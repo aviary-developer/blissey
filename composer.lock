@@ -105,7 +105,11 @@
                 "singularize",
                 "string"
             ],
+<<<<<<< HEAD
             "time": "2015-11-06 14:35:42"
+=======
+            "time": "2015-11-06T14:35:42+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "erusev/parsedown",
@@ -480,7 +484,11 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
+<<<<<<< HEAD
             "time": "2017-08-12 15:52:38"
+=======
+            "time": "2017-08-12T15:52:38+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "league/flysystem",
@@ -1993,7 +2001,11 @@
                 "constructor",
                 "instantiate"
             ],
+<<<<<<< HEAD
             "time": "2015-06-14 21:17:01"
+=======
+            "time": "2015-06-14T21:17:01+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "fzaninotto/faker",
@@ -2294,7 +2306,11 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
+<<<<<<< HEAD
             "time": "2017-08-08 06:39:58"
+=======
+            "time": "2017-08-08T06:39:58+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2341,7 +2357,11 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
+<<<<<<< HEAD
             "time": "2017-06-03 08:32:36"
+=======
+            "time": "2017-06-03T08:32:36+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "phpspec/prophecy",
@@ -2653,7 +2673,11 @@
             "keywords": [
                 "tokenizer"
             ],
+<<<<<<< HEAD
             "time": "2017-02-27 10:12:30"
+=======
+            "time": "2017-02-27T10:12:30+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "phpunit/phpunit",
