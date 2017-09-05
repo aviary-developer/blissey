@@ -9,9 +9,8 @@
 
     <title>Gentelella Alela! | </title>
     <!-- jQuery -->
-    {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
     <!-- Bootstrap -->
-    {!!Html::style('assets/css/bootstrap/dist/css/bootstrap.min.css')!!}
+    {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
     <!-- Font Awesome -->
     {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
     <!-- NProgress -->
@@ -43,7 +42,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src={!! asset('img/img.jpg') !!} alt="..." class="img-circle profile_img">
+                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -188,7 +187,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src={!! asset('img/img.jpg') !!} alt="">John Doe
+                    <img src="images/img.jpg" alt="">John Doe
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -212,7 +211,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src={!! asset('img/img.jpg') !!} alt="Profile Image" /></span>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -224,7 +223,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src={!! asset('img/img.jpg') !!} alt="Profile Image" /></span>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -236,7 +235,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src={!! asset('img/img.jpg') !!} alt="Profile Image" /></span>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -248,7 +247,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src={!! asset('img/img.jpg') !!} alt="Profile Image" /></span>
+                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -273,47 +272,7 @@
           </div>
         </div>
         <!-- /top navigation -->
-
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-              <div class="count">2500</div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
-              <div class="count">123.50</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
-              <div class="count green">2,500</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
-              <div class="count">4,567</div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
-              <div class="count">2,315</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-              <div class="count">7,325</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-          </div>
-          <!-- /top tiles -->
-            @yield('layout')
-        </div>
-        <!-- /page content -->
-
+          @yield('layout')
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -325,6 +284,7 @@
       </div>
     </div>
 
+    {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
     <!-- Bootstrap -->
     {!!Html::script('assets/bootstrap/dist/js/bootstrap.min.js')!!}
     <!-- FastClick -->
