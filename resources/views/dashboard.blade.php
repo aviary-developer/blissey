@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Blissey</title>
     <!-- jQuery -->
     <!-- Bootstrap -->
     {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
@@ -24,6 +24,8 @@
     {!!Html::style('assets/jqvmap/dist/jqvmap.min.css')!!}
     <!-- bootstrap-daterangepicker -->
     {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!}
+
+    {!!Html::style('assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')!!}
     <!-- Custom Theme Style -->
     {!!Html::style('assets/build/css/custom.css')!!}
   </head>
@@ -34,7 +36,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-medkit"></i> <span>Blissey</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -272,7 +274,9 @@
           </div>
         </div>
         <!-- /top navigation -->
+        <div class="right_col" role="main">
           @yield('layout')
+        </div>
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -320,6 +324,14 @@
     <!-- bootstrap-daterangepicker -->
     {!!Html::script('assets/moment/min/moment.min.js')!!}
     {!!Html::script('assets/bootstrap-daterangepicker/daterangepicker.js')!!}
+
+    {!!Html::script('assets/datatables.net/js/jquery.dataTables.js')!!}
+    {!!Html::script('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}
+    {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!}
+    {!!Html::script('assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')!!}
+    {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!}
+    {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
+    {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}
 
     <!-- Custom Theme Scripts -->
     {!!Html::script('assets/build/js/custom.js')!!}
