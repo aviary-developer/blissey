@@ -26,6 +26,10 @@
     {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!}
 
     {!!Html::style('assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')!!}
+
+    {!!Html::script('assets/sweetalert2/dist/sweetalert2.js')!!}
+    {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
+
     <!-- Custom Theme Style -->
     {!!Html::style('assets/build/css/custom.css')!!}
   </head>
