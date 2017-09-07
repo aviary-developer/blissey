@@ -103,4 +103,5 @@
   </div>
 </div>
 <!-- /page content -->
+{!! str_replace ('/?', '?', $reactivos-> render ()) !!}
 @stop
