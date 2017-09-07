@@ -1,5 +1,6 @@
 @extends('dashboard')
 @section('layout')
+  @include('Reactivos.Formularios.modal')
 <!-- page content -->
 <!--Panel-->
 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -110,5 +111,8 @@
     </div>
   </div>
 </div>
+@section('scripts')
+  {!!Html::script('js/scripts/ReactivosMostrar.js')!!}
+@endsection
 <!-- /page content -->
 @stop

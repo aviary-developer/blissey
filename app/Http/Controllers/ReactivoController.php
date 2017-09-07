@@ -17,7 +17,7 @@ class ReactivoController extends Controller
   */
   public function index()
   {
-    $reactivos=Reactivo::orderBy('id','asc')->paginate(3);
+    $reactivos=Reactivo::orderBy('id','asc')->paginate(5);
     return view('Reactivos.index',compact('reactivos'));
   }
 
@@ -28,7 +28,7 @@ class ReactivoController extends Controller
   */
   public function create()
   {
-    //
+    return view('Reactivos.create');
   }
 
   /**
@@ -39,6 +39,12 @@ class ReactivoController extends Controller
   */
   public function store(Request $request)
   {
+    if($request->ajax()){
+      Reactivo::create($request->all());
+      return response()->json([
+        "mensaje"=>$request->all()
+      ]);
+    }
     Reactivo::create($request->All());
     return redirect('/reactivos')->with('mensaje','Registro Guardado');
   }

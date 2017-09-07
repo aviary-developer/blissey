@@ -285,6 +285,9 @@
     {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
     {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}
 
+    @section('scripts')
+    @show
+
     <!-- Custom Theme Scripts -->
     {!!Html::script('assets/build/js/custom.js')!!}
 
