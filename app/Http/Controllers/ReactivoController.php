@@ -17,7 +17,7 @@ class ReactivoController extends Controller
   */
   public function index()
   {
-    $reactivos=Reactivo::orderBy('id','asc')->paginate(5);
+    $reactivos=Reactivo::orderBy('id','asc')->paginate(3);
     return view('Reactivos.index',compact('reactivos'));
   }
 

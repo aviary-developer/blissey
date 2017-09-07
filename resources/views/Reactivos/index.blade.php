@@ -10,6 +10,7 @@
     </div>
     <div class="x_content">
       <div class="row">
+        <center>
         <div class="btn-group">
           <button class="btn btn-success" type="button" data-toggle="modal" data-target=".modal-new">Nuevo</button>
           <!--<button class="btn btn-default" type="button">Pantalla1</button>
@@ -19,34 +20,42 @@
           <button class="btn btn-danger" type="button">Papelera</button>
           <button class="btn btn-info" type="button">Ayuda</button>
         </div>
+      </center>
       </div>
       <br>
-      <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+      <table class="table table-striped">
         <thead>
           <tr>
-            <th>Identificador</th>
+            <th>#</th>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Contenido por envase</th>
+            <th>Contenido</th>
             <th colspan="2">Opciones</th>
           </tr>
         </thead>
         <tbody>
+          @php
+            $correlativo = 1;
+          @endphp
           @foreach($reactivos as $reactivo)
           <tr>
-            <td>{{$reactivo->id}}</td>
+            <td>{{$correlativo}}</td>
             <td>{{$reactivo->nombre}}</td>
             <td>{{$reactivo->descripcion}}</td>
-            <td>{{$reactivo->contenidoPorEnvase}}</td>
-            <td> {!!link_to_route("reactivos.edit", $title = "Editar", $parameters = $reactivo->id, $attributes = ["class"=>"btn btn-primary"])!!}
+            <td>{{$reactivo->contenidoPorEnvase." ml"}}</td>
+            <td> {!!link_to_route("reactivos.edit", $title = "Editar", $parameters = $reactivo->id, $attributes = ["class"=>"btn btn-primary btn-xs"])!!}
 				    </td>
 				    <td>@include('Reactivos.Formularios.eliminarReactivo')</td>
           </tr>
+          @php
+            $correlativo++;
+          @endphp
           @endforeach
         </tbody>
       </table>
-
-
+      <center>
+        {!! str_replace ('/?', '?', $reactivos-> render ()) !!}
+      </center>
     </div>
   </div>
   <div class="modal fade modal-new" tabindex="-1" role="dialog" aria-hidden="true">
@@ -103,5 +112,4 @@
   </div>
 </div>
 <!-- /page content -->
-{!! str_replace ('/?', '?', $reactivos-> render ()) !!}
 @stop
