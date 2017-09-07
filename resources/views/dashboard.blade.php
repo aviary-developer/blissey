@@ -232,7 +232,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            UES-FMP 2017 | Blissey powered by Gentelella
+            UES-FMP 2017
           </div>
           <div class="clearfix"></div>
         </footer>
