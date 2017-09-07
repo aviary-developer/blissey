@@ -1,4 +1,4 @@
-  <div class="modal fade modal-new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade modal-new1" tabindex="-1" role="dialog" aria-hidden="true" id="gg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,8 +8,8 @@
         </div>
         <div class="modal-body">
           <!--Cuerpo del modal-->
-          <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
-          <input type="hidden" id="id">
+          <input type="hidden" name="_token" value="{{csrf_token()}}" id="tokenReactivos">
+          <input type="hidden" id="idReactivo">
           <div class="row">
             <div class="col-md-12 col-xs-12">
               <div class="x_panel">

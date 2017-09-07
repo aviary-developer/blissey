@@ -15,3 +15,4 @@ Route::get('/', function () {
     return view('main');
 });
 Route::resource('reactivos','ReactivoController');
+Route::get('leerReactivos','ReactivoController@listingReactivos');

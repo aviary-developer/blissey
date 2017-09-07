@@ -24,6 +24,19 @@
       </center>
       </div>
       <br>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Contenido</th>
+            <th colspan="2">Opciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaReactivos">
+        </tbody>
+      </table>
       <table class="table table-striped">
         <thead>
           <tr>

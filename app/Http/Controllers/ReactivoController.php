@@ -69,7 +69,11 @@ class ReactivoController extends Controller
   public function edit($id)
   {
     $reactivos=Reactivo::find($id);
-      return view('reactivos.edit', compact('reactivos'));
+    return response()->json(
+      $reactivos->toArray()
+    );
+    /*$reactivos=Reactivo::find($id);
+      return view('reactivos.edit', compact('reactivos'));*/
   }
 
   /**
@@ -84,7 +88,9 @@ class ReactivoController extends Controller
       $reactivos = Reactivo::find($id);
         $reactivos->fill($request->all());
         $reactivos->save();
-        return Redirect::to('/reactivos');
+        return response()->json([
+          "mensaje"=>"Reactivo Actualizado"
+        ]);
   }
 
   /**
@@ -98,5 +104,11 @@ class ReactivoController extends Controller
         $reactivos= Reactivo::find($id);
         $reactivos->delete();
         return Redirect::to('/reactivos');
+  }
+  public function listingReactivos(){
+    $reactivos=Reactivo::orderBy('id', 'desc')->get();
+    return response()->json(
+      $reactivos->toArray()
+    );
   }
 }
