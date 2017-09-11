@@ -101,6 +101,11 @@ class ReactivoController extends Controller
   */
   public function destroy($id)
   {
+      $reactivo = Reactivo::findOrFail($id);
+      $reactivo->delete();
+      return response()->json([
+        "mensaje"=>"Reactivo eliminado"
+      ]);
         $reactivos= Reactivo::find($id);
         $reactivos->delete();
         return Redirect::to('/reactivos');
