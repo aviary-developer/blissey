@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 Route::resource('reactivos','ReactivoController');
 Route::get('leerReactivos','ReactivoController@listingReactivos');
+
+
+
+Route::resource('proveedores','ProveedorController');
