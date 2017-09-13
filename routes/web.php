@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 Route::resource('reactivos','ReactivoController');
 Route::get('leerReactivos','ReactivoController@listingReactivos');
-
-
-
 Route::resource('proveedores','ProveedorController');
+//Rutas de pacientes
+Route::resource('pacientes','PacienteController');
+Route::get('leerPacientes','PacienteController@listingPacientes');
