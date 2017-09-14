@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Paciente;
 use Redirect;
+use Carbon\Carbon;
 
 class PacienteController extends Controller
 {
@@ -15,9 +16,11 @@ class PacienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pacientes = Paciente::orderBy('apellido','asc')->paginate(5);
+        $estado = $request->get('estado');
+        $nombre = $request->get('nombre');
+        $pacientes = Paciente::buscar($nombre,$estado);
         return view('Pacientes.index',compact('pacientes'));
     }
 
@@ -28,7 +31,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('pacientes.create');
     }
 
     /**
@@ -39,7 +42,8 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Paciente::create($request->All());
+        return redirect('/pacientes')->with('mensaje', '¡Hecho!');
     }
 
     /**
@@ -61,7 +65,8 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pacientes = Paciente::find($id);
+        return view('Pacientes.edit',compact('pacientes'));
     }
 
     /**
@@ -73,7 +78,10 @@ class PacienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pacientes = Paciente::find($id);
+        $pacientes->fill($request->all());
+        $pacientes->save();
+        return Redirect::to('/pacientes');
     }
 
     /**
@@ -87,10 +95,10 @@ class PacienteController extends Controller
         //
     }
 
-    public function listingPacientes(){
-      $pacientes=Paciente::orderBy('apellido', 'asc')->get();
-      return response()->json(
-        $pacientes->toArray()
-      );
+    public function desactivate($id){
+      $pacientes = Paciente::find($id);
+      $pacientes->estado = false;
+      $pacientes->save();
+      return Redirect::to('/pacientes');
     }
 }

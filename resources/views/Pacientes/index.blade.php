@@ -1,8 +1,11 @@
 @extends('dashboard')
 @section('layout')
-  @include('Pacientes.Formularios.modal')
   <!-- page content -->
   <!--Panel-->
+  @if(Session::has('mensaje'))
+  <?php $mensaje = Session::get('mensaje');
+  echo "<script>swal('$mensaje', 'Registro almacenado', 'success')</script>";?>
+  @endif
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
@@ -13,7 +16,7 @@
         <div class="row">
           <center>
             <div class="btn-group">
-              <button class="btn btn-dark" type="button" data-toggle="modal" data-target=".modal-new"><i class="fa fa-plus"></i> Nuevo</button>
+              <a href={!! asset('/pacientes/create') !!} class="btn btn-dark"><i class="fa fa-plus"></i> Nuevo</a>
               <button class="btn btn-dark" type="button"><i class="fa fa-file"></i> Reporte</button>
               <button class="btn btn-dark" type="button"><i class="fa fa-trash"></i> Papelera</button>
               <button class="btn btn-primary" type="button"><i class="fa fa-question"></i> Ayuda</button>
@@ -21,7 +24,7 @@
           </center>
         </div>
         <br>
-        <table class="table">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>#</th>
@@ -32,80 +35,43 @@
               <th colspan="2">Opciones</th>
             </tr>
           </thead>
-          <tbody id="tablaPacientes">
+          @php
+            $correlativo = 1;
+          @endphp
+          @foreach ($pacientes as $paciente)
+            <tr>
+              <td>{{ $correlativo }}</td>
+              <td>{{ $paciente->apellido }}</td>
+              <td>{{ $paciente->nombre }}</td>
+              <td>
+                @if ($paciente->sexo)
+                  {{ "Masculino" }}
+                @else
+                  {{ "Femenino" }}
+                @endif
+              </td>
+              <td>{{ $paciente->telefono }}</td>
+              <td>
+                <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
+                  <i class="fa fa-edit"></i>
+                </a>
+  				    </td>
+  				    <td>
+                @include('Pacientes.Formularios.desactivate')
+              </td>
+            </tr>
+            @php
+              $correlativo++;
+            @endphp
+          @endforeach
           </tbody>
         </table>
-      </div>
-    </div>
-
-    <div class="modal fade modal-new" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title" id="myModalLabel">Paciente<small> Nuevo </small></h4>
-          </div>
-          <div class="modal-body">
-            <!--Cuerpo del modal-->
-            <div class="row">
-              <div class="col-md-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_content">
-                    <br />
-                    {!!Form::open(['class'=>'form-horizontal form-label-left input_mask','route'=>'pacientes.store','method'=>'POST', 'autocomplete'=>'off'])!!}
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        {!! Form::text('nombre',null,['id'=>'nombrePaciente','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Apellido</label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        {!! Form::text('apellido',null,['id'=>'apellidoPaciente','class'=>'form-control','placeholder'=>'Apellido del paciente']) !!}
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo</label>
-                      <label>
-                        {!!Form :: radio ( "sexo",1,true,['id'=>'sexoMasculino', 'class'=>'flat'])!!} Masculino
-                      </label>
-                      <label>
-                        {!!Form :: radio ( "sexo",0,false,['id'=>'sexoFemenino', 'class'=>'flat'])!!} Femenino
-                      </label>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono</label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        {!! Form::text('telefono',null,['id'=>'telefonoPaciente','class'=>'form-control','placeholder'=>'Teléfono del paciente']) !!}
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Dirección</label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        {!! Form::textarea('direccion',null,['id'=>'direccionPaciente','class'=>'form-control','placeholder'=>'Dirección del paciente','rows'=>'2']) !!}
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              {!!Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
-            </div>
-            {!!Form::close()!!}
-          </div>
-        </div>
+        <div class="ln_solid"></div>
+        <center>
+          {!! str_replace ('/?', '?', $pacientes->appends(Request::only(['nombre','estado']))->render ()) !!}
+        </center>
       </div>
     </div>
   </div>
-  @section('scripts')
-    {!!Html::script('js/scripts/paciente/Pacientes.js')!!}
-    {!!Html::script('js/scripts/paciente/PacientesMostrar.js')!!}
-  @endsection
   <!-- /page content -->
-@stop
+@endsection

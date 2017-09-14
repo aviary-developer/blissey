@@ -31,7 +31,7 @@
     {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
 
     <!-- Custom Theme Style -->
-    {!!Html::style('assets/build/css/custom.css')!!}
+    {!!Html::style('assets/build/css/custom.min.css')!!}
   </head>
 
   <body class="nav-md">
