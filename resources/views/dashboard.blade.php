@@ -284,7 +284,7 @@
     {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!}
     {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
     {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}
-
+    {!!Html::script('assets/js/scripts/proveedor/proveedor.js')!!}
     @section('scripts')
     @show
 

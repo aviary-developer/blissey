@@ -13,7 +13,10 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+      $estado = $request->get('estado');
+      $nombre = $request->get('nombre');
+      $proveedores = Proveedor::buscar($nombre,$estado);
+      return view('Proveedor.index',compact('proveedores'));
     }
 
     /**
@@ -23,7 +26,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        //
+        return view('proveedores.create');
     }
 
     /**
