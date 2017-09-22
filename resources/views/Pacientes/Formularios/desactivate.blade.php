@@ -1,4 +1,7 @@
 {!!Form::open(['url'=>['desactivatePaciente',$paciente->id],'method'=>'POST'])!!}
+<a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <i class="fa fa-edit"></i>
+</a>
 <button type="button" class="btn btn-danger btn-xs" onclick="
   return swal({
     title: 'Enviar registro a papelera',

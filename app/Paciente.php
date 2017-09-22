@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Paciente extends Model
 {
     protected $fillable = ['nombre','apellido','direccion','telefono','sexo','fechaNacimiento'];
+    protected $dates = ['fechaNacimiento'];
 
     public static function buscar($nombre, $estado){
       return Paciente::nombre($nombre)->estado($estado)->orderBy('apellido')->paginate(10);
@@ -14,7 +15,7 @@ class Paciente extends Model
 
     public function scopeNombre($query, $nombre){
       if(trim($nombre)!=""){
-        $query->where('nombre', 'LIKE','%'.$nombre.'%')->orWhere('apellido', 'LIKE','%'.$nombre.'%');
+        $query->where('nombre', 'ilike','%'.$nombre.'%')->orWhere('apellido', 'ilike','%'.$nombre.'%');
       }
     }
 

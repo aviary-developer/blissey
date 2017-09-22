@@ -1,6 +1,9 @@
 @extends('dashboard')
 @section('layout')
-  {!!Form::model($pacientes,['class' =>'form-horizontal form-label-left input_mask','route' =>['pacientes.update',$pacientes->id],'method' =>'PUT'])!!}
+  {!!Form::model($pacientes,['class' =>'form-horizontal form-label-left input_mask','route' =>['pacientes.update',$pacientes->id],'method' =>'PUT','autocomplete'=>'off'])!!}
+  @php
+    $fecha = $pacientes->fechaNacimiento;
+  @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
       <div class="x_title">

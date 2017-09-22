@@ -29,11 +29,11 @@
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de nacimiento *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
-      @php
-      $ahora = Carbon\Carbon::now();
-      @endphp
       <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::date('fechaNacimiento',$ahora,['max'=>$ahora->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+      @php
+        $ahora = Carbon\Carbon::now();
+      @endphp
+      {!! Form::date('fechaNacimiento',$fecha,['max'=>$ahora->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
     </div>
   </div>
   <div class="form-group">

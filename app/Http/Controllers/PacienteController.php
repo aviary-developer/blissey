@@ -21,7 +21,7 @@ class PacienteController extends Controller
         $estado = $request->get('estado');
         $nombre = $request->get('nombre');
         $pacientes = Paciente::buscar($nombre,$estado);
-        return view('Pacientes.index',compact('pacientes'));
+        return view('Pacientes.index',compact('pacientes','estado','nombre'));
     }
 
     /**
@@ -81,7 +81,7 @@ class PacienteController extends Controller
         $pacientes = Paciente::find($id);
         $pacientes->fill($request->all());
         $pacientes->save();
-        return Redirect::to('/pacientes');
+        return redirect('/pacientes')->with('mensaje', '¡Hecho!');
     }
 
     /**
@@ -92,12 +92,21 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pacientes = Paciente::findOrFail($id);
+        $pacientes->delete();
+        return redirect('/pacientes');
     }
 
     public function desactivate($id){
       $pacientes = Paciente::find($id);
       $pacientes->estado = false;
+      $pacientes->save();
+      return Redirect::to('/pacientes');
+    }
+
+    public function activate($id){
+      $pacientes = Paciente::find($id);
+      $pacientes->estado = true;
       $pacientes->save();
       return Redirect::to('/pacientes');
     }
