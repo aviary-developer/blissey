@@ -8,7 +8,6 @@
     text: '¿Está seguro? ¡Ya no estara disponible!',
     type: 'question',
     showCancelButton: true,
-    confirmButtonColor: '#DD6B55',
     confirmButtonText: 'Si, ¡Enviar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-danger',
