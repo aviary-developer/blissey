@@ -1,13 +1,42 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
-<a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
-  <i class="fa fa-edit"></i>
-</a>
-<button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
+@if ($index)
+  <a href={!! asset('/pacientes/'.$paciente->id)!!} class="btn btn-xs btn-info">
+    <i class="fa fa-info-circle"></i>
+  </a>
+  <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
+    <i class="fa fa-edit"></i>
+  </a>
+  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
     <i class="fa fa-check"></i>
-</button>
-<button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
+  </button>
+  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
     <i class="fa fa-remove"></i>
-</button>
+  </button>
+@else
+  <div class="btn-group">
+    <a href={!! asset('/pacientes')!!} class="btn btn-dark btn-xs">
+      <i class="fa fa-arrow-left"></i> Atras
+    </a>
+    <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-dark btn-xs">
+      <i class="fa fa-edit"></i> Editar
+    </a>
+    @if ($paciente->estado)
+      <button type="button" class="btn btn-dark btn-xs" onclick={!! "'baja(".$paciente->id.");'" !!}>
+        <i class="fa fa-trash"></i> Papelera
+      </button>
+    @else
+      <button type="button" class="btn btn-dark btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
+        <i class="fa fa-check"></i> Restaurar
+      </button>
+      <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
+        <i class="fa fa-remove"></i> Eliminar
+      </button>
+    @endif
+    <a href={!! asset('#')!!} class="btn btn-primary btn-xs">
+      <i class="fa fa-question"></i> Ayuda
+    </a>
+  </div>
+@endif
 {!!Form::close()!!}
 <script type="text/javascript">
   function alta(id){
@@ -63,6 +92,39 @@
       swal(
         '¡Hecho!',
         'El registro ha sido eliminado',
+        'success'
+      )
+    }, function (dismiss) {
+      // dismiss can be 'cancel', 'overlay',
+      // 'close', and 'timer'
+      if (dismiss === 'cancel') {
+        swal(
+          'Cancelado',
+          'El registro se mantiene',
+          'info'
+        )
+      }
+    });
+  }
+
+  function baja(id){
+    return swal({
+      title: 'Enviar registro a papelera',
+      text: '¿Está seguro? ¡Ya no estara disponible!',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, ¡Enviar!',
+      cancelButtonText: 'No, ¡Cancelar!',
+      confirmButtonClass: 'btn btn-danger',
+      cancelButtonClass: 'btn btn-default',
+      buttonsStyling: false
+    }).then(function () {
+      var dominio = window.location.host;
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
+      $('#formulario').submit();
+      swal(
+        '¡Hecho!',
+        'El registro ha sido enviado a papelera',
         'success'
       )
     }, function (dismiss) {

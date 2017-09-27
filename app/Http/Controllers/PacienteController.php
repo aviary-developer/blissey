@@ -21,7 +21,9 @@ class PacienteController extends Controller
         $estado = $request->get('estado');
         $nombre = $request->get('nombre');
         $pacientes = Paciente::buscar($nombre,$estado);
-        return view('Pacientes.index',compact('pacientes','estado','nombre'));
+        $activos = Paciente::where('estado',true)->count();
+        $inactivos = Paciente::where('estado',false)->count();
+        return view('Pacientes.index',compact('pacientes','estado','nombre','activos','inactivos'));
     }
 
     /**
@@ -54,8 +56,8 @@ class PacienteController extends Controller
      */
     public function show($id)
     {
-        $pacientes = Paciente::find($id);
-        return view('Pacientes.show',compact('pacientes'));
+        $paciente = Paciente::find($id);
+        return view('Pacientes.show',compact('paciente'));
     }
 
     /**

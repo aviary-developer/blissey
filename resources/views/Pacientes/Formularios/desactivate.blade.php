@@ -1,4 +1,7 @@
 {!!Form::open(['url'=>['desactivatePaciente',$paciente->id],'method'=>'POST'])!!}
+<a href={!! asset('/pacientes/'.$paciente->id)!!} class="btn btn-xs btn-info">
+  <i class="fa fa-info-circle"></i>
+</a>
 <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
   <i class="fa fa-edit"></i>
 </a>
