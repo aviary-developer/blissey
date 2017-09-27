@@ -2,7 +2,7 @@
 @section('layout')
   @if(Session::has('mensaje'))
     <?php $mensaje = Session::get('mensaje');
-    echo "<script>swal('$mensaje', 'Registro almacenado', 'success')</script>";?>
+    echo "<script>swal('$mensaje', 'Acción realizada satisfactorimente', 'success')</script>";?>
   @endif
   @if ($estado == 1 || $estado == null)
     @php

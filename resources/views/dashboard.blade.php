@@ -277,6 +277,8 @@
     {!!Html::script('assets/moment/min/moment.min.js')!!}
     {!!Html::script('assets/bootstrap-daterangepicker/daterangepicker.js')!!}
 
+    {!!Html::script('assets/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
+
     {!!Html::script('assets/datatables.net/js/jquery.dataTables.js')!!}
     {!!Html::script('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}
     {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!}

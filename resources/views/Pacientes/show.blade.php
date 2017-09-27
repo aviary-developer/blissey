@@ -46,7 +46,7 @@
               </tr>
               <tr>
                 <th>Fecha de nacimiento</th>
-                <td>{{ $paciente->fechaNacimiento->formatLocalized('%#x') }}</td>
+                <td>{{ $paciente->fechaNacimiento->formatLocalized('%d de %B de %Y') }}</td>
               </tr>
               <tr>
                 <th>Edad</th>
@@ -72,11 +72,11 @@
               </tr>
               <tr>
                 <th>Fecha de creación</th>
-                <td>{{ $paciente->created_at->formatLocalized('%#c') }}</td>
+                <td>{{ $paciente->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
               <tr>
                 <th>Fecha de modificación</th>
-                <td>{{ $paciente->updated_at->formatLocalized('%#c') }}</td>
+                <td>{{ $paciente->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
             </table>
           </div>

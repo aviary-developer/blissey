@@ -45,7 +45,7 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         Paciente::create($request->All());
-        return redirect('/pacientes')->with('mensaje', '¡Hecho!');
+        return redirect('/pacientes')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -84,7 +84,7 @@ class PacienteController extends Controller
         $pacientes = Paciente::find($id);
         $pacientes->fill($request->all());
         $pacientes->save();
-        return redirect('/pacientes')->with('mensaje', '¡Hecho!');
+        return redirect('/pacientes')->with('mensaje', '¡Editado!');
     }
 
     /**
