@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/pacientes/'.$paciente->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/pacientes/'.$paciente->id)!!} class="btn btn-ms btn-info">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-ms btn-primary">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-ms" onclick={!! "'alta(".$paciente->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
 @else
@@ -23,25 +23,25 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/pacientes'.$regreso)!!} class="btn btn-dark btn-xs">
+    <a href={!! asset('/pacientes'.$regreso)!!} class="btn btn-dark btn-ms">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-dark btn-xs">
+    <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-dark btn-ms">
       <i class="fa fa-edit"></i> Editar
     </a>
     @if ($paciente->estado)
-      <button type="button" class="btn btn-dark btn-xs" onclick={!! "'baja(".$paciente->id.");'" !!}>
+      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$paciente->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$paciente->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-xs">
+    <a href={!! asset('#')!!} class="btn btn-primary btn-ms">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>
