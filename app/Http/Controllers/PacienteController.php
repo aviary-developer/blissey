@@ -84,7 +84,13 @@ class PacienteController extends Controller
         $pacientes = Paciente::find($id);
         $pacientes->fill($request->all());
         $pacientes->save();
-        return redirect('/pacientes')->with('mensaje', '¡Editado!');
+        if($pacientes->estado)
+        {
+          return redirect('/pacientes')->with('mensaje', '¡Editado!');
+        }
+        else{
+          return redirect('/pacientes?estado=0')->with('mensaje', '¡Editado!');
+        }
     }
 
     /**
@@ -97,7 +103,7 @@ class PacienteController extends Controller
     {
         $pacientes = Paciente::findOrFail($id);
         $pacientes->delete();
-        return redirect('/pacientes');
+        return redirect('/pacientes?estado=0');
     }
 
     public function desactivate($id){
@@ -111,6 +117,6 @@ class PacienteController extends Controller
       $pacientes = Paciente::find($id);
       $pacientes->estado = true;
       $pacientes->save();
-      return Redirect::to('/pacientes');
+      return Redirect::to('/pacientes?estado=0');
     }
 }

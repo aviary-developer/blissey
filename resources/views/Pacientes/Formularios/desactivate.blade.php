@@ -19,8 +19,8 @@
   }).then(function () {
     submit();
     swal(
-      '¡Hecho!',
-      'El registro ha sido enviado a papelera',
+      '¡Desactivado!',
+      'Acción realizada satisfactorimente',
       'success'
     )
   }, function (dismiss) {

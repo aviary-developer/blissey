@@ -31,7 +31,7 @@
     {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
 
     <!-- Custom Theme Style -->
-    {!!Html::style('assets/build/css/custom.min.css')!!}
+    {!!Html::style('assets/build/css/custom.css')!!}
   </head>
 
   <body class="nav-md">
@@ -113,18 +113,6 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
             </div>
             <!-- /menu footer buttons -->
           </div>

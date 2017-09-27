@@ -14,7 +14,16 @@
   </button>
 @else
   <div class="btn-group">
-    <a href={!! asset('/pacientes')!!} class="btn btn-dark btn-xs">
+    @if (!$paciente->estado)
+      @php
+        $regreso = "?estado=0";
+      @endphp
+    @else
+      @php
+        $regreso = '';
+      @endphp
+    @endif
+    <a href={!! asset('/pacientes'.$regreso)!!} class="btn btn-dark btn-xs">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
     <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-dark btn-xs">
@@ -56,8 +65,8 @@
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePaciente/'+id);
       $('#formulario').submit();
       swal(
-        '¡Hecho!',
-        'El registro ha sido activado',
+        '¡Activado!',
+        'Acción realizada satisfactorimente',
         'success'
       )
     }, function (dismiss) {
@@ -90,8 +99,8 @@
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPaciente/'+id);
       $('#formulario').submit();
       swal(
-        '¡Hecho!',
-        'El registro ha sido eliminado',
+        '¡Eliminado!',
+        'Acción realizada satisfactorimente',
         'success'
       )
     }, function (dismiss) {
@@ -123,8 +132,8 @@
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
       $('#formulario').submit();
       swal(
-        '¡Hecho!',
-        'El registro ha sido enviado a papelera',
+        '¡Desactivado!',
+        'Acción realizada satisfactorimente',
         'success'
       )
     }, function (dismiss) {
