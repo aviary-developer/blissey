@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Proveedor;
 
 class ProveedorController extends Controller
 {
@@ -11,12 +12,14 @@ class ProveedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $proveedores = Proveedor::buscar($nombre,$estado);
-      return view('Proveedor.index',compact('proveedores'));
+      $activos = Proveedor::where('estado',true)->count();
+      $inactivos = Proveedor::where('estado',false)->count();
+      return view('Proveedores.index',compact('proveedores','estado','nombre','activos','inactivos'));
     }
 
     /**
@@ -82,6 +85,22 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $proveedores = Proveedores::findOrFail($id);
+      $proveedores->delete();
+      return redirect('/proveedores?estado=0');
+    }
+
+    public function desactivate($id){
+      $proveedores= Proveedor::find($id);
+      $proveedores->estado = false;
+      $proveedores->save();
+      return Redirect::to('/proveedores');
+    }
+
+    public function activate($id){
+      $proveedores = Proveedor::find($id);
+      $proveedores->estado = true;
+      $proveedores->save();
+      return Redirect::to('/proveedores?estado=0');
     }
 }
