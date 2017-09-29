@@ -19,7 +19,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Pacientes
+        <h2>Usuarios
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
@@ -32,9 +32,9 @@
         <div class="row">
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/pacientes?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/usuarios?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'pacientes.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
+            {!!Form::open(['route'=>'usuarios.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
@@ -72,29 +72,29 @@
             </tr>
           </thead>
           <tbody>
-            @if (count($pacientes)>0)
+            @if (count($usuarios)>0)
               @php
               $correlativo = 1;
               @endphp
-              @foreach ($pacientes as $paciente)
+              @foreach ($usuarios as $usuario)
                 <tr>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $paciente->apellido }}</td>
-                  <td>{{ $paciente->nombre }}</td>
+                  <td>{{ $usuario->apellido }}</td>
+                  <td>{{ $usuario->nombre }}</td>
                   <td>
-                    @if ($paciente->sexo)
+                    @if ($usuario->sexo)
                       {{ "Masculino" }}
                     @else
                       {{ "Femenino" }}
                     @endif
                   </td>
-                  <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>
-                  <td>{{ $paciente->telefono }}</td>
+                  <td>{{ $usuario->fechaNacimiento->age.' años' }}</td>
+                  <td>{{ $usuario->telefono }}</td>
                   <td>
                     @if ($estadoOpuesto)
-                      @include('Pacientes.Formularios.activate')
+                      @include('Usuarios.Formularios.activate')
                     @else
-                      @include('Pacientes.Formularios.desactivate')
+                      @include('Usuarios.Formularios.desactivate')
                     @endif
                   </td>
                 </tr>
@@ -115,7 +115,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $pacientes->appends(Request::only(['nombre','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $usuarios->appends(Request::only(['nombre','estado']))->render ()) !!}
         </center>
       </div>
     </div>
