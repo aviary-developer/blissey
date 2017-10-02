@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\Http\Requests\ProveedoresRequest;
 
 class ProveedorController extends Controller
 {
@@ -38,9 +39,16 @@ class ProveedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProveedoresRequest $request)
     {
-        //
+        echo $request['nombre'];
+        echo $request['telefono'];
+        echo $request['correo'];
+        echo count($request['nombrev']);
+
+        foreach ($request['nombrev'] as $nombre) {
+          echo $nombre;
+        }
     }
 
     /**

@@ -17,6 +17,12 @@ class AddProveedoresTable extends Migration
         $table->string('correo',30);
         $table->string('telefono',9);
         $table->boolean('estado')->default(true);
+        /*
+        Estado-------------------
+        true: Activo
+        false: Inactivo
+        -------------------------
+        */
       });
     }
 

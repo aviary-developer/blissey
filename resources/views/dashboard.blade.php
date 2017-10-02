@@ -30,7 +30,12 @@
     {!!Html::script('assets/sweetalert2/dist/sweetalert2.js')!!}
     {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
 
+    <!-- Css de nitify-->
+    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
+
     <!-- Custom Theme Style -->
+
     {!!Html::style('assets/build/css/custom.css')!!}
   </head>
 
@@ -221,12 +226,32 @@
     {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!}
     {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
     {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}
-    {!!Html::script('assets/js/scripts/proveedor/proveedor.js')!!}
+
+    <!--para mensajes de error en validaciones-->
+    {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+
+    <!--js agregados -->
+    {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
     @section('scripts')
     @show
 
     <!-- Custom Theme Scripts -->
-    {!!Html::script('assets/build/js/custom.js')!!}
 
+    {!!Html::script('assets/build/js/custom.js')!!}
   </body>
 </html>
+@foreach ($errors->all() as $error)
+
+<div class="alert-d">
+    {{$error}}
+  </div>
+  <?php echo("<script language='javascript' >
+  new PNotify({
+                                  title: 'Oh No!',
+                                  text: '".$error."',
+                                  type: 'error',
+                                  styling: 'bootstrap3'
+                              });
+  </script>");?>
+  @endforeach
