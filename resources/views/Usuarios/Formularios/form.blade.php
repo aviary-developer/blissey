@@ -44,27 +44,62 @@
     </div>
   </div>
   <div class="form-group col-md-6 col-sm-6 col-xs-12">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de usuario *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-      <select class="form-control has-feedback-left" name="tipoUsuario">
-        <option value="0">Administración</option>
-        <option value="1">Gerencia</option>
-        <option value="2">Médico</option>
-        <option value="3">Recepción</option>
-        <option value="4">Laboratorio Clínico</option>
-        <option value="5">Ultrasonografía</option>
-        <option value="6">Rayos X</option>
-        <option value="7">Farmacia</option>
-        <option value="8">Enfermería</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group col-md-6 col-sm-6 col-xs-12">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Dirección *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::textarea('direccion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Dirección del nuevo usuario','rows'=>'3']) !!}
+      {!! Form::textarea('direccion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Dirección del nuevo usuario','rows'=>'1']) !!}
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-sm-6 col-xs-12">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Usuario *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::text('name',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de usuario']) !!}
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-sm-6 col-xs-12">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Correo *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::email('email',null,['class'=>'form-control has-feedback-left','placeholder'=>'Dirección de correo electronico']) !!}
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-sm-6 col-xs-12">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Contraseña *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::password('password',['class'=>'form-control has-feedback-left','placeholder'=>'Contraseña']) !!}
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-sm-6 col-xs-12">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Repetir Contraseña *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::password('repetir_password',['class'=>'form-control has-feedback-left','placeholder'=>'Repetir Contraseña']) !!}
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-sm-6 col-xs-12">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de usuario *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+      <select class="form-control has-feedback-left" name="tipoUsuario" id="tipoUsuario" onchange="junta();">
+        <option value="Administración">Administración</option>
+        <option value="Gerencia">Gerencia</option>
+        <option value="Médico">Médico</option>
+        <option value="Recepción">Recepción</option>
+        <option value="Laboaratorio">Laboratorio Clínico</option>
+        <option value="Ultrasonografía">Ultrasonografía</option>
+        <option value="Rayos X">Rayos X</option>
+        <option value="Farmacia">Farmacia</option>
+        <option value="Enfermería">Enfermería</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-sm-6 col-xs-12" id="juntaVigilancia" style="display:none;">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Junta de Vigilancia</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-users form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::text('juntaVigilancia',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número de Junta de Vigilancia']) !!}
     </div>
   </div>
   <div class="ln_solid"></div>
@@ -76,3 +111,13 @@
     </center>
   </div>
 </div>
+<script type="text/javascript">
+  function junta(){
+    var valorUsuario = $("#tipoUsuario").val();
+    if(valorUsuario == 2 || (valorUsuario > 3 && valorUsuario < 7)){
+      document.getElementById('juntaVigilancia').style.display = 'block';
+    }else{
+      document.getElementById('juntaVigilancia').style.display = 'none';
+    }
+  }
+</script>
