@@ -14,8 +14,11 @@
 Route::get('/', function () {
     return view('main');
 });
+//Rutas de Reactivos
 Route::resource('reactivos','ReactivoController');
-Route::get('leerReactivos','ReactivoController@listingReactivos');
+Route::match(['get','post'],'/desactivateReactivo/{id}','ReactivoController@desactivate');
+Route::match(['get','post'],'/activateReactivo/{id}','ReactivoController@activate');
+Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
 Route::resource('proveedores','ProveedorController');
 //Rutas de pacientes
 Route::resource('pacientes','PacienteController');

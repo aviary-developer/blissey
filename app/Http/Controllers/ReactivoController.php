@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Reactivo;
 use Redirect;
+use Carbon\Carbon;
 
 class ReactivoController extends Controller
 {
@@ -15,10 +16,14 @@ class ReactivoController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function index()
+  public function index(Request $request)
   {
-    $reactivos=Reactivo::orderBy('id','asc')->paginate(5);
-    return view('Reactivos.index',compact('reactivos'));
+    $estado = $request->get('estado');
+    $nombre = $request->get('nombre');
+    $reactivos = Reactivo::buscar($nombre,$estado);
+    $activos = Reactivo::where('estado',true)->count();
+    $inactivos = Reactivo::where('estado',false)->count();
+    return view('Reactivos.index',compact('reactivos','estado','nombre','activos','inactivos'));
   }
 
   /**
@@ -39,14 +44,8 @@ class ReactivoController extends Controller
   */
   public function store(Request $request)
   {
-    if($request->ajax()){
-      Reactivo::create($request->all());
-      return response()->json([
-        "mensaje"=>$request->all()
-      ]);
-    }
     Reactivo::create($request->All());
-    return redirect('/reactivos')->with('mensaje','Registro Guardado');
+    return redirect('/reactivos')->with('mensaje', '¡Guardado!');
   }
 
   /**
@@ -57,7 +56,8 @@ class ReactivoController extends Controller
   */
   public function show($id)
   {
-    //
+    $reactivo = Reactivo::find($id);
+    return view('Reactivos.show',compact('reactivo'));
   }
 
   /**
@@ -68,12 +68,8 @@ class ReactivoController extends Controller
   */
   public function edit($id)
   {
-    $reactivos=Reactivo::find($id);
-    return response()->json(
-      $reactivos->toArray()
-    );
-    /*$reactivos=Reactivo::find($id);
-      return view('reactivos.edit', compact('reactivos'));*/
+    $reactivos = Reactivo::find($id);
+    return view('Reactivos.edit',compact('reactivos'));
   }
 
   /**
@@ -85,12 +81,16 @@ class ReactivoController extends Controller
   */
   public function update(Request $request, $id)
   {
-      $reactivos = Reactivo::find($id);
-        $reactivos->fill($request->all());
-        $reactivos->save();
-        return response()->json([
-          "mensaje"=>"Reactivo Actualizado"
-        ]);
+    $reactivos = Reactivo::find($id);
+    $reactivos->fill($request->all());
+    $reactivos->save();
+    if($reactivos->estado)
+    {
+      return redirect('/reactivos')->with('mensaje', '¡Editado!');
+    }
+    else{
+      return redirect('/reactivos?estado=0')->with('mensaje', '¡Editado!');
+    }
   }
 
   /**
@@ -101,19 +101,21 @@ class ReactivoController extends Controller
   */
   public function destroy($id)
   {
-      $reactivo = Reactivo::findOrFail($id);
-      $reactivo->delete();
-      return response()->json([
-        "mensaje"=>"Reactivo eliminado"
-      ]);
-        $reactivos= Reactivo::find($id);
-        $reactivos->delete();
-        return Redirect::to('/reactivos');
+    $reactivos = Reactivo::findOrFail($id);
+    $reactivos->delete();
+    return redirect('/reactivos?estado=0');
   }
-  public function listingReactivos(){
-    $reactivos=Reactivo::orderBy('id', 'desc')->get();
-    return response()->json(
-      $reactivos->toArray()
-    );
+  public function desactivate($id){
+    $reactivos = Reactivo::find($id);
+    $reactivos->estado = false;
+    $reactivos->save();
+    return Redirect::to('/reactivos');
+  }
+
+  public function activate($id){
+    $reactivos = Reactivo::find($id);
+    $reactivos->estado = true;
+    $reactivos->save();
+    return Redirect::to('/reactivos?estado=0');
   }
 }
