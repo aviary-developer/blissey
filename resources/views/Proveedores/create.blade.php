@@ -10,5 +10,14 @@
       @include('Proveedores.Formularios.form')
     </div>
   </div>
+  <div class="col-md-6 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Visitadores<small>Nuevo</small></h2>
+        <div class="clearfix"></div>
+      </div>
+      @include('Proveedores.Formularios.form2')
+    </div>
+  </div>
   {!!Form::close()!!}
 @endsection

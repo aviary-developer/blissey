@@ -30,7 +30,12 @@
     {!!Html::script('assets/sweetalert2/dist/sweetalert2.js')!!}
     {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
 
+    <!-- Css de nitify-->
+    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
+
     <!-- Custom Theme Style -->
+
     {!!Html::style('assets/build/css/custom.css')!!}
   </head>
 
@@ -113,6 +118,18 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
             </div>
             <!-- /menu footer buttons -->
           </div>
@@ -144,71 +161,6 @@
                     <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src={!! asset('/img/img.jpg') !!} alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src={!! asset('/img/img.jpg') !!} alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src={!! asset('/img/img.jpg') !!} alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src={!! asset('/img/img.jpg') !!} alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                </ul>
-                </li>
               </ul>
             </nav>
           </div>
@@ -219,7 +171,7 @@
         </div>
         <!-- footer content -->
         <footer>
-          <div class="pull-right">
+          <div class="pull-right" style="color:#FFF">
             UES-FMP 2017
           </div>
           <div class="clearfix"></div>
@@ -274,12 +226,32 @@
     {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!}
     {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
     {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}
-    {!!Html::script('assets/js/scripts/proveedor/proveedor.js')!!}
+
+    <!--para mensajes de error en validaciones-->
+    {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+
+    <!--js agregados -->
+    {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
     @section('scripts')
     @show
 
     <!-- Custom Theme Scripts -->
-    {!!Html::script('assets/build/js/custom.js')!!}
 
+    {!!Html::script('assets/build/js/custom.js')!!}
   </body>
 </html>
+@foreach ($errors->all() as $error)
+
+<div class="alert-d">
+    {{$error}}
+  </div>
+  <?php echo("<script language='javascript' >
+  new PNotify({
+                                  title: 'Oh No!',
+                                  text: '".$error."',
+                                  type: 'error',
+                                  styling: 'bootstrap3'
+                              });
+  </script>");?>
+  @endforeach

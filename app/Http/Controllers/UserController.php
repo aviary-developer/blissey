@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Proveedor;
-use App\Http\Requests\ProveedoresRequest;
+use App\User;
+use Redirect;
+use Carbon\Carbon;
 
-class ProveedorController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +18,10 @@ class ProveedorController extends Controller
     {
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
-      $proveedores = Proveedor::buscar($nombre,$estado);
-      $activos = Proveedor::where('estado',true)->count();
-      $inactivos = Proveedor::where('estado',false)->count();
-      return view('Proveedores.index',compact('proveedores','estado','nombre','activos','inactivos'));
+      $usuarios = User::buscar($nombre,$estado);
+      $activos = User::where('estado',true)->count();
+      $inactivos = User::where('estado',false)->count();
+      return view('Usuarios.index',compact('usuarios','estado','nombre','activos','inactivos'));
     }
 
     /**
@@ -30,7 +31,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        return view('proveedores.create');
+        return view('usuarios.create');
     }
 
     /**
@@ -39,16 +40,10 @@ class ProveedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProveedoresRequest $request)
+    public function store(Request $request)
     {
-        echo $request['nombre'];
-        echo $request['telefono'];
-        echo $request['correo'];
-        echo count($request['nombrev']);
-
-        foreach ($request['nombrev'] as $nombre) {
-          echo $nombre;
-        }
+      User::create($request->All());
+      return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -93,22 +88,6 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-      $proveedores = Proveedores::findOrFail($id);
-      $proveedores->delete();
-      return redirect('/proveedores?estado=0');
-    }
-
-    public function desactivate($id){
-      $proveedores= Proveedor::find($id);
-      $proveedores->estado = false;
-      $proveedores->save();
-      return Redirect::to('/proveedores');
-    }
-
-    public function activate($id){
-      $proveedores = Proveedor::find($id);
-      $proveedores->estado = true;
-      $proveedores->save();
-      return Redirect::to('/proveedores?estado=0');
+        //
     }
 }

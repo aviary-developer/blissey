@@ -19,7 +19,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Pacientes
+        <h2>Proveedores
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
@@ -30,11 +30,11 @@
       </div>
       <div class="x_content">
         <div class="row">
-          <div class="col-md-6 col-xs-12">
+          <div class="col-md-5 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/proveedores/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/pacientes?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/proveedores?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -46,8 +46,9 @@
               <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
+          <div class="col-md-3 col-xs-12"></div>
           <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'pacientes.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
+            {!!Form::open(['route'=>'proveedores.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
@@ -63,38 +64,28 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Apellido</th>
               <th>Nombre</th>
-              <th>Sexo</th>
-              <th>Edad</th>
+              <th>Correo</th>
               <th>Teléfono</th>
               <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
-            @if (count($pacientes)>0)
+            @if (count($proveedores)>0)
               @php
               $correlativo = 1;
               @endphp
-              @foreach ($pacientes as $paciente)
+              @foreach ($proveedores as $proveedor)
                 <tr>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $paciente->apellido }}</td>
-                  <td>{{ $paciente->nombre }}</td>
-                  <td>
-                    @if ($paciente->sexo)
-                      {{ "Masculino" }}
-                    @else
-                      {{ "Femenino" }}
-                    @endif
-                  </td>
-                  <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>
-                  <td>{{ $paciente->telefono }}</td>
+                  <td>{{ $proveedor->nombre }}</td>
+                  <td>{{ $proveedor->correo }}</td>
+                  <td>{{ $proveedor->telefono }}</td>
                   <td>
                     @if ($estadoOpuesto)
-                      @include('Pacientes.Formularios.activate')
+                      @include('proveedores.Formularios.activate')
                     @else
-                      @include('Pacientes.Formularios.desactivate')
+                      @include('proveedores.Formularios.desactivate')
                     @endif
                   </td>
                 </tr>
@@ -115,7 +106,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $pacientes->appends(Request::only(['nombre','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $proveedores->appends(Request::only(['nombre','estado']))->render ()) !!}
         </center>
       </div>
     </div>
