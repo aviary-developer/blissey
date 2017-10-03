@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Redirect;
 use Carbon\Carbon;
+use App\Http\Controllers;
 
 class UserController extends Controller
 {
@@ -42,7 +43,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      User::create($request->All());
+      $user = User::create($request->All());
+      if($request->hasfile('firma')){
+        $user->firma = $request->file('firma')->store('public/firma');
+        $user->save();
+      }
       return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
