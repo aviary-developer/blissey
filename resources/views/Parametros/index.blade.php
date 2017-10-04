@@ -19,7 +19,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Reactivos
+        <h2>Parametros
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
@@ -32,9 +32,9 @@
         <div class="row">
           <div class="col-md-5 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/reactivos/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/parametros/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/reactivos?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/parametros?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -48,7 +48,7 @@
           </div>
           <div class="col-md-3 col-xs-12"></div>
           <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'reactivos.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
+            {!!Form::open(['route'=>'parametros.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
@@ -65,27 +65,31 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Contenido por envase</th>
+              <th>Valor Mínimo</th>
+              <th>Valor Máximo</th>
+              <th>Valor Predeterminado</th>
+              <th>Unidad de medida</th>
               <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
-            @if (count($reactivos)>0)
+            @if (count($parametros)>0)
               @php
               $correlativo = 1;
               @endphp
-              @foreach ($reactivos as $reactivo)
+              @foreach ($parametros as $parametro)
                 <tr>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $reactivo->nombre }}</td>
-                  <td>{{ $reactivo->descripcion }}</td>
-                  <td>{{ $reactivo->contenidoPorEnvase}} ml</td>
+                  <td>{{ $parametro->nombreParametro}}</td>
+                  <td>{{ $parametro->valorMinimo}}</td>
+                  <td>{{ $parametro->valorMaximo}}</td>
+                  <td>{{ $parametro->valorPredeterminado}}</td>
+                  <td>{{ $parametro->unidad}}</td>
                   <td>
                     @if ($estadoOpuesto)
-                      @include('Reactivos.Formularios.activate')
+                      @include('Parametros.Formularios.activate')
                     @else
-                      @include('Reactivos.Formularios.desactivate')
+                      @include('Parametros.Formularios.desactivate')
                     @endif
                   </td>
                 </tr>
@@ -106,7 +110,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $reactivos->appends(Request::only(['nombre','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $parametros->appends(Request::only(['nombre','estado']))->render ()) !!}
         </center>
       </div>
     </div>

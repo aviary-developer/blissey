@@ -49,3 +49,9 @@ Route::resource('examenes','ExamenController');
 Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');
 Route::match(['get','post'],'/activateExamen/{id}','ExamenController@activate');
 Route::match(['get','post'],'/destroyExamen/{id}','ExamenController@destroy');
+
+//Rutas de Parámetros
+Route::resource('parametros','ParametroController');
+Route::match(['get','post'],'/desactivateParametro/{id}','ParametroController@desactivate');
+Route::match(['get','post'],'/activateParametro/{id}','ParametroController@activate');
+Route::match(['get','post'],'/destroyParametro/{id}','ParametroController@destroy');

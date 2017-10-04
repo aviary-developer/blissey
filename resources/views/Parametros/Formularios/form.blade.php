@@ -6,22 +6,29 @@
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-flask form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo reactivo']) !!}
+      <span class="fa fa-pencil-square-o form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::text('nombreParametro',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo parametro']) !!}
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Descripción *</label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor mínimo *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('descripcion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Descripción del nuevo reactivo']) !!}
+      <span class="fa fa-arrow-circle-o-down form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('valorMinimo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Valor mínimo','step'=>'any']) !!}
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido por envase</label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor mínimo *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('contenidoPorEnvase',null,['class'=>'form-control has-feedback-left','placeholder'=>'Contenido en ml']) !!}
+      <span class="fa fa-arrow-circle-o-up form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('valorMaximo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Valor máximo','step'=>'any']) !!}
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor predeterminado</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-check-circle-o form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('valorPredeterminado',null,['class'=>'form-control has-feedback-left','placeholder'=>'Valor fijo','step'=>'any']) !!}
     </div>
   </div>
   <div class="ln_solid"></div>
