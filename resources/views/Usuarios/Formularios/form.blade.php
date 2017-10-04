@@ -176,6 +176,18 @@
             {!! Form::text('juntaVigilancia',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número de Junta de Vigilancia']) !!}
           </div>
         </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad *</label>
+          <div class="col-md-9 col-sm-9 col-xs-12" id="especialidad">
+            <div class="input-group">
+              {!! Form::text('especialidad[]',null,['class'=>'form-control has-feedback-left','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+              <span class="input-group-btn">
+                <button type="button" name="button" class="btn btn-primary" id="agregar_telefono">+</button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-4 col-sm-4 col-xs-12">
         <div class="form-group" id="firma" style="display:none;">
