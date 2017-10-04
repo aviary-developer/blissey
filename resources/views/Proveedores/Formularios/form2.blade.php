@@ -17,6 +17,7 @@
   </div>
   <div class="form-group">
     <center>
+      <!--<input name="registrarProveedor" id="registrarProveedor" type="button" value="Guardar" onClick="guardarProveedor()"/>-->
       {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       <button type="reset" name="button" class="btn btn-default">Limpiar</button>
       <a href={!! asset('/pacientes') !!} class="btn btn-default">Cancelar</a>

@@ -41,14 +41,24 @@ class ProveedorController extends Controller
      */
     public function store(ProveedoresRequest $request)
     {
-        echo $request['nombre'];
-        echo $request['telefono'];
-        echo $request['correo'];
         echo count($request['nombrev']);
+        Proveedor::create([
+            'nombre'=>$request['nombre'],
+            'correo'=>$request['correo'],
+            'telefono'=>$request['telefono'],
+        ]);
 
-        foreach ($request['nombrev'] as $nombre) {
-          echo $nombre;
-        }
+          $contador=count($request['nombrev']);
+          $nombrev=$request['nombrev'];
+          $apellidov=$request['apellidov'];
+          $telefonov=$request['telefonov'];
+          for($a=0;$a<$contador;$a++){
+            Dependiente::create([
+              'nombre'=>$nombrev[$a],
+              'apellido'=>$apellidov[$a],
+              'telefono'=>$telefonov[$a];
+            ]);
+          }
     }
 
     /**

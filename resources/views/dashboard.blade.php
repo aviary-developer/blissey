@@ -248,10 +248,10 @@
   </div>
   <?php echo("<script language='javascript' >
   new PNotify({
-                                  title: 'Oh No!',
-                                  text: '".$error."',
-                                  type: 'error',
-                                  styling: 'bootstrap3'
-                              });
+      title: 'Error!',
+      text: '".$error."',
+      type: 'error',
+      styling: 'bootstrap3'
+    });
   </script>");?>
   @endforeach
