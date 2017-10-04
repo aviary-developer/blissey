@@ -43,3 +43,9 @@ Route::resource('especialidades','EspecialidadController');
 Route::match(['get','post'],'/desactivateEspecialidad/{id}','EspecialidadController@desactivate');
 Route::match(['get','post'],'/activateEspecialidad/{id}','EspecialidadController@activate');
 Route::match(['get','post'],'/destroyEspecialidad/{id}','EspecialidadController@destroy');
+
+//Rutas de Exámenes
+Route::resource('examenes','ExamenController');
+Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');
+Route::match(['get','post'],'/activateExamen/{id}','ExamenController@activate');
+Route::match(['get','post'],'/destroyExamen/{id}','ExamenController@destroy');
