@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\TelefonoUsuario;
 use Redirect;
 use Carbon\Carbon;
 use App\Http\Controllers;
@@ -46,7 +47,19 @@ class UserController extends Controller
       $user = User::create($request->All());
       if($request->hasfile('firma')){
         $user->firma = $request->file('firma')->store('public/firma');
-        $user->save();
+      }
+      if($request->hasfile('sello')){
+        $user->sello = $request->file('sello')->store('public/sello');
+      }
+      if($request->hasfile('foto')){
+        $user->foto = $request->file('foto')->store('public/foto');
+      }
+      $user->save();
+      foreach ($request->telefono as $k => $val) {
+        $telefono_usuario = new TelefonoUsuario;
+        $telefono_usuario->f_usuario = $user->id;
+        $telefono_usuario->telefono = $request->telefono[$k];
+        $telefono_usuario->save();
       }
       return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }

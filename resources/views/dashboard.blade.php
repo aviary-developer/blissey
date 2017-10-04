@@ -230,9 +230,11 @@
     <!--para mensajes de error en validaciones-->
     {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
     {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+    {!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
 
     <!--js agregados -->
     {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
+    {!!Html::script('js/scripts/Usuarios.js')!!}
     @section('scripts')
     @show
 
