@@ -9,7 +9,7 @@ class Proveedor extends Model
     protected $fillable=['nombre','correo','telefono','estado'];
 
     public static function buscar($nombre, $estado){
-      return Proveedor::nombre($nombre)->estado($estado)->orderBy('apellido')->paginate(10);
+      return Proveedor::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
     }
 
     public function scopeNombre($query, $nombre){
@@ -23,5 +23,11 @@ class Proveedor extends Model
         $estado = 1;
       }
       $query->where('estado',$estado);
+    }
+    public static function buscarId($nombre){
+      $fila=Proveedor::where('nombre','=',$nombre)->get();
+      foreach($fila as $f){
+        return $f->id;
+      }
     }
 }
