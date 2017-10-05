@@ -7,6 +7,7 @@
         <h2>Proveedor<small>Nuevo</small></h2>
         <div class="clearfix"></div>
       </div>
+      <?php $bandera=1;?>{{--Indica que es ingresar --}}
       @include('Proveedores.Formularios.form')
     </div>
   </div>

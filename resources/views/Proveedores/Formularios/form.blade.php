@@ -26,7 +26,8 @@
       {!! Form::text('telefono',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número telefónico del nuevo proveedor','id'=>'telefono']) !!}
     </div>
   </div>
-<!-- Campos que se agregarán en tabla dependientes-->
+<!-- Campos que se agregarán en tabla dependientes cuando se esta creando un nuevo proveedor-->
+@if($bandera==1)
 <center>
 <p>Datos del visitador.</p>
 </center>
@@ -55,3 +56,4 @@
 <input name="agregarVis" id="agregarVis" type="button" value="Agregar" onClick="agregarVisitador()" class="btn btn-primary"/>
 </center>
 </div>
+@endif

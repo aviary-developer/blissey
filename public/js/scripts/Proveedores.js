@@ -17,7 +17,12 @@ $(parent).remove();
 function guardarProveedor(){
     vnombre=validarNombre();
     vcorreo=validarCorreo();
-    alert(vnombre);
+    vtelefono=validarTelefono();
+    if(vnombre==false || vcorreo==false || vtelefono==false){
+
+    }else{
+      alert("Todo bien");
+    }
 
 }
 function validarNombre(){
@@ -56,6 +61,31 @@ function validarCorreo(){
     var errores= [];
     if(correo==""){
       errores[cont]="El campo correo es obligatorio";
+      cont=cont+1;
+    }
+    if(cont>0){
+      val= false;
+    }
+    for(a=0;a<cont;a++){
+      new PNotify({
+        title: 'Error!',
+        text: errores[a],
+        type: 'error',
+        styling: 'bootstrap3'
+      });
+    }
+    return val;
+}
+function validarTelefono(){
+  telefono=$("#Telefono").val();
+  val= true;
+    cont=0;
+    var errores= [];
+    if(telefono==""){
+      errores[cont]="El campo teléfono es obligatorio";
+      cont=cont+1;
+    }else if(telefono.length!=9){
+      errores[cont]="El campo teléfono debe contener 9 caracteres";
       cont=cont+1;
     }
     if(cont>0){

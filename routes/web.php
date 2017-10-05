@@ -37,3 +37,6 @@ Route::resource('proveedores','ProveedorController');
 Route::match(['get','post'],'/desactivateProveedor/{id}','ProveedorController@desactivate');
 Route::match(['get','post'],'/activateProveedor/{id}','ProveedorController@activate');
 Route::match(['get','post'],'/destroyProveedor/{id}','ProveedorController@destroy');
+
+//Rutas de visitadores
+Route::resource('visitadores','DependienteController');

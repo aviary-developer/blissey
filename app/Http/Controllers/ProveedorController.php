@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\Dependiente;
+use Redirect;
 use App\Http\Requests\ProveedoresRequest;
 
 class ProveedorController extends Controller
@@ -15,7 +17,7 @@ class ProveedorController extends Controller
      */
     public function index(Request $request)
     {
-      $estado = $request->get('estado');
+      $estado = $request->get('estado'); 
       $nombre = $request->get('nombre');
       $proveedores = Proveedor::buscar($nombre,$estado);
       $activos = Proveedor::where('estado',true)->count();
@@ -41,12 +43,12 @@ class ProveedorController extends Controller
      */
     public function store(ProveedoresRequest $request)
     {
-        echo count($request['nombrev']);
         Proveedor::create([
             'nombre'=>$request['nombre'],
             'correo'=>$request['correo'],
             'telefono'=>$request['telefono'],
         ]);
+        $id_proveedor=Proveedor::buscarId($request['nombre']);
 
           $contador=count($request['nombrev']);
           $nombrev=$request['nombrev'];
@@ -54,11 +56,13 @@ class ProveedorController extends Controller
           $telefonov=$request['telefonov'];
           for($a=0;$a<$contador;$a++){
             Dependiente::create([
+              'f_proveedor'=>$id_proveedor,
               'nombre'=>$nombrev[$a],
               'apellido'=>$apellidov[$a],
-              'telefono'=>$telefonov[$a];
+              'telefono'=>$telefonov[$a],
             ]);
           }
+          return redirect('/proveedores')->with('mensaje','¡Guardado!');
     }
 
     /**
@@ -80,7 +84,8 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proveedor=Proveedor::find($id);
+        return view('Proveedores.edit',compact('proveedor'));
     }
 
     /**
@@ -91,8 +96,41 @@ class ProveedorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   $v1=$v2=$v3=0;
+        $proveedor=Proveedor::find($id);
+        if($request->nombre==$proveedor->nombre){
+          $v1=1;
+        }else{
+          $validar['nombre']="required| min:5 |max:40 |unique:proveedors";
+          $men['nombre.required']="El campo drogería es requerido";
+          $men['nombre.min']="El campo drogería requiere mínimo 5 caracteres";
+          $men['nombre.max']="El campo drogería requiere máximo 40 caracteres";
+          $men['nombre.unique']="Drogería registrada, ingrese otra";
+        }
+        if($request->correo==$proveedor->correo){
+          $v2=1;
+        }else{
+          $validar['correo']="required| email |unique:proveedors";
+          $men['correo.required']="El campo correo es requerido";
+          $men['correo.email']="El texto ingresado no es un correo electrónico";
+          $men['correo.unique']="Correo registrado, ingrese otro";
+        }
+        if($request->telefono==$proveedor->telefono){
+          $v3=1;
+        }else{
+          $validar['telefono']="required| size:9 |unique:proveedors";
+          $men['telefono.required']="El campo teléfono es requerido";
+          $men['telefono.size']="El campo teléfono debe contener 9 caracteres";
+          $men['telefono.unique']="Teléfono registrado, ingrese otro";
+        }
+        if($v1==1 && $v2==1 && $v3==1){
+          return redirect('/proveedores')->with('info','No hay cambios');
+        }else{
+          $this->validate($request,$validar,$men);
+          $proveedor->fill($request->all());
+          $proveedor->save();
+          return redirect('/proveedores')->with('mensaje','Cambios guardados');
+        }
     }
 
     /**

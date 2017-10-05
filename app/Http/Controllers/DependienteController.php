@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Dependiente;
 use Illuminate\Http\Request;
 
 class DependienteController extends Controller
@@ -11,10 +11,14 @@ class DependienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $proveedores=Proveedor::orderBy('name','asc')->paginate(5);
-      return view('Proveedores.index',compact('proveedores'));
+      $id_proveedor=$request->id;
+      $estado=$request->estado;
+      $nombre=$request->nombre;
+      $visitadores=Dependiente::buscar($id_proveedor,$estado,$nombre);
+      echo count($visitadores);
+
     }
 
     /**

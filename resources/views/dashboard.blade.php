@@ -40,6 +40,18 @@
   </head>
 
   <body class="nav-md">
+    @if(Session::has('mensaje'))
+      <?php $mensaje = Session::get('mensaje');
+        echo "<script>swal('$mensaje', 'Acción realizada satisfactorimente', 'success')</script>";?>
+    @endif
+    @if(Session::has('error'))
+      <?php $men=Session::pull('error');
+        echo "<script>swal('$men', 'Acción no realizada', 'error')</script>";?>
+    @endif
+    @if(Session::has('info'))
+      <?php $men=Session::pull('info');
+        echo "<script>swal('$men', 'Click al botón', 'info')</script>";?>
+    @endif
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col ">
