@@ -244,10 +244,6 @@
   </body>
 </html>
 @foreach ($errors->all() as $error)
-
-<div class="alert-d">
-    {{$error}}
-  </div>
   <?php echo("<script language='javascript' >
   new PNotify({
       title: 'Error!',
@@ -256,4 +252,4 @@
       styling: 'bootstrap3'
     });
   </script>");?>
-  @endforeach
+@endforeach

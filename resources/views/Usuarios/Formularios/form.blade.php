@@ -35,7 +35,7 @@
       </li>
     </ul>
     {{-- Contenido del wizard --}}
-    <div id="step-1">
+    <div id="step-1" onmouseover="verAlerta1()">
       <h4 class="StepTitle">Datos Personales</h4>
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="form-group">
@@ -90,15 +90,26 @@
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono *</label>
-          <div class="col-md-9 col-sm-9 col-xs-12" id="telefono">
+          <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="input-group">
-              {!! Form::text('telefono[]',null,['class'=>'form-control has-feedback-left','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+              {!! Form::text('telefonoInput',null,['id'=>'telefono','class'=>'form-control has-feedback-left','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
               <span class="input-group-btn">
-                <button type="button" name="button" class="btn btn-primary" id="agregar_telefono">+</button>
+                <button type="button" name="button" class="btn btn-primary" id="agregar_telefono">
+                  <i class="fa fa-plus"></i>
+                </button>
               </span>
             </div>
           </div>
         </div>
+        <table class="table" id='tablaTelefono'>
+          <thead>
+            <th>Teléfono</th>
+            <th style="width : 80px">Acción</th>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
       </div>
     </div>
     <div id="step-2">
@@ -136,7 +147,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de usuario *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-            <select class="form-control has-feedback-left" name="tipoUsuario" id="tipoUsuario" onchange="junta();">
+            <select class="form-control has-feedback-left" name="tipoUsuario" id="tipoUsuario" onchange="tipo_usuario();">
               <option value="Administración">Administración</option>
               <option value="Gerencia">Gerencia</option>
               <option value="Médico">Médico</option>
@@ -165,11 +176,11 @@
         </div>
       </div>
     </div>
-    <div id="step-3">
+    <div id="step-3" onmouseover="verAlerta2();">
       <h4 class="StepTitle">Datos de Especialidad</h4>
-      <p id="texto">El tipo de usuario que ha seleccionado, <b>NO</b> requiere detallar la especialidad</p>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="form-group" id="juntaVigilancia" style="display:none;">
+      <p id="texto" style="display:none">El tipo de usuario que ha seleccionado, <b>NO</b> requiere detallar la especialidad</p>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group" id="juntaVigilancia">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Junta de Vigilancia</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-users form-control-feedback left" aria-hidden="true"></span>
@@ -177,20 +188,35 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad *</label>
+        <div class="form-group" id="grupoEspecialidad">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad</label>
           <div class="col-md-9 col-sm-9 col-xs-12" id="especialidad">
             <div class="input-group">
-              {!! Form::text('especialidad[]',null,['class'=>'form-control has-feedback-left','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+              <select class="form-control has-feedback-left" name="especialidadSelect">
+                @foreach ($especialidades as $especialidad)
+                  <option value={{ $especialidad->id }}>{{ $especialidad->nombre }}</option>
+                @endforeach
+              </select>
               <span class="input-group-btn">
-                <button type="button" name="button" class="btn btn-primary" id="agregar_telefono">+</button>
+                <button type="button" name="button" class="btn btn-primary" id="agregar_especialidad">
+                  <i class="fa fa-plus"></i>
+                </button>
               </span>
             </div>
           </div>
         </div>
+        <table class="table" id="tablaEspecialidad">
+          <thead>
+            <th>Especialidad</th>
+            <th style="width : 80px">Acción</th>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
       </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="form-group" id="firma" style="display:none;">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group" id="firma">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Firma</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-pencil form-control-feedback left" aria-hidden="true"></span>
@@ -199,12 +225,10 @@
         </div>
         <div class="">
           <center>
-            <output id="list2" style="height:250px"></output>
+            <output id="list2" style="height:100px"></output>
           </center>
         </div>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="form-group" id="sello" style="display:none;">
+        <div class="form-group" id="sello">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Sello</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-pencil form-control-feedback left" aria-hidden="true"></span>
@@ -213,7 +237,7 @@
         </div>
         <div class="">
           <center>
-            <output id="list3" style="height:250px"></output>
+            <output id="list3" style="height:100px"></output>
           </center>
         </div>
       </div>
@@ -221,18 +245,24 @@
   </div>
 </div>
 <script type="text/javascript">
-  function junta(){
+  var cuenta1 = 0;
+  var cuenta2 = 0;
+  function tipo_usuario(){
     var valorUsuario = $("#tipoUsuario").val();
 
-    if(valorUsuario == 'Médico' || valorUsuario == 'Laboaratorio' || valorUsuario == 'Rayos X' || valorUsuario == 'Ultrasonografía'){
+    if(!(valorUsuario == 'Recepción' || valorUsuario == 'Enfermería')){
       document.getElementById('juntaVigilancia').style.display = 'block';
       document.getElementById('firma').style.display = 'block';
       document.getElementById('sello').style.display = 'block';
+      document.getElementById('grupoEspecialidad').style.display = 'block';
+      document.getElementById('tablaEspecialidad').style.display = 'table';
       document.getElementById('texto').style.display = 'none';
     }else{
       document.getElementById('juntaVigilancia').style.display = 'none';
       document.getElementById('firma').style.display = 'none';
       document.getElementById('sello').style.display = 'none';
+      document.getElementById('grupoEspecialidad').style.display = 'none';
+      document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'block';
     }
   }
@@ -268,7 +298,7 @@
 
       reader.onload = (function(theFile){
         return function(e){
-          document.getElementById('list2').innerHTML = ['<img style="height: 200px" src = "', e.target.result,'"/>'].join('');
+          document.getElementById('list2').innerHTML = ['<img style="height: 75px" src = "', e.target.result,'"/>'].join('');
         };
       })(f);
       reader.readAsDataURL(f);
@@ -287,10 +317,41 @@
 
       reader.onload = (function(theFile){
         return function(e){
-          document.getElementById('list3').innerHTML = ['<img style="height: 200px" src = "', e.target.result,'"/>'].join('');
+          document.getElementById('list3').innerHTML = ['<img style="height: 75px" src = "', e.target.result,'"/>'].join('');
         };
       })(f);
       reader.readAsDataURL(f);
+    }
+  }
+
+  function verAlerta2() {
+    if(cuenta2 == 0){
+      new PNotify({
+        title: 'Nota',
+        text: 'Solamente las especialidades agregadas a la tabla serán almacenadas,'+
+        ' y la primera será tomada como especialidad y las demás como subespecialidades.',
+        type: 'info',
+        nonblock:{
+          nonblock : true
+        },
+        styling: 'bootstrap3'
+      });
+      cuenta2++;
+    }
+  }
+
+  function verAlerta1() {
+    if(cuenta1 == 0){
+      new PNotify({
+        title: 'Nota',
+        text: 'Solamente los números de telefono agregados a la tabla serán almacenados,',
+        type: 'info',
+        nonblock:{
+          nonblock : true
+        },
+        styling: 'bootstrap3'
+      });
+      cuenta1++;
     }
   }
 

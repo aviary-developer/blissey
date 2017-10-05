@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\TelefonoUsuario;
+use App\Especialidad;
+use App\EspecialidadUsuario;
 use Redirect;
 use Carbon\Carbon;
 use App\Http\Controllers;
@@ -33,7 +36,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('usuarios.create');
+      $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
+      return view('usuarios.create',compact('especialidades'));
     }
 
     /**
@@ -61,6 +65,17 @@ class UserController extends Controller
         $telefono_usuario->telefono = $request->telefono[$k];
         $telefono_usuario->save();
       }
+      foreach ($request->especialidad as $k => $val) {
+        $especialidad_usuario = new EspecialidadUsuario;
+        if($k == 0){
+          $especialidad_usuario->principal = true;
+        }else{
+          $especialidad_usuario->principal = false;
+        }
+        $especialidad_usuario->f_usuario = $user->id;
+        $especialidad_usuario->f_especialidad = $request->especialidad[$k];
+        $especialidad_usuario->save();
+      }
       return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
@@ -83,7 +98,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuarios = User::find($id);
+        $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
+        return view('Usuarios.edit',compact('usuarios','especialidades'));
     }
 
     /**
@@ -106,6 +123,30 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $usuario = User::findOrFail($id);
+      if($usuario->foto != 'noImagen.jpg'){
+        Storage::delete($usuario->foto);
+      }
+      if($usuario->firma != 'noImagen.jpg'){
+        Storage::delete($usuario->firma);
+      }
+      if($usuario->sello != 'noImagen.jpg'){
+        Storage::delete($usuario->sello);
+      }
+      $usuario->delete();
+      return redirect('/usuarios?estado=0');
+    }
+    public function desactivate($id){
+      $usuario = User::find($id);
+      $usuario->estado = false;
+      $usuario->save();
+      return Redirect::to('/usuarios');
+    }
+
+    public function activate($id){
+      $usuario = User::find($id);
+      $usuario->estado = true;
+      $usuario->save();
+      return Redirect::to('/usuarios?estado=0');
     }
 }
