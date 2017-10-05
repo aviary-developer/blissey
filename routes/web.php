@@ -38,5 +38,11 @@ Route::match(['get','post'],'/desactivateProveedor/{id}','ProveedorController@de
 Route::match(['get','post'],'/activateProveedor/{id}','ProveedorController@activate');
 Route::match(['get','post'],'/destroyProveedor/{id}','ProveedorController@destroy');
 
++//Rutas de especialidades
+ +Route::resource('especialidades','EspecialidadController');
+ +Route::match(['get','post'],'/desactivateEspecialidad/{id}','EspecialidadController@desactivate');
+ +Route::match(['get','post'],'/activateEspecialidad/{id}','EspecialidadController@activate');
+ +Route::match(['get','post'],'/destroyEspecialidad/{id}','EspecialidadController@destroy');
+
 //Rutas de visitadores
 Route::resource('visitadores','DependienteController');
