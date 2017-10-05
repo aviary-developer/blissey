@@ -17,7 +17,7 @@
     </div>
     <div class="x_content">
       <div class="row">
-        <div class="col-md-5 col-xs-12">
+        <div class="col-md-6 col-xs-12">
           @include('Reactivos.Formularios.activate')
         </div>
       </div>

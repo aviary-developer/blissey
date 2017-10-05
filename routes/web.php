@@ -56,5 +56,11 @@ Route::match(['get','post'],'/desactivateParametro/{id}','ParametroController@de
 Route::match(['get','post'],'/activateParametro/{id}','ParametroController@activate');
 Route::match(['get','post'],'/destroyParametro/{id}','ParametroController@destroy');
 
+//Rutas de Unidades
+Route::resource('unidades','UnidadController');
+Route::match(['get','post'],'/desactivateUnidad/{id}','UnidadController@desactivate');
+Route::match(['get','post'],'/activateUnidad/{id}','UnidadController@activate');
+Route::match(['get','post'],'/destroyUnidad/{id}','UnidadController@destroy');
+
 //Rutas de visitadores
 Route::resource('visitadores','DependienteController');

@@ -3,12 +3,13 @@
   @php
     $index = false;
     setlocale(LC_ALL,'es');
+    $valorEstado=($unidad->estado)?"Activo":"En papelera";
   @endphp
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
     <div class="x_title">
       <h2>
-        Examen
+        Unidad
         <small>
           Información
         </small>
@@ -18,7 +19,7 @@
     <div class="x_content">
       <div class="row">
         <div class="col-md-6 col-xs-12">
-          @include('Examenes.Formularios.activate')
+          @include('Unidades.Formularios.activate')
         </div>
       </div>
       <br>
@@ -38,19 +39,19 @@
             <table class="table">
               <tr>
                 <th>Nombre</th>
-                <td>{{ $examen->nombreExamen }}</td>
+                <td>{{ $unidad->nombre}}</td>
               </tr>
               <tr>
-                <th>Tipo de muestra</th>
-                <td>{{ $examen->tipoMuestra}}</td>
+                <th>Estado</th>
+                <td>{{$valorEstado}}</td>
               </tr>
               <tr>
                 <th>Fecha de creación</th>
-                <td>{{ $examen->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $unidad->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
               <tr>
                 <th>Fecha de modificación</th>
-                <td>{{ $examen->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $unidad->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
             </table>
           </div>
