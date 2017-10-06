@@ -64,3 +64,6 @@ Route::match(['get','post'],'/destroyUnidad/{id}','UnidadController@destroy');
 
 //Rutas de visitadores
 Route::resource('visitadores','DependienteController');
+Route::match(['get','post'],'/desactivateVisitador/{id}','DependienteController@desactivate');
+Route::match(['get','post'],'/activateVisitador/{id}','DependienteController@activate');
+Route::match(['get','post'],'/destroyVisitador/{id}','DependienteController@destroy');
