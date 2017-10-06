@@ -17,7 +17,9 @@ class DependienteController extends Controller
       $estado=$request->estado;
       $nombre=$request->nombre;
       $visitadores=Dependiente::buscar($id_proveedor,$estado,$nombre);
-      echo count($visitadores);
+      $activos = Dependiente::where('f_proveedor','=',$id_proveedor)->where('estado',true)->count();
+      $inactivos = Dependiente::where('f_proveedor','=',$id_proveedor)->where('estado',false)->count();
+      return view('Visitadores.index',compact('id_proveedor','estado','nombre','visitadores','activos','inactivos'));
 
     }
 
@@ -85,5 +87,18 @@ class DependienteController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function desactivate($id){
+      $dependiente= Dependiente::find($id);
+      $dependiente->estado = false;
+      $dependiente->save();
+      return Redirect::to('/visistadores');
+    }
+
+    public function activate($id){
+      $dependiente = Dependiente::find($id);
+      $dependiente->estado = true;
+      $dependiente->save();
+      return Redirect::to('/proveedores?estado=0');
     }
 }

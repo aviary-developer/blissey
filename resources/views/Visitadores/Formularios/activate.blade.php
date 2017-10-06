@@ -1,23 +1,17 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/proveedores/'.$proveedor->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/visitadores/'.$visitador->id)!!} class="btn btn-xs btn-info">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a href={!! asset('/visitadores/'.$visitador->id.'/edit')!!} class="btn btn-xs btn-primary">
     <i class="fa fa-edit"></i>
   </a>
-  <a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-xs btn-dark">
-    <i class="fa fa-users"></i>
-  </a>
-  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$proveedor->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$visitador->id.");'" !!}/>
     <i class="fa fa-check"></i>
-  </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$proveedor->id.");'" !!}/>
-    <i class="fa fa-remove"></i>
   </button>
 @else
   <div class="btn-group">
-    @if (!$proveedor->estado)
+    @if (!$visitador->estado)
       @php
         $regreso = "?estado=0";
       @endphp
@@ -26,25 +20,25 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/proveedores'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/visitadores'.$regreso)!!} class="btn btn-dark btn-xs">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/visitadores/'.$paciente->id.'/edit')!!} class="btn btn-dark btn-xs">
       <i class="fa fa-edit"></i> Editar
     </a>
-    @if ($proveedor->estado)
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$proveedor->id.");'" !!}>
+    @if ($visitador->estado)
+      <button type="button" class="btn btn-dark btn-xs" onclick={!! "'baja(".$visitador->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$proveedor->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$proveedor->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-ms">
+    <a href={!! asset('#')!!} class="btn btn-primary btn-xs">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>
@@ -65,7 +59,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateProveedor/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePaciente/'+id);
       $('#formulario').submit();
       swal(
         '¡Activado!',
@@ -99,7 +93,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProveedor/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPaciente/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -132,7 +126,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateProveedor/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
       $('#formulario').submit();
       swal(
         '¡Desactivado!',

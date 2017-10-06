@@ -1,12 +1,9 @@
-{!!Form::open(['url'=>['desactivateProveedor',$proveedor->id],'method'=>'POST'])!!}
-<a href={!! asset('/proveedores/'.$proveedor->id)!!} class="btn btn-xs btn-info">
+{!!Form::open(['url'=>['desactivateVisitador',$visitador->id],'method'=>'POST'])!!}
+<a href={!! asset('/visitadores/'.$visitador->id)!!} class="btn btn-xs btn-info">
   <i class="fa fa-info-circle"></i>
 </a>
-<a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-xs btn-primary">
+<a href={!! asset('/visitadores/'.$visitador->id.'/edit')!!} class="btn btn-xs btn-primary">
   <i class="fa fa-edit"></i>
-</a>
-<a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-xs btn-dark">
-  <i class="fa fa-users"></i>
 </a>
 <button type="button" class="btn btn-danger btn-xs" onclick="
   return swal({
