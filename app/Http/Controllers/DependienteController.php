@@ -51,8 +51,8 @@ class DependienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   $visitador=Dependiente::find($id);
+        return view('Visitadores.show',compact('visitador'));
     }
 
     /**
