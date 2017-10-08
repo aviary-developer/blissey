@@ -5,6 +5,9 @@
 <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-xs btn-primary">
   <i class="fa fa-edit"></i>
 </a>
+<a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-xs btn-dark">
+  <i class="fa fa-users"></i>
+</a>
 <button type="button" class="btn btn-danger btn-xs" onclick="
   return swal({
     title: 'Enviar registro a papelera',

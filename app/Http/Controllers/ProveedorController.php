@@ -17,7 +17,7 @@ class ProveedorController extends Controller
      */
     public function index(Request $request)
     {
-      $estado = $request->get('estado'); 
+      $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $proveedores = Proveedor::buscar($nombre,$estado);
       $activos = Proveedor::where('estado',true)->count();
@@ -73,7 +73,8 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        //
+      $proveedor = Proveedor::find($id);
+      return view('Proveedores.show',compact('proveedor'));
     }
 
     /**

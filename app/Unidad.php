@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Parametro extends Model
+class Unidad extends Model
 {
   protected $fillable = [
-      'nombreParametro', 'valorMinimo','valorMaximo','valorPredeterminado','unidad'
+      'nombre'
   ];
   public static function buscar($nombre, $estado){
-    return Parametro::nombre($nombre)->estado($estado)->orderBy('nombreParametro')->paginate(10);
+    return Unidad::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
   }
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('nombreParametro', 'ilike','%'.$nombre.'%')->orWhere('nombreParametro', 'ilike','%'.$nombre.'%')->orWhere('unidad', 'ilike','%'.$nombre.'%');
+      $query->where('nombre', 'ilike','%'.$nombre.'%');
     }
   }
 

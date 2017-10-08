@@ -1,8 +1,8 @@
-{!!Form::open(['url'=>['desactivateParametro',$parametro->id],'method'=>'POST'])!!}
-<a href={!! asset('/parametros/'.$parametro->id)!!} class="btn btn-xs btn-info">
+{!!Form::open(['url'=>['desactivateVisitador',$visitador->id],'method'=>'POST'])!!}
+<a href={!! asset('/visitadores/'.$visitador->id)!!} class="btn btn-xs btn-info">
   <i class="fa fa-info-circle"></i>
 </a>
-<a href={!! asset('/parametros/'.$parametro->id.'/edit')!!} class="btn btn-xs btn-primary">
+<a href={!! asset('/visitadores/'.$visitador->id.'/edit')!!} class="btn btn-xs btn-primary">
   <i class="fa fa-edit"></i>
 </a>
 <button type="button" class="btn btn-danger btn-xs" onclick="

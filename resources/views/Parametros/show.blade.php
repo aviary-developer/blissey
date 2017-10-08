@@ -8,17 +8,17 @@
   <div class="x_panel">
     <div class="x_title">
       <h2>
-        Reactivo
+        Parametro
         <small>
-          {{ $reactivo->nombre.' '.$reactivo->apellido }}
+          {{ $parametro->nombreParametro}}
         </small>
       </h2>
       <div class="clearfix"></div>
     </div>
     <div class="x_content">
       <div class="row">
-        <div class="col-md-5 col-xs-12">
-          @include('Reactivos.Formularios.activate')
+        <div class="col-md-6 col-xs-12">
+          @include('Parametros.Formularios.activate')
         </div>
       </div>
       <br>
@@ -38,23 +38,31 @@
             <table class="table">
               <tr>
                 <th>Nombre</th>
-                <td>{{ $reactivo->nombre }}</td>
+                <td>{{ $parametro->nombreParametro }}</td>
               </tr>
               <tr>
-                <th>Descripción</th>
-                <td>{{ $reactivo->descripcion }}</td>
+                <th>Unidad de medición</th>
+                <td>{{ $parametro->unidad}}</td>
               </tr>
               <tr>
-                <th>Contenido por envase</th>
-                <td>{{ $reactivo->contenidoPorEnvase }}</td>
+                <th>Valor mínimo</th>
+                <td>{{ $parametro->valorMinimo }}</td>
+              </tr>
+              <tr>
+                <th>Valor máximo</th>
+                <td>{{ $parametro->valorMaximo }}</td>
+              </tr>
+              <tr>
+                <th>Valor predeterminado</th>
+                <td>{{ $parametro->valorPredeterminado}}</td>
               </tr>
               <tr>
                 <th>Fecha de creación</th>
-                <td>{{ $reactivo->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $parametro->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
               <tr>
                 <th>Fecha de modificación</th>
-                <td>{{ $reactivo->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $parametro->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
             </table>
           </div>

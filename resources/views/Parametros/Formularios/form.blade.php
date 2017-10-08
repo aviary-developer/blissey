@@ -11,6 +11,13 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-reorder form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::text('unidad',null,['class'=>'form-control has-feedback-left','placeholder'=>'Unidad de medición']) !!}
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor mínimo *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-arrow-circle-o-down form-control-feedback left" aria-hidden="true"></span>
@@ -18,7 +25,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor mínimo *</label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor máximo *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-arrow-circle-o-up form-control-feedback left" aria-hidden="true"></span>
       {!! Form::number('valorMaximo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Valor máximo','step'=>'any']) !!}

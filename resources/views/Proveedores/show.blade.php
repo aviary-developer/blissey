@@ -8,9 +8,9 @@
   <div class="x_panel">
     <div class="x_title">
       <h2>
-        Examen
+        Proveedor
         <small>
-          Información
+          {{ $proveedor->nombre.' '.$proveedor->apellido }}
         </small>
       </h2>
       <div class="clearfix"></div>
@@ -18,7 +18,7 @@
     <div class="x_content">
       <div class="row">
         <div class="col-md-6 col-xs-12">
-          @include('Examenes.Formularios.activate')
+          @include('Proveedores.Formularios.activate')
         </div>
       </div>
       <br>
@@ -26,10 +26,7 @@
       <div class="" role="tabpanel" data-example-id="togglable-tabs">
         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información general</a>
-          </li>
-          <li role="presentation" class="">
-            <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
+            <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos Personales</a>
           </li>
         </ul>
         {{-- Contenido del tab --}}
@@ -38,27 +35,36 @@
             <table class="table">
               <tr>
                 <th>Nombre</th>
-                <td>{{ $examen->nombreExamen }}</td>
+                <td>{{ $proveedor->nombre }}</td>
               </tr>
               <tr>
-                <th>Tipo de muestra</th>
-                <td>{{ $examen->tipoMuestra}}</td>
+                <th>Correo</th>
+                <td>{{ $proveedor->correo }}</td>
+              </tr>
+              <tr>
+                <th>Teléfono</th>
+                <td>{{ $proveedor->telefono }}</td>
+              </tr>
+              <tr>
+                <th>Estado</th>
+                <td>
+                @if($proveedor->estado)
+                  Activo
+                @else
+                  Inactivo
+                @endif
+                </td>
               </tr>
               <tr>
                 <th>Fecha de creación</th>
-                <td>{{ $examen->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $proveedor->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
               <tr>
                 <th>Fecha de modificación</th>
-                <td>{{ $examen->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $proveedor->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
             </table>
           </div>
-          {{-- Otra pestaña --}}
-          <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-            Otra cosa
-          </div>
-        </div>
       </div>
     </div>
   </div>
