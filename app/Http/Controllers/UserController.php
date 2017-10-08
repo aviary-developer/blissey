@@ -100,7 +100,9 @@ class UserController extends Controller
     {
         $usuarios = User::find($id);
         $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
-        return view('Usuarios.edit',compact('usuarios','especialidades'));
+        $especialidad_usuarios = EspecialidadUsuario::where('f_usuario',$id)->get();
+        $telefono_usuarios = TelefonoUsuario::where('f_usuario',$id)->get();
+        return view('Usuarios.edit',compact('usuarios','especialidades','telefono_usuarios','especialidad_usuarios'));
     }
 
     /**
@@ -112,7 +114,70 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $user = User::find($id);
+      $firma = $user->firma;
+      $foto = $user->foto;
+      $sello = $user->sello;
+      $user->fill($request->all());
+      if($request->hasfile('firma')){
+        $user->firma = $request->file('firma')->store('public/firma');
+        if($firma != "noImgen.jpg"){
+          Storage::delete($usuario->firma);
+        }
+      }
+      if($request->hasfile('sello')){
+        $user->sello = $request->file('sello')->store('public/sello');
+        if($sello != "noImgen.jpg"){
+          Storage::delete($usuario->sello);
+        }
+      }
+      if($request->hasfile('foto')){
+        $user->foto = $request->file('foto')->store('public/foto');
+        if($foto != "noImgen.jpg"){
+          Storage::delete($usuario->foto);
+        }
+      }
+      $user->save();
+      if (isset($request->telefono)) {
+        foreach ($request->telefono as $k => $val) {
+          $telefono_usuario = new TelefonoUsuario;
+          $telefono_usuario->f_usuario = $user->id;
+          $telefono_usuario->telefono = $request->telefono[$k];
+          $telefono_usuario->save();
+        }
+      }
+      if (isset($request->especialidad)) {
+        foreach ($request->especialidad as $k => $val) {
+          $especialidad_usuario = new EspecialidadUsuario;
+          if($k == 0){
+            $especialidad_usuario->principal = true;
+          }else{
+            $especialidad_usuario->principal = false;
+          }
+          $especialidad_usuario->f_usuario = $user->id;
+          $especialidad_usuario->f_especialidad = $request->especialidad[$k];
+          $especialidad_usuario->save();
+        }
+      }
+      foreach ($request->deletes as $k => $val) {
+        if ($val != "ninguno") {
+          $eliminar = TelefonoUsuario::findOrFail($val);
+          $eliminar->delete();
+        }
+      }
+      foreach ($request->delesp as $k => $val) {
+        if ($val != "ninguno") {
+          $eliminar = EspecialidadUsuario::findOrFail($val);
+          $eliminar->delete();
+        }
+      }
+      if($user->estado)
+      {
+        return redirect('/usuarios')->with('mensaje', '¡Editado!');
+      }
+      else{
+        return redirect('/usuarios?estado=0')->with('mensaje', '¡Editado!');
+      }
     }
 
     /**
@@ -124,13 +189,13 @@ class UserController extends Controller
     public function destroy($id)
     {
       $usuario = User::findOrFail($id);
-      if($usuario->foto != 'noImagen.jpg'){
+      if($usuario->foto != 'noImgen.jpg'){
         Storage::delete($usuario->foto);
       }
-      if($usuario->firma != 'noImagen.jpg'){
+      if($usuario->firma != 'noImgen.jpg'){
         Storage::delete($usuario->firma);
       }
-      if($usuario->sello != 'noImagen.jpg'){
+      if($usuario->sello != 'noImgen.jpg'){
         Storage::delete($usuario->sello);
       }
       $usuario->delete();

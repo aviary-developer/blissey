@@ -1,9 +1,13 @@
 $(document).on('ready',function(){
-    
-
+  var limite = $("#contador").val();
+  var especialidad_agregada = [];
+  for(i=0;i<=limite;i++)
+  {
+    var especial = $('#especialidad'+i).val();
+    especialidad_agregada.push(especial);
+  }
   var wrapper = $('#tablaTelefono');
   var wrapper2 = $('#tablaEspecialidad');
-  var especialidad_agregada = [];
   var contador_especialidad = 0;
 
   $('#agregar_telefono').click(function(){
@@ -40,9 +44,9 @@ $(document).on('ready',function(){
       "</button>"+
     "</td>"+
     "</tr>";
-    if(especialidad_agregada.indexOf(contenido)==-1)
+    if(especialidad_agregada.indexOf(valor)==-1)
     {
-      especialidad_agregada.push(contenido);
+      especialidad_agregada.push(valor);
       $(wrapper2).append(html_texto);
       contador_especialidad++;
     }
@@ -53,11 +57,29 @@ $(document).on('ready',function(){
     $(this).parent('td').parent('tr').remove();
   });
 
+  $(wrapper).on('click','#eliminar_telefono_antiguo',function(e){
+    e.preventDefault();
+    var valores = $(this).parents('tr').find('input').val();
+    $("#deletes").val(valores);
+    $(this).parent('td').parent('tr').remove();
+  });
+
   $(wrapper2).on('click','#eliminar_especialidad',function(e){
     e.preventDefault();
-    var elemento = $(this).parents('tr').find('td:eq(0)').html();
+    var elemento = $(this).parents('tr').find('input').val();
     var indice = especialidad_agregada.indexOf(elemento);
     especialidad_agregada.splice(indice);
+    $(this).parent('td').parent('tr').remove();
+  });
+
+  $(wrapper2).on('click','#eliminar_especialidad_antiguo',function(e){
+    e.preventDefault();
+    var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var indice = especialidad_agregada.indexOf(elemento);
+    especialidad_agregada.splice(indice);
+
+    var valores = $(this).parents('tr').find('input:eq(1)').val();
+    $("#delesp").val(valores);
     $(this).parent('td').parent('tr').remove();
   });
 });

@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-ms btn-info">
+  <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-xs btn-info">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-ms btn-primary">
+  <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-xs btn-primary">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-ms" onclick={!! "'alta(".$usuario->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$usuario->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$usuario->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$usuario->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
 @else

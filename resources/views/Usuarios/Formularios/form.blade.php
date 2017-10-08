@@ -55,7 +55,7 @@
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo *</label>
           <label>
-            {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino
+            {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
           </label>
           <label>
             {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
@@ -95,7 +95,7 @@
               {!! Form::text('telefonoInput',null,['id'=>'telefono','class'=>'form-control has-feedback-left','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
               <span class="input-group-btn">
                 <button type="button" name="button" class="btn btn-primary" id="agregar_telefono">
-                  <i class="fa fa-plus"></i>
+                  <i class="fa fa-save"></i>
                 </button>
               </span>
             </div>
@@ -107,7 +107,20 @@
             <th style="width : 80px">Acción</th>
           </thead>
           <tbody>
-
+            @if (!$create)
+              <input type="hidden" name="deletes[]" value="ninguno" id="deletes">
+              @foreach ($telefono_usuarios as $key => $telefono)
+                <tr>
+                  <td>{{$telefono->telefono}}</td>
+                  <td>
+                    <input type="hidden" id={{"telefono".$key}} value={{ $telefono->id }}>
+                    <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
+                      <i class="fa fa-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              @endforeach
+            @endif
           </tbody>
         </table>
       </div>
@@ -148,7 +161,6 @@
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
             <select class="form-control has-feedback-left" name="tipoUsuario" id="tipoUsuario" onchange="tipo_usuario();">
-              <option value="Administración">Administración</option>
               <option value="Gerencia">Gerencia</option>
               <option value="Médico">Médico</option>
               <option value="Recepción">Recepción</option>
@@ -159,6 +171,15 @@
               <option value="Enfermería">Enfermería</option>
             </select>
           </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Rol *</label>
+          <label>
+            {!!Form :: radio ( "administrador",1,false,['class'=>'flat'])!!} Administrador &nbsp;
+          </label>
+          <label>
+            {!!Form :: radio ( "administrador",0,true,['class'=>'flat'])!!} Ninguno
+          </label>
         </div>
       </div>
       <div class="col-md-6 col-sm-6 col-xs-12">
@@ -171,7 +192,13 @@
         </div>
         <div class="">
           <center>
-            <output id="list"></output>
+            <output id="list">
+              @if ($create)
+                <img src={{asset(Storage::url('noImgen.jpg'))}} style="height : 200px">
+              @else
+                <img src={{asset(Storage::url($usuarios->foto))}} style="height : 200px">
+              @endif
+            </output>
           </center>
         </div>
       </div>
@@ -188,34 +215,6 @@
           </div>
         </div>
 
-        <div class="form-group" id="grupoEspecialidad">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad</label>
-          <div class="col-md-9 col-sm-9 col-xs-12" id="especialidad">
-            <div class="input-group">
-              <select class="form-control has-feedback-left" name="especialidadSelect">
-                @foreach ($especialidades as $especialidad)
-                  <option value={{ $especialidad->id }}>{{ $especialidad->nombre }}</option>
-                @endforeach
-              </select>
-              <span class="input-group-btn">
-                <button type="button" name="button" class="btn btn-primary" id="agregar_especialidad">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </span>
-            </div>
-          </div>
-        </div>
-        <table class="table" id="tablaEspecialidad">
-          <thead>
-            <th>Especialidad</th>
-            <th style="width : 80px">Acción</th>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-      </div>
-      <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="form-group" id="firma">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Firma</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
@@ -225,7 +224,13 @@
         </div>
         <div class="">
           <center>
-            <output id="list2" style="height:100px"></output>
+            <output id="list2" style="height:100px">
+              @if ($create)
+                <img src={{asset(Storage::url('noImgen.jpg'))}} style="height : 75px">
+              @else
+                <img src={{asset(Storage::url($usuarios->firma))}} style="height : 75px">
+              @endif
+            </output>
           </center>
         </div>
         <div class="form-group" id="sello">
@@ -237,10 +242,68 @@
         </div>
         <div class="">
           <center>
-            <output id="list3" style="height:100px"></output>
+            <output id="list3" style="height:100px">
+              @if ($create)
+                <img src={{asset(Storage::url('noImgen.jpg'))}} style="height : 75px">
+              @else
+                <img src={{asset(Storage::url($usuarios->sello))}} style="height : 75px">
+              @endif
+            </output>
           </center>
         </div>
       </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group" id="grupoEspecialidad">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad</label>
+          <div class="col-md-9 col-sm-9 col-xs-12" id="especialidad">
+            <div class="input-group">
+              <select class="form-control has-feedback-left" name="especialidadSelect">
+                @foreach ($especialidades as $especialidad)
+                  <option value={{ $especialidad->id }}>{{ $especialidad->nombre }}</option>
+                @endforeach
+              </select>
+              <span class="input-group-btn">
+                <button type="button" name="button" class="btn btn-primary" id="agregar_especialidad">
+                  <i class="fa fa-save"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <table class="table" id="tablaEspecialidad">
+          <thead>
+            <th>Especialidad</th>
+            <th style="width : 80px">Acción</th>
+          </thead>
+          <tbody>
+            @if (!$create)
+              @php
+                $auxiliar = 0;
+              @endphp
+              <input type="hidden" name="delesp[]" value="ninguno" id="delesp">
+              @foreach ($especialidad_usuarios as $key => $especialidad)
+                <tr>
+                  <td>
+                    {{$especialidad->nombreEspecialidad($especialidad->f_especialidad)}}
+                  </td>
+                  <td>
+                    <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad->f_especialidad }}>
+                    <input type="hidden" value={{ $especialidad->id }}>
+                    <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_especialidad_antiguo">
+                      <i class="fa fa-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+                @php
+                  $auxiliar = $key;
+                @endphp
+              @endforeach
+              <input type="hidden" id="contador" value={{$auxiliar}}>
+            @endif
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
