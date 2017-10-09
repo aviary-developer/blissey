@@ -8,7 +8,7 @@
   <div class="x_panel">
     <div class="x_title">
       <h2>
-        Proveedor
+        Visitador
         <small>
           {{ $visitador->nombre.' '.$visitador->apellido }}
         </small>

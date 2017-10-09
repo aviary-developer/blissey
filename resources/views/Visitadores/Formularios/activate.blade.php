@@ -13,11 +13,11 @@
   <div class="btn-group">
     @if (!$visitador->estado)
       @php
-        $regreso = "?estado=0";
+        $regreso = "?estado=0&id=".$visitador->f_proveedor;
       @endphp
     @else
       @php
-        $regreso = '';
+        $regreso = '?id='.$visitador->f_proveedor;
       @endphp
     @endif
     <a href={!! asset('/visitadores'.$regreso)!!} class="btn btn-dark btn-ms">
@@ -31,10 +31,10 @@
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$paciente->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$visitador->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$visitador->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
@@ -59,7 +59,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePaciente/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateVisitador/'+id);
       $('#formulario').submit();
       swal(
         '¡Activado!',
@@ -93,7 +93,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPaciente/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyVisitador/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -126,7 +126,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateVisitador/'+id);
       $('#formulario').submit();
       swal(
         '¡Desactivado!',

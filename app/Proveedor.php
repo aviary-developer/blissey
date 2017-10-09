@@ -24,10 +24,16 @@ class Proveedor extends Model
       }
       $query->where('estado',$estado);
     }
-    public static function buscarId($nombre){
+    public static function buscarId($nombre){ //Recibe nombre y retorna el id
       $fila=Proveedor::where('nombre','=',$nombre)->get();
       foreach($fila as $f){
         return $f->id;
       }
     }
+
+    public static function buscarNombre($id){ //Recibe id y retorna el nombre
+      $fila=Proveedor::find($id);
+      return $fila->nombre;
+    }
+
 }
