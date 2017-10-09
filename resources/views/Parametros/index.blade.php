@@ -84,7 +84,7 @@
                   <td>{{ $parametro->valorMinimo}}</td>
                   <td>{{ $parametro->valorMaximo}}</td>
                   <td>{{ $parametro->valorPredeterminado}}</td>
-                  <td>{{ $parametro->unidad}}</td>
+                  <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Parametros.Formularios.activate')

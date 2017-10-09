@@ -14,7 +14,7 @@ class CampoUnidadParametros extends Migration
     public function up()
     {
         Schema::table('parametros', function (Blueprint $table) {
-            $table->string('unidad');
+            $table->integer('unidad');
         });
     }
 

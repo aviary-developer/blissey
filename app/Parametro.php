@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Unidad;
 
 class Parametro extends Model
 {
@@ -24,5 +25,9 @@ class Parametro extends Model
       $estado = 1;
     }
     $query->where('estado',$estado);
+  }
+  public static function nombreUnidad($id){
+    $n= Unidad::find($id);
+    return $n->nombre;
   }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Parametro;
+use App\Unidad;
 use Redirect;
 use Carbon\Carbon;
 
@@ -21,6 +22,7 @@ class ParametroController extends Controller
     $estado = $request->get('estado');
     $nombre = $request->get('nombre');
     $parametros = Parametro::buscar($nombre,$estado);
+    $unidades = Unidad::all();
     $activos = Parametro::where('estado',true)->count();
     $inactivos = Parametro::where('estado',false)->count();
     return view('Parametros.index',compact('parametros','estado','nombre','activos','inactivos'));
@@ -33,7 +35,8 @@ class ParametroController extends Controller
   */
   public function create()
   {
-    return view('Parametros.create');
+    $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    return view('Parametros.create',compact('unidades'));
   }
 
   /**

@@ -10,11 +10,15 @@
       {!! Form::text('nombreParametro',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo parametro']) !!}
     </div>
   </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-reorder form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('unidad',null,['class'=>'form-control has-feedback-left','placeholder'=>'Unidad de medición']) !!}
+  <div class="form-group" id="grupoUnidadParametro">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición</label>
+    <div class="col-md-9 col-sm-9 col-xs-12" id="unidadParametro">
+      <span class="fa fa-tasks form-control-feedback left" aria-hidden="true"></span>
+        <select class="form-control has-feedback-left" name="unidad">
+          @foreach ($unidades as $unidad)
+            <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
+          @endforeach
+        </select>
     </div>
   </div>
   <div class="form-group">
