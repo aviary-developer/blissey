@@ -60,22 +60,26 @@ class UserController extends Controller
         $user->foto = $request->file('foto')->store('public/foto');
       }
       $user->save();
-      foreach ($request->telefono as $k => $val) {
-        $telefono_usuario = new TelefonoUsuario;
-        $telefono_usuario->f_usuario = $user->id;
-        $telefono_usuario->telefono = $request->telefono[$k];
-        $telefono_usuario->save();
-      }
-      foreach ($request->especialidad as $k => $val) {
-        $especialidad_usuario = new EspecialidadUsuario;
-        if($k == 0){
-          $especialidad_usuario->principal = true;
-        }else{
-          $especialidad_usuario->principal = false;
+      if (isset($request->telefono)) {
+        foreach ($request->telefono as $k => $val) {
+          $telefono_usuario = new TelefonoUsuario;
+          $telefono_usuario->f_usuario = $user->id;
+          $telefono_usuario->telefono = $request->telefono[$k];
+          $telefono_usuario->save();
         }
-        $especialidad_usuario->f_usuario = $user->id;
-        $especialidad_usuario->f_especialidad = $request->especialidad[$k];
-        $especialidad_usuario->save();
+      }
+      if (isset($request->especialidad)) {
+        foreach ($request->especialidad as $k => $val) {
+          $especialidad_usuario = new EspecialidadUsuario;
+          if($k == 0){
+            $especialidad_usuario->principal = true;
+          }else{
+            $especialidad_usuario->principal = false;
+          }
+          $especialidad_usuario->f_usuario = $user->id;
+          $especialidad_usuario->f_especialidad = $request->especialidad[$k];
+          $especialidad_usuario->save();
+        }
       }
       return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }

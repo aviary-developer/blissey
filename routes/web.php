@@ -21,16 +21,22 @@ Route::match(['get','post'],'/activateReactivo/{id}','ReactivoController@activat
 Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
 
 //Rutas de pacientes
-Route::resource('pacientes','PacienteController');
-Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');
-Route::match(['get','post'],'/activatePaciente/{id}','PacienteController@activate');
-Route::match(['get','post'],'/destroyPaciente/{id}','PacienteController@destroy');
+Route::group(['middleware'=>'recepcion'], function()
+{
+  Route::resource('pacientes','PacienteController');
+  Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');
+  Route::match(['get','post'],'/activatePaciente/{id}','PacienteController@activate');
+  Route::match(['get','post'],'/destroyPaciente/{id}','PacienteController@destroy');
+});
 
 //Rutas usuarios
-Route::resource('usuarios','UserController');
-Route::match(['get','post'],'/desactivateUsuario/{id}','UserController@desactivate');
-Route::match(['get','post'],'/activateUsuario/{id}','UserController@activate');
-Route::match(['get','post'],'/destroyUsuario/{id}','UserController@destroy');
+Route::group(['middleware'=>'admin'], function()
+{
+  Route::resource('usuarios','UserController');
+  Route::match(['get','post'],'/desactivateUsuario/{id}','UserController@desactivate');
+  Route::match(['get','post'],'/activateUsuario/{id}','UserController@activate');
+  Route::match(['get','post'],'/destroyUsuario/{id}','UserController@destroy');
+});
 
 //Rutas de proveedores
 Route::resource('proveedores','ProveedorController');
