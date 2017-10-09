@@ -67,3 +67,10 @@ Route::resource('visitadores','DependienteController');
 Route::match(['get','post'],'/desactivateVisitador/{id}','DependienteController@desactivate');
 Route::match(['get','post'],'/activateVisitador/{id}','DependienteController@activate');
 Route::match(['get','post'],'/destroyVisitador/{id}','DependienteController@destroy');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'LoginController@logout')->name('logout');
+Route::get('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');

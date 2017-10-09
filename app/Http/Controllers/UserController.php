@@ -48,6 +48,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+      $request['password']=bcrypt($request['password']);
       $user = User::create($request->All());
       if($request->hasfile('firma')){
         $user->firma = $request->file('firma')->store('public/firma');
@@ -114,6 +115,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request['password']=bcrypt($request['password']);
       $user = User::find($id);
       $firma = $user->firma;
       $foto = $user->foto;

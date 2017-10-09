@@ -253,18 +253,22 @@ html , body{
     margin-top: 10px
 }
 .profile_pic {
-    width: 35%;
+    width: 70px;
+    height: 70px;
     float: left
 }
 .img-circle.profile_img {
-    width: 70%;
-    background: #fff;
+    width: 68px;
+    height: 68px;
+    background: #FFF;
     margin-left: 15%;
+    margin-right: 5px;
     z-index: 1000;
     position: inherit;
     margin-top: 20px;
     border: 1px solid rgba(52, 73, 94, 0.44);
-    padding: 4px
+    object-fit: cover;
+    padding: 2px
 }
 .profile_info {
     padding: 25px 10px 10px;
@@ -1680,9 +1684,11 @@ span.right {
     float: left;
     background: #1f7b7d;
     cursor: pointer;
+    color:  #2ea2a4;
 }
 .sidebar-footer a:hover {
-    background: #425567
+    background: #2c8b8c;
+    color: #425567;
 }
 .tile_count {
     margin-bottom: 20px;
@@ -1762,7 +1768,8 @@ a.user-profile {
     width: 29px;
     height: 29px;
     border-radius: 50%;
-    margin-right: 10px
+    margin-right: 10px;
+    object-fit: cover;
 }
 ul.top_profiles {
     height: 330px;

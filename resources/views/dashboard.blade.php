@@ -65,11 +65,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src={!! asset('/img/img.jpg') !!} alt="..." class="img-circle profile_img">
+                <img src={!! asset(Storage::url((Auth::check())?Auth::user()->foto:"NoImgen.jpg")) !!} alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
-                <h2>John Doe</h2>
+                <h2>{{(Auth::check())?Auth::user()->nombre:"Invitado"}}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -139,7 +139,8 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <a data-toggle="tooltip" data-placement="top" title="Salir" href="{{ route('logout')}}" onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -158,7 +159,8 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src={!! asset('/img/img.jpg') !!} alt="">John Doe
+                    <img src={!! asset(Storage::url((Auth::check())?Auth::user()->foto:"NoImgen.jpg")) !!} alt="">
+                    {{(Auth::check())?Auth::user()->nombre:"Invitado"}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -170,13 +172,21 @@
                       </a>
                     </li>
                     <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li>
+                      <a href="{{ route('logout')}}" onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                        <i class="fa fa-sign-out pull-right"></i> Salir
+                      </a>
+                    </li>
                   </ul>
                 </li>
               </ul>
             </nav>
           </div>
         </div>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
         <!-- /top navigation -->
         <div class="right_col" role="main">
           @yield('layout')
