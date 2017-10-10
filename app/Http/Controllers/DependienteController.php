@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Dependiente;
 use Illuminate\Http\Request;
+use App\Http\Requests\DependienteRequest;
 
 class DependienteController extends Controller
 {
@@ -40,9 +41,11 @@ class DependienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DependienteRequest $request)
     {
-        //
+        Dependiente::create($request->all());
+        return redirect('/visitadores?id='.$request->f_proveedor)->with('mensaje','Guardado!');
+
     }
 
     /**
@@ -87,19 +90,23 @@ class DependienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dependiente=Dependiente::findOrFail($id);
+        $p=$dependiente->f_proveedor;
+        $e=$dependiente->estado;
+        Dependiente::destroy($id);
+        return redirect('/visitadores?estado=0&id='.$p);
     }
     public function desactivate($id){
       $dependiente= Dependiente::find($id);
       $dependiente->estado = false;
       $dependiente->save();
-      return Redirect::to('/visistadores');
+      return redirect('/visitadores?estado=1&id='.$dependiente->f_proveedor);
     }
 
     public function activate($id){
       $dependiente = Dependiente::find($id);
       $dependiente->estado = true;
       $dependiente->save();
-      return Redirect::to('/proveedores?estado=0');
+      return redirect('/visitadores?estado=0&id='.$dependiente->f_proveedor);
     }
 }
