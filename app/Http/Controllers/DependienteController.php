@@ -44,7 +44,7 @@ class DependienteController extends Controller
     public function store(DependienteRequest $request)
     {
         Dependiente::create($request->all());
-        return redirect('/visitadores?id='.$request->f_proveedor)->with('mensaje','Guardado!');
+        return redirect('/visitadores?id='.$request->f_proveedor)->with('mensaje','¡Guardado!');
 
     }
 
@@ -67,7 +67,8 @@ class DependienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $visitador=Dependiente::find($id);
+        return view('Visitadores.edit',compact('visitador'));
     }
 
     /**
@@ -79,7 +80,25 @@ class DependienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $visitador=Dependiente::find($id);
+        $nv=1; //No necesita validar=true
+        if($visitador['nombre']!=$request['nombre']){
+          $nv=0;
+          $validar['nombre']='required | min:3 | max:25';
+        }
+        if($visitador['apellido']!=$request['apellido']){
+          $nv=0;
+          $validar['apellido']='required | min:3 | max:25';
+        }
+        if($visitador['telefono']!=$request['telefono']){
+          $nv=0;
+          $validar['telefono']='required | size:9';
+        }
+        if($nv==1){
+          return redirect('/visitadores?estado='.$visitador->estado.'&id='.$visitador->f_proveedor)->with('info', '¡No hay cambios!');
+        }else{
+          $this->validate($request,$validar);
+        }
     }
 
     /**

@@ -125,12 +125,12 @@ class ProveedorController extends Controller
           $men['telefono.unique']="Teléfono registrado, ingrese otro";
         }
         if($v1==1 && $v2==1 && $v3==1){
-          return redirect('/proveedores')->with('info','No hay cambios');
+          return redirect('/proveedores')->with('info','¡No hay cambios!');
         }else{
           $this->validate($request,$validar,$men);
           $proveedor->fill($request->all());
           $proveedor->save();
-          return redirect('/proveedores')->with('mensaje','Cambios guardados');
+          return redirect('/proveedores')->with('mensaje','¡Editado!');
         }
     }
 

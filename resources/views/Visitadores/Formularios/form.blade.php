@@ -24,7 +24,9 @@
       {!! Form::text('telefono',null,['class'=>'form-control has-feedback-left','placeholder'=>'Telefono del visitador']) !!}
     </div>
   </div>
-  <input type="hidden" name="f_proveedor" value="{{$id}}">
+  @if ($bandera==1)
+    <input type="hidden" name="f_proveedor" value="{{$id}}">
+  @endif
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>
