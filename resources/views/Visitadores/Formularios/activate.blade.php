@@ -9,6 +9,9 @@
   <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$visitador->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
+  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$visitador->id.");'" !!}/>
+    <i class="fa fa-remove"></i>
+  </button>
 @else
   <div class="btn-group">
     @if (!$visitador->estado)
