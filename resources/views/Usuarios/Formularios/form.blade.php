@@ -317,6 +317,8 @@
       document.getElementById('juntaVigilancia').style.display = 'block';
       document.getElementById('firma').style.display = 'block';
       document.getElementById('sello').style.display = 'block';
+      document.getElementById('list2').style.display = 'block';
+      document.getElementById('list3').style.display = 'block';
       document.getElementById('grupoEspecialidad').style.display = 'block';
       document.getElementById('tablaEspecialidad').style.display = 'table';
       document.getElementById('texto').style.display = 'none';
@@ -324,6 +326,8 @@
       document.getElementById('juntaVigilancia').style.display = 'none';
       document.getElementById('firma').style.display = 'none';
       document.getElementById('sello').style.display = 'none';
+      document.getElementById('list2').style.display = 'none';
+      document.getElementById('list3').style.display = 'none';
       document.getElementById('grupoEspecialidad').style.display = 'none';
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'block';

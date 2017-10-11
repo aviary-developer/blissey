@@ -74,6 +74,9 @@ Route::match(['get','post'],'/desactivateVisitador/{id}','DependienteController@
 Route::match(['get','post'],'/activateVisitador/{id}','DependienteController@activate');
 Route::match(['get','post'],'/destroyVisitador/{id}','DependienteController@destroy');
 
+//Ruta de bitacoras
+Route::resource('bitacoras','BitacoraController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

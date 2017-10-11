@@ -1,4 +1,7 @@
 thead{background: #cccccc}
+.label-purple{
+  background-color: rgb(159, 45, 249);
+}
 html , body{
 
  height:100%;

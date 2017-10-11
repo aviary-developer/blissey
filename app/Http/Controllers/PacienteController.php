@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Paciente;
+use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
 
@@ -44,7 +45,8 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        Paciente::create($request->All());
+        $pacientes = Paciente::create($request->All());
+        Bitacora::bitacora('store','pacientes','pacientes',$pacientes->id);
         return redirect('/pacientes')->with('mensaje', '¡Guardado!');
     }
 
@@ -84,6 +86,7 @@ class PacienteController extends Controller
         $pacientes = Paciente::find($id);
         $pacientes->fill($request->all());
         $pacientes->save();
+        Bitacora::bitacora('update','pacientes','pacientes',$id);
         if($pacientes->estado)
         {
           return redirect('/pacientes')->with('mensaje', '¡Editado!');
@@ -103,6 +106,7 @@ class PacienteController extends Controller
     {
         $pacientes = Paciente::findOrFail($id);
         $pacientes->delete();
+        Bitacora::bitacora('destroy','pacientes','pacientes',$id);
         return redirect('/pacientes?estado=0');
     }
 
@@ -110,6 +114,7 @@ class PacienteController extends Controller
       $pacientes = Paciente::find($id);
       $pacientes->estado = false;
       $pacientes->save();
+      Bitacora::bitacora('desactivate','pacientes','pacientes',$id);
       return Redirect::to('/pacientes');
     }
 
@@ -117,6 +122,7 @@ class PacienteController extends Controller
       $pacientes = Paciente::find($id);
       $pacientes->estado = true;
       $pacientes->save();
+      Bitacora::bitacora('activate','pacientes','pacientes',$id);
       return Redirect::to('/pacientes?estado=0');
     }
 }

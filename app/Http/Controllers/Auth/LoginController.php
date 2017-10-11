@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Bitacora;
 
 class LoginController extends Controller
 {
@@ -51,7 +52,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         if (Auth::attempt(['name' => $request['name'], 'password' => $request['password'], 'estado' => true])) {
-            // Authentication passed...
+            Bitacora::bitacora('login','users','usuarios',Auth::user()->id);
             return redirect('/');
         }
         return redirect('login');
@@ -59,6 +60,7 @@ class LoginController extends Controller
 
     public function logout()
     {
+      Bitacora::bitacora('logout','users','usuarios',Auth::user()->id);
       Auth::logout();
       return redirect('login');
     }
