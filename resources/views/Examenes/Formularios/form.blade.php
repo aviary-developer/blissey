@@ -22,9 +22,17 @@
       </select>
     </div>
   </div>
-  <div class="ln_solid"></div>
   <div class="form-group">
-    <center>
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+        <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a></label>
+  </div>
+  <div class="ln_solid"></div>
+        <div class="clearfix"></div>
+            <div class="seccionesExamenes" id="seccionesExamenes">
+              <!--AQUI SE AGREGAN LAS SECCIONES -->
+      </div>
+    <div class="form-group">
+      <center>
       {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       <button type="reset" name="button" class="btn btn-default">Limpiar</button>
       <a href={!! asset('/reactivos') !!} class="btn btn-default">Cancelar</a>
