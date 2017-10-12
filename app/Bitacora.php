@@ -37,4 +37,30 @@ class Bitacora extends Model
       $usuario = User::find($id);
       return $usuario->nombre.' '.$usuario->apellido;
     }
+
+    public static function buscar($usuario, $inicial, $final,$store,$update,$destroy,$activate,$desactivate,$login,$logout){
+      return Bitacora::usuario($usuario)->Fecha($inicial, $final)->Estado($store,$update,$destroy,$activate,$desactivate,$login,$logout)->orderBy('created_at','desc')->paginate(10);
+    }
+
+    public static function scopeUsuario($query, $usuario){
+      if($usuario != null){
+        $query->where('f_usuario',$usuario);
+      }
+    }
+
+    public static function scopeFecha($query,$inicial,$final){
+      $query->where('created_at','>=',$inicial)->where('created_at','<=',$final);
+    }
+
+    public static function scopeEstado($query,$store,$update,$destroy,$activate,$desactivate,$login,$logout){
+      $store = ($store==1)?'store':false;
+      $update = ($update==1)?'update':false;
+      $destroy = ($destroy==1)?'destroy':false;
+      $activate = ($activate==1)?'activate':false;
+      $desactivate = ($desactivate==1)?'desactivate':false;
+      $login = ($login==1)?'login':false;
+      $logout = ($logout==1)?'logout':false;
+
+      $query->where('tipo',$store)->orWhere('tipo',$update)->orWhere('tipo',$destroy)->orWhere('tipo',$activate)->orWhere('tipo',$desactivate)->orWhere('tipo',$login)->orWhere('tipo',$logout);
+    }
 }

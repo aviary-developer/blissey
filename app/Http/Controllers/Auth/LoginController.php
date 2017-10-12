@@ -60,7 +60,9 @@ class LoginController extends Controller
 
     public function logout()
     {
-      Bitacora::bitacora('logout','users','usuarios',Auth::user()->id);
+      if(Auth::check()){
+        Bitacora::bitacora('logout','users','usuarios',Auth::user()->id);
+      }
       Auth::logout();
       return redirect('login');
     }

@@ -123,7 +123,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {{--  {!! str_replace ('/?', '?', $bitacoras->appends(Request::only(['nombre','estado']))->render ()) !!} --}}
+           {!! str_replace ('/?', '?', $bitacoras->appends(Request::only(['usuario','fecha_max','fecha_min','store','update','activate','desactivate','destroy','login','logout']))->render ()) !!}
         </center>
       </div>
     </div>
@@ -146,9 +146,6 @@
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha incial</label>
               <div class="col-md-9 col-sm-9 col-xs-12">
                 <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                @php
-                $ahora = Carbon\Carbon::now();
-                @endphp
                 <input type="datetime-local" name="fecha_min" class="form-control has-feedback-left" value={{$fechaInicial->created_at->format('Y-m-d').'T'.$fechaInicial->created_at->format('H:i')}} max={{$fechaFinal->created_at->format('Y-m-d').'T'.$fechaFinal->created_at->format('H:i')}} min={{$fechaInicial->created_at->format('Y-m-d').'T'.$fechaInicial->created_at->format('H:i')}}>
               </div>
             </div>
@@ -156,9 +153,6 @@
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha final</label>
               <div class="col-md-9 col-sm-9 col-xs-12">
                 <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                @php
-                $ahora = Carbon\Carbon::now();
-                @endphp
                 <input type="datetime-local" name="fecha_max" class="form-control has-feedback-left" value={{$fechaFinal->created_at->format('Y-m-d').'T'.$fechaFinal->created_at->format('H:i')}} max={{$fechaFinal->created_at->format('Y-m-d').'T'.$fechaFinal->created_at->format('H:i')}} min={{$fechaInicial->created_at->format('Y-m-d').'T'.$fechaInicial->created_at->format('H:i')}}>
               </div>
             </div>
