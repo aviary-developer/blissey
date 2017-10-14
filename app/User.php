@@ -46,4 +46,14 @@ class User extends Authenticatable
       }
       $query->where('estado',$estado);
     }
+
+    public function telefono($id){
+      $telefono = TelefonoUsuario::where('f_usuario',$id)->orderBy('created_at')->first();
+      return ($telefono!=null)?$telefono->telefono:"Sin teléfono";
+    }
+
+    public function nombreEspecialidad($id){
+      $nombre = Especialidad::find($id);
+      return $nombre->nombre;
+    }
 }

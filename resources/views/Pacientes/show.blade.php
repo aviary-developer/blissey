@@ -46,11 +46,7 @@
               </tr>
               <tr>
                 <th>Fecha de nacimiento</th>
-                <td>{{ $paciente->fechaNacimiento->formatLocalized('%d de %B de %Y') }}</td>
-              </tr>
-              <tr>
-                <th>Edad</th>
-                <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>
+                <td>{{ $paciente->fechaNacimiento->formatLocalized('%d de %B de %Y').' ('.$paciente->fechaNacimiento->age.' años)' }}</td>
               </tr>
               <tr>
                 <th>Sexo</th>

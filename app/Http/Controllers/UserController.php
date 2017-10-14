@@ -92,7 +92,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $usuario = User::find($id);
+        $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
+        $especialidad_principal = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
+        $especialidades = EspecialidadUsuario::where('f_usuario',$id)->where('principal',false)->get();
+        return view('Usuarios.show',compact('usuario','telefonos','especialidad_principal','especialidades','id'));
     }
 
     /**
@@ -128,19 +132,19 @@ class UserController extends Controller
       if($request->hasfile('firma')){
         $user->firma = $request->file('firma')->store('public/firma');
         if($firma != "noImgen.jpg"){
-          Storage::delete($usuario->firma);
+          Storage::delete($firma);
         }
       }
       if($request->hasfile('sello')){
         $user->sello = $request->file('sello')->store('public/sello');
         if($sello != "noImgen.jpg"){
-          Storage::delete($usuario->sello);
+          Storage::delete($sello);
         }
       }
       if($request->hasfile('foto')){
         $user->foto = $request->file('foto')->store('public/foto');
         if($foto != "noImgen.jpg"){
-          Storage::delete($usuario->foto);
+          Storage::delete($foto);
         }
       }
       $user->save();

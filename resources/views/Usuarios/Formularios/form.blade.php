@@ -53,15 +53,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo *</label>
-          <label>
-            {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
-          </label>
-          <label>
-            {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
-          </label>
-        </div>
-        <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de nacimiento *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
@@ -70,6 +61,15 @@
             @endphp
             {!! Form::date('fechaNacimiento',$fecha,['max'=>$ahora->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
           </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo *</label>
+          <label>
+            {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
+          </label>
+          <label>
+            {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
+          </label>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">DUI *</label>

@@ -89,7 +89,7 @@
                     @endif
                   </td>
                   <td>{{ $usuario->fechaNacimiento->age.' años' }}</td>
-                  <td><img src={!! asset(Storage::url($usuario->firma))!!} alt="" style="height: 50px;"></td>
+                  <td>{{ $usuario->telefono($usuario->id)}}</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Usuarios.Formularios.activate')

@@ -2,6 +2,16 @@ thead{background: #cccccc}
 .label-purple{
   background-color: rgb(159, 45, 249);
 }
+.perfil{
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+.miniperfil{
+  width: 150px;
+  height: 150px;
+  object-fit: scale-down;
+}
 html , body{
 
  height:100%;
