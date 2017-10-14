@@ -57,7 +57,7 @@
         <div class="col-md-3 left_col ">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-medkit"></i> <span>Blissey</span></a>
+              <a href={{asset('/')}} class="site_title"><i class="fa fa-medkit"></i> <span>Blissey</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -69,7 +69,15 @@
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
-                <h2>{{(Auth::check())?Auth::user()->nombre:"Invitado"}}</h2>
+                <h2>
+                  @if (Auth::check())
+                    <a href={{asset('/usuarios/'.Auth::user()->id)}} style="color:#FFF">
+                      {{Auth::user()->nombre}}
+                    </a>
+                  @else
+                    {{"Invitado"}}
+                  @endif
+                </h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -118,8 +126,13 @@
                   </li>
                   <li><a><i class="fa fa-cogs"></i>Configuración <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Base de datos</a></li>
-                      <li><a href="fixed_footer.html">Usuarios</a></li>
+                      @if (Auth::user()->administrador)
+                        <li><a href={{asset('/usuarios')}}>Usuarios</a></li>
+                        <li><a href={{asset('/especialidades')}}>Especialidades Médicas</a></li>
+                      @else
+                        <li><a href={{asset('/usuarios/'.Auth::user()->id)}}>Mi Perfil</a></li>
+                      @endif
+                      <li><a href="fixed_footer.html">Base de datos</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -164,7 +177,7 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
+                    <li><a href={{asset('/usuarios/'.Auth::user()->id)}}>Mi Perfil</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>

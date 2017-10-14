@@ -33,6 +33,7 @@
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
               <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/usuarios/'.Auth::user()->id) !!} class="btn btn-dark btn-ms"><i class="fa fa-user"></i> Mi Perfil</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/usuarios?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)

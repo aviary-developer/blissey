@@ -32,6 +32,9 @@
               <li role="presentation" class="">
                 <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Datos de usuario</a>
               </li>
+              <li role="presentation" class="">
+                <a href="#tab_content3" id="otros-tab3" role="tab" data-toggle="tab" aria-expanded="false">Bitacora</a>
+              </li>
             @endif
           </ul>
           {{-- Contenido del tab --}}
@@ -133,7 +136,7 @@
                     <td>{{$usuario->name}}</td>
                   </tr>
                   <tr>
-                    <th>e-mail</th>
+                    <th>E-mail</th>
                     <td>{{$usuario->email}}</td>
                   </tr>
                   <tr>
@@ -145,6 +148,13 @@
                     <td>{{($usuario->administrador)?"Administrador":"Ninguno"}}</td>
                   </tr>
                 </table>
+              </div>
+              {{-- Otra pestaña --}}
+              <div class="tab-pane fade" role="tabpanel" id="tab_content3" aria-labelledby="otros-tab3">
+                @include('Bitacoras.form.tabla');
+                <center>
+                   {!! str_replace ('/?', '?', $bitacoras->render ()) !!}
+                </center>
               </div>
             @endif
           </div>

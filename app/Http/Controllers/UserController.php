@@ -8,6 +8,7 @@ use App\User;
 use App\TelefonoUsuario;
 use App\Especialidad;
 use App\EspecialidadUsuario;
+use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
 use App\Http\Controllers;
@@ -96,7 +97,8 @@ class UserController extends Controller
         $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
         $especialidad_principal = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
         $especialidades = EspecialidadUsuario::where('f_usuario',$id)->where('principal',false)->get();
-        return view('Usuarios.show',compact('usuario','telefonos','especialidad_principal','especialidades','id'));
+        $bitacoras = Bitacora::where('f_usuario',$id)->orderBy('created_at','desc')->paginate(10);
+        return view('Usuarios.show',compact('usuario','telefonos','especialidad_principal','especialidades','id','bitacoras'));
     }
 
     /**
