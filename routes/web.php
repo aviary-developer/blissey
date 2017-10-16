@@ -83,3 +83,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
+
+//Rutas de estantes
+Route::resource('estantes','EstanteController');
+Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');
+Route::match(['get','post'],'/activateEstante/{id}','EstanteController@activate');
+Route::match(['get','post'],'/destroyVisitador/{id}','EstanteController@destroy');
