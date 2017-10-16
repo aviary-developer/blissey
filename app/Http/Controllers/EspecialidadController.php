@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Especialidad;
+use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
 
@@ -42,7 +43,8 @@ class EspecialidadController extends Controller
      */
     public function store(Request $request)
     {
-        Especialidad::create($request->All());
+        $especialidades = Especialidad::create($request->All());
+        Bitacora::bitacora('store','especialidads','especialidades',$especialidades->id);
         return redirect('/especialidades')->with('mensaje', '¡Guardado!');
     }
 
@@ -82,6 +84,7 @@ class EspecialidadController extends Controller
       $especialidades = Especialidad::find($id);
       $especialidades->fill($request->all());
       $especialidades->save();
+      Bitacora::bitacora('update','especialidads','especialidades',$id);
       if($especialidades->estado)
       {
         return redirect('/especialidades')->with('mensaje', '¡Editado!');
@@ -101,6 +104,7 @@ class EspecialidadController extends Controller
     {
       $especialidades = Especialidad::findOrFail($id);
       $especialidades->delete();
+      Bitacora::bitacora('destroy','especialidads','especialidades',$id);
       return redirect('/especialidades?estado=0');
     }
 
@@ -108,6 +112,7 @@ class EspecialidadController extends Controller
       $especialidades = Especialidad::find($id);
       $especialidades->estado = false;
       $especialidades->save();
+      Bitacora::bitacora('desactivate','especialidads','especialidades',$id);
       return Redirect::to('/especialidades');
     }
 
@@ -115,6 +120,7 @@ class EspecialidadController extends Controller
       $especialidades = Especialidad::find($id);
       $especialidades->estado = true;
       $especialidades->save();
+      Bitacora::bitacora('activate','especialidads','especialidades',$id);
       return Redirect::to('/especialidades?estado=0');
     }
 }

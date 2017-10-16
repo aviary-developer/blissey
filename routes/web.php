@@ -50,6 +50,18 @@ Route::match(['get','post'],'/desactivateEspecialidad/{id}','EspecialidadControl
 Route::match(['get','post'],'/activateEspecialidad/{id}','EspecialidadController@activate');
 Route::match(['get','post'],'/destroyEspecialidad/{id}','EspecialidadController@destroy');
 
+//Rutas de categoria servicio
+Route::resource('categoria_servicios','CategoriaServicioController');
+Route::match(['get','post'],'/desactivateCategoriaServicio/{id}','CategoriaServicioController@desactivate');
+Route::match(['get','post'],'/activateCategoriaServicio/{id}','CategoriaServicioController@activate');
+Route::match(['get','post'],'/destroyCategoriaServicio/{id}','CategoriaServicioController@destroy');
+
+//Rutas de especialidades
+Route::resource('servicios','ServicioController');
+Route::match(['get','post'],'/desactivateServicio/{id}','ServicioController@desactivate');
+Route::match(['get','post'],'/activateServicio/{id}','ServicioController@activate');
+Route::match(['get','post'],'/destroyServicio/{id}','ServicioController@destroy');
+
 //Rutas de examenes
 Route::resource('examenes','ExamenController');
 Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');

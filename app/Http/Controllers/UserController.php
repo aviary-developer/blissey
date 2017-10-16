@@ -82,6 +82,7 @@ class UserController extends Controller
           $especialidad_usuario->save();
         }
       }
+      Bitacora::bitacora('store','users','usuarios',$user->id);
       return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
@@ -183,6 +184,7 @@ class UserController extends Controller
           $eliminar->delete();
         }
       }
+      Bitacora::bitacora('update','users','usuarios',$id);
       if($user->estado)
       {
         return redirect('/usuarios')->with('mensaje', '¡Editado!');
@@ -211,12 +213,14 @@ class UserController extends Controller
         Storage::delete($usuario->sello);
       }
       $usuario->delete();
+      Bitacora::bitacora('destroy','users','usuarios',$id);
       return redirect('/usuarios?estado=0');
     }
     public function desactivate($id){
       $usuario = User::find($id);
       $usuario->estado = false;
       $usuario->save();
+      Bitacora::bitacora('desactivate','users','usuarios',$id);
       return Redirect::to('/usuarios');
     }
 
@@ -224,6 +228,7 @@ class UserController extends Controller
       $usuario = User::find($id);
       $usuario->estado = true;
       $usuario->save();
+      Bitacora::bitacora('activate','users','usuarios',$id);
       return Redirect::to('/usuarios?estado=0');
     }
 }
