@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateEstantesTable extends Migration
-{5l k
+{
     /**
      * Run the migrations.
      *

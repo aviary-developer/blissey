@@ -126,12 +126,12 @@
                   </li>
                   <li><a><i class="fa fa-cogs"></i>Configuración <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      @if (Auth::user()->administrador)
+                      {{-- @if (Auth::user()->administrador)
                         <li><a href={{asset('/usuarios')}}>Usuarios</a></li>
                         <li><a href={{asset('/especialidades')}}>Especialidades Médicas</a></li>
                       @else
                         <li><a href={{asset('/usuarios/'.Auth::user()->id)}}>Mi Perfil</a></li>
-                      @endif
+                      @endif --}}
                       <li><a href="fixed_footer.html">Base de datos</a></li>
                     </ul>
                   </li>
@@ -177,7 +177,7 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href={{asset('/usuarios/'.Auth::user()->id)}}>Mi Perfil</a></li>
+                    {{-- <li><a href={{asset('/usuarios/'.Auth::user()->id)}}>Mi Perfil</a></li> --}}
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
