@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Parametro;
 use App\Unidad;
 use Redirect;
+use Response;
 use Carbon\Carbon;
 
 class ParametroController extends Controller
@@ -120,5 +121,10 @@ class ParametroController extends Controller
     $parametros->estado = true;
     $parametros->save();
     return Redirect::to('/parametros?estado=0');
+  }
+
+  public function llenarParametrosExamenes(){
+    $parametros=Parametro::where('estado',true)->get();
+    return Response::json($parametros);
   }
 }

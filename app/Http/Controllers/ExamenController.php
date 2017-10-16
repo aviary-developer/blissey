@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Examen;
+use App\Parametro;
 use Redirect;
 use Carbon\Carbon;
 
@@ -43,6 +44,7 @@ class ExamenController extends Controller
      */
     public function store(Request $request)
     {
+      return $request;
       Examen::create($request->All());
       return redirect('/examenes')->with('mensaje', '¡Guardado!');
     }
