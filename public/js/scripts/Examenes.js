@@ -11,7 +11,7 @@ $('#agregarSeccionExamen').click(function(){
   "</ul><div class='clearfix'></div></div>"+
   "<div class='x_content'>"+
   "<div class='col-md-9 col-sm-9 col-xs-6'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span>"+
-  "<select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'>"+
+  "<select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'></select>"+
   "</div></div></div></div>" );
   llenarParametros();
   contadorSelectsParametros++;
@@ -29,4 +29,39 @@ function llenarParametros(){
     			parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
     		});
     	});
-    }
+  }
+  $('#guardarParametroModal').click(function(){
+    var nombre = $("#nombreParametroModal").val();
+      var unidad = $("#unidadModal").val();
+      var valorMinimo= $('#valorMinimoModal').val();
+      var valorMaximo= $('#valorMaximoModal').val();
+      var valorPredeterminado= $('#valorPredeterminadoModal').val();
+        var ruta="/blissey/public/ingresoParametro";
+      	var token=$('#tokenParametroModal').val();
+      	$.ajax({
+      		url:ruta,
+      		headers:{'X-CSRF-TOKEN':token},
+      		type:'POST',
+      		dataType:'json',
+      		data:{nombreParametro:nombre,unidad:unidad,valorMinimo:valorMinimo,valorMaximo:valorMaximo,valorPredeterminado:valorPredeterminado},
+            success: function(){
+              $(".modal").modal('toggle');
+              swal('Parametro Registrado!','','success')}
+      	});
+        var paso=0;
+        for (paso = 0; paso <= contadorSelectsParametros; paso++) {
+            console.log('Nombre paso'+paso);
+        rellenarCombosParametros(paso);
+      }
+  });
+  function rellenarCombosParametros(paso){
+      var parametros=$("#selectParametrosExamenes"+paso);
+      var ruta="/blissey/public/llenarParametrosExamenes";
+      $.get(ruta,function(res){
+        		parametros.empty();
+        		$(res).each(function(key,value){
+        			parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
+              console.log('Nombre paso'+paso+': '+value.nombreParametro);
+        		});
+        	});
+  }

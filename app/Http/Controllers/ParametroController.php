@@ -127,4 +127,8 @@ class ParametroController extends Controller
     $parametros=Parametro::where('estado',true)->get();
     return Response::json($parametros);
   }
+  public function ingresoParametro(Request $request){
+    Parametro::create($request->All());
+    return Response::json('success');
+  }
 }

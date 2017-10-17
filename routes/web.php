@@ -74,6 +74,7 @@ Route::match(['get','post'],'/desactivateParametro/{id}','ParametroController@de
 Route::match(['get','post'],'/activateParametro/{id}','ParametroController@activate');
 Route::match(['get','post'],'/destroyParametro/{id}','ParametroController@destroy');
 Route::match(['get','post'],'/llenarParametrosExamenes','ParametroController@llenarParametrosExamenes');
+Route::match(['get','post'],'/ingresoParametro','ParametroController@ingresoParametro');
 
 //Rutas de Unidades
 Route::resource('unidades','UnidadController');
