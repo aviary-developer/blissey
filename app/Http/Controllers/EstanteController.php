@@ -43,17 +43,9 @@ class EstanteController extends Controller
      */
     public function store(EstanteRequest $request)
     {
-        Estante::create([
-          'codigo'=>$request->codigo,
-          'cantidad'=>$request->cantidad,
-        ]);
-        $id_estante=Estante::codigoId($request->codigo);
-        for ($i=0; $i < $request->cantidad ; $i++) {
-          Nivel::create([
-            'f_estante'=>$id_estante,
-            'numero'=>$i+1,
-          ]);
-        }
+      $estante=new Estante;
+      $estante->fill($request->all());
+      $estante->save();
         return redirect('/estantes')->with('mensaje','¡Guardado!');
     }
 
@@ -90,7 +82,36 @@ class EstanteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $estante=Estante::find($id);
+        $nv=1; //No necesita validar = true
+        if($estante->codigo!=$request->codigo){
+          $nv=0;
+          $validar['codigo']='required | min:1 | max:5 |unique:estantes';
+
+          $mensaje['codigo.required']='El campo código identificador es obligatorio';
+          $mensaje['codigo.min']='El campo código identificador necesita 1 caracteres mínimos';
+          $mensaje['codigo.max']='El campo código identificador necesita 3 caracteres máximo';
+          $mensaje['codigo.unique']='El campo código identificador ya ha sido registrado';
+        }
+        if($estante->cantidad!=$request->cantidad){
+          $nv=0;
+          $validar['cantidad']='required';
+          $mensaje['cantidad.required']='El campo n° de niveles es obligatorio';
+        }
+        if($estante->localizacion!=$request->localizacion){
+          $nv=0;
+          $validar['localizacion']='required';
+          $mensaje['localizacion.required']='El campo localización es obligatorio';
+        }
+        if($nv==1){
+          return redirect('/estantes?estado'.$estante->estado)->with('info', '¡No hay cambios!');
+        }
+        else{
+          $this->validate($request,$validar,$mensaje);
+          $estante->fill($request->all());
+          $estante->save();
+          return redirect('/estantes')->with('mensaje','¡Editado!');
+        }
     }
 
     /**

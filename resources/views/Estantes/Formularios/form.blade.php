@@ -1,3 +1,8 @@
+@if (isset($estante)){{--Si se esta editando --}}
+  @php $opcion = ($estante->localizacion) ? '1' : '0'; @endphp {{--1 para recepción y 0 para farmacia--}}
+@else{{--Si se esta creando--}}
+  @php $opcion=null;@endphp
+@endif
 <div class="x_content">
   <center>
     <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
@@ -14,7 +19,14 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Número de niveles *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('cantidad',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número de niveles que posee el estante']) !!}
+      {!!Form::selectRange('cantidad', 1, 9,null,['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Localizacón *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
+        {!!Form::select('localizacion', ['1'=> 'Recepción','0'=> 'Farmacia'],$opcion, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
     </div>
   </div>
   <div class="ln_solid"></div>

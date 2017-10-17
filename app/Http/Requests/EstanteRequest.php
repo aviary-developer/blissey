@@ -25,7 +25,8 @@ class EstanteRequest extends FormRequest
     {
         return [
             'codigo'=>'required | min:1 | max:5 |unique:estantes',
-            'cantidad'=>'required | min:1 | max:9',
+            'cantidad'=>'required',
+            'localizacion'=>'required',
         ];
     }
     public function messages(){
@@ -33,7 +34,11 @@ class EstanteRequest extends FormRequest
             'codigo.required'=>'El campo código identificador es obligatorio',
             'codigo.min'=>'El campo código identificador necesita 1 caracteres mínimos',
             'codigo.max'=>'El campo código identificador necesita 3 caracteres máximo',
-            'codigo.unique'=>'',
+            'codigo.unique'=>'El campo código identificador ya ha sido registrado',
+
+            'cantidad.required'=>'El campo n° de niveles es obligatorio',
+
+            'localizacion.required'=>'El localización es obligatorio',
        ];
     }
 }

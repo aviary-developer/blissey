@@ -29,9 +29,6 @@
           <li role="presentation" class="active">
             <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información general</a>
           </li>
-          <li role="presentation" class="">
-            <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
-          </li>
         </ul>
         {{-- Contenido del tab --}}
         <div id="myTabContent" class="tab-content">
@@ -46,6 +43,16 @@
                 <td>{{ $estante->cantidad}}</td>
               </tr>
               <tr>
+                <th>Localización</th>
+                <td>
+                  @if($estante->localizacion)
+                    Recepción
+                  @else
+                    Farmacia
+                  @endif
+                </td>
+              </tr>
+              <tr>
                 <th>Estado</th>
                 <td>{{$valorEstado}}</td>
               </tr>
@@ -58,10 +65,6 @@
                 <td>{{ $estante->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
             </table>
-          </div>
-          {{-- Otra pestaña --}}
-          <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-            Otra cosa
           </div>
         </div>
       </div>

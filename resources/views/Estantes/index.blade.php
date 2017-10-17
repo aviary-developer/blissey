@@ -66,6 +66,7 @@
               <th>#</th>
               <th>Código identificador</th>
               <th>N° de niveles</th>
+              <th>Localización</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -79,7 +80,13 @@
                   <td>{{ $correlativo }}</td>
                   <td>{{ $estante->codigo}}</td>
                   <td>{{ $estante->cantidad}}</td>
-
+                  <td>
+                    @if($estante->localizacion)
+                      Recepción
+                    @else
+                      Farmacia
+                    @endif
+                  </td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Estantes.Formularios.activate')

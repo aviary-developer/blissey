@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estante extends Model
 {
-  protected $fillable = ['codigo', 'cantidad','estado'];
+  protected $fillable = ['codigo', 'cantidad','estado','localizacion'];
 
   public static function buscar($codigo,$estado){
     return Estante::codigo($codigo)->estado($estado)->orderBy('codigo')->paginate(10);
@@ -22,12 +22,5 @@ class Estante extends Model
       $estado = 1;
     }
     $query->where('estado',$estado);
-  }
-
-  public static function codigoId($codigo){ //Recibe código y retorna id
-    $estante=Estante::where('codigo','=',$codigo)->get();
-    foreach ($estante as $fila) {
-      return $fila->codigo;
-    }
   }
 }
