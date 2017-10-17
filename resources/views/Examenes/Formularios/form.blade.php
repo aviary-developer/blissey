@@ -24,8 +24,9 @@
   </div>
   <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a></label>
-  </div>
+        <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a>
+      </label>
+  </div><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Parametro</button>
   <div class="ln_solid"></div>
         <div class="clearfix"></div>
             <div class="seccionesExamenes x_panel" id="seccionesExamenes">
@@ -39,3 +40,26 @@
     </center>
   </div>
 </div>
+<!--INICIO DE MODAL DE PARAMETRO-->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">Nuevo parametro</h4>
+                        </div>
+                        <div class="modal-body">
+                          {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'parametros.store','method' =>'POST','autocomplete'=>'off'])!!}
+                          @include('Parametros.Formularios.form')
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                          <button type="button" class="btn btn-primary">Guardar</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>

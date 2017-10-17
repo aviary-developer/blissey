@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Examen;
+use App\Unidad;
 use App\Parametro;
 use Redirect;
 use Carbon\Carbon;
@@ -33,7 +34,8 @@ class ExamenController extends Controller
      */
     public function create()
     {
-        return view('Examenes.create');
+      $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+        return view('Examenes.create',compact('unidades'));
     }
 
     /**
