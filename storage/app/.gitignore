@@ -1,3 +1,4 @@
-*
-!public/
+public/firma
+public/sello
+public/foto
 !.gitignore
