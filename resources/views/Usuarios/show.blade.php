@@ -33,7 +33,7 @@
                 <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Datos de usuario</a>
               </li>
               <li role="presentation" class="">
-                <a href="#tab_content3" id="otros-tab3" role="tab" data-toggle="tab" aria-expanded="false">Bitacora</a>
+                <a href="#tab_content3" id="otros-tab3" role="tab" data-toggle="tab" aria-expanded="false">Historial</a>
               </li>
             @endif
           </ul>

@@ -3,7 +3,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Bitacora
+        <h2>Historial
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <br>
-        @include('Bitacoras.form.tabla');
+        @include('Bitacoras.form.tabla')
         <div class="ln_solid"></div>
         <center>
            {!! str_replace ('/?', '?', $bitacoras->appends(Request::only(['usuario','fecha_max','fecha_min','store','update','activate','desactivate','destroy','login','logout']))->render ()) !!}
@@ -32,7 +32,7 @@
 
   {{-- Modal --}}
   <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    {!!Form::open(['route'=>'bitacoras.index','method'=>'GET','role'=>'search'])!!}
+    {!!Form::open(['route'=>'historial.index','method'=>'GET','role'=>'search'])!!}
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
 

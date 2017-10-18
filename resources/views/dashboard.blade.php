@@ -145,8 +145,8 @@
                           </ul>
                         </li>
                       @endif
+                      <li><a href={{asset('/historial')}}>Historial</a></li>
                     @endif
-                    <li><a href="fixed_footer.html">Base de datos</a></li>
                   </ul>
                 </li>
               </ul>
@@ -220,7 +220,7 @@
   </div>
   <!-- footer content -->
   <footer>
-    <div class="pull-right" style="color:#FFF">
+    <div class="pull-right" style="color:#000">
       UES-FMP 2017
     </div>
     <div class="clearfix"></div>

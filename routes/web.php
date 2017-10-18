@@ -89,7 +89,7 @@ Route::match(['get','post'],'/activateVisitador/{id}','DependienteController@act
 Route::match(['get','post'],'/destroyVisitador/{id}','DependienteController@destroy');
 
 //Ruta de bitacoras
-Route::resource('bitacoras','BitacoraController');
+Route::resource('historial','BitacoraController');
 
 Auth::routes();
 
