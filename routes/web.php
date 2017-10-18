@@ -102,4 +102,10 @@ Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authent
 Route::resource('estantes','EstanteController');
 Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');
 Route::match(['get','post'],'/activateEstante/{id}','EstanteController@activate');
-Route::match(['get','post'],'/destroyVisitador/{id}','EstanteController@destroy');
+Route::match(['get','post'],'/destroyEstante/{id}','EstanteController@destroy');
+
+//Rutas de componentes
+Route::resource('componentes','ComponenteController');
+Route::match(['get','post'],'/desactivateComponente/{id}','ComponenteController@desactivate');
+Route::match(['get','post'],'/activateComponente/{id}','ComponenteController@activate');
+Route::match(['get','post'],'/destroyComponente/{id}','ComponenteController@destroy');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dependiente extends Model
 {
-    protected $fillable=['nombre','apellido','telefono','f_proveedor'];
+    protected $fillable=['nombre','apellido','telefono','f_proveedor','estado'];
 
     public static function buscar($id_p,$estado,$nombre){
         return Dependiente::nombre($nombre)->estado($estado)->f_proveedor($id_p)->orderBy('nombre')->paginate(10);
