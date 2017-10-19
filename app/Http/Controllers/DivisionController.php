@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Division;
 use Illuminate\Http\Request;
 use App\Http\Requests\DivisionRequest;
+use Redirect;
 
 class DivisionController extends Controller
 {
@@ -53,8 +54,9 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function show(Division $division)
+    public function show( $id)
     {
+          $division=Division::find($id);
           return view('Divisiones.show',compact('division'));
     }
 
@@ -64,8 +66,9 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function edit(Division $division)
+    public function edit($id)
     {
+        $division=Division::find($id);
         return view('Divisiones.edit',compact('division'));
     }
 
@@ -76,8 +79,9 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Division $division)
+    public function update(Request $request,$id)
     {
+      $division=Division::find($id);
       if($request->nombre==$division->nombre){
         return redirect('/divisiones?estado'.$division->estado)->with('info', '¡No hay cambios!');
       }else{

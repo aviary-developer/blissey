@@ -1,9 +1,9 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/division/'.$division->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/divisiones/'.$division->id)!!} class="btn btn-xs btn-info">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/division/'.$division->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a href={!! asset('/divisiones/'.$division->id.'/edit')!!} class="btn btn-xs btn-primary">
     <i class="fa fa-edit"></i>
   </a>
   <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$division->id.");'" !!}/>
@@ -26,7 +26,7 @@
     <a href={!! asset('/division'.$regreso)!!} class="btn btn-dark btn-ms">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/division/'.$division->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/divisiones/'.$division->id.'/edit')!!} class="btn btn-dark btn-ms">
       <i class="fa fa-edit"></i> Editar
     </a>
     @if ($division->estado)
