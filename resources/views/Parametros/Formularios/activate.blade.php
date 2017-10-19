@@ -62,7 +62,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateReactivo/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateParametro/'+id);
       $('#formulario').submit();
       swal(
         '¡Activado!',
@@ -96,7 +96,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyReactivo/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyParametro/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -129,7 +129,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateReactivo/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateParametro/'+id);
       $('#formulario').submit();
       swal(
         '¡Desactivado!',
