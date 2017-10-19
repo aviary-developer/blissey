@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Componente;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComponenteRequest;
+use Redirect;
 
 class ComponenteController extends Controller
 {
@@ -20,7 +21,7 @@ class ComponenteController extends Controller
       $componentes = Componente::buscar($nombre,$estado);
       $activos = Componente::where('estado',true)->count();
       $inactivos = Componente::where('estado',false)->count();
-      return view('Componentes.index',compact('componentes','estado','codigo','nombre','inactivos'));
+      return view('Componentes.index',compact('componentes','estado','nombre','activos','inactivos'));
     }
 
     /**
@@ -55,7 +56,7 @@ class ComponenteController extends Controller
      */
     public function show(Componente $componente)
     {
-        //
+        return view('Componentes.show',compact('componente'));
     }
 
     /**
@@ -66,7 +67,7 @@ class ComponenteController extends Controller
      */
     public function edit(Componente $componente)
     {
-        //
+        return view('Componentes.edit',compact('componente'));
     }
 
     /**
@@ -78,7 +79,15 @@ class ComponenteController extends Controller
      */
     public function update(Request $request, Componente $componente)
     {
-        //
+        if($request->nombre==$componente->nombre){
+          return redirect('/componentes?estado'.$componente->estado)->with('info', '¡No hay cambios!');
+        }else{
+          $validar['nombre']='required';
+          $this->validate($request,$validar);
+          $componente->fill($request->all());
+          $componente->save();
+          return redirect('/componentes')->with('mensaje','¡Editado!');
+        }
     }
 
     /**
@@ -87,8 +96,23 @@ class ComponenteController extends Controller
      * @param  \App\Componente  $componente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Componente $componente)
+    public function destroy($id)
     {
-        //
+      $componente = Componente::findOrFail($id);
+      $componente->delete();
+      return redirect('/componentes?estado=0');
+    }
+
+    public function desactivate($id){
+      $componentes = Componente::find($id);
+      $componentes->estado = false;
+      $componentes->save();
+      return Redirect::to('/componentes');
+    }
+    public function activate($id){
+      $componentes = Componente::find($id);
+      $componentes->estado = true;
+      $componentes->save();
+      return Redirect::to('/componentes?estado=0');
     }
 }

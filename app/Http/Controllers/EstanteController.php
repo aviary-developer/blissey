@@ -122,9 +122,9 @@ class EstanteController extends Controller
      */
     public function destroy($id)
     {
-      $estantes = Unidad::findOrFail($id);
+      $estantes = Estante::findOrFail($id);
       $estantes->delete();
-      return redirect('/unidades?estado=0');
+      return redirect('/estantes?estado=0');
     }
 
     public function desactivate($id){
