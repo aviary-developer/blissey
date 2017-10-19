@@ -11,7 +11,7 @@ $('#agregarSeccionExamen').click(function(){
   "</ul><div class='clearfix'></div></div>"+
   "<div class='x_content'>"+
   "<div class='col-md-9 col-sm-9 col-xs-6'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span>"+
-  "<select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'></select>"+
+  "<select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select>"+
   "</div></div></div></div>" );
   llenarParametros();
   contadorSelectsParametros++;
@@ -44,13 +44,28 @@ function llenarParametros(){
       		type:'POST',
       		dataType:'json',
       		data:{nombreParametro:nombre,unidad:unidad,valorMinimo:valorMinimo,valorMaximo:valorMaximo,valorPredeterminado:valorPredeterminado},
-            success: function(){
-              $(".modal").modal('toggle');
-              swal('Parametro Registrado!','','success')}
+          success: function(){
+            $(".modal").modal('toggle');
+          }
       	});
-        var paso=0;
-        for (paso = 0; paso <= contadorSelectsParametros; paso++) {
-            console.log('Nombre paso'+paso);
+
+        var paso=-1;
+        swal({
+  title: 'Parametro registrado!',
+  text: 'Cargando nuevo parametro',
+  timer: 3000,
+  onOpen: function () {
+    swal.showLoading()
+  }
+}).then(
+  function () {},
+  function (dismiss) {
+    if (dismiss === 'timer') {
+      console.log('cerrado timer de parametros en examenes')
+    }
+  }
+)
+        for (paso = -1; paso < contadorSelectsParametros; paso++) {
         rellenarCombosParametros(paso);
       }
   });
@@ -61,7 +76,6 @@ function llenarParametros(){
         		parametros.empty();
         		$(res).each(function(key,value){
         			parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
-              console.log('Nombre paso'+paso+': '+value.nombreParametro);
         		});
         	});
   }
