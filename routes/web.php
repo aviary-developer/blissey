@@ -68,6 +68,12 @@ Route::match(['get','post'],'/desactivatePresentacion/{id}','PresentacionControl
 Route::match(['get','post'],'/activatePresentacion/{id}','PresentacionController@activate');
 Route::match(['get','post'],'/destroyPresentacion/{id}','PresentacionController@destroy');
 
+//Rutas de productos
+Route::resource('productos','ProductoController');
+Route::match(['get','post'],'/desactivateProducto/{id}','ProductoController@desactivate');
+Route::match(['get','post'],'/activateProducto/{id}','ProductoController@activate');
+Route::match(['get','post'],'/destroyProducto/{id}','ProductoController@destroy');
+
 //Rutas de examenes
 Route::resource('examenes','ExamenController');
 Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');
