@@ -98,6 +98,9 @@ class DependienteController extends Controller
           return redirect('/visitadores?estado='.$visitador->estado.'&id='.$visitador->f_proveedor)->with('info', '¡No hay cambios!');
         }else{
           $this->validate($request,$validar);
+          $visitador->fill($request->all());
+          $visitador->save();
+          return redirect('/visitadores?estado='.$visitador->estado.'&id='.$visitador->f_proveedor)->with('mensaje','¡Editado!');
         }
     }
 

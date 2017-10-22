@@ -169,4 +169,20 @@ class ProveedorController extends Controller
         echo "true";
       }
     }
+
+    public function existeCorreo($correo){
+      $conteo=Proveedor::where('correo','=',$correo)->count();
+      if($conteo==0){
+        echo "false";
+      }else{
+        echo "true";
+      }
+    }
+
+    public function existeTelefono($telefono){
+      $conteo=Proveedor::where('telefono','=',$telefono)->count();
+      if($conteo==0){
+      }else{
+      }
+    }
 }

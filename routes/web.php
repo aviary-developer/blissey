@@ -128,4 +128,6 @@ Route::match(['get','post'],'/desactivateDivision/{id}','DivisionController@desa
 Route::match(['get','post'],'/activateDivision/{id}','DivisionController@activate');
 Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
 
-Route::match(['get','post'],'/existeNombre/{nombre}','ProveedorController@existeNombre');
+Route::match(['get','post'],'/existeNombreProveedor/{nombre}','ProveedorController@existeNombre');
+Route::match(['get','post'],'/existeCorreoProveedor/{correo}','ProveedorController@existeCorreo');
+Route::match(['get','post'],'/existeTelefonoProveedor/{telefono}','ProveedorController@existeTelefono');
