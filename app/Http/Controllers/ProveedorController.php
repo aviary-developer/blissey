@@ -182,7 +182,9 @@ class ProveedorController extends Controller
     public function existeTelefono($telefono){
       $conteo=Proveedor::where('telefono','=',$telefono)->count();
       if($conteo==0){
+        echo "false";
       }else{
+        echo "true";
       }
     }
 }
