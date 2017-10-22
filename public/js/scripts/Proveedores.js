@@ -29,15 +29,25 @@ function validarNombre(){
   nombre=$("#nombre").val();
   val= true;
     cont=0;
+
     var errores= [];
+    if(nombre!=""){
+      $.get('/blissey/public/existeNombre/'+nombre,function(data){
+        if(data=="true"){
+          errores[cont]="El campo drogería ya esta registrado";
+          cont=cont+1;
+        }
+      });
+    }
     if(nombre==""){
       errores[cont]="El campo drogería es obligatorio";
+
       cont=cont+1;
     }else if(nombre.length<5){
       errores[cont]="El campo drogería debe contener mínimo 5 caracteres";
       cont=cont+1;
-    }else if(nombre.length>40){
-      errores[cont]="El campo drogería debe contener máximo 5 caracteres";
+    }else if(nombre.length>50){
+      errores[cont]="El campo drogería debe contener máximo 50 caracteres";
       cont=cont+1;
     }
     if(cont>0){
@@ -77,7 +87,7 @@ function validarCorreo(){
     return val;
 }
 function validarTelefono(){
-  telefono=$("#Telefono").val();
+  telefono=$("#telefono").val();
   val= true;
     cont=0;
     var errores= [];

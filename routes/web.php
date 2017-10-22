@@ -127,3 +127,5 @@ Route::resource('divisiones','DivisionController');
 Route::match(['get','post'],'/desactivateDivision/{id}','DivisionController@desactivate');
 Route::match(['get','post'],'/activateDivision/{id}','DivisionController@activate');
 Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
+
+Route::match(['get','post'],'/existeNombre/{nombre}','ProveedorController@existeNombre');

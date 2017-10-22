@@ -160,4 +160,13 @@ class ProveedorController extends Controller
       $proveedores->save();
       return Redirect::to('/proveedores?estado=0');
     }
+
+    public function existeNombre($nombre){
+      $conteo=Proveedor::where('nombre','=',$nombre)->count();
+      if($conteo==0){
+        echo "false";
+      }else{
+        echo "true";
+      }
+    }
 }
