@@ -34,11 +34,11 @@ class DependienteRequest extends FormRequest
         return [
             'nombre.required'=>'El campo nombre es obligatorio',
             'nombre.min'=>'El campo nombre necesita 3 caracteres mínimos',
-            'nombre.max'=>'El campo nombre necesita 3 caracteres máximo',
+            'nombre.max'=>'El campo nombre necesita 25 caracteres máximo',
 
             'apellido.required'=>'El campo apellido es obligatorio',
             'apellido.min'=>'El campo apellido necesita 3 caracteres mínimos',
-            'apellido.max'=>'El campo apellido necesita 3 caracteres máximo',
+            'apellido.max'=>'El campo apellido necesita 25 caracteres máximo',
 
             'telefono.required'=>'El campo teléfono es obligatorio',
             'telefono.size'=>'El campo teléfon debe contener 9 caracteres incluyendo el guión',

@@ -21,7 +21,11 @@
             <td>{{$nombrev[$a]}}</td>
             <td>{{$apellidov[$a]}}</td>
             <td>{{$telefonov[$a]}}</td>
-            <td class='deleteVisitador' style='cursor:pointer;'>Eliminar</td>
+            <td class='deleteVisitador' style='cursor:pointer;'>
+              <a class='btn btn-danger btn-xs'>
+                <i class='fa fa-remove'></i>
+              </a>
+            </td>
           </tr>
         @endfor
       @endif

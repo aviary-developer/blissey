@@ -34,22 +34,22 @@
 <div class="form-group"><!-- Temporal visitador nombre-->
   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
   <div class="col-md-9 col-sm-9 col-xs-12">
-    <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
     {!! Form::text('tvn',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo visitador','id'=>'tvn']) !!}
   </div>
 </div>
 <div class="form-group"><!-- Temporal visitador apellido-->
   <label class="control-label col-md-3 col-sm-3 col-xs-12">Apellido *</label>
   <div class="col-md-9 col-sm-9 col-xs-12">
-    <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-    {!! Form::text('tva',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo visitador','id'=>'tva']) !!}
+    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    {!! Form::text('tva',null,['class'=>'form-control has-feedback-left','placeholder'=>'Apellido del nuevo visitador','id'=>'tva']) !!}
   </div>
 </div>
 <div class="form-group"><!-- Temporal visitador teléfono-->
   <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono *</label>
   <div class="col-md-9 col-sm-9 col-xs-12">
     <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-    {!! Form::text('tvt',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo visitador','id'=>'tvt']) !!}
+    {!! Form::text('tvt',null,['class'=>'form-control has-feedback-left','placeholder'=>'Teléfono del nuevo visitador','id'=>'tvt','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
   </div>
 </div>
 <center>
