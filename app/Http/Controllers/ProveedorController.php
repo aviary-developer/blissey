@@ -7,6 +7,7 @@ use App\Proveedor;
 use App\Dependiente;
 use Redirect;
 use App\Http\Requests\ProveedoresRequest;
+use Validator;
 
 class ProveedorController extends Controller
 {
@@ -41,8 +42,26 @@ class ProveedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProveedoresRequest $request)
+    public function store(Request $request)
     {
+        $valida= Validator::make($request->all(),[
+          'nombre'=>'required| min:5 |max:40 |unique:proveedors',
+          'correo'=>'required| email |unique:proveedors',
+          'telefono'=>'required| size:9 |unique:proveedors',
+          'nombrev'=>'required'
+        ],[
+          'nombrev.required'=>'No se ha ingresado ningún visitador'
+        ]
+      );
+        if($valida->fails()){
+          $nombre=$request->nombre;
+          $correo=$request->correo;
+          $telefono=$request->telefono;
+          $nombrev=$request->nombrev;
+          $apellidov=$request->apellidov;
+          $telefonov=$request->telefonov;
+        return view('Proveedores.create',compact('nombre','correo','telefono','nombrev','apellidov','telefonov'))->withErrors($valida->errors());
+      }else{
         Proveedor::create([
             'nombre'=>$request['nombre'],
             'correo'=>$request['correo'],
@@ -63,6 +82,7 @@ class ProveedorController extends Controller
             ]);
           }
           return redirect('/proveedores')->with('mensaje','¡Guardado!');
+          }
     }
 
     /**
