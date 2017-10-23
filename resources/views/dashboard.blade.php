@@ -17,6 +17,8 @@
   {!!Html::style('assets/nprogress/nprogress.css')!!}
   <!-- iCheck -->
   {!!Html::style('assets/iCheck/skins/flat/green.css')!!}
+  <!-- iCheck -->
+  {!!Html::style('css/animate.css')!!}
 
   <!-- bootstrap-progressbar -->
   {!!Html::style('assets/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}

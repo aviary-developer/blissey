@@ -88,16 +88,40 @@ function rellenarCombosParametros(paso){
    var valorParametro=parametro.value;
    var textoParametro=parametro.options[parametro.selectedIndex].text;
    var tablaActual=$("#tablaParametros"+paso);
+   var tablaAVerificar=$("#tablaParametros"+paso+" tbody tr");
    var html_texto = "<tr>"+
    "<td>"+
-   "<input type='hidden' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>"+
+   "<input type='hidden' id='parametrosEnTabla"+paso+"[]' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>"+
    textoParametro+
    "</td>"+
    "<td>"+
-     "<button type = 'button' name='button' class='btn btn-danger btn-xs' onClick='eliminarParametroEnTabla"+paso+"'>"+
+     "<button type = 'button' name='button' class='btn btn-danger btn-xs' onClick='eliminarParametroEnTabla(this);'>"+
        "<i class='fa fa-remove'></i>"+
      "</button>"+
    "</td>"+
    "</tr>";
-   $(tablaActual).append(html_texto);
+   if(verificarParametroEnTabla(tablaAVerificar,textoParametro)==true){
+   $(tablaActual).append(html_texto);}else{
+     swal({
+  type: 'error',
+  title: '¡Ya esta agregado!',
+  showConfirmButton: false,
+  timer: 1500,
+  animation: false,
+  customClass: 'animated tada'
+});
+   }
+ }
+ function verificarParametroEnTabla(tabla,nombreParametro){
+   var bandera=true;
+   $(tabla).each(function(key,value){
+     if($(this).text()==nombreParametro){
+       bandera=false;
+       console.log($(this).text()+" IGUALES "+nombreParametro)
+     }
+ });
+ return bandera;
+ }
+ function eliminarParametroEnTabla(tabla){
+   $(tabla).parent('td').parent('tr').remove();
  }
