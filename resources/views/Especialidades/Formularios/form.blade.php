@@ -15,7 +15,7 @@
     <center>
       {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/especialidades') !!} class="btn btn-default">Cancelar</a>
+      <a href={!! asset($ruta) !!} class="btn btn-default">Cancelar</a>
     </center>
   </div>
 </div>

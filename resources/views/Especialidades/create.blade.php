@@ -3,6 +3,7 @@
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'especialidades.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
     $fecha = Carbon\Carbon::now();
+    $ruta = '/especialidades';
   @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">

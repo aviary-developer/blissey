@@ -10,7 +10,7 @@
         <h2>Producto<small>Nuevo</small></h2>
         <div class="clearfix"></div>
       </div>
-      @include('Productos.Formularios.form')
+      @include('Productos.Formularios.productos_form')
     </div>
   </div>
   {!!Form::close()!!}
