@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Producto;
+use App\Presentacion;
+use App\Division;
+use App\Proveedor;
+use App\Unidad;
+use App\Componente;
 use Illuminate\Http\Request;
 use Bitacora;
 use Rediret;
+use Response;
 
 class ProductoController extends Controller
 {
@@ -31,7 +37,12 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('Productos.create');
+      $presentaciones = Presentacion::where('estado',true)->orderBy('nombre','asc')->get();
+      $proveedores = Proveedor::where('estado',true)->orderBy('nombre','asc')->get();
+      $divisiones = Division::where('estado',true)->orderBy('nombre','asc')->get();
+      $unidades = Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+      //$componentes = Componente::where('estado',true)->orderBy('nombre','asc')->get();
+      return view('Productos.create', compact('presentaciones','proveedores','divisiones','unidades'));
     }
 
     /**
@@ -121,5 +132,10 @@ class ProductoController extends Controller
       $productos->save();
       Bitacora::bitacora('activate','productos','productos',$id);
       return Redirect::to('/productos?estado=0');
+    }
+
+    public function buscarComponentes($texto){
+      $componentes = Componente::where('nombre','ilike','%'.$texto.'%')->orderBy('nombre','asc')->get();
+      dd(Response::json($componentes));
     }
 }

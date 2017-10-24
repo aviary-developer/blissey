@@ -1,8 +1,4 @@
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
-  <br />
   <div class="form_wizard wizard_horizontal" id="wizard">
     {{-- Encabezado del wizard --}}
     <ul class="wizard_steps">
@@ -34,6 +30,9 @@
         </a>
       </li>
     </ul>
+    <center>
+      <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
+    </center>
     {{-- Contenido del wizard --}}
     <div id="step-1" onmouseover="verAlerta1()">
       <h4 class="StepTitle">Datos Personales</h4>

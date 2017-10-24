@@ -73,6 +73,7 @@ Route::resource('productos','ProductoController');
 Route::match(['get','post'],'/desactivateProducto/{id}','ProductoController@desactivate');
 Route::match(['get','post'],'/activateProducto/{id}','ProductoController@activate');
 Route::match(['get','post'],'/destroyProducto/{id}','ProductoController@destroy');
+Route::match(['get','post'],'/buscarComponenteProducto/{id}','ProductoController@buscarComponentes');
 
 //Rutas de examenes
 Route::resource('examenes','ExamenController');

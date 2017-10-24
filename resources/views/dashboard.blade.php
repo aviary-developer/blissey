@@ -287,6 +287,7 @@
 {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
 {!!Html::script('js/scripts/Usuarios.js')!!}
 {!!Html::script('js/scripts/Examenes.js')!!}
+{!!Html::script('js/scripts/Productos.js')!!}
 @section('scripts')
 @show
 
