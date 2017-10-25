@@ -8,10 +8,13 @@ use App\Division;
 use App\Proveedor;
 use App\Unidad;
 use App\Componente;
+use App\Bitacora;
+use App\DivisionProducto;
+use App\ComponenteProducto;
 use Illuminate\Http\Request;
-use Bitacora;
-use Rediret;
+use Redirect;
 use Response;
+use DB;
 
 class ProductoController extends Controller
 {
@@ -53,7 +56,36 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-      $productos = Producto::create($request->All());
+      DB::beginTransaction();
+
+      try{
+        $productos = Producto::create($request->All());
+        if(isset($request->divisiones)){
+          foreach ($request->divisiones as $key => $division) {
+            $divisiones_productos = new DivisionProducto;
+            $divisiones_productos->f_producto = $productos->id;
+            $divisiones_productos->f_division = $request->divisiones[$key];
+            $divisiones_productos->cantidad = $request->cantidades[$key];
+            $divisiones_productos->ganancia = $request->ganancias[$key];
+            $divisiones_productos->save();
+          }
+        }
+        if(isset($request->componentes)){
+          foreach ($request->componentes as $key => $componentes) {
+            $componentes_productos = new ComponenteProducto;
+            $componentes_productos->f_producto = $productos->id;
+            $componentes_productos->f_unidad = $request->unidades[$key];
+            $componentes_productos->f_componente = $request->componentes[$key];
+            $componentes_productos->cantidad = $request->cantidades_componentes[$key];
+            $componentes_productos->save();
+          }
+        }
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/productos')->with('mensaje', 'Algo salio mal');
+      }
+
+      DB::commit();
       Bitacora::bitacora('store','productos','productos',$productos->id);
       return redirect('/productos')->with('mensaje', '¡Guardado!');
     }
@@ -67,7 +99,9 @@ class ProductoController extends Controller
     public function show($id)
     {
       $producto = Producto::find($id);
-      return view('Productos.show',compact('producto'));
+      $divisiones = DivisionProducto::where('f_producto',$id)->orderBy('cantidad','asc')->get();
+      $componentes = ComponenteProducto::where('f_producto',$id)->orderBy('cantidad','asc')->get();
+      return view('Productos.show',compact('producto','divisiones','componentes'));
     }
 
     /**

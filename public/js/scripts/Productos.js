@@ -95,7 +95,7 @@ $(document).on('ready',function(){
       "</td>"+
       "<td>"+
         "<input type='hidden' name='componentes[]' value ='"+id+"'>"+
-        "<input type='hidden' name='cantidades[]' value ='"+cantidad+"'>"+
+        "<input type='hidden' name='cantidades_componentes[]' value ='"+cantidad+"'>"+
         "<input type='hidden' name='unidades[]' value ='"+unidad_id+"'>"+
         "<button type='button' class='btn btn-xs btn-danger' id='eliminar_componente'>"+
           "<i class='fa fa-remove'></i>"+

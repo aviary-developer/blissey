@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'especialidades.store','method' =>'POST','autocomplete'=>'off'])!!}
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'productos.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
     $fecha = Carbon\Carbon::now();
   @endphp

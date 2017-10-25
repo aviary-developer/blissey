@@ -11,7 +11,7 @@ class Producto extends Model
   ];
 
   public static function buscar($nombre, $estado){
-    return Especialidad::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return Producto::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
   }
 
   public function scopeNombre($query, $nombre){

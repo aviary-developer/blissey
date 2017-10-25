@@ -23,7 +23,7 @@
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
-            <small>Activas</small>
+            <small>Activos</small>
           @endif
         </h2>
         <div class="clearfix"></div>
@@ -36,7 +36,7 @@
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/productos?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
-                  <i class="fa fa-check"></i> Activas
+                  <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
                 @else
                   <i class="fa fa-trash"></i> Papelera

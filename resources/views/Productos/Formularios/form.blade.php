@@ -125,7 +125,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
             {!! Form::text('cantidad_componente',1,['id'=>'cantidad_componente','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de componente','min'=>'0.00']) !!}
@@ -155,7 +155,7 @@
         <table class="table" id="tablaComponente">
           <thead>
             <th>Componente</th>
-            <th>Cantidad</th>
+            <th>Contenido</th>
             <th style="width : 80px">Acción</th>
           </thead>
         </table>
