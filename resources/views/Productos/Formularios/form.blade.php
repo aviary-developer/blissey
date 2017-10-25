@@ -85,14 +85,14 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','min'=>'0.00']) !!}
+            {!! Form::number('cantidad',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','min'=>'1']) !!}
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Ganancia ($) *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::number('ganancia',null,['id'=>'ganancia','class'=>'form-control has-feedback-left','placeholder'=>'Ganancia por división','min'=>'1.00','step'=>'0.05']) !!}
+            {!! Form::number('ganancia','0.00',['id'=>'ganancia','class'=>'form-control has-feedback-left','placeholder'=>'Ganancia por división','min'=>'1.00','step'=>'0.05']) !!}
           </div>
         </div>
         <center>
@@ -135,7 +135,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-            <select class="form-control has-feedback-left" name="divisionSelect" id = "division">
+            <select class="form-control has-feedback-left" name="divisionSelect" id = "unidad">
               @foreach ($unidades as $unidad)
                 <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
               @endforeach
@@ -143,7 +143,7 @@
           </div>
         </div>
         <h4 class="StepTitle">Resultado de busqueda</h4>
-        <table class="table" id="tablaComponente">
+        <table class="table" id="tablaBuscarComponente">
           <thead>
             <th>Componente</th>
             <th style="width : 80px">Acción</th>
