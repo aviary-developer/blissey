@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDetalleTransaccionTable extends Migration
+class DeletelTransacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddDetalleTransaccionTable extends Migration
      */
     public function up()
     {
-      Schema::table('detalle_transacions', function (Blueprint $table) {
-          $table->integer('f_reactivo')->unsigned()->nullable();
-          $table->foreign('f_reactivo')->references('id')->on('reactivos');
+      Schema::table('transacions', function (Blueprint $table) {
+          $table->dropColumn('localizacion');
       });
     }
 
