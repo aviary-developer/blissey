@@ -94,6 +94,9 @@ $(document).on('ready',function(){
         cantidad+" "+unidad+
       "</td>"+
       "<td>"+
+        "<input type='hidden' name='componentes[]' value ='"+id+"'>"+
+        "<input type='hidden' name='cantidades[]' value ='"+cantidad+"'>"+
+        "<input type='hidden' name='unidades[]' value ='"+unidad_id+"'>"+
         "<button type='button' class='btn btn-xs btn-danger' id='eliminar_componente'>"+
           "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -116,5 +119,13 @@ $(document).on('ready',function(){
 
       $("#componente").focus();
     }
+  });
+
+  $("#tablaComponente").on('click','#eliminar_componente',function(e){
+    e.preventDefault();
+    var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var indice = componentes_agregados.indexOf(elemento);
+    componentes_agregados.splice(indice);
+    $(this).parent('td').parent('tr').remove();
   });
 });
