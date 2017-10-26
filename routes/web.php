@@ -20,6 +20,13 @@ Route::match(['get','post'],'/desactivateReactivo/{id}','ReactivoController@desa
 Route::match(['get','post'],'/activateReactivo/{id}','ReactivoController@activate');
 Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
 
+//Rutas de Secciones Examenes
+Route::resource('secciones','SeccionController');
+Route::match(['get','post'],'/desactivateSeccion/{id}','SeccionController@desactivate');
+Route::match(['get','post'],'/activateSeccion/{id}','SeccionController@activate');
+Route::match(['get','post'],'/destroySeccion/{id}','SeccionController@destroy');
+Route::match(['get','post'],'/llenarSeccionExamenes','SeccionController@llenarSeccionExamenes');
+
 //Rutas de pacientes
 Route::group(['middleware'=>'recepcion'], function()
 {

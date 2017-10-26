@@ -46,8 +46,42 @@ class ExamenController extends Controller
      */
     public function store(Request $request)
     {
-      return $request;
-      Examen::create($request->All());
+      dd($request);
+      DB::beginTransaction();
+
+      try{
+        $examenNuevo = new Examen;
+        $examenNuevo->nombreExamen=$request->nombreExamen;
+        $examenNuevo->tipoMuestra=$request->tipoMuestra;
+        $examenNuevo->save();
+
+        if(isset($request->divisiones)){
+          foreach ($request->divisiones as $key => $division) {
+            $divisiones_productos = new DivisionProducto;
+            $divisiones_productos->f_producto = $productos->id;
+            $divisiones_productos->f_division = $request->divisiones[$key];
+            $divisiones_productos->cantidad = $request->cantidades[$key];
+            $divisiones_productos->ganancia = $request->ganancias[$key];
+            $divisiones_productos->save();
+          }
+        }
+        if(isset($request->componentes)){
+          foreach ($request->componentes as $key => $componentes) {
+            $componentes_productos = new ComponenteProducto;
+            $componentes_productos->f_producto = $productos->id;
+            $componentes_productos->f_unidad = $request->unidades[$key];
+            $componentes_productos->f_componente = $request->componentes[$key];
+            $componentes_productos->cantidad = $request->cantidades_componentes[$key];
+            $componentes_productos->save();
+          }
+        }
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/productos')->with('mensaje', 'Algo salio mal');
+      }
+
+      DB::commit();
+      Bitacora::bitacora('store','productos','productos',$productos->id);
       return redirect('/examenes')->with('mensaje', '¡Guardado!');
     }
 

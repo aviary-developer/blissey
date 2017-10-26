@@ -5,7 +5,7 @@ $('#agregarSeccionExamen').click(function(){
   "<div class='x_title'>"+
   "<div class='col-md-9 col-sm-9 col-xs-12'>"+
   "<span class='fa fa-bars form-control-feedback left' aria-hidden='true'></span>"+
-  "<input type='text' name='nombreSeccion[]' class='form-control has-feedback-left' placeholder='Nombre de sección...' required></div>"+
+  "<select class='form-control has-feedback-left' name='selectSeccion"+contadorSelectsParametros+"' id='selectSeccion"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
   "<ul class='nav navbar-right panel_toolbox'>"+
   "<li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>"+
   "</ul><div class='clearfix'></div></div>"+
@@ -15,12 +15,24 @@ $('#agregarSeccionExamen').click(function(){
   "<table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th style='width : 80px'>Acción</th></thead>"+
   "<tbody></tbody></table>"+
   "</div></div></div></div>" );
+  llenarSecciones();
   llenarParametros();
   contadorSelectsParametros++;
 });
 function cerrarSeccion(seccion){
   var $BOX_PANEL=seccion.closest('.x_panel');
   $BOX_PANEL.remove();
+}
+function llenarSecciones(){
+  var secciones=$("#selectSeccion"+contadorSelectsParametros);
+  var ruta="/blissey/public/llenarSeccionExamenes";
+  $.get(ruta,function(res){
+    secciones.empty();
+    secciones.append("<option value='0' readonly='readonly'>[Seleccione sección]</option>");
+    $(res).each(function(key,value){
+      secciones.append("<option value='"+value.id+"'>"+value.nombre+"</option>");
+    });
+  });
 }
 function llenarParametros(){
   var parametros=$("#selectParametrosExamenes"+contadorSelectsParametros);
