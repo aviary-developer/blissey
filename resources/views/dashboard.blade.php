@@ -288,6 +288,7 @@
 {!!Html::script('js/scripts/Usuarios.js')!!}
 {!!Html::script('js/scripts/Examenes.js')!!}
 {!!Html::script('js/scripts/Productos.js')!!}
+{!!Html::script('js/scripts/Transacciones.js')!!}
 @section('scripts')
 @show
 

@@ -23,8 +23,8 @@ class TransaccionController extends Controller
      */
     public function create()
     {
-        $tipo=0;
-        //$tipo=1;
+        //$tipo=0;
+        $tipo=1;
         return view('Transacciones.create',compact('tipo'));
     }
 

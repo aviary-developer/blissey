@@ -7,10 +7,14 @@
   <div class="col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Transacción<small>Nueva</small></h2>
+        @if ($tipo==1)
+          <h2>Venta<small>Nueva</small></h2>
+        @else
+          <h2>Compra<small>Nueva</small></h2>
+        @endif
         <div class="clearfix"></div>
       </div>
-      @include('Transacciones.Formularios.transacciones_form')
+      @include('Transacciones.Formularios.form')
     </div>
   </div>
   {!!Form::close()!!}
