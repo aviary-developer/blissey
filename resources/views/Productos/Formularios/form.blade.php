@@ -111,6 +111,32 @@
             <th>Ganancia</th>
             <th style="width : 80px">Acción</th>
           </thead>
+          <tbody>
+            @if (!$create)
+              @php
+                $auxiliar_division = 0;
+              @endphp
+              <input type="hidden" name="divisiones_eliminadas[]" value="ninguno" id="division_eliminada">
+              @foreach ($divisiones_productos  as $key => $division)
+                <tr>
+                  <td>{{$division->nombreDivision($division->f_division)}}</td>
+                  <td>{{$division->cantidad}}</td>
+                  <td>{{'$ '.number_format($division->ganancia,2,'.',',')}}</td>
+                  <td>
+                    <input type="hidden" id={{"division".$key}} value={{$division->f_division}}>
+                    <input type="hidden" value={{$division->id}}>
+                    <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_division_antigua">
+                      <i class="fa fa-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+                @php
+                  $auxiliar_division = $key;
+                @endphp
+              @endforeach
+              <input type="hidden" id="contador_division" value={{$auxiliar_division}}>
+            @endif
+          </tbody>
         </table>
       </div>
     </div>
@@ -158,6 +184,31 @@
             <th>Contenido</th>
             <th style="width : 80px">Acción</th>
           </thead>
+          <tbody>
+            @if (!$create)
+              @php
+                $auxiliar_componente = 0;
+              @endphp
+              <input type="hidden" name="componentes_eliminados[]" value="ninguno" id="componente_eliminado">
+              @foreach ($componentes_productos  as $key => $componente)
+                <tr>
+                  <td>{{$componente->nombreComponente($componente->f_componente)}}</td>
+                  <td>{{$componente->cantidad.' '.$componente->nombreUnidad($componente->f_unidad)}}</td>
+                  <td>
+                    <input type="hidden" id={{"componente".$key}} value={{$componente->f_componente}}>
+                    <input type="hidden" value={{$componente->id}}>
+                    <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_componente_antiguo">
+                      <i class="fa fa-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+                @php
+                  $auxiliar_componente = $key;
+                @endphp
+              @endforeach
+              <input type="hidden" id="contador_componente" value={{$auxiliar_componente}}>
+            @endif
+          </tbody>
         </table>
       </div>
     </div>

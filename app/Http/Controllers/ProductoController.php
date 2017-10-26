@@ -44,7 +44,6 @@ class ProductoController extends Controller
       $proveedores = Proveedor::where('estado',true)->orderBy('nombre','asc')->get();
       $divisiones = Division::where('estado',true)->orderBy('nombre','asc')->get();
       $unidades = Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-      //$componentes = Componente::where('estado',true)->orderBy('nombre','asc')->get();
       return view('Productos.create', compact('presentaciones','proveedores','divisiones','unidades'));
     }
 
@@ -113,7 +112,13 @@ class ProductoController extends Controller
     public function edit($id)
     {
       $productos = Producto::find($id);
-      return view('Productos.edit',compact('productos'));
+      $presentaciones = Presentacion::where('estado',true)->orderBy('nombre','asc')->get();
+      $proveedores = Proveedor::where('estado',true)->orderBy('nombre','asc')->get();
+      $divisiones = Division::where('estado',true)->orderBy('nombre','asc')->get();
+      $unidades = Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+      $divisiones_productos = DivisionProducto::where('f_producto',$id)->orderBy('cantidad','asc')->get();
+      $componentes_productos = ComponenteProducto::where('f_producto',$id)->orderBy('cantidad','asc')->get();
+      return view('Productos.edit',compact('productos','presentaciones','unidades','proveedores','divisiones','divisiones_productos','componentes_productos'));
     }
 
     /**
@@ -125,9 +130,56 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $productos = Producto::find($id);
-      $productos->fill($request->all());
-      $productos->save();
+      DB::beginTransaction();
+
+      try{
+        $productos = Producto::find($id);
+        $productos->fill($request->all());
+        $productos->save();
+        if(isset($request->divisiones)){
+          foreach ($request->divisiones as $key => $division) {
+            $divisiones_productos = new DivisionProducto;
+            $divisiones_productos->f_producto = $productos->id;
+            $divisiones_productos->f_division = $request->divisiones[$key];
+            $divisiones_productos->cantidad = $request->cantidades[$key];
+            $divisiones_productos->ganancia = $request->ganancias[$key];
+            $divisiones_productos->save();
+          }
+        }
+        if(isset($request->componentes)){
+          foreach ($request->componentes as $key => $componentes) {
+            $componentes_productos = new ComponenteProducto;
+            $componentes_productos->f_producto = $productos->id;
+            $componentes_productos->f_unidad = $request->unidades[$key];
+            $componentes_productos->f_componente = $request->componentes[$key];
+            $componentes_productos->cantidad = $request->cantidades_componentes[$key];
+            $componentes_productos->save();
+          }
+        }
+        foreach ($request->divisiones_eliminadas as $key => $division_e) {
+          if($division_e != "ninguno"){
+            $eliminar = DivisionProducto::findOrFail($division_e);
+            $eliminar->delete();
+          }
+        }
+        foreach ($request->componentes_eliminados as $key => $componente_e) {
+          if($componente_e != "ninguno"){
+            $eliminar = ComponenteProducto::findOrFail($componente_e);
+            $eliminar->delete();
+          }
+        }
+      }catch(\Exception $e){
+        DB::rollback();
+        if($productos->estado)
+        {
+          return redirect('/productos')->with('mensaje', 'Algo salio mal');
+        }
+        else{
+          return redirect('/productos?estado=0')->with('mensaje', 'Algo salio mal');
+        }
+      }
+
+      DB::commit();
       Bitacora::bitacora('update','productos','productos',$id);
       if($productos->estado)
       {

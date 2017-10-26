@@ -1,6 +1,17 @@
 $(document).on('ready',function(){
   var division_agregada = [];
   var componentes_agregados = [];
+  var limite_divisiones = $("#contador_division").val();
+  var limite_componente = $("#contador_componente").val();
+  for (i = 0; i <= limite_divisiones; i++) {
+    var division_tmp = $("#division"+i).val();
+    division_agregada.push(division_tmp);
+  }
+
+  for(i=0;i <= limite_componente; i++){
+    var componente_tmp = $("#componente"+i).val();
+    componentes_agregados.push(componente_tmp);
+  }
   $('#agregar_division').click(function(){
     var division = $('#division').find('option:selected').text();
     var valor = $('#division').find('option:selected').val();
@@ -126,6 +137,28 @@ $(document).on('ready',function(){
     var elemento = $(this).parents('tr').find('input:eq(0)').val();
     var indice = componentes_agregados.indexOf(elemento);
     componentes_agregados.splice(indice);
+    $(this).parent('td').parent('tr').remove();
+  });
+
+  $("#tablaDivision").on("click",'#eliminar_division_antigua',function(e){
+    e.preventDefault();
+    var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var indice = division_agregada.indexOf(elemento);
+    division_agregada.splice(indice);
+
+    var valores = $(this).parents('tr').find('input:eq(1)').val();
+    $("#division_eliminada").val(valores);
+    $(this).parent('td').parent('tr').remove();
+  });
+
+  $("#tablaComponente").on('click','#eliminar_componente_antiguo',function(e){
+    e.preventDefault();
+    var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var indice = componentes_agregados.indexOf(elemento);
+    componentes_agregados.splice(indice);
+
+    var valores = $(this).parents('tr').find('input:eq(1)').val();
+    $("#componente_eliminado").val(valores);
     $(this).parent('td').parent('tr').remove();
   });
 });
