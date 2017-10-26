@@ -27,6 +27,7 @@ function llenarParametros(){
   var ruta="/blissey/public/llenarParametrosExamenes";
   $.get(ruta,function(res){
     parametros.empty();
+    //parametros.append("<option value='-1' readonly='readonly'>[Seleccione parametros]</option>");
     $(res).each(function(key,value){
       parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
     });
