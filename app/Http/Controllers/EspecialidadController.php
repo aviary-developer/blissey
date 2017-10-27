@@ -7,6 +7,7 @@ use App\Especialidad;
 use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
+use DB;
 
 class EspecialidadController extends Controller
 {
@@ -43,9 +44,17 @@ class EspecialidadController extends Controller
      */
     public function store(Request $request)
     {
+      DB::beginTransaction();
+
+      try {
         $especialidades = Especialidad::create($request->All());
-        Bitacora::bitacora('store','especialidads','especialidades',$especialidades->id);
-        return redirect('/especialidades')->with('mensaje', '¡Guardado!');
+      } catch (Exception $e) {
+        DB::rollback();
+        return redirect('/especialidades')->with('mensaje', 'Algo salio mal');
+      }
+      DB::commit();
+      Bitacora::bitacora('store','especialidads','especialidades',$especialidades->id);
+      return redirect('/especialidades')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -82,8 +91,21 @@ class EspecialidadController extends Controller
     public function update(Request $request, $id)
     {
       $especialidades = Especialidad::find($id);
-      $especialidades->fill($request->all());
-      $especialidades->save();
+      DB::beginTransaction();
+      try {
+        $especialidades->fill($request->all());
+        $especialidades->save();
+      } catch (Exception $e) {
+        DB::rollback();
+        if($especialidades->estado)
+        {
+          return redirect('/especialidades')->with('mensaje', 'Algo salio mal');
+        }
+        else{
+          return redirect('/especialidades?estado=0')->with('mensaje', 'Algo salio mal');
+        }
+      }
+      DB::commit();
       Bitacora::bitacora('update','especialidads','especialidades',$id);
       if($especialidades->estado)
       {

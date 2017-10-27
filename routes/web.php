@@ -82,6 +82,10 @@ Route::match(['get','post'],'/activateProducto/{id}','ProductoController@activat
 Route::match(['get','post'],'/destroyProducto/{id}','ProductoController@destroy');
 Route::match(['get','post'],'/buscarComponenteProducto/{id}','ProductoController@buscarComponentes');
 
+//Rutas de habitaciones
+Route::resource('habitaciones','HabitacionController');
+Route::match(['get','post'],'/destroyHabitacion/{id}','HabitacionController@destroy');
+
 //Rutas de examenes
 Route::resource('examenes','ExamenController');
 Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');

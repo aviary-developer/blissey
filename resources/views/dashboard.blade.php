@@ -38,7 +38,7 @@
 
   <!-- Custom Theme Style -->
 
-  {!!Html::style('assets/build/css/custom.css')!!}
+  {!!Html::style('assets/build/css/blissey.css')!!}
 </head>
 
 <body class="nav-md">
@@ -91,39 +91,27 @@
             <div class="menu_section">
               <h3>Menú</h3>
               <ul class="nav side-menu">
-                <li><a><i class="fa fa-shopping-cart"></i> Compras <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-users"></i> Recepción <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="index.html">Compras</a></li>
-                    <li><a href="index2.html">Productos</a></li>
-                    <li><a href="index3.html">Proveedores</a></li>
-                  </ul>
-                </li>
-                <li><a><i class="fa fa-money"></i> Ventas <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="form.html">Ventas</a></li>
-                    <li><a href="form_advanced.html">Clientes</a></li>
-                  </ul>
-                </li>
-                <li><a><i class="fa fa-stethoscope"></i> Consultas médica <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="general_elements.html">Signos Vitales</a></li>
-                    <li><a href="media_gallery.html">Consultas</a></li>
-                    <li><a href="typography.html">Recetas</a></li>
+                    <li><a href={{asset('/pacientes')}}>Pacientes</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-medkit"></i> Laboratorio Clínico <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="tables.html">Laboratorio Clínico</a></li>
-                    <li><a href="#">Rayos X</a></li>
-                    <li><a href="#">Ultrasonografía</a></li>
-                    <li><a href="#">Inventario</a></li>
+                    <li><a href={{asset('/examenes')}}>Exámenes</a></li>
+                    <li><a href={{asset('/reactivos')}}>Reactivos</a></li>
                   </ul>
                 </li>
-                <li><a><i class="fa fa-ambulance"></i> Hospitalización <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-ambulance"></i> Farmacia <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="chartjs.html">Observación</a></li>
-                    <li><a href="chartjs2.html">Hospitalización</a></li>
-                    <li><a href="morisjs.html">Cuenta</a></li>
+                    <li><a>Productos <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                        <li><a href={{asset('/productos')}}>Productos</a></li>
+                        <li><a href={{asset('/presentaciones')}}>Presentaciones</a></li>
+                        <li><a href={{asset('/componentes')}}>Componentes</a></li>
+                      </ul>
+                    </li>
+                    <li><a href={{asset('/proveedores')}}>Proveedores</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-cogs"></i>Configuración <span class="fa fa-chevron-down"></span></a>
@@ -147,6 +135,7 @@
                           </ul>
                         </li>
                       @endif
+                      <li><a href={{asset('/unidades')}}>Unidades de medida</a></li>
                       <li><a href={{asset('/historial')}}>Historial</a></li>
                     @endif
                   </ul>

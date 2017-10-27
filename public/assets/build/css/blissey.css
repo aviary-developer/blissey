@@ -1,11 +1,24 @@
 :root{
   --primario : #CCC;
-  --principal : #25b4b1;
-  --secundario : #3faf6c;
-  --terciario : #009a93;
+  --principal : #995ca2;
+  --secundario : #82368c;
+  --terciario : #471e4d;
   --dark : #514e64;
   --subdark : #5c5b69;
   --nodark : #5c5970;
+}
+.label-purple{
+  background-color: rgb(159, 45, 249);
+}
+.perfil{
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+.miniperfil{
+  width: 150px;
+  height: 150px;
+  object-fit: scale-down;
 }
 thead{
   background: var(--primario);
@@ -268,14 +281,17 @@ html , body{
     float: left
 }
 .img-circle.profile_img {
-    width: 70%;
-    background: #fff;
-    margin-left: 15%;
-    z-index: 1000;
-    position: inherit;
-    margin-top: 20px;
-    border: 1px solid rgba(52, 73, 94, 0.44);
-    padding: 4px
+  width: 68px;
+  height: 68px;
+  background: #FFF;
+  margin-left: 15%;
+  margin-right: 5px;
+  z-index: 1000;
+  position: inherit;
+  margin-top: 20px;
+  border: 1px solid rgba(52, 73, 94, 0.44);
+  object-fit: cover;
+  padding: 2px
 }
 .profile_info {
     padding: 25px 10px 10px;
@@ -1782,7 +1798,8 @@ a.user-profile {
     width: 29px;
     height: 29px;
     border-radius: 50%;
-    margin-right: 10px
+    margin-right: 10px;
+    object-fit: cover;
 }
 ul.top_profiles {
     height: 330px;
