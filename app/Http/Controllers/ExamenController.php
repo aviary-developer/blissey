@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Examen;
 use App\Unidad;
+use App\Bitacora;
 use App\Parametro;
+use App\ExamenSeccionParametro;
 use Redirect;
+use DB;
 use Carbon\Carbon;
 
 class ExamenController extends Controller
@@ -46,7 +49,6 @@ class ExamenController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request);
       DB::beginTransaction();
 
       try{
@@ -54,34 +56,30 @@ class ExamenController extends Controller
         $examenNuevo->nombreExamen=$request->nombreExamen;
         $examenNuevo->tipoMuestra=$request->tipoMuestra;
         $examenNuevo->save();
-
-        if(isset($request->divisiones)){
-          foreach ($request->divisiones as $key => $division) {
-            $divisiones_productos = new DivisionProducto;
-            $divisiones_productos->f_producto = $productos->id;
-            $divisiones_productos->f_division = $request->divisiones[$key];
-            $divisiones_productos->cantidad = $request->cantidades[$key];
-            $divisiones_productos->ganancia = $request->ganancias[$key];
-            $divisiones_productos->save();
+        $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
+        $ultimoExamen=Examen::all();
+        $ultimoExamen=$ultimoExamen->last();
+        if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
+          for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
+            $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
+            echo('<pre>');
+            echo $seccion;
+            echo('</pre>');
+            for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
+            $e_s_p = new ExamenSeccionParametro;
+            $e_s_p->f_examen = $ultimoExamen->id;
+            $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
+            $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
+            $e_s_p->save();
           }
         }
-        if(isset($request->componentes)){
-          foreach ($request->componentes as $key => $componentes) {
-            $componentes_productos = new ComponenteProducto;
-            $componentes_productos->f_producto = $productos->id;
-            $componentes_productos->f_unidad = $request->unidades[$key];
-            $componentes_productos->f_componente = $request->componentes[$key];
-            $componentes_productos->cantidad = $request->cantidades_componentes[$key];
-            $componentes_productos->save();
-          }
-        }
+      }
       }catch(\Exception $e){
         DB::rollback();
-        return redirect('/productos')->with('mensaje', 'Algo salio mal');
+        return redirect('/examenes')->with('mensaje', 'Algo salio mal');
       }
-
       DB::commit();
-      Bitacora::bitacora('store','productos','productos',$productos->id);
+      Bitacora::bitacora('store','examens','examenes',$ultimoExamen->id);
       return redirect('/examenes')->with('mensaje', '¡Guardado!');
     }
 

@@ -18,10 +18,13 @@ $('#agregarSeccionExamen').click(function(){
   llenarSecciones();
   llenarParametros();
   contadorSelectsParametros++;
+  $("#totalSecciones").val(contadorSelectsParametros);
 });
 function cerrarSeccion(seccion){
   var $BOX_PANEL=seccion.closest('.x_panel');
   $BOX_PANEL.remove();
+  contadorSelectsParametros--;
+  $("#totalSecciones").val(contadorSelectsParametros);
 }
 function llenarSecciones(){
   var secciones=$("#selectSeccion"+contadorSelectsParametros);

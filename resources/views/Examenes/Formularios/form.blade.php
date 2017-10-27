@@ -31,6 +31,7 @@
         <div class="clearfix"></div>
             <div class="seccionesExamenes x_panel" id="seccionesExamenes">
               <!--AQUI SE AGREGAN LAS SECCIONES -->
+              <input type='hidden' id='totalSecciones' name='totalSecciones' value="0"/>
       </div>
     <div class="form-group">
       <center>
