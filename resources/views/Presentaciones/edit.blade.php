@@ -7,7 +7,7 @@
         <h2>Presentación<small>Editar</small></h2>
         <div class="clearfix"></div>
       </div>
-      @include('Especialidades.Formularios.form')
+      @include('Presentaciones.Formularios.form')
     </div>
   </div>
   {!!Form::close()!!}
