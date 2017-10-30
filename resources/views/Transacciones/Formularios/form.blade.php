@@ -89,14 +89,14 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Precio *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('cantidad_resultado',null,['id'=>'precio_resultado','class'=>'form-control has-feedback-left','placeholder'=>'Precio']) !!}
+            {!! Form::text('precio_resultado',null,['id'=>'precio_resultado','class'=>'form-control has-feedback-left','placeholder'=>'Precio']) !!}
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Descuento *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('descuento_resultado',null,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','placeholder'=>'Descuento unitario']) !!}
+            {!! Form::text('descuento_resultado',null,['id'=>'descuento_resultado','class'=>'form-control has-feedback-left','placeholder'=>'Descuento unitario']) !!}
           </div>
         </div>
         <div class="form-group">
@@ -111,14 +111,14 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de vencimiento *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::date('fecha_resultado',null,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left']) !!}
+            {!! Form::date('fecha_resultado',null,['id'=>'fecha_resultado','class'=>'form-control has-feedback-left']) !!}
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Lote *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('lote_resultado',null,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','placeholder'=>'N° de lote']) !!}
+            {!! Form::text('lote_resultado',null,['id'=>'lote_resultado','class'=>'form-control has-feedback-left','placeholder'=>'N° de lote']) !!}
           </div>
         </div>
         @endif
@@ -130,11 +130,12 @@
           </thead>
         </table>
       </div>
+      {{--Paso dos columna 2--}}
       <div class="col-md-6 col-sm-6 col-xs-12">
         <h4 class="StepTitle">Componentes</h4>
-        <table class="table" id="tablaComponente">
+        <table class="table" id="tablaDetalle">
           <thead>
-            <th>Componente</th>
+            <th>Detalle</th>
             <th>Cantidad</th>
             <th style="width : 80px">Acción</th>
           </thead>
