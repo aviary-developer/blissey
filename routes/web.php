@@ -141,3 +141,4 @@ Route::match(['get','post'],'/activateDivision/{id}','DivisionController@activat
 Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
 
 Route::resource('transacciones','TransaccionController');
+Route::match(['get','post'],'/buscarProductoTransaccion/{id}/{texto}','TransaccionController@buscarProductos');

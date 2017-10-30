@@ -29,7 +29,7 @@
     <div id="step-1">
       <div class="col-md-6 col-sm-6 col-xs-12">
         <h4 class="StepTitle">Datos de la factura</h4>
-        <input type="hidden" name="tipo" value="{{$tipo}}">
+        <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
@@ -61,7 +61,7 @@
               <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
               {!!Form::select('f_proveedor',
                 Transacion::arrayProveedores()
-                ,null, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
+                ,null, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
             </div>
           </div>
         @endif

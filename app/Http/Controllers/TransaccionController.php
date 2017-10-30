@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Producto;
+use Response;
 
 class TransaccionController extends Controller
 {
@@ -23,8 +25,8 @@ class TransaccionController extends Controller
      */
     public function create()
     {
-        //$tipo=0;
-        $tipo=1;
+        $tipo=0;
+        //$tipo=1;
         return view('Transacciones.create',compact('tipo'));
     }
 
@@ -82,5 +84,13 @@ class TransaccionController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function buscarProductos($id,$texto){
+      $productos=Producto::where('f_proveedor','=',$id)->where('nombre','ilike','%'.$texto.'%')->get();
+      if(count($productos)>0){
+        return Response::json($productos);
+      }else{
+        return null;
+      }
     }
 }

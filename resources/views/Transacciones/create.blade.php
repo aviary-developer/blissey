@@ -1,3 +1,6 @@
+@php
+  $tipoUsuario='Farmacia';
+@endphp
 @extends('dashboard')
 @section('layout')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'transacciones.store','method' =>'POST','autocomplete'=>'off'])!!}
@@ -15,6 +18,7 @@
         <div class="clearfix"></div>
       </div>
       @include('Transacciones.Formularios.form')
+      <input type="hidden"  id="tipoUsuario" value="{{$tipoUsuario}}">
     </div>
   </div>
   {!!Form::close()!!}
