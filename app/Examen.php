@@ -19,6 +19,16 @@ class Examen extends Model
     }
   }
 
+  public function nombreSeccion($id){
+    $nombre = Seccion::find($id);
+    return $nombre->nombre;
+  }
+
+  public function nombreParametro($id){
+    $nombre = Parametro::find($id);
+    return $nombre->nombre;
+  }
+
   public function scopeEstado($query, $estado){
     if($estado == null){
       $estado = 1;

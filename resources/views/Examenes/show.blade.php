@@ -29,7 +29,7 @@
             <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información general</a>
           </li>
           <li role="presentation" class="">
-            <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
+            <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Secciones</a>
           </li>
         </ul>
         {{-- Contenido del tab --}}
@@ -56,7 +56,40 @@
           </div>
           {{-- Otra pestaña --}}
           <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-            Otra cosa
+
+            <table class="table">
+              <caption>Parametros</caption>
+              <thead>
+                <th>#</th>
+                <th>Sección</th>
+                <th>Parametro</th>
+              </thead>
+              @php
+                $contadorParametros = 1;
+              @endphp
+              <tbody>
+                @if (count($e_s_p)>0)
+                  @foreach ($e_s_p as $esp)
+                    <tr>
+                      <td>{{$contadorParametros}}</td>
+                      <td>{{$esp->nombreSeccion($esp->f_seccion)}}</td>
+                      <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
+                    </tr>
+                    @php
+                      $contadorParametros++;
+                    @endphp
+                  @endforeach
+                @else
+                  <tr>
+                    <td colspan="4">
+                      <center>
+                        No hay registros
+                      </center>
+                    </td>
+                  </tr>
+                @endif
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

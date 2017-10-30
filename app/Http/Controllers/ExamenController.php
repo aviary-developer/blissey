@@ -92,7 +92,8 @@ class ExamenController extends Controller
     public function show($id)
     {
       $examen = Examen::find($id);
-      return view('Examenes.show',compact('examen'));
+      $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->get();
+      return view('Examenes.show',compact('examen','e_s_p'));
     }
 
     /**
