@@ -38,7 +38,7 @@
 
   <!-- Custom Theme Style -->
 
-  {!!Html::style('assets/build/css/blissey.css')!!}
+  {!!Html::style('assets/build/css/custom.css')!!}
 </head>
 
 <body class="nav-md">

@@ -1,6 +1,9 @@
 @extends('dashboard')
 @section('layout')
   {!!Form::model($especialidades,['class' =>'form-horizontal form-label-left input_mask','route' =>['especialidades.update',$especialidades->id],'method' =>'PUT','autocomplete'=>'off'])!!}
+  @php
+    $ruta = '/especialidades';
+  @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
       <div class="x_title">

@@ -22,7 +22,7 @@ class Habitacion extends Model
 
     public function scopeEstado($query, $estado){
       if($estado == null){
-        $estado = 0;
+        $estado = 1;
       }
       $query->where('estado',$estado);
     }

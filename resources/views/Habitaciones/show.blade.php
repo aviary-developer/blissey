@@ -8,9 +8,9 @@
   <div class="x_panel">
     <div class="x_title">
       <h2>
-        Especialidad
+        Habitación
         <small>
-          {{ $especialidad->nombre }}
+          {{ 'número '.$habitacion->numero }}
         </small>
       </h2>
       <div class="clearfix"></div>
@@ -18,7 +18,7 @@
     <div class="x_content">
       <div class="row">
         <div class="col-md-6 col-xs-12">
-          @include('Especialidades.Formularios.activate')
+          @include('Habitaciones.Formularios.activate')
         </div>
       </div>
       <br>
@@ -37,20 +37,28 @@
           <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
             <table class="table">
               <tr>
-                <th>Nombre</th>
-                <td>{{ $especialidad->nombre }}</td>
+                <th>Número</th>
+                <td>{{ $habitacion->numero }}</td>
+              </tr>
+              <tr>
+                <th>Precio</th>
+                <td>{{ '$ '.number_format($habitacion->precio,2,'.',',') }}</td>
+              </tr>
+              <tr>
+                <th>Disponibilidad</th>
+                <td>{{ ($habitacion->ocupado)?"Ocupada":"Disponible" }}</td>
               </tr>
               <tr>
                 <th>Estado</th>
-                <td>{{ ($especialidad->estado)?"Activo":"En Papelera" }}</td>
+                <td>{{ ($habitacion->estado)?"Activo":"En Papelera" }}</td>
               </tr>
               <tr>
                 <th>Fecha de creación</th>
-                <td>{{ $especialidad->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $habitacion->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
               <tr>
                 <th>Fecha de modificación</th>
-                <td>{{ $especialidad->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                <td>{{ $habitacion->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
             </table>
           </div>
