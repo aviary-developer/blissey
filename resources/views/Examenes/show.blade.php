@@ -56,40 +56,43 @@
           </div>
           {{-- Otra pestaña --}}
           <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-
-            <table class="table">
-              <caption>Parametros</caption>
-              <thead>
-                <th>#</th>
-                <th>Sección</th>
-                <th>Parametro</th>
-              </thead>
-              @php
-                $contadorParametros = 1;
-              @endphp
-              <tbody>
-                @if (count($e_s_p)>0)
-                  @foreach ($e_s_p as $esp)
+            @for ($i=0; $i < count($secciones); $i++)
+              <table class="table">
+                <caption>Parametros</caption>
+                <thead>
+                  <th>#</th>
+                  <th>Sección</th>
+                  <th>Parametro</th>
+                </thead>
+                @php
+                  $contadorParametros = 1;
+                @endphp
+                <tbody>
+                  @if (count($e_s_p)>0)
+                    @foreach ($e_s_p as $esp)
+                      @if ($esp->f_seccion==$secciones[$i])
+                      <tr>
+                        <td>{{$contadorParametros}}</td>
+                        <td>{{$esp->nombreSeccion($esp->f_seccion)}}</td>
+                        <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
+                      </tr>
+                    @endif
+                      @php
+                        $contadorParametros++;
+                      @endphp
+                    @endforeach
+                  @else
                     <tr>
-                      <td>{{$contadorParametros}}</td>
-                      <td>{{$esp->nombreSeccion($esp->f_seccion)}}</td>
-                      <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
+                      <td colspan="4">
+                        <center>
+                          No hay registros
+                        </center>
+                      </td>
                     </tr>
-                    @php
-                      $contadorParametros++;
-                    @endphp
-                  @endforeach
-                @else
-                  <tr>
-                    <td colspan="4">
-                      <center>
-                        No hay registros
-                      </center>
-                    </td>
-                  </tr>
-                @endif
-              </tbody>
-            </table>
+                  @endif
+                </tbody>
+              </table>
+            @endfor
           </div>
         </div>
       </div>
