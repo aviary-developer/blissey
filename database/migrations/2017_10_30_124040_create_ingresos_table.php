@@ -15,8 +15,8 @@ class CreateIngresosTable extends Migration
     {
         Schema::create('ingresos', function (Blueprint $table) {
             $table->increments('id');
-            $table->datatime('fecha_ingreso');
-            $table->datatime('fecha_alta')->nullable();
+            $table->datetime('fecha_ingreso');
+            $table->datetime('fecha_alta')->nullable();
             $table->integer('f_paciente')->unsigned();
             $table->integer('f_responsable')->unsigned();
             $table->integer('f_medico')->unsigned();

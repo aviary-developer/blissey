@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Ingreso;
+use App\Bitacora;
 use Illuminate\Http\Request;
+use DB;
+use Redirect;
+use Carbon\Carbon;
 
 class IngresoController extends Controller
 {
@@ -12,9 +16,12 @@ class IngresoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+      $estado = $request->get('estado');
+      $ingresos = Ingreso::buscar($estado);
+      $activos = Ingreso::where('estado','<>',2)->count();
+      return view('Ingresos.index',compact('ingresos','estado','activos'));
     }
 
     /**
