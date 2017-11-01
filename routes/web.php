@@ -93,6 +93,7 @@ Route::resource('ingresos','IngresoController');
 Route::match(['get','post'],'/desactivateIngreso/{id}','IngresoController@desactivate');
 Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
 Route::match(['get','post'],'/destroyIngreso/{id}','IngresoController@destroy');
+Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
 
 //Rutas de examenes
 Route::resource('examenes','ExamenController');
