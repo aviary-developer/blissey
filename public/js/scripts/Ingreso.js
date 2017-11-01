@@ -1,14 +1,14 @@
 $(document).on('ready',function(){
-  $("#componente").keyup(function(){
-    var valor = $("#componente").val();
+  $("#busqueda").keyup(function(){
+    var valor = $("#busqueda").val();
     if(valor.length > 2){
-      var ruta = "/blissey/public/buscarComponenteProducto/"+valor;
-      var tabla = $("#tablaBuscarComponente");
+      var ruta = "/blissey/public/buscarPacienteIngreso/"+valor;
+      var tabla = $("#tablaPaciente");
       $.get(ruta,function(res){
         tabla.empty();
         head =
         "<thead>"+
-        "<th>Componente</th>"+
+        "<th>Nombre</th>"+
         "<th style='width : 80px'>Acción</th>"+
         "</thead>";
         tabla.append(head);
@@ -16,13 +16,13 @@ $(document).on('ready',function(){
           html =
           "<tr>"+
           "<td>"+
-          value.nombre+
+          value.apellido+', '+value.nombre+
           "</td>"+
           "<td>"+
-          "<input type='hidden' name='nombre_componente[]' value ='"+value.nombre+"'>"+
-          "<input type='hidden' name='id_componente[]' value ='"+value.id+"'>"+
-          "<button type='button' class='btn btn-xs btn-primary' id='agregar_componente'>"+
-          "<i class='fa fa-arrow-right'></i>"+
+          "<input type='hidden' name='nombre_paciente[]' value ='"+value.apellido+', '+value.nombre+"'>"+
+          "<input type='hidden' name='id_paciente[]' value ='"+value.id+"'>"+
+          "<button type='button' class='btn btn-xs btn-primary' id='agregar_paciente' data-dismiss='modal'>"+
+          "<i class='fa fa-check'></i>"+
           "</button>"+
           "</td>"+
           "</tr>";
@@ -30,5 +30,34 @@ $(document).on('ready',function(){
         });
       });
     }
+  });
+
+  $('#tablaPaciente').on('click','#agregar_paciente',function(e){
+    e.preventDefault();
+    var nombre = $(this).parents('tr').find('input:eq(0)').val();
+    var id = $(this).parents('tr').find('input:eq(1)').val();
+    var opcion = $("#seleccion").val();
+    var tabla = $("#tablaPaciente");
+    if(opcion == "paciente")
+    {
+      var input_nombre = $("#n_paciente");
+      var input_id = $("#f_paciente");
+    }else{
+      var input_nombre = $("#n_responsable");
+      var input_id = $("#f_responsable");
+    }
+    input_nombre.val(nombre);
+    input_id.val(id);
+
+    $("#busqueda").val("");
+    tabla.empty();
+    head =
+    "<thead>"+
+    "<th>Nombre</th>"+
+    "<th style='width : 80px'>Acción</th>"+
+    "</thead>";
+    tabla.append(head);
+
+    $("#modal").modal('hide');
   });
 });

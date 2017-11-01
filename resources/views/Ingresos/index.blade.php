@@ -70,11 +70,11 @@
                 @foreach ($ingresos as $ingreso)
                   <tr>
                     <td>{{$correlativo}}</td>
-                    <th>{{$ingreos->nombrePaciente($ingreso->f_paciente)}}</th>
-                    <th>{{$ingreso->nombreMedico($ingreso->f_medico)}}</th>
-                    <th>{{$ingreso->numeroHabitacion($ingreso->f_habitacion)}}</th>
-                    <th>{{$ingreso->fecha_ingreso->format('d / M / Y')}}</th>
-                    <th><a href="#" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a></th>
+                    <td>{{$ingreso->nombrePaciente($ingreso->f_paciente)}}</td>
+                    <td>{{$ingreso->nombreMedico($ingreso->f_medico)}}</td>
+                    <td>{{$ingreso->numeroHabitacion($ingreso->f_habitacion)}}</td>
+                    <td>{{$ingreso->fecha_ingreso->format('d / m / Y')}}</td>
+                    <td><a href="#" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a></td>
                   </tr>
                   @php
                     $correlativo++;

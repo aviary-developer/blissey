@@ -94,6 +94,7 @@
                 <li><a><i class="fa fa-users"></i> Recepción <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href={{asset('/pacientes')}}>Pacientes</a></li>
+                    <li><a href={{asset('/ingresos')}}>Ingresos</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-medkit"></i> Laboratorio Clínico <span class="fa fa-chevron-down"></span></a>
@@ -278,6 +279,7 @@
 {!!Html::script('js/scripts/Examenes.js')!!}
 {!!Html::script('js/scripts/Productos.js')!!}
 {!!Html::script('js/scripts/Transacciones.js')!!}
+{!!Html::script('js/scripts/Ingreso.js')!!}
 @section('scripts')
 @show
 

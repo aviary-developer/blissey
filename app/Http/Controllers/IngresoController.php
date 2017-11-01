@@ -6,6 +6,7 @@ use App\Ingreso;
 use App\Bitacora;
 use App\User;
 use App\Habitacion;
+use App\Paciente;
 use Illuminate\Http\Request;
 use DB;
 use Redirect;
@@ -47,7 +48,24 @@ class IngresoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+          $ingresos = new Ingreso;
+          $ingresos->f_paciente = $request->f_paciente;
+          $ingresos->f_responsable = $request->f_responsable;
+          $ingresos->f_habitacion = $request->f_habitacion;
+          $ingresos->f_medico = $request->f_medico;
+          $aux = explode('T',$request->fecha_ingreso);
+          $fecha = $aux[0].' '.$aux[1];
+          $ingresos->fecha_ingreso  = $fecha.':00';
+          $ingresos->save();
+        } catch (Exception $e) {
+          DB::rollback();
+          return redirect('/ingresos')->with('mensaje', 'Algo salio mal');
+        }
+        DB::commit();
+        Bitacora::bitacora('store','ingresos','ingresos',$ingresos->id);
+        return redirect('/ingresos')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -97,7 +115,7 @@ class IngresoController extends Controller
 
     public function buscarPaciente($nombre)
     {
-      $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->orderBy('apellido')->get();
+      $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->orderBy('apellido')->take(7)->get();
       if(count($pacientes)>0){
         return Response::json($pacientes);
       }else{

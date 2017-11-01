@@ -3,17 +3,33 @@
     <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
   </center>
   <br />
+  <input type="hidden" id="seleccion">
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Paciente *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="input-group">
-        {!! Form::text('n_paciente',null,['id'=>'paciente','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
+        {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
         <span class="input-group-btn">
-          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente">
+          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('paciente');">
             <i class="fa fa-search"></i>
           </button>
         </span>
       </div>
+      <input type="hidden" name="f_paciente" id="f_paciente">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsable *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <div class="input-group">
+        {!! Form::text('n_responsable',null,['id'=>'n_responsable','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
+        <span class="input-group-btn">
+          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('responsable');">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div>
+      <input type="hidden" name="f_responsable" id="f_responsable">
     </div>
   </div>
   <div class="form-group">
@@ -36,6 +52,13 @@
       </select>
     </div>
   </div>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de ingreso *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+      <input type="datetime-local" name="fecha_ingreso" class="form-control has-feedback-left" value={{$fecha->format('Y-m-d').'T'.$fecha->format('H:i')}} max={{$fecha->format('Y-m-d').'T'.$fecha->format('H:i')}}>
+    </div>
+  </div>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>
@@ -46,7 +69,7 @@
   </div>
 </div>
 
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
@@ -85,3 +108,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function input_seleccion(e){
+    document.getElementById('seleccion').value = e;
+  }
+</script>

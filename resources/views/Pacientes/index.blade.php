@@ -85,7 +85,7 @@
                     @endif
                   </td>
                   <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>
-                  <td>{{ $paciente->telefono }}</td>
+                  <td>{{ (strlen($paciente->telefono)==9)?$paciente->telefono:"Sin teléfono" }}</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Pacientes.Formularios.activate')
