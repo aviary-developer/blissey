@@ -57,7 +57,7 @@ class ProductoController extends Controller
     {
       DB::beginTransaction();
 
-      // try{
+      try{
         $productos = Producto::create($request->All());
         if(isset($request->divisiones)){
           foreach ($request->divisiones as $key => $division) {
@@ -79,10 +79,10 @@ class ProductoController extends Controller
             $componentes_productos->save();
           }
         }
-      // }catch(\Exception $e){
-      //   DB::rollback();
-      //   return redirect('/productos')->with('mensaje', 'Algo salio mal');
-      // }
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/productos')->with('mensaje', 'Algo salio mal');
+      }
 
       DB::commit();
       Bitacora::bitacora('store','productos','productos',$productos->id);

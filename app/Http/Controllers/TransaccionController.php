@@ -7,6 +7,7 @@ use App\Producto;
 use Response;
 use App\Transacion;
 use App\DetalleTransacion;
+use DB;
 
 class TransaccionController extends Controller
 {
@@ -40,6 +41,9 @@ class TransaccionController extends Controller
      */
     public function store(Request $request)
     {
+      if(count($request->f_producto)>0){
+        DB::beginTransaction();
+        try{
         $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
           'f_proveedor'=>$request->f_proveedor,
@@ -59,6 +63,16 @@ class TransaccionController extends Controller
             'condicion'=>0,
           ]);
         }
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/')->with('mensaje', 'Algo salio mal');
+      }
+      DB::commit();
+      return redirect('/')->with('mensaje', '¡Guardado!');
+    }else{
+      DB::rollback();
+      return redirect('/transacciones/create')->with('error', 'No agrego ningún detalle');
+    }
     }
 
     /**
