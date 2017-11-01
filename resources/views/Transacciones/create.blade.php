@@ -13,7 +13,7 @@
         @if ($tipo==1)
           <h2>Venta<small>Nueva</small></h2>
         @else
-          <h2>Compra<small>Nueva</small></h2>
+          <h2>Compra<small>Nuevo pedido</small></h2>
         @endif
         <div class="clearfix"></div>
       </div>
