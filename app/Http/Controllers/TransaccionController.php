@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Producto;
 use Response;
 use App\Transacion;
+use App\DetalleTransacion;
 
 class TransaccionController extends Controller
 {
@@ -39,18 +40,24 @@ class TransaccionController extends Controller
      */
     public function store(Request $request)
     {
-        echo($request->fecha);
-        echo($request->f_proveedor);
-        Transacion::create([
+        $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
           'f_proveedor'=>$request->f_proveedor,
           'tipo'=>0,
           'f_usuario'=>4,
           'localizacion'=>0,
         ]);
+        $id_transaccion= $transaccion->id;
+
         $f_producto=$request->f_producto;
+        $cantidad=$request->cantidad;
         for ($i=0; $i < count($f_producto); $i++) {
-          echo("<br>F_producto".$request->f_producto[$i]);
+          DetalleTransacion::create([
+            'f_transaccion'=>$id_transaccion,
+            'f_producto'=>$request->f_producto[$i],
+            'cantidad'=>$cantidad[$i],
+            'condicion'=>0,
+          ]);
         }
     }
 

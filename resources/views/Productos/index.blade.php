@@ -66,7 +66,6 @@
               <th>Código</th>
               <th>Nombre</th>
               <th>Proveedor</th>
-              <th>Precio</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -81,7 +80,6 @@
                   <td>{{ $producto->codigo }}</td>
                   <td>{{ $producto->nombre }}</td>
                   <td>{{ $producto->nombreProveedor($producto->f_proveedor) }}</td>
-                  <td>{{ '$ '.number_format($producto->precio,2,'.',',') }}</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Productos.Formularios.activate')

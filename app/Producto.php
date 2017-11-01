@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
   protected $fillable = [
-    'nombre','codigo','precio','f_proveedor','f_presentacion'
+    'nombre','codigo','f_proveedor','f_presentacion'
   ];
 
   public static function buscar($nombre, $estado){

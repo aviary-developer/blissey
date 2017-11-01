@@ -41,13 +41,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Precio ($) *</label>
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::number('precio',null,['class'=>'form-control has-feedback-left','placeholder'=>'Precio del nuevo producto','min'=>'0.00','step'=>'0.05']) !!}
-          </div>
-        </div>
-        <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Presentación *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
@@ -89,10 +82,10 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Ganancia ($) *</label>
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Precio ($) *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::number('ganancia','0.00',['id'=>'ganancia','class'=>'form-control has-feedback-left','placeholder'=>'Ganancia por división','min'=>'1.00','step'=>'0.05']) !!}
+            {!! Form::number('precio','0.00',['id'=>'precio','class'=>'form-control has-feedback-left','placeholder'=>'Precio por división','min'=>'1.00','step'=>'0.05']) !!}
           </div>
         </div>
         <center>
@@ -108,7 +101,7 @@
           <thead>
             <th>División</th>
             <th>Cantidad</th>
-            <th>Ganancia</th>
+            <th>Precio</th>
             <th style="width : 80px">Acción</th>
           </thead>
           <tbody>
@@ -121,7 +114,7 @@
                 <tr>
                   <td>{{$division->nombreDivision($division->f_division)}}</td>
                   <td>{{$division->cantidad}}</td>
-                  <td>{{'$ '.number_format($division->ganancia,2,'.',',')}}</td>
+                  <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
                   <td>
                     <input type="hidden" id={{"division".$key}} value={{$division->f_division}}>
                     <input type="hidden" value={{$division->id}}>

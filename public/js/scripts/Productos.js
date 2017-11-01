@@ -16,7 +16,8 @@ $(document).on('ready',function(){
     var division = $('#division').find('option:selected').text();
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
-    var ganancia = $('#ganancia').val();
+    var precio = $('#precio').val();
+    alert(precio);
     var html_texto =
     "<tr>"+
       "<td>"+
@@ -26,12 +27,12 @@ $(document).on('ready',function(){
         cantidad+
       "</td>"+
       "<td>"+
-        "$ "+ganancia+
+        "$ "+precio+
       "</td>"+
       "<td>"+
         "<input type='hidden' name='divisiones[]' value='"+valor+"'/>"+
         "<input type='hidden' name='cantidades[]' value='"+cantidad+"'/>"+
-        "<input type='hidden' name='ganancias[]' value='"+ganancia+"'/>"+
+        "<input type='hidden' name='precios[]' value='"+precio+"'/>"+
         "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
           "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -42,7 +43,7 @@ $(document).on('ready',function(){
       division_agregada.push(valor);
       $("#tablaDivision").append(html_texto);
       $("#cantidad").val("1");
-      $("#ganancia").val("0.00");
+      $("#precio").val("0.00");
     }
   });
 
