@@ -69,4 +69,9 @@
           </thead>
         </table>
       </div>
+      <center>
+        {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+        <button type="reset" name="button" class="btn btn-default">Limpiar</button>
+        <a href={!! asset('/estantes') !!} class="btn btn-default">Cancelar</a>
+      </center>
 </div>

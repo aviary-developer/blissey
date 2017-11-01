@@ -15,6 +15,7 @@ class DeleteTransacionTable extends Migration
     {
       Schema::table('transacions', function (Blueprint $table) {
           $table->dropColumn('factura');
+          $table->dropColumn('descuento');
       });
     }
 
