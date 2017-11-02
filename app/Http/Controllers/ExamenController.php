@@ -125,8 +125,25 @@ class ExamenController extends Controller
     $examenes = Examen::find($id);
     $muestraSeleccionada=$examenes->tipoMuestra;
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-    $esp = ExamenSeccionParametro::where('f_examen',$id)->get();
-    return view('Examenes.edit',compact('examenes','muestraSeleccionada','unidades','esp'));
+    $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->get();
+    $contador=0;
+    $contadorSecciones=0;
+    if(count($e_s_p)>0){
+      foreach ($e_s_p as $esp) {
+        if($contador==0){
+          $secciones[$contadorSecciones]=$esp->f_seccion;
+        }else{
+          if($secciones[$contadorSecciones]==$esp->f_seccion)
+          {
+          }else {
+            $contadorSecciones++;
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }
+        }
+        $contador++;
+      }
+    }
+    return view('Examenes.edit',compact('examenes','muestraSeleccionada','unidades','e_s_p','secciones'));
   }
 
   /**

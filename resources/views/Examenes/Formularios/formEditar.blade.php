@@ -31,7 +31,7 @@
   <div class="ln_solid"></div>
   <div class="clearfix"></div>
   <div class="seccionesExamenes x_panel" id="seccionesExamenes">
-    @foreach ($esp as $secciones)
+    @for ($i=0; $i < count($secciones); $i++)
       <div class='col-md-6 col-sm-6 col-xs-12'>
         <div class='x_panel'>
           <div class='x_title'>
@@ -49,12 +49,26 @@
               <select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"' onChange='agregarParametro(this,"+contadorSelectsParametros+")';><option><strong>Cargando...</strong></option></select>
               <hr>
               <table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th style='width : 80px'>Acción</th></thead>
-                <tbody></tbody></table>
+                <tbody>
+                @foreach ($e_s_p as $esp)
+                  @if ($esp->f_seccion==$secciones[$i])
+                  <tr>
+                  <td>
+                  <input type='hidden' id='parametrosEnTabla"+paso+"[]' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>{{$esp->nombreParametro($esp->f_parametro)}}</td>
+                  <td>
+                  <button type = 'button' name='button' class='btn btn-danger btn-xs' onClick='eliminarParametroEnTabla(this);'>
+                  <i class='fa fa-remove'></i>
+                  </button>
+                  </td>
+                  </tr>
+                @endif
+                  @endforeach
+                </tbody></table>
               </div>
             </div>
           </div>
         </div>
-      @endforeach
+      @endfor
       <input type='hidden' id='totalSecciones' name='totalSecciones' value="0"/>
     </div>
     <div class="form-group">
