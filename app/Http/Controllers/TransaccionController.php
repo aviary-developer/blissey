@@ -8,6 +8,7 @@ use Response;
 use App\Transacion;
 use App\DetalleTransacion;
 use DB;
+use Auth;
 
 class TransaccionController extends Controller
 {
@@ -47,8 +48,8 @@ class TransaccionController extends Controller
         $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
           'f_proveedor'=>$request->f_proveedor,
-          'tipo'=>0,
-          'f_usuario'=>4,
+          'tipo'=>$request->tipo,
+          'f_usuario'=>Auth::user()->id,
           'localizacion'=>0,
         ]);
         $id_transaccion= $transaccion->id;
@@ -65,7 +66,7 @@ class TransaccionController extends Controller
         }
       }catch(\Exception $e){
         DB::rollback();
-        return redirect('/')->with('mensaje', 'Algo salio mal');
+        return redirect('/')->with('error', 'Algo salio mal');
       }
       DB::commit();
       return redirect('/')->with('mensaje', '¡Guardado!');
