@@ -35,8 +35,8 @@ class IngresoController extends Controller
      */
     public function create()
     {
-      $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->get();
-      $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->get();
+      $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
+      $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->orderBy('numero')->get();
       return view('Ingresos.create',compact('medicos','habitaciones'));
     }
 
@@ -59,6 +59,10 @@ class IngresoController extends Controller
           $fecha = $aux[0].' '.$aux[1];
           $ingresos->fecha_ingreso  = $fecha.':00';
           $ingresos->save();
+
+          $habitacion = Habitacion::find($request->f_habitacion);
+          $habitacion->ocupado = true;
+          $habitacion->save();
         } catch (Exception $e) {
           DB::rollback();
           return redirect('/ingresos')->with('mensaje', 'Algo salio mal');
@@ -108,14 +112,20 @@ class IngresoController extends Controller
      * @param  \App\Ingreso  $ingreso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ingreso $ingreso)
+    public function destroy($id)
     {
-        //
+        $ingreso = Ingreso::findOrFail($id);
+        $habitacion = Habitacion::find($ingreso->f_habitacion);
+        $habitacion->ocupado = false;
+        $habitacion->save();
+        $ingreso->delete();
+        Bitacora::bitacora('destroy','ingresos','ingresos',$id);
+        return redirect('/ingresos');
     }
 
     public function buscarPaciente($nombre)
     {
-      $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->orderBy('apellido')->take(7)->get();
+      $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       if(count($pacientes)>0){
         return Response::json($pacientes);
       }else{

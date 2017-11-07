@@ -17,7 +17,6 @@ $(document).on('ready',function(){
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
-    alert(precio);
     var html_texto =
     "<tr>"+
       "<td>"+

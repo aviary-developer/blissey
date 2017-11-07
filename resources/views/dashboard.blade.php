@@ -136,6 +136,7 @@
                           </ul>
                         </li>
                       @endif
+                      <li><a href={{asset('/habitaciones')}}>Habitaciones</a></li>
                       <li><a href={{asset('/unidades')}}>Unidades de medida</a></li>
                       <li><a href={{asset('/historial')}}>Historial</a></li>
                     @endif

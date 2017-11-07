@@ -51,10 +51,6 @@
                     <td>{{$producto->nombreProveedor($producto->f_proveedor)}}</td>
                   </tr>
                   <tr>
-                    <th>Precio</th>
-                    <td>{{ '$ '.number_format($producto->precio,2,'.',',') }}</td>
-                  </tr>
-                  <tr>
                     <th>Presentación</th>
                     <td>{{$producto->nombrePresentacion($producto->f_presentacion)}}</td>
                   </tr>
@@ -79,7 +75,7 @@
                     <th>#</th>
                     <th>División</th>
                     <th>Cantidad</th>
-                    <th>Ganancia</th>
+                    <th>Precio</th>
                   </thead>
                   @php
                     $contador_division = 1;
@@ -91,7 +87,7 @@
                           <td>{{$contador_division}}</td>
                           <td>{{$division->nombreDivision($division->f_division)}}</td>
                           <td>{{$division->cantidad.' '.$producto->nombrePresentacion($producto->f_presentacion)}}</td>
-                          <td>{{'$ '.number_format($division->ganancia,2,'.','.')}}</td>
+                          <td>{{'$ '.number_format($division->precio,2,'.','.')}}</td>
                         </tr>
                         @php
                           $contador_division++;

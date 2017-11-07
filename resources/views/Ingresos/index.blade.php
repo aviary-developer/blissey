@@ -74,7 +74,9 @@
                     <td>{{$ingreso->nombreMedico($ingreso->f_medico)}}</td>
                     <td>{{$ingreso->numeroHabitacion($ingreso->f_habitacion)}}</td>
                     <td>{{$ingreso->fecha_ingreso->format('d / m / Y')}}</td>
-                    <td><a href="#" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a></td>
+                    <td>
+                      @include('Ingresos.Formularios.desactivate')
+                    </td>
                   </tr>
                   @php
                     $correlativo++;
