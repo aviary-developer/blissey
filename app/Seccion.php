@@ -12,6 +12,10 @@ class Seccion extends Model
   public static function buscar($nombre, $estado){
     return Seccion::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
   }
+  public function nombreSeccion($id){
+    $nombre = Seccion::find($id);
+    return $nombre->nombre;
+  }
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){

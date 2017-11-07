@@ -25,19 +25,25 @@
   </div>
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">
-      <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a>
+      <a class="btn btn-primary" id="agregarSeccionExamenEditar"><i class="fa fa-plus"></i> Agregar sección</a>
     </label>
   </div><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Parametro</button>
   <div class="ln_solid"></div>
   <div class="clearfix"></div>
   <div class="seccionesExamenes x_panel" id="seccionesExamenes">
+    <input id="contadorEnEdit" name="contadorEnEdit" type="hidden" value={{count($secciones)}}>
     @for ($i=0; $i < count($secciones); $i++)
       <div class='col-md-6 col-sm-6 col-xs-12'>
         <div class='x_panel'>
           <div class='x_title'>
             <div class='col-md-9 col-sm-9 col-xs-12'>
               <span class='fa fa-bars form-control-feedback left' aria-hidden='true'></span>
-              <select class='form-control has-feedback-left' name='selectSeccion"+contadorSelectsParametros+"' id='selectSeccion"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select>
+              <select class='form-control has-feedback-left' name='selectSeccion{{$i}}' id='selectSeccion{{$i}}'>
+                <option value={{$secciones[$i]}}>{{$examenes->nombreSeccion($secciones[$i])}}</option>
+                @foreach ($seccionesTabla as $seccionesTabla1)
+                  <option value={{ $seccionesTabla1->id }}>{{ $seccionesTabla1->nombre }}</option>
+                @endforeach
+              </select>
             </div>
             <ul class='nav navbar-right panel_toolbox'>
               <li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>
@@ -46,9 +52,13 @@
           </div>
           <div class='x_content'>
             <div class='col-md-9 col-sm-9 col-xs-6'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span>
-              <select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"' onChange='agregarParametro(this,"+contadorSelectsParametros+")';><option><strong>Cargando...</strong></option></select>
+              <select class='form-control has-feedback-left' name='selectParametrosExamenes{{$i}}' id='selectParametrosExamenes{{$i}}' onChange='agregarParametro(this,{{$i}})';>
+                <option value="-1"><strong>[Seleccione nuevos parametros]</strong></option>
+                @foreach ($parametros as $parametro)
+                  <option value={{ $parametro->id }}>{{ $parametro->nombreParametro}}</option>
+                @endforeach</select>
               <hr>
-              <table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th style='width : 80px'>Acción</th></thead>
+              <table class='table' id='tablaParametros{{$i}}'><thead><th>Parametros</th><th style='width : 80px'>Acción</th></thead>
                 <tbody>
                 @foreach ($e_s_p as $esp)
                   @if ($esp->f_seccion==$secciones[$i])
@@ -69,7 +79,6 @@
           </div>
         </div>
       @endfor
-      <input type='hidden' id='totalSecciones' name='totalSecciones' value="0"/>
     </div>
     <div class="form-group">
       <center>

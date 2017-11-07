@@ -8,6 +8,7 @@ use App\Examen;
 use App\Unidad;
 use App\Bitacora;
 use App\Parametro;
+use App\Seccion;
 use App\ExamenSeccionParametro;
 use Redirect;
 use DB;
@@ -123,6 +124,9 @@ class ExamenController extends Controller
   public function edit($id)
   {
     $examenes = Examen::find($id);
+    $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    $seccionesTabla=Seccion::where('estado',true)->orderBy('nombre','asc')->get();
+    $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
     $muestraSeleccionada=$examenes->tipoMuestra;
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
     $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->get();
@@ -143,7 +147,7 @@ class ExamenController extends Controller
         $contador++;
       }
     }
-    return view('Examenes.edit',compact('examenes','muestraSeleccionada','unidades','e_s_p','secciones'));
+    return view('Examenes.edit',compact('examenes','muestraSeleccionada','unidades','e_s_p','secciones','seccionesTabla','parametros'));
   }
 
   /**
@@ -155,6 +159,7 @@ class ExamenController extends Controller
   */
   public function update(Request $request, $id)
   {
+    return $request;
     $examenes = Examen::find($id);
     $examenes->fill($request->all());
     $examenes->save();

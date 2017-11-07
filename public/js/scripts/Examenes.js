@@ -141,3 +141,57 @@ function rellenarCombosParametros(paso){
  function eliminarParametroEnTabla(tabla){
    $(tabla).parent('td').parent('tr').remove();
  }
+
+ ////////////////////////////////////SCRIPTS DE EDITAR
+ var contadorEnEditar=$("#contadorEnEdit").val();
+ $('#agregarSeccionExamenEditar').click(function(){
+   contadorEnEditar++;
+   alert(contadorEnEditar);
+   $('.seccionesExamenes').append( "<div class='col-md-6 col-sm-6 col-xs-12'>"+
+   "<div class='x_panel'>"+
+   "<div class='x_title'>"+
+   "<div class='col-md-9 col-sm-9 col-xs-12'>"+
+   "<span class='fa fa-bars form-control-feedback left' aria-hidden='true'></span>"+
+   "<select class='form-control has-feedback-left' name='selectSeccion"+contadorEnEditar+"' id='selectSeccion"+contadorEnEditar+"'><option><strong>Cargando...</strong></option></select></div>"+
+   "<ul class='nav navbar-right panel_toolbox'>"+
+   "<li><a class='close-link' onClick='cerrarSeccionEditar(this);'><i class='fa fa-close'></i></a></li>"+
+   "</ul><div class='clearfix'></div></div>"+
+   "<div class='x_content'>"+
+   "<div class='col-md-9 col-sm-9 col-xs-6'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span>"+
+   "<select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorEnEditar+"' id='selectParametrosExamenes"+contadorEnEditar+"' onChange='agregarParametro(this,"+contadorEnEditar+")';><option><strong>Cargando...</strong></option></select><hr>"+
+   "<table class='table' id='tablaParametros"+contadorEnEditar+"'><thead><th>Parametros</th><th style='width : 80px'>Acción</th></thead>"+
+   "<tbody></tbody></table>"+
+   "</div></div></div></div>" );
+   llenarSeccionesEditar();
+   llenarParametrosEditar();
+   $("#contadorEnEdit").val(contadorEnEditar);
+ });
+
+ function cerrarSeccionEditar(seccion){
+   var $BOX_PANEL=seccion.closest('.x_panel');
+   $BOX_PANEL.remove();
+   contadorEnEditar--;
+   $("#contadorEnEdit").val(contadorEnEditar);
+ }
+ function llenarSeccionesEditar(){
+   var secciones=$("#selectSeccion"+contadorEnEditar);
+   var ruta="/blissey/public/llenarSeccionExamenes";
+   $.get(ruta,function(res){
+     secciones.empty();
+     secciones.append("<option value='0' readonly='readonly'>[Seleccione sección]</option>");
+     $(res).each(function(key,value){
+       secciones.append("<option value='"+value.id+"'>"+value.nombre+"</option>");
+     });
+   });
+ }
+ function llenarParametrosEditar(){
+   var parametros=$("#selectParametrosExamenes"+contadorEnEditar);
+   var ruta="/blissey/public/llenarParametrosExamenes";
+   $.get(ruta,function(res){
+     parametros.empty();
+     //parametros.append("<option value='-1' readonly='readonly'>[Seleccione parametros]</option>");
+     $(res).each(function(key,value){
+       parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
+     });
+   });
+ }
