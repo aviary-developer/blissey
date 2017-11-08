@@ -23,7 +23,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('telefono',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número telefónico del nuevo proveedor','id'=>'telefono']) !!}
+      {!! Form::text('telefono',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número telefónico del nuevo proveedor','id'=>'telefono','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
     </div>
   </div>
 <!-- Campos que se agregarán en tabla dependientes cuando se esta creando un nuevo proveedor-->

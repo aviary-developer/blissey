@@ -7,6 +7,8 @@ use App\Producto;
 use Response;
 use App\Transacion;
 use App\DetalleTransacion;
+use App\DivisionProducto;
+use App\Division;
 use DB;
 use Auth;
 
@@ -127,5 +129,18 @@ class TransaccionController extends Controller
       }else{
         return null;
       }
+    }
+    public function buscarDivisiones($id){
+      $divisiones=DivisionProducto::where('f_producto','=',$id)->get();
+      if(count($divisiones)>0){
+        return Response::json($divisiones);
+      }else{
+        return null;
+      }
+    }
+
+    public function nombreDivision($id){
+      $nombre=Division::find($id);
+      return $nombre->nombre;
     }
 }

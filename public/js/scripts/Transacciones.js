@@ -14,25 +14,36 @@ $(document).on('ready',function(){
               tabla.empty();
               head =
               "<thead>"+
-              "<th>Resultado</th>"+
+              "<th colspan='2'>Resultado</th>"+
               "<th style='width : 80px'>Acción</th>"+
               "</thead>";
               tabla.append(head);
               $(res).each(function(key,value){
-                html =
-                "<tr>"+
-                "<td>"+
-                value.nombre+
-                "</td>"+
-                "<td>"+
-                "<input type='hidden' name='nombre_producto[]' value ='"+value.nombre+"'>"+
-                "<input type='hidden' name='id_producto[]' value ='"+value.id+"'>"+
-                "<button type='button' class='btn btn-xs btn-primary' id='agregar_resultado'>"+
-                "<i class='fa fa-arrow-right'></i>"+
-                "</button>"+
-                "</td>"+
-                "</tr>";
-                tabla.append(html);
+                var ruta2= "/blissey/public/buscarDivisionTransaccion/"+value.id;
+                $.get(ruta2,function(res2){
+                  $(res2).each(function(key2,value2){
+                    var ruta3="/blissey/public/buscarNombreDivision/"+value2.f_division;
+                    $.get(ruta3,function(res3){
+                      html =
+                      "<tr>"+
+                      "<td>"+
+                      res3+
+                      "</td>"+
+                      "<td>"+
+                      value.nombre+
+                      "</td>"+
+                      "<td>"+
+                      "<input type='hidden' name='nombre_producto[]' value ='"+value.nombre+"'>"+
+                      "<input type='hidden' name='id_producto[]' value ='"+value.id+"'>"+
+                      "<button type='button' class='btn btn-xs btn-primary' id='agregar_resultado'>"+
+                      "<i class='fa fa-arrow-right'></i>"+
+                      "</button>"+
+                      "</td>"+
+                      "</tr>";
+                      tabla.append(html);
+                    });
+                  });
+                });
               });
             });
 
