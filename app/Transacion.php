@@ -9,6 +9,11 @@ class Transacion extends Model
   protected $fillable = [
     'fecha','factura','f_cliente','f_proveedor','descuento','tipo','f_usuario','localizacion'
   ];
+  protected $dates = ['fecha'];
+
+  public static function buscar($buscar){
+    return Transacion::paginate(8);
+  }
 
   public static function arrayClientes(){ //Retorna los pacientes activos usando la función buscar
       $pacientes=Paciente::buscar("",true);
@@ -25,5 +30,14 @@ class Transacion extends Model
         $arrayP[$proveedor->id]=$proveedor->nombre;
       }
       return $arrayP;
+  }
+  public function cliente(){
+    return $this->belongsTo('App\Paciente');
+  }
+  public function proveedor(){
+    return $this->belongsTo('App\Proveedor','f_proveedor');
+  }
+  public function usuario(){
+    return $this->belongsTo('App\User');
   }
 }

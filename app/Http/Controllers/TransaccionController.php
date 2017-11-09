@@ -9,6 +9,7 @@ use App\Transacion;
 use App\DetalleTransacion;
 use App\DivisionProducto;
 use App\Division;
+use App\Presentacion;
 use DB;
 use Auth;
 
@@ -19,9 +20,12 @@ class TransaccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+      $tipo= $request->tipo;
+    $transacciones=Transacion::buscar("");
+
+    return view('transacciones.index',compact('transacciones','tipo'));
     }
 
     /**
@@ -68,7 +72,7 @@ class TransaccionController extends Controller
         }
       }catch(\Exception $e){
         DB::rollback();
-        return redirect('/')->with('error', 'Algo salio mal');
+        return redirect('/')->with('error', '¡Algo salio mal!');
       }
       DB::commit();
       return redirect('/')->with('mensaje', '¡Guardado!');
@@ -141,6 +145,11 @@ class TransaccionController extends Controller
 
     public function nombreDivision($id){
       $nombre=Division::find($id);
+      return $nombre->nombre;
+    }
+
+    public function nombrePresentacion($id){
+      $nombre=Presentacion::find($id);
       return $nombre->nombre;
     }
 }

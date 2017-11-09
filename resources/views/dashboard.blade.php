@@ -113,6 +113,7 @@
                       </ul>
                     </li>
                     <li><a href={{asset('/proveedores')}}>Proveedores</a></li>
+                    <li><a href={{asset('/transacciones?tipo=0')}}>Pedidos</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-cogs"></i>Configuración <span class="fa fa-chevron-down"></span></a>

@@ -41,7 +41,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+        {!! Form::number('cantidad',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
@@ -63,7 +63,7 @@
         <table class="table" id="tablaDetalle">
           <thead>
             <th>Cantidad</th>
-            <th>Detalle</th>
+            <th colspan="2">Detalle</th>
             <th style="width : 80px">Acción</th>
           </thead>
         </table>

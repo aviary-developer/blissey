@@ -24,23 +24,30 @@ $(document).on('ready',function(){
                   $(res2).each(function(key2,value2){
                     var ruta3="/blissey/public/buscarNombreDivision/"+value2.f_division;
                     $.get(ruta3,function(res3){
+
+                    var ruta4="/blissey/public/buscarNombrePresentacion/"+value.f_presentacion;
+                    $.get(ruta4,function(res4){
+                      n_division=res3+" "+value2.cantidad+" "+res4;
                       html =
                       "<tr>"+
                       "<td>"+
-                      res3+
+                      n_division+
                       "</td>"+
                       "<td>"+
                       value.nombre+
                       "</td>"+
                       "<td>"+
+                      "<input type='hidden' name='producto_division[]' value ='"+n_division+"'>"+
                       "<input type='hidden' name='nombre_producto[]' value ='"+value.nombre+"'>"+
-                      "<input type='hidden' name='id_producto[]' value ='"+value.id+"'>"+
+                      "<input type='hidden' name='id_producto[]' value ='"+value2.id+"'>"+
                       "<button type='button' class='btn btn-xs btn-primary' id='agregar_resultado'>"+
                       "<i class='fa fa-arrow-right'></i>"+
                       "</button>"+
                       "</td>"+
                       "</tr>";
                       tabla.append(html);
+
+                    });
                     });
                   });
                 });
@@ -64,13 +71,15 @@ $(document).on('ready',function(){
     });
     $("#tablaBuscar").on('click',"#agregar_resultado",function(e){
       var v=validarCantidad();
-      var f_producto = $(this).parents('tr').find('input:eq(1)').val();
+      var f_producto = $(this).parents('tr').find('input:eq(2)').val();
       if(v==true && !componentes_agregados.includes(f_producto)){
-        var nombre = $(this).parents('tr').find('input:eq(0)').val();
+        var division=$(this).parents('tr').find('input:eq(0)').val();
+        var nombre = $(this).parents('tr').find('input:eq(1)').val();
         var tabla = $("#tablaDetalle");
         var cantidad=parseFloat($("#cantidad_resultado").val());
         html="<tr>"+
         "<td>"+cantidad+"</td>"+
+        "<td>"+division+"</td>"+
         "<td>"+nombre+"</td>"+
         "<td>"+
         "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
