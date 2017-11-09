@@ -125,15 +125,15 @@ function rellenarCombosParametros(paso){
   timer: 1500,
   animation: false,
   customClass: 'animated tada'
-});
+}).catch(swal.noop);
    }
  }
  function verificarParametroEnTabla(tabla,nombreParametro){
    var bandera=true;
    $(tabla).each(function(key,value){
-     if($(this).text()==nombreParametro){
+     if($(this).text().trim()==nombreParametro){
        bandera=false;
-       console.log($(this).text()+" IGUALES "+nombreParametro)
+       console.log($(this).text().trim()+" IGUALES "+nombreParametro);
      }
  });
  return bandera;
@@ -146,7 +146,6 @@ function rellenarCombosParametros(paso){
  var contadorEnEditar=$("#contadorEnEdit").val();
  $('#agregarSeccionExamenEditar').click(function(){
    contadorEnEditar++;
-   alert(contadorEnEditar);
    $('.seccionesExamenes').append( "<div class='col-md-6 col-sm-6 col-xs-12'>"+
    "<div class='x_panel'>"+
    "<div class='x_title'>"+
@@ -168,10 +167,14 @@ function rellenarCombosParametros(paso){
  });
 
  function cerrarSeccionEditar(seccion){
+   disminuiContadorSeccionesEnEditar();
    var $BOX_PANEL=seccion.closest('.x_panel');
    $BOX_PANEL.remove();
+ }
+ function disminuiContadorSeccionesEnEditar(){
    contadorEnEditar--;
    $("#contadorEnEdit").val(contadorEnEditar);
+   alert(contadorEnEditar);
  }
  function llenarSeccionesEditar(){
    var secciones=$("#selectSeccion"+contadorEnEditar);

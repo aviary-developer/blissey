@@ -46,7 +46,7 @@
               </select>
             </div>
             <ul class='nav navbar-right panel_toolbox'>
-              <li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>
+              <li><a class='close-link' onClick='cerrarSeccionEditar(this);'><i class='fa fa-close'></i></a></li>
             </ul>
             <div class='clearfix'></div>
           </div>
@@ -64,7 +64,7 @@
                   @if ($esp->f_seccion==$secciones[$i])
                   <tr>
                   <td>
-                  <input type='hidden' id='parametrosEnTabla"+paso+"[]' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>{{$esp->nombreParametro($esp->f_parametro)}}</td>
+                  <input type='hidden' id='parametrosEnTabla{{$i}}[]' name='parametrosEnTabla{{$i}}[]' value = {{$esp->f_parametro}} />{{$esp->nombreParametro($esp->f_parametro)}}</td>
                   <td>
                   <button type = 'button' name='button' class='btn btn-danger btn-xs' onClick='eliminarParametroEnTabla(this);'>
                   <i class='fa fa-remove'></i>

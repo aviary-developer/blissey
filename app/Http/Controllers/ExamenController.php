@@ -159,10 +159,37 @@ class ExamenController extends Controller
   */
   public function update(Request $request, $id)
   {
-    return $request;
-    $examenes = Examen::find($id);
-    $examenes->fill($request->all());
-    $examenes->save();
+    dd($request);
+    DB::beginTransaction();
+    try{
+      $examenes = Examen::find($id);
+      $examenes->fill($request->all());
+      $examenes->save();
+      $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
+      $ultimoExamen=Examen::all();
+      $ultimoExamen=$ultimoExamen->last();
+      if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
+        for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
+          $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
+          echo('<pre>');
+          echo $seccion;
+          echo('</pre>');
+          for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
+            $e_s_p = new ExamenSeccionParametro;
+            $e_s_p->f_examen = $ultimoExamen->id;
+            $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
+            $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
+            $e_s_p->save();
+          }
+        }
+      }
+    }catch(\Exception $e){
+      DB::rollback();
+      return redirect('/examenes')->with('mensaje', 'Algo salio mal');
+    }
+    DB::commit();
+    Bitacora::bitacora('update','examens','examenes',$examenes->id);
+
     if($examenes->estado)
     {
       return redirect('/examenes')->with('mensaje', '¡Editado!');
