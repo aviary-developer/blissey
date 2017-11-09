@@ -13,7 +13,7 @@ class PacienteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,24 @@ class PacienteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required | min:2 | max:30',
+            'apellido' => 'required | min:2 | max:30',
+            'fechaNacimiento' => 'required',
         ];
+    }
+
+    public function messages(){
+       return [
+            'nombre.required'=>'El campo nombre es obligatorio',
+            'nombre.min'=>'El campo nombre necesita 2 caracteres como mínimo',
+            'nombre.max'=>'El campo nombre necesita 30 caracteres como máximo',
+
+            'apellido.required'=>'El campo apellido es obligatorio',
+            'apellido.min'=>'El campo apellido necesita 2 caracteres como mínimo',
+            'apellido.max'=>'El campo apellido necesita 30 caracteres como máximo',
+
+            'fechaNacimiento.required' => 'El campo fecha de nacimiento es obligatorio',
+
+       ];
     }
 }

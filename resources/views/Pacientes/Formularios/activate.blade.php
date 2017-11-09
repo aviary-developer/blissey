@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/pacientes/'.$paciente->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/pacientes/'.$paciente->id)!!} class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a href={!! asset('/pacientes/'.$paciente->id.'/edit')!!} class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$paciente->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$paciente->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
     <i class="fa fa-remove"></i>
   </button>
 @else
@@ -50,12 +50,11 @@
 <script type="text/javascript">
   function alta(id){
     return swal({
-      title: 'Activar registro',
+      title: 'Restaurar registro',
       text: '¿Está seguro? ¡El registro estará activo nuevamente!',
       type: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, ¡Activar!',
+      confirmButtonText: 'Si, ¡Restaurar!',
       cancelButtonText: 'No, ¡Cancelar!',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
@@ -63,12 +62,14 @@
     }).then(function () {
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePaciente/'+id);
+      swal({
+        title: '¡Restaurado!',
+        text: 'Acción realizada satisfactorimente',
+        type: 'success',
+        showCancelButton: false,
+        showConfirmButton: false
+      })
       $('#formulario').submit();
-      swal(
-        '¡Activado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -97,12 +98,14 @@
     }).then(function () {
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPaciente/'+id);
+      swal({
+        title: '¡Eliminado!',
+        text: 'Acción realizada satisfactorimente',
+        type: 'success',
+        showCancelButton: false,
+        showConfirmButton: false
+      })
       $('#formulario').submit();
-      swal(
-        '¡Eliminado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -130,12 +133,16 @@
     }).then(function () {
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
-      $('#formulario').submit();
       swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
+        swal({
+          title: '¡Desactivado!',
+          text: 'Acción realizada satisfactorimente',
+          type: 'success',
+          showCancelButton: false,
+          showConfirmButton: false
+        })
       )
+      $('#formulario').submit();
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'

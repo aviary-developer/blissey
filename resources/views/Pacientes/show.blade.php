@@ -58,13 +58,37 @@
                   @endif
                 </td>
               </tr>
+              @if ($paciente->fechaNacimiento->age >= 18)
+                <tr>
+                  <th>DUI</th>
+                  <td>
+                    @if (strlen($paciente->dui) != 10)
+                      <i style="color:red">Sin DUI</i>
+                    @else
+                      {{ $paciente->dui }}
+                    @endif
+                  </td>
+                </tr>
+              @endif
               <tr>
                 <th>Teléfono</th>
-                <td>{{ $paciente->telefono }}</td>
+                <td>
+                  @if (strlen($paciente->telefono) != 9)
+                    <i style="color:red">Sin teléfono</i>
+                  @else
+                    {{ $paciente->telefono }}
+                  @endif
+                </td>
               </tr>
               <tr>
                 <th>Dirección</th>
-                <td>{{ $paciente->direccion }}</td>
+                <td>
+                  @if ($paciente->direccion == null)
+                    <i style="color:red">Sin dirección</i>
+                  @else
+                    {{ $paciente->direccion }}
+                  @endif
+                </td>
               </tr>
               <tr>
                 <th>Fecha de creación</th>

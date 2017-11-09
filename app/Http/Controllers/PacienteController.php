@@ -9,6 +9,8 @@ use App\Paciente;
 use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
+use App\Http\Requests\PacienteRequest;
+use DB;
 
 class PacienteController extends Controller
 {
@@ -43,11 +45,18 @@ class PacienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PacienteRequest $request)
     {
+      DB::beginTransaction();
+      try {
         $pacientes = Paciente::create($request->All());
-        Bitacora::bitacora('store','pacientes','pacientes',$pacientes->id);
-        return redirect('/pacientes')->with('mensaje', '¡Guardado!');
+      } catch (Exception $e) {
+        DB::rollback();
+        return redirect('/pacientes')->with('mensaje', 'Algo salio mal');
+      }
+      DB::commit();
+      Bitacora::bitacora('store','pacientes','pacientes',$pacientes->id);
+      return redirect('/pacientes')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -81,7 +90,7 @@ class PacienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PacienteRequest $request, $id)
     {
         $pacientes = Paciente::find($id);
         $pacientes->fill($request->all());

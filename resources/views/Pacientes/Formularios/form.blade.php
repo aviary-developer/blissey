@@ -37,6 +37,13 @@
     </label>
   </div>
   <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">DUI</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-credit-card form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::text('dui',null,['class'=>'form-control has-feedback-left','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>

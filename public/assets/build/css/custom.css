@@ -12,6 +12,13 @@ thead{background: #cccccc}
   height: 150px;
   object-fit: scale-down;
 }
+.btn-outline-warning{
+  border-color: transparent;
+  color: #F0ad4e;
+}
+.btn-outline-warning:hover{
+  color: #b6833b;
+}
 html , body{
 
  height:100%;

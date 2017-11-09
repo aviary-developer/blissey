@@ -58,6 +58,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th style="width: 40px"></th>
               <th>#</th>
               <th>Apellido</th>
               <th>Nombre</th>
@@ -74,9 +75,24 @@
               @endphp
               @foreach ($pacientes as $paciente)
                 <tr>
+                  <td>
+                    @if ($paciente->completed($paciente->id)!=false)
+                      <a href={{asset('pacientes/'.$paciente->id.'/edit')}} data-toggle="tooltip" data-placement="top" title="Registro incompleto" class="btn btn-outline-warning btn-xs">
+                        <i class="fa fa-warning"></i>
+                      </a>
+                    @endif
+                  </td>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $paciente->apellido }}</td>
-                  <td>{{ $paciente->nombre }}</td>
+                  <td>
+                    <a href={{asset('pacientes/'.$paciente->id)}}>
+                      {{ $paciente->apellido }}
+                    </a>
+                  </td>
+                  <td>
+                    <a href={{asset('pacientes/'.$paciente->id)}}>
+                      {{ $paciente->nombre }}
+                    </a>
+                  </td>
                   <td>
                     @if ($paciente->sexo)
                       {{ "Masculino" }}
@@ -85,7 +101,13 @@
                     @endif
                   </td>
                   <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>
-                  <td>{{ (strlen($paciente->telefono)==9)?$paciente->telefono:"Sin teléfono" }}</td>
+                  <td>
+                    @if (strlen($paciente->telefono) != 9)
+                      <i style="color:red">Sin teléfono</i>
+                    @else
+                      {{ $paciente->telefono }}
+                    @endif
+                  </td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Pacientes.Formularios.activate')
@@ -100,7 +122,7 @@
               @endforeach
             @else
               <tr>
-                <td colspan="7">
+                <td colspan="8">
                   <center>
                     No hay registros que coincidan con los terminos de busqueda indicados
                   </center>

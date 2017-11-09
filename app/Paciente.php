@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paciente extends Model
 {
-    protected $fillable = ['nombre','apellido','direccion','telefono','sexo','fechaNacimiento'];
+    protected $fillable = ['nombre','apellido','direccion','telefono','sexo','fechaNacimiento','dui'];
     protected $dates = ['fechaNacimiento'];
 
     public static function buscar($nombre, $estado){
@@ -24,5 +24,16 @@ class Paciente extends Model
         $estado = 1;
       }
       $query->where('estado',$estado);
+    }
+
+    public static function completed($id){
+      $registro = Paciente::find($id);
+      if(strlen($registro->telefono) != 9)
+        return true;
+      if($registro->direccion == null)
+        return true;
+      if($registro->fechaNacimiento->age >= 18 && strlen($registro->dui) != 10)
+        return true;
+      return false;
     }
 }
