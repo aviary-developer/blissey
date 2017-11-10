@@ -34,13 +34,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Código *</label>
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('codigo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Código del nuevo producto']) !!}
-          </div>
-        </div>
-        <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Presentación *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
@@ -63,6 +56,13 @@
           </div>
         </div>
         <h4 class="StepTitle">División del producto</h4>
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Código *</label>
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
+            {!! Form::text('codigo',null,['id'=>'codigo','class'=>'form-control has-feedback-left','placeholder'=>'Código del nuevo producto']) !!}
+          </div>
+        </div>
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">División *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
@@ -99,6 +99,7 @@
         <h4 class="StepTitle">Divisiones</h4>
         <table class="table" id="tablaDivision">
           <thead>
+            <th>Código</th>
             <th>División</th>
             <th>Cantidad</th>
             <th>Precio</th>

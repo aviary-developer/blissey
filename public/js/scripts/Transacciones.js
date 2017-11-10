@@ -66,7 +66,7 @@ $(document).on('ready',function(){
           timer: 2000,
           animation: false,
           customClass: 'animated tada'
-        });
+        }).catch(swal.noop);
       }
     });
     $("#tablaBuscar").on('click',"#agregar_resultado",function(e){

@@ -66,6 +66,7 @@ class ProductoController extends Controller
             $divisiones_productos->f_division = $request->divisiones[$key];
             $divisiones_productos->cantidad = $request->cantidades[$key];
             $divisiones_productos->precio = $request->precios[$key];
+            $divisiones_productos->codigo = $request->codigos[$key];
             $divisiones_productos->save();
           }
         }
@@ -227,5 +228,8 @@ class ProductoController extends Controller
       }else{
         return null;
       }
+    }
+    public function existeCodigo($codigo){
+      return DivisionProducto::where('codigo',$codigo)->count();
     }
 }

@@ -1,24 +1,29 @@
 $(document).on('ready',function(){
   var division_agregada = [];
   var componentes_agregados = [];
+  var codigos_agregados= [];
   var limite_divisiones = $("#contador_division").val();
   var limite_componente = $("#contador_componente").val();
   for (i = 0; i <= limite_divisiones; i++) {
     var division_tmp = $("#division"+i).val();
     division_agregada.push(division_tmp);
   }
-
   for(i=0;i <= limite_componente; i++){
     var componente_tmp = $("#componente"+i).val();
     componentes_agregados.push(componente_tmp);
   }
   $('#agregar_division').click(function(){
+    var codigo = $('#codigo').val();
     var division = $('#division').find('option:selected').text();
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
+    if(!codigos_agregados.includes(codigo) && !division_agregada.includes(valor)){
     var html_texto =
     "<tr>"+
+    "<td>"+
+      codigo+
+    "</td>"+
       "<td>"+
         division+
       "</td>"+
@@ -30,6 +35,7 @@ $(document).on('ready',function(){
       "</td>"+
       "<td>"+
         "<input type='hidden' name='divisiones[]' value='"+valor+"'/>"+
+        "<input type='hidden' name='codigos[]' value='"+codigo+"'/>"+
         "<input type='hidden' name='cantidades[]' value='"+cantidad+"'/>"+
         "<input type='hidden' name='precios[]' value='"+precio+"'/>"+
         "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
@@ -38,8 +44,8 @@ $(document).on('ready',function(){
       "</td>"+
     "</tr>";
 
-    if(division_agregada.indexOf(valor)==-1){
       division_agregada.push(valor);
+      codigos_agregados.push(codigo);
       $("#tablaDivision").append(html_texto);
       $("#cantidad").val("1");
       $("#precio").val("0.00");
@@ -48,9 +54,12 @@ $(document).on('ready',function(){
 
   $("#tablaDivision").on('click','#eliminar_division',function(e){
     e.preventDefault();
-    var elemento = $(this).parents('tr').find('input').val();
+    var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var cod = $(this).parents('tr').find('input:eq(1)').val();
     var indice = division_agregada.indexOf(elemento);
+    var indice2 = codigos_agregados.indexOf(cod);
     division_agregada.splice(indice);
+    codigos_agregados.splice(indice2);
     $(this).parent('td').parent('tr').remove();
   });
 
@@ -160,5 +169,24 @@ $(document).on('ready',function(){
     var valores = $(this).parents('tr').find('input:eq(1)').val();
     $("#componente_eliminado").val(valores);
     $(this).parent('td').parent('tr').remove();
+  });
+
+  $("#codigo").keyup(function(){
+    var codigo = $("#codigo").val();
+    if(codigo!="")
+    var ruta="/blissey/public/existeCodigoProducto/"+codigo;
+    $.get(ruta,function(existe){
+      if(existe==1){
+        swal({
+          type: 'error',
+          title: '¡Ya existe una división con el código '+codigo+'!',
+          showConfirmButton: false,
+          timer: 2000,
+          animation: false,
+          customClass: 'animated tada'
+        }).catch(swal.noop);
+        $("#codigo").val("");
+      }
+    });
   });
 });
