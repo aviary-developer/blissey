@@ -29,7 +29,7 @@
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
               <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/paciente_pdf') !!} class="btn btn-dark btn-ms" target="_blank"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/pacientes?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos

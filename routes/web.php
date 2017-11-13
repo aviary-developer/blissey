@@ -34,6 +34,7 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');
   Route::match(['get','post'],'/activatePaciente/{id}','PacienteController@activate');
   Route::match(['get','post'],'/destroyPaciente/{id}','PacienteController@destroy');
+  Route::match(['get','post'],'/paciente_pdf','PacienteController@paciente_pdf');
 });
 
 //Rutas usuarios

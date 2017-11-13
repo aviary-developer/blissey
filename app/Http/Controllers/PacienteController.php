@@ -134,4 +134,21 @@ class PacienteController extends Controller
       Bitacora::bitacora('activate','pacientes','pacientes',$id);
       return Redirect::to('/pacientes?estado=0');
     }
+
+    public function paciente_pdf(){
+      $pacientes = Paciente::orderBy('apellido')->get();
+      $pdf = \App::make('dompdf.wrapper');
+      //$view = view('Pacientes.PDF.pacientes',compact('pacientes'));
+      $pdf->loadView('Pacientes.PDF.pacientes',compact('pacientes'));
+      //$pdf->output();
+      $dompdf = $pdf->getDomPDF();
+
+      $canvas = $dompdf->get_canvas();
+      $canvas->page_text(30,755,'Generado: '.date('d/m/Y h:i:s a'),null,10,array(0,0,0));
+      $canvas->page_text(500, 755,("Página").": {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
+      //$dompdf->loadHTMLFile('Pacientes.PDF.pacientes',compact('pacientes'));
+      ini_set("memory_limit","500M");
+      //$dompdf->render();
+      return $pdf->stream();
+    }
 }
