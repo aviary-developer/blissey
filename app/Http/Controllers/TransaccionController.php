@@ -22,10 +22,13 @@ class TransaccionController extends Controller
      */
     public function index(Request $request)
     {
-      $tipo= $request->tipo;
-    $transacciones=Transacion::buscar("");
-
-    return view('transacciones.index',compact('transacciones','tipo'));
+    $tipo= $request->tipo;
+    if(Auth::check()){
+      $transacciones=Transacion::buscar($tipo);
+      return view('transacciones.index',compact('transacciones','tipo'));
+    }else{
+      return redirect('/');
+    }
     }
 
     /**
@@ -151,5 +154,10 @@ class TransaccionController extends Controller
     public function nombrePresentacion($id){
       $nombre=Presentacion::find($id);
       return $nombre->nombre;
+    }
+
+    public function confirmarPedido($id){
+      $transaccion=Transacion::find($id);
+      return view('Transacciones.confirmar',compact('transaccion'));
     }
 }

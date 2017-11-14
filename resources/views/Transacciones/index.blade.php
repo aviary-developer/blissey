@@ -41,7 +41,7 @@
               @else
                 <th>Proveedor</th>
               @endif
-
+              <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
@@ -58,6 +58,10 @@
                   @else
                   <td>{{$transaccion->proveedor->nombre}}</td>
                   @endif
+                  <td>@if($transaccion->factura==null)
+                    @include('Transacciones.Formularios.confirm')
+                  @endif
+                  </td>
                 </tr>
                 @php
                 $correlativo++;

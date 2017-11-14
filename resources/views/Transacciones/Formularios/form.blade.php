@@ -7,7 +7,11 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+        @if($pantalla==1)
         {!! Form::date('fecha',$fecha,['class'=>'form-control has-feedback-left']) !!}
+      @else
+        {!! Form::date('fecha',$transaccion->fecha,['class'=>'form-control has-feedback-left']) !!}
+      @endif
       </div>
       @if ($tipo==1)
           <label class="col-md-1 col-sm-12 col-xs-12 form-group">Cliente *</label>
@@ -66,6 +70,19 @@
             <th colspan="2">Detalle</th>
             <th style="width : 80px">Acción</th>
           </thead>
+          @if($pantalla==2)
+            @php
+            $detalles=$transaccion->detalleTransaccion;
+            @endphp
+            @foreach ($detalles as $detalle)
+              <tr>
+                <td>{{$detalle->cantidad}}</td>
+                <td>{{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->f_presentacion}}</td>
+                <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                <td></td>
+            </tr>
+            @endforeach
+          @endif
         </table>
       </div>
       </div>
