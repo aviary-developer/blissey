@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Transacion extends Model
 {
@@ -11,10 +12,16 @@ class Transacion extends Model
   ];
   protected $dates = ['fecha'];
 
-  public static function buscar($buscar){
-    return Transacion::paginate(8);
+  public static function buscar($tipo){
+    return Transacion::tipo($tipo)->Localizacion()->orderBy('fecha')->paginate(10);
   }
-
+  public function scopeTipo($query, $tipo){
+      $query->where('tipo', '=',$tipo);
+  }
+  public function scopeLocalizacion($query){
+    $tipoUsuario=Transacion::tipoUsuario();
+    $query->where('localizacion', '=',$tipoUsuario);
+  }
   public static function arrayClientes(){ //Retorna los pacientes activos usando la función buscar
       $pacientes=Paciente::buscar("",true);
       $arrayP = [];
@@ -39,5 +46,17 @@ class Transacion extends Model
   }
   public function usuario(){
     return $this->belongsTo('App\User');
+  }
+  public function detalleTransaccion(){
+    return $this->hasMany('App\DetalleTransacion','f_transaccion');
+  }
+  public function tipoUsuario(){
+    if(Auth::user()->tipoUsuario=='Recepción'){
+      return 1;
+    }elseif(Auth::user()->tipoUsuario=='Farmacia'){
+      return 0;
+    }elseif(Auth::user()->tipoUsuario=='Laboratorio'){
+      return 2;
+    }
   }
 }

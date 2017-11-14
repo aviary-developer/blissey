@@ -6,6 +6,7 @@
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'transacciones.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
     $fecha = Carbon\Carbon::now();
+    $pantalla=1;//Crear
   @endphp
   <div class="col-xs-12">
     <div class="x_panel">

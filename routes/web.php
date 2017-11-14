@@ -154,3 +154,4 @@ Route::match(['get','post'],'/buscarProductoTransaccion/{id}/{texto}','Transacci
 Route::match(['get','post'],'/buscarDivisionTransaccion/{id}','TransaccionController@buscarDivisiones');
 Route::match(['get','post'],'/buscarNombreDivision/{id}','TransaccionController@nombreDivision');
 Route::match(['get','post'],'/buscarNombrePresentacion/{id}','TransaccionController@nombrePresentacion');
+Route::match(['get','post'],'/confirmarPedido/{id}','TransaccionController@confirmarPedido');
