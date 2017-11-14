@@ -31,7 +31,9 @@
   <div class="ln_solid"></div>
   <div class="clearfix"></div>
   <div class="seccionesExamenes x_panel" id="seccionesExamenes">
+  @if(count($e_s_p)>0)
     <input id="contadorEnEdit" name="contadorEnEdit" type="hidden" value={{count($secciones)}}>
+    <input id="contadorTotal" name="contadorTotal" type="hidden" value={{count($secciones)}}>
     @for ($i=0; $i < count($secciones); $i++)
       <div class='col-md-6 col-sm-6 col-xs-12'>
         <div class='x_panel'>
@@ -46,7 +48,7 @@
               </select>
             </div>
             <ul class='nav navbar-right panel_toolbox'>
-              <li><a class='close-link' onClick='cerrarSeccionEditar(this);'><i class='fa fa-close'></i></a></li>
+              <li><a class='close-link' onClick='cerrarSeccionEditar(this,{{$i}});'><i class='fa fa-close'></i></a></li>
             </ul>
             <div class='clearfix'></div>
           </div>
@@ -79,10 +81,13 @@
           </div>
         </div>
       @endfor
-    </div>
+@endif
+<input id="contadorEnEdit" name="contadorEnEdit" type="hidden" value=0>
+<input id="contadorTotal" name="contadorTotal" type="hidden" value=0>
+</div>
     <div class="form-group">
       <center>
-        {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
         <button type="reset" name="button" class="btn btn-default">Limpiar</button>
         <a href={!! asset('/examenes') !!} class="btn btn-default">Cancelar</a>
       </center>

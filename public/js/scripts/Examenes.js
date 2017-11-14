@@ -145,7 +145,6 @@ function rellenarCombosParametros(paso){
  ////////////////////////////////////SCRIPTS DE EDITAR
  var contadorEnEditar=$("#contadorEnEdit").val();
  $('#agregarSeccionExamenEditar').click(function(){
-   contadorEnEditar++;
    $('.seccionesExamenes').append( "<div class='col-md-6 col-sm-6 col-xs-12'>"+
    "<div class='x_panel'>"+
    "<div class='x_title'>"+
@@ -153,7 +152,7 @@ function rellenarCombosParametros(paso){
    "<span class='fa fa-bars form-control-feedback left' aria-hidden='true'></span>"+
    "<select class='form-control has-feedback-left' name='selectSeccion"+contadorEnEditar+"' id='selectSeccion"+contadorEnEditar+"'><option><strong>Cargando...</strong></option></select></div>"+
    "<ul class='nav navbar-right panel_toolbox'>"+
-   "<li><a class='close-link' onClick='cerrarSeccionEditar(this);'><i class='fa fa-close'></i></a></li>"+
+   "<li><a class='close-link' onClick='cerrarSeccionEditar(this,contadorEnEditar);'><i class='fa fa-close'></i></a></li>"+
    "</ul><div class='clearfix'></div></div>"+
    "<div class='x_content'>"+
    "<div class='col-md-9 col-sm-9 col-xs-6'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span>"+
@@ -163,18 +162,19 @@ function rellenarCombosParametros(paso){
    "</div></div></div></div>" );
    llenarSeccionesEditar();
    llenarParametrosEditar();
+   contadorEnEditar++;
    $("#contadorEnEdit").val(contadorEnEditar);
+   $("#contadorTotal").val(contadorEnEditar);
  });
 
- function cerrarSeccionEditar(seccion){
-   disminuiContadorSeccionesEnEditar();
+ function cerrarSeccionEditar(seccion,paso){
+   disminuiContadorSeccionesEnEditar(paso);
    var $BOX_PANEL=seccion.closest('.x_panel');
    $BOX_PANEL.remove();
  }
- function disminuiContadorSeccionesEnEditar(){
+ function disminuiContadorSeccionesEnEditar(paso){
    contadorEnEditar--;
    $("#contadorEnEdit").val(contadorEnEditar);
-   alert(contadorEnEditar);
  }
  function llenarSeccionesEditar(){
    var secciones=$("#selectSeccion"+contadorEnEditar);

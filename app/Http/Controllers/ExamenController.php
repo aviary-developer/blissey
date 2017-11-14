@@ -12,6 +12,7 @@ use App\Seccion;
 use App\ExamenSeccionParametro;
 use Redirect;
 use DB;
+use App;
 use Carbon\Carbon;
 
 class ExamenController extends Controller
@@ -129,7 +130,7 @@ class ExamenController extends Controller
     $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
     $muestraSeleccionada=$examenes->tipoMuestra;
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-    $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->get();
+    $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->where('estado',TRUE)->get();
     $contador=0;
     $contadorSecciones=0;
     if(count($e_s_p)>0){
@@ -159,24 +160,26 @@ class ExamenController extends Controller
   */
   public function update(Request $request, $id)
   {
-    dd($request);
     DB::beginTransaction();
     try{
       $examenes = Examen::find($id);
       $examenes->fill($request->all());
       $examenes->save();
-      $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
-      $ultimoExamen=Examen::all();
-      $ultimoExamen=$ultimoExamen->last();
+      $totalSecciones=($request->contadorEnEdit);//Porque inicia en 0
+      $datosADesactivar=ExamenSeccionParametro::where('f_examen', $id)->get();
+      if (!empty($datosADesactivar)){
+          foreach ($datosADesactivar as $desactive) {
+            $desactive->delete();
+            /*$desactive->estado=false;
+            $desactive->save();*/
+          }
+          }
       if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
         for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
           $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
-          echo('<pre>');
-          echo $seccion;
-          echo('</pre>');
           for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
             $e_s_p = new ExamenSeccionParametro;
-            $e_s_p->f_examen = $ultimoExamen->id;
+            $e_s_p->f_examen = $examenes->id;
             $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
             $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
             $e_s_p->save();
