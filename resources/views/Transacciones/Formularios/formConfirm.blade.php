@@ -7,7 +7,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::date('fecha',$fecha,['class'=>'form-control has-feedback-left']) !!}
+        {!! Form::date('fecha',$transaccion->fecha,['class'=>'form-control has-feedback-left']) !!}
       </div>
       @if ($tipo==1)
           <label class="col-md-1 col-sm-12 col-xs-12 form-group">Cliente *</label>
@@ -64,8 +64,37 @@
           <thead>
             <th>Cantidad</th>
             <th colspan="2">Detalle</th>
+            <th>Descuento</th>
+            <th>Fecha de vencimiento</th>
+            <th>Precio</th>
+            <th>Lote</th>
             <th style="width : 80px">Acción</th>
           </thead>
+            @php
+            $detalles=$transaccion->detalleTransaccion;
+            @endphp
+            @foreach ($detalles as $detalle)
+              <tr>
+                <td style="width: 10%">
+                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Descuento']) !!}
+                </td>
+                <td style="width: 20%">{{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}</td>
+                <td style="width: 10%">{{$detalle->divisionProducto->producto->nombre}}</td>
+                <td style="width: 10%">
+                    {!! Form::number('descuento[]',null,['class'=>'form-control','placeholder'=>'%']) !!}
+                </td>
+                <td style="width: 10%">
+                  {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control','placeholder'=>'Fecha de vencimiento']) !!}
+                </td>
+                <td style="width: 10%">
+                  {!! Form::number('precio[]',null,['class'=>'form-control','placeholder'=>'Precio']) !!}
+                </td>
+                <td style="width: 10%">
+                  {!! Form::text('lote[]',null,['class'=>'form-control','placeholder'=>'N° de lote']) !!}
+                </td>
+                <td>Opciones</td>
+            </tr>
+            @endforeach
         </table>
       </div>
       </div>

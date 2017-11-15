@@ -58,7 +58,11 @@ class ProductoController extends Controller
       DB::beginTransaction();
 
       try{
-        $productos = Producto::create($request->All());
+        $productos = Producto::create([
+          'nombre'=>$request->nombre,
+          'f_presentacion'=>$request->f_presentacion,
+          'f_proveedor'=>$request->f_proveedor,
+        ]);
         if(isset($request->divisiones)){
           foreach ($request->divisiones as $key => $division) {
             $divisiones_productos = new DivisionProducto;

@@ -36,4 +36,7 @@ class Producto extends Model
     $nombre = Proveedor::find($id);
     return $nombre->nombre;
   }
+  public function presentacion(){
+    return $this->belongsTo('App\Presentacion','f_presentacion');
+  }
 }

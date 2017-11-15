@@ -5,7 +5,7 @@ $(document).on('ready',function(){
       var tipo  = $("#tipo").val();
       var usuario= $("#tipoUsuario").val();
       var laboratorio=$("#f_proveedor").val();
-      if(laboratorio!=null){
+      if(laboratorio!=""){
         if(valor.length > 2){
           if(tipo==0 && usuario=="Farmacia"){ //Venta a clientes
             var ruta = "/blissey/public/buscarProductoTransaccion/"+laboratorio+"/"+valor;
@@ -84,8 +84,8 @@ $(document).on('ready',function(){
         "<td>"+
         "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
-        "<button type='button' class='btn btn-xs btn-primary' id='eliminar_detalle'>"+
-        "<i class='fa fa-arrow-right'></i>"+
+        "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+        "<i class='fa fa-remove'></i>"+
         "</button>"+
         "</td>"+
         "</tr>";

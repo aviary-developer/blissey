@@ -113,6 +113,7 @@
               <input type="hidden" name="divisiones_eliminadas[]" value="ninguno" id="division_eliminada">
               @foreach ($divisiones_productos  as $key => $division)
                 <tr>
+                  <td>{{$division->codigo}}</td>
                   <td>{{$division->nombreDivision($division->f_division)}}</td>
                   <td>{{$division->cantidad}}</td>
                   <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>

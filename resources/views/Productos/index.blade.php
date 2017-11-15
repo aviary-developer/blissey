@@ -63,7 +63,6 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Código</th>
               <th>Nombre</th>
               <th>Proveedor</th>
               <th>Opciones</th>
@@ -77,7 +76,6 @@
               @foreach ($productos as $producto)
                 <tr>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $producto->codigo }}</td>
                   <td>{{ $producto->nombre }}</td>
                   <td>{{ $producto->nombreProveedor($producto->f_proveedor) }}</td>
                   <td>
