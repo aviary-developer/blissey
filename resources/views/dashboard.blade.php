@@ -36,6 +36,10 @@
   {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
   {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
 
+  {!!Html::style('assets/normalize-css/normalize.css')!!}
+  {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.css')!!}
+  {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')!!}
+
   <!-- Custom Theme Style -->
 
   {!!Html::style('assets/build/css/custom.css')!!}
@@ -260,6 +264,8 @@
 {!!Html::script('assets/moment/min/moment.min.js')!!}
 {!!Html::script('assets/bootstrap-daterangepicker/daterangepicker.js')!!}
 
+{!!Html::script('assets/ion.rangeSlider/js/ion.rangeSlider.min.js')!!}
+
 {!!Html::script('assets/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
 
 {!!Html::script('assets/datatables.net/js/jquery.dataTables.js')!!}
@@ -282,6 +288,7 @@
 {!!Html::script('js/scripts/Productos.js')!!}
 {!!Html::script('js/scripts/Transacciones.js')!!}
 {!!Html::script('js/scripts/Ingreso.js')!!}
+{!!Html::script('js/scripts/general.js')!!}
 @section('scripts')
 @show
 

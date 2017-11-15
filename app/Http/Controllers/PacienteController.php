@@ -23,10 +23,41 @@ class PacienteController extends Controller
     {
         $estado = $request->get('estado');
         $nombre = $request->get('nombre');
-        $pacientes = Paciente::buscar($nombre,$estado);
+        $apellido = $request->get('apellido');
+        $sexo = $request->get('sexo');
+        //Telefono
+        $telefono_incompleto = $request->get('telefono');
+        $telefono_incompleto = explode('_',$telefono_incompleto);
+        $telefono = $telefono_incompleto[0];
+        //dui
+        $dui_incompleto = $request->get('dui');
+        $dui_incompleto = explode('_',$dui_incompleto);
+        $dui = $dui_incompleto[0];
+        //Direccion
+        $direccion = $request->get('direccion');
+        //Edad
+        $edad = $request->get('edad');
+        $inicio = Paciente::where('estado',1)->orderBy('fechaNacimiento','asc')->first();
+        $fin = Paciente::where('estado',1)->orderBy('fechaNacimiento','desc')->first();
+        if($edad!=null){
+          $edad = explode(';',$edad);
+          $minimo = $edad[1];
+          $maximo = $edad[0];
+          $fecha_minima = Carbon::now();
+          $fecha_minima = $fecha_minima->subYears($minimo+1);
+          $fecha_minima = $fecha_minima->subDay();
+          $fecha_maxima = Carbon::now();
+          $fecha_maxima = $fecha_maxima->subYears($maximo);
+        }else{
+          $fecha_minima = $inicio->fechaNacimiento;
+          $fecha_maxima = $fin->fechaNacimiento;
+        }
+        $inicio = $inicio->fechaNacimiento->age;
+        $fin = $fin->fechaNacimiento->age;
+        $pacientes = Paciente::buscar($nombre,$apellido,$sexo,$telefono,$dui,$direccion,$fecha_minima,$fecha_maxima,$estado);
         $activos = Paciente::where('estado',true)->count();
         $inactivos = Paciente::where('estado',false)->count();
-        return view('Pacientes.index',compact('pacientes','estado','nombre','activos','inactivos'));
+        return view('Pacientes.index',compact('pacientes','estado','nombre','activos','inactivos','inicio','fin'));
     }
 
     /**
@@ -139,7 +170,7 @@ class PacienteController extends Controller
       $pacientes = Paciente::orderBy('apellido')->get();
       $pdf = \App::make('dompdf.wrapper');
       //$view = view('Pacientes.PDF.pacientes',compact('pacientes'));
-      $pdf->loadView('Pacientes.PDF.pacientes',compact('pacientes'));
+      $pdf->loadView('Pacientes.PDF.prueba',compact('pacientes'));
       //$pdf->output();
       $dompdf = $pdf->getDomPDF();
 
@@ -147,8 +178,12 @@ class PacienteController extends Controller
       $canvas->page_text(30,755,'Generado: '.date('d/m/Y h:i:s a'),null,10,array(0,0,0));
       $canvas->page_text(500, 755,("Página").": {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
       //$dompdf->loadHTMLFile('Pacientes.PDF.pacientes',compact('pacientes'));
-      ini_set("memory_limit","500M");
+      //ini_set("memory_limit","500M");
       //$dompdf->render();
       return $pdf->stream();
+    }
+
+    public function filtrar(Request $request){
+      return 0;
     }
 }
