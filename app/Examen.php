@@ -23,6 +23,10 @@ class Examen extends Model
     $nombre = Seccion::find($id);
     return $nombre->nombre;
   }
+  public function nombreMuestra($id){
+    $nombre = MuestraExamen::find($id);
+    return $nombre->nombre;
+  }
 
   public function nombreParametro($id){
     $nombre = Parametro::find($id);

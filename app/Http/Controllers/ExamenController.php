@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Examen;
 use App\Unidad;
 use App\Bitacora;
+use App\MuestraExamen;
 use App\Parametro;
 use App\Seccion;
 use App\ExamenSeccionParametro;
@@ -40,7 +41,8 @@ class ExamenController extends Controller
   public function create()
   {
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-    return view('Examenes.create',compact('unidades'));
+    $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
+    return view('Examenes.create',compact('unidades','muestras'));
   }
 
   /**

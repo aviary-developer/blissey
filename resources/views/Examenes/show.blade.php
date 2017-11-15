@@ -42,7 +42,7 @@
               </tr>
               <tr>
                 <th>Tipo de muestra</th>
-                <td>{{ $examen->tipoMuestra}}</td>
+                <td>{{ $examen->nombreMuestra($examen->tipoMuestra)}}</td>
               </tr>
               <tr>
                 <th>Fecha de creación</th>

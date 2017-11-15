@@ -19,7 +19,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Examenes
+        <h2>Muestras
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
@@ -32,9 +32,9 @@
         <div class="row">
           <div class="col-md-5 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/examenes/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/muestras/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/examenes?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/muestras?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -48,7 +48,7 @@
           </div>
           <div class="col-md-3 col-xs-12"></div>
           <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'examenes.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
+            {!!Form::open(['route'=>'muestras.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
@@ -65,25 +65,23 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Tipo de muestra</th>
               <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
-            @if (count($examenes)>0)
+            @if (count($muestras)>0)
               @php
               $correlativo = 1;
               @endphp
-              @foreach ($examenes as $examen)
+              @foreach ($muestras as $muestra)
                 <tr>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $examen->nombreExamen }}</td>
-                  <td>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</td>
+                  <td>{{ $muestra->nombre}}</td>
                   <td>
                     @if ($estadoOpuesto)
-                      @include('Examenes.Formularios.activate')
+                      @include('Muestras.Formularios.activate')
                     @else
-                      @include('Examenes.Formularios.desactivate')
+                      @include('Muestras.Formularios.desactivate')
                     @endif
                   </td>
                 </tr>
@@ -104,7 +102,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $examenes->appends(Request::only(['nombre','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $muestras->appends(Request::only(['nombre','estado']))->render ()) !!}
         </center>
       </div>
     </div>

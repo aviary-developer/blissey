@@ -15,10 +15,9 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
       <select class="form-control has-feedback-left" name="tipoMuestra" id="" required>
-        <option value="Sangre">Sangre</option>
-        <option value="Heces">Heces</option>
-        <option value="Orina">Orina</option>
-        <option value="Secreción">Secreción</option>
+        @foreach ($muestras as $muestra)
+          <option value={{ $muestra->id }}>{{ $muestra->nombre }}</option>
+        @endforeach
       </select>
     </div>
   </div>
@@ -65,7 +64,7 @@
                             <div class="col-md-9 col-sm-9 col-xs-12" id="unidadParametro">
                               <span class="fa fa-tasks form-control-feedback left" aria-hidden="true"></span>
                                 <select class="form-control has-feedback-left" name="unidadModal" id="unidadModal">
-                                  @foreach ($unidades as $unidad)
+                                  @foreach ($muestras as $unidad)
                                     <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
                                   @endforeach
                                 </select>

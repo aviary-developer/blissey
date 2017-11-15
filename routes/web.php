@@ -116,6 +116,12 @@ Route::match(['get','post'],'/desactivateUnidad/{id}','UnidadController@desactiv
 Route::match(['get','post'],'/activateUnidad/{id}','UnidadController@activate');
 Route::match(['get','post'],'/destroyUnidad/{id}','UnidadController@destroy');
 
+//Rutas de Muestras
+Route::resource('muestras','MuestraExamenController');
+Route::match(['get','post'],'/desactivateMuestraExamen/{id}','MuestraExamenController@desactivate');
+Route::match(['get','post'],'/activateMuestraExamen/{id}','MuestraExamenController@activate');
+Route::match(['get','post'],'/destroyMuestraExamen/{id}','MuestraExamenController@destroy');
+
 //Rutas de visitadores
 Route::resource('visitadores','DependienteController');
 Route::match(['get','post'],'/desactivateVisitador/{id}','DependienteController@desactivate');
