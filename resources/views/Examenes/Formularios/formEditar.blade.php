@@ -27,7 +27,8 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">
       <a class="btn btn-primary" id="agregarSeccionExamenEditar"><i class="fa fa-plus"></i> Agregar sección</a>
     </label>
-  </div><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Parametro</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-plus"></i> Nuevo Parametro</button>
+  </div>
   <div class="ln_solid"></div>
   <div class="clearfix"></div>
   <div class="seccionesExamenes x_panel" id="seccionesExamenes">
@@ -81,10 +82,10 @@
           </div>
         </div>
       @endfor
-@endif
-<input id="contadorEnEdit" name="contadorEnEdit" type="hidden" value=0>
-<input id="contadorTotal" name="contadorTotal" type="hidden" value=0>
-</div>
+    @else
+      <input id="contadorEnEdit" name="contadorEnEdit" type="hidden">
+      <input id="contadorTotal" name="contadorTotal" type="hidden">
+@endif</div>
     <div class="form-group">
       <center>
         {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}

@@ -94,7 +94,7 @@ class ExamenController extends Controller
   public function show($id)
   {
     $examen = Examen::find($id);
-    $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->get();
+    $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->where('estado',TRUE)->get();
     //echo $e_s_p;
     $contador=0;
     $contadorSecciones=0;
@@ -165,18 +165,21 @@ class ExamenController extends Controller
       $examenes = Examen::find($id);
       $examenes->fill($request->all());
       $examenes->save();
-      $totalSecciones=($request->contadorEnEdit);//Porque inicia en 0
+      $totalSecciones=($request->contadorEnEdit)+1;//Porque inicia en 0
       $datosADesactivar=ExamenSeccionParametro::where('f_examen', $id)->get();
       if (!empty($datosADesactivar)){
           foreach ($datosADesactivar as $desactive) {
-            $desactive->delete();
-            /*$desactive->estado=false;
-            $desactive->save();*/
+            //$desactive->delete();
+            $desactive->estado=false;
+            $desactive->save();
           }
           }
-      if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
+      //if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
         for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
           $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
+          echo('<pre>');
+          echo $seccion;
+          echo('</pre>');
           for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
             $e_s_p = new ExamenSeccionParametro;
             $e_s_p->f_examen = $examenes->id;
@@ -185,7 +188,7 @@ class ExamenController extends Controller
             $e_s_p->save();
           }
         }
-      }
+      //}
     }catch(\Exception $e){
       DB::rollback();
       return redirect('/examenes')->with('mensaje', 'Algo salio mal');

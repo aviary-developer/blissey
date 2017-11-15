@@ -26,7 +26,8 @@
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
         <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a>
       </label>
-  </div><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Parametro</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-plus"></i> Nuevo Parametro</button>
+  </div>
   <div class="ln_solid"></div>
         <div class="clearfix"></div>
             <div class="seccionesExamenes x_panel" id="seccionesExamenes">

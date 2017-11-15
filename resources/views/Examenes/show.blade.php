@@ -56,24 +56,28 @@
           </div>
           {{-- Otra pestaña --}}
           <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-            @for ($i=0; $i < count($secciones); $i++)
+            <div class='col-md-9 col-sm-9 col-xs-6'>
+              @for ($i=0; $i < count($secciones); $i++)
+                @php
+                $contadorParametros = 1;
+                @endphp
               <table class="table">
-                <caption>Parametros</caption>
+                <div class="x_title">
+                  <h2>
+                    <small>{{$examen->nombreSeccion($secciones[$i])}}</small>
+                  </h2>
+                  <div class="clearfix"></div>
+                </div>
                 <thead>
                   <th>#</th>
-                  <th>Sección</th>
                   <th>Parametro</th>
                 </thead>
-                @php
-                  $contadorParametros = 1;
-                @endphp
                 <tbody>
                   @if (count($e_s_p)>0)
                     @foreach ($e_s_p as $esp)
                       @if ($esp->f_seccion==$secciones[$i])
                       <tr>
                         <td>{{$contadorParametros}}</td>
-                        <td>{{$esp->nombreSeccion($esp->f_seccion)}}</td>
                         <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
                       </tr>
                     @endif
@@ -94,6 +98,7 @@
               </table>
             @endfor
           </div>
+        </div>
         </div>
       </div>
     </div>

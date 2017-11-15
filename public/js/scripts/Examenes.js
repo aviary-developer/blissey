@@ -101,6 +101,7 @@ function rellenarCombosParametros(paso){
   });
 }
  function agregarParametro(parametro,paso){
+   console.log("PASo: "+paso);
    var valorParametro=parametro.value;
    var textoParametro=parametro.options[parametro.selectedIndex].text;
    var tablaActual=$("#tablaParametros"+paso);
@@ -145,6 +146,10 @@ function rellenarCombosParametros(paso){
  ////////////////////////////////////SCRIPTS DE EDITAR
  var contadorEnEditar=$("#contadorEnEdit").val();
  $('#agregarSeccionExamenEditar').click(function(){
+   if(!contadorEnEditar){
+     contadorEnEditar=0;
+   }
+   console.log(contadorEnEditar);
    $('.seccionesExamenes').append( "<div class='col-md-6 col-sm-6 col-xs-12'>"+
    "<div class='x_panel'>"+
    "<div class='x_title'>"+
@@ -165,8 +170,8 @@ function rellenarCombosParametros(paso){
    contadorEnEditar++;
    $("#contadorEnEdit").val(contadorEnEditar);
    $("#contadorTotal").val(contadorEnEditar);
+   alert($("#contadorTotal").val());
  });
-
  function cerrarSeccionEditar(seccion,paso){
    disminuiContadorSeccionesEnEditar(paso);
    var $BOX_PANEL=seccion.closest('.x_panel');
