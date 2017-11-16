@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Examen extends Model
 {
   protected $fillable = [
-      'nombreExamen', 'tipoMuestra'
+      'nombreExamen', 'tipoMuestra','area'
   ];
   public static function buscar($nombre, $estado){
     return Examen::nombre($nombre)->estado($estado)->orderBy('nombreExamen')->paginate(10);

@@ -65,6 +65,7 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
+              <th>Área</th>
               <th>Tipo de muestra</th>
               <th>Opciones</th>
             </tr>
@@ -78,6 +79,7 @@
                 <tr>
                   <td>{{ $correlativo }}</td>
                   <td>{{ $examen->nombreExamen }}</td>
+                  <td>{{ $examen->area}}</td>
                   <td>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</td>
                   <td>
                     @if ($estadoOpuesto)

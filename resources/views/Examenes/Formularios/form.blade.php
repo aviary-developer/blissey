@@ -4,6 +4,23 @@
   </center>
   <br />
   <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Area de examen</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
+      <select class="form-control has-feedback-left" name="area" id="" required>
+      <option value="HEMATOLOGIA">HEMATOLOGIA</option>
+      <option value="EXAMENES DE ORINA">EXAMENES DE ORINA</option>
+      <option value="EXAMENES DE HECES">EXAMENES DE HECES</option>
+      <option value="BACTERIOLOGIA">BACTERIOLOGIA</option>
+      <option value="QUIMICA SANGUINEA">QUIMICA SANGUINEA</option>
+      <option value="INMUNOLOGIA">INMUNOLOGIA</option>
+      <option value="ENZIMAS">ENZIMAS</option>
+      <option value="PRUEBAS ESPECIALES">PRUEBAS ESPECIALES</option>
+      <option value="OTROS">OTROS</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>

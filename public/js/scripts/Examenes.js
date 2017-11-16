@@ -116,6 +116,7 @@ function rellenarCombosParametros(paso){
        "<i class='fa fa-remove'></i>"+
      "</button>"+
    "</td>"+
+   "<select class='form-control has-feedback-left' name='selectReactivos"+contadorSelectsParametros+"' id='selectReactivos"+contadorSelectsParametros+"' onChange='agregarParametro(this,"+contadorSelectsParametros+")';><option><strong>Cargando...</strong></option></select>"+
    "</tr>";
    if(verificarParametroEnTabla(tablaAVerificar,textoParametro)==true){
    $(tablaActual).append(html_texto);}else{

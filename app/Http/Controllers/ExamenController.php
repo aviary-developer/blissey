@@ -59,6 +59,7 @@ class ExamenController extends Controller
       $examenNuevo = new Examen;
       $examenNuevo->nombreExamen=$request->nombreExamen;
       $examenNuevo->tipoMuestra=$request->tipoMuestra;
+      $examenNuevo->area=$request->area;
       $examenNuevo->save();
       $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
       $ultimoExamen=Examen::all();
@@ -128,8 +129,10 @@ class ExamenController extends Controller
   {
     $examenes = Examen::find($id);
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
     $seccionesTabla=Seccion::where('estado',true)->orderBy('nombre','asc')->get();
     $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
+    $areaSeleccionada=$examenes->area;
     $muestraSeleccionada=$examenes->tipoMuestra;
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
     $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->where('estado',TRUE)->get();
@@ -150,7 +153,7 @@ class ExamenController extends Controller
         $contador++;
       }
     }
-    return view('Examenes.edit',compact('examenes','muestraSeleccionada','unidades','e_s_p','secciones','seccionesTabla','parametros'));
+    return view('Examenes.edit',compact('muestras','examenes','areaSeleccionada','muestraSeleccionada','unidades','e_s_p','secciones','seccionesTabla','parametros'));
   }
 
   /**
@@ -171,9 +174,9 @@ class ExamenController extends Controller
       $datosADesactivar=ExamenSeccionParametro::where('f_examen', $id)->get();
       if (!empty($datosADesactivar)){
           foreach ($datosADesactivar as $desactive) {
-            //$desactive->delete();
-            $desactive->estado=false;
-            $desactive->save();
+            $desactive->delete();
+            /*$desactive->estado=false;
+            $desactive->save();*/
           }
           }
       //if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable

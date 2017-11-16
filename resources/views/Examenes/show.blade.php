@@ -45,6 +45,10 @@
                 <td>{{ $examen->nombreMuestra($examen->tipoMuestra)}}</td>
               </tr>
               <tr>
+                <th>Área</th>
+                <td>{{ $examen->area}}</td>
+              </tr>
+              <tr>
                 <th>Fecha de creación</th>
                 <td>{{ $examen->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
               </tr>
