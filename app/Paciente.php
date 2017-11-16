@@ -13,6 +13,10 @@ class Paciente extends Model
       return Paciente::nombre($nombre)->apellido($apellido)->sexo($sexo)->telefono($telefono)->dui($dui)->direccion($direccion)->fecha($fecha_minima,$fecha_maxima)->estado($estado)->orderBy('apellido')->paginate(10);
     }
 
+    public static function contar($nombre, $apellido, $sexo, $telefono, $dui, $direccion, $fecha_minima, $fecha_maxima, $estado){
+      return Paciente::nombre($nombre)->apellido($apellido)->sexo($sexo)->telefono($telefono)->dui($dui)->direccion($direccion)->fecha($fecha_minima,$fecha_maxima)->estado($estado)->orderBy('apellido')->count();
+    }
+
     public function scopeNombre($query, $nombre){
       if(trim($nombre)!=""){
         $query->where('nombre', 'ilike','%'.$nombre.'%');

@@ -29,12 +29,16 @@
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
               <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <button type="button" class="btn btn-dark btn-ms" data-toggle="modal" data-target=".bs-modal-lg">
+              <button type="button" class="btn btn-dark btn-ms" data-toggle="modal" data-target=".bs-modal-lg" id="abrir_filtro" >
                 <i class="fa fa-sliders"></i>
                 Filtros
               </button>
-              <a href={!! asset('/paciente_pdf') !!} class="btn btn-dark btn-ms" target="_blank"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/pacientes?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              @if ($contador > 0 && $contador < 3)
+                <a href={!! asset('/paciente_pdf'.$ruta) !!} class="btn btn-dark btn-ms" target="_blank"><i class="fa fa-file"></i> Reporte</a>
+              @else
+                <a href={!! asset('#') !!} disabled class="btn btn-dark btn-ms" data-toggle="tooltip" data-placement="top" title="No se puede generar reporte"><i class="fa fa-file"></i> Reporte</a>
+              @endif
+              <a href={!! asset('/pacientes?estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -146,7 +150,7 @@
 
   {{-- Modal --}}
   <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    {!!Form::open(['route'=>'pacientes.index','method'=>'GET','role'=>'search'])!!}
+    {!!Form::open(['route'=>'pacientes.index','method'=>'GET','role'=>'search','autocomplete'=>'off'])!!}
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
 

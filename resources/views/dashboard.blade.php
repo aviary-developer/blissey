@@ -288,7 +288,7 @@
 {!!Html::script('js/scripts/Productos.js')!!}
 {!!Html::script('js/scripts/Transacciones.js')!!}
 {!!Html::script('js/scripts/Ingreso.js')!!}
-{!!Html::script('js/scripts/general.js')!!}
+{!!Html::script('js/scripts/Paciente.js')!!}
 @section('scripts')
 @show
 

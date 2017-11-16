@@ -22,33 +22,30 @@
         @php
           $correlativo = 1;
         @endphp
-        @for ($i=0; $i < 100; $i++)
-
-          @foreach ($pacientes as $paciente)
-            <tr>
-              <td>{{$correlativo++}}</td>
-              <td>{{$paciente->nombre}}</td>
-              <td>{{$paciente->apellido}}</td>
-              <td>{{$paciente->fechaNacimiento->age.' años'}}</td>
-              <td>
-                @if (strlen($paciente->telefono)!=9)
-                  <i>Sin Telefono</i>
-                @else
-                  {{$paciente->telefono}}
-                @endif
-              </td>
-              <td>
-                @if ($paciente->fechaNacimiento->age < 18)
-                  <i>Menor de edad</i>
-                @elseif (strlen($paciente->dui) != 10)
-                  <i>Sin DUI</i>
-                @else
-                  {{$paciente->dui}}
-                @endif
-              </td>
-            </tr>
-          @endforeach
-        @endfor
+        @foreach ($pacientes as $paciente)
+          <tr>
+            <td>{{$correlativo++}}</td>
+            <td>{{$paciente->nombre}}</td>
+            <td>{{$paciente->apellido}}</td>
+            <td>{{$paciente->fechaNacimiento->age.' años'}}</td>
+            <td>
+              @if (strlen($paciente->telefono)!=9)
+                <i>Sin Telefono</i>
+              @else
+                {{$paciente->telefono}}
+              @endif
+            </td>
+            <td>
+              @if ($paciente->fechaNacimiento->age < 18)
+                <i>Menor de edad</i>
+              @elseif (strlen($paciente->dui) != 10)
+                <i>Sin DUI</i>
+              @else
+                {{$paciente->dui}}
+              @endif
+            </td>
+          </tr>
+        @endforeach
       </tbody>
     </table>
   </body>

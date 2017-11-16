@@ -1,5 +1,6 @@
 <center>
   <p>Si no desea aplicar un filtro a un campo, dejelo vacio</p>
+  <p id="texto">Hola mundo</p>
 </center>
 <br />
 <div class="form-group col-sm-6 col-xs-12">
@@ -18,15 +19,15 @@
 </div>
 <div class="form-group col-sm-6 col-xs-12">
   <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo </label>
-  <label>
+  <label id="lsexo1">
     {!!Form :: radio ( "sexo",2,true,['id'=>'sexo1','class'=>'flat'])!!} Ambos
   </label>
   &nbsp;
-  <label>
+  <label id ="lsexo2">
     {!!Form :: radio ( "sexo",1,false,['id'=>'sexo2','class'=>'flat'])!!} Masculino
   </label>
   &nbsp;
-  <label>
+  <label id = "lsexo3">
     {!!Form :: radio ( "sexo",0,false,['id'=>'sexo3','class'=>'flat'])!!} Femenino
   </label>
 </div>
@@ -57,5 +58,12 @@
     <input type="text" id="range_paciente_edad" name="edad"/>
   </div>
 </div>
-<input type="hidden" id="from" value={{$fin}}>
-<input type="hidden" id="to" value={{$inicio}}>
+<input type="hidden" id="min" value={{$fin}}>
+<input type="hidden" id="max" value={{$inicio}}>
+<input type="hidden" id="from" value={{$desde}}>
+<input type="hidden" id="to" value={{$hasta}}>
+@if ($estadoOpuesto)
+  <input type="hidden" name="estado" value="0" id="estado">
+@else
+  <input type="hidden" name="estado" value="1" id="estado">
+@endif
