@@ -132,6 +132,9 @@ class TransaccionController extends Controller
     public function buscarProductos($id,$texto){
       $productos=Producto::where('f_proveedor','=',$id)->where('nombre','ilike','%'.$texto.'%')->get();
       if(count($productos)>0){
+        foreach($productos as $producto){
+          $producto->presentacion;
+        }
         return Response::json($productos);
       }else{
         return null;
@@ -140,6 +143,9 @@ class TransaccionController extends Controller
     public function buscarDivisiones($id){
       $divisiones=DivisionProducto::where('f_producto','=',$id)->get();
       if(count($divisiones)>0){
+        foreach($divisiones as $division){
+            $division->division;
+        }
         return Response::json($divisiones);
       }else{
         return null;
@@ -151,13 +157,27 @@ class TransaccionController extends Controller
       return $nombre->nombre;
     }
 
-    public function nombrePresentacion($id){
-      $nombre=Presentacion::find($id);
-      return $nombre->nombre;
+    public function nombrePresentacion($id,$tipo){
+      if($tipo=="1"){
+        $nombre=Presentacion::find($id);
+        return $nombre->nombre;
+      }else{
+        $producto=Producto::find($id);
+        $producto->presentacion;
+        return $producto;
+      }
     }
 
     public function confirmarPedido($id){
       $transaccion=Transacion::find($id);
       return view('Transacciones.confirmar',compact('transaccion'));
+    }
+    public function buscarDivision($codigo){
+      $division=DivisionProducto::where('codigo','=',$codigo)->first();
+      if(count($division)==1){
+        return $division;
+      }else{
+        return 0;
+      }
     }
 }

@@ -22,12 +22,8 @@ $(document).on('ready',function(){
                 var ruta2= "/blissey/public/buscarDivisionTransaccion/"+value.id;
                 $.get(ruta2,function(res2){
                   $(res2).each(function(key2,value2){
-                    var ruta3="/blissey/public/buscarNombreDivision/"+value2.f_division;
-                    $.get(ruta3,function(res3){
-
-                    var ruta4="/blissey/public/buscarNombrePresentacion/"+value.f_presentacion;
-                    $.get(ruta4,function(res4){
-                      n_division=res3+" "+value2.cantidad+" "+res4;
+                    console.log(value2);
+                      n_division=value2.division.nombre+" "+value2.cantidad+" "+value.presentacion.nombre;
                       html =
                       "<tr>"+
                       "<td>"+
@@ -46,9 +42,6 @@ $(document).on('ready',function(){
                       "</td>"+
                       "</tr>";
                       tabla.append(html);
-
-                    });
-                    });
                   });
                 });
               });
@@ -67,6 +60,24 @@ $(document).on('ready',function(){
           animation: false,
           customClass: 'animated tada'
         }).catch(swal.noop);
+      }
+    });
+    $("#codigoBuscar").keyup(function(){
+      codigo=$('#codigoBuscar').val();
+      if(codigo!=""){
+        ruta="/blissey/public/busquedaCodigo/"+codigo;
+        $.get(ruta,function(res){
+          if(res!=0){
+            var ruta3="/blissey/public/buscarNombreDivision/"+res.f_division;
+            $.get(ruta3,function(res3){
+              var ruta4="/blissey/public/buscarNombrePresentacion/"+res.f_producto+"/2";
+              $.get(ruta4,function(res4){
+                n_division=res3+" "+res.cantidad+" "+res4.presentacion.nombre;
+                $('#producto').val(n_division);
+              });
+            });
+          }
+        });
       }
     });
     $("#tablaBuscar").on('click',"#agregar_resultado",function(e){
@@ -94,6 +105,12 @@ $(document).on('ready',function(){
       }
     });
     $("#tablaDetalle").on('click','#eliminar_detalle',function(e){
+    var elemento = $(this).parents('tr').find('input:eq(1)').val();
+      var indice = componentes_agregados.indexOf(elemento);
+      componentes_agregados.splice(indice,1);
+      $(this).parent('td').parent('tr').remove();
+    });
+    $("#tablaDetalle").on('click','#eliminar_fila_pedido',function(e){
     var elemento = $(this).parents('tr').find('input:eq(1)').val();
       var indice = componentes_agregados.indexOf(elemento);
       componentes_agregados.splice(indice,1);

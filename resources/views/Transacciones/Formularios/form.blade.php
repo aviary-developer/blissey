@@ -15,7 +15,7 @@
             <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
             {!!Form::select('f_cliente',
               App\Transacion::arrayClientes()
-              ,null, ['placeholder' => 'Seleccione un proveedor','class'=>'form-control has-feedback-left'])!!}
+              ,null, ['class'=>'form-control has-feedback-left'])!!}
           </div>
       @else
           <label class="col-md-2 col-sm-12 col-xs-12 form-group">Proveedor *</label>
@@ -23,19 +23,19 @@
             <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
             {!!Form::select('f_proveedor',
               App\Transacion::arrayProveedores()
-              ,null, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
+              ,null, ['class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
           </div>
       @endif
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Código </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('codigo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Código']) !!}
+        {!! Form::text('codigo',null,['id'=>'codigoBuscar','class'=>'form-control has-feedback-left','placeholder'=>'Código']) !!}
       </div>
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Producto </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-shopping-cart form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('producto',null,['class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
+        {!! Form::text('producto',null,['id'=>'producto','class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
       </div>
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>

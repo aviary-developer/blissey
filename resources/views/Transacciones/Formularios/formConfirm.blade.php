@@ -26,6 +26,16 @@
               ,null, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
           </div>
       @endif
+      <label class="col-md-2 col-sm-12 col-xs-12 form-group">N° de factura *</label>
+      <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
+        {!! Form::text('factura',null,['class'=>'form-control has-feedback-left']) !!}
+      </div>
+      <label class="col-md-2 col-sm-12 col-xs-12 form-group">Descuento general *</label>
+      <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <span class="fa fa-percent form-control-feedback left" aria-hidden="true"></span>
+        {!! Form::number('factura',0,['class'=>'form-control has-feedback-left']) !!}
+      </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Código </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
@@ -79,7 +89,7 @@
                   {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Descuento']) !!}
                 </td>
                 <td style="width: 20%">{{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}</td>
-                <td style="width: 10%">{{$detalle->divisionProducto->producto->nombre}}</td>
+                <td style="width: 15%">{{$detalle->divisionProducto->producto->nombre}}</td>
                 <td style="width: 10%">
                     {!! Form::number('descuento[]',null,['class'=>'form-control','placeholder'=>'%']) !!}
                 </td>
@@ -92,7 +102,12 @@
                 <td style="width: 10%">
                   {!! Form::text('lote[]',null,['class'=>'form-control','placeholder'=>'N° de lote']) !!}
                 </td>
-                <td>Opciones</td>
+                <td>
+                  <input type='hidden' name='f_producto[]' value ='{{$detalle->f_producto}}'>
+                  <button type='button' class='btn btn-xs btn-danger' id='eliminar_fila_pedido'>
+                  <i class='fa fa-remove'></i>
+                  </button>
+                </td>
             </tr>
             @endforeach
         </table>
