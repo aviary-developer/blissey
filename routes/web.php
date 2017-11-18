@@ -47,6 +47,9 @@ Route::group(['middleware'=>'admin'], function()
   Route::match(['get','post'],'/destroyUsuario/{id}','UserController@destroy');
 });
 
+//Ruta de empresa
+Route::resource('grupo_promesa','EmpresaController');
+
 //Rutas de proveedores
 Route::resource('proveedores','ProveedorController');
 Route::match(['get','post'],'/desactivateProveedor/{id}','ProveedorController@desactivate');
