@@ -22,7 +22,6 @@ $(document).on('ready',function(){
                 var ruta2= "/blissey/public/buscarDivisionTransaccion/"+value.id;
                 $.get(ruta2,function(res2){
                   $(res2).each(function(key2,value2){
-                    console.log(value2);
                       n_division=value2.division.nombre+" "+value2.cantidad+" "+value.presentacion.nombre;
                       html =
                       "<tr>"+
@@ -72,10 +71,15 @@ $(document).on('ready',function(){
             $.get(ruta3,function(res3){
               var ruta4="/blissey/public/buscarNombrePresentacion/"+res.f_producto+"/2";
               $.get(ruta4,function(res4){
-                n_division=res3+" "+res.cantidad+" "+res4.presentacion.nombre;
+                n_division=res3+" "+res.cantidad+" "+res4.presentacion.nombre+" "+res4.nombre;
                 $('#producto').val(n_division);
+                $('#idoculto').val(res.id);
+                $('#divoculto').val(res3+" "+res.cantidad+" "+res4.presentacion.nombre);
+                $('#nomoculto').val(res4.nombre);
               });
             });
+          }else{
+            $('#producto').val("");
           }
         });
       }
@@ -93,8 +97,8 @@ $(document).on('ready',function(){
         "<td>"+division+"</td>"+
         "<td>"+nombre+"</td>"+
         "<td>"+
-        "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
+        "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
         "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
         "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -105,7 +109,7 @@ $(document).on('ready',function(){
       }
     });
     $("#tablaDetalle").on('click','#eliminar_detalle',function(e){
-    var elemento = $(this).parents('tr').find('input:eq(1)').val();
+    var elemento = $(this).parents('tr').find('input:eq(0)').val();
       var indice = componentes_agregados.indexOf(elemento);
       componentes_agregados.splice(indice,1);
       $(this).parent('td').parent('tr').remove();
@@ -116,7 +120,7 @@ $(document).on('ready',function(){
       componentes_agregados.splice(indice,1);
       $(this).parent('td').parent('tr').remove();
     });
-    function validarCantidad(){
+    function validarCantidad(){ //Campo cantidad_resultado
       c=0;
       var error =[];
       valor=true;
@@ -139,6 +143,63 @@ $(document).on('ready',function(){
       }
       return valor;
     }
+    function validaciones(){ //campo cantidad
+      c=0;
+      var error =[];
+      valor=true;
+      if($("#cantidad").val()==""){
+        error[c]='El campo cantidad es requerido';
+        c=c+1;
+        valor=false;
+      }if(parseFloat($("#cantidad").val())<=0){
+        error[c]='La cantidad debe ser mayor a cero';
+        c=c+1;
+        valor=false;
+      }
+      if($('#producto').val()==""){
+        error[c]='No ha ingresado un código de producto válido';
+        c=c+1;
+        valor=false;
+      }
+      for (var i = 0; i < c; i++) {
+        new PNotify({
+          title: 'Error!',
+          text: error[i],
+          type: 'error',
+          styling: 'bootstrap3'
+        });
+      }
+      return valor;
+    }
+    $("#agregar").on("click",function(){
+      var v=validaciones();
+      f_producto=$('#idoculto').val();
+      if(v==true && !componentes_agregados.includes(f_producto)){
+        var tabla = $("#tablaDetalle");
+        var cantidad=parseFloat($("#cantidad").val());
+        html="<tr>"+
+        "<td>"+cantidad+"</td>"+
+        "<td>"+$("#divoculto").val()+"</td>"+
+        "<td>"+$("#nomoculto").val()+"</td>"+
+        "<td>"+
+        "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
+        "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
+        "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+        "<i class='fa fa-remove'></i>"+
+        "</button>"+
+        "</td>"+
+        "</tr>";
+        tabla.append(html);
+        $('#idoculto').val("");
+        $('#divoculto').val("");
+        $('#nomoculto').val("");
+        $('#codigoBuscar').val("");
+        $('#producto').val("");
+        $('#cantidad').val("1");
+        componentes_agregados.push(f_producto);
+      }
+    });
+
 });
 function entero(obj,e,valor){
   val = (document.all) ? e.keyCode : e.which;

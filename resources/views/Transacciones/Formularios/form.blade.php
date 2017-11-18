@@ -3,6 +3,9 @@
     <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
   </center>
     <div class="row">
+      <input type="hidden" value="" id="idoculto">
+      <input type="hidden" value="" id="divoculto">
+      <input type="hidden" value="" id="nomoculto">
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
@@ -35,7 +38,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Producto </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-shopping-cart form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('producto',null,['id'=>'producto','class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
+        {!! Form::text('producto',null,['readonly' => 'readonly','id'=>'producto','class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
       </div>
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>
@@ -45,15 +48,15 @@
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <a href="#" class="btn btn-default">Agegar</a>
+        <a href="#" class="btn btn-default" id="agregar">Agregar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-default" id="agregar_paciente">
+        <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-default">
           Buscar
         </button>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <a href="#" class="btn btn-default">Cancelar</a>
+        <a href="/blissey/public/transacciones?tipo=0" class="btn btn-default">Cancelar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
         {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
