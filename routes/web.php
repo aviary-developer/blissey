@@ -136,6 +136,7 @@ Route::resource('historial','BitacoraController');
 
 Auth::routes();
 
+//Rutas de login
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@login')->name('login');
@@ -159,6 +160,7 @@ Route::match(['get','post'],'/desactivateDivision/{id}','DivisionController@desa
 Route::match(['get','post'],'/activateDivision/{id}','DivisionController@activate');
 Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
 
+//Rutas de transacciones
 Route::resource('transacciones','TransaccionController');
 Route::match(['get','post'],'/buscarProductoTransaccion/{id}/{texto}','TransaccionController@buscarProductos');
 Route::match(['get','post'],'/buscarDivisionTransaccion/{id}','TransaccionController@buscarDivisiones');
