@@ -19,6 +19,7 @@
   {!!Html::style('assets/iCheck/skins/flat/green.css')!!}
   <!-- iCheck -->
   {!!Html::style('css/animate.css')!!}
+  {!!Html::style('assets/switchery/dist/switchery.min.css')!!}
 
   <!-- bootstrap-progressbar -->
   {!!Html::style('assets/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}
@@ -280,7 +281,8 @@
 {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
 {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
 {!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
-
+{!!Html::script('assets/iCheck/icheck.min.js')!!}
+{!!Html::script('assets/switchery/dist/switchery.min.js')!!}
 <!--js agregados -->
 {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
 {!!Html::script('js/scripts/Usuarios.js')!!}

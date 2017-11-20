@@ -204,3 +204,13 @@ function rellenarCombosParametros(paso){
      });
    });
  }
+
+$('#checkValores').click(function(){
+  if(this.checked == true){
+    $("#valorMinimo").prop("readonly", false);
+    $("#valorMaximo").prop("readonly", false);
+  }else{
+    $("#valorMaximo").prop("readonly", true);
+    $("#valorMinimo").prop("readonly", true);
+  }
+});
