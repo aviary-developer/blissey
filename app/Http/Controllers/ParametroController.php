@@ -73,7 +73,8 @@ class ParametroController extends Controller
   public function edit($id)
   {
     $parametros = Parametro::find($id);
-    return view('Parametros.edit',compact('parametros'));
+    $unidades = Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    return view('Parametros.edit',compact('parametros','unidades'));
   }
 
   /**

@@ -81,9 +81,21 @@
                 <tr>
                   <td>{{ $correlativo }}</td>
                   <td>{{ $parametro->nombreParametro}}</td>
+                  @if($parametro->valorMinimo!=null)
                   <td>{{ $parametro->valorMinimo}}</td>
+                  @else
+                    <td>(Vacío)</td>
+                  @endif
+                  @if($parametro->valorMaximo!=null)
                   <td>{{ $parametro->valorMaximo}}</td>
+                  @else
+                    <td>(Vacío)</td>
+                  @endif
+                  @if($parametro->valorPredeterminado!=null)
                   <td>{{ $parametro->valorPredeterminado}}</td>
+                  @else
+                    <td>(Vacío)</td>
+                  @endif
                   <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
                   <td>
                     @if ($estadoOpuesto)

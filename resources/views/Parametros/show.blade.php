@@ -46,15 +46,27 @@
               </tr>
               <tr>
                 <th>Valor mínimo</th>
-                <td>{{ $parametro->valorMinimo }}</td>
+                @if($parametro->valorMinimo!=null)
+                <td>{{ $parametro->valorMinimo}}</td>
+                @else
+                  <td>(Vacío)</td>
+                @endif
               </tr>
               <tr>
                 <th>Valor máximo</th>
-                <td>{{ $parametro->valorMaximo }}</td>
+                @if($parametro->valorMaximo!=null)
+                <td>{{ $parametro->valorMaximo}}</td>
+                @else
+                  <td>(Vacío)</td>
+                @endif
               </tr>
               <tr>
                 <th>Valor predeterminado</th>
+                @if($parametro->valorPredeterminado!=null)
                 <td>{{ $parametro->valorPredeterminado}}</td>
+                @else
+                  <td>(Vacío)</td>
+                @endif
               </tr>
               <tr>
                 <th>Fecha de creación</th>

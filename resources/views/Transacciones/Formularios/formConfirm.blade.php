@@ -4,6 +4,7 @@
   </center>
     <div class="row">
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
+      <input type="hidden" id="confirmar" name="confirmar" value="{{true}}">
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
@@ -86,7 +87,7 @@
             @foreach ($detalles as $detalle)
               <tr>
                 <td style="width: 10%">
-                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Descuento']) !!}
+                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Cantidad']) !!}
                 </td>
                 <td style="width: 20%">{{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}</td>
                 <td style="width: 15%">{{$detalle->divisionProducto->producto->nombre}}</td>
@@ -94,7 +95,7 @@
                     {!! Form::number('descuento[]',null,['class'=>'form-control','placeholder'=>'%']) !!}
                 </td>
                 <td style="width: 10%">
-                  {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control','placeholder'=>'Fecha de vencimiento']) !!}
+                  {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control']) !!}
                 </td>
                 <td style="width: 10%">
                   {!! Form::number('precio[]',null,['class'=>'form-control','placeholder'=>'Precio']) !!}
@@ -125,7 +126,7 @@
             </div>
 
             <div class="modal-body">
-              <div class="x_panel" style="height:300px">
+              <div class="x_panel" style="height:600px">
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar</label>
                   <div class="col-md-7 col-sm-7 col-xs-12">

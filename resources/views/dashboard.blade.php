@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
+=======
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Blissey</title>
+  <!-- jQuery -->
+  <!-- Bootstrap -->
+  {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
+  <!-- Font Awesome -->
+  {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
+  <!-- NProgress -->
+  {!!Html::style('assets/nprogress/nprogress.css')!!}
+  <!-- iCheck -->
+  {!!Html::style('assets/iCheck/skins/flat/green.css')!!}
+  <!-- iCheck -->
+  {!!Html::style('css/animate.css')!!}
+  {!!Html::style('assets/switchery/dist/switchery.min.css')!!}
+>>>>>>> acab49081ec95a6bdc2b1b2fbc6084ba134e1a6e
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -329,7 +352,30 @@
 
 	<!-- Custom Theme Scripts -->
 
+<<<<<<< HEAD
 	{!!Html::script('assets/build/js/custom.js')!!}
+=======
+<!--para mensajes de error en validaciones-->
+{!!Html::script('assets/pnotify/dist/pnotify.js')!!}
+{!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+{!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
+{!!Html::script('assets/iCheck/icheck.min.js')!!}
+{!!Html::script('assets/switchery/dist/switchery.min.js')!!}
+<!--js agregados -->
+{!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
+{!!Html::script('js/scripts/Usuarios.js')!!}
+{!!Html::script('js/scripts/Examenes.js')!!}
+{!!Html::script('js/scripts/Productos.js')!!}
+{!!Html::script('js/scripts/Transacciones.js')!!}
+{!!Html::script('js/scripts/Ingreso.js')!!}
+{!!Html::script('js/scripts/Paciente.js')!!}
+@section('scripts')
+@show
+
+<!-- Custom Theme Scripts -->
+
+{!!Html::script('assets/build/js/custom.js')!!}
+>>>>>>> acab49081ec95a6bdc2b1b2fbc6084ba134e1a6e
 </body>
 
 </html>

@@ -7,6 +7,7 @@
       <input type="hidden" value="" id="divoculto">
       <input type="hidden" value="" id="nomoculto">
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
+      <input type="hidden" id="confirmar" name="confirmar" value="{{false}}">
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
@@ -84,7 +85,7 @@
             </div>
 
             <div class="modal-body">
-              <div class="x_panel" style="height:300px">
+              <div class="x_panel" style="height:600px">
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar</label>
                   <div class="col-md-7 col-sm-7 col-xs-12">
@@ -103,7 +104,7 @@
                   <div class="col-md-2 col-xs-12"></div>
                   <div class="col-md-8 col-xs-12">
                     <h4 class="StepTitle">Resultado de busqueda</h4>
-                    <table class="table" id="tablaBuscar">
+                    <table class="table" id="tablaBuscar" style="max-height: 300px">
                       <thead>
                         <th colspan="2">Resultado</th>
                         <th style="width : 80px">Acción</th>
