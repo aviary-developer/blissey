@@ -29,7 +29,12 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        return view('Empresa.create');
+        // $cantidad = Empresa::count();
+        // if($cantidad < 1)
+        // {
+            return view('Empresa.create');
+        // }
+        // return redirect('/grupo_promesa');
     }
 
     /**
