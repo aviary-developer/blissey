@@ -1,5 +1,5 @@
+var componentes_agregados = [];
 $(document).on('ready',function(){
-    var componentes_agregados = [];
     $("#resultado").keyup(function(){
       var valor = $("#resultado").val();
       var tipo  = $("#tipo").val();
@@ -7,7 +7,8 @@ $(document).on('ready',function(){
       var laboratorio=$("#f_proveedor").val();
       var confirmar=$("#confirmar").val();
       if(laboratorio!=""){
-        if(valor.length > 2){
+        conteo=valor.length;
+        if(conteo > 1 && (conteo%2)==0){
           if(confirmar==true||tipo==0 && usuario=="Farmacia"){ //Venta a clientes
             var ruta = "/blissey/public/buscarProductoTransaccion/"+laboratorio+"/"+valor;
             var tabla = $("#tablaBuscar");
@@ -27,10 +28,10 @@ $(document).on('ready',function(){
                       html =
                       "<tr>"+
                       "<td>"+
-                      n_division+
+                      value.nombre+
                       "</td>"+
                       "<td>"+
-                      value.nombre+
+                      n_division+
                       "</td>"+
                       "<td>"+
                       "<input type='hidden' name='producto_division[]' value ='"+n_division+"'>"+

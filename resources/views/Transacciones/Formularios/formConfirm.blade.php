@@ -87,12 +87,12 @@
             @foreach ($detalles as $detalle)
               <tr>
                 <td style="width: 10%">
-                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Cantidad']) !!}
+                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Cantidad','min'=>'1','onKeyPress' => 'return entero( this, event,this.value);']) !!}
                 </td>
                 <td style="width: 20%">{{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}</td>
                 <td style="width: 15%">{{$detalle->divisionProducto->producto->nombre}}</td>
                 <td style="width: 10%">
-                    {!! Form::number('descuento[]',null,['class'=>'form-control','placeholder'=>'%']) !!}
+                    {!! Form::number('descuento[]',null,['class'=>'form-control','placeholder'=>'%','min'=>'0']) !!}
                 </td>
                 <td style="width: 10%">
                   {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control']) !!}
