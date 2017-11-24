@@ -10,8 +10,9 @@ $('#agregarSeccionExamen').click(function(){
   "<li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>"+
   "</ul><div class='clearfix'></div></div>"+
   "<div class='row'>"+
-  "<div class='col-md-6 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
-  "<div class='col-md-6 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes"+contadorSelectsParametros+"' id='selectReactivosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
+  "<div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
+  "<div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes"+contadorSelectsParametros+"' id='selectReactivosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
+  "<div class='col-md-2 col-sm-12 col-xs-12 form-group'><span class='input-group-btn'><button type='button' name='button' class='btn btn-primary' id='agregarParametroReactivo' onClick='agregarParametro("+contadorSelectsParametros+")'><i class='fa fa-save'></i></button></span></div>"+
   "<table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th>Reactivos</th><th style='width : 80px'>Acción</th></thead>"+
   "<tbody></tbody></table>"+
   "</div></div></div></div>" );
@@ -52,9 +53,9 @@ function llenarReactivos(){
   var reactivos=$("#selectReactivosExamenes"+contadorSelectsParametros);
   var ruta="/blissey/public/llenarReactivosExamenes";
   $.get(ruta,function(res){
-    rea reactivos.empty();
+    reactivos.empty();
     $(res).each(function(key,value){
-      rea reactivos.append("<option value='"+value.id+"'>"+value.nombre+"</option>");
+      reactivos.append("<option value='"+value.id+"'>"+value.nombre+"</option>");
     });
   });
 }
@@ -110,9 +111,11 @@ function rellenarCombosParametros(paso){
     });
   });
 }
- function agregarParametro(parametro,paso){
+ function agregarParametro(paso){
    console.log("PASo: "+paso);
+   var parametro=$("#selectParametrosExamenes"+contadorSelectsParametros);
    var valorParametro=parametro.value;
+   console.log("PASo: "+parametro);
    var textoParametro=parametro.options[parametro.selectedIndex].text;
    var tablaActual=$("#tablaParametros"+paso);
    var tablaAVerificar=$("#tablaParametros"+paso+" tbody tr");

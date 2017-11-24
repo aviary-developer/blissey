@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Reactivo;
 use Redirect;
+use Response;
 use Carbon\Carbon;
 
 class ReactivoController extends Controller
