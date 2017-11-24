@@ -6,17 +6,18 @@ $('#agregarSeccionExamen').click(function(){
   "<div class='col-md-9 col-sm-9 col-xs-12'>"+
   "<span class='fa fa-bars form-control-feedback left' aria-hidden='true'></span>"+
   "<select class='form-control has-feedback-left' name='selectSeccion"+contadorSelectsParametros+"' id='selectSeccion"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
-  "<ul class='nav navbar-right panel_toolbox'>"+
+  "<ul class='nav navbar-center panel_toolbox'>"+
   "<li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>"+
   "</ul><div class='clearfix'></div></div>"+
-  "<div class='x_content'>"+
-  "<div class='col-md-9 col-sm-9 col-xs-6'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span>"+
-  "<select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"' onChange='agregarParametro(this,"+contadorSelectsParametros+")';><option><strong>Cargando...</strong></option></select><hr>"+
-  "<table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th style='width : 80px'>Acción</th></thead>"+
+  "<div class='row'>"+
+  "<div class='col-md-6 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
+  "<div class='col-md-6 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes"+contadorSelectsParametros+"' id='selectReactivosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
+  "<table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th>Reactivos</th><th style='width : 80px'>Acción</th></thead>"+
   "<tbody></tbody></table>"+
   "</div></div></div></div>" );
   llenarSecciones();
   llenarParametros();
+  llenarReactivos();
   contadorSelectsParametros++;
   $("#totalSecciones").val(contadorSelectsParametros);
 });
@@ -42,9 +43,18 @@ function llenarParametros(){
   var ruta="/blissey/public/llenarParametrosExamenes";
   $.get(ruta,function(res){
     parametros.empty();
-    //parametros.append("<option value='-1' readonly='readonly'>[Seleccione parametros]</option>");
     $(res).each(function(key,value){
       parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
+    });
+  });
+}
+function llenarReactivos(){
+  var reactivos=$("#selectReactivosExamenes"+contadorSelectsParametros);
+  var ruta="/blissey/public/llenarReactivosExamenes";
+  $.get(ruta,function(res){
+    rea reactivos.empty();
+    $(res).each(function(key,value){
+      rea reactivos.append("<option value='"+value.id+"'>"+value.nombre+"</option>");
     });
   });
 }
@@ -116,7 +126,6 @@ function rellenarCombosParametros(paso){
        "<i class='fa fa-remove'></i>"+
      "</button>"+
    "</td>"+
-   "<select class='form-control has-feedback-left' name='selectReactivos"+contadorSelectsParametros+"' id='selectReactivos"+contadorSelectsParametros+"' onChange='agregarParametro(this,"+contadorSelectsParametros+")';><option><strong>Cargando...</strong></option></select>"+
    "</tr>";
    if(verificarParametroEnTabla(tablaAVerificar,textoParametro)==true){
    $(tablaActual).append(html_texto);}else{

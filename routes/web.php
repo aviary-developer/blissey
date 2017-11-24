@@ -19,7 +19,7 @@ Route::resource('reactivos','ReactivoController');
 Route::match(['get','post'],'/desactivateReactivo/{id}','ReactivoController@desactivate');
 Route::match(['get','post'],'/activateReactivo/{id}','ReactivoController@activate');
 Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
-
+Route::match(['get','post'],'/llenarReactivosExamenes','ReactivoController@llenarReactivosExamenes');
 //Rutas de Secciones Examenes
 Route::resource('secciones','SeccionController');
 Route::match(['get','post'],'/desactivateSeccion/{id}','SeccionController@desactivate');

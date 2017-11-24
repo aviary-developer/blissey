@@ -80,7 +80,7 @@
                   <td>{{ $correlativo }}</td>
                   <td>{{ $reactivo->nombre }}</td>
                   <td>{{ $reactivo->descripcion }}</td>
-                  <td>{{ $reactivo->contenidoPorEnvase}} ml</td>
+                  <td>{{ $reactivo->contenidoPorEnvase}}</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Reactivos.Formularios.activate')
