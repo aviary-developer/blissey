@@ -123,6 +123,21 @@ class IngresoController extends Controller
         return redirect('/ingresos');
     }
 
+    public function activate($id){
+      $ingreso = Ingreso::find($id);
+      DB::beginTransaction();
+      try{
+        $ingreso->estado = 1;
+        $ingreso->save();
+        DB::commit();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/ingresos')->with('mensaje', 'Algo salio mal');
+      }
+      Bitacora::bitacora('activate','ingresos','ingresos',$id);
+      return redirect('/ingresos');
+    }
+
     public function buscarPaciente($nombre)
     {
       $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
