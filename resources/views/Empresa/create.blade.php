@@ -9,6 +9,7 @@
 			</h2>
 			<div class="clearfix"></div>
 		</div>
+		<input type="hidden" name="telefono_eliminados[]" value="ninguno" id="telefono_eliminados">
 		@include('Empresa.Formularios.form')
 	</div>
 </div>

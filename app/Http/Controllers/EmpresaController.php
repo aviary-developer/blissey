@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empresa;
 use App\Bitacora;
+use App\TelefonoEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
@@ -19,7 +20,8 @@ class EmpresaController extends Controller
     public function index()
     {
         $empresa = Empresa::orderBy('created_at','desc')->first();
-        return view('Empresa.index',compact('empresa'));
+        $telefonos = TelefonoEmpresa::where('f_empresa',$empresa->id)->get();
+        return view('Empresa.index',compact('empresa','telefonos'));
     }
 
     /**
@@ -61,6 +63,15 @@ class EmpresaController extends Controller
                 $empresa->logo_farmacia = $request->file('logo_farmacia')->store('public/logo');
             }
             $empresa->save();
+            if(isset($request->telefono)){
+                foreach ($request->telefono as $t => $tel) {
+                    $telefono = new TelefonoEmpresa;
+                    $telefono->f_empresa = $empresa->id;
+                    $telefono->telefono = $request->telefono[$t];
+                    $telefono->tipo = $request->tipo[$t];
+                    $telefono->save();
+                }
+            }
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -93,7 +104,8 @@ class EmpresaController extends Controller
         $id = $aux[0];
         $seccion = $aux[1];
         $empresa = Empresa::find($id);
-        return view("Empresa.edit",compact("empresa","seccion"));
+        $telefonos = TelefonoEmpresa::where('f_empresa',$id)->get();
+        return view("Empresa.edit",compact("empresa","seccion","telefonos"));
     }
 
     /**
@@ -139,6 +151,23 @@ class EmpresaController extends Controller
                 }
             }
             $empresa->save();
+
+            if(isset($request->telefono)){
+                foreach ($request->telefono as $t => $tel) {
+                    $telefono = new TelefonoEmpresa;
+                    $telefono->f_empresa = $empresa->id;
+                    $telefono->telefono = $request->telefono[$t];
+                    $telefono->tipo = $request->tipo[$t];
+                    $telefono->save();
+                }
+            }
+
+            foreach($request->telefono_eliminados as $telefono){
+                if($telefono != "ninguno"){
+                    $eliminar = TelefonoEmpresa::findOrFail($telefono);
+                    $eliminar->delete();
+                }
+            }
         }catch(Exception $e){
             DB::rollback();
             return redirect("/grupo_promesa")->with('mensaje','Algo salio mal');

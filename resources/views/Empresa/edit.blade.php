@@ -14,6 +14,7 @@
 			<div class="clearfix"></div>
 		</div>
     <div class="x_content">
+      <input type="hidden" name="telefono_eliminados[]" value="ninguno" id="telefono_eliminados">
       @if($seccion==1)
         @include('Empresa.Formularios.paso1')
       @elseif($seccion==2)  

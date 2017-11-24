@@ -51,7 +51,14 @@
                 </tr>
                 <tr>
                   <th style="width: 150px">Télefono</th>
-                  <td></td>
+                  <td>
+                    @foreach($telefonos as $telefono)
+                        @if($telefono->tipo == 'hospital')
+                            {{ $telefono->telefono}}
+                            &#8226;
+                        @endif
+                    @endforeach
+                  </td>
                 </tr>
                 <tr>
                   <th style="width: 150px">Dirección</th>
@@ -97,7 +104,14 @@
                 </tr>
                 <tr>
                   <th style="width: 150px">Télefono</th>
-                  <td></td>
+                  <td>
+                     @foreach($telefonos as $telefono)
+                        @if($telefono->tipo == 'laboratorio')
+                            {{ $telefono->telefono}}
+                            &#8226;
+                        @endif
+                    @endforeach
+                  </td>
                 </tr>
                 <tr>
                   <th style="width: 150px">Dirección</th>
@@ -143,7 +157,14 @@
                 </tr>
                 <tr>
                   <th style="width: 150px">Télefono</th>
-                  <td></td>
+                  <td>
+                     @foreach($telefonos as $telefono)
+                        @if($telefono->tipo == 'clinica')
+                            {{ $telefono->telefono}}
+                            &#8226;
+                        @endif
+                    @endforeach
+                  </td>
                 </tr>
                 <tr>
                   <th style="width: 150px">Dirección</th>
@@ -189,7 +210,14 @@
                 </tr>
                 <tr>
                   <th style="width: 150px">Télefono</th>
-                  <td></td>
+                  <td>
+                     @foreach($telefonos as $telefono)
+                        @if($telefono->tipo == 'farmacia')
+                            {{ $telefono->telefono}}
+                            &#8226;
+                        @endif
+                    @endforeach
+                  </td>
                 </tr>
                 <tr>
                   <th style="width: 150px">Dirección</th>
