@@ -118,10 +118,10 @@ $(document).on('ready',function(){
           "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control' value='"+cantidad+"'></td>"+
           "<td style='width: 20%'>"+division+"</td>"+
           "<td style='width: 15%'>"+nombre+"</td>"+
-          "<td style='width: 10%'><input class='form-control' type='number' placeholder='%' value='0'></td>"+
-          "<td style='width: 10%'><input class='form-control' type='date' placeholder=''></td>"+
-          "<td style='width: 10%'><input class='form-control' type='number' placeholder='Precio'></td>"+
-          "<td style='width: 10%'><input class='form-control' type='text' placeholder='N° de lote'></td>"+
+          "<td style='width: 10%'><input name='descuento[]' class='form-control' type='number' placeholder='%' value='0'></td>"+
+          "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control' type='date' placeholder=''></td>"+
+          "<td style='width: 10%'><input name='precio[]' class='form-control' type='number' placeholder='Precio'></td>"+
+          "<td style='width: 10%'><input name='lote[]' class='form-control' type='text' placeholder='N° de lote'></td>"+
           "<td>"+
           "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
           "<input type='hidden' name='estado[]' value ='nuevo'>"+

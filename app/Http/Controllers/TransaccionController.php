@@ -117,23 +117,36 @@ class TransaccionController extends Controller
     public function update(Request $request, $id)
     {
         $transaccion = Transacion::findOrFail($id);
-        echo $request->fecha;
-        echo $request->factura;
-        echo $request->descuentog;
+        $transaccion->fecha=$request->fecha;
+        $transaccion->factura=$request->factura;
+        $transaccion->descuento=$request->descuentog;
+        $transaccion->save();
 
         $contador = count($request->estado);
         $cont_eliminados=count($request->eliminado);
-        for($i=0;$i<$contador;$i++){
-          echo "<br>".$request->estado[$i];
-          echo "/".$request->descuento[$i];
-          echo "/".$request->cantidad[$i];
-          echo "/".$request->fecha_vencimiento[$i];
-          echo "/".$request->precio[$i];
-          echo "/".$request->lote[$i];
-        }
-        for($i=0;$i<$cont_eliminados;$i++){
 
+        for($i=0;$i<$cont_eliminados;$i++){
+          $bor=DetalleTransacion::findOrFail($request->eliminado[$i]);
+          $bor->delete();
         }
+
+        for($i=0;$i<$contador;$i++){
+          if($request->estado[$i]!='nuevo'){
+            $detalle=DetalleTransacion::findOrFail($request->estado[$i]);
+          }else{
+            $detalle= new DetalleTransacion;
+          }
+          $detalle->descuento = $request->descuento[$i];
+          $detalle->cantidad = $request->cantidad[$i];
+          $detalle->condicion = '1';
+          $detalle->fecha_vencimiento = $request->fecha_vencimiento[$i];
+          $detalle->f_transaccion=$transaccion->id;
+          $detalle->precio = $request->precio[$i];
+          $detalle->lote = $request->lote[$i];
+          $detalle->f_producto=$request->f_producto[$i];
+          $detalle->save();
+        }
+
 
     }
 

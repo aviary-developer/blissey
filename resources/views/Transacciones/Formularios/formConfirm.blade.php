@@ -106,6 +106,7 @@
                 <td>
                   <input type="hidden" id={{"f_prod".$key}} value={{$detalle->f_producto}}>
                   <input type='hidden' name='estado[]' value ='{{$detalle->id}}'>
+                  <input type='hidden' name='f_producto[]' value ={{$detalle->f_producto}}>
                   <button type='button' class='btn btn-xs btn-danger' id='eliminar_fila_pedido'>
                   <i class='fa fa-remove'></i>
                   </button>
