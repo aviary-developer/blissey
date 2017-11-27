@@ -116,7 +116,25 @@ class TransaccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transaccion = Transacion::findOrFail($id);
+        echo $request->fecha;
+        echo $request->factura;
+        echo $request->descuentog;
+
+        $contador = count($request->estado);
+        $cont_eliminados=count($request->eliminado);
+        for($i=0;$i<$contador;$i++){
+          echo "<br>".$request->estado[$i];
+          echo "/".$request->descuento[$i];
+          echo "/".$request->cantidad[$i];
+          echo "/".$request->fecha_vencimiento[$i];
+          echo "/".$request->precio[$i];
+          echo "/".$request->lote[$i];
+        }
+        for($i=0;$i<$cont_eliminados;$i++){
+
+        }
+
     }
 
     /**

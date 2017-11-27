@@ -1,5 +1,11 @@
-var componentes_agregados = [];
 $(document).on('ready',function(){
+  var componentes_agregados = [];
+  var contador = $("#contador").val();
+  for (i = 0; i <= contador; i++) {
+    var prod_tmp = $("#f_prod"+i).val();
+    componentes_agregados.push(prod_tmp);
+  }
+  console.log(componentes_agregados);
     $("#resultado").keyup(function(){
       var valor = $("#resultado").val();
       var tipo  = $("#tipo").val();
@@ -118,7 +124,7 @@ $(document).on('ready',function(){
           "<td style='width: 10%'><input class='form-control' type='text' placeholder='N° de lote'></td>"+
           "<td>"+
           "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
-          "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
+          "<input type='hidden' name='estado[]' value ='nuevo'>"+
           "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
           "<i class='fa fa-remove'></i>"+
           "</button>"+
@@ -128,6 +134,7 @@ $(document).on('ready',function(){
 
         tabla.append(html);
         componentes_agregados.push(f_producto);
+        console.log(componentes_agregados);
       }
     });
     $("#tablaDetalle").on('click','#eliminar_detalle',function(e){
@@ -137,10 +144,16 @@ $(document).on('ready',function(){
       $(this).parent('td').parent('tr').remove();
     });
     $("#tablaDetalle").on('click','#eliminar_fila_pedido',function(e){
-    var elemento = $(this).parents('tr').find('input:eq(1)').val();
+    var elemento = $(this).parents('tr').find('input:eq(5)').val();
+    var estado = $(this).parents('tr').find('input:eq(6)').val();
       var indice = componentes_agregados.indexOf(elemento);
       componentes_agregados.splice(indice,1);
       $(this).parent('td').parent('tr').remove();
+      if(estado!='nuevo'){
+        var eliminado ="<input type='hidden' name='eliminado[]' value='"+estado+"'>";
+        $('#eliminados').append(eliminado);
+      }
+      console.log(componentes_agregados);
     });
     function validarCantidad(){ //Campo cantidad_resultado
       c=0;

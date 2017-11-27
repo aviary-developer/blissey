@@ -35,7 +35,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Descuento general *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-percent form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::number('factura',0,['class'=>'form-control has-feedback-left']) !!}
+        {!! Form::number('descuentog',0,['class'=>'form-control has-feedback-left']) !!}
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Código </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
@@ -84,7 +84,7 @@
             @php
             $detalles=$transaccion->detalleTransaccion;
             @endphp
-            @foreach ($detalles as $detalle)
+            @foreach ($detalles as $key => $detalle)
               <tr>
                 <td style="width: 10%">
                   {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Cantidad','min'=>'1','onKeyPress' => 'return entero( this, event,this.value);']) !!}
@@ -104,13 +104,19 @@
                   {!! Form::text('lote[]',null,['class'=>'form-control','placeholder'=>'N° de lote']) !!}
                 </td>
                 <td>
-                  <input type='hidden' name='f_producto[]' value ='{{$detalle->f_producto}}'>
+                  <input type="hidden" id={{"f_prod".$key}} value={{$detalle->f_producto}}>
+                  <input type='hidden' name='estado[]' value ='{{$detalle->id}}'>
                   <button type='button' class='btn btn-xs btn-danger' id='eliminar_fila_pedido'>
                   <i class='fa fa-remove'></i>
                   </button>
                 </td>
             </tr>
+            @php
+              $auxiliar_contador = $key;
+            @endphp
             @endforeach
+            <input type="hidden" id="contador" value={{$auxiliar_contador}}>
+            <div id="eliminados"></div>
         </table>
       </div>
       </div>

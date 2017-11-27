@@ -4,7 +4,7 @@
     $tipo=0;
     $pantalla=2;//Confirmar
   @endphp
-  {!! Form::model($transaccion,['route'=>['proveedores.update',$transaccion->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','autocomplete'=>'off']) !!}
+  {!! Form::model($transaccion,['route'=>['transacciones.update',$transaccion->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','autocomplete'=>'off']) !!}
   <div class="col-xs-12">
       <div class="x_panel">
         <div class="x_title">
