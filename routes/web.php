@@ -71,7 +71,6 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::resource('ingresos','IngresoController');
   Route::match(['get','post'],'/desactivateIngreso/{id}','IngresoController@destroy');
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
-  Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
 });
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){
@@ -152,6 +151,13 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/desactivateUnidad/{id}','UnidadController@desactivate');
   Route::match(['get','post'],'/activateUnidad/{id}','UnidadController@activate');
   Route::match(['get','post'],'/destroyUnidad/{id}','UnidadController@destroy');
+  //Rutas de Solicitud de examenes
+  Route::resource('solicitudex','SolicitudExamenController');
+  Route::match(['get','post'],'/desactivateSolicitudExamen/{id}','SolicitudExamenController@desactivate');
+  Route::match(['get','post'],'/activateSolicitudExamen/{id}','SolicitudExamenController@activate');
+  Route::match(['get','post'],'/destroySolicitudExamen/{id}','SolicitudExamenController@destroy');
+  //Pacientes
+  Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
 });
 Auth::routes();
 //Rutas de login

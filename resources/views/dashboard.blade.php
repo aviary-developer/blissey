@@ -94,7 +94,10 @@
                               <a href={{asset( '/pacientes')}}>Pacientes</a>
                             </li>
                             <li>
-                              <a href={{asset( '/ingresos')}}>Ingresos</a>
+                              <a href={{asset( '/ingresos')}}>Hospitalización</a>
+                            </li>
+                            <li>
+                              <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
                             </li>
                           </ul>
                         </li>
@@ -336,6 +339,7 @@
       {!!Html::script('js/scripts/Ingreso.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}
+      {!!Html::script('js/general.js')!!}
       @section('scripts')
       @show
 
