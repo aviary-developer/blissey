@@ -93,7 +93,9 @@ class TransaccionController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaccion=Transacion::find($id);
+
+        return view('Transacciones.show',compact('transaccion'));
     }
 
     /**
@@ -146,8 +148,7 @@ class TransaccionController extends Controller
           $detalle->f_producto=$request->f_producto[$i];
           $detalle->save();
         }
-
-
+        Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
     }
 
     /**

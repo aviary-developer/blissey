@@ -3,6 +3,9 @@
     <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
   </center>
     <div class="row">
+      <input type="hidden" value="" id="idoculto">
+      <input type="hidden" value="" id="divoculto">
+      <input type="hidden" value="" id="nomoculto">
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
       <input type="hidden" id="confirmar" name="confirmar" value="{{true}}">
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
@@ -10,23 +13,13 @@
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
         {!! Form::date('fecha',$transaccion->fecha,['class'=>'form-control has-feedback-left']) !!}
       </div>
-      @if ($tipo==1)
-          <label class="col-md-1 col-sm-12 col-xs-12 form-group">Cliente *</label>
-          <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-            <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
-            {!!Form::select('f_cliente',
-              App\Transacion::arrayClientes()
-              ,null, ['placeholder' => 'Seleccione un proveedor','class'=>'form-control has-feedback-left'])!!}
-          </div>
-      @else
-          <label class="col-md-2 col-sm-12 col-xs-12 form-group">Proveedor *</label>
-          <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-            <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
-            {!!Form::select('f_proveedor',
-              App\Transacion::arrayProveedores()
-              ,null, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
-          </div>
-      @endif
+      <label class="col-md-2 col-sm-12 col-xs-12 form-group">Proveedor *</label>
+      <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
+        {!!Form::select('f_proveedor',
+          App\Transacion::arrayProveedores()
+          ,null, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
+      </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">N° de factura *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
@@ -40,13 +33,13 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Código </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('codigo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Código']) !!}
+        {!! Form::text('codigo',null,['id'=>'codigoBuscar','class'=>'form-control has-feedback-left','placeholder'=>'Código']) !!}
       </div>
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Producto </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-shopping-cart form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('producto',null,['class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
+        {!! Form::text('producto',null,['id'=>'producto','class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
       </div>
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>
@@ -56,7 +49,7 @@
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <a href="#" class="btn btn-default">Agegar</a>
+        <a href="#" class="btn btn-default" id="agregar">Agregar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
         <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-default" id="agregar_paciente">
@@ -67,7 +60,7 @@
         <a href="#" class="btn btn-default">Cancelar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!}
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12 form-group">
         <h4 class="StepTitle">Detalles</h4>

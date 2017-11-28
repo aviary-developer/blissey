@@ -59,7 +59,15 @@
                   <td>{{$transaccion->proveedor->nombre}}</td>
                   @endif
                   <td>@if($transaccion->factura==null)
-                    @include('Transacciones.Formularios.confirm')
+                    {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
+                    <button type="submit" class="btn btn-success btn-xs"/>
+                      <i class="fa fa-check"></i>
+                    </button>
+                    {!!Form::close()!!}
+                    @else
+                      <a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
+                        <i class="fa fa-info-circle"></i>
+                      </a>
                   @endif
                   </td>
                 </tr>
