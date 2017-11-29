@@ -113,16 +113,19 @@ function rellenarCombosParametros(paso){
 }
  function agregarParametro(paso){
    console.log("PASo: "+paso);
-   var parametro=$("#selectParametrosExamenes"+contadorSelectsParametros);
-   var valorParametro=parametro.value;
-   console.log("PASo: "+parametro);
-   var textoParametro=parametro.options[parametro.selectedIndex].text;
+   //var parametro=$("#selectParametrosExamenes"+contadorSelectsParametros);
+   var valorParametro=$("#selectParametrosExamenes"+paso).val();
+   var textoParametro=$("#selectParametrosExamenes"+paso+" option:selected" ).text();
+   var valorReactivo=$("#selectReactivosExamenes"+paso).val();
+   var textoReactivo=$("#selectReactivosExamenes"+paso+" option:selected" ).text();
    var tablaActual=$("#tablaParametros"+paso);
    var tablaAVerificar=$("#tablaParametros"+paso+" tbody tr");
    var html_texto = "<tr>"+
    "<td>"+
    "<input type='hidden' id='parametrosEnTabla"+paso+"[]' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>"+
-   textoParametro+
+   textoParametro+"</td>"+
+   "<td><input type='hidden' id='reactivosEnTabla"+paso+"[]' name='reactivosEnTabla"+paso+"[]' value = '"+valorReactivo+"'/>"+
+   textoReactivo+
    "</td>"+
    "<td>"+
      "<button type = 'button' name='button' class='btn btn-danger btn-xs' onClick='eliminarParametroEnTabla(this);'>"+
@@ -130,7 +133,7 @@ function rellenarCombosParametros(paso){
      "</button>"+
    "</td>"+
    "</tr>";
-   if(verificarParametroEnTabla(tablaAVerificar,textoParametro)==true){
+   if(verificarParametroEnTabla(tablaAVerificar,textoParametro+textoReactivo)==true){
    $(tablaActual).append(html_texto);}else{
      swal({
   type: 'error',
@@ -145,6 +148,7 @@ function rellenarCombosParametros(paso){
  function verificarParametroEnTabla(tabla,nombreParametro){
    var bandera=true;
    $(tabla).each(function(key,value){
+     console.log($(this).text().trim()+" : "+nombreParametro);
      if($(this).text().trim()==nombreParametro){
        bandera=false;
        console.log($(this).text().trim()+" IGUALES "+nombreParametro);

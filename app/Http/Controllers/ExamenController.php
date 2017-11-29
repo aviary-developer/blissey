@@ -67,6 +67,7 @@ class ExamenController extends Controller
       if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
         for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
           $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
+          $reactivosEnTablaActual=$request->{"reactivosEnTabla".$seccion};
           echo('<pre>');
           echo $seccion;
           echo('</pre>');
@@ -75,6 +76,7 @@ class ExamenController extends Controller
             $e_s_p->f_examen = $ultimoExamen->id;
             $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
             $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
+            $e_s_p->f_reactivo = $reactivosEnTablaActual[$parametros];
             $e_s_p->save();
           }
         }
