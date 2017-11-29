@@ -211,7 +211,7 @@ $(document).on('ready',function(){
       f_producto=$('#idoculto').val();
       if(v==true && !componentes_agregados.includes(f_producto)){
         var tabla = $("#tablaDetalle");
-        var cantidad=parseFloat($("#cantidad").val());
+        var cantidad=parseFloat($("#cantidadp").val());
         if($("#confirmar").val()==false){
         html="<tr>"+
         "<td>"+cantidad+"</td>"+
@@ -249,7 +249,7 @@ $(document).on('ready',function(){
         $('#nomoculto').val("");
         $('#codigoBuscar').val("");
         $('#producto').val("");
-        $('#cantidad').val("1");
+        $('#cantidadp').val("1");
         componentes_agregados.push(f_producto);
       }
     });

@@ -12,8 +12,8 @@ class Transacion extends Model
   ];
   protected $dates = ['fecha'];
 
-  public static function buscar($tipo){
-    return Transacion::tipo($tipo)->Localizacion()->orderBy('fecha')->paginate(10);
+  public static function buscar($tipo,$estado){
+    return Transacion::tipo($tipo)->Localizacion()->estado($estado)->orderBy('fecha')->paginate(10);
   }
   public function scopeTipo($query, $tipo){
       $query->where('tipo', '=',$tipo);
@@ -21,6 +21,13 @@ class Transacion extends Model
   public function scopeLocalizacion($query){
     $tipoUsuario=Transacion::tipoUsuario();
     $query->where('localizacion', '=',$tipoUsuario);
+  }
+  public function scopeEstado($query, $estado){
+      if($estado==1 || $estado==""){
+        $query->where('factura', '=',null)->orWhere('factura','=','');
+      }elseif($estado==0){
+        $query->where('factura', '<>',null)->Where('factura','<>','');
+      }
   }
   public static function arrayClientes(){ //Retorna los pacientes activos usando la función buscar
       $pacientes=Paciente::buscar("",true);

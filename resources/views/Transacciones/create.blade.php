@@ -5,7 +5,9 @@
 @section('layout')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'transacciones.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
+    if(!isset($fecha)){
     $fecha = Carbon\Carbon::now();
+    }
     $pantalla=1;//Crear
   @endphp
   <div class="col-xs-12">
