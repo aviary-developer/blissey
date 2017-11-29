@@ -1,6 +1,9 @@
 $(document).on('ready',function(){
   var componentes_agregados = [];
   var contador = $("#contador").val();
+  $("#codigoBuscar").val("");
+  $("#producto").val("");
+  $("#cantidad").val("1");
   for (i = 0; i <= contador; i++) {
     var prod_tmp = $("#f_prod"+i).val();
     componentes_agregados.push(prod_tmp);

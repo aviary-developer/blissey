@@ -1,3 +1,4 @@
+<?php use App\Http\Controllers\TransaccionController; ?>
 <div class="x_content">
   <center>
     <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
@@ -71,16 +72,32 @@
             <th style="width : 80px">Acción</th>
           </thead>
           @if(isset($f_producto))
+            @php
+              $conteo;
+            @endphp
             @for ($i=0; $i < count($f_producto); $i++)
               <tr>
                 <td>{{$cantidad[$i]}}</td>
                 @php
                   $division=App\DivisionProducto::find($f_producto[$i]);
+                  $pmp=TransaccionController::nombrePresentacion($division->f_producto,2);//Retorna producto + presentación
                 @endphp
-                <td>{{$tran->nombreDivision($division->id)}}</td>
+                <td>{{TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
+                <td>{{$pmp->nombre}}</td>
+                <td>
+                  <input type='hidden' name='f_producto[]' value ={{$f_producto[$i]}}>
+                  <input type='hidden' name='cantidad[]' value ={{$cantidad[$i]}}>
+                  <button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>
+                  <i class='fa fa-remove'></i>
+                  </button>
+                </td>
               </tr>
+              <input type='hidden' id={{"f_prod".$i}} value ={{$f_producto[$i]}}>
+              @php
+                $conteo=$i;
+              @endphp
             @endfor
-
+            <input type='hidden' id='contador' value ={{$conteo}}>
           @endif
         </table>
       </div>

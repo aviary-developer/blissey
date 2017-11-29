@@ -136,6 +136,7 @@ class TransaccionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,['factura'=>'required']);
         $transaccion = Transacion::findOrFail($id);
         $transaccion->fecha=$request->fecha;
         $transaccion->factura=$request->factura;
@@ -202,12 +203,12 @@ class TransaccionController extends Controller
       }
     }
 
-    public function nombreDivision($id){
+    public static function nombreDivision($id){
       $nombre=Division::find($id);
       return $nombre->nombre;
     }
 
-    public function nombrePresentacion($id,$tipo){
+    public static function nombrePresentacion($id,$tipo){
       if($tipo=="1"){
         $nombre=Presentacion::find($id);
         return $nombre->nombre;
