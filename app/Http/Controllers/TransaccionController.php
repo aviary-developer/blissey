@@ -136,6 +136,7 @@ class TransaccionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,['factura'=>'required']);
         $transaccion = Transacion::findOrFail($id);
         $transaccion->fecha=$request->fecha;
         $transaccion->factura=$request->factura;
