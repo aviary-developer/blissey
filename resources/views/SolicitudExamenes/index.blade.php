@@ -48,7 +48,8 @@
                             <tr>
                               <td>{{$solicitud->codigo_muestra}}</td>
                               <td>{{$solicitud->nombreExamen($solicitud->f_examen)}}</td>
-                              <td>
+                              <td id="celda">
+                                @include('SolicitudExamenes.Formularios.delete')
                               </td>
                             </tr>
                           @endif

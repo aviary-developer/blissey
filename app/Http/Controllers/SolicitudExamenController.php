@@ -17,8 +17,8 @@ class SolicitudExamenController extends Controller
      */
     public function index()
     {
-        $pacientes = SolicitudExamen::distinct()->get(['f_paciente']);
-        $solicitudes = SolicitudExamen::where('estado','<>',4)->get();
+        $pacientes = SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','<>',3)->orderBy('estado')->get();
         return view('SolicitudExamenes.index',compact('pacientes','solicitudes'));
     }
 
@@ -111,8 +111,19 @@ class SolicitudExamenController extends Controller
      * @param  \App\SolicitudExamen  $solicitudExamen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SolicitudExamen $solicitudExamen)
+    public function destroy($id)
     {
-        //
+        $solicitud = SolicitudExamen::findOrFail($id);
+        $paciente = $solicitud->f_paciente;
+        $solicitud->delete();
+        $examenes = SolicitudExamen::where('f_paciente',$paciente)->where('estado','<',3)->count();
+        return $examenes;
+    }
+
+    public function aceptar($id){
+        $solicitud = SolicitudExamen::find($id);
+        $solicitud->estado = 1;
+        $solicitud->save();
+        return 1;
     }
 }

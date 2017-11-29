@@ -8,7 +8,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Paciente *</label>
     <div class="col-md-7 col-sm-7 col-xs-12">
       <div class="input-group">
-        {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
+        {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente', 'disabled']) !!}
         <span class="input-group-btn">
           <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('paciente');">
             <i class="fa fa-search"></i>

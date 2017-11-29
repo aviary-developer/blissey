@@ -113,6 +113,15 @@
                             <li>
                               <a href={{asset( '/reactivos')}}>Reactivos</a>
                             </li>
+                            <li>
+                              <a href={{asset( '/parametros')}}>Parametros</a>
+                            </li>
+                            <li>
+                              <a href={{asset( '/secciones')}}>Secciones</a>
+                            </li>
+                            <li>
+                              <a href={{asset( '/muestras')}}>Tipo de muestras</a>
+                            </li>
                           </ul>
                         </li>
                         <li>
@@ -339,6 +348,7 @@
       {!!Html::script('js/scripts/Ingreso.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}
+      {!!Html::script('js/scripts/Solicitud.js')!!}
       {!!Html::script('js/general.js')!!}
       @section('scripts')
       @show
