@@ -16,7 +16,7 @@ class Producto extends Model
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('nombre', 'ilike','%'.$nombre.'%')->orWhere('codigo', 'ilike','%'.$nombre.'%');
+      $query->where('nombre', 'ilike','%'.$nombre.'%');
     }
   }
 

@@ -211,7 +211,8 @@ $(document).on('ready',function(){
       f_producto=$('#idoculto').val();
       if(v==true && !componentes_agregados.includes(f_producto)){
         var tabla = $("#tablaDetalle");
-        var cantidad=parseFloat($("#cantidad").val());
+        var cantidad=parseFloat($("#cantidadp").val());
+        if($("#confirmar").val()==false){
         html="<tr>"+
         "<td>"+cantidad+"</td>"+
         "<td>"+$("#divoculto").val()+"</td>"+
@@ -224,13 +225,31 @@ $(document).on('ready',function(){
         "</button>"+
         "</td>"+
         "</tr>";
+      }else{
+        html="<tr>"+
+        "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control' value='"+cantidad+"'></td>"+
+        "<td style='width: 20%'>"+$("#divoculto").val()+"</td>"+
+        "<td style='width: 15%'>"+$("#nomoculto").val()+"</td>"+
+        "<td style='width: 10%'><input name='descuento[]' class='form-control' type='number' placeholder='%' value='0'></td>"+
+        "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control' type='date' placeholder=''></td>"+
+        "<td style='width: 10%'><input name='precio[]' class='form-control' type='number' placeholder='Precio'></td>"+
+        "<td style='width: 10%'><input name='lote[]' class='form-control' type='text' placeholder='N° de lote'></td>"+
+        "<td>"+
+        "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
+        "<input type='hidden' name='estado[]' value ='nuevo'>"+
+        "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+        "<i class='fa fa-remove'></i>"+
+        "</button>"+
+        "</td>"+
+        "</tr>";
+      }
         tabla.append(html);
         $('#idoculto').val("");
         $('#divoculto').val("");
         $('#nomoculto').val("");
         $('#codigoBuscar').val("");
         $('#producto').val("");
-        $('#cantidad').val("1");
+        $('#cantidadp').val("1");
         componentes_agregados.push(f_producto);
       }
     });

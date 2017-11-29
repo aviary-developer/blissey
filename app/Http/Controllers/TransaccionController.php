@@ -12,6 +12,7 @@ use App\Division;
 use App\Presentacion;
 use DB;
 use Auth;
+use Validator;
 
 class TransaccionController extends Controller
 {
@@ -23,9 +24,10 @@ class TransaccionController extends Controller
     public function index(Request $request)
     {
     $tipo= $request->tipo;
+    $estado=$request->estado;
     if(Auth::check()){
-      $transacciones=Transacion::buscar($tipo);
-      return view('transacciones.index',compact('transacciones','tipo'));
+      $transacciones=Transacion::buscar($tipo,$estado);
+      return view('transacciones.index',compact('transacciones','tipo','estado'));
     }else{
       return redirect('/');
     }
@@ -51,13 +53,28 @@ class TransaccionController extends Controller
      */
     public function store(Request $request)
     {
-      if(count($request->f_producto)>0){
+      $tipo=$request->tipo;
+      $fecha=$request->fecha;
+      $f_proveedor=$request->f_proveedor;
+      $f_producto=$request->f_producto;
+      $cantidad=$request->cantidad;
+
+      $validar['fecha']='required';
+      $validar['f_producto']='required';
+      $validar['f_proveedor']='required';
+      $mensaje['fecha.required']="El campo fecha es obligatorio";
+      $mensaje['f_producto.required']="No agregó nungún detalle";
+      $mensaje['f_proveedor.required']="Ningún proveedor seleccionado";
+      $valida= Validator::make($request->all(),$validar,$mensaje);
+
+
+      if(!$valida->fails()){
         DB::beginTransaction();
         try{
         $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
           'f_proveedor'=>$request->f_proveedor,
-          'tipo'=>$request->tipo,
+          'tipo'=>$tipo,
           'f_usuario'=>Auth::user()->id,
           'localizacion'=>0,
         ]);
@@ -81,7 +98,8 @@ class TransaccionController extends Controller
       return redirect('/')->with('mensaje', '¡Guardado!');
     }else{
       DB::rollback();
-      return redirect('/transacciones/create')->with('error', 'No agrego ningún detalle');
+      $tran= new Transacion;
+      return view('transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad'))->withErrors($valida->errors());
     }
     }
 
@@ -93,7 +111,9 @@ class TransaccionController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaccion=Transacion::find($id);
+
+        return view('Transacciones.show',compact('transaccion'));
     }
 
     /**
@@ -146,8 +166,7 @@ class TransaccionController extends Controller
           $detalle->f_producto=$request->f_producto[$i];
           $detalle->save();
         }
-
-
+        Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
     }
 
     /**

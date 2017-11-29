@@ -45,7 +45,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::number('cantidad',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+        {!! Form::number('cantidadp',1,['id'=>'cantidadp','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
@@ -70,6 +70,18 @@
             <th colspan="2">Detalle</th>
             <th style="width : 80px">Acción</th>
           </thead>
+          @if(isset($f_producto))
+            @for ($i=0; $i < count($f_producto); $i++)
+              <tr>
+                <td>{{$cantidad[$i]}}</td>
+                @php
+                  $division=App\DivisionProducto::find($f_producto[$i]);
+                @endphp
+                <td>{{$tran->nombreDivision($division->id)}}</td>
+              </tr>
+            @endfor
+
+          @endif
         </table>
       </div>
       </div>
