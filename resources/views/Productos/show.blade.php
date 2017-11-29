@@ -43,10 +43,6 @@
                     <td>{{ $producto->nombre }}</td>
                   </tr>
                   <tr>
-                    <th>Código</th>
-                    <td>{{ $producto->codigo }}</td>
-                  </tr>
-                  <tr>
                     <th>Droguería</th>
                     <td>{{$producto->nombreProveedor($producto->f_proveedor)}}</td>
                   </tr>
@@ -73,6 +69,7 @@
                   <caption>Divisiones</caption>
                   <thead>
                     <th>#</th>
+                    <th>Código</th>
                     <th>División</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
@@ -85,6 +82,7 @@
                       @foreach ($divisiones as $division)
                         <tr>
                           <td>{{$contador_division}}</td>
+                          <td>{{$division->codigo}}</td>
                           <td>{{$division->nombreDivision($division->f_division)}}</td>
                           <td>{{$division->cantidad.' '.$producto->nombrePresentacion($producto->f_presentacion)}}</td>
                           <td>{{'$ '.number_format($division->precio,2,'.','.')}}</td>
