@@ -26,14 +26,14 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
           <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-          {!! Form::text('nombreExamen',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo examen','required']) !!}
+          {!! Form::text('nombreExamen',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo examen','']) !!}
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo de muestra *</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
           <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
-          <select class="form-control has-feedback-left" name="tipoMuestra" id="" required>
+          <select class="form-control has-feedback-left" name="tipoMuestra" id="" >
             @foreach ($muestras as $muestra)
               <option value={{ $muestra->id }}>{{ $muestra->nombre }}</option>
             @endforeach
@@ -88,14 +88,14 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                               <span class="fa fa-pencil-square-o form-control-feedback left" aria-hidden="true"></span>
-                              {!! Form::text('nombreParametro',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo parametro','required']) !!}
+                              {!! Form::text('nombreParametro',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo parametro']) !!}
                             </div>
                           </div>
                           <div class="form-group" id="grupoUnidadParametro">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición</label>
                             <div class="col-md-9 col-sm-9 col-xs-12" id="unidadParametro">
                               <span class="fa fa-tasks form-control-feedback left" aria-hidden="true"></span>
-                                <select class="form-control has-feedback-left" name="unidad" required>
+                                <select class="form-control has-feedback-left" name="unidad" >
                                   @foreach ($unidades as $unidad)
                                     <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
                                   @endforeach
