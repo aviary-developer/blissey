@@ -32,6 +32,10 @@ class Examen extends Model
     $nombre = Parametro::find($id);
     return $nombre->nombre;
   }
+  public function nombreReactivo($id){
+    $nombre = Reactivo::find($id);
+    return $nombre->nombre;
+  }
 
   public function scopeEstado($query, $estado){
     if($estado == null){

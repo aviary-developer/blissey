@@ -75,6 +75,7 @@
                 <thead>
                   <th>#</th>
                   <th>Parametro</th>
+                  <th>Reactivo</th>
                 </thead>
                 <tbody>
                   @if (count($e_s_p)>0)
@@ -82,6 +83,7 @@
                       @if ($esp->f_seccion==$secciones[$i])
                       <tr>
                         <td>{{$contadorParametros}}</td>
+                        <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
                         <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
                       </tr>
                     @endif

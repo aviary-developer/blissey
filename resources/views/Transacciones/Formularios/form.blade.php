@@ -114,7 +114,7 @@
             </div>
 
             <div class="modal-body">
-              <div class="x_panel" style="height:600px">
+              <div class="x_panel">
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar</label>
                   <div class="col-md-7 col-sm-7 col-xs-12">
@@ -133,7 +133,7 @@
                   <div class="col-md-2 col-xs-12"></div>
                   <div class="col-md-8 col-xs-12">
                     <h4 class="StepTitle">Resultado de busqueda</h4>
-                    <table class="table" id="tablaBuscar" style="max-height: 300px">
+                    <table class="table" id="tablaBuscar">
                       <thead>
                         <th colspan="2">Resultado</th>
                         <th style="width : 80px">Acción</th>

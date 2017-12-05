@@ -39,4 +39,13 @@ class Producto extends Model
   public function presentacion(){
     return $this->belongsTo('App\Presentacion','f_presentacion');
   }
+
+  public static function arrayUnidades(){
+    $unidades=Unidad::where('estado','=','true')->get();
+    $arrayU= [];
+    foreach($unidades as $unidad){
+      $arrayU[$unidad->id]=$unidad->nombre;
+    }
+    return $arrayU;
+  }
 }
