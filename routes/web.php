@@ -121,6 +121,7 @@ Route::group(['middleware'=>'admin'], function()
   Route::match(['get','post'],'/desactivateEspecialidad/{id}','EspecialidadController@desactivate');
   Route::match(['get','post'],'/activateEspecialidad/{id}','EspecialidadController@activate');
   Route::match(['get','post'],'/destroyEspecialidad/{id}','EspecialidadController@destroy');
+  Route::match(['get','post'],'/guardarEspecialidad','EspecialidadController@guardar');
 });
 Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {

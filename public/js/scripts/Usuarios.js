@@ -11,21 +11,22 @@ $(document).on('ready',function(){
   var contador_especialidad = 0;
 
   $('#agregar_telefono').click(function(){
-    var contenido = $('#telefono').val();
+    var contenido = $('#telefono_usuario').val();
     var html_texto = "<tr>"+
     "<td>"+
     "<input type='hidden' name='telefono[]' value = '"+contenido+"'/>"+
     contenido+
     "</td>"+
     "<td>"+
-      "<button type = 'button' name='button' class='btn btn-danger btn-xs' id='eliminar_telefono'>"+
+      "<button type = 'button' name='button' class='btn btn-danger btn-xs' id='eliminar_telefono' data-toggle='tooltip' data-placement='top' title='Eliminar'>"+
         "<i class='fa fa-remove'></i>"+
       "</button>"+
     "</td>"+
     "</tr>";
     if(contenido != ""){
       $(wrapper).append(html_texto);
-      $('#telefono').val("");
+      $('#telefono_usuario').val("");
+      $('#eliminar_telefono').tooltip();
     }
 
   });
@@ -81,5 +82,31 @@ $(document).on('ready',function(){
     var valores = $(this).parents('tr').find('input:eq(1)').val();
     $("#delesp").val(valores);
     $(this).parent('td').parent('tr').remove();
+  });
+
+  $("#guardar_especialidad").on('click', function (e) {
+    e.preventDefault();
+    var v_nombre = $("#nombre_especialidad");
+    var s_especialidad = $("#select_especialidad");
+    var modal = $("#modal");
+    $.ajax({
+      type: "GET",
+      url: "/blissey/public/guardarEspecialidad",
+      data: {
+        nombre: v_nombre.val()
+      },
+      dateType: 'json',
+      success: function (respuesta) {
+        if (respuesta > 0) {
+          var html = "<option value = '" + respuesta + "'>" + v_nombre.val() + "</option>";
+          s_especialidad.append(html);
+          modal.modal('hide');
+          return swal('Hecho', 'Acción realizada satisfactoriamente', 'success');
+          v_nombre.val("");
+        } else {
+          return swal('Algo salio mal', 'Acción no realizada', 'error');
+        }
+      }
+    });
   });
 });

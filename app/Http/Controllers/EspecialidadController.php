@@ -145,4 +145,17 @@ class EspecialidadController extends Controller
       Bitacora::bitacora('activate','especialidads','especialidades',$id);
       return Redirect::to('/especialidades?estado=0');
     }
+
+    public function guardar(Request $request){
+      DB::beginTransaction();
+      try {
+        $especialidades = Especialidad::create($request->All());
+      } catch (Exception $e) {
+        DB::rollback();
+        return 0;
+      }
+      DB::commit();
+      Bitacora::bitacora('store','especialidads','especialidades',$especialidades->id);
+      return $especialidades->id;
+    }
 }

@@ -28,17 +28,17 @@
         <div class="row">
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <button type="button" class="btn btn-dark btn-ms" data-toggle="modal" data-target=".bs-modal-lg" id="abrir_filtro" >
-                <i class="fa fa-sliders"></i>
-                Filtros
+              <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target=".bs-modal-lg" id="abrir_filtro" >
+                <i class="fa fa-search"></i>
+                Buscar
               </button>
               @if ($contador > 0 && $contador < 3)
-                <a href={!! asset('/paciente_pdf'.$ruta) !!} class="btn btn-dark btn-ms" target="_blank"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/paciente_pdf'.$ruta) !!} class="btn btn-dark btn-sm" target="_blank"><i class="fa fa-file"></i> Reporte</a>
               @else
-                <a href={!! asset('#') !!} disabled class="btn btn-dark btn-ms" data-toggle="tooltip" data-placement="top" title="No se puede generar reporte"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('#') !!} disabled class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="No se puede generar reporte"><i class="fa fa-file"></i> Reporte</a>
               @endif
-              <a href={!! asset('/pacientes?estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/pacientes?estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -47,19 +47,8 @@
                   <span class="label label-warning">{{ $inactivos }}</span>
                 @endif
               </a>
-              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
-          </div>
-          <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'pacientes.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
-              @if ($estadoOpuesto)
-                <input type="hidden" name="estado" value="0">
-              @endif
-            </div>
-            {!! Form::close() !!}
           </div>
         </div>
         <br>
@@ -157,7 +146,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Filtros</h4>
+          <h4 class="modal-title" id="myModalLabel">Buscar</h4>
         </div>
         <div class="modal-body">
           <div class="x_panel">

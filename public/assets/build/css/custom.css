@@ -1,6 +1,18 @@
+:root{
+    --principal: #2ea2a4;
+    --secundario: #3ec8ca;
+    --terciario: #1f7b7d;
+}
+.modal-header{
+    border-radius: 6px 6px 0px 0px;
+    background: linear-gradient(var(--principal), var(--secundario)), var(--terciario);
+}
 thead{background: #cccccc}
 .label-purple{
   background-color: rgb(159, 45, 249);
+}
+.label-dark-blue{
+  background-color: rgb(26, 44, 106);
 }
 .perfil{
   width: 300px;

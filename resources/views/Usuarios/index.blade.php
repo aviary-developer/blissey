@@ -32,10 +32,10 @@
         <div class="row">
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <a href={!! asset('/usuarios/'.Auth::user()->id) !!} class="btn btn-dark btn-ms"><i class="fa fa-user"></i> Mi Perfil</a>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/usuarios?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/usuarios/'.Auth::user()->id) !!} class="btn btn-dark btn-sm"><i class="fa fa-user"></i> Mi Perfil</a>
+              <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/usuarios?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -44,7 +44,7 @@
                   <span class="label label-warning">{{ $inactivos }}</span>
                 @endif
               </a>
-              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
           <div class="col-md-4 col-xs-12">
@@ -63,12 +63,14 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th style="width: 40px"></th>
               <th>#</th>
               <th>Apellido</th>
               <th>Nombre</th>
               <th>Sexo</th>
-              <th>Edad</th>
               <th>Teléfono</th>
+              <th>Tipo</th>
+              <th>Especialidad</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -79,9 +81,24 @@
               @endphp
               @foreach ($usuarios as $usuario)
                 <tr>
+                  <td>
+                    @if ($usuario->completed($usuario->id)!=false)
+                      <a href={{asset('usuarios/'.$usuario->id.'/edit')}} data-toggle="tooltip" data-placement="top" title="Registro incompleto" class="btn btn-outline-warning btn-xs">
+                        <i class="fa fa-warning"></i>
+                      </a>
+                    @endif
+                  </td>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ $usuario->apellido }}</td>
-                  <td>{{ $usuario->nombre }}</td>
+                  <td>
+                    <a href={{asset('usuarios/'.$usuario->id)}}>
+                      {{ $usuario->apellido }}
+                    </a>
+                  </td>
+                  <td>
+                    <a href={{asset('usuarios/'.$usuario->id)}}>
+                      {{ $usuario->nombre }}
+                    </a>
+                  </td>
                   <td>
                     @if ($usuario->sexo)
                       {{ "Masculino" }}
@@ -89,8 +106,29 @@
                       {{ "Femenino" }}
                     @endif
                   </td>
-                  <td>{{ $usuario->fechaNacimiento->age.' años' }}</td>
                   <td>{{ $usuario->telefono($usuario->id)}}</td>
+                  <td>
+                    @if($usuario->tipoUsuario == "Gerencia")
+                      <span class="label label-default">Gerencia</span>
+                    @elseif ($usuario->tipoUsuario == "Médico")
+                      <span class="label label-primary">Médico</span>
+                    @elseif ($usuario->tipoUsuario == "Laboaratorio")
+                      <span class="label label-success">Laboratorio</span>
+                    @elseif ($usuario->tipoUsuario == "Ultrasonografía")
+                      <span class="label label-warning">Ultrasonografía</span>
+                    @elseif ($usuario->tipoUsuario == "Rayos X")
+                      <span class="label label-info">Rayos X</span>
+                    @elseif ($usuario->tipoUsuario == "Recepción")
+                      <span class="label label-danger">Recepción</span>
+                    @elseif ($usuario->tipoUsuario == "Enfermería")
+                      <span class="label label-purple">Enfermería</span>
+                    @elseif ($usuario->tipoUsuario == "Farmacia")
+                      <span class="label label-dark-blue">Farmacia</span>
+                    @endif
+                  </td>
+                  <td>
+                    {{$usuario->especialidad_principal($usuario->id)}}
+                  </td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Usuarios.Formularios.activate')

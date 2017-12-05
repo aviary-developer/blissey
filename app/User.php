@@ -56,4 +56,23 @@ class User extends Authenticatable
       $nombre = Especialidad::find($id);
       return $nombre->nombre;
     }
+
+    public static function completed($id){
+      $registro = User::find($id);
+      $telefono = TelefonoUsuario::where('f_usuario',$id)->count();
+      if($telefono < 1)
+        return true;
+      if($registro->foto == "noImgen.jpg")
+        return true;
+      return false;
+    }
+
+    public static function especialidad_principal($id){
+      $registro = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
+      if($registro != null){
+        $nombre = Especialidad::find($registro->f_especialidad);
+        return $nombre->nombre;
+      }
+      return "Ninguna";
+    }
 }

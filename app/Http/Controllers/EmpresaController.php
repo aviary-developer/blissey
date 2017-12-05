@@ -19,9 +19,14 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $empresa = Empresa::orderBy('created_at','desc')->first();
-        $telefonos = TelefonoEmpresa::where('f_empresa',$empresa->id)->get();
-        return view('Empresa.index',compact('empresa','telefonos'));
+        $cantidad = Empresa::count();
+        if($cantidad < 1){
+            return redirect('/grupo_promesa/create');
+        }else{
+            $empresa = Empresa::orderBy('created_at','desc')->first();
+            $telefonos = TelefonoEmpresa::where('f_empresa',$empresa->id)->get();
+            return view('Empresa.index',compact('empresa','telefonos'));
+        }
     }
 
     /**
@@ -31,12 +36,12 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        // $cantidad = Empresa::count();
-        // if($cantidad < 1)
-        // {
+        $cantidad = Empresa::count();
+        if($cantidad < 1)
+        {
             return view('Empresa.create');
-        // }
-        // return redirect('/grupo_promesa');
+        }
+        return redirect('/grupo_promesa');
     }
 
     /**
