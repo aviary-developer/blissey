@@ -75,10 +75,33 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+          <label>
+              Cantidad<input type="checkbox" name="contenido" class="js-switch" id="contenido"/> Contenido
+          </label>
+        </div>
+        <div class="form-group" id="opc1">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
-          <div class="col-md-9 col-sm-9 col-xs-12">
+          <div class="col-md-4 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
             {!! Form::number('cantidad',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','min'=>'1']) !!}
+          </div>
+          <div class="col-md-5 col-sm-9 col-xs-12">
+            <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
+            {!! Form::text('valor',null,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas']) !!}
+          </div>
+        </div>
+        <div class="form-group" id="opc2" style="display:none;">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido *</label>
+          <div class="col-md-4 col-sm-9 col-xs-12">
+            <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
+            {!! Form::number('v_contenido',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','min'=>'1']) !!}
+          </div>
+          <div class="col-md-5 col-sm-9 col-xs-12">
+            <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
+            {!!Form::select('v_valor',
+              App\Producto::arrayUnidades()
+              ,null, ['class'=>'form-control has-feedback-left'])!!}
           </div>
         </div>
         <div class="form-group">
@@ -118,7 +141,7 @@
                   <td>{{$division->cantidad}}</td>
                   <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
                   <td>
-                    <input type="hidden" id={{"division".$key}} value={{$division->f_division}}>
+                    <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
                     <input type="hidden" value={{$division->id}}>
                     <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_division_antigua">
                       <i class="fa fa-remove"></i>

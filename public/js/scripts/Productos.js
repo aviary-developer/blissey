@@ -18,7 +18,8 @@ $(document).on('ready',function(){
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
-    if(!codigos_agregados.includes(codigo) && !division_agregada.includes(valor)){
+    var vmc=valor+cantidad; //Valor más cantidad
+    if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
     var html_texto =
     "<tr>"+
     "<td>"+
@@ -44,7 +45,7 @@ $(document).on('ready',function(){
       "</td>"+
     "</tr>";
 
-      division_agregada.push(valor);
+      division_agregada.push(vmc);
       codigos_agregados.push(codigo);
       $("#tablaDivision").append(html_texto);
       $("#cantidad").val("1");
@@ -55,8 +56,9 @@ $(document).on('ready',function(){
   $("#tablaDivision").on('click','#eliminar_division',function(e){
     e.preventDefault();
     var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var cantidad = $(this).parents('tr').find('input:eq(2)').val();
     var cod = $(this).parents('tr').find('input:eq(1)').val();
-    var indice = division_agregada.indexOf(elemento);
+    var indice = division_agregada.indexOf(elemento+cantidad);
     var indice2 = codigos_agregados.indexOf(cod);
     division_agregada.splice(indice);
     codigos_agregados.splice(indice2);
@@ -189,4 +191,14 @@ $(document).on('ready',function(){
       }
     });
   });
+});
+
+$('#contenido').click(function(){
+  if(this.checked){
+    $('#opc1').css("display","none");
+    $('#opc2').css("display","block");
+  }else{
+    $('#opc1').css("display","block");
+    $('#opc2').css("display","none");
+  }
 });
