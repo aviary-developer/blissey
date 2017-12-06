@@ -154,6 +154,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/destroyUnidad/{id}','UnidadController@destroy');
   //Rutas de Solicitud de examenes
   Route::resource('solicitudex','SolicitudExamenController');
+  Route::match(['get','post'],'/evaluarExamen/{id}','SolicitudExamenController@evaluarExamen');
   Route::match(['get','post'],'/aceptarSolicitudExamen/{id}','SolicitudExamenController@aceptar');
   Route::match(['get','post'],'/activateSolicitudExamen/{id}','SolicitudExamenController@activate');
   Route::match(['get','post'],'/destroySolicitudExamen/{id}','SolicitudExamenController@destroy');

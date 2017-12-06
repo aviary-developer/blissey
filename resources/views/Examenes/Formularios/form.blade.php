@@ -48,20 +48,43 @@
             Opciones
           </small>
         </h4>
-      </center>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">
         <i class="fa fa-plus"></i> Nuevo Parametro
       </button>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a>
+        </label>
+      </div>
+    </center>
     </div>
-  </div>
-  <div class="form-group">
-      <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <a class="btn btn-primary" id="agregarSeccionExamen"><i class="fa fa-plus"></i> Agregar sección</a>
-      </label>
   </div>
   <div class="ln_solid"></div>
         <div class="clearfix"></div>
-            <div class="seccionesExamenes x_panel" id="seccionesExamenes">
+        <div class="seccionesExamenes x_panel" id="seccionesExamenes">
+        <!--Inicia una sección General -->
+        <div class='col-md-6 col-sm-6 col-xs-12'>
+        <div class='x_panel'>
+        <div class='x_title'>
+        <div class='col-md-9 col-sm-9 col-xs-12'>
+        <span class='fa fa-bars form-control-feedback left' aria-hidden='true'></span>
+        <select class='form-control has-feedback-left' name='selectSeccion0' id='selectSeccion0'>@foreach ($secciones as $seccion)
+          <option value={{$seccion->id}}>{{ $seccion->nombre}}</option>
+        @endforeach</select></select></div>
+        <ul class='nav navbar-center panel_toolbox'>
+        <li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>
+        </ul><div class='clearfix'></div></div>
+        <div class='row'>
+        <div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left' name='selectParametrosExamenes0' id='selectParametrosExamenes0'>@foreach ($parametros as $parametro)
+          <option value={{$parametro->id}}>{{ $parametro->nombreParametro}}</option>
+        @endforeach</select></div>
+        <div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes0' id='selectReactivosExamenes0'>@foreach ($reactivos as $reactivo)
+          <option value={{$reactivo->id}}>{{ $reactivo->nombre}}</option>
+        @endforeach</select></div>
+        <div class='col-md-2 col-sm-12 col-xs-12 form-group'><span class='input-group-btn'><button type='button' name='button' class='btn btn-primary' id='agregarParametroReactivo' onClick='agregarParametro(0)'><i class='fa fa-save'></i></button></span></div>
+        <table class='table' id='tablaParametros0'><thead><th>Parametros</th><th>Reactivos</th><th style='width : 80px'>Acción</th></thead>
+        <tbody></tbody></table>
+        </div></div></div></div>
               <!--AQUI SE AGREGAN LAS SECCIONES -->
               <input type='hidden' id='totalSecciones' name='totalSecciones' value="0"/>
       </div>

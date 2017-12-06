@@ -59,7 +59,7 @@ class SolicitudExamenController extends Controller
                     $solicitud->estado = 0;
 
                     $solicitud->save();
-                    
+
                     DB::commit();
                     Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
                 }
@@ -125,5 +125,10 @@ class SolicitudExamenController extends Controller
         $solicitud->estado = 1;
         $solicitud->save();
         return 1;
+    }
+
+    public function evaluarExamen($id){
+      $solicitudes = SolicitudExamen::where('id','=',$id)->where('estado','=',1)->get();
+      return view('SolicitudExamenes.evaluarExamen',compact('solicitudes'));
     }
 }
