@@ -15,8 +15,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','nombre','apellido','direccion','fechaNacimiento',
-        'dui','sexo','tipoUsuario','juntaVigilancia','administrador'
+        'name', 
+        'email', 
+        'password',
+        'nombre',
+        'apellido',
+        'direccion',
+        'fechaNacimiento',
+        'dui',
+        'sexo',
+        'tipoUsuario',
+        'juntaVigilancia',
+        'administrador'
     ];
 
     /**
@@ -70,7 +80,14 @@ class User extends Authenticatable
     public static function especialidad_principal($id){
       $registro = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
       if($registro != null){
-        $nombre = Especialidad::find($registro->f_especialidad);
+        return $registro->f_especialidad;
+      }
+      return 0;
+    }
+
+    public static function nombre_especialidad($id){
+      if($id != 0){
+        $nombre = Especialidad::find($id);
         return $nombre->nombre;
       }
       return "Ninguna";

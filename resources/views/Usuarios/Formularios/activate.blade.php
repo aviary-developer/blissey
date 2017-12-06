@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$usuario->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$usuario->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
     <i class="fa fa-remove"></i>
   </button>
 @else

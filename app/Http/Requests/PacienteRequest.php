@@ -34,11 +34,11 @@ class PacienteRequest extends FormRequest
        return [
             'nombre.required'=>'El campo nombre es obligatorio',
             'nombre.min'=>'El campo nombre necesita 2 caracteres como mínimo',
-            'nombre.max'=>'El campo nombre necesita 30 caracteres como máximo',
+            'nombre.max'=>'El campo nombre soporta 30 caracteres como máximo',
 
             'apellido.required'=>'El campo apellido es obligatorio',
             'apellido.min'=>'El campo apellido necesita 2 caracteres como mínimo',
-            'apellido.max'=>'El campo apellido necesita 30 caracteres como máximo',
+            'apellido.max'=>'El campo apellido soporta 30 caracteres como máximo',
 
             'fechaNacimiento.required' => 'El campo fecha de nacimiento es obligatorio',
 

@@ -106,28 +106,45 @@
                       {{ "Femenino" }}
                     @endif
                   </td>
-                  <td>{{ $usuario->telefono($usuario->id)}}</td>
                   <td>
-                    @if($usuario->tipoUsuario == "Gerencia")
-                      <span class="label label-default">Gerencia</span>
-                    @elseif ($usuario->tipoUsuario == "Médico")
-                      <span class="label label-primary">Médico</span>
-                    @elseif ($usuario->tipoUsuario == "Laboaratorio")
-                      <span class="label label-success">Laboratorio</span>
-                    @elseif ($usuario->tipoUsuario == "Ultrasonografía")
-                      <span class="label label-warning">Ultrasonografía</span>
-                    @elseif ($usuario->tipoUsuario == "Rayos X")
-                      <span class="label label-info">Rayos X</span>
-                    @elseif ($usuario->tipoUsuario == "Recepción")
-                      <span class="label label-danger">Recepción</span>
-                    @elseif ($usuario->tipoUsuario == "Enfermería")
-                      <span class="label label-purple">Enfermería</span>
-                    @elseif ($usuario->tipoUsuario == "Farmacia")
-                      <span class="label label-dark-blue">Farmacia</span>
+                    @if($usuario->telefono($usuario->id) == "Sin teléfono")
+                      <i style="color: red">{{ $usuario->telefono($usuario->id)}}</i>
+                    @else    
+                      {{ $usuario->telefono($usuario->id)}}
                     @endif
                   </td>
                   <td>
-                    {{$usuario->especialidad_principal($usuario->id)}}
+                    @if($usuario->tipoUsuario == "Gerencia")
+                      <span class="label label-default col-md-12 col-sm-12 col-xs-12">Gerencia</span>
+                    @elseif ($usuario->tipoUsuario == "Médico")
+                      <span class="label label-primary col-md-12 col-sm-12 col-xs-12">Médico</span>
+                    @elseif ($usuario->tipoUsuario == "Laboaratorio")
+                      <span class="label label-success col-md-12 col-sm-12 col-xs-12">Laboratorio</span>
+                    @elseif ($usuario->tipoUsuario == "Ultrasonografía")
+                      <span class="label label-warning col-md-12 col-sm-12 col-xs-12">Ultrasonografía</span>
+                    @elseif ($usuario->tipoUsuario == "Rayos X")
+                      <span class="label label-info col-md-12 col-sm-12 col-xs-12">Rayos X</span>
+                    @elseif ($usuario->tipoUsuario == "Recepción")
+                      <span class="label label-danger col-md-12 col-sm-12 col-xs-12">Recepción</span>
+                    @elseif ($usuario->tipoUsuario == "Enfermería")
+                      <span class="label label-purple">Enfermería</span>
+                    @elseif ($usuario->tipoUsuario == "Farmacia")
+                      <span class="label label-dark-blue col-md-12 col-sm-12 col-xs-12">Farmacia</span>
+                    @endif
+                  </td>
+                  <td>
+                    @php
+                      $especialidad = $usuario->especialidad_principal($usuario->id);
+                    @endphp
+                    @if($especialidad != 0)
+                      <a href={{asset('/especialidades/'.$especialidad)}}>
+                        {{$usuario->nombre_especialidad($especialidad)}}
+                      </a>
+                    @else
+                      <i style="color: gray;">
+                        {{$usuario->nombre_especialidad($especialidad)}}
+                      </i>
+                    @endif
                   </td>
                   <td>
                     @if ($estadoOpuesto)
@@ -143,7 +160,7 @@
               @endforeach
             @else
               <tr>
-                <td colspan="7">
+                <td colspan="9">
                   <center>
                     No hay registros que coincidan con los terminos de busqueda indicados
                   </center>

@@ -12,6 +12,8 @@ use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
 use App\Http\Controllers;
+use Validator;
+use DB;
 
 class UserController extends Controller
 {
@@ -49,41 +51,116 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      $request['password']=bcrypt($request['email']);
-      $user = User::create($request->All());
-      if($request->hasfile('firma')){
-        $user->firma = $request->file('firma')->store('public/firma');
-      }
-      if($request->hasfile('sello')){
-        $user->sello = $request->file('sello')->store('public/sello');
-      }
-      if($request->hasfile('foto')){
-        $user->foto = $request->file('foto')->store('public/foto');
-      }
-      $user->save();
-      if (isset($request->telefono)) {
-        foreach ($request->telefono as $k => $val) {
-          $telefono_usuario = new TelefonoUsuario;
-          $telefono_usuario->f_usuario = $user->id;
-          $telefono_usuario->telefono = $request->telefono[$k];
-          $telefono_usuario->save();
-        }
-      }
-      if (isset($request->especialidad)) {
-        foreach ($request->especialidad as $k => $val) {
-          $especialidad_usuario = new EspecialidadUsuario;
-          if($k == 0){
-            $especialidad_usuario->principal = true;
-          }else{
-            $especialidad_usuario->principal = false;
+      $rules = [
+        'nombre' => 'required | min:2 | max:30',
+        'apellido' => 'required | min:2 | max:30',
+        'fechaNacimiento' => 'required',
+        'direccion' => 'required | min:2',
+        'name' => 'required | min:4 | max:30 | unique:users',
+        'email' => 'required | email | unique:users'
+      ];
+      $messages = [
+        'nombre.required' => 'El campo nombre es obligatorio',
+        'nombre.min' => 'El campo nombre necesita 2 caracteres como mínimo',
+        'nombre.max' => 'El campo nombre soporta 30 caracteres como máximo',
+
+        'apellido.required' => 'El campo apellido es obligatorio',
+        'apellido.min' => 'El campo apellido necesita 2 caracteres como mínimo',
+        'apellido.max' => 'El campo apellido soporta 30 caracteres como máximo',
+
+        'fechaNaciento.required' => 'El campo fecha de nacimiento es obligatorio',
+
+        'name.required' => 'El campo usuario es obligatorio',
+        'name.min' => 'El campo usuario necesita 4 caracteres como mínimo',
+        'name.max' => 'El campo usuario soporta 30 caracteres como máximo',
+        'name.unique' => 'El usuario ya ha sido registrado',
+
+        'email.required' => 'El campo correo es obligatorio',
+        'email.email' => 'Ingrese un correo válido',
+        'email.unique' => 'El correo ya ha sido registrado',
+
+        'direccion.required' => 'El campo direccion es obligatorio',
+        'direccion.min' => 'El campo direccion necesita 2 caracteres como mínimo',
+      ];
+
+      $valida = Validator::make($request->all(), $rules , $messages);
+      
+      if($valida->fails()){
+        $nombre = $request->nombre;
+        $apellido = $request->apellido;
+        $sexo = $request->sexo;
+        $fechaNacimiento = $request->fechaNacimiento;
+        $dui = $request->dui;
+        $direccion = $request->direccion;
+        $name = $request->name;
+        $email = $request->email;
+        $tipoUsuario = $request->tipoUsuario;
+        $administrador = $request->administrador;
+        $juntaVigilancia = $request->juntaVigilancia;
+
+        $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
+
+        $telefonos = $request->telefono;
+
+        return view('Usuarios.create', compact(
+          'nombre',
+          'apellido',
+          'sexo',
+          'fechaNacimiento',
+          'dui',
+          'direccion',
+          'name',
+          'email',
+          'tipoUsuario',
+          'administrador',
+          'juntaVigilancia',
+          'especialidades',
+          'telefonos'
+        ))->withErrors($valida->errors());
+      }else{
+        DB::beginTransaction();
+        try{
+          $request['password']=bcrypt($request['email']);
+          $user = User::create($request->All());
+          if($request->hasfile('firma')){
+            $user->firma = $request->file('firma')->store('public/firma');
           }
-          $especialidad_usuario->f_usuario = $user->id;
-          $especialidad_usuario->f_especialidad = $request->especialidad[$k];
-          $especialidad_usuario->save();
+          if($request->hasfile('sello')){
+            $user->sello = $request->file('sello')->store('public/sello');
+          }
+          if($request->hasfile('foto')){
+            $user->foto = $request->file('foto')->store('public/foto');
+          }
+          $user->save();
+          if (isset($request->telefono)) {
+            foreach ($request->telefono as $k => $val) {
+              $telefono_usuario = new TelefonoUsuario;
+              $telefono_usuario->f_usuario = $user->id;
+              $telefono_usuario->telefono = $request->telefono[$k];
+              $telefono_usuario->save();
+            }
+          }
+          if (isset($request->especialidad)) {
+            foreach ($request->especialidad as $k => $val) {
+              $especialidad_usuario = new EspecialidadUsuario;
+              if($k == 0){
+                $especialidad_usuario->principal = true;
+              }else{
+                $especialidad_usuario->principal = false;
+              }
+              $especialidad_usuario->f_usuario = $user->id;
+              $especialidad_usuario->f_especialidad = $request->especialidad[$k];
+              $especialidad_usuario->save();
+            }
+          }
+          DB::commit();
+        }catch(Exception $e){
+          DB::rollback();
+          return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');  
         }
+        Bitacora::bitacora('store','users','usuarios',$user->id);
+        return redirect('/usuarios')->with('mensaje', '¡Guardado!');
       }
-      Bitacora::bitacora('store','users','usuarios',$user->id);
-      return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
     /**

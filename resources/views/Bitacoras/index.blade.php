@@ -11,12 +11,12 @@
         <div class="row">
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
-              <button type="button" class="btn btn-dark btn-ms" data-toggle="modal" data-target=".bs-modal-lg">
-                <i class="fa fa-sliders"></i>
-                Filtros
+              <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target=".bs-modal-lg">
+                <i class="fa fa-search"></i>
+                Busqueda
               </button>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+              <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Filtros</h4>
+          <h4 class="modal-title" id="myModalLabel">Busqueda</h4>
         </div>
         <div class="modal-body">
           <div class="x_panel">

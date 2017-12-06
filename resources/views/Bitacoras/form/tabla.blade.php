@@ -23,19 +23,19 @@
           <td>
             <center>
               @if ($bitacora->tipo == 'store')
-                <span class="label label-success">Creación</span>
+                <span class="label label-success col-md-12 col-sm-12 col-xs-12">Creación</span>
               @elseif ($bitacora->tipo == 'update')
-                <span class="label label-warning">Edición</span>
+                <span class="label label-warning col-md-12 col-sm-12 col-xs-12">Edición</span>
               @elseif ($bitacora->tipo == 'destroy')
-                <span class="label label-danger">Eliminar</span>
+                <span class="label label-danger col-md-12 col-sm-12 col-xs-12">Eliminar</span>
               @elseif ($bitacora->tipo == 'activate')
-                <span class="label label-info">Activar</span>
+                <span class="label label-info col-md-12 col-sm-12 col-xs-12">Activar</span>
               @elseif ($bitacora->tipo == 'desactivate')
-                <span class="label label-purple">Papelara</span>
+                <span class="label label-purple col-md-12 col-sm-12 col-xs-12">Papelara</span>
               @elseif ($bitacora->tipo == 'login')
-                <span class="label label-primary">Ingreso</span>
+                <span class="label label-primary col-md-12 col-sm-12 col-xs-12">Ingreso</span>
               @elseif ($bitacora->tipo == 'logout')
-                <span class="label label-default">Salida</span>
+                <span class="label label-default col-md-12 col-sm-12 col-xs-12">Salida</span>
               @endif
             </center>
           </td>
