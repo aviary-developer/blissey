@@ -21,4 +21,10 @@ class SolicitudExamen extends Model
         $examen = Examen::find($id);
         return $examen->nombreExamen;
     }
+    public function paciente(){
+      return $this->belongsTo('App\Paciente','f_paciente');
+    }
+    public function examen(){
+      return $this->belongsTo('App\Examen','f_examen');
+    }
 }
