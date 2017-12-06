@@ -21,55 +21,99 @@
         <div class="col-md-9 col-sm-9 col-xs-12">
           <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
           <select class="form-control has-feedback-left" name="tipoUsuario" id="tipoUsuario" onchange="tipo_usuario();">
-            @if($create)  
-              <option value="Gerencia">Gerencia</option>
-              <option value="Médico">Médico</option>
-              <option value="Recepción">Recepción</option>
-              <option value="Laboaratorio">Laboratorio Clínico</option>
-              <option value="Ultrasonografía">Ultrasonografía</option>
-              <option value="Rayos X">Rayos X</option>
-              <option value="Farmacia">Farmacia</option>
-              <option value="Enfermería">Enfermería</option>
-            @else
-              @if($usuarios->tipoUsuario == "Gerencia")
+            @if(isset($tipoUsuario))
+              @if($tipoUsuario == "Gerencia")
                 <option value="Gerencia" selected>Gerencia</option>
               @else
                 <option value="Gerencia">Gerencia</option>
               @endif
-              @if($usuarios->tipoUsuario == "Médico")
+              @if($tipoUsuario == "Médico")
                 <option value="Médico" selected>Médico</option>
               @else
                 <option value="Médico">Médico</option>
               @endif
-              @if($usuarios->tipoUsuario == "Recepción")
+              @if($tipoUsuario == "Recepción")
                 <option value="Recepción" selected>Recepción</option>
               @else
                 <option value="Recepción">Recepción</option>
               @endif
-              @if($usuarios->tipoUsuario == "Laboaratorio")
+              @if($tipoUsuario == "Laboaratorio")
                 <option value="Laboaratorio" selected>Laboratorio Clínico</option>
               @else
                 <option value="Laboaratorio">Laboratorio Clínico</option>
               @endif
-              @if($usuarios->tipoUsuario == "Ultrasonografía")
+              @if($tipoUsuario == "Ultrasonografía")
                 <option value="Ultrasonografía" selected>Ultrasonografía</option>
               @else
                 <option value="Ultrasonografía">Ultrasonografía</option>
               @endif
-              @if($usuarios->tipoUsuario == "Rayos X")
+              @if($tipoUsuario == "Rayos X")
                 <option value="Rayos X" selected>Rayos X</option>
               @else
                 <option value="Rayos X">Rayos X</option>
               @endif
-              @if($usuarios->tipoUsuario == "Farmacia")
+              @if($tipoUsuario == "Farmacia")
                 <option value="Farmacia" selected>Farmacia</option>
               @else
                 <option value="Farmacia">Farmacia</option>
               @endif
-              @if($usuarios->tipoUsuario == "Enfermería")
+              @if($tipoUsuario == "Enfermería")
                 <option value="Enfermería" selected>Enfermería</option>
               @else
                 <option value="Enfermería">Enfermería</option>
+              @endif
+            @else
+                
+              @if($create)  
+                <option value="Gerencia">Gerencia</option>
+                <option value="Médico">Médico</option>
+                <option value="Recepción">Recepción</option>
+                <option value="Laboaratorio">Laboratorio Clínico</option>
+                <option value="Ultrasonografía">Ultrasonografía</option>
+                <option value="Rayos X">Rayos X</option>
+                <option value="Farmacia">Farmacia</option>
+                <option value="Enfermería">Enfermería</option>
+              @else
+                @if($usuarios->tipoUsuario == "Gerencia")
+                  <option value="Gerencia" selected>Gerencia</option>
+                @else
+                  <option value="Gerencia">Gerencia</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Médico")
+                  <option value="Médico" selected>Médico</option>
+                @else
+                  <option value="Médico">Médico</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Recepción")
+                  <option value="Recepción" selected>Recepción</option>
+                @else
+                  <option value="Recepción">Recepción</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Laboaratorio")
+                  <option value="Laboaratorio" selected>Laboratorio Clínico</option>
+                @else
+                  <option value="Laboaratorio">Laboratorio Clínico</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Ultrasonografía")
+                  <option value="Ultrasonografía" selected>Ultrasonografía</option>
+                @else
+                  <option value="Ultrasonografía">Ultrasonografía</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Rayos X")
+                  <option value="Rayos X" selected>Rayos X</option>
+                @else
+                  <option value="Rayos X">Rayos X</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Farmacia")
+                  <option value="Farmacia" selected>Farmacia</option>
+                @else
+                  <option value="Farmacia">Farmacia</option>
+                @endif
+                @if($usuarios->tipoUsuario == "Enfermería")
+                  <option value="Enfermería" selected>Enfermería</option>
+                @else
+                  <option value="Enfermería">Enfermería</option>
+                @endif
               @endif
             @endif
           </select>

@@ -18,12 +18,30 @@
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo *</label>
       &nbsp;&nbsp;&nbsp;
-      <label>
-        {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
-      </label>
-      <label>
-        {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
-      </label>
+      @if(isset($sexo))
+        @if($sexo)
+          <label>
+          {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
+        </label>
+        <label>
+          {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
+        </label>    
+        @else
+          <label>
+          {!!Form :: radio ( "sexo",1,false,['class'=>'flat'])!!} Masculino &nbsp;
+        </label>
+        <label>
+          {!!Form :: radio ( "sexo",0,true,['class'=>'flat'])!!} Femenino
+        </label>
+        @endif  
+      @else  
+        <label>
+          {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
+        </label>
+        <label>
+          {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
+        </label>
+      @endif
     </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de nacimiento *</label>
@@ -83,6 +101,19 @@
               <td>
                 <input type="hidden" id={{"telefono".$key}} value={{ $telefono->id }}>
                 <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
+                  <i class="fa fa-remove"></i>
+                </button>
+              </td>
+            </tr>
+          @endforeach
+        @endif
+        @if(isset($telefonos))
+          @foreach($telefonos as $k => $telefono)
+            <tr>
+              <td>{{$telefono}}</td>
+              <td>
+                <input type="hidden" name="telefono[]" value={{ $telefono }}>
+                <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono">
                   <i class="fa fa-remove"></i>
                 </button>
               </td>

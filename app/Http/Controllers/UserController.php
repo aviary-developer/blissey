@@ -101,6 +101,7 @@ class UserController extends Controller
         $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
 
         $telefonos = $request->telefono;
+        $especialidades_tabla = $request->especialidad;
 
         return view('Usuarios.create', compact(
           'nombre',
@@ -115,7 +116,8 @@ class UserController extends Controller
           'administrador',
           'juntaVigilancia',
           'especialidades',
-          'telefonos'
+          'telefonos',
+          'especialidades_tabla'
         ))->withErrors($valida->errors());
       }else{
         DB::beginTransaction();

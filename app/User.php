@@ -85,7 +85,7 @@ class User extends Authenticatable
       return 0;
     }
 
-    public static function nombre_especialidad($id){
+    public static function nombre_especialidad_index($id){
       if($id != 0){
         $nombre = Especialidad::find($id);
         return $nombre->nombre;

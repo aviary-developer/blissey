@@ -138,11 +138,11 @@
                     @endphp
                     @if($especialidad != 0)
                       <a href={{asset('/especialidades/'.$especialidad)}}>
-                        {{$usuario->nombre_especialidad($especialidad)}}
+                        {{$usuario->nombre_especialidad_index($especialidad)}}
                       </a>
                     @else
                       <i style="color: gray;">
-                        {{$usuario->nombre_especialidad($especialidad)}}
+                        {{$usuario->nombre_especialidad_index($especialidad)}}
                       </i>
                     @endif
                   </td>

@@ -1,4 +1,4 @@
-<div class="x_content">
+<div class="x_content" onmouseover="precarga()">
   <div class="form_wizard wizard_horizontal" id="wizard">
     {{-- Encabezado del wizard --}}
     <ul class="wizard_steps">
@@ -43,7 +43,7 @@
     <div id="step-2">
       @include('Usuarios.Formularios.pasos.paso2')
     </div>
-    <div id="step-3" onmouseover="verAlerta2();">
+    <div id="step-3" onmouseover="verAlerta2()">
       @include('Usuarios.Formularios.pasos.paso3')
     </div>
   </div>
@@ -51,6 +51,15 @@
 <script type="text/javascript">
   var cuenta1 = 0;
   var cuenta2 = 0;
+  var cuenta3 = 0;
+
+  function precarga(){
+    if(cuenta3==0){
+      tipo_usuario();
+    }
+    cuenta3++;
+  }
+
   function tipo_usuario(){
     var valorUsuario = $("#tipoUsuario").val();
 

@@ -107,6 +107,29 @@
           @endforeach
           <input type="hidden" id="contador" value={{$auxiliar}}>
         @endif
+        @if(isset($especialidades_tabla))
+          @php
+            $auxiliar = 0;
+          @endphp
+          @foreach ($especialidades_tabla as $key => $especialidad)
+            <tr>
+              <td>
+                {{$especialidades[$key]->nombreEspecialidad($especialidad)}}
+              </td>
+              <td>
+                <input type="hidden" id="{{"especialidad".$key}}" value={{$especialidad}}>
+                <input type="hidden" name="especialidad[]" value={{ $especialidad}}>
+                <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_especialidad">
+                  <i class="fa fa-remove"></i>
+                </button>
+              </td>
+            </tr>
+            @php
+              $auxiliar = $key;
+            @endphp
+          @endforeach
+          <input type="hidden" id="contador" value={{$auxiliar}}>
+        @endif
       </tbody>
     </table>
   </div>

@@ -26,4 +26,9 @@ class Especialidad extends Model
       }
       $query->where('estado',$estado);
     }
+
+    public static function nombreEspecialidad($id){
+      $retorno = Especialidad::find($id);
+      return $retorno->nombre;
+    }
 }
