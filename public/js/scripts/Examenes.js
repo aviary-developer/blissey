@@ -1,4 +1,4 @@
-var contadorSelectsParametros=0;
+var contadorSelectsParametros=1;
 $('#agregarSeccionExamen').click(function(){
   $('.seccionesExamenes').append( "<div class='col-md-6 col-sm-6 col-xs-12'>"+
   "<div class='x_panel'>"+
@@ -220,7 +220,7 @@ function rellenarCombosParametros(paso){
      });
    });
  }
-
+//////////////////PARA PARAMETROS
 $('#checkValores').click(function(){
   if(this.checked == true){
     $("#valorMinimo").prop("readonly", false);

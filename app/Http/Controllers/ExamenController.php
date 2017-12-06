@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Examen;
 use App\Unidad;
+use App\Reactivo;
 use App\Bitacora;
 use App\MuestraExamen;
 use App\Parametro;
@@ -42,7 +43,10 @@ class ExamenController extends Controller
   {
     $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
     $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
-    return view('Examenes.create',compact('unidades','muestras'));
+    $secciones = Seccion::where('estado',true)->get();
+    $reactivos = Reactivo::where('estado',true)->get();
+    $parametros= Parametro::where('estado',true)->get();
+    return view('Examenes.create',compact('reactivos','parametros','secciones','unidades','muestras'));
   }
 
   /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\SolicitudExamen;
 use App\Examen;
 use App\Bitacora;
+use App\Paciente;
 use Illuminate\Http\Request;
 use DB;
 
@@ -59,7 +60,7 @@ class SolicitudExamenController extends Controller
                     $solicitud->estado = 0;
 
                     $solicitud->save();
-                    
+
                     DB::commit();
                     Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
                 }
@@ -125,5 +126,11 @@ class SolicitudExamenController extends Controller
         $solicitud->estado = 1;
         $solicitud->save();
         return 1;
+    }
+
+    public function evaluarExamen($id,$idExamen){
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->get();
+      $examen=ExamenSeccionParametro::where('f_examen','=',$idExamen);
+      return view('SolicitudExamenes.evaluarExamen',compact('solicitudes'));
     }
 }

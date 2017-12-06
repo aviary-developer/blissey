@@ -191,14 +191,21 @@ $(document).on('ready',function(){
       }
     });
   });
+    $('#f_presentacion').on('change',function(e){
+        var obtener=$("#f_presentacion").find('option:selected');
+        nPresentacion=obtener.text();
+        $('#valor').val(nPresentacion);
+    });
 });
 
 $('#contenido').click(function(){
   if(this.checked){
     $('#opc1').css("display","none");
     $('#opc2').css("display","block");
+    $('#lchange').text("Contenido *");
   }else{
     $('#opc1').css("display","block");
     $('#opc2').css("display","none");
+    $('#lchange').text("Cantidad *");
   }
 });
