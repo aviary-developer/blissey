@@ -37,7 +37,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Presentación *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
-            <select class="form-control has-feedback-left" name="f_presentacion">
+            <select class="form-control has-feedback-left" name="f_presentacion" id="f_presentacion">
               @foreach ($presentaciones as $presentacion)
                 <option value={{ $presentacion->id }}>{{ $presentacion->nombre }}</option>
               @endforeach
@@ -80,28 +80,21 @@
               Cantidad<input type="checkbox" name="contenido" class="js-switch" id="contenido"/> Contenido
           </label>
         </div>
-        <div class="form-group" id="opc1">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
+        <div class="form-group" >
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" id="lchange">Cantidad *</label>
           <div class="col-md-4 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
             {!! Form::number('cantidad',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','min'=>'1']) !!}
           </div>
-          <div class="col-md-5 col-sm-9 col-xs-12">
+          <div class="col-md-5 col-sm-9 col-xs-12" id="opc1">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('valor',null,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas']) !!}
+            {!! Form::text('valor',null,['id'=>'valor','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','readonly'=>'readonly']) !!}
           </div>
-        </div>
-        <div class="form-group" id="opc2" style="display:none;">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido *</label>
-          <div class="col-md-4 col-sm-9 col-xs-12">
-            <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::number('v_contenido',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','min'=>'1']) !!}
-          </div>
-          <div class="col-md-5 col-sm-9 col-xs-12">
+          <div class="col-md-5 col-sm-9 col-xs-12" id="opc2" style="display:none;">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
             {!!Form::select('v_valor',
               App\Producto::arrayUnidades()
-              ,null, ['class'=>'form-control has-feedback-left'])!!}
+              ,null, ['class'=>'form-control has-feedback-left','id'=>'v_valor'])!!}
           </div>
         </div>
         <div class="form-group">
@@ -124,7 +117,7 @@
           <thead>
             <th>Código</th>
             <th>División</th>
-            <th>Cantidad</th>
+            <th>Cantidad/Contenido</th>
             <th>Precio</th>
             <th style="width : 80px">Acción</th>
           </thead>
