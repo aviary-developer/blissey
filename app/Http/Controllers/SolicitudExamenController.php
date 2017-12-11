@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SolicitudExamen;
 use App\Examen;
+use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Paciente;
 use Illuminate\Http\Request;
@@ -135,8 +136,8 @@ class SolicitudExamenController extends Controller
     }
 
     public function evaluarExamen($id,$idExamen){
-      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->get();
-      $examen=ExamenSeccionParametro::where('f_examen','=',$idExamen);
-      return view('SolicitudExamenes.evaluarExamen',compact('solicitudes'));
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
+      $examen=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
+      return view('SolicitudExamenes.evaluarExamen',compact('solicitud','examen'));
     }
 }

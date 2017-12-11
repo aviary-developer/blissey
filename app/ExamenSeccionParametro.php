@@ -19,4 +19,13 @@ class ExamenSeccionParametro extends Model
     $nombre = Seccion::find($id);
     return $nombre->nombre;
   }
+  public function seccion(){
+    return $this->belongsTo('App\Seccion','f_seccion');
+  }
+  public function parametro(){
+    return $this->belongsTo('App\Parametro','f_parametro');
+  }
+  public function reactivo(){
+    return $this->belongsTo('App\Reactivo','f_reactivo');
+  }
 }
