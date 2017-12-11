@@ -1,3 +1,4 @@
+
 @extends('dashboard')
 @section('layout')
   @if(Session::has('mensaje'))
@@ -32,7 +33,7 @@
         <div class="row">
           <div class="col-md-6 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/presentaciones/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a  class="btn btn-dark btn-ms" data-toggle="modal" data-target=".bs-modal-lg" id="nuevo"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/presentaciones?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
                 @if ($estadoOpuesto)
@@ -107,4 +108,34 @@
     </div>
   </div>
   <!-- /page content -->
+  {{-- Modal --}}
+  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" type="button" data-dismiss="modal">
+            <span aria-hidden="true">x</span>
+          </button>
+          <h4 class="modal-title">Presentación <small>Nueva</small></h4>
+        </div>
+        <div class="modal-body">
+          <div class="x_panel">
+            <div class="form-group">
+              <label class="control-label">Nombre *</label>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                {!! Form::text('nombre_presentacion',null,['id'=>'nombre_presentacion','class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la nueva especialidad']) !!}
+              </div>
+          </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="accion" value="">
+          <input type="hidden" id="idEditar" value="">
+          <button id="guardar_presentacion" class="btn btn-primary" type="button">Guardar</button>
+          <button class="btn btn-default" type="button" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection

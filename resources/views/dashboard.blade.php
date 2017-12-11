@@ -349,6 +349,7 @@
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}
       {!!Html::script('js/scripts/Solicitud.js')!!}
+      {!!Html::script('js/scripts/Presentaciones.js')!!}
       {!!Html::script('js/general.js')!!}
       @section('scripts')
       @show
