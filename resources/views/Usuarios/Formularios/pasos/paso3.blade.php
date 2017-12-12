@@ -83,7 +83,7 @@
         <th style="width : 80px">Acción</th>
       </thead>
       <tbody>
-        @if (!$create)
+        @if (!$create && !$validacion_activa)
           @php
             $auxiliar = 0;
           @endphp
@@ -94,8 +94,8 @@
                 {{$especialidad->nombreEspecialidad($especialidad->f_especialidad)}}
               </td>
               <td>
-                <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad->f_especialidad }}>
-                <input type="hidden" value={{ $especialidad->id }}>
+                <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad->f_especialidad }} name="esp_f[]">
+                <input type="hidden" value={{ $especialidad->id }} name="esp_id[]">
                 <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_especialidad_antiguo">
                   <i class="fa fa-remove"></i>
                 </button>
@@ -105,6 +105,33 @@
               $auxiliar = $key;
             @endphp
           @endforeach
+          <input type="hidden" id="contador" value={{$auxiliar}}>
+        @elseif($validacion_activa)
+          @php
+            $auxiliar = 0;
+          @endphp
+          @foreach($delesp as $especialidades_borradas)
+            <input type="hidden" name="delesp[]" value={{$especialidades_borradas}}  id="delesp">
+          @endforeach
+          @if(isset($especialidad_id))    
+            @foreach ($especialidad_id as $key => $especialidad)
+              <tr>
+                <td>
+                  {{App\Especialidad::nombreEspecialidad($especialidad_f[$key])}}
+                </td>
+                <td>
+                  <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad_f[$key] }} name="esp_f[]">
+                  <input type="hidden" value={{ $especialidad }} name="esp_id[]">
+                  <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_especialidad_antiguo">
+                    <i class="fa fa-remove"></i>
+                  </button>
+                </td>
+              </tr>
+              @php
+                $auxiliar = $key;
+              @endphp
+            @endforeach
+          @endif
           <input type="hidden" id="contador" value={{$auxiliar}}>
         @endif
         @if(isset($especialidades_tabla))

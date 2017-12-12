@@ -23,25 +23,27 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/usuarios'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/usuarios'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
-    @if ($usuario->estado)
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$usuario->id.");'" !!}>
-        <i class="fa fa-trash"></i> Papelera
-      </button>
-    @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$usuario->id.");'" !!}/>
-        <i class="fa fa-check"></i> Restaurar
-      </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$usuario->id.");'" !!}/>
-        <i class="fa fa-remove"></i> Eliminar
-      </button>
+    @if($usuario->id != Auth::user()->id)
+      @if ($usuario->estado)
+        <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$usuario->id.");'" !!}>
+          <i class="fa fa-trash"></i> Papelera
+        </button>
+      @else
+        <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$usuario->id.");'" !!}/>
+          <i class="fa fa-check"></i> Restaurar
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!}/>
+          <i class="fa fa-remove"></i> Eliminar
+        </button>
+      @endif
     @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-ms">
+    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>

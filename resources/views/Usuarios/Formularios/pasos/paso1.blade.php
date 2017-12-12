@@ -93,19 +93,38 @@
         <th style="width : 80px">Acción</th>
       </thead>
       <tbody>
-        @if (!$create)
+        @if (!$create && !$validacion_activa)
           <input type="hidden" name="deletes[]" value="ninguno" id="deletes">
           @foreach ($telefono_usuarios as $key => $telefono)
             <tr>
               <td>{{$telefono->telefono}}</td>
               <td>
-                <input type="hidden" id={{"telefono".$key}} value={{ $telefono->id }}>
+                <input type="hidden" id={{"telefono".$key}} value={{ $telefono->id }} name="tel_id[]">
+                <input type="hidden" value={{ $telefono->telefono }} name="tel_tel[]">
                 <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
                   <i class="fa fa-remove"></i>
                 </button>
               </td>
             </tr>
           @endforeach
+        @elseif($validacion_activa)
+          @foreach($deletes as $telefonos_eliminados)
+            <input type="hidden" name="deletes[]" value={{$telefonos_eliminados}} id="deletes">
+          @endforeach
+          @if(isset($telefono_telefono))    
+            @foreach ($telefono_telefono as $key => $telefono)
+              <tr>
+                <td>{{$telefono}}</td>
+                <td>
+                  <input type="hidden" id={{"telefono".$key}} value={{ $telefono_id[$key] }} name="tel_id[]">
+                  <input type="hidden" value={{ $telefono }} name="tel_tel[]">
+                  <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
+                    <i class="fa fa-remove"></i>
+                  </button>
+                </td>
+              </tr>
+            @endforeach
+          @endif
         @endif
         @if(isset($telefonos))
           @foreach($telefonos as $k => $telefono)

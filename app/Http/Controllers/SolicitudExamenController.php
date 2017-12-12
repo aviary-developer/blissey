@@ -16,11 +16,17 @@ class SolicitudExamenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pacientes = SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
-        $solicitudes = SolicitudExamen::where('estado','<>',3)->orderBy('estado')->get();
-        return view('SolicitudExamenes.index',compact('pacientes','solicitudes'));
+        $vista = $request->get("vista");
+        if($vista == "paciente"){
+            $pacientes = SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
+            $solicitudes = SolicitudExamen::where('estado','<>',3)->orderBy('estado')->get();
+        }else{
+            $examenes = SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_examen']);
+            $solicitudes = SolicitudExamen::where('estado','<>',3)->orderBy('estado')->get();
+        }
+        return view('SolicitudExamenes.index',compact('pacientes','solicitudes','examenes','vista'));
     }
 
     /**

@@ -1,6 +1,6 @@
 $(document).on('ready', function () {
   var ubicacion = window.location.pathname;
-  if (ubicacion.indexOf("/blissey/public/usuarios/")>-1) {
+  if (ubicacion.indexOf("/blissey/public/usuarios")>-1) {
     var boton_atras = "<a href='/blissey/public/usuarios' class='btn btn-default'>Cancelar</a>"
     $(".actionBar").append(boton_atras);
   }

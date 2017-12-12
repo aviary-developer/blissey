@@ -37,5 +37,9 @@
     });"/>
       <i class="fa fa-trash"></i>
   </button>
+@else
+  <button class="btn btn-xs btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No puedes desactivarte a ti mismo">
+    <i class="fa fa-warning"></i>
+  </button>
 @endif
 {!!Form::close()!!}
