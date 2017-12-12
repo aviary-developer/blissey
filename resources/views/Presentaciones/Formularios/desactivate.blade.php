@@ -2,7 +2,7 @@
 <a href={!! asset('/presentaciones/'.$presentacion->id)!!} class="btn btn-xs btn-info">
   <i class="fa fa-info-circle"></i>
 </a>
-<a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!} class="btn btn-xs btn-primary">
+<a onclick="{{'editarPresentacion('.$presentacion->id.',"'.$presentacion->nombre.'")'}}" class="btn btn-xs btn-primary" data-toggle="modal" data-target=".bs-modal-lg">
   <i class="fa fa-edit"></i>
 </a>
 <button type="button" class="btn btn-danger btn-xs" onclick="

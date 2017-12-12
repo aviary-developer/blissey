@@ -3,7 +3,7 @@
   <a href={!! asset('/presentaciones/'.$presentacion->id)!!} class="btn btn-xs btn-info">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a onclick={!!asset('editarPresentacion('.$presentacion->id.','.$presentacion->nombre.')')!!} class="btn btn-xs btn-primary">
     <i class="fa fa-edit"></i>
   </a>
   <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$presentacion->id.");'" !!}/>

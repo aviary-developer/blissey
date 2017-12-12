@@ -122,4 +122,25 @@ class PresentacionController extends Controller
       Bitacora::bitacora('activate','especialidads','presentaciones',$id);
       return Redirect::to('/presentaciones?estado=0');
     }
+    public function guardar($nombre)
+    {
+      $presentaciones = Presentacion::create([
+        'nombre'=>$nombre,
+      ]);
+      Bitacora::bitacora('store','presentacions','presentaciones',$presentaciones->id);
+      return redirect('/presentaciones')->with('mensaje', '¡Guardado!');
+    }
+    public function editar($id,$nombre){
+      $pre=Presentacion::find($id);
+      $pre->nombre=$nombre;
+      $pre->save();
+      Bitacora::bitacora('update','especialidads','presentaciones',$id);
+      if($pre->estado)
+      {
+        return redirect('/presentaciones')->with('mensaje', '¡Editado!');
+      }
+      else{
+        return redirect('/presentaciones?estado=0')->with('mensaje', '¡Editado!');
+      }
+    }
 }
