@@ -15,12 +15,17 @@
         {!! Form::date('fecha',$fecha,['class'=>'form-control has-feedback-left']) !!}
       </div>
       @if ($tipo==1)
-          <label class="col-md-1 col-sm-12 col-xs-12 form-group">Cliente *</label>
+          <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cliente *</label>
           <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+            <div class="input-group">
             <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
-            {!!Form::select('f_cliente',
-              App\Transacion::arrayClientes()
-              ,null, ['class'=>'form-control has-feedback-left'])!!}
+            {!! Form::text('f_cliente',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cliente']) !!}
+              <span class="input-group-btn">
+                <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2">
+                  <i class="fa fa-save"></i>
+                </button>
+              </span>
+            </div>
           </div>
       @else
           <label class="col-md-2 col-sm-12 col-xs-12 form-group">Proveedor *</label>
@@ -53,7 +58,7 @@
         <a href="#" class="btn btn-default" id="agregar">Agregar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-default">
+        <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-default">
           Buscar
         </button>
       </div>
@@ -152,3 +157,52 @@
       </div>
         {{-- MODAL FINAL --}}
     </div>
+    {{-- MODAL 2--}}
+    <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal2">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Buscar clientes</h4>
+          </div>
+
+          <div class="modal-body">
+            <div class="x_panel">
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar</label>
+                <div class="col-md-7 col-sm-7 col-xs-12">
+                  <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
+                  {!! Form::text('resultado',null,['id'=>'resultado','class'=>'form-control has-feedback-left','placeholder'=>'Buscar']) !!}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
+                <div class="col-md-7 col-sm-7 col-xs-12">
+                  <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
+                  {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 col-xs-12"></div>
+                <div class="col-md-8 col-xs-12">
+                  <h4 class="StepTitle">Resultado de busqueda</h4>
+                  <table class="table" id="tablaBuscar">
+                    <thead>
+                      <th colspan="2">Resultado</th>
+                      <th style="width : 80px">Acción</th>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- FIN 2--}}

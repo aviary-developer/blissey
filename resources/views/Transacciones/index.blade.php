@@ -7,7 +7,11 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Pedidos
+        <h2>
+          @if($tipo==0)Pedidos
+          @else
+            Ventas
+          @endif
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -16,7 +20,7 @@
           <div class="col-md-5 col-xs-12">
             <div class="btn-group">
               @if($estado==1 || $estado=='')
-              <a href={!! asset('/transacciones/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Comfirmados</a>
             @elseif($estado==0)

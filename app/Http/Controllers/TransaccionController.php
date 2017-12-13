@@ -38,10 +38,9 @@ class TransaccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $tipo=0;
-        //$tipo=1;
+        $tipo=$request->tipo;
         return view('Transacciones.create',compact('tipo'));
     }
 
