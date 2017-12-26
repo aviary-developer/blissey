@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ExamenSeccionParametro extends Model
 {
   protected $fillable = [
-    'f_examen','f_seccion','f_parametro'
+    'f_examen','f_seccion','f_parametro','f_reactivo'
   ];
 
   public function nombreParametro($id){
@@ -18,6 +18,13 @@ class ExamenSeccionParametro extends Model
   public function nombreSeccion($id){
     $nombre = Seccion::find($id);
     return $nombre->nombre;
+  }
+  public function nombreUnidad($id){
+    $nombre = Unidad::find($id);
+    return $nombre->nombre;
+  }
+  public function examen(){
+    return $this->belongsTo('App\Examen','f_examen');
   }
   public function seccion(){
     return $this->belongsTo('App\Seccion','f_seccion');

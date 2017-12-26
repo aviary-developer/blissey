@@ -30,4 +30,7 @@ class Parametro extends Model
     $n= Unidad::find($id);
     return $n->nombre;
   }
+  public function unidad(){
+    return $this->belongsTo('App\Unidad','unidad');
+  }
 }

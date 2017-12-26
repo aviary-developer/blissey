@@ -50,6 +50,11 @@
           Química sanguinea
         </a>
       </li>
+      <li role="presentation" class="">
+        <a href="#tab_content7" id="tab7" role="tab" data-toggle="tab" aria-expanded="true">
+          Enzimas
+        </a>
+      </li>
     </ul>
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane fade active in" id="tab_content1" role="tabpanel" aria-labelledby="tab1">
@@ -71,7 +76,7 @@
           </div>
         </div>
       </div>
-    
+
       <div class="tab-pane fade" id="tab_content2" role="tabpanel" aria-labelledby="tab2">
         <div>
           <div class="row">
@@ -171,6 +176,27 @@
           </div>
         </div>
       </div>
+
+      <div class="tab-pane fade" id="tab_content7" role="tabpanel" aria-labelledby="tab3">
+        <div>
+          <div class="row">
+            <h4>Área de Enzimas</h4>
+          </div>
+          <div class="row">
+            @foreach($examenes as $examen)
+              @if($examen->area == "ENZIMAS")
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
+                    {{ $examen->nombreExamen }}
+                  </button>
+                  <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
+                </span>
+              @endif
+            @endforeach
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

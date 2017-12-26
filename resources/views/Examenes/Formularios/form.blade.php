@@ -86,7 +86,7 @@
         <tbody></tbody></table>
         </div></div></div></div>
               <!--AQUI SE AGREGAN LAS SECCIONES -->
-              <input type='hidden' id='totalSecciones' name='totalSecciones' value="0"/>
+              <input type='hidden' id='totalSecciones' name='totalSecciones' value="1"/>
       </div>
     <div class="form-group">
       <center>
