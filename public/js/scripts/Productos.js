@@ -18,6 +18,12 @@ $(document).on('ready',function(){
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
+    var com=$('#hchange').val(); //Cantidad o contenido
+    var idu=0;
+    var unidad="";
+    if(com=="o"){
+
+    }
     var vmc=valor+cantidad; //Valor más cantidad
     if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
     var html_texto =
@@ -203,9 +209,11 @@ $('#contenido').click(function(){
     $('#opc1').css("display","none");
     $('#opc2').css("display","block");
     $('#lchange').text("Contenido *");
+    $('#hchange').text("o");
   }else{
     $('#opc1').css("display","block");
     $('#opc2').css("display","none");
     $('#lchange').text("Cantidad *");
+    $('#hchange').text("a");
   }
 });
