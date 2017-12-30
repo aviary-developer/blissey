@@ -81,7 +81,7 @@
           </label>
         </div>
         <div class="form-group" >
-          <input type="hidden" id="hchange" value="c">
+          <input type="hidden" id="hchange" value="a">
           <label class="control-label col-md-3 col-sm-3 col-xs-12" id="lchange">Cantidad *</label>
           <div class="col-md-4 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
