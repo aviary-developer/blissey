@@ -33,7 +33,12 @@
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
                     <th><input type="text" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
-                    <th>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td><td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</th>
+                      @if ($esp->parametro->valorMinimo)
+                        <th>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td><td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</th>
+                      @else
+                      <th>No especificados</th><th>-</th>
+                      @endif
+
                   </tr>
                 @endif
                   @php
