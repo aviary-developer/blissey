@@ -19,5 +19,8 @@ class DivisionProducto extends Model
   public function division(){
     return $this->belongsTo('App\Division','f_division');
   }
+  public function unidad(){
+    return $this->belongsTo('App\Unidad','contenido');
+  }
 
 }

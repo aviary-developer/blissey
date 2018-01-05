@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SolicitudExamen;
 use App\Examen;
+use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Paciente;
 use Illuminate\Http\Request;
@@ -135,8 +136,25 @@ class SolicitudExamenController extends Controller
     }
 
     public function evaluarExamen($id,$idExamen){
-      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->get();
-      $examen=ExamenSeccionParametro::where('f_examen','=',$idExamen);
-      return view('SolicitudExamenes.evaluarExamen',compact('solicitudes'));
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
+      $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
+      $contador=0;
+      $contadorSecciones=0;
+      if(count($espr)>0){
+        foreach ($espr as $esp) {
+          if($contador==0){
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }else{
+            if($secciones[$contadorSecciones]==$esp->f_seccion)
+            {
+            }else {
+              $contadorSecciones++;
+              $secciones[$contadorSecciones]=$esp->f_seccion;
+            }
+          }
+          $contador++;
+        }
+      }
+      return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones'));
     }
 }

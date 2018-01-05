@@ -18,6 +18,14 @@ $(document).on('ready',function(){
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
+    var com=$('#hchange').val(); //Cantidad o contenido
+    var idu=0;
+    var unidad="";
+    if(com=="o"){
+      idu=$('#v_valor').find('option:selected').val();
+      unidad=$('#v_valor').find('option:selected').text();
+    }
+    console.log(idu+unidad);
     var vmc=valor+cantidad; //Valor más cantidad
     if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
     var html_texto =
@@ -29,7 +37,7 @@ $(document).on('ready',function(){
         division+
       "</td>"+
       "<td>"+
-        cantidad+
+        cantidad+" "+unidad+
       "</td>"+
       "<td>"+
         "$ "+precio+
@@ -39,6 +47,7 @@ $(document).on('ready',function(){
         "<input type='hidden' name='codigos[]' value='"+codigo+"'/>"+
         "<input type='hidden' name='cantidades[]' value='"+cantidad+"'/>"+
         "<input type='hidden' name='precios[]' value='"+precio+"'/>"+
+        "<input type='hidden' name='idus[]' value='"+idu+"'/>"+
         "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
           "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -203,9 +212,11 @@ $('#contenido').click(function(){
     $('#opc1').css("display","none");
     $('#opc2').css("display","block");
     $('#lchange').text("Contenido *");
+    $('#hchange').val("o");
   }else{
     $('#opc1').css("display","block");
     $('#opc2').css("display","none");
     $('#lchange').text("Cantidad *");
+    $('#hchange').val("a");
   }
 });

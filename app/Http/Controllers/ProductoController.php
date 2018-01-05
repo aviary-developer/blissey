@@ -71,6 +71,9 @@ class ProductoController extends Controller
             $divisiones_productos->cantidad = $request->cantidades[$key];
             $divisiones_productos->precio = $request->precios[$key];
             $divisiones_productos->codigo = $request->codigos[$key];
+            if($request->idus[$key]!=0){
+              $divisiones_productos->contenido = $request->idus[$key];
+            }
             $divisiones_productos->save();
           }
         }

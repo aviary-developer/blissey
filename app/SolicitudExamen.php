@@ -24,6 +24,9 @@ class SolicitudExamen extends Model
     public function paciente(){
       return $this->belongsTo('App\Paciente','f_paciente');
     }
+    public function pacientes(){
+      return $this->hasMany('App\Paciente','f_paciente');
+    }
     public function examen(){
       return $this->belongsTo('App\Examen','f_examen');
     }

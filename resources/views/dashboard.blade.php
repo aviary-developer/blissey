@@ -137,6 +137,9 @@
                                   <li>
                                     <a href={{asset( '/componentes')}}>Componentes</a>
                                   </li>
+                                  <li>
+                                  <a href={{asset( '/divisiones')}}>Divisiones</a>
+                                </li>
                                 </ul>
                               </li>
                               <li>

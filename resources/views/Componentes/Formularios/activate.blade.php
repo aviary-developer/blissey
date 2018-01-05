@@ -23,7 +23,7 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/componente'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/componentes'.$regreso)!!} class="btn btn-dark btn-ms">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
     <a href={!! asset('/componente/'.$componente->id.'/edit')!!} class="btn btn-dark btn-ms">

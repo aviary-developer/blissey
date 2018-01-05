@@ -81,6 +81,7 @@
           </label>
         </div>
         <div class="form-group" >
+          <input type="hidden" id="hchange" value="a">
           <label class="control-label col-md-3 col-sm-3 col-xs-12" id="lchange">Cantidad *</label>
           <div class="col-md-4 col-sm-9 col-xs-12">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
@@ -88,7 +89,7 @@
           </div>
           <div class="col-md-5 col-sm-9 col-xs-12" id="opc1">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('valor',null,['id'=>'valor','class'=>'form-control has-feedback-left','placeholder'=>'Cantidad de unidades minimas','readonly'=>'readonly']) !!}
+            {!! Form::text('valor',null,['id'=>'valor','class'=>'form-control has-feedback-left','readonly'=>'readonly']) !!}
           </div>
           <div class="col-md-5 col-sm-9 col-xs-12" id="opc2" style="display:none;">
             <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
