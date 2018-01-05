@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DivisionProducto extends Model
 {
   protected $fillable = [
-    'f_division','f_producto','cantidad','precio','codigo'
+    'f_division','f_producto','cantidad','precio','codigo','contenido'
   ];
   public function nombreDivision($id){
     $nombre = Division::find($id);

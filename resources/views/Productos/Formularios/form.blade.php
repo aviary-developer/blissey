@@ -37,11 +37,9 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Presentación *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
-            <select class="form-control has-feedback-left" name="f_presentacion" id="f_presentacion">
-              @foreach ($presentaciones as $presentacion)
-                <option value={{ $presentacion->id }}>{{ $presentacion->nombre }}</option>
-              @endforeach
-            </select>
+            {!!Form::select('f_presentacion',
+              App\Producto::arrayPresentaciones()
+              ,null, ['class'=>'form-control has-feedback-left','id'=>'f_presentacion'])!!}
           </div>
         </div>
         <div class="form-group">
@@ -132,12 +130,22 @@
                 <tr>
                   <td>{{$division->codigo}}</td>
                   <td>{{$division->nombreDivision($division->f_division)}}</td>
-                  <td>{{$division->cantidad}}</td>
+                  <td>@if ($division->contenido!=null)
+                    {{$division->cantidad.' '.$division->unidad->nombre}}
+                  @else
+                  {{$division->cantidad.' '.$productos->nombrePresentacion($productos->f_presentacion)}}
+                @endif</td>
                   <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
                   <td>
                     <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
                     <input type="hidden" value={{$division->id}}>
+                    @if(App\detalle_transacions::cuenta($division->f_producto))
                     <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_division_antigua">
+                    @else
+                      <button class="btn btn-xs btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No puedes desactivarte a ti mismo">
+                        <i class="fa fa-warning"></i>
+                      </button>
+                    @endif
                       <i class="fa fa-remove"></i>
                     </button>
                   </td>

@@ -140,7 +140,7 @@ class ProductoController extends Controller
     {
       DB::beginTransaction();
 
-      try{
+       try{
         $productos = Producto::find($id);
         $productos->fill($request->all());
         $productos->save();
@@ -151,6 +151,10 @@ class ProductoController extends Controller
             $divisiones_productos->f_division = $request->divisiones[$key];
             $divisiones_productos->cantidad = $request->cantidades[$key];
             $divisiones_productos->precio = $request->precios[$key];
+            $divisiones_productos->codigo = $request->codigos[$key];
+            if($request->idus[$key]!=0){
+              $divisiones_productos->contenido = $request->idus[$key];
+            }
             $divisiones_productos->save();
           }
         }
@@ -176,7 +180,7 @@ class ProductoController extends Controller
             $eliminar->delete();
           }
         }
-      }catch(\Exception $e){
+       }catch(\Exception $e){
         DB::rollback();
         if($productos->estado)
         {
@@ -185,7 +189,7 @@ class ProductoController extends Controller
         else{
           return redirect('/productos?estado=0')->with('mensaje', 'Algo salio mal');
         }
-      }
+       }
 
       DB::commit();
       Bitacora::bitacora('update','productos','productos',$id);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
   protected $fillable = [
-    'nombre','codigo','f_proveedor','f_presentacion'
+    'nombre','f_proveedor','f_presentacion'
   ];
 
   public static function buscar($nombre, $estado){
@@ -41,11 +41,19 @@ class Producto extends Model
   }
 
   public static function arrayUnidades(){
-    $unidades=Unidad::where('estado','=','true')->get();
+    $unidades=Unidad::where('estado','=','true')->orderBy('nombre')->get();
     $arrayU= [];
     foreach($unidades as $unidad){
       $arrayU[$unidad->id]=$unidad->nombre;
     }
     return $arrayU;
+  }
+  public static function arrayPresentaciones(){
+    $presentaciones=Presentacion::where('estado','=','true')->orderBy('nombre')->get();
+    $arrayP= [];
+    foreach($presentaciones as $presentacion){
+      $arrayP[$presentacion->id]=$presentacion->nombre;
+    }
+    return $arrayP;
   }
 }
