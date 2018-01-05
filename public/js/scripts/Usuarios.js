@@ -114,4 +114,42 @@ $(document).on('ready', function () {
       }
     });
   });
+
+  $('#btn_change').on('click', function (e) {
+    e.preventDefault();
+    var v_nueva = $("#new_pass").val();
+    var v_nueva_r = $("#new_pass_r").val();
+    if (v_nueva.length >= 6) {
+      var v_actual = $("#current_pass").val();
+      if (v_nueva == v_nueva_r) {
+        $.ajax({
+          type: "POST",
+          url: "/blissey/public/psw",
+          data: {
+            _token: $("#token").val(),
+            actual: v_actual,
+            nueva: v_nueva,
+          },
+          success: function (respuesta) {
+            $("#modal").modal('hide');
+            if (respuesta != "error") {
+              return swal('¡Hecho!', 'Se ha cambiado la contraseña', 'success');
+            } else {
+              return swal('Error', 'La contraseña actual no coincide', 'error');
+            }
+          },
+          error: function (respuesta) {
+            if (respuesta == "error") {
+              return swal('Error', 'La contraseña actual no coincide', 'error');
+            }
+            return swal('Error', 'Algo ha salido mal', 'error');
+          }
+        });
+      } else {
+        return swal('Error', 'No repitío correctamente la nueva contraseña', 'error');
+      }
+    } else {
+      return swal('Error', 'La contraseña debe contener al menos 6 caracteres', 'error');
+    }
+  });
 });

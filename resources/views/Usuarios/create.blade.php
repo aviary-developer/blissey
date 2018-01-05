@@ -4,6 +4,9 @@
   @php
     $fecha = Carbon\Carbon::now();
     $create = true;
+    if(!isset($validacion_activa)){
+      $validacion_activa = false;
+    }
   @endphp
   <div class="col-md-12 col-xs-12">
     <div class="x_panel">

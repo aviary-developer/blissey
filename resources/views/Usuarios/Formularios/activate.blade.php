@@ -42,6 +42,11 @@
           <i class="fa fa-remove"></i> Eliminar
         </button>
       @endif
+    @else
+      <button type="button" class="{!! "btn btn-sm"." ".(($usuario->password_correo())?"btn-danger":"btn-dark") !!}" data-toggle="modal" data-target=".bs-modal-sm" id="cambiar_contra" >
+        <i class="fa fa-lock"></i>
+        Contraseña
+      </button>
     @endif
     <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda

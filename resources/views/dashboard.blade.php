@@ -84,79 +84,73 @@
                     <div class="menu_section">
                       <h3>Menú</h3>
                       <ul class="nav side-menu">
-                        <li>
-                          <a>
-                            <i class="fa fa-users"></i> Recepción
-                            <span class="fa fa-chevron-down"></span>
-                          </a>
-                          <ul class="nav child_menu">
-                            <li>
-                              <a href={{asset( '/pacientes')}}>Pacientes</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/ingresos')}}>Hospitalización</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a>
-                            <i class="fa fa-medkit"></i> Laboratorio Clínico
-                            <span class="fa fa-chevron-down"></span>
-                          </a>
-                          <ul class="nav child_menu">
-                            <li>
-                              <a href={{asset( '/examenes')}}>Exámenes</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/reactivos')}}>Reactivos</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/parametros')}}>Parametros</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/secciones')}}>Secciones</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/muestras')}}>Tipo de muestras</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a>
-                            <i class="fa fa-ambulance"></i> Farmacia
-                            <span class="fa fa-chevron-down"></span>
-                          </a>
-                          <ul class="nav child_menu">
-                            <li>
-                              <a>Productos
-                                <span class="fa fa-chevron-down"></span>
-                              </a>
-                              <ul class="nav child_menu">
-                                <li>
-                                  <a href={{asset( '/productos')}}>Productos</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/presentaciones')}}>Presentaciones</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/componentes')}}>Componentes</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li>
-                              <a href={{asset( '/proveedores')}}>Proveedores</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
-                            </li>
-                            <li>
-                              <a href={{asset( '/transacciones?tipo=1')}}>Ventas</a>
-                            </li>
-                          </ul>
-                        </li>
+                        @if(Auth::user()->tipoUsuario == "Recepción")  
+                          <li>
+                            <a>
+                              <i class="fa fa-users"></i> Recepción
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a href={{asset( '/pacientes')}}>Pacientes</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/ingresos')}}>Hospitalización</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
+                              </li>
+                            </ul>
+                          </li>
+                        @endif
+                        @if(Auth::user()->tipoUsuario == "Laboaratorio")
+                          <li>
+                            <a>
+                              <i class="fa fa-medkit"></i> Laboratorio Clínico
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a href={{asset( '/solicitudex')}}>Evaluación de examen</a>
+                              </li>
+                            </ul>
+                          </li>
+                        @endif
+                        @if(Auth::user()->tipoUsuario == "Farmacia")
+                          <li>
+                            <a>
+                              <i class="fa fa-ambulance"></i> Farmacia
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a>Productos
+                                  <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                  <li>
+                                    <a href={{asset( '/productos')}}>Productos</a>
+                                  </li>
+                                  <li>
+                                    <a href={{asset( '/presentaciones')}}>Presentaciones</a>
+                                  </li>
+                                  <li>
+                                    <a href={{asset( '/componentes')}}>Componentes</a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <a href={{asset( '/proveedores')}}>Proveedores</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/transacciones?tipo=1')}}>Ventas</a>
+                              </li>
+                            </ul>
+                          </li>
+                        @endif
                         <li>
                           <a>
                             <i class="fa fa-cogs"></i>Configuración
@@ -193,6 +187,30 @@
                                   </li>
                                   <li>
                                     <a href={{asset( '/categoria_servicios')}}>Categorias de servicios</a>
+                                  </li>
+                                </ul>
+                              </li>
+                            @endif
+                            @if(Auth::user()->tipoUsuario == "Laboaratorio")
+                              <li>
+                                <a>Laboratorio Clínico
+                                  <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                  <li>
+                                    <a href={{asset( '/examenes')}}>Exámenes</a>
+                                  </li>
+                                  <li>
+                                    <a href={{asset( '/reactivos')}}>Reactivos</a>
+                                  </li>
+                                  <li>
+                                    <a href={{asset( '/parametros')}}>Parametros</a>
+                                  </li>
+                                  <li>
+                                    <a href={{asset( '/secciones')}}>Secciones</a>
+                                  </li>
+                                  <li>
+                                    <a href={{asset( '/muestras')}}>Tipo de muestras</a>
                                   </li>
                                 </ul>
                               </li>

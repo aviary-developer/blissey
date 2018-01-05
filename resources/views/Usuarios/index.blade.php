@@ -34,6 +34,10 @@
             <div class="btn-group">
               <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('/usuarios/'.Auth::user()->id) !!} class="btn btn-dark btn-sm"><i class="fa fa-user"></i> Mi Perfil</a>
+              <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target=".bs-modal-lg" id="abrir_filtro" >
+                <i class="fa fa-search"></i>
+                Buscar
+              </button>
               <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/usuarios?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
@@ -177,4 +181,30 @@
     </div>
   </div>
   <!-- /page content -->
+
+  {{-- Modal --}}
+  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    {!!Form::open(['route'=>'usuarios.index','method'=>'GET','role'=>'search','autocomplete'=>'off'])!!}
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Buscar</h4>
+        </div>
+        <div class="modal-body">
+          <div class="x_panel">
+            @include('Usuarios.Formularios.filtro')
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+          <button type="button" class="btn btn-default" id="limpiar_paciente_filtro">Limpiar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+    {!!Form::close()!!}
+  </div>
 @endsection

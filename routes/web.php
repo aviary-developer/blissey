@@ -129,6 +129,9 @@ Route::group(['middleware'=>'general'], function(){
     return view('main');
   });
 
+  //Ruta de usuario
+  Route::match(['get','post'],'/psw','UserController@psw');
+
   //Ruta de empresa
   Route::resource('grupo_promesa','EmpresaController');
 

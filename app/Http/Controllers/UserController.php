@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\TelefonoUsuario;
@@ -420,5 +421,21 @@ class UserController extends Controller
       $usuario->save();
       Bitacora::bitacora('activate','users','usuarios',$id);
       return Redirect::to('/usuarios?estado=0');
+    }
+
+    public function psw(Request $request){
+      $actual = $request['actual'];
+      $id = Auth::user()->id;
+      $validador = Auth::attempt(['id' => $id, 'password' => $actual]);
+      if($validador){
+        $nueva = bcrypt($request['nueva']);
+        $usuario = User::find($id);
+        $usuario->password = $nueva;
+        $usuario->save();
+        Bitacora::bitacora('update','users','usuarios',$id);
+        return "exito";
+      }else{
+        return "error";
+      }
     }
 }

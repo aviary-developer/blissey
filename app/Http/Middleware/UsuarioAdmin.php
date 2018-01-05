@@ -26,8 +26,11 @@ class UsuarioAdmin
         return redirect('usuarios/create');
       }
       else {
+        $id = auth()->user()->id;
         if(auth()->check() && auth()->user()->administrador)
         {
+          return $next($request);
+        }else if(auth()->check() && $request->path() == 'usuarios/'.$id && $request->method() == 'GET'){
           return $next($request);
         }
       }

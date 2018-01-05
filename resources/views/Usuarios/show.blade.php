@@ -99,10 +99,12 @@
                       <th>Número de Junta de Vigilancia</th>
                       <td>{{$usuario->juntaVigilancia}}</td>
                     </tr>
-                    <tr>
-                      <th>Especialidad principal</th>
-                      <td>{{$especialidad_principal->nombreEspecialidad($especialidad_principal->f_especialidad)}}</td>
-                    </tr>
+                    @if(isset($especialidad_principal))
+                      <tr>
+                        <th>Especialidad principal</th>
+                        <td>{{$especialidad_principal->nombreEspecialidad($especialidad_principal->f_especialidad)}}</td>
+                      </tr>
+                    @endif
                     @if (count($especialidades)>0)
                       <th>Subespecialidades</th>
                       <td>
@@ -159,6 +161,31 @@
             @endif
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- Modal --}}
+  <input type="hidden" id="token" value="{{ csrf_token() }}">
+  <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Cambiar contraseña</h4>
+        </div>
+        <div class="modal-body">
+          <div class="x_panel">
+            @include('Usuarios.Formularios.contra')
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn_change" type="button" class="btn btn-primary">Cambiar</button>
+          <button type="button" class="btn btn-default" id="limpiar_paciente_filtro">Limpiar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+
       </div>
     </div>
   </div>
