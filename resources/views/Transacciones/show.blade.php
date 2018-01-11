@@ -70,7 +70,13 @@
                   @foreach ($detalles as $detalle)
                     <tr>
                       <td>{{$detalle->cantidad}}</td>
-                      <td>{{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}</td>
+                      <td>
+                        @if($detalle->divisionProducto->unidad==null)
+                          {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
+                        @else
+                          {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                        @endif
+                      </td>
                       <td>{{$detalle->divisionProducto->producto->nombre}}</td>
                       <td>{{$detalle->descuento}}%</td>
                       <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>
