@@ -10,6 +10,7 @@ use App\DetalleTransacion;
 use App\DivisionProducto;
 use App\Division;
 use App\Presentacion;
+use App\InventarioFarmacia;
 use DB;
 use Auth;
 use Validator;
@@ -94,7 +95,11 @@ class TransaccionController extends Controller
         return redirect('/')->with('error', '¡Algo salio mal!');
       }
       DB::commit();
-      return redirect('/')->with('mensaje', '¡Guardado!');
+      if(Auth::user()->tipoUsuario=="Farmacia")
+      {
+        $tipo=0;
+      }
+      return redirect('/transacciones?tipo='.$tipo)->with('mensaje', '¡Guardado!');
     }else{
       DB::rollback();
       $tran= new Transacion;
@@ -144,7 +149,7 @@ class TransaccionController extends Controller
 
         $contador = count($request->estado);
         $cont_eliminados=count($request->eliminado);
-
+        DB::beginTransaction();
         for($i=0;$i<$cont_eliminados;$i++){
           $bor=DetalleTransacion::findOrFail($request->eliminado[$i]);
           $bor->delete();
@@ -165,7 +170,22 @@ class TransaccionController extends Controller
           $detalle->lote = $request->lote[$i];
           $detalle->f_producto=$request->f_producto[$i];
           $detalle->save();
+
+          $inventario= InventarioFarmacia::where('f_producto',$request->f_producto[$i])->get()->last();
+          if(count($inventario)>0){
+            $ea=$inventario->existencia_nueva;
+          }else{
+            $ea=0;
+          }
+          InventarioFarmacia::create([
+          'f_producto'=>$request->f_producto[$i],
+          'tipo'=>1,
+          'existencia_anterior'=>$ea,
+          'cantidad'=>$request->cantidad[$i],
+          'existencia_nueva'=>$ea+$request->cantidad[$i],
+          ]);
         }
+        DB::commit();
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
     }
 
@@ -195,6 +215,7 @@ class TransaccionController extends Controller
       if(count($divisiones)>0){
         foreach($divisiones as $division){
             $division->division;
+            $division->unidad;
         }
         return Response::json($divisiones);
       }else{
@@ -225,9 +246,15 @@ class TransaccionController extends Controller
     public function buscarDivision($codigo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
       if(count($division)==1){
+        $division->unidad;
         return $division;
       }else{
         return 0;
       }
+    }
+
+    public function inventario(Request $request){
+      $division_productos=DivisionProducto::all();
+      return view('Inventarios.index',compact('division_productos'));
     }
 }

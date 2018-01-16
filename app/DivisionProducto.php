@@ -22,5 +22,9 @@ class DivisionProducto extends Model
   public function unidad(){
     return $this->belongsTo('App\Unidad','contenido');
   }
+  public function inventarioFarmaciaUltimo(){
+     return $this->hasMany('App\InventarioFarmacia','f_producto');
+
+  }
 
 }
