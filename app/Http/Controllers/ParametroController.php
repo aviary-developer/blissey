@@ -125,7 +125,7 @@ class ParametroController extends Controller
   }
 
   public function llenarParametrosExamenes(){
-    $parametros=Parametro::where('estado',true)->get();
+    $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
     return Response::json($parametros);
   }
   public function ingresoParametro(Request $request){

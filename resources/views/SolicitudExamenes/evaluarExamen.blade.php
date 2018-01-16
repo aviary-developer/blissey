@@ -58,6 +58,25 @@
           </table>
         @endforeach
         </div>
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+          <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="">
+          <label>
+            <input type="checkbox" name="checkObservacion" id="checkObservacion" class="js-switch" unchecked /> Añadir Observación
+          </label>
+        </div>
+        <div id="divObservacion" style="display:none;">
+          <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Observaciones</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
+              {!! Form::textarea('observacion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Escriba la observación','rows'=>'3']) !!}
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
         <div class="clearfix"></div>
       </div>
       </div>

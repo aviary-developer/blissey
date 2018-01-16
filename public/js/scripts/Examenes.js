@@ -9,9 +9,13 @@ $('#agregarSeccionExamen').click(function(){
   "<ul class='nav navbar-center panel_toolbox'>"+
   "<li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>"+
   "</ul><div class='clearfix'></div></div>"+
+  "<div class='row'><div class='col-md-4 col-sm-4 col-xs-12 form-group'><label>"+
+  "<input type='checkbox' name='checkReactivo' id='checkReactivo"+contadorSelectsParametros+"' onClick='chekearReactivo(this,"+contadorSelectsParametros+");' class='js-switch' unchecked /> Añadir reactivo"+
+  "</label></div>"+
+  "</div>"+
   "<div class='row'>"+
   "<div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left' name='selectParametrosExamenes"+contadorSelectsParametros+"' id='selectParametrosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
-  "<div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes"+contadorSelectsParametros+"' id='selectReactivosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
+  "<div id='divReactivo"+contadorSelectsParametros+"' class='col-md-5 col-sm-12 col-xs-12 form-group' style='display:none;'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes"+contadorSelectsParametros+"' id='selectReactivosExamenes"+contadorSelectsParametros+"'><option><strong>Cargando...</strong></option></select></div>"+
   "<div class='col-md-2 col-sm-12 col-xs-12 form-group'><span class='input-group-btn'><button type='button' name='button' class='btn btn-primary' id='agregarParametroReactivo' onClick='agregarParametro("+contadorSelectsParametros+")'><i class='fa fa-save'></i></button></span></div>"+
   "<table class='table' id='tablaParametros"+contadorSelectsParametros+"'><thead><th>Parametros</th><th>Reactivos</th><th style='width : 80px'>Acción</th></thead>"+
   "<tbody></tbody></table>"+
@@ -120,7 +124,9 @@ function rellenarCombosParametros(paso){
    var textoReactivo=$("#selectReactivosExamenes"+paso+" option:selected" ).text();
    var tablaActual=$("#tablaParametros"+paso);
    var tablaAVerificar=$("#tablaParametros"+paso+" tbody tr");
-   var html_texto = "<tr>"+
+   var html_texto="texto";
+   if( $("#checkReactivo"+paso).is(':checked') ) {
+     html_texto= "<tr>"+
    "<td>"+
    "<input type='hidden' id='parametrosEnTabla"+paso+"[]' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>"+
    textoParametro+"</td>"+
@@ -133,6 +139,23 @@ function rellenarCombosParametros(paso){
      "</button>"+
    "</td>"+
    "</tr>";
+ }
+ else {
+   html_texto="<tr>"+
+ "<td>"+
+ "<input type='hidden' id='parametrosEnTabla"+paso+"[]' name='parametrosEnTabla"+paso+"[]' value = '"+valorParametro+"'/>"+
+ textoParametro+"</td>"+
+ "<td><input type='hidden' id='reactivosEnTabla"+paso+"[]' name='reactivosEnTabla"+paso+"[]' value = ''/>"+
+ '-'+
+ "</td>"+
+ "<td>"+
+   "<button type = 'button' name='button' class='btn btn-danger btn-xs' onClick='eliminarParametroEnTabla(this);'>"+
+     "<i class='fa fa-remove'></i>"+
+   "</button>"+
+ "</td>"+
+ "</tr>";
+ }
+   //alert(html_texto);
    if(verificarParametroEnTabla(tablaAVerificar,textoParametro+textoReactivo)==true){
    $(tablaActual).append(html_texto);}else{
      swal({
@@ -230,3 +253,18 @@ $('#checkValores').click(function(){
     $("#valorMinimo").prop("readonly", true);
   }
 });
+//////////////////PARA EXAMENES
+$('#checkObservacion').click(function(){
+  if(this.checked == true){
+    document.getElementById('divObservacion').style.display = 'block';
+  }else{
+    document.getElementById('divObservacion').style.display = 'none';
+  }
+});
+function chekearReactivo(checke,paso){
+  if(checke.checked == true){
+    document.getElementById('divReactivo'+paso).style.display = 'block';
+  }else{
+    document.getElementById('divReactivo'+paso).style.display = 'none';
+  }
+}
