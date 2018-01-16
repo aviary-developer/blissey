@@ -126,7 +126,17 @@ Route::group(['middleware'=>'admin'], function()
 });
 Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {
-    return view('main');
+    $primero = $segundo = "Nada";
+    if(Auth::user()->tipoUsuario == "Recepción"){
+      $primero = App\Ingreso::where('estado',1)->take(5)->get();
+      $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
+    }
+    $empresa = App\Empresa::latest()->first();
+    return view('main', compact(
+      "empresa",
+      "primero",
+      "segundo"
+    ));
   });
 
   //Ruta de usuario

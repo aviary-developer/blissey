@@ -24,6 +24,26 @@ thead{background: #cccccc}
   height: 150px;
   object-fit: scale-down;
 }
+.smallperfil{
+    width: 70px;
+    height: 70px;
+    object-fit: scale-down;
+}
+.bg-blue-sky-2 {
+    background: rgb(47, 171, 187) !important;
+    border: 1px solid  rgb(47, 171, 187) !important;
+    color: #fff
+}
+.bg-blue-2 {
+    background: rgb(36, 140, 209) !important;
+    border: 1px solid rgb(36, 140, 209) !important;
+    color: #fff
+}
+.bg-green-2 {
+    background: rgb(34, 162, 136) !important;
+    border: 1px solid rgb(34, 162, 136) !important;
+    color: #fff
+}
 .btn-outline-warning{
   border-color: transparent;
   color: #F0ad4e;
@@ -506,6 +526,7 @@ body .container.body .right_col {
     border: 1px solid #50C1CF !important;
     color: #fff
 }
+
 .container {
     width: 100%;
     padding: 0

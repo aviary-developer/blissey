@@ -26,6 +26,7 @@ class CreateSolicitudExamensTable extends Migration
              * 0: Pendiente
              * 1: Aceptado
              * 2: Realizado
+             * 3: Entregado
              */
             $table->timestamps();
         });

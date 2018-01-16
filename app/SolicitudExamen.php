@@ -30,4 +30,17 @@ class SolicitudExamen extends Model
     public function examen(){
       return $this->belongsTo('App\Examen','f_examen');
     }
+
+    public function examenesPaciente($id){
+        $examenes = SolicitudExamen::where('f_paciente',$id)->where('estado','<>',3)->orderBy('estado')->get();
+        foreach($examenes as $examen){
+            if($examen->estado == 0){
+                return 0;
+            }else if($examen->estado == 1){
+                return 1;
+            }else{
+                return 2;
+            }
+        }
+    }
 }
