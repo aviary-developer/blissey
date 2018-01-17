@@ -45,7 +45,7 @@ class ExamenController extends Controller
     $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
     $secciones = Seccion::where('estado',true)->get();
     $reactivos = Reactivo::where('estado',true)->get();
-    $parametros= Parametro::where('estado',true)->get();
+    $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
     return view('Examenes.create',compact('reactivos','parametros','secciones','unidades','muestras'));
   }
 
@@ -87,7 +87,8 @@ class ExamenController extends Controller
       }
     }catch(\Exception $e){
       DB::rollback();
-      return redirect('/examenes')->with('mensaje', 'Algo salio mal');
+      return $e;
+      return redirect('/examenes')->with('mensaje', $e);
     }
     DB::commit();
     Bitacora::bitacora('store','examens','examenes',$ultimoExamen->id);

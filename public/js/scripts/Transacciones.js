@@ -8,7 +8,6 @@ $(document).on('ready',function(){
     var prod_tmp = $("#f_prod"+i).val();
     componentes_agregados.push(prod_tmp);
   }
-  console.log(componentes_agregados);
     $("#resultado").keyup(function(){
       var valor = $("#resultado").val();
       var tipo  = $("#tipo").val();
@@ -264,7 +263,38 @@ $(document).on('ready',function(){
         componentes_agregados.push(f_producto);
       }
     });
-
+    $("#resultadoCliente").keyup(function(){
+      var valor = $("#resultadoCliente").val();
+      conteo=valor.length;
+      var tabla = $("#tablaBuscarCliente");
+      if(conteo >1){
+        var ruta = "/blissey/public/buscarCliente/"+valor;
+        $.get(ruta,function(res){
+          tabla.empty();
+          html="<thead><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>DUI</th><th style='width : 80px'>Acción</th></thead>";
+          tabla.append(html);
+          $(res).each(function(key,value){
+              cadena="<tr>"+
+              "<td id='tbcn"+value.id+"'>"+value.nombre+"</td>"+
+              "<td id='tbca"+value.id+"'>"+value.apellido+"</td>"+
+              "<td>"+value.telefono+"</td>"+
+              "<td>"+value.dui+"</td>"+
+              "<td>"+
+              "<button type='button' class='btn btn-xs btn-primary' onclick='agregarCliente("+value.id+");' data-dismiss='modal'>"+
+              "<i class='fa fa-arrow-right'></i>"+
+              "</button>"+
+              "</td>"+
+              "</tr>";
+              tabla.append(cadena);
+          });
+        });
+      }else{
+        tabla.empty();
+      }
+    });
+    $("#resultadoVenta").keyup(function(){
+      
+    });
 });
 function entero(obj,e,valor){
   val = (document.all) ? e.keyCode : e.which;
@@ -273,4 +303,14 @@ function entero(obj,e,valor){
   }else{
     return false;
   }
+}
+function agregarCliente(id){
+  nombre=$('#tbcn'+id).text();
+  apellido=$('#tbca'+id).text();
+  $('#f_cliente').val(nombre+" "+apellido);
+}
+
+function limpiarTabla(){
+  $('#tablaBuscarCliente').empty();
+  $('#resultadoCliente').val("");
 }

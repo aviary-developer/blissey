@@ -19,9 +19,9 @@
           <div class="col-md-4 col-sm-12 col-xs-12 form-group">
             <div class="input-group">
             <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('f_cliente',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cliente']) !!}
+            {!! Form::text('f_cliente',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cliente','id'=>'f_cliente','readonly'=>'readonly']) !!}
               <span class="input-group-btn">
-                <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2">
+                <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2" onclick="limpiarTabla()">
                   <i class="fa fa-save"></i>
                 </button>
               </span>
@@ -63,7 +63,7 @@
         </button>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <a href="/blissey/public/transacciones?tipo=0" class="btn btn-default">Cancelar</a>
+        <a href="/blissey/public/transacciones?tipo={{$tipo}}" class="btn btn-default">Cancelar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
         {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
@@ -107,54 +107,10 @@
         </table>
       </div>
       </div>
-@include('Transacciones.Formularios.modalBuscarProducto')
+      @if ($tipo)
+        @include('Transacciones.Formularios.modalBuscarVenta')
+      @else
+        @include('Transacciones.Formularios.modalBuscarProducto')
+      @endif
+@include('Transacciones.Formularios.modalBuscarCliente')
     </div>
-    {{-- MODAL 2--}}
-    <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal2">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title" id="myModalLabel">Buscar clientes</h4>
-          </div>
-
-          <div class="modal-body">
-            <div class="x_panel">
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar</label>
-                <div class="col-md-7 col-sm-7 col-xs-12">
-                  <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-                  {!! Form::text('resultado',null,['id'=>'resultado','class'=>'form-control has-feedback-left','placeholder'=>'Buscar']) !!}
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
-                <div class="col-md-7 col-sm-7 col-xs-12">
-                  <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-                  {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2 col-xs-12"></div>
-                <div class="col-md-8 col-xs-12">
-                  <h4 class="StepTitle">Resultado de busqueda</h4>
-                  <table class="table" id="tablaBuscar">
-                    <thead>
-                      <th colspan="2">Resultado</th>
-                      <th style="width : 80px">Acción</th>
-                    </thead>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{-- FIN 2--}}

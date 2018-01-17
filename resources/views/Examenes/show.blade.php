@@ -84,7 +84,11 @@
                       <tr>
                         <td>{{$contadorParametros}}</td>
                         <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
-                        <td>{{$esp->nombreParametro($esp->f_parametro)}}</td>
+                        @if($esp->reactivo)
+                        <td>{{$esp->reactivo->nombre}}</td>
+                      @else
+                        <td>-</td>
+                      @endif
                       </tr>
                     @endif
                       @php

@@ -74,11 +74,17 @@
         <ul class='nav navbar-center panel_toolbox'>
         <li><a class='close-link' onClick='cerrarSeccion(this);'><i class='fa fa-close'></i></a></li>
         </ul><div class='clearfix'></div></div>
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+          <label>
+            <input type="checkbox" name="checkReactivo" id="checkReactivo0" onClick="chekearReactivo(this,0);" class="js-switch" unchecked /> Añadir reactivo
+          </label></div>
+        </div>
         <div class='row'>
         <div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left' name='selectParametrosExamenes0' id='selectParametrosExamenes0'>@foreach ($parametros as $parametro)
           <option value={{$parametro->id}}>{{ $parametro->nombreParametro}}</option>
         @endforeach</select></div>
-        <div class='col-md-5 col-sm-12 col-xs-12 form-group'><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes0' id='selectReactivosExamenes0'>@foreach ($reactivos as $reactivo)
+        <div id="divReactivo0" class='col-md-5 col-sm-12 col-xs-12 form-group' style="display:none;"><span class='fa fa-flask form-control-feedback left' aria-hidden='true'></span><select class='form-control has-feedback-left'  name='selectReactivosExamenes0' id='selectReactivosExamenes0'>@foreach ($reactivos as $reactivo)
           <option value={{$reactivo->id}}>{{ $reactivo->nombre}}</option>
         @endforeach</select></div>
         <div class='col-md-2 col-sm-12 col-xs-12 form-group'><span class='input-group-btn'><button type='button' name='button' class='btn btn-primary' id='agregarParametroReactivo' onClick='agregarParametro(0)'><i class='fa fa-save'></i></button></span></div>
