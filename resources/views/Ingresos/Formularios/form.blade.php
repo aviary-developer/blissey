@@ -8,7 +8,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Paciente *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="input-group">
-        {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
+        {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente','disabled']) !!}
         <span class="input-group-btn">
           <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('paciente');">
             <i class="fa fa-search"></i>
@@ -22,7 +22,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsable *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="input-group">
-        {!! Form::text('n_responsable',null,['id'=>'n_responsable','class'=>'form-control','placeholder'=>'Nombre del paciente']) !!}
+        {!! Form::text('n_responsable',null,['id'=>'n_responsable','class'=>'form-control','placeholder'=>'Nombre del paciente','disabled']) !!}
         <span class="input-group-btn">
           <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('responsable');">
             <i class="fa fa-search"></i>
@@ -46,9 +46,13 @@
     <label class="control-label col-md-3 col-xs-12">Habitación *</label>
     <div class="col-md-9 col-xs-12">
       <select class="form-control" name="f_habitacion">
-        @foreach ($habitaciones as $habitacion)
-          <option value={{$habitacion->id}}>{{'Habitación '.$habitacion->numero}}</option>
-        @endforeach
+        @if (count($habitaciones)==0)
+            <option value="0" disabled>No ha habitaciones disponibles</option>
+        @else
+          @foreach ($habitaciones as $habitacion)
+            <option value={{$habitacion->id}}>{{'Habitación '.$habitacion->numero}}</option>
+          @endforeach
+        @endif
       </select>
     </div>
   </div>

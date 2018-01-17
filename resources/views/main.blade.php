@@ -6,10 +6,17 @@
   <div class="x_panel">
     <div class="row">
       <center>
-        <img src={{asset(Storage::url($empresa->logo_hospital))}} class="img-responsive avatar-view smallperfil">
-        <h3>Grupo Promesa
-          <br><small>Divino Niño</small>
-        </h3>
+        @if (isset($empresa))            
+          <img src={{asset(Storage::url($empresa->logo_hospital))}} class="img-responsive avatar-view smallperfil">
+          <h3>Grupo Promesa
+            <br><small>Divino Niño</small>
+          </h3>
+        @else
+          <img src={{asset(Storage::url("NoImgen.jpg"))}} class="img-responsive avatar-view smallperfil">
+          <h3>Grupo Promesa
+            <br><small>Divino Niño</small>
+          </h3>      
+        @endif
       </center>
     </div>
   </div>

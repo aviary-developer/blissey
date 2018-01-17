@@ -52,6 +52,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+      dd($request->sexo);
       $rules = [
         'nombre' => 'required | min:2 | max:30',
         'apellido' => 'required | min:2 | max:30',
@@ -394,6 +395,10 @@ class UserController extends Controller
     public function destroy($id)
     {
       $usuario = User::findOrFail($id);
+      $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
+      foreach($telefonos as $telefono){
+        $telefono->delete();
+      }
       if($usuario->foto != 'noImgen.jpg'){
         Storage::delete($usuario->foto);
       }
@@ -403,7 +408,8 @@ class UserController extends Controller
       if($usuario->sello != 'noImgen.jpg'){
         Storage::delete($usuario->sello);
       }
-      $usuario->delete();
+      $usuario->eliminar = false;
+      $usuario->save();
       Bitacora::bitacora('destroy','users','usuarios',$id);
       return redirect('/usuarios?estado=0');
     }

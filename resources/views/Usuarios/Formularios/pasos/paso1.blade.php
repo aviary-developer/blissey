@@ -34,13 +34,25 @@
           {!!Form :: radio ( "sexo",0,true,['class'=>'flat'])!!} Femenino
         </label>
         @endif  
-      @else  
-        <label>
+      @else
+        <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
+          <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+            Masculino
+          </button>
+          <input type="checkbox" class="hidden" name="sexo" value="1">
+        </span>
+        <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
+          <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+            Femenino
+          </button>
+          <input type="checkbox" class="hidden" name="sexo" value="0">
+        </span>    
+        {{--  <label>
           {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
-        </label>
-        <label>
+        </label>  --}}
+        {{--  <label>
           {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
-        </label>
+        </label>  --}}
       @endif
     </div>
     <div class="form-group">
