@@ -33,7 +33,7 @@
                 <i class="fa fa-search"></i>
                 Buscar
               </button>
-              @if ($contador > 0 && $contador < 3)
+              @if ($contador > 0 && $contador < 10)
                 <a href={!! asset('/paciente_pdf'.$ruta) !!} class="btn btn-dark btn-sm" target="_blank"><i class="fa fa-file"></i> Reporte</a>
               @else
                 <a href={!! asset('#') !!} disabled class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="No se puede generar reporte"><i class="fa fa-file"></i> Reporte</a>

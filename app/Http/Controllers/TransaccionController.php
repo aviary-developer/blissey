@@ -14,6 +14,7 @@ use App\InventarioFarmacia;
 use DB;
 use Auth;
 use Validator;
+use App\Paciente;
 
 class TransaccionController extends Controller
 {
@@ -256,5 +257,12 @@ class TransaccionController extends Controller
     public function inventario(Request $request){
       $division_productos=DivisionProducto::all();
       return view('Inventarios.index',compact('division_productos'));
+    }
+    public static function buscarCliente($valor){
+      $clientes=Paciente::where('nombre','ILIKE','%'.$valor.'%')
+      ->orWhere('apellido', 'ILIKE','%'.$valor.'%')
+      ->orWhere('telefono', 'ILIKE','%'.$valor.'%')
+      ->orWhere('dui', 'ILIKE','%'.$valor.'%')->orderBy('nombre')->get();
+      return $clientes;
     }
 }
