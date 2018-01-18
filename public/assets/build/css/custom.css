@@ -7,7 +7,9 @@
     border-radius: 6px 6px 0px 0px;
     background: linear-gradient(var(--principal), var(--secundario)), var(--terciario);
 }
-thead{background: #cccccc}
+thead{
+    background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
+}
 .label-purple{
   background-color: rgb(159, 45, 249);
 }
@@ -3316,7 +3318,8 @@ ul.project_files li a i {
 .tabs-left>li.active>a:hover,
 .tabs-left>li.active>a:focus {
     border-bottom-color: #F7F7F7;
-    border-right-color: transparent
+    border-right-color: transparent;
+    background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
 }
 .tabs-right>li.active>a,
 .tabs-right>li.active>a:hover,

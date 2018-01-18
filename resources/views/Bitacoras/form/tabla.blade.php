@@ -16,7 +16,7 @@
       @endphp
       @foreach ($bitacoras as $bitacora)
         <tr>
-          <td>{{ $correlativo }}</td>
+          <td>{{ $correlativo+$pagina }}</td>
           <td>{{ $bitacora->created_at->format('d/m/Y')}}</td>
           <td>{{ $bitacora->created_at->format('H:i:s')}}</td>
           <td>{{ $bitacora->nombreUsuario($bitacora->f_usuario) }}</td>
@@ -43,23 +43,23 @@
             @php
               if($bitacora->tipo == 'store')
               {
-                echo "Se ha creado un registro en ".$bitacora->tabla.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
+                echo "Se ha creado un registro en ".$bitacora->ruta.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
               }
               else if($bitacora->tipo == 'update')
               {
-                echo "Se ha editado un registro en ".$bitacora->tabla.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
+                echo "Se ha editado un registro en ".$bitacora->ruta.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
               }
               else if($bitacora->tipo == 'destroy')
               {
-                echo "Se ha eliminado un registro en ".$bitacora->tabla.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
+                echo "Se ha eliminado un registro en ".$bitacora->ruta.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
               }
               else if($bitacora->tipo == 'activate')
               {
-                echo "Se ha activado un registro en ".$bitacora->tabla.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
+                echo "Se ha activado un registro en ".$bitacora->ruta.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
               }
               else if($bitacora->tipo == 'desactivate')
               {
-                echo "Se ha enviado a papelera un registro en ".$bitacora->tabla.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
+                echo "Se ha enviado a papelera un registro en ".$bitacora->ruta.' id: '.str_pad($bitacora->indice,7,'0',STR_PAD_LEFT);
               }
               else if($bitacora->tipo == 'logout')
               {
@@ -73,7 +73,7 @@
           </td>
           <td>
             @if ($bitacora->existeRegistro($bitacora->indice,$bitacora->tabla) > 0)
-              <a href={!! asset($bitacora->ruta.'/'.$bitacora->indice)!!} class="btn btn-xs btn-primary">
+              <a href={!! asset($bitacora->ruta.'/'.$bitacora->indice)!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Ver">
                 <i class="fa fa-eye"></i>
               </a>
             @else

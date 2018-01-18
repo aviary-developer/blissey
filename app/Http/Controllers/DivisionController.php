@@ -16,12 +16,22 @@ class DivisionController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $divisiones = Division::buscar($nombre,$estado);
       $activos = Division::where('estado',true)->count();
       $inactivos = Division::where('estado',false)->count();
-      return view('Divisiones.index',compact('divisiones','estado','nombre','activos','inactivos'));
+      return view('Divisiones.index',compact(
+        'divisiones',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

@@ -15,57 +15,69 @@ class BitacoraController extends Controller
      */
     public function index(Request $request)
     {
-      $usuarioRequest = $request->get('usuario');
-      if($usuarioRequest == 0){
-        $usuarioRequest = null;
-      }
-      $fechaMaxRequest = $request->get('fecha_max');
-      $fechaMinRequest = $request->get('fecha_min');
+        //Correlativo paginado
+        $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+        $pagina--;
+        $pagina *= 10;
+        $usuarioRequest = $request->get('usuario');
+        if($usuarioRequest == 0){
+            $usuarioRequest = null;
+        }
+        $fechaMaxRequest = $request->get('fecha_max');
+        $fechaMinRequest = $request->get('fecha_min');
 
-      $fechaInicial = Bitacora::orderBy('created_at','asc')->first();
-      $fechaFinal = Bitacora::orderBy('created_at','desc')->first();
+        $fechaInicial = Bitacora::orderBy('created_at','asc')->first();
+        $fechaFinal = Bitacora::orderBy('created_at','desc')->first();
 
-      if($fechaMaxRequest == null){
-        $fechaMaxRequest = $fechaFinal->created_at->format('d/m/Y H:i:s');
+        if($fechaMaxRequest == null){
+            $fechaMaxRequest = $fechaFinal->created_at->format('d/m/Y H:i:s');
 
-        $storeRequest = 1;
-        $updateRequest = 1;
-        $destroyRequest = 1;
-        $activateRequest = 1;
-        $desactivateRequest = 1;
-        $loginRequest = 1;
-        $logoutRequest = 1;
-      }else{
-        $aux = explode(':',$fechaMaxRequest);
-        $aux[1]++;
-        $fechaMaxRequest = $aux[0].':'.$aux[1];
+            $storeRequest = 1;
+            $updateRequest = 1;
+            $destroyRequest = 1;
+            $activateRequest = 1;
+            $desactivateRequest = 1;
+            $loginRequest = 1;
+            $logoutRequest = 1;
+        }else{
+            $aux = explode(':',$fechaMaxRequest);
+            $aux[1]++;
+            $fechaMaxRequest = $aux[0].':'.$aux[1];
 
-        $storeRequest = $request->get('store');
-        $updateRequest = $request->get('update');
-        $destroyRequest = $request->get('destroy');
-        $activateRequest = $request->get('activate');
-        $desactivateRequest = $request->get('desactivate');
-        $loginRequest = $request->get('login');
-        $logoutRequest = $request->get('logout');
-      }
-      if($fechaMinRequest == null){
-        $fechaMinRequest = $fechaInicial->created_at->format('d/m/Y H:i:s');
-      }
+            $storeRequest = $request->get('store');
+            $updateRequest = $request->get('update');
+            $destroyRequest = $request->get('destroy');
+            $activateRequest = $request->get('activate');
+            $desactivateRequest = $request->get('desactivate');
+            $loginRequest = $request->get('login');
+            $logoutRequest = $request->get('logout');
+        }
+        if($fechaMinRequest == null){
+            $fechaMinRequest = $fechaInicial->created_at->format('d/m/Y H:i:s');
+        }
 
-      $bitacoras = Bitacora::buscar(
-        $usuarioRequest,
-        $fechaMinRequest,
-        $fechaMaxRequest,
-        $storeRequest,
-        $updateRequest,
-        $destroyRequest,
-        $activateRequest,
-        $desactivateRequest,
-        $loginRequest,
-        $logoutRequest
-      );
-      $usuarios = User::orderBy('apellido')->get();
-      return view('Bitacoras.index',compact('bitacoras','usuarios','fechaInicial','fechaFinal','fechaMinRequest','fechaMaxRequest'));
+        $bitacoras = Bitacora::buscar(
+            $usuarioRequest,
+            $fechaMinRequest,
+            $fechaMaxRequest,
+            $storeRequest,
+            $updateRequest,
+            $destroyRequest,
+            $activateRequest,
+            $desactivateRequest,
+            $loginRequest,
+            $logoutRequest
+        );
+        $usuarios = User::orderBy('apellido')->get();
+        return view('Bitacoras.index',compact(
+            'bitacoras',
+            'usuarios',
+            'fechaInicial',
+            'fechaFinal',
+            'fechaMinRequest',
+            'fechaMaxRequest',
+            'pagina'
+        ));
     }
     /**
      * Show the form for creating a new resource.

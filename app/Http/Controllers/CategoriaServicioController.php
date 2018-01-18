@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CategoriaServicio;
 use App\Bitacora;
 use Redirect;
+use App\Http\Requests\CategoriaServicioRequest;
 
 class CategoriaServicioController extends Controller
 {
@@ -16,12 +17,22 @@ class CategoriaServicioController extends Controller
      */
     public function index(Request $request)
     {
+        $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+        $pagina--;
+        $pagina *= 10;
         $estado = $request->get('estado');
         $nombre = $request->get('nombre');
         $categoria_servicios = CategoriaServicio::buscar($nombre,$estado);
         $activos = CategoriaServicio::where('estado',true)->count();
         $inactivos = CategoriaServicio::where('estado',false)->count();
-        return view('CategoriaServicios.index',compact('categoria_servicios','estado','nombre','activos','inactivos'));
+        return view('CategoriaServicios.index',compact(
+          'categoria_servicios',
+          'estado',
+          'nombre',
+          'activos',
+          'inactivos',
+          'pagina'
+        ));
     }
 
     /**
@@ -40,7 +51,7 @@ class CategoriaServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriaServicioRequest $request)
     {
       $categoria_servicios = CategoriaServicio::create($request->All());
       Bitacora::bitacora('store','categoria_servicios','categoria_servicios',$categoria_servicios->id);
@@ -78,7 +89,7 @@ class CategoriaServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriaServicioRequest $request, $id)
     {
       $categoria_servicios = CategoriaServicio::find($id);
       $categoria_servicios->fill($request->all());

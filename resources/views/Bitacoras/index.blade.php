@@ -70,28 +70,59 @@
               </div>
             </div>
             <div class="form-group col-md-12 col-xs-12">
-              <label class="control-label col-md-2 col-sm-2 col-xs-12">Acción</label>
-              <label>
-                {!!Form :: checkbox ( "store",1,true,['class'=>'flat'])!!} Creación &nbsp;
-              </label>
-              <label>
-                {!!Form :: checkbox ( "update",1,true,['class'=>'flat'])!!} Edición &nbsp;
-              </label>
-              <label>
-                {!!Form :: checkbox ( "destroy",1,true,['class'=>'flat'])!!} Eliminar &nbsp;
-              </label>
-              <label>
-                {!!Form :: checkbox ( "activate",1,true,['class'=>'flat'])!!} Activar &nbsp;
-              </label>
-              <label>
-                {!!Form :: checkbox ( "desactivate",1,true,['class'=>'flat'])!!} Papelera &nbsp;
-              </label>
-              <label>
-                {!!Form :: checkbox ( "login",1,true,['class'=>'flat'])!!} Ingreso &nbsp;
-              </label>
-              <label>
-                {!!Form :: checkbox ( "logout",1,true,['class'=>'flat'])!!} Salida &nbsp;
-              </label>
+              <div class="row">
+                <center>
+                  <label class="control-label col-md-12 col-sm-12 col-xs-12">Acción</label>
+                </center>
+              </div>
+              
+              <div class="row">
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Creación
+                  </button>
+                  <input type="checkbox" class="hidden" name="store" value="1" checked>
+                </span>
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Edición
+                  </button>
+                  <input type="checkbox" class="hidden" name="update" value="1" checked>
+                </span>
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Eliminar
+                  </button>
+                  <input type="checkbox" class="hidden" name="destroy" value="1" checked>
+                </span>
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Activar
+                  </button>
+                  <input type="checkbox" class="hidden" name="activate" value="1" checked>
+                </span>
+              </div>
+              <br>
+              <div class="row">
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Papelera
+                  </button>
+                  <input type="checkbox" class="hidden" name="desactivate" value="1" checked>
+                </span>
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Ingreso
+                  </button>
+                  <input type="checkbox" class="hidden" name="login" value="1" checked>
+                </span>
+                <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+                  <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
+                    Salida
+                  </button>
+                  <input type="checkbox" class="hidden" name="logout" value="1" checked>
+                </span>
+              </div>
             </div>
           </div>
         </div>

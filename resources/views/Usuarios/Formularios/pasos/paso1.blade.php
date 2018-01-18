@@ -20,39 +20,25 @@
       &nbsp;&nbsp;&nbsp;
       @if(isset($sexo))
         @if($sexo)
-          <label>
-          {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
-        </label>
-        <label>
-          {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
-        </label>    
+          <div id="radioBtn" class="btn-group">
+            <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="1">Masculino</a>
+            <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="0">Femenino</a>
+          </div>
+          <input type="hidden" name="sexo" id="sexo" value="1"> 
         @else
-          <label>
-          {!!Form :: radio ( "sexo",1,false,['class'=>'flat'])!!} Masculino &nbsp;
-        </label>
-        <label>
-          {!!Form :: radio ( "sexo",0,true,['class'=>'flat'])!!} Femenino
-        </label>
+          <div id="radioBtn" class="btn-group">
+            <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="1">Masculino</a>
+            <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="0">Femenino</a>
+          </div>
+          <input type="hidden" name="sexo" id="sexo" value="0">
         @endif  
       @else
-        <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
-          <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
-            Masculino
-          </button>
-          <input type="checkbox" class="hidden" name="sexo" value="1">
-        </span>
-        <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
-          <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">
-            Femenino
-          </button>
-          <input type="checkbox" class="hidden" name="sexo" value="0">
-        </span>    
-        {{--  <label>
-          {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino &nbsp;
-        </label>  --}}
-        {{--  <label>
-          {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
-        </label>  --}}
+        {{--  Radios button   --}}
+        <div id="radioBtn" class="btn-group">
+          <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="1">Masculino</a>
+          <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="0">Femenino</a>
+        </div>
+        <input type="hidden" name="sexo" id="sexo" value="1">
       @endif
     </div>
     <div class="form-group">

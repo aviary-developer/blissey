@@ -306,6 +306,7 @@
         <!-- /top navigation -->
         <div class="right_col" role="main">
           @yield('layout')
+          <div class="clearfix"></div>
         </div>
         <!-- footer content -->
         <footer>

@@ -52,7 +52,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request->sexo);
       $rules = [
         'nombre' => 'required | min:2 | max:30',
         'apellido' => 'required | min:2 | max:30',

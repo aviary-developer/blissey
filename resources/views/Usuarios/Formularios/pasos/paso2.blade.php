@@ -122,12 +122,11 @@
       <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Rol *</label>
         &nbsp;&nbsp;&nbsp;
-        <label>
-          {!!Form :: radio ( "administrador",1,false,['class'=>'flat'])!!} Administrador &nbsp;
-        </label>
-        <label>
-          {!!Form :: radio ( "administrador",0,true,['class'=>'flat'])!!} Ninguno
-        </label>
+        <div id="radioBtn" class="btn-group">
+          <a class="btn btn-primary btn-sm notActive" data-toggle="administrador" data-title="1">Administrador</a>
+          <a class="btn btn-primary btn-sm active" data-toggle="administrador" data-title="0">Ninguno</a>
+        </div>
+        <input type="hidden" name="administrador" id="administrador" value="0">
       </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
