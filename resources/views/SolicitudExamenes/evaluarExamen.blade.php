@@ -9,14 +9,15 @@
       <div class="x_title">
         <h2>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}<small>{{$solicitud->examen->nombreExamen}}</small></h2>
         <div class='col-md-8 col-sm-6 col-xs-6'>
-          @foreach ($espr as $variable)
+
+          @foreach ($secciones as $variable)
             @php
             $contadorParametros = 1;
             @endphp
           <table class="table">
             <div class="x_title">
               <div class="clearfix">
-                <h2>{{$variable->seccion->nombre}}</h2></div>
+                <h2>{{$espr->nombreSeccion($variable)}}</h2></div>
             </div>
             <thead>
               <th>#</th>
@@ -28,7 +29,7 @@
             <tbody>
               @if (count($espr)>0)
                 @foreach ($espr as $esp)
-                  @if ($esp->f_seccion==$variable->seccion->id)
+                  @if ($esp->f_seccion==$variable)
                   <tr>
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
