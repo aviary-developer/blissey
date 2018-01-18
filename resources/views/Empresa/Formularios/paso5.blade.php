@@ -80,3 +80,7 @@
 		</div>
 	</div>
 </div>
+<br>
+<center>
+	<p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+</center>
