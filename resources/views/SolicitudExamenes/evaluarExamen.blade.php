@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'examenes.store','method' =>'POST','autocomplete'=>'off'])!!}
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off'])!!}
   @php
     $fecha = Carbon\Carbon::now();
   @endphp
@@ -17,7 +17,7 @@
           <table class="table">
             <div class="x_title">
               <div class="clearfix">
-                <h2>{{$espr->nombreSeccion($variable)}}</h2></div>
+                <h2>{{$espr->first()->nombreSeccion($variable)}}</h2></div>
             </div>
             <thead>
               <th>#</th>
@@ -33,11 +33,11 @@
                   <tr>
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
-                    <th><input type="text" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
+                    <th><input type="text" name="resultados{{$variable}}[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
                       @if ($esp->parametro->valorMinimo)
                         <th>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td><td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</th>
                       @else
-                      <th>No especificados</th><th>-</th>
+                      <th>-</th><th>-</th>
                       @endif
 
                   </tr>
@@ -76,6 +76,11 @@
             </div>
           </div>
         </div>
+        <center>
+          {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+          <button type="reset" name="button" class="btn btn-default">Limpiar</button>
+          <a href={!! asset('/solicitudex') !!} class="btn btn-default">Cancelar</a>
+        </center>
         </div>
         </div>
         <div class="clearfix"></div>

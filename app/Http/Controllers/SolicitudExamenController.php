@@ -158,4 +158,8 @@ class SolicitudExamenController extends Controller
       }
       return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones','contadorSecciones'));
     }
+    public function guardarResultadosExamen(Request $request)
+    {
+      dd($request);
+    }
 }
