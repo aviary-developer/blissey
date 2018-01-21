@@ -1,3 +1,4 @@
+var radio=3;
 $(document).on('ready',function(){
   var componentes_agregados = [];
   var contador = $("#contador").val();
@@ -75,6 +76,28 @@ $(document).on('ready',function(){
         }).catch(swal.noop);
       }
     });
+    $("#resultadoVenta").keyup(function(){
+      var valor = $("#resultadoVenta").val();
+      if(radio=='1'&& valor.length>0){
+        var ruta = "/blissey/public/buscarProductoVenta/"+valor;
+        var tabla = $("#tablaBuscar");
+        $.get(ruta,function(res){
+          tabla.empty();
+          $(res).each(function(key,value){
+            $(value.division_producto).each(function(key2,value2){
+              console.log(value2);
+              html="<tr>"+
+              "<td>"+value.nombre+" "+value2.division.nombre+" "+value2.cantidad+" "+value.presentacion.nombre+" "+"<td>"+
+              "<td><td>"+
+              "<td><td>"+
+              "<td><td>"+
+              "</tr>";
+              tabla.append(html);
+            });
+          });
+        });
+      }
+    });
     $("#codigoBuscar").keyup(function(){
       codigo=$('#codigoBuscar').val();
       if(codigo!=""){
@@ -93,7 +116,7 @@ $(document).on('ready',function(){
                 $('#producto').val(n_division+" "+res4.nombre);
                 $('#idoculto').val(res.id);
                 $('#divoculto').val(n_division);
-                $('#nomoculto').val(res4.nombre);
+
               });
             });
           }else{
@@ -292,9 +315,6 @@ $(document).on('ready',function(){
         tabla.empty();
       }
     });
-    $("#resultadoVenta").keyup(function(){
-      
-    });
 });
 function entero(obj,e,valor){
   val = (document.all) ? e.keyCode : e.which;
@@ -313,4 +333,7 @@ function agregarCliente(id){
 function limpiarTabla(){
   $('#tablaBuscarCliente').empty();
   $('#resultadoCliente').val("");
+}
+function cambioRadio(t){
+  radio=t;
 }

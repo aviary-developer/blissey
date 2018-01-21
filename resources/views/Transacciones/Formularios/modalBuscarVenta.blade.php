@@ -12,11 +12,11 @@
       <div class="modal-body">
         <div class="x_panel">
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar por</label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar por: </label>
             <div class="col-md-7 col-sm-7 col-xs-12">
-              {!!Form::radio('Producto', '1')!!}
-              {!!Form::radio('Componente', '2')!!}
-              {!!Form::radio('Ambos', '3')!!}
+              Producto {!!Form::radio('busq', '1',null,['onclick'=>'cambioRadio(1)'])!!}
+              Componente {!!Form::radio('busq', '2',null,['onclick'=>'cambioRadio(2)'])!!}
+              Ambos {!!Form::radio('busq', '3',true,['onclick'=>'cambioRadio(3)'])!!}
             </div>
           </div>
           <div class="form-group">
