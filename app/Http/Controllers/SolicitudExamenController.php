@@ -137,6 +137,7 @@ class SolicitudExamenController extends Controller
 
     public function evaluarExamen($id,$idExamen){
       $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
+      $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
       $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
       $contador=0;
       $contadorSecciones=0;
@@ -155,6 +156,10 @@ class SolicitudExamenController extends Controller
           $contador++;
         }
       }
-      return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones'));
+      return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones','contadorSecciones'));
+    }
+    public function guardarResultadosExamen(Request $request)
+    {
+      dd($request);
     }
 }

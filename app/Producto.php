@@ -37,7 +37,7 @@ class Producto extends Model
     return $nombre->nombre;
   }
   public function presentacion(){
-    return $this->belongsTo('App\Presentacion','f_presentacion');
+    return $this->belongsTo('App\Presentacion','f_presentacion')->select(['id','nombre']);
   }
 
   public static function arrayUnidades(){
@@ -55,5 +55,8 @@ class Producto extends Model
       $arrayP[$presentacion->id]=$presentacion->nombre;
     }
     return $arrayP;
+  }
+  public function divisionProducto(){
+    return $this->hasMany('App\DivisionProducto','f_producto')->select(['id','f_division','f_producto','cantidad','precio','codigo','contenido']);
   }
 }

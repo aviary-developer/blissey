@@ -265,4 +265,19 @@ class TransaccionController extends Controller
       ->orWhere('dui', 'ILIKE','%'.$valor.'%')->orderBy('nombre')->get();
       return $clientes;
     }
+    public static function buscarVenta($texto){
+      $productos=Producto::where('nombre','ILIKE','%'.$texto.'%')->where('estado',1)->get(['id','nombre','f_presentacion']);
+      foreach ($productos as $p) {
+        $p->presentacion;
+        $p->divisionProducto;
+        foreach ($p->divisionProducto as $dp) {
+          $dp->division;
+          if($dp->contenido!=null){
+            $dp->unidad;
+          }
+          $dp->inventario=DivisionProducto::inventario($dp->id);
+        }
+      }
+      return $productos;
+    }
 }

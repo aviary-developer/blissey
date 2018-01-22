@@ -17,13 +17,21 @@ class DivisionProducto extends Model
     return $this->belongsTo('App\Producto','f_producto');
   }
   public function division(){
-    return $this->belongsTo('App\Division','f_division');
+    return $this->belongsTo('App\Division','f_division')->select(['id','nombre']);
   }
   public function unidad(){
-    return $this->belongsTo('App\Unidad','contenido');
+    return $this->belongsTo('App\Unidad','contenido')->select(['id','nombre']);
   }
   public function inventarioFarmaciaUltimo(){
      return $this->hasMany('App\InventarioFarmacia','f_producto');
+  }
+  public static function inventario($id){
+    $existe=InventarioFarmacia::where('f_producto',$id)->get()->last();
+    if (count($existe)>0) {
+      return $existe->existencia_nueva;
+    } else {
+      return 0;
+    }
 
   }
 
