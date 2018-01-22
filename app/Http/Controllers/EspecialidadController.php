@@ -8,6 +8,7 @@ use App\Bitacora;
 use Redirect;
 use Carbon\Carbon;
 use DB;
+use App\Http\Requests\EspecialidadRequest;
 
 class EspecialidadController extends Controller
 {
@@ -18,12 +19,22 @@ class EspecialidadController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $especialidades = Especialidad::buscar($nombre,$estado);
       $activos = Especialidad::where('estado',true)->count();
       $inactivos = Especialidad::where('estado',false)->count();
-      return view('Especialidades.index',compact('especialidades','estado','nombre','activos','inactivos'));
+      return view('Especialidades.index',compact(
+        'especialidades',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**
@@ -42,7 +53,7 @@ class EspecialidadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EspecialidadRequest $request)
     {
       DB::beginTransaction();
 
@@ -66,7 +77,11 @@ class EspecialidadController extends Controller
     public function show($id)
     {
       $especialidad = Especialidad::find($id);
-      return view('Especialidades.show',compact('especialidad'));
+      $medicos = $especialidad->usuario_especialidad;
+      return view('Especialidades.show',compact(
+        'especialidad',
+        'medicos'
+      ));
     }
 
     /**
@@ -88,7 +103,7 @@ class EspecialidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EspecialidadRequest $request, $id)
     {
       $especialidades = Especialidad::find($id);
       DB::beginTransaction();

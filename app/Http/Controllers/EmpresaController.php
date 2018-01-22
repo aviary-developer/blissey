@@ -6,6 +6,7 @@ use App\Empresa;
 use App\Bitacora;
 use App\TelefonoEmpresa;
 use Illuminate\Http\Request;
+use App\Http\Requests\EmpresaRequest;
 use Illuminate\Support\Facades\Storage;
 use DB;
 use App\Http\Controllers;
@@ -61,7 +62,7 @@ class EmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmpresaRequest $request)
     {
         DB::beginTransaction();
         try {

@@ -3,7 +3,7 @@
   @php
     $index = false;
     setlocale(LC_ALL,'es');
-    $valorEstado=($componente->estado)?"Activo":"En papelera";
+    $valorEstado=($categoria_servicio->estado)?"Activo":"En papelera";
   @endphp
 <div class="col-md-10 col-sm-10 col-xs-12">
   <div class="x_panel">

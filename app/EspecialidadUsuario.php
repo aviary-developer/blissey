@@ -14,4 +14,8 @@ class EspecialidadUsuario extends Model
       $retorno = Especialidad::find($id);
       return $retorno->nombre;
     }
+
+    public function usuario(){
+      return $this->belongsTo('App\User','f_usuario');
+    }
 }

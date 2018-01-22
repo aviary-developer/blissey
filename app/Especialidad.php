@@ -31,4 +31,8 @@ class Especialidad extends Model
       $retorno = Especialidad::find($id);
       return $retorno->nombre;
     }
+    
+    public function usuario_especialidad(){
+      return $this->hasMany('App\EspecialidadUsuario','f_especialidad');
+    }
 }
