@@ -19,7 +19,8 @@
           <div class="col-md-4 col-sm-12 col-xs-12 form-group">
             <div class="input-group">
             <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::text('f_cliente',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cliente','id'=>'f_cliente','readonly'=>'readonly']) !!}
+            {!! Form::text('f_clientea',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cliente','id'=>'f_clientea','readonly'=>'readonly']) !!}
+            <input type="hidden" name="f_cliente" value="" id="f_cliente">
               <span class="input-group-btn">
                 <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2" onclick="limpiarTabla()">
                   <i class="fa fa-save"></i>
@@ -74,7 +75,11 @@
           <thead>
             <th>Cantidad</th>
             <th colspan="2">Detalle</th>
-            <th style="width : 80px">Acción</th>
+            @if($tipo==1)
+            <th style="width : 120px">Precio</th>
+            <th style="width : 120px">Subtotal</th>
+            @endif
+            <th style="width : 100px">Acción</th>
           </thead>
           @if(isset($f_producto))
             @php

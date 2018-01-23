@@ -1,6 +1,6 @@
 var radio=3;
+var componentes_agregados = [];
 $(document).on('ready',function(){
-  var componentes_agregados = [];
   var contador = $("#contador").val();
   $("#codigoBuscar").val("");
   $("#producto").val("");
@@ -78,24 +78,46 @@ $(document).on('ready',function(){
     });
     $("#resultadoVenta").keyup(function(){
       var valor = $("#resultadoVenta").val();
-      if(radio=='1'&& valor.length>0){
+      if(radio=='1' && valor.length>0){
         var ruta = "/blissey/public/buscarProductoVenta/"+valor;
         var tabla = $("#tablaBuscar");
         $.get(ruta,function(res){
           tabla.empty();
+          cab="<thead>"+
+          "<th colspan='2'>Resultado</th>"+
+          "<th>Existencias</th>"+
+          "<th>Precio</th>"+
+          "<th style='width : 80px'>Acción</th>"+
+          "</thead>";
+          tabla.append(cab);
           $(res).each(function(key,value){
             $(value.division_producto).each(function(key2,value2){
-              console.log(value2);
+              if(parseFloat(value2.inventario)>0){
+              if (value2.contenido!=null) {
+                var aux=value2.unidad.nombre;
+              } else {
+                var aux=value.presentacion.nombre;
+              }
               html="<tr>"+
-              "<td>"+value.nombre+" "+value2.division.nombre+" "+value2.cantidad+" "+value.presentacion.nombre+" "+"<td>"+
-              "<td><td>"+
-              "<td><td>"+
-              "<td><td>"+
+              "<td id='cu"+value2.id+"'>"+value.nombre+"</td>"+
+              "<td id='cd"+value2.id+"'>"+" "+value2.division.nombre+" "+value2.cantidad+" "+aux+"</td>"+
+              "<td id='ct"+value2.id+"'>"+value2.inventario+"</td>"+
+              "<td>$ <label id='cc"+value2.id+"'>"+parseFloat(value2.precio).toFixed(2)+"</label></td>"+
+              "<td>"+
+              "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa("+value2.id+");'>"+
+              "<i class='fa fa-arrow-right'></i>"+
+              "</button>"+
+              "</td>"+
               "</tr>";
               tabla.append(html);
+              }
             });
           });
         });
+      }
+      if(radio=='2' && valor.length>0){
+        var ruta = "/blissey/public/buscarComponenteVenta/"+valor;
+        var tabla = $("#tablaBuscar");
       }
     });
     $("#codigoBuscar").keyup(function(){
@@ -164,10 +186,8 @@ $(document).on('ready',function(){
           "</td>"+
           "</tr>";
         }
-
         tabla.append(html);
         componentes_agregados.push(f_producto);
-        console.log(componentes_agregados);
       }
     });
     $("#tablaDetalle").on('click','#eliminar_detalle',function(e){
@@ -186,7 +206,6 @@ $(document).on('ready',function(){
         var eliminado ="<input type='hidden' name='eliminado[]' value='"+estado+"'>";
         $('#eliminados').append(eliminado);
       }
-      console.log(componentes_agregados);
     });
     function validarCantidad(){ //Campo cantidad_resultado
       c=0;
@@ -327,7 +346,8 @@ function entero(obj,e,valor){
 function agregarCliente(id){
   nombre=$('#tbcn'+id).text();
   apellido=$('#tbca'+id).text();
-  $('#f_cliente').val(nombre+" "+apellido);
+  $('#f_clientea').val(nombre+" "+apellido);
+  $('#f_cliente').val(id);
 }
 
 function limpiarTabla(){
@@ -336,4 +356,33 @@ function limpiarTabla(){
 }
 function cambioRadio(t){
   radio=t;
+}
+function registrarventa(id){
+  var cantidad= parseFloat($('#cantidad_resultado').val());
+  var existencia=parseFloat($('#ct'+id).text());
+  if(cantidad>existencia || componentes_agregados.includes(""+id+"")){
+    alert("existencia superada o producto ya agregado");
+  }else{
+    c1=$('#cu'+id).text();
+    c2=$('#cd'+id).text();
+    c4=parseFloat($('#cc'+id).text()).toFixed(2);
+    tabla=$('#tablaDetalle');
+    html="<tr>"+
+    "<td>"+cantidad+"</td>"+
+    "<td>"+c1+"</td>"+
+    "<td>"+c2+"</td>"+
+    "<td>"+c4+"</td>"+
+    "<td>"+parseFloat(cantidad*c4).toFixed(2)+"</td>"+
+    "<td>"+
+    "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
+    "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
+    "<input type='hidden' name='precio[]' value='"+c4+"'>"+
+    "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+    "<i class='fa fa-remove'></i>"+
+    "</button>"+
+    "</td>"+
+    "</tr>";
+    tabla.append(html);
+    componentes_agregados.push(""+id+"");
+  }
 }

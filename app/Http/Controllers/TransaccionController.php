@@ -15,6 +15,7 @@ use DB;
 use Auth;
 use Validator;
 use App\Paciente;
+use App\Componente;
 
 class TransaccionController extends Controller
 {
@@ -59,10 +60,13 @@ class TransaccionController extends Controller
       $f_proveedor=$request->f_proveedor;
       $f_producto=$request->f_producto;
       $cantidad=$request->cantidad;
+      $precio=$request->precio;
 
       $validar['fecha']='required';
       $validar['f_producto']='required';
+      if($tipo==0){
       $validar['f_proveedor']='required';
+      }
       $mensaje['fecha.required']="El campo fecha es obligatorio";
       $mensaje['f_producto.required']="No agregó nungún detalle";
       $mensaje['f_proveedor.required']="Ningún proveedor seleccionado";
@@ -72,6 +76,7 @@ class TransaccionController extends Controller
       if(!$valida->fails()){
         DB::beginTransaction();
         try{
+          if($tipo==0){
         $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
           'f_proveedor'=>$request->f_proveedor,
@@ -79,27 +84,49 @@ class TransaccionController extends Controller
           'f_usuario'=>Auth::user()->id,
           'localizacion'=>0,
         ]);
-        $id_transaccion= $transaccion->id;
 
-        $f_producto=$request->f_producto;
-        $cantidad=$request->cantidad;
         for ($i=0; $i < count($f_producto); $i++) {
           DetalleTransacion::create([
-            'f_transaccion'=>$id_transaccion,
+            'f_transaccion'=>$transaccion->id,
             'f_producto'=>$request->f_producto[$i],
             'cantidad'=>$cantidad[$i],
             'condicion'=>0,
           ]);
         }
+      }else{
+        $transaccion= new Transacion;
+        $transaccion->fecha=$request->fecha;
+        if(isset($request->f_cliente)){
+          $transaccion->f_cliente=$request->f_cliente;
+        }
+        $transaccion->tipo=$tipo;
+        $transaccion->f_usuario=Auth::user()->id;
+        $transaccion->localizacion=0;
+        $transaccion->save();
+
+        for ($i=0; $i < count($f_producto); $i++) {
+          DetalleTransacion::create([
+            'f_transaccion'=>$transaccion->id,
+            'f_producto'=>$f_producto[$i],
+            'cantidad'=>$cantidad[$i],
+            'precio'=>$precio[$i],
+            'condicion'=>1,
+          ]);
+          $inventario= InventarioFarmacia::where('f_producto',$f_producto[$i])->get()->last();
+          InventarioFarmacia::create([
+          'f_producto'=>$f_producto[$i],
+          'tipo'=>0,
+          'existencia_anterior'=>$inventario->existencia_nueva,
+          'cantidad'=>$cantidad[$i],
+          'existencia_nueva'=>$inventario->existencia_nueva-$cantidad[$i],
+          ]);
+        }
+      }
       }catch(\Exception $e){
         DB::rollback();
         return redirect('/')->with('error', '¡Algo salio mal!');
       }
       DB::commit();
-      if(Auth::user()->tipoUsuario=="Farmacia")
-      {
-        $tipo=0;
-      }
       return redirect('/transacciones?tipo='.$tipo)->with('mensaje', '¡Guardado!');
     }else{
       DB::rollback();
@@ -279,5 +306,8 @@ class TransaccionController extends Controller
         }
       }
       return $productos;
+    }
+    public static function buscarComponente($texto){
+      $componentes=Componente::where('nombre','ILIKE','%'.$texto.'%')->get(['id','nombre']);
     }
 }
