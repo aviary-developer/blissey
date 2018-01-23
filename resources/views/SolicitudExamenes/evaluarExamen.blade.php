@@ -10,8 +10,7 @@
         <h2>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}<small>{{$solicitud->examen->nombreExamen}}</small></h2>
         <div class='col-md-8 col-sm-6 col-xs-6'>
           <input type="hidden" name="solicitud" value={{$solicitud->id}}>
-          <input type="hidden" name="examen" value={{$solicitud->examen->id}}>
-          <input type="hidden" name="secciones" value={{$secciones}}>
+          <input type="hidden" name="idExamen" value={{$solicitud->f_examen}}>
           @foreach ($espr as $esp)
             <input type="hidden" name="espr[]" value={{$esp->id}}>
           @endforeach
@@ -39,7 +38,7 @@
                   <tr>
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
-                    <td><input type="text" name="resultados{{$variable}}[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
+                    <td><input type="text" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
                       @if ($esp->parametro->valorMinimo)
                         <td>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td>
                         <td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</td>
@@ -47,7 +46,7 @@
                       <th>-</th><th>-</th>
                       @endif
                         @if ($esp->f_reactivo)
-                      <td>{!!Form::selectRange('datoControlado'.$esp->parametro->id, 0, 4,['class'=>'form-control has-feedback-left'])!!}</td>
+                      <td>{!!Form::selectRange('datoControlado[]', 0, 4,['class'=>'form-control has-feedback-left'])!!}</td>
                     @else
                       <td>-</td>
                     @endif

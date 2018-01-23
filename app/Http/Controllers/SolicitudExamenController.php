@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SolicitudExamen;
 use App\Examen;
+use App\DetalleResultado;
 use App\Resultado;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
@@ -161,12 +162,37 @@ class SolicitudExamenController extends Controller
     }
     public function guardarResultadosExamen(Request $request)
     {
-      dd($request);
-      $solicitud=$request->solicitud;
+      $resultadosGuardar=$request->resultados;
+      $datosControlados=$request->datoControlado;
+      $idSolicitud=$request->solicitud;
       $observacion=$request->observacion;
+      DB::beginTransaction();
+      try{
       $resultado= new Resultado();
-      $resultado->f_solicitud=$solicitud;
+      $resultado->f_solicitud=$idSolicitud;
       $resultado->observacion=$observacion;
-      echo $resultado;
+      $resultado->save();
+      $resultados=Resultado::all();
+      $idResultado=$resultados->last()->id;
+      $contadorControlados=0;
+      foreach ($request->espr as $key =>$valor) {
+      $detallesResultado= new DetalleResultado();
+      $detallesResultado->f_resultado=$idResultado;
+      $detallesResultado->f_espr=$valor;
+      $detallesResultado->resultado=$resultadosGuardar[$key];
+      $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+      if($espr_evaluar_controlado->f_reactivo){
+      $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+      $contadorControlados++;
+    }
+      $detallesResultado->save();
+      }
+    }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+    }
+    DB::commit();
+    Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
+    return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
     }
 }
