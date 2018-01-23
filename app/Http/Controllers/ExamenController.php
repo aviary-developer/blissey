@@ -90,24 +90,35 @@ class ExamenController extends Controller
       $examenNuevo->tipoMuestra=$request->tipoMuestra;
       $examenNuevo->area=$request->area;
       $examenNuevo->save();
-      $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
-      $ultimoExamen=Examen::all();
-      $ultimoExamen=$ultimoExamen->last();
-      if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
-        for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
-          $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
-          $reactivosEnTablaActual=$request->{"reactivosEnTabla".$seccion};
-          echo('<pre>');
-          echo $seccion;
-          echo('</pre>');
-          for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
-            $e_s_p = new ExamenSeccionParametro;
-            $e_s_p->f_examen = $ultimoExamen->id;
-            $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
-            $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
-            $e_s_p->f_reactivo = $reactivosEnTablaActual[$parametros];
-            $e_s_p->save();
-          }
+      // $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
+      // $ultimoExamen=Examen::all();
+      // $ultimoExamen=$ultimoExamen->last();
+      // if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
+      //   for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
+      //     $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
+      //     $reactivosEnTablaActual=$request->{"reactivosEnTabla".$seccion};
+      //     echo('<pre>');
+      //     echo $seccion;
+      //     echo('</pre>');
+      //     for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
+      //       $e_s_p = new ExamenSeccionParametro;
+      //       $e_s_p->f_examen = $ultimoExamen->id;
+      //       $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
+      //       $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
+      //       $e_s_p->f_reactivo = $reactivosEnTablaActual[$parametros];
+      //       $e_s_p->save();
+      //     }
+      //   }
+      // }
+
+      if(isset($request->f_reactivo)){
+        foreach($request->f_reactivo as $k => $reactivo){
+          $Seccion_examen = new ExamenSeccionParametro;
+          $Seccion_examen->f_seccion = $request->f_seccion[$k];
+          $Seccion_examen->f_examen = $examenNuevo->id;
+          $Seccion_examen->f_parametro = $request->f_parametro[$k];
+          $Seccion_examen->f_reactivo = $reactivo;
+          $Seccion_examen->save();
         }
       }
     }catch(\Exception $e){

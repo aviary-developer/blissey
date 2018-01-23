@@ -1,24 +1,270 @@
-// var x = 0;
-// $('#agregar_seccion_x').on('click', function (e) {
-//   e.preventDefault();
-//   var panel = $("#panel_seccion");
-//   html = '<div class="btn-default col-xs-3" style="height: 130px; margin: 0px">' +
-//       '<center>' +
-//         '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
-//         '<br>' +
-//         '<div style="margin-bottom: 10px;">' +
-//           '<span class="label label-lg label-default" >Metazoarios</span>' +
-//         '</div>' +
-//         '<div>' +
-//           '<button class="btn btn-xs btn-primary">' +
-//             '<i class="fa fa-search"></i>' +
-//           '</button>' +
-//           '<button class="btn btn-xs btn-danger">' +
-//             '<i class="fa fa-remove"></i>' +
-//           '</button>' +
-//         '</div>' +
-//       '</center>' +
-//     '</div>';
-//   panel.append(html);
-//   x++;
-// });
+var x = 0;
+var parametros = 0;
+var agregar = true;
+var seccion_vista;
+$('#agregar_parametro_x').on('click', function (e) {
+  e.preventDefault();
+
+  var v_parametro = $("#parametro_select").val();
+  var n_parametro = $("#parametro_select option:selected").text();
+
+  var check = $("#checkReactivo");
+
+  if (check.is(':checked')) {
+    var v_reactivo = $("#reactivo_select").val();
+    var n_reactivo = $("#reactivo_select option:selected").text();
+  } else {
+    var v_reactivo = null;
+    var n_reactivo = "--";
+  }
+  var tabla = $("#tabla_parametros");
+
+  var fila = "<tr>" +
+      "<td>" +
+        n_parametro.trim() +
+      "</td>" +
+      "<td>" +
+        n_reactivo.trim() +
+      "</td>" +
+      "<td>" +
+        "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
+        "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
+        "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
+        "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
+        "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
+        "<i class='fa fa-remove'></i>"
+        "<button>"+
+      "</td>" +
+    "</tr>";
+  
+  var tabla_verificar = $("#tabla_parametros tbody tr");
+
+  if (verificarParametroEnTabla(tabla_verificar, n_parametro.trim()+n_reactivo.trim())) {
+    tabla.append(fila);
+  } else {
+    swal({
+      type: 'error',
+      title: '¡Repetido!',
+      text: 'El parametro ya ha sido agregado',
+      showConfirmButton: false,
+      timer: 1500,
+      animation: false,
+      customClass: 'animated tada'
+    }).catch(swal.noop);
+  }
+  parametros++;
+  bloqueo_listo();
+});
+
+$("#listo_x").on("click", function (e) {
+  e.preventDefault();
+
+  var v_seccion = $("#seccion_select").val();
+  var n_seccion = $("#seccion_select option:selected").text();
+
+  if (parametros > 0) {
+    if (agregar) {
+      
+    
+      var panel = $("#panel_seccion");
+      html = '<div class="btn-default col-xs-3" style="height: 130px; margin: 0px" id="x_seccion_x' + x + '">' +
+          '<input type="hidden" name="seccion_a_ver" value="seccion_x'+ x+'">' +
+          '<center>' +
+            '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
+            '<br>' +
+            '<div style="margin-bottom: 10px;">' +
+              '<span class="label label-lg label-default" >' + n_seccion + '</span>' +
+            '</div>' +
+            '<div id="seccion_x' + x + '">' +
+              '<input type="hidden" id="y_seccion" name="y_seccion[]" value="'+ v_seccion+'">'+
+              '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+                '<i class="fa fa-search"></i>' +
+              '</button>' +
+              '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
+                '<i class="fa fa-remove"></i>' +
+              '</button>' +
+            '</div>' +
+          '</center>' +
+        '</div>';
+      panel.append(html);
+    
+      var seccion = $("#seccion_x" + x);
+      
+      var input = $("#tabla_parametros").find("input");
+    
+      $(input).each(function (key, value) {
+        if (value.name == "v_parametro") {
+          var input_v_p = "<input type='hidden' name='f_parametro[]' value='" + value.value + "'>";
+          var input_v_s = '<input type="hidden" name="f_seccion[]" value="' + v_seccion + '">';
+        } else if (value.name == "n_parametro") {
+          var input_n_p = "<input type='hidden' name='parametro[]' value='" + value.value + "'>";
+        } else if (value.name == "v_reactivo") {
+          var input_v_r = "<input type='hidden' name='f_reactivo[]' value='" + value.value + "'>";
+        } else {
+          var input_n_r = "<input type='hidden' name='reactivo[]' value='" + value.value + "'>";
+        }
+        
+        seccion.append(input_v_s);//Id seccion
+        seccion.append(input_v_p);//Id parametro
+        seccion.append(input_n_p);//Nombre parametro
+        seccion.append(input_v_r);//Id reactivo
+        seccion.append(input_n_r);//Nombre reactivo
+      });
+    
+      $("#modal1").modal('hide');
+      
+      reset_modal();
+  
+      x++;
+      parametros = 0;
+      bloqueo_listo();
+    } else {
+      $('#x_' + seccion_vista).empty();
+      var ficha = $("#x_" + seccion_vista);
+      var html = '<input type="hidden" name="seccion_a_ver" value="' + seccion_vista + '">' +
+        '<center>' +
+        '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
+        '<br>' +
+        '<div style="margin-bottom: 10px;">' +
+        '<span class="label label-lg label-default" >' + n_seccion + '</span>' +
+        '</div>' +
+        '<div id="' + seccion_vista + '">' +
+        '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
+        '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+        '<i class="fa fa-search"></i>' +
+        '</button>' +
+        '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
+        '<i class="fa fa-remove"></i>' +
+        '</button>' +
+        '</div>' +
+        '</center>';
+      ficha.append(html);
+
+      var seccion = $('#'+seccion_vista);
+
+      var input = $("#tabla_parametros").find("input");
+
+      $(input).each(function (key, value) {
+        if (value.name == "v_parametro") {
+          var input_v_p = "<input type='hidden' name='f_parametro[]' value='" + value.value + "'>";
+        } else if (value.name == "n_parametro") {
+          var input_n_p = "<input type='hidden' name='parametro[]' value='" + value.value + "'>";
+        } else if (value.name == "v_reactivo") {
+          var input_v_r = "<input type='hidden' name='f_reactivo[]' value='" + value.value + "'>";
+        } else {
+          var input_n_r = "<input type='hidden' name='reactivo[]' value='" + value.value + "'>";
+        }
+        var input_v_s = '<input type="hidden" name="f_seccion[]" value="' + v_seccion + '">';
+
+        seccion.append(input_v_s);//Id seccion
+        seccion.append(input_v_p);//Id parametro
+        seccion.append(input_n_p);//Nombre parametro
+        seccion.append(input_v_r);//Id reactivo
+        seccion.append(input_n_r);//Nombre reactivo
+      });
+
+      $("#modal1").modal('hide');
+
+      reset_modal();
+
+      parametros = 0;
+      bloqueo_listo();
+    }
+  }
+});
+
+$('#agregar_seccion_x').on('click', function (e) {
+  e.preventDefault();
+  agregar = true;
+  reset_modal();
+});
+
+$("#panel_seccion").on('click','#eliminar_ficha',function(e){
+  e.preventDefault();
+  seccion_vista = $(this).parent('div').parent('center').parent('div').find('input[name="seccion_a_ver"]').val();
+  $('#x_' + seccion_vista).remove();
+  reset_modal();
+});
+
+$('#panel_seccion').on('click','#ver_seccion', function (e) { 
+  e.preventDefault();
+
+  reset_modal();
+  agregar = false;
+
+  seccion_vista = $(this).parent('div').parent('center').parent('div').find('input[name="seccion_a_ver"]').val();
+
+  var seccion_id = $(this).parent('div').find('#y_seccion').val();
+
+  $("#seccion_select").val(seccion_id);
+
+  var input_n_p = $(this).parent('div').find('input[name="parametro[]"]');
+  var input_v_p = $(this).parent('div').find('input[name="f_parametro[]"]');
+  var input_n_r = $(this).parent('div').find('input[name="reactivo[]"]');
+  var input_v_r = $(this).parent('div').find('input[name="f_reactivo[]"]');
+
+
+  $(input_n_p).each(function (key, value) {
+    var v_parametro = input_v_p[key].value;
+    var n_parametro = value.value;
+    var v_reactivo = input_v_r[key].value;
+    var n_reactivo = input_n_r[key].value;
+
+    var tabla = $("#tabla_parametros");
+
+    var fila = "<tr>" +
+      "<td>" +
+      n_parametro +
+      "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
+      "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
+      "</td>" +
+      "<td>" +
+      n_reactivo +
+      "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
+      "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
+      "</td>" +
+      "<td>" +
+      "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
+      "<i class='fa fa-remove'></i>"
+    "<button>" +
+      "</td>" +
+      "</tr>";
+
+    tabla.append(fila);
+    parametros++;
+    bloqueo_listo();
+  });
+});
+
+$("#tabla_parametros").on('click', '#eliminar_fila', function (e) {
+  e.preventDefault();
+  $(this).parent('td').parent('tr').remove();
+  parametros--;
+  bloqueo_listo();
+});
+
+function bloqueo_listo() {
+  if (parametros == 0) {
+    $("#listo_x").addClass('disabled');
+  } else {
+    $("#listo_x").removeClass('disabled');
+  }
+}
+
+function reset_modal() {
+  parametros = 0;
+  bloqueo_listo();
+
+  var tabla = $("#tabla_parametros");
+  tabla.empty();
+
+  var head = '<thead>' +
+    '<th>Parametro</th>' +
+    '<th>Reactivo</th>' +
+    '<th style="width: 80px">Acción</th>' +
+    '</thead>' +
+    '<tbody>' +
+    '</tbody>';
+
+  tabla.append(head);
+}
