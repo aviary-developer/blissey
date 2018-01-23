@@ -9,7 +9,12 @@
       <div class="x_title">
         <h2>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}<small>{{$solicitud->examen->nombreExamen}}</small></h2>
         <div class='col-md-8 col-sm-6 col-xs-6'>
-
+          <input type="hidden" name="solicitud" value={{$solicitud->id}}>
+          <input type="hidden" name="examen" value={{$solicitud->examen->id}}>
+          <input type="hidden" name="secciones" value={{$secciones}}>
+          @foreach ($espr as $esp)
+            <input type="hidden" name="espr[]" value={{$esp->id}}>
+          @endforeach
           @foreach ($secciones as $variable)
             @php
             $contadorParametros = 1;
@@ -25,6 +30,7 @@
               <th>Resultado</th>
               <th>Valores normales</th>
               <th>Unidades</th>
+              <th>Dato controlado</th>
             </thead>
             <tbody>
               @if (count($espr)>0)
@@ -33,13 +39,18 @@
                   <tr>
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
-                    <th><input type="text" name="resultados{{$variable}}[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
+                    <td><input type="text" name="resultados{{$variable}}[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
                       @if ($esp->parametro->valorMinimo)
-                        <th>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td><td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</th>
+                        <td>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td>
+                        <td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</td>
                       @else
                       <th>-</th><th>-</th>
                       @endif
-
+                        @if ($esp->f_reactivo)
+                      <td>{!!Form::selectRange('datoControlado'.$esp->parametro->id, 0, 4,['class'=>'form-control has-feedback-left'])!!}</td>
+                    @else
+                      <td>-</td>
+                    @endif
                   </tr>
                 @endif
                   @php

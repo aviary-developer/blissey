@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SolicitudExamen;
 use App\Examen;
+use App\Resultado;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Paciente;
@@ -161,5 +162,11 @@ class SolicitudExamenController extends Controller
     public function guardarResultadosExamen(Request $request)
     {
       dd($request);
+      $solicitud=$request->solicitud;
+      $observacion=$request->observacion;
+      $resultado= new Resultado();
+      $resultado->f_solicitud=$solicitud;
+      $resultado->observacion=$observacion;
+      echo $resultado;
     }
 }
