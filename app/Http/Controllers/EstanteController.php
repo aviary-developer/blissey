@@ -17,12 +17,22 @@ class EstanteController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $codigo = $request->get('codigo');
       $estantes = Estante::buscar($codigo,$estado);
       $activos = Estante::where('estado',true)->count();
       $inactivos = Estante::where('estado',false)->count();
-      return view('Estantes.index',compact('estantes','estado','codigo','activos','inactivos'));
+      return view('Estantes.index',compact(
+        'estantes',
+        'estado',
+        'codigo',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

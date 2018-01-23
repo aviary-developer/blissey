@@ -3,7 +3,6 @@
   @php
     $index = false;
     setlocale(LC_ALL,'es');
-    $valorEstado=($categoria_servicio->estado)?"Activo":"En papelera";
   @endphp
 <div class="col-md-10 col-sm-10 col-xs-12">
   <div class="x_panel">
@@ -48,7 +47,13 @@
                 </tr>
                 <tr>
                   <th>Estado</th>
-                  <td>{{$valorEstado}}</td>
+                  <td>
+                    @if ($categoria_servicio->estado)
+                      <span class="label label-lg label-success col-xs-4">Activo</span>
+                    @else
+                      <span class="label label-lg label-danger col-xs-4">En papelera</span>
+                    @endif
+                  </td>
                 </tr>
                 <tr>
                   <th>Fecha de creación</th>

@@ -193,6 +193,17 @@
                                   </li>
                                 </ul>
                               </li>
+                              <li>
+                                <a href={{asset( '/habitaciones')}}>Habitaciones</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/estantes')}}>Estantes</a>
+                              </li>
+                            @endif
+                            @if (Auth::user()->tipoUsuario == "Farmacia")
+                              <li>
+                                <a href={{asset( '/estantes')}}>Estantes</a>
+                              </li>
                             @endif
                             @if(Auth::user()->tipoUsuario == "Laboaratorio")
                               <li>
@@ -218,9 +229,6 @@
                                 </ul>
                               </li>
                             @endif
-                            <li>
-                              <a href={{asset( '/habitaciones')}}>Habitaciones</a>
-                            </li>
                             <li>
                               <a href={{asset( '/unidades')}}>Unidades de medida</a>
                             </li>
@@ -368,6 +376,7 @@
       {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
       {!!Html::script('js/scripts/Usuarios.js')!!}
       {!!Html::script('js/scripts/Examenes.js')!!}
+      {!!Html::script('js/scripts/Examenes2.js')!!}
       {!!Html::script('js/scripts/Productos.js')!!}
       {!!Html::script('js/scripts/Transacciones.js')!!}
       {!!Html::script('js/scripts/Ingreso.js')!!}

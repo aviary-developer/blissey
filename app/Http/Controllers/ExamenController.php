@@ -26,12 +26,22 @@ class ExamenController extends Controller
   */
   public function index(Request $request)
   {
+    $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+    $pagina--;
+    $pagina *= 10;
     $estado = $request->get('estado');
     $nombre = $request->get('nombre');
     $examenes = Examen::buscar($nombre,$estado);
     $activos = Examen::where('estado',true)->count();
     $inactivos = Examen::where('estado',false)->count();
-    return view('Examenes.index',compact('examenes','estado','nombre','activos','inactivos'));
+    return view('Examenes.index',compact(
+      'examenes',
+      'estado',
+      'nombre',
+      'activos',
+      'inactivos',
+      'pagina'
+    ));
   }
 
   /**
@@ -39,14 +49,29 @@ class ExamenController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function create()
+  public function create(Request $request)
   {
-    $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-    $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
-    $secciones = Seccion::where('estado',true)->get();
-    $reactivos = Reactivo::where('estado',true)->get();
-    $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
-    return view('Examenes.create',compact('reactivos','parametros','secciones','unidades','muestras'));
+    $temp = $request->get('x');
+    if($temp == null){
+      $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+      $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
+      $secciones = Seccion::where('estado',true)->get();
+      $reactivos = Reactivo::where('estado',true)->get();
+      $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
+      return view('Examenes.create',compact('reactivos','parametros','secciones','unidades','muestras'));
+    }else{
+      $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
+      $secciones = Seccion::where('estado',true)->orderBy('nombre')->get();
+      $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
+      $reactivos = Reactivo::where('estado',true)->orderBy('nombre')->get();
+
+      return view('Examenes.create2', compact(
+        'muestras',
+        'secciones',
+        'parametros',
+        'reactivos'
+      ));
+    }
   }
 
   /**

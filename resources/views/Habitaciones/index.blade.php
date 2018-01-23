@@ -81,9 +81,9 @@
                   <td>{{ '$ '.number_format($habitacion->precio,2,'.',',')}}</td>
                   <td>
                     @if ($habitacion->ocupado)
-                      <span class="label label-danger col-md-8 col-sm-8 col-xs-8">Ocupada</span>
+                      <span class="label label-danger col-md-8 col-sm-8 col-xs-8 label-lg">Ocupada</span>
                     @else
-                      <span class="label label-success col-md-8 col-sm-8 col-xs-8">Disponible</span>
+                      <span class="label label-success col-md-8 col-sm-8 col-xs-8 label-lg">Disponible</span>
                     @endif
                   </td>
                   <td>

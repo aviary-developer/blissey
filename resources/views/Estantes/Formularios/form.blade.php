@@ -4,9 +4,6 @@
   @php $opcion=null;@endphp
 @endif
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
   <br />
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Código identificador *</label>
@@ -29,6 +26,9 @@
         {!!Form::select('localizacion', ['1'=> 'Recepción','0'=> 'Farmacia'],$opcion, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
     </div>
   </div>
+  <center>
+    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>

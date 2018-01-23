@@ -47,7 +47,13 @@
                 </tr>
                 <tr>
                   <th>Estado</th>
-                  <td>{{ ($especialidad->estado)?"Activo":"En Papelera" }}</td>
+                  <td>
+                    @if ($especialidad->estado)
+                      <span class="label label-lg label-success col-xs-4">Activo</span>
+                    @else
+                      <span class="label label-lg label-danger col-xs-4">En papelera</span>
+                    @endif
+                  </td>
                 </tr>
                 <tr>
                   <th>Fecha de creación</th>
@@ -90,9 +96,9 @@
                         </td>
                         <td>
                           @if ($medico->principal)
-                            <span class="label label-success">Especialidad</span>
+                            <span class="label label-success label-lg col-xs-8">Especialidad</span>
                           @else
-                            <span class="label label-primary">Subespecialida</span>
+                            <span class="label label-primary label-lg col-xs-8">Subespecialida</span>
                           @endif
                         </td>
                       </tr>
