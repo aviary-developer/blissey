@@ -39,8 +39,6 @@
               <h4 class="StepTitle">Resultado de busqueda</h4>
               <table class="table" id="tablaBuscar">
                 <thead>
-                  <th colspan="2">Resultado</th>
-                  <th style="width : 80px">Acción</th>
                 </thead>
               </table>
             </div>

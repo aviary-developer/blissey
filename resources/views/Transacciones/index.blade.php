@@ -66,7 +66,13 @@
                   <td>{{ $correlativo }}</td>
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   @if ($tipo==1)
-                  <td>{{$transaccion->cliente->nombre}}</td>
+                  <td>
+                    @if(count($transaccion->cliente)>0)
+                    {{$transaccion->cliente->nombre}}
+                  @else
+                    Clientes varios
+                  @endif
+                  </td>
                   @else
                   <td>{{$transaccion->proveedor->nombre}}</td>
                   @endif
