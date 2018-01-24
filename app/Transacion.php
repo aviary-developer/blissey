@@ -26,7 +26,7 @@ class Transacion extends Model
       if($estado==1 || $estado==""){
         $query->where('factura', '=',null)->orWhere('factura','=','');
       }elseif($estado==0){
-        $query->where('factura', '<>',null)->Where('factura','<>','');
+        $query->where('factura', '<>',null)->orWhere('factura','<>','');
       }
   }
   public static function arrayClientes(){ //Retorna los pacientes activos usando la función buscar

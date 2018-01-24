@@ -7,13 +7,24 @@
       <input type="hidden" value="" id="idoculto">
       <input type="hidden" value="" id="divoculto">
       <input type="hidden" value="" id="nomoculto">
+      @if($tipo==1)
+        <input type="hidden" name="fecha" value="{{$fecha}}">
+      @endif
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
       <input type="hidden" id="confirmar" name="confirmar" value="{{false}}">
-      <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
-      <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::date('fecha',$fecha,['class'=>'form-control has-feedback-left']) !!}
-      </div>
+      @if($tipo==1)
+        <label class="col-md-2 col-sm-12 col-xs-12 form-group">N° de factura *</label>
+        <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+          <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
+          {!! Form::text('factura',null,['class'=>'form-control has-feedback-left','placeholder'=>'Factura']) !!}
+        </div>
+      @else
+        <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
+        <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+          <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+          {!! Form::date('fecha',$fecha,['class'=>'form-control has-feedback-left']) !!}
+        </div>
+      @endif
       @if ($tipo==1)
           <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cliente *</label>
           <div class="col-md-4 col-sm-12 col-xs-12 form-group">

@@ -181,25 +181,24 @@ $(document).on('ready',function(){
     $("#componente_eliminado").val(valores);
     $(this).parent('td').parent('tr').remove();
   });
-
-  $("#codigo").keyup(function(){
-    var codigo = $("#codigo").val();
-    if(codigo!="")
-    var ruta="/blissey/public/existeCodigoProducto/"+codigo;
-    $.get(ruta,function(existe){
-      if(existe==1){
-        swal({
-          type: 'error',
-          title: '¡Ya existe una división con el código '+codigo+'!',
-          showConfirmButton: false,
-          timer: 2000,
-          animation: false,
-          customClass: 'animated tada'
-        }).catch(swal.noop);
-        $("#codigo").val("");
-      }
-    });
-  });
+  // $("#codigo").keyup(function(){
+  //   var codigo = $("#codigo").val();
+  //   if(codigo!="")
+  //   var ruta="/blissey/public/existeCodigoProducto/"+codigo;
+  //   $.get(ruta,function(existe){
+  //     if(existe==1){
+  //       swal({
+  //         type: 'error',
+  //         title: '¡Ya existe una división con el código '+codigo+'!',
+  //         showConfirmButton: false,
+  //         timer: 2000,
+  //         animation: false,
+  //         customClass: 'animated tada'
+  //       }).catch(swal.noop);
+  //       $("#codigo").val("");
+  //     }
+  //   });
+  // });
     $('#f_presentacion').on('change',function(e){
         var obtener=$("#f_presentacion").find('option:selected');
         nPresentacion=obtener.text();

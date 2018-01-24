@@ -84,7 +84,7 @@
                     <div class="menu_section">
                       <h3>Menú</h3>
                       <ul class="nav side-menu">
-                        @if(Auth::user()->tipoUsuario == "Recepción")  
+                        @if(Auth::user()->tipoUsuario == "Recepción")
                           <li>
                             <a>
                               <i class="fa fa-users"></i> Recepción
@@ -149,7 +149,7 @@
                                 <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                               </li>
                               <li>
-                                <a href={{asset( '/transacciones?tipo=1')}}>Ventas</a>
+                                <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Venas</a>
                               </li>
                             </ul>
                           </li>
