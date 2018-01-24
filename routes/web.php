@@ -186,3 +186,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
+Route::get ('/github', 'PdfController@github');
