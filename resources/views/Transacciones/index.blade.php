@@ -73,9 +73,12 @@
                     Clientes varios
                   @endif
                   </td>
+                  <td><a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
+                    <i class="fa fa-info-circle"></i>
+                  </a></td>
                   @else
                   <td>{{$transaccion->proveedor->nombre}}</td>
-                  @endif
+
                   <td>@if($transaccion->factura==null)
                     {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
                     <button type="submit" class="btn btn-success btn-xs"/>
@@ -87,6 +90,7 @@
                         <i class="fa fa-info-circle"></i>
                       </a>
                   @endif
+                    @endif
                   </td>
                 </tr>
                 @php

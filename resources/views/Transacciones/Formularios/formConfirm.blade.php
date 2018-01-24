@@ -45,7 +45,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::number('cantidad',1,['id'=>'cantidad','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+        {!! Form::number('cantidadp',1,['id'=>'cantidadp','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
@@ -103,9 +103,9 @@
                   {!! Form::text('lote[]',null,['class'=>'form-control','placeholder'=>'N° de lote']) !!}
                 </td>
                 <td>
-                  <input type="hidden" id={{"f_prod".$key}} value={{$detalle->f_producto}}>
+                  <input type="hidden" id='{{"f_prod".$key}}' value='{{$detalle->f_producto}}'>
                   <input type='hidden' name='estado[]' value ='{{$detalle->id}}'>
-                  <input type='hidden' name='f_producto[]' value ={{$detalle->f_producto}}>
+                  <input type='hidden' name='f_producto[]' value ='{{$detalle->f_producto}}'>
                   <button type='button' class='btn btn-xs btn-danger' id='eliminar_fila_pedido'>
                   <i class='fa fa-remove'></i>
                   </button>

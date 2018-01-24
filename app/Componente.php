@@ -22,6 +22,6 @@ class Componente extends Model
       $query->where('estado',$estado);
     }
     public function componenteProducto(){
-      return $this->hasMany('App\ComponenteProducto','f_componente')->select(['id','f_componente','f_producto','cantidad','unidad']);
+      return $this->hasMany('App\ComponenteProducto','f_componente')->select(['id','f_componente','f_producto','cantidad','f_unidad']);
     }
 }

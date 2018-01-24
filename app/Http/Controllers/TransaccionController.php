@@ -309,5 +309,19 @@ class TransaccionController extends Controller
     }
     public static function buscarComponente($texto){
       $componentes=Componente::where('nombre','ILIKE','%'.$texto.'%')->get(['id','nombre']);
+      foreach ($componentes as $c) {
+        foreach ($c->componenteProducto as $cp) {
+          $cp->producto;
+          $cp->producto->presentacion;
+          foreach ($cp->producto->divisionProducto as $dp) {
+            $dp->division;
+            if($dp->contenido!=null){
+              $dp->unidad;
+            }
+            $dp->inventario=DivisionProducto::inventario($dp->id);
+          }
+        }
+      }
+      return $componentes;
     }
 }

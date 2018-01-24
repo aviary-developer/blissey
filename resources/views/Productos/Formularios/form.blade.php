@@ -139,15 +139,15 @@
                   <td>
                     <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
                     <input type="hidden" value={{$division->id}}>
-                    @if(App\detalle_transacions::cuenta($division->f_producto))
+                    @if(App\DetalleTransacion::cuenta($division->id))
                     <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_division_antigua">
+                      <i class="fa fa-remove"></i>
+                    </button>
                     @else
-                      <button class="btn btn-xs btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No puedes desactivarte a ti mismo">
+                      <button type="button" class="btn btn-xs btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
                         <i class="fa fa-warning"></i>
                       </button>
                     @endif
-                      <i class="fa fa-remove"></i>
-                    </button>
                   </td>
                 </tr>
                 @php
