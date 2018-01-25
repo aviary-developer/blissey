@@ -181,10 +181,16 @@ class SolicitudExamenController extends Controller
         $detallesResultado->f_espr=$valor;
         $detallesResultado->resultado=$resultadosGuardar[$key];
         $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+        $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+        $cantidadReactivo=$reactivoUtilizado->contenidoPorEnvase;
         if($espr_evaluar_controlado->f_reactivo){
           $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+          $cantidadReactivoRestante=$cantidadReactivo-($datosControlados[$contadorControlados]+1)
           $contadorControlados++;
         }
+        $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+        $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+        $finalReactivo->save();
         $detallesResultado->save();
       }
       $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
@@ -200,6 +206,8 @@ class SolicitudExamenController extends Controller
   }
   public function entregarExamen($id,$idExamen)
   {
+    $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
     $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
@@ -220,6 +228,6 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones'))->stream('entregaExamen'.$solicitud->id.'.pdf');
+    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'))->stream('entregaExamen'.$solicitud->id.'.pdf');
   }
 }
