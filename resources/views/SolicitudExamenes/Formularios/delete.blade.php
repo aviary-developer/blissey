@@ -11,7 +11,7 @@
     <i class="fa fa-paste"></i>
   </a>
 @else
-  <button id="entregar" type="button" class="btn btn-primary btn-xs"  data-toggle="tooltip" data-placement="top" title="Entregar"/>
+  <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-xs"  data-toggle="tooltip" data-placement="top" title="Entregar"/>
     <i class="fa fa-envelope"></i>
-  </button>
+  </a>
 @endif

@@ -198,4 +198,28 @@ class SolicitudExamenController extends Controller
     Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
     return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
   }
+  public function entregarExamen($id,$idExamen)
+  {
+    $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
+    $contador=0;
+    $contadorSecciones=0;
+    if(count($espr)>0){
+      foreach ($espr as $esp) {
+        if($contador==0){
+          $secciones[$contadorSecciones]=$esp->f_seccion;
+        }else{
+          if($secciones[$contadorSecciones]==$esp->f_seccion)
+          {
+          }else {
+            $contadorSecciones++;
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }
+        }
+        $contador++;
+      }
+    }
+    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones'))->stream('entregaExamen'.$solicitud->id.'.pdf');
+  }
 }
