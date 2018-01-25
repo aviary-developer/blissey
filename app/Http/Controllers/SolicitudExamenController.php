@@ -8,6 +8,7 @@ use App\DetalleResultado;
 use App\Resultado;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
+use App\Reactivo;
 use App\Paciente;
 use Illuminate\Http\Request;
 use DB;
@@ -181,16 +182,15 @@ class SolicitudExamenController extends Controller
         $detallesResultado->f_espr=$valor;
         $detallesResultado->resultado=$resultadosGuardar[$key];
         $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
-        $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
-        $cantidadReactivo=$reactivoUtilizado->contenidoPorEnvase;
         if($espr_evaluar_controlado->f_reactivo){
           $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
-          $cantidadReactivoRestante=$cantidadReactivo-($datosControlados[$contadorControlados]+1)
+          $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+          $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
           $contadorControlados++;
+          $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+          $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+          $finalReactivo->save();
         }
-        $finalReactivo=Reactivo::find($reactivoUtilizado->id);
-        $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
-        $finalReactivo->save();
         $detallesResultado->save();
       }
       $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);

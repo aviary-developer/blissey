@@ -10,7 +10,8 @@
 <div class="col-md-12 col-xs-12">
   <div class="x_panel">
     <div class="x_title">{{$fecha->format('d-m-Y h:i:s A')}}<center>
-      <h2>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}<small>{{$solicitud->examen->nombreExamen}}</small></h2>
+      <h2>{{$solicitud->examen->nombreExamen}}</h2>
+      <h3>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</h3>
     </center>
     <div class='col-md-8 col-sm-6 col-xs-6'>
       <input type="hidden" name="solicitud" value={{$solicitud->id}}>
@@ -39,12 +40,12 @@
                 @foreach ($espr as $esp =>$valor)
                   @if ($valor->f_seccion==$variable)
                     <tr>
-                      <td>{{$contadorParametros}}</td>
-                      <td>{{$valor->nombreParametro($valor->f_parametro)}}</th>
-                        <td><input type="text" name="resultados[]" value="{{$detallesResultado[$esp]->resultado}}"></input></td>
+                      <td><center>{{$contadorParametros}}</center></td>
+                      <td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
+                        <td><center>{{$detallesResultado[$esp]->resultado}}</center></td>
                         @if ($valor->parametro->valorMinimo)
-                          <td>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</td>
-                          <td>{{$valor->nombreUnidad($valor->parametro->unidad)}}</td>
+                          <td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
+                          <td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
                         @else
                           <th>-</th><th>-</th>
                         @endif
