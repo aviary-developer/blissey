@@ -49,29 +49,19 @@ class ExamenController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function create(Request $request)
+  public function create()
   {
-    $temp = $request->get('x');
-    if($temp == null){
-      $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-      $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
-      $secciones = Seccion::where('estado',true)->get();
-      $reactivos = Reactivo::where('estado',true)->get();
-      $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
-      return view('Examenes.create',compact('reactivos','parametros','secciones','unidades','muestras'));
-    }else{
-      $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
-      $secciones = Seccion::where('estado',true)->orderBy('nombre')->get();
-      $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
-      $reactivos = Reactivo::where('estado',true)->orderBy('nombre')->get();
+    $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
+    $secciones = Seccion::where('estado',true)->orderBy('nombre')->get();
+    $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
+    $reactivos = Reactivo::where('estado',true)->orderBy('nombre')->get();
 
-      return view('Examenes.create2', compact(
-        'muestras',
-        'secciones',
-        'parametros',
-        'reactivos'
-      ));
-    }
+    return view('Examenes.create2', compact(
+      'muestras',
+      'secciones',
+      'parametros',
+      'reactivos'
+    ));
   }
 
   /**
@@ -111,13 +101,13 @@ class ExamenController extends Controller
       //   }
       // }
 
-      if(isset($request->f_reactivo)){
-        foreach($request->f_reactivo as $k => $reactivo){
+      if(isset($request->f_parametro)){
+        foreach($request->f_parametro as $k => $parametro){
           $Seccion_examen = new ExamenSeccionParametro;
           $Seccion_examen->f_seccion = $request->f_seccion[$k];
           $Seccion_examen->f_examen = $examenNuevo->id;
-          $Seccion_examen->f_parametro = $request->f_parametro[$k];
-          $Seccion_examen->f_reactivo = $reactivo;
+          $Seccion_examen->f_parametro = $parametro;
+          $Seccion_examen->f_reactivo = $request->f_reactivo[$k];
           $Seccion_examen->save();
         }
       }
@@ -127,7 +117,7 @@ class ExamenController extends Controller
       return redirect('/examenes')->with('mensaje', $e);
     }
     DB::commit();
-    Bitacora::bitacora('store','examens','examenes',$ultimoExamen->id);
+    Bitacora::bitacora('store','examens','examenes',$examenNuevo->id);
     return redirect('/examenes')->with('mensaje', '¡Guardado!');
   }
 
@@ -170,33 +160,52 @@ class ExamenController extends Controller
   */
   public function edit($id)
   {
+    // $examenes = Examen::find($id);
+    // $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    // $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
+    // $seccionesTabla=Seccion::where('estado',true)->orderBy('nombre','asc')->get();
+    // $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
+    // $areaSeleccionada=$examenes->area;
+    // $muestraSeleccionada=$examenes->tipoMuestra;
+    // $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    // $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->where('estado',TRUE)->get();
+    // $contador=0;
+    // $contadorSecciones=0;
+    // if(count($e_s_p)>0){
+    //   foreach ($e_s_p as $esp) {
+    //     if($contador==0){
+    //       $secciones[$contadorSecciones]=$esp->f_seccion;
+    //     }else{
+    //       if($secciones[$contadorSecciones]==$esp->f_seccion)
+    //       {
+    //       }else {
+    //         $contadorSecciones++;
+    //         $secciones[$contadorSecciones]=$esp->f_seccion;
+    //       }
+    //     }
+    //     $contador++;
+    //   }
+    // }
+    // return view('Examenes.edit',compact('muestras','examenes','areaSeleccionada','muestraSeleccionada','unidades','e_s_p','secciones','seccionesTabla','parametros'));
+
     $examenes = Examen::find($id);
-    $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
+    $secciones_examen = ExamenSeccionParametro::where('f_examen',$id)->orderBy('f_seccion')->distinct()->get(['f_seccion']);
+    $parametros_examen = ExamenSeccionParametro::where('f_examen',$id)->orderby('f_seccion')->get();
+    
     $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
-    $seccionesTabla=Seccion::where('estado',true)->orderBy('nombre','asc')->get();
-    $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
-    $areaSeleccionada=$examenes->area;
-    $muestraSeleccionada=$examenes->tipoMuestra;
-    $unidades=Unidad::where('estado',true)->orderBy('nombre','asc')->get();
-    $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->where('estado',TRUE)->get();
-    $contador=0;
-    $contadorSecciones=0;
-    if(count($e_s_p)>0){
-      foreach ($e_s_p as $esp) {
-        if($contador==0){
-          $secciones[$contadorSecciones]=$esp->f_seccion;
-        }else{
-          if($secciones[$contadorSecciones]==$esp->f_seccion)
-          {
-          }else {
-            $contadorSecciones++;
-            $secciones[$contadorSecciones]=$esp->f_seccion;
-          }
-        }
-        $contador++;
-      }
-    }
-    return view('Examenes.edit',compact('muestras','examenes','areaSeleccionada','muestraSeleccionada','unidades','e_s_p','secciones','seccionesTabla','parametros'));
+    $secciones = Seccion::where('estado',true)->orderBy('nombre')->get();
+    $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
+    $reactivos = Reactivo::where('estado',true)->orderBy('nombre')->get();
+
+    return view('Examenes.edit2',compact(
+      'examenes',
+      'secciones_examen',
+      'parametros_examen',
+      'muestras',
+      'secciones',
+      'parametros',
+      'reactivos'
+    ));
   }
 
   /**

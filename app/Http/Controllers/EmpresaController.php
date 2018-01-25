@@ -49,7 +49,7 @@ class EmpresaController extends Controller
     public function create()
     {
         $cantidad = Empresa::count();
-        if($cantidad > 1)
+        if($cantidad < 1)
         {
             return view('Empresa.create');
         }

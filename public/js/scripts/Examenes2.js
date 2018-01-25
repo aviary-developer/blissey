@@ -1,4 +1,5 @@
 var x = 0;
+var total_seccion = 0;
 var parametros = 0;
 var agregar = true;
 var seccion_vista;
@@ -14,7 +15,7 @@ $('#agregar_parametro_x').on('click', function (e) {
     var v_reactivo = $("#reactivo_select").val();
     var n_reactivo = $("#reactivo_select option:selected").text();
   } else {
-    var v_reactivo = null;
+    var v_reactivo = "";
     var n_reactivo = "--";
   }
   var tabla = $("#tabla_parametros");
@@ -70,10 +71,10 @@ $("#listo_x").on("click", function (e) {
       html = '<div class="btn-default col-xs-3" style="height: 130px; margin: 0px" id="x_seccion_x' + x + '">' +
           '<input type="hidden" name="seccion_a_ver" value="seccion_x'+ x+'">' +
           '<center>' +
-            '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
+            '<i class="fa fa-flask blue" style="font-size: 300%; margin: 15px;"></i>' +
             '<br>' +
             '<div style="margin-bottom: 10px;">' +
-              '<span class="label label-lg label-default" >' + n_seccion + '</span>' +
+              '<span class="label label-lg label-primary" >' + n_seccion + '</span>' +
             '</div>' +
             '<div id="seccion_x' + x + '">' +
               '<input type="hidden" id="y_seccion" name="y_seccion[]" value="'+ v_seccion+'">'+
@@ -116,6 +117,7 @@ $("#listo_x").on("click", function (e) {
       reset_modal();
   
       x++;
+      total_seccion++;
       parametros = 0;
       bloqueo_listo();
     } else {
@@ -184,6 +186,7 @@ $("#panel_seccion").on('click','#eliminar_ficha',function(e){
   seccion_vista = $(this).parent('div').parent('center').parent('div').find('input[name="seccion_a_ver"]').val();
   $('#x_' + seccion_vista).remove();
   reset_modal();
+  total_seccion--;
 });
 
 $('#panel_seccion').on('click','#ver_seccion', function (e) { 
@@ -250,6 +253,58 @@ function bloqueo_listo() {
     $("#listo_x").removeClass('disabled');
   }
 }
+
+$("#guardar_examen").on("click", function (e) {
+  e.preventDefault();
+  var nombre = $("#nombre_examen").val();
+  var bandera = true;
+  if (total_seccion < 1) {
+    new PNotify({
+      title: '¡Error!',
+      text: 'Se necesita 1 sección como mínimo',
+      type: 'error',
+      nonblock: {
+        nonblock: false
+      },
+      styling: 'bootstrap3'
+    });
+    bandera = false;
+  }
+  if (nombre.length < 4) {
+    new PNotify({
+      title: '¡Error!',
+      text: 'El campo nombre necesita 4 caracteres como mínimo',
+      type: 'error',
+      nonblock: {
+        nonblock: false
+      },
+      styling: 'bootstrap3'
+    });
+    bandera = false;
+  }
+  if (bandera) {
+    // $("#examen_form").submit();
+    var variable = $("panel_seccion").find('input[name="y_seccion[]"');
+    console.log(variable);
+    swal({
+      title: '<i>HTML</i> <u>example</u>',
+      type: 'info',
+      html:
+        'You can<br> use <b>bold text</b>, ' +
+        '<a href="//github.com">links</a> ' +
+        'and other HTML tags',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Great!',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText:
+        '<i class="fa fa-thumbs-down"></i>',
+      cancelButtonAriaLabel: 'Thumbs down',
+    });
+  }
+});
 
 function reset_modal() {
   parametros = 0;

@@ -78,7 +78,27 @@
                 <tr>
                   <td>{{ $correlativo + $pagina }}</td>
                   <td>{{ $examen->nombreExamen }}</td>
-                  <td>{{ $examen->area}}</td>
+                  <td>
+                    @if ($examen->area == "HEMATOLOGIA")
+                      <span class="label label-lg label-danger col-xs-10">Hematológia</span>
+                    @elseif($examen->area == "EXAMENES DE ORINA")
+                      <span class="label label-lg label-dark-blue col-xs-10">Exámenes de orina</span>
+                    @elseif($examen->area == "EXAMENES DE HECES")
+                      <span class="label label-lg label-default col-xs-10">Exámenes de heces</span>
+                    @elseif($examen->area == "BACTERIOLOGIA")
+                      <span class="label label-lg label-info col-xs-10">Bactereología</span>
+                    @elseif($examen->area == "QUIMICA SANGUINEA")
+                      <span class="label label-lg label-primary col-xs-10">Química sanguínea</span>
+                    @elseif($examen->area == "INMUNOLOGIA")
+                      <span class="label label-lg label-purple col-xs-10">Inmunología</span>
+                    @elseif($examen->area == "ENZIMAS")
+                      <span class="label label-lg label-success col-xs-10">Enzimas</span>
+                    @elseif($examen->area == "PRUEBAS ESPECIALES")
+                      <span class="label label-lg label-warning col-xs-10">Enzimas</span>
+                    @elseif($examen->area == "OTROS")
+                      <span class="label label-lg label-white blue col-xs-10">Enzimas</span>
+                    @endif
+                  </td>
                   <td>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</td>
                   <td>
                     @if ($estadoOpuesto)

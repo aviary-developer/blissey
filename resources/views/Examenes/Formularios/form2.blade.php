@@ -27,7 +27,7 @@
       <label class="control-label col-md-2 col-sm-2 col-xs-12">Nombre *</label>
       <div class="col-md-10 col-sm-10 col-xs-12">
         <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('nombreExamen',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo examen','']) !!}
+        {!! Form::text('nombreExamen',null,['id'=>'nombre_examen','class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo examen','']) !!}
       </div>
     </div>
     <div class="form-group col-sm-6 col-xs-12">
@@ -39,7 +39,7 @@
         <option value="EXAMENES DE ORINA">Exámenes de orina</option>
         <option value="EXAMENES DE HECES">Exámenes de heces</option>
         <option value="BACTERIOLOGIA">Bacteriología</option>
-        <option value="QUIMICA SANGUINEA">Química sanguinea</option>
+        <option value="QUIMICA SANGUINEA">Química sanguínea</option>
         <option value="INMUNOLOGIA">Inmunología</option>
         <option value="ENZIMAS">Enzimas</option>
         <option value="PRUEBAS ESPECIALES">Pruebas especialies</option>
@@ -74,7 +74,7 @@
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>
-      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+      <button type="button" name="" class="btn btn-primary" id="guardar_examen">Guardar</button>
       <button type="reset" name="button" class="btn btn-default">Limpiar</button>
       <a href={!! asset('/examenes') !!} class="btn btn-default">Cancelar</a>
     </center>
@@ -175,8 +175,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-primary disabled" id="listo_x">¡Listo!</button>
-          <button type="button" class="btn btn-default" id="limpiar_seccion_x">Limpiar</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
         </div>
 
       </div>
