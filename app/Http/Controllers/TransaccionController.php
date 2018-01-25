@@ -61,15 +61,17 @@ class TransaccionController extends Controller
       $f_producto=$request->f_producto;
       $cantidad=$request->cantidad;
       $precio=$request->precio;
-
-      $validar['fecha']='required';
       $validar['f_producto']='required';
       if($tipo==0){
-      $validar['f_proveedor']='required';
+        $validar['f_proveedor']='required';
+        $validar['fecha']='required';
+      }else{
+        $validar['factura']='required';
       }
       $mensaje['fecha.required']="El campo fecha es obligatorio";
       $mensaje['f_producto.required']="No agregó nungún detalle";
       $mensaje['f_proveedor.required']="Ningún proveedor seleccionado";
+      $mensaje['factura.required']="El campo número de factura es obligatorio";
       $valida= Validator::make($request->all(),$validar,$mensaje);
 
 
@@ -309,5 +311,19 @@ class TransaccionController extends Controller
     }
     public static function buscarComponente($texto){
       $componentes=Componente::where('nombre','ILIKE','%'.$texto.'%')->get(['id','nombre']);
+      foreach ($componentes as $c) {
+        foreach ($c->componenteProducto as $cp) {
+          $cp->producto;
+          $cp->producto->presentacion;
+          foreach ($cp->producto->divisionProducto as $dp) {
+            $dp->division;
+            if($dp->contenido!=null){
+              $dp->unidad;
+            }
+            $dp->inventario=DivisionProducto::inventario($dp->id);
+          }
+        }
+      }
+      return $componentes;
     }
 }

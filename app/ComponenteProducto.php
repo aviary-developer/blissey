@@ -15,7 +15,7 @@ class ComponenteProducto extends Model
     $nombre = Componente::find($id);
     return $nombre->nombre;
   }
-  public function proveedor(){
+  public function producto(){
     return $this->belongsTo('App\Producto','f_producto')->select(['id','nombre','f_presentacion','estado']);
   }
 }

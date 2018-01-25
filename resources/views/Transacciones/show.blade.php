@@ -6,7 +6,11 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
+          @if(!$transaccion->tipo)
         <h2>Pedido<small>Confirmado</small></h2>
+      @else
+        <h2>Venta<small>Realizada</small></h2>
+      @endif
         <div class="clearfix"></div>
         <div class="x_content">
           <div class="row">
@@ -26,7 +30,11 @@
               <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
                 <table class="table">
                   <tr>
-                    <th>Fecha del pedido</th>
+                      @if(!$transaccion->tipo)
+                    <th>Fecha del confirmación</th>
+                  @else
+                    <th>Fecha de venta</th>
+                  @endif
                     <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   </tr>
                   <tr>
@@ -34,8 +42,17 @@
                     <td>{{$transaccion->factura}}</td>
                   </tr>
                   <tr>
-                    <th>Proveedor</th>
-                    <td>{{$transaccion->proveedor->nombre}}</td>
+                    @if($transaccion->tipo)
+                      <th>Cliente</th>
+                      @if(count($transaccion->cliente)>0)
+                        <td>{{$transaccion->cliente->nombre}}</td>
+                      @else
+                        <td>Clientes varios</td>
+                      @endif
+                    @else
+                      <th>Proveedor</th>
+                      <td>{{$transaccion->proveedor->nombre}}</td>
+                    @endif
                   </tr>
                   <tr>
                     <th>Descuento general</th>
@@ -58,9 +75,13 @@
                     <th>Cantidad</th>
                     <th colspan='2'>Detalle</th>
                     <th>Descuento</th>
+                    @if(!$transaccion->tipo)
                     <th>Fecha de vencimiento</th>
+                  @endif
                     <th>Precio</th>
+                    @if(!$transaccion->tipo)
                     <th>Lote</th>
+                      @endif
                   </thead>
                   @php
                   $detalles=$transaccion->detalleTransaccion;
@@ -79,9 +100,13 @@
                       </td>
                       <td>{{$detalle->divisionProducto->producto->nombre}}</td>
                       <td>{{$detalle->descuento}}%</td>
+                      @if(!$transaccion->tipo)
                       <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>
-                      <td>${{number_format($detalle->precio,2,'.','.')}}</td>
+                    @endif
+                      <td>$ {{number_format($detalle->precio,2,'.','.')}}</td>
+                        @if(!$transaccion->tipo)
                       <td>{{$detalle->lote}}</td>
+                    @endif
                     </tr>
                   @endforeach
                   </tbody>

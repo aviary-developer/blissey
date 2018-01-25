@@ -9,8 +9,18 @@
       <div class="x_title">
         <h2>
           @if($tipo==0)Pedidos
+            @if($estado==1 || $estado=='')
+            <small>Por confirmar</small>
+            @else
+              <small>Confirmados</small>
+            @endif
           @else
             Ventas
+            @if($estado==1 || $estado=='')
+            <small>Anuladas</small>
+            @else
+              <small>Realizadas</small>
+            @endif
           @endif
         </h2>
         <div class="clearfix"></div>
@@ -19,15 +29,40 @@
         <div class="row">
           <div class="col-md-5 col-xs-12">
             <div class="btn-group">
+            @if(!$tipo)
               @if($estado==1 || $estado=='')
               <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Comfirmados</a>
+              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms">
+                <i class="fa fa-file"></i> Comfirmados
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->count() }}</span>
+              </a>
             @elseif($estado==0)
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Por confirmar</a>
+              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms">
+                <i class="fa fa-file"></i> Por confirmar
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->count() }}</span>
+              </a>
             @endif
               <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+            @else
+              @if($estado==1 || $estado=='')
+              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms">
+                <i class="fa fa-file"></i> Realizadas
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->count() }}</span>
+              </a>
+            @elseif($estado==0)
+              <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms">
+                <i class="fa fa-file"></i> Anuladas
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->count() }}</span>
+              </a>
+            @endif
+              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+
+            @endif
             </div>
           </div>
           <div class="col-md-3 col-xs-12"></div>
@@ -73,9 +108,12 @@
                     Clientes varios
                   @endif
                   </td>
+                  <td><a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
+                    <i class="fa fa-info-circle"></i>
+                  </a></td>
                   @else
                   <td>{{$transaccion->proveedor->nombre}}</td>
-                  @endif
+
                   <td>@if($transaccion->factura==null)
                     {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
                     <button type="submit" class="btn btn-success btn-xs"/>
@@ -87,6 +125,7 @@
                         <i class="fa fa-info-circle"></i>
                       </a>
                   @endif
+                    @endif
                   </td>
                 </tr>
                 @php

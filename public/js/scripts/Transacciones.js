@@ -1,4 +1,4 @@
-var radio=3;
+var radio=1;
 var componentes_agregados = [];
 $(document).on('ready',function(){
   var contador = $("#contador").val();
@@ -78,6 +78,10 @@ $(document).on('ready',function(){
     });
     $("#resultadoVenta").keyup(function(){
       var valor = $("#resultadoVenta").val();
+      if(valor.length==0){
+        var tabla = $("#tablaBuscar");
+        tabla.empty();
+      }
       if(radio=='1' && valor.length>0){
         var ruta = "/blissey/public/buscarProductoVenta/"+valor;
         var tabla = $("#tablaBuscar");
@@ -92,7 +96,7 @@ $(document).on('ready',function(){
           tabla.append(cab);
           $(res).each(function(key,value){
             $(value.division_producto).each(function(key2,value2){
-              if(parseFloat(value2.inventario)>0){
+              if(parseFloat(value2.inventario)>3){
               if (value2.contenido!=null) {
                 var aux=value2.unidad.nombre;
               } else {
@@ -115,9 +119,46 @@ $(document).on('ready',function(){
           });
         });
       }
-      if(radio=='2' && valor.length>0){
+      if(radio=='2' && valor.length>3){
         var ruta = "/blissey/public/buscarComponenteVenta/"+valor;
         var tabla = $("#tablaBuscar");
+        $.get(ruta,function(res){
+          tabla.empty();
+          cab="<thead>"+
+          "<th colspan='2'>Resultado</th>"+
+          "<th>Existencias</th>"+
+          "<th>Precio</th>"+
+          "<th>Componente</th>"+
+          "<th style='width : 80px'>Acción</th>"+
+          "</thead>";
+          tabla.append(cab);
+          $(res).each(function(key,value){
+            $(value.componente_producto).each(function(key2,value2){
+              $(value2.producto.division_producto).each(function(key3,value3){
+                if(parseFloat(value3.inventario)>0){
+                if (value3.contenido!=null) {
+                  var aux=value3.unidad.nombre;
+                } else {
+                  var aux=value2.producto.presentacion.nombre;
+                }
+                html="<tr>"+
+                "<td id='cu"+value3.id+"'>"+value2.producto.nombre+"</td>"+
+                "<td id='cd"+value3.id+"'>"+" "+value3.division.nombre+" "+value3.cantidad+" "+aux+"</td>"+
+                "<td id='ct"+value3.id+"'>"+value3.inventario+"</td>"+
+                "<td>$ <label id='cc"+value3.id+"'>"+parseFloat(value3.precio).toFixed(2)+"</label></td>"+
+                "<td>"+value.nombre+"</td>"+
+                "<td>"+
+                "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa("+value3.id+");'>"+
+                "<i class='fa fa-arrow-right'></i>"+
+                "</button>"+
+                "</td>"+
+                "</tr>";
+                tabla.append(html);
+                }
+            });
+          });
+        });
+      });
       }
     });
     $("#codigoBuscar").keyup(function(){
@@ -138,7 +179,7 @@ $(document).on('ready',function(){
                 $('#producto').val(n_division+" "+res4.nombre);
                 $('#idoculto').val(res.id);
                 $('#divoculto').val(n_division);
-
+                $('#nomoculto').val(res4.nombre);
               });
             });
           }else{
@@ -353,6 +394,11 @@ function agregarCliente(id){
 function limpiarTabla(){
   $('#tablaBuscarCliente').empty();
   $('#resultadoCliente').val("");
+}
+function limpiarTablaVenta(){
+  $('#tablaBuscar').empty();
+  $('#cantidad_resultado').val("1");
+  $('#resultadoVenta').val("1");
 }
 function cambioRadio(t){
   radio=t;

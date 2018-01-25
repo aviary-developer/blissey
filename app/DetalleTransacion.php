@@ -14,5 +14,14 @@ class DetalleTransacion extends Model
 public function divisionProducto(){
   return $this->belongsTo('App\DivisionProducto','f_producto');
 }
+public static function cuenta($id){
+  $cuenta=DetalleTransacion::where('f_producto',$id)->count();
+
+  if($cuenta>0){
+    return false;
+  }else{
+    return true;
+  }
+}
 
 }

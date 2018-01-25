@@ -124,7 +124,7 @@
               <label class="control-label">Nombre *</label>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                {!! Form::text('nombre_presentacion',null,['id'=>'nombre_presentacion','class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la nueva especialidad']) !!}
+                {!! Form::text('nombre_presentacion',null,['id'=>'nombre_presentacion','class'=>'form-control has-feedback-left','placeholder'=>'Nombre presentación']) !!}
               </div>
           </div>
           </div>

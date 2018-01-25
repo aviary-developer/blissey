@@ -14,9 +14,8 @@
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar por: </label>
             <div class="col-md-7 col-sm-7 col-xs-12">
-              Producto {!!Form::radio('busq', '1',null,['onclick'=>'cambioRadio(1)'])!!}
+              Producto {!!Form::radio('busq', '1',true,['onclick'=>'cambioRadio(1)'])!!}
               Componente {!!Form::radio('busq', '2',null,['onclick'=>'cambioRadio(2)'])!!}
-              Ambos {!!Form::radio('busq', '3',true,['onclick'=>'cambioRadio(3)'])!!}
             </div>
           </div>
           <div class="form-group">
@@ -47,7 +46,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarTablaVenta()">Cerrar</button>
       </div>
     </div>
   </div>
