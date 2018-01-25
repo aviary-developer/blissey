@@ -180,6 +180,8 @@ $(document).on('ready',function(){
                 $('#idoculto').val(res.id);
                 $('#divoculto').val(n_division);
                 $('#nomoculto').val(res4.nombre);
+                $('#preoculto').val(res.precio);
+                $('#exioculto').val(res4.inventario);
               });
             });
           }else{
@@ -309,11 +311,18 @@ $(document).on('ready',function(){
         html="<tr>"+
         "<td>"+cantidad+"</td>"+
         "<td>"+$("#divoculto").val()+"</td>"+
-        "<td>"+$("#nomoculto").val()+"</td>"+
-        "<td>"+
+        "<td>"+$("#nomoculto").val()+"</td>";
+        if($('#tipo').val()=='1'){
+          html=html+"<td>$ "+parseFloat($("#preoculto").val()).toFixed(2)+"</td>"+
+          "<td>$ "+(cantidad*parseFloat($("#preoculto").val())).toFixed(2)+"</td>";
+        }
+        html=html+"<td>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
-        "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
-        "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+        "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>";
+        if($('#tipo').val()=='1'){
+          html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>";
+        }
+        html=html+"<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
         "<i class='fa fa-remove'></i>"+
         "</button>"+
         "</td>"+
@@ -415,10 +424,10 @@ function registrarventa(id){
     tabla=$('#tablaDetalle');
     html="<tr>"+
     "<td>"+cantidad+"</td>"+
-    "<td>"+c1+"</td>"+
     "<td>"+c2+"</td>"+
-    "<td>"+c4+"</td>"+
-    "<td>"+parseFloat(cantidad*c4).toFixed(2)+"</td>"+
+    "<td>"+c1+"</td>"+
+    "<td>$ "+c4+"</td>"+
+    "<td>$ "+parseFloat(cantidad*c4).toFixed(2)+"</td>"+
     "<td>"+
     "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
     "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+

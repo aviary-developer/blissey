@@ -181,6 +181,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/activateSolicitudExamen/{id}','SolicitudExamenController@activate');
   Route::match(['get','post'],'/destroySolicitudExamen/{id}','SolicitudExamenController@destroy');
   Route::match(['get','post'],'/guardarResultadosExamen','SolicitudExamenController@guardarResultadosExamen');
+  Route::match(['get','post'],'/entregarExamen/{id}/{idExamen}','SolicitudExamenController@entregarExamen');
   //Pacientes
   Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
 });

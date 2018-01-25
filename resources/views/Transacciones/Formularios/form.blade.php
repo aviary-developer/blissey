@@ -7,6 +7,8 @@
       <input type="hidden" value="" id="idoculto">
       <input type="hidden" value="" id="divoculto">
       <input type="hidden" value="" id="nomoculto">
+      <input type="hidden" value="" id="preoculto">
+      <input type="hidden" value="" id="exioculto">
       @if($tipo==1)
         <input type="hidden" name="fecha" value="{{$fecha}}">
       @endif
@@ -105,9 +107,16 @@
                 @endphp
                 <td>{{TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
                 <td>{{$pmp->nombre}}</td>
+                @if ($tipo)
+                  <td>$ {{number_format($precio[$i],2,'.','.')}}</td>
+                  <td>$ {{number_format($cantidad[$i]*$precio[$i],2,'.','.')}}</td>
+                @endif
                 <td>
                   <input type='hidden' name='f_producto[]' value ={{$f_producto[$i]}}>
                   <input type='hidden' name='cantidad[]' value ={{$cantidad[$i]}}>
+                  @if ($tipo)
+                  <input type='hidden' name='precio[]' value ={{$precio[$i]}}>
+                  @endif
                   <button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>
                   <i class='fa fa-remove'></i>
                   </button>

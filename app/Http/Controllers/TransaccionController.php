@@ -133,7 +133,7 @@ class TransaccionController extends Controller
     }else{
       DB::rollback();
       $tran= new Transacion;
-      return view('transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad'))->withErrors($valida->errors());
+      return view('transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad','precio'))->withErrors($valida->errors());
     }
     }
 
@@ -275,6 +275,10 @@ class TransaccionController extends Controller
     }
     public function buscarDivision($codigo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
+      $division->inventario=DivisionProducto::inventario($division->id);
+      if($division->inventario<1){
+        return 0;
+      }
       if(count($division)==1){
         $division->unidad;
         return $division;
