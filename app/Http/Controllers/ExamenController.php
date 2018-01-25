@@ -55,12 +55,14 @@ class ExamenController extends Controller
     $secciones = Seccion::where('estado',true)->orderBy('nombre')->get();
     $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
     $reactivos = Reactivo::where('estado',true)->orderBy('nombre')->get();
+    $unidades = Unidad::where('estado',true)->orderBy('nombre')->get();
 
     return view('Examenes.create2', compact(
       'muestras',
       'secciones',
       'parametros',
-      'reactivos'
+      'reactivos',
+      'unidades'
     ));
   }
 
@@ -187,25 +189,7 @@ class ExamenController extends Controller
     //   }
     // }
     // return view('Examenes.edit',compact('muestras','examenes','areaSeleccionada','muestraSeleccionada','unidades','e_s_p','secciones','seccionesTabla','parametros'));
-
-    $examenes = Examen::find($id);
-    $secciones_examen = ExamenSeccionParametro::where('f_examen',$id)->orderBy('f_seccion')->distinct()->get(['f_seccion']);
-    $parametros_examen = ExamenSeccionParametro::where('f_examen',$id)->orderby('f_seccion')->get();
-    
-    $muestras=MuestraExamen::where('estado',true)->orderBy('nombre','asc')->get();
-    $secciones = Seccion::where('estado',true)->orderBy('nombre')->get();
-    $parametros= Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
-    $reactivos = Reactivo::where('estado',true)->orderBy('nombre')->get();
-
-    return view('Examenes.edit2',compact(
-      'examenes',
-      'secciones_examen',
-      'parametros_examen',
-      'muestras',
-      'secciones',
-      'parametros',
-      'reactivos'
-    ));
+    return redirect('/examenes');
   }
 
   /**

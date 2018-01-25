@@ -3,9 +3,6 @@
   <a href={!! asset('/examenes/'.$examen->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/examenes/'.$examen->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
-    <i class="fa fa-edit"></i>
-  </a>
   <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$examen->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>

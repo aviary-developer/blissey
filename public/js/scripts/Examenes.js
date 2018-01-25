@@ -66,24 +66,30 @@ function llenarReactivos(){
 $('#guardarParametroModal').click(function(){
   var nombre = $("#nombreParametroModal").val();
   var unidad = $("#unidadModal").val();
-  var valorMinimo= $('#valorMinimoModal').val();
-  var valorMaximo= $('#valorMaximoModal').val();
-  var valorPredeterminado= $('#valorPredeterminadoModal').val();
+  var valorMinimo= $('#valorMinimo').val();
+  var valorMaximo= $('#valorMaximo').val();
+  var valorPredeterminado= $('#valorPredeterminado').val();
   var ruta="/blissey/public/ingresoParametro";
-  var token=$('#tokenParametroModal').val();
+  var token = $('#tokenParametroModal').val();
+  
   $.ajax({
     url:ruta,
     headers:{'X-CSRF-TOKEN':token},
     type:'POST',
-    dataType:'json',
-    data:{nombreParametro:nombre,unidad:unidad,valorMinimo:valorMinimo,valorMaximo:valorMaximo,valorPredeterminado:valorPredeterminado},
+    data: {
+      nombreParametro: nombre,
+      unidad: unidad,
+      valorMinimo: valorMinimo,
+      valorMaximo: valorMaximo,
+      valorPredeterminado: valorPredeterminado
+    },
     success: function(){
-      $(".modal").modal('toggle');
+      $(".modal").modal('hide');
     }
   });
   var paso=-1;
   swal({
-    title: 'Parametro registrado!',
+    title: '¡Parametro registrado!',
     text: 'Cargando información',
     timer: 3000,
     onOpen: function () {
@@ -97,16 +103,17 @@ $('#guardarParametroModal').click(function(){
       }
     }
   )
-  for (paso = -1; paso < contadorSelectsParametros; paso++) {
-    rellenarCombosParametros(paso);
-  }
+  // for (paso = -1; paso < contadorSelectsParametros; paso++) {
+  //   rellenarCombosParametros(paso);
+  // }
+  rellenarCombosParametros();
   $("#nombreParametroModal").val("");
-  $('#valorMinimoModal').val("");
-  $('#valorMaximoModal').val("");
-  $('#valorPredeterminadoModal').val("");
+  $('#valorMinimo').val("");
+  $('#valorMaximo').val("");
+  $('#valorPredeterminado').val("");
 });
-function rellenarCombosParametros(paso){
-  var parametros=$("#selectParametrosExamenes"+paso);
+function rellenarCombosParametros(){
+  var parametros = $("#parametro_select");
   var ruta="/blissey/public/llenarParametrosExamenes";
   $.get(ruta,function(res){
     parametros.empty();

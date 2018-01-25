@@ -111,6 +111,8 @@ $("#listo_x").on("click", function (e) {
         seccion.append(input_v_r);//Id reactivo
         seccion.append(input_n_r);//Nombre reactivo
       });
+      var input_n_s = '<input type="hidden" name="n_seccion[]" value="' + n_seccion + '">';
+      seccion.append(input_n_s);
     
       $("#modal1").modal('hide');
       
@@ -149,6 +151,7 @@ $("#listo_x").on("click", function (e) {
       $(input).each(function (key, value) {
         if (value.name == "v_parametro") {
           var input_v_p = "<input type='hidden' name='f_parametro[]' value='" + value.value + "'>";
+          var input_v_s = '<input type="hidden" name="f_seccion[]" value="' + v_seccion + '">';
         } else if (value.name == "n_parametro") {
           var input_n_p = "<input type='hidden' name='parametro[]' value='" + value.value + "'>";
         } else if (value.name == "v_reactivo") {
@@ -156,14 +159,15 @@ $("#listo_x").on("click", function (e) {
         } else {
           var input_n_r = "<input type='hidden' name='reactivo[]' value='" + value.value + "'>";
         }
-        var input_v_s = '<input type="hidden" name="f_seccion[]" value="' + v_seccion + '">';
-
+        
         seccion.append(input_v_s);//Id seccion
         seccion.append(input_v_p);//Id parametro
         seccion.append(input_n_p);//Nombre parametro
         seccion.append(input_v_r);//Id reactivo
         seccion.append(input_n_r);//Nombre reactivo
       });
+      var input_n_s = '<input type="hidden" name="n_seccion[]" value="' + n_seccion + '">';
+      seccion.append(input_n_s);
 
       $("#modal1").modal('hide');
 
@@ -283,28 +287,208 @@ $("#guardar_examen").on("click", function (e) {
     bandera = false;
   }
   if (bandera) {
-    // $("#examen_form").submit();
-    var variable = $("panel_seccion").find('input[name="y_seccion[]"');
-    console.log(variable);
-    swal({
-      title: '<i>HTML</i> <u>example</u>',
-      type: 'info',
-      html:
-        'You can<br> use <b>bold text</b>, ' +
-        '<a href="//github.com">links</a> ' +
-        'and other HTML tags',
-      showCloseButton: true,
-      showCancelButton: true,
-      focusConfirm: false,
-      confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Great!',
-      confirmButtonAriaLabel: 'Thumbs up, great!',
-      cancelButtonText:
-        '<i class="fa fa-thumbs-down"></i>',
-      cancelButtonAriaLabel: 'Thumbs down',
+    
+    var seccion_agregadas = $("#panel_seccion").find('input[name="seccion_a_ver"]');
+    var titulo = $('#nombre_examen').val();
+    var tipo_muestra = $("#tipo_muestra_select option:selected").text();
+    var area = $("#area_select option:selected").text();
+
+    var html_ = "<h3 class='blue'>" + titulo + "</h3>"+
+      "<div class='ln_solid'></div>"+
+      "<span class='left'>Tipo de muestra: " +
+      "<b class='blue'>" + tipo_muestra + "</b></span>" +
+      "<br><span class='left'>Área del examen: " +
+      "<b class='blue'>" + area + "</b></span>" +
+      "<br><div class='ln_solid'></div>";
+    var html_2="";
+    $(seccion_agregadas).each(function (key, value) {
+      var n_seccion = $("#" + value.value).find("input[name='n_seccion[]']").val();
+      html_2 += "<h3 class='left'><i class='fa fa-flask'></i> " + n_seccion + "</h3><div class='clearfix'></div>";
+
+      var n_parametro = $("#" + value.value).find("input[name='parametro[]']");
+      var n_reactivo = $("#" + value.value).find("input[name='reactivo[]']");
+
+      $(n_parametro).each(function (key, value) {
+        html_2 += "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-sliders blue'></i> " + value.value.trim() + "</span>" +
+          "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-tint green'></i> " + n_reactivo[key].value.trim() + "</span>" +
+          "<br>";
+      });
+
+      html_2 += "<div class='clearfix'></div><div class='ln_solid'></div>";
     });
+
+    var html_3 = "<h4 class='red'>¡Importante!<h4>"+
+      '<span>¿Está seguro que desea guardar?<br><small> Si guarda los cambios, estos no podrán ser modificados después</small></span>';  
+
+    swal({
+      title: 'Resumen',
+      html: html_ + html_2 + html_3,      
+      showCancelButton: true,
+      confirmButtonText: 'Si, ¡Guardar!',
+      cancelButtonText: 'No, ¡Seguir trabajando!',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-default'
+    }).then(function () {
+      $("#examen_form").submit();
+    }).catch(swal.noop);
   }
 });
+
+$("#guardarReactivoModal").on('click', function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreReactivoModal").val();
+  var v_descripcion = $("#descripcionReactivoModal").val();
+  var contenido = $("#contenidoReactivoModal").val();
+  var token = $("#tokenReactivoModal").val();
+
+  $.ajax({
+    url: "/blissey/public/ingresoReactivo",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+      descripcion: v_descripcion,
+      contenidoPorEnvase: contenido
+    },
+    success: function () {
+      $(".modal").modal('hide');
+    }
+  });
+
+  swal({
+    title: '¡Reactivo registrado!',
+    text: 'Cargando información',
+    timer: 3000,
+    onOpen: function () {
+      swal.showLoading()
+    }
+  }).then(
+    function () { },
+    function (dismiss) {
+      if (dismiss === 'timer') {
+        console.log('cerrado timer de reactivos en examenes')
+      }
+    }
+  );
+
+  rellenarReactivo();
+  $("#nombreReactivoModal").val("");
+  $("#descripcionReactivoModal").val("");
+  $("#contenidoReactivoModal").val("");
+
+});
+
+$("#guardarMuestraModal").on('click', function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreMuestraModal").val();
+
+  var token = $("#tokenMuestraModal").val();
+
+  $.ajax({
+    url: "/blissey/public/ingresoMuestra",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+    }
+  });
+
+  swal({
+    title: '¡Tipo de muestra registrado!',
+    text: 'Cargando información',
+    timer: 3000,
+    onOpen: function () {
+      swal.showLoading()
+    }
+  }).then(
+    function () { },
+    function (dismiss) {
+      if (dismiss === 'timer') {
+        console.log('cerrado timer de muestras en examenes')
+      }
+    }
+    );
+
+  rellenarMuestra();
+  $("#nombreMuestraModal").val("");
+
+});
+
+$("#guardarSeccionModal").on('click', function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreSeccionModal").val();
+
+  var token = $("#tokenSeccionModal").val();
+
+  $.ajax({
+    url: "/blissey/public/ingresoSeccion",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+    }
+  });
+
+  swal({
+    title: '¡Tipo de sección registrado!',
+    text: 'Cargando información',
+    timer: 3000,
+    onOpen: function () {
+      swal.showLoading()
+    }
+  }).then(
+    function () { },
+    function (dismiss) {
+      if (dismiss === 'timer') {
+        console.log('cerrado timer de seccion en examenes')
+      }
+    }
+    );
+
+  rellenarSeccion();
+  $("#nombreSeccionModal").val("");
+
+});
+
+function rellenarReactivo() {
+  var reactivos = $("#reactivo_select");
+  var ruta = "/blissey/public/llenarReactivosExamenes";
+  $.get(ruta, function (res) {
+    reactivos.empty();
+    $(res).each(function (key, value) {
+      reactivos.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}
+
+function rellenarMuestra() {
+  var muestras = $("#tipo_muestra_select");
+  var ruta = "/blissey/public/llenarMuestrasExamenes";
+  console.log("Hola");
+  $.get(ruta, function (res) {
+    muestras.empty();
+    $(res).each(function (key, value) {
+      muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}
+
+function rellenarSeccion() {
+  var secciones = $("#seccion_select");
+  var ruta = "/blissey/public/llenarSeccionExamenes";
+  $.get(ruta, function (res) {
+    secciones.empty();
+    $(res).each(function (key, value) {
+      secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}
 
 function reset_modal() {
   parametros = 0;

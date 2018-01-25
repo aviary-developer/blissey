@@ -120,7 +120,11 @@ class ReactivoController extends Controller
     return Redirect::to('/reactivos?estado=0');
   }
   public function llenarReactivosExamenes(){
-    $reactivos=Reactivo::where('estado',true)->get();
+    $reactivos=Reactivo::where('estado',true)->orderBy('nombre')->get();
     return Response::json($reactivos);
+  }
+  public function ingresoReactivo(Request $request){
+    Reactivo::create($request->All());
+    return Response::json('success');
   }
 }

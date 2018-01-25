@@ -118,7 +118,12 @@ class SeccionController extends Controller
       return Redirect::to('/secciones?estado=0');
     }
     public function llenarSeccionExamenes(){
-      $secciones=Seccion::where('estado',true)->get();
+      $secciones=Seccion::where('estado',true)->orderBy('nombre')->get();
       return Response::json($secciones);
+    }
+
+    public function ingresoSeccion(Request $request){
+      Seccion::create($request->All());
+      return Response::json('success');
     }
 }

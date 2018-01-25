@@ -17,6 +17,7 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/activateReactivo/{id}','ReactivoController@activate');
   Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
   Route::match(['get','post'],'/llenarReactivosExamenes','ReactivoController@llenarReactivosExamenes');
+  Route::match(['get','post'],'/ingresoReactivo','ReactivoController@ingresoReactivo');
 
   //Rutas de Secciones Examenes
   Route::resource('secciones','SeccionController');
@@ -24,6 +25,7 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/activateSeccion/{id}','SeccionController@activate');
   Route::match(['get','post'],'/destroySeccion/{id}','SeccionController@destroy');
   Route::match(['get','post'],'/llenarSeccionExamenes','SeccionController@llenarSeccionExamenes');
+  Route::match(['get','post'],'/ingresoSeccion','SeccionController@ingresoSeccion');
   //Rutas de examenes
   Route::resource('examenes','ExamenController');
   Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');
@@ -41,6 +43,8 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/desactivateMuestraExamen/{id}','MuestraExamenController@desactivate');
   Route::match(['get','post'],'/activateMuestraExamen/{id}','MuestraExamenController@activate');
   Route::match(['get','post'],'/destroyMuestraExamen/{id}','MuestraExamenController@destroy');
+  Route::match(['get','post'],'/llenarMuestrasExamenes','MuestraExamenController@llenarMuestrasExamenes');
+  Route::match(['get','post'],'/ingresoMuestra','MuestraExamenController@ingresoMuestra');
 });
 //Grupo Recepción
 Route::group(['middleware'=>'recepcion'], function()

@@ -6,6 +6,7 @@ use App\MuestraExamen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
+use Response;
 use Carbon\Carbon;
 
 class MuestraExamenController extends Controller
@@ -118,4 +119,13 @@ class MuestraExamenController extends Controller
        $muestras->save();
        return Redirect::to('/muestras?estado=0');
      }
+
+    public function llenarMuestrasExamenes(){
+      $muestras=MuestraExamen::where('estado',true)->orderBy('nombre')->get();
+      return Response::json($muestras);
+    }
+    public function ingresoMuestra(Request $request){
+      MuestraExamen::create($request->All());
+      return Response::json('success');
+    }
 }
