@@ -228,6 +228,6 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'))->stream('entregaExamen'.$solicitud->id.'.pdf');
+    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'))->stream('Examen_con_solicitud_'.$solicitud->id.'.pdf');
   }
 }

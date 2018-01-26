@@ -39,7 +39,7 @@
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
                     <td><input type="text" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
-                      @if ($esp->parametro->valorMinimo)
+                      @if($esp->parametro->valorMinimo)
                         <td>{{number_format($esp->parametro->valorMinimo, 2, '.', '')." - ".number_format($esp->parametro->valorMaximo, 2, '.', '')}}</td>
                         <td>{{$esp->nombreUnidad($esp->parametro->unidad)}}</td>
                       @else

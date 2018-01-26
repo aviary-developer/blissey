@@ -71,7 +71,7 @@ $('#guardarParametroModal').click(function(){
   var valorPredeterminado= $('#valorPredeterminado').val();
   var ruta="/blissey/public/ingresoParametro";
   var token = $('#tokenParametroModal').val();
-  
+
   $.ajax({
     url:ruta,
     headers:{'X-CSRF-TOKEN':token},
@@ -255,9 +255,11 @@ $('#checkValores').click(function(){
   if(this.checked == true){
     $("#valorMinimo").prop("readonly", false);
     $("#valorMaximo").prop("readonly", false);
+    $("#selectUnidadParametro").removeAttr('disabled');
   }else{
     $("#valorMaximo").prop("readonly", true);
     $("#valorMinimo").prop("readonly", true);
+    $("#selectUnidadParametro").prop('disabled', 'disabled');
   }
 });
 //////////////////PARA EXAMENES
