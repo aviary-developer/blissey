@@ -8,6 +8,7 @@ use App\DetalleResultado;
 use App\Resultado;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
+use App\Reactivo;
 use App\Paciente;
 use Illuminate\Http\Request;
 use DB;
@@ -183,7 +184,12 @@ class SolicitudExamenController extends Controller
         $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
         if($espr_evaluar_controlado->f_reactivo){
           $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+          $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+          $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
           $contadorControlados++;
+          $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+          $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+          $finalReactivo->save();
         }
         $detallesResultado->save();
       }
@@ -200,6 +206,8 @@ class SolicitudExamenController extends Controller
   }
   public function entregarExamen($id,$idExamen)
   {
+    $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
     $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
@@ -220,6 +228,6 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones'))->stream('entregaExamen'.$solicitud->id.'.pdf');
+    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'))->stream('entregaExamen'.$solicitud->id.'.pdf');
   }
 }

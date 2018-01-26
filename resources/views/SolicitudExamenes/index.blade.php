@@ -43,7 +43,7 @@
         <div class="row">
           @if($vista == "paciente")
             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-              @foreach($pacientes as $k => $paciente) 
+              @foreach($pacientes as $k => $paciente)
                 <div class="panel">
                   <a class="panel-heading collapsed" role="tab" id={{"H".$k}} data-toggle="collapse" data-parent="#accordion" href={{"#C".$k}}        aria-expanded="false" aria-controls={{"C".$k}}>
                     <h4 class="panel-title">
@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
-                            @if($solicitud->f_paciente == $paciente->f_paciente)  
+                            @if($solicitud->f_paciente == $paciente->f_paciente)
                               <tr>
                                 <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>{{$solicitud->nombreExamen($solicitud->f_examen)}}</td>
@@ -79,7 +79,7 @@
             </div>
           @else
             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-              @foreach($examenes as $k => $examen) 
+              @foreach($examenes as $k => $examen)
                 <div class="panel">
                   <a class="panel-heading collapsed" role="tab" id={{"H".$k}} data-toggle="collapse" data-parent="#accordion" href={{"#C".$k}}        aria-expanded="false" aria-controls={{"C".$k}}>
                     <h4 class="panel-title">
@@ -96,7 +96,7 @@
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
-                            @if($solicitud->f_examen == $examen->f_examen)  
+                            @if($solicitud->f_examen == $examen->f_examen)
                               <tr>
                                 <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>
@@ -119,5 +119,5 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 @endsection
