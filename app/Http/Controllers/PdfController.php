@@ -8,6 +8,6 @@ class PdfController extends Controller
 {
   public function github (){
     //return "HOLA";
-    return \PDF::loadView('especialidades.create')->stream('nombre-archivo.pdf');
+    return \PDF::loadView('temporal')->stream('nombre-archivo.pdf');
   }
 }

@@ -7,6 +7,7 @@ use App\Bitacora;
 use Illuminate\Http\Request;
 use DB;
 use Redirect;
+use App\Http\Requests\HabitacionRequest;
 
 class HabitacionController extends Controller
 {
@@ -42,7 +43,7 @@ class HabitacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HabitacionRequest $request)
     {
       DB::beginTransaction();
 
@@ -88,7 +89,7 @@ class HabitacionController extends Controller
      * @param  \App\Habitacion  $habitacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HabitacionRequest $request, $id)
     {
       $habitaciones = Habitacion::find($id);
       DB::beginTransaction();

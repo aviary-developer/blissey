@@ -77,7 +77,11 @@
               @foreach ($examenes as $examen)
                 <tr>
                   <td>{{ $correlativo + $pagina }}</td>
-                  <td>{{ $examen->nombreExamen }}</td>
+                  <td>
+                    <a href={{asset('/examenes/'.$examen->id)}}>
+                      {{ $examen->nombreExamen }}
+                    </a>
+                  </td>
                   <td>
                     @if ($examen->area == "HEMATOLOGIA")
                       <span class="label label-lg label-danger col-xs-10">Hematológia</span>
@@ -99,7 +103,11 @@
                       <span class="label label-lg label-dark-blue col-xs-10">Otros</span>
                     @endif
                   </td>
-                  <td>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</td>
+                  <td>
+                    <a href={{asset('/muestras/'.$examen->tipoMuestra)}}>
+                      {{ $examen->nombreMuestra($examen->tipoMuestra) }}
+                    </a>
+                  </td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Examenes.Formularios.activate')

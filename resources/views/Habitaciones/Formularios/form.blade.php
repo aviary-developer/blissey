@@ -4,7 +4,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Número *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('numero',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo registro']) !!}
+      {!! Form::number('numero',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número de la nueva habitación']) !!}
     </div>
   </div>
   <div class="form-group">

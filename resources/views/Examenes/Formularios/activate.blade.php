@@ -23,9 +23,6 @@
     <a href={!! asset('/examenes'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/examenes/'.$examen->id.'/edit')!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-edit"></i> Editar
-    </a>
     @if ($examen->estado)
       <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$examen->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
