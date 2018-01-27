@@ -23,7 +23,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">N° de factura *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('factura',null,['class'=>'form-control has-feedback-left']) !!}
+        {!! Form::text('factura',null,['class'=>'form-control has-feedback-left','id'=>'fac']) !!}
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Descuento general *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
@@ -60,7 +60,8 @@
         <a href="#" class="btn btn-default">Cancelar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!}
+        {{-- {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!} --}}
+        {!!Form::button('Confirmar',['class'=>'btn btn-primary','id'=>'confirmarPedido'])!!}
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12 form-group">
         <h4 class="StepTitle">Detalles</h4>
@@ -80,7 +81,7 @@
             @foreach ($detalles as $key => $detalle)
               <tr>
                 <td style="width: 10%">
-                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control','placeholder'=>'Cantidad','min'=>'1','onKeyPress' => 'return entero( this, event,this.value);']) !!}
+                  {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control valu','placeholder'=>'Cantidad','min'=>'1','onKeyPress' => 'return entero( this, event,this.value);']) !!}
                 </td>
                 <td style="width: 20%">
                 @if ($detalle->divisionProducto->unidad==null)
@@ -91,16 +92,16 @@
                 </td>
                 <td style="width: 15%">{{$detalle->divisionProducto->producto->nombre}}</td>
                 <td style="width: 10%">
-                    {!! Form::number('descuento[]',null,['class'=>'form-control','placeholder'=>'%','min'=>'0']) !!}
+                    {!! Form::number('descuento[]',null,['class'=>'form-control vald','placeholder'=>'%','min'=>'0']) !!}
                 </td>
                 <td style="width: 10%">
-                  {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control']) !!}
+                  {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control valt']) !!}
                 </td>
                 <td style="width: 10%">
-                  {!! Form::number('precio[]',null,['class'=>'form-control','placeholder'=>'Precio']) !!}
+                  {!! Form::number('precio[]',null,['class'=>'form-control valc','placeholder'=>'Precio']) !!}
                 </td>
                 <td style="width: 10%">
-                  {!! Form::text('lote[]',null,['class'=>'form-control','placeholder'=>'N° de lote']) !!}
+                  {!! Form::text('lote[]',null,['class'=>'form-control vali','placeholder'=>'N° de lote']) !!}
                 </td>
                 <td>
                   <input type="hidden" id='{{"f_prod".$key}}' value='{{$detalle->f_producto}}'>

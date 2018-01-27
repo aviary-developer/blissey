@@ -35,13 +35,13 @@
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Comfirmados
-                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->count() }}</span>
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
             @elseif($estado==0)
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Por confirmar
-                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->count() }}</span>
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
             @endif
               <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
@@ -50,14 +50,14 @@
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Realizadas
-                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->count() }}</span>
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
             @elseif($estado==0)
               <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Anuladas
-                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->count() }}</span>
+                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
             @endif
               <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
@@ -119,6 +119,7 @@
                     <button type="submit" class="btn btn-success btn-xs"/>
                       <i class="fa fa-check"></i>
                     </button>
+                    @include('Transacciones.Formularios.eliminarPedido')
                     {!!Form::close()!!}
                     @else
                       <a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">

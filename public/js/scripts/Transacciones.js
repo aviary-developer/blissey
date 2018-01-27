@@ -12,13 +12,12 @@ $(document).on('ready',function(){
     $("#resultado").keyup(function(){
       var valor = $("#resultado").val();
       var tipo  = $("#tipo").val();
-      var usuario= $("#tipoUsuario").val();
       var laboratorio=$("#f_proveedor").val();
       var confirmar=$("#confirmar").val();
       if(laboratorio!=""){
         conteo=valor.length;
         if(conteo > 1 && (conteo%2)==0){
-          if(confirmar==true||tipo==0 && usuario=="Farmacia"){ //Venta a clientes
+          if(confirmar==true||tipo==0){ //Venta a clientes
             var ruta = "/blissey/public/buscarProductoTransaccion/"+laboratorio+"/"+valor;
             var tabla = $("#tablaBuscar");
             $.get(ruta,function(res){
@@ -82,7 +81,7 @@ $(document).on('ready',function(){
         var tabla = $("#tablaBuscar");
         tabla.empty();
       }
-      if(radio=='1' && valor.length>0){
+      if(radio=='1' && valor.length>2){
         var ruta = "/blissey/public/buscarProductoVenta/"+valor;
         var tabla = $("#tablaBuscar");
         $.get(ruta,function(res){
@@ -96,7 +95,7 @@ $(document).on('ready',function(){
           tabla.append(cab);
           $(res).each(function(key,value){
             $(value.division_producto).each(function(key2,value2){
-              if(parseFloat(value2.inventario)>3){
+              if(parseFloat(value2.inventario)>0){
               if (value2.contenido!=null) {
                 var aux=value2.unidad.nombre;
               } else {
@@ -164,7 +163,8 @@ $(document).on('ready',function(){
     $("#codigoBuscar").keyup(function(){
       codigo=$('#codigoBuscar').val();
       if(codigo!=""){
-        ruta="/blissey/public/busquedaCodigo/"+codigo;
+        conf=$('#tipo').val();
+        ruta="/blissey/public/busquedaCodigo/"+codigo+"/"+conf;
         $.get(ruta,function(res){
           if(res!=0){
             var ruta3="/blissey/public/buscarNombreDivision/"+res.f_division;
@@ -213,13 +213,13 @@ $(document).on('ready',function(){
             "</tr>";
         }else{
           html="<tr>"+
-          "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control' value='"+cantidad+"'></td>"+
+          "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
           "<td style='width: 20%'>"+division+"</td>"+
           "<td style='width: 15%'>"+nombre+"</td>"+
-          "<td style='width: 10%'><input name='descuento[]' class='form-control' type='number' placeholder='%' value='0'></td>"+
-          "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control' type='date' placeholder=''></td>"+
-          "<td style='width: 10%'><input name='precio[]' class='form-control' type='number' placeholder='Precio'></td>"+
-          "<td style='width: 10%'><input name='lote[]' class='form-control' type='text' placeholder='N° de lote'></td>"+
+          "<td style='width: 10%'><input name='descuento[]' class='form-control vald' type='number' placeholder='%' value='0'></td>"+
+          "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control valt' type='date' placeholder=''></td>"+
+          "<td style='width: 10%'><input name='precio[]' class='form-control valc' type='number' placeholder='Precio'></td>"+
+          "<td style='width: 10%'><input name='lote[]' class='form-control vali' type='text' placeholder='N° de lote'></td>"+
           "<td>"+
           "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
           "<input type='hidden' name='estado[]' value ='nuevo'>"+
@@ -329,13 +329,13 @@ $(document).on('ready',function(){
         "</tr>";
       }else{
         html="<tr>"+
-        "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control' value='"+cantidad+"'></td>"+
+        "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
         "<td style='width: 20%'>"+$("#divoculto").val()+"</td>"+
         "<td style='width: 15%'>"+$("#nomoculto").val()+"</td>"+
-        "<td style='width: 10%'><input name='descuento[]' class='form-control' type='number' placeholder='%' value='0'></td>"+
-        "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control' type='date' placeholder=''></td>"+
-        "<td style='width: 10%'><input name='precio[]' class='form-control' type='number' placeholder='Precio'></td>"+
-        "<td style='width: 10%'><input name='lote[]' class='form-control' type='text' placeholder='N° de lote'></td>"+
+        "<td style='width: 10%'><input name='descuento[]' class='form-control vald' type='number' placeholder='%' value='0'></td>"+
+        "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control valt' type='date' placeholder=''></td>"+
+        "<td style='width: 10%'><input name='precio[]' class='form-control valc' type='number' placeholder='Precio'></td>"+
+        "<td style='width: 10%'><input name='lote[]' class='form-control vali' type='text' placeholder='N° de lote'></td>"+
         "<td>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
         "<input type='hidden' name='estado[]' value ='nuevo'>"+
@@ -383,6 +383,97 @@ $(document).on('ready',function(){
       }else{
         tabla.empty();
       }
+    });
+    $('#confirmarPedido').on('click', function (e) {
+      var error=0;
+      v1=v2=v3=v4=v5=v6=0;
+      $('.valu').each(function(){ //Cantidad
+        if($(this).val().trim()=="" || parseFloat($(this).val())<1){
+          error++;
+          v1=1;
+        }
+      });
+      $('.vald').each(function(){ //Descuento
+        if($(this).val().trim()=="" || parseFloat($(this).val())<0  || parseFloat($(this).val())>100){
+          error++;
+          v2=1;
+        }
+      });
+      $('.valt').each(function(){ //Fecha
+        if($(this).val().trim()==""){
+          error++;
+          v3=1;
+        }
+      });
+      $('.valc').each(function(){ //Precio
+        if($(this).val().trim()=="" || parseFloat($(this).val())<0){
+          error++;
+          v4=1;
+        }
+      });
+      $('.vali').each(function(){ //Lote
+        if($(this).val().trim()==""){
+          error++;
+          v5=1;
+        }
+      });
+      if($('#fac').val().trim()==""){
+        error++;
+        v6=1;
+      }
+      if(error==0){
+        $('#formVender').submit();
+      }else{
+        if(v6==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'El campo factura es obligatorio',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+        if(v1==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'Cantidad debe ser un valor mayor a cero',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+        if(v2==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'Descuento debe entre 0% a 100%',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+        if(v3==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'Ingrese fecha de vencimiento valida',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+        if(v4==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'El precio debe ser mayor que $0.00',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+        if(v5==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'El número de lote es requerido',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+      console.log(error);
+    }
     });
 });
 function entero(obj,e,valor){

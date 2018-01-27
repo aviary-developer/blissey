@@ -84,7 +84,7 @@ class TransaccionController extends Controller
           'f_proveedor'=>$request->f_proveedor,
           'tipo'=>$tipo,
           'f_usuario'=>Auth::user()->id,
-          'localizacion'=>0,
+          'localizacion'=>Transacion::tipoUsuario(),
         ]);
 
         for ($i=0; $i < count($f_producto); $i++) {
@@ -103,7 +103,7 @@ class TransaccionController extends Controller
         }
         $transaccion->tipo=$tipo;
         $transaccion->f_usuario=Auth::user()->id;
-        $transaccion->localizacion=0;
+        $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
 
         for ($i=0; $i < count($f_producto); $i++) {
@@ -114,13 +114,14 @@ class TransaccionController extends Controller
             'precio'=>$precio[$i],
             'condicion'=>1,
           ]);
-          $inventario= InventarioFarmacia::where('f_producto',$f_producto[$i])->get()->last();
+          $inventario= InventarioFarmacia::where('f_producto',$f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
           InventarioFarmacia::create([
           'f_producto'=>$f_producto[$i],
           'tipo'=>0,
           'existencia_anterior'=>$inventario->existencia_nueva,
           'cantidad'=>$cantidad[$i],
           'existencia_nueva'=>$inventario->existencia_nueva-$cantidad[$i],
+          'localizacion'=>Transacion::tipoUsuario(),
           ]);
         }
       }
@@ -201,7 +202,7 @@ class TransaccionController extends Controller
           $detalle->f_producto=$request->f_producto[$i];
           $detalle->save();
 
-          $inventario= InventarioFarmacia::where('f_producto',$request->f_producto[$i])->get()->last();
+          $inventario= InventarioFarmacia::where('f_producto',$request->f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
           if(count($inventario)>0){
             $ea=$inventario->existencia_nueva;
           }else{
@@ -213,6 +214,7 @@ class TransaccionController extends Controller
           'existencia_anterior'=>$ea,
           'cantidad'=>$request->cantidad[$i],
           'existencia_nueva'=>$ea+$request->cantidad[$i],
+          'localizacion'=>Transacion::tipoUsuario(),
           ]);
         }
         DB::commit();
@@ -273,13 +275,13 @@ class TransaccionController extends Controller
       $transaccion=Transacion::find($id);
       return view('Transacciones.confirmar',compact('transaccion'));
     }
-    public function buscarDivision($codigo){
+    public function buscarDivision($codigo,$tipo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
-      $division->inventario=DivisionProducto::inventario($division->id);
-      if($division->inventario<1){
-        return 0;
-      }
       if(count($division)==1){
+        $division->inventario=DivisionProducto::inventario($division->id);
+        if($division->inventario<1 && $tipo=='1'){
+          return 0;
+        }
         $division->unidad;
         return $division;
       }else{
@@ -329,5 +331,11 @@ class TransaccionController extends Controller
         }
       }
       return $componentes;
+    }
+    public function eliminarPedido($id){
+      DetalleTransacion::where('f_transaccion',$id)->delete();
+      Transacion::destroy($id);
+      return redirect('/transacciones?tipo=0');
+
     }
 }

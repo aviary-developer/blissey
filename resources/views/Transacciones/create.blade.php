@@ -1,5 +1,5 @@
 @php
-  $tipoUsuario='Farmacia';
+  $tipoUsuario=Auth::user()->tipoUsuario;
 @endphp
 @extends('dashboard')
 @section('layout')
@@ -17,6 +17,9 @@
           <h2>Venta<small>Nueva</small></h2>
         @else
           <h2>Compra<small>Nuevo pedido</small></h2>
+          @php
+            $tipo=0;
+          @endphp
         @endif
         <div class="clearfix"></div>
       </div>
