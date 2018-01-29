@@ -77,7 +77,11 @@
               @foreach ($habitaciones as $habitacion)
                 <tr>
                   <td>{{ $correlativo }}</td>
-                  <td>{{ 'Habitación '.$habitacion->numero }}</td>
+                  <td>
+                    <a href={{asset('/habitaciones/'.$habitacion->id)}}>
+                      {{ 'Habitación '.$habitacion->numero }}
+                    </a>
+                  </td>
                   <td>{{ '$ '.number_format($habitacion->precio,2,'.',',')}}</td>
                   <td>
                     @if ($habitacion->ocupado)

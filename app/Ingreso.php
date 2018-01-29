@@ -43,4 +43,8 @@ class Ingreso extends Model
       $numero = Habitacion::find($id);
       return 'Habitación '.$numero->numero;
     }
+
+    public function paciente(){
+      return $this->belongsTo('App\Paciente','f_paciente');
+    }
 }

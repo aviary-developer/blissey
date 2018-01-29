@@ -125,4 +125,45 @@ $(document).on('ready',function(){
       },
     });
   }
+
+  $("#fecha_paciente").on("change", function () {
+    var hoy = new Date();
+    var fecha = $("#fecha_paciente").val();
+    var a_fecha = fecha.split('-');
+    var is_anio = true;
+    var is_mes = true;
+    var is_dia = true;
+    var anio = parseInt(a_fecha[0]);
+    var mes = parseInt(a_fecha[1]);
+    var dia = parseInt(a_fecha[2]);
+
+    if (isNaN(anio)) {
+      is_anio = false;
+    }
+    if (isNaN(mes)) {
+      is_mes = false;
+    }
+    if (isNaN(dia)) {
+      is_dia = false;
+    }
+
+    if (is_dia && is_mes && is_anio && (anio > 1000)) {
+      var edad = hoy.getFullYear() - anio;
+      if (mes > (hoy.getMonth() + 1)) {
+        edad--;
+      }
+      if (mes == (hoy.getMonth() + 1) && dia > hoy.getDay()) {
+        edad--;
+      }
+      
+      if (edad > 17) {
+        document.getElementById("dui_paciente").style = "display:block";
+      } else {
+        document.getElementById("dui_paciente").style = "display:none";
+      }
+    } else {
+      document.getElementById("dui_paciente").style = "display:none";
+    }
+  });
+
 });

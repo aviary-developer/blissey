@@ -75,6 +75,14 @@
                         <td>{{ $empresa->nombre_hospital }}</td>
                       </tr>
                       <tr>
+                        <th style="width: 150px">Correo</th>
+                        @if ($empresa->correo_hospital != null)
+                          <td>{{$empresa->correo_hospital}}</td>
+                        @else
+                          <td><i class="red">Sin correo</i></td>
+                        @endif
+                      </tr>
+                      <tr>
                         @if ($count_telefono_h <= 1)  
                           <th style="width: 150px">Télefono</th>
                         @else
@@ -140,6 +148,14 @@
                       <tr>
                         <th style="width: 150px">Nombre</th>
                         <td>{{ $empresa->nombre_laboratorio }}</td>
+                      </tr>
+                      <tr>
+                        <th style="width: 150px">Correo</th>
+                        @if ($empresa->correo_laboratorio != null)
+                          <td>{{$empresa->correo_laboratorio}}</td>
+                        @else
+                          <td><i class="red">Sin correo</i></td>
+                        @endif
                       </tr>
                       <tr>
                         @if ($count_telefono_l <= 1)  
@@ -210,6 +226,14 @@
                         <td>{{ $empresa->nombre_clinica }}</td>
                       </tr>
                       <tr>
+                        <th style="width: 150px">Correo</th>
+                        @if ($empresa->correo_clinica != null)
+                          <td>{{$empresa->correo_clinica}}</td>
+                        @else
+                          <td><i class="red">Sin correo</i></td>
+                        @endif
+                      </tr>
+                      <tr>
                         @if ($count_telefono_c <= 1)  
                           <th style="width: 150px">Télefono</th>
                         @else
@@ -275,6 +299,14 @@
                       <tr>
                         <th style="width: 150px">Nombre</th>
                         <td>{{ $empresa->nombre_farmacia }}</td>
+                      </tr>
+                      <tr>
+                        <th style="width: 150px">Correo</th>
+                        @if ($empresa->correo_farmacia != null)
+                          <td>{{$empresa->correo_farmacia}}</td>
+                        @else
+                          <td><i class="red">Sin correo</i></td>
+                        @endif
                       </tr>
                       <tr>
                         @if ($count_telefono_f <= 1)  

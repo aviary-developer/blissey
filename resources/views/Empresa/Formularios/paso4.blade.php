@@ -18,6 +18,13 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="control-label col-md-3 col-sm-3 col-xs-12">Correo </label>
+			<div class="col-md-9 col-sm-9 col-xs-12">
+				<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+				{!! Form::email('correo_farmacia',null,['class'=>'form-control has-feedback-left','placeholder'=>'Dirección de correo electronico']) !!}
+			</div>
+		</div>
+		<div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono *</label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <div class="input-group">

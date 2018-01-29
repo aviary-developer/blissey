@@ -1,7 +1,4 @@
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
   <br />
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
@@ -18,25 +15,25 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo *</label>
+    &nbsp;&nbsp;&nbsp;
+    <div id="radioBtn" class="btn-group">
+      <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="1">Masculino</a>
+      <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="0">Femenino</a>
+    </div>
+    <input type="hidden" name="sexo" id="sexo" value="1">
+  </div>
+  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de nacimiento *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
       @php
         $ahora = Carbon\Carbon::now();
       @endphp
-      {!! Form::date('fechaNacimiento',$fecha,['max'=>$ahora->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+      {!! Form::date('fechaNacimiento',$fecha,['id'=>'fecha_paciente','max'=>$ahora->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
     </div>
   </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo *</label>
-    <label>
-      {!!Form :: radio ( "sexo",1,true,['class'=>'flat'])!!} Masculino
-    </label>
-    <label>
-      {!!Form :: radio ( "sexo",0,false,['class'=>'flat'])!!} Femenino
-    </label>
-  </div>
-  <div class="form-group">
+  <div class="form-group" id="dui_paciente" style="display: none;">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">DUI</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-credit-card form-control-feedback left" aria-hidden="true"></span>
@@ -57,6 +54,9 @@
       {!! Form::textarea('direccion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Dirección del nuevo paciente','rows'=>'3']) !!}
     </div>
   </div>
+  <center>
+    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>

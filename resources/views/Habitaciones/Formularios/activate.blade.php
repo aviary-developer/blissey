@@ -23,25 +23,25 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/habitaciones'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/habitaciones'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/habitaciones/'.$habitacion->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/habitaciones/'.$habitacion->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
     @if ($habitacion->estado)
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$habitacion->id.");'" !!}>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$habitacion->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$habitacion->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$habitacion->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$habitacion->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$habitacion->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-ms">
+    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>

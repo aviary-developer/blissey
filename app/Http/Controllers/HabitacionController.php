@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Habitacion;
 use App\Bitacora;
+use App\Ingreso;
 use Illuminate\Http\Request;
 use DB;
 use Redirect;
@@ -67,7 +68,14 @@ class HabitacionController extends Controller
     public function show($id)
     {
       $habitacion = Habitacion::find($id);
-      return view('Habitaciones.show',compact('habitacion'));
+      $paciente = null;
+      if($habitacion->ocupado){
+        $paciente=Ingreso::where('f_habitacion',$habitacion->id)->where('estado','<',2)->first();
+      }
+      return view('Habitaciones.show',compact(
+        'habitacion',
+        'paciente'
+      ));
     }
 
     /**
