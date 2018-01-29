@@ -26,13 +26,12 @@ class DivisionProducto extends Model
      return $this->hasMany('App\InventarioFarmacia','f_producto');
   }
   public static function inventario($id){
-    $existe=InventarioFarmacia::where('f_producto',$id)->get()->last();
+    $existe=InventarioFarmacia::where('f_producto',$id)->where('localizacion',Transacion::tipoUsuario())->get()->last();
     if (count($existe)>0) {
       return $existe->existencia_nueva;
     } else {
       return 0;
     }
-
   }
 
 }

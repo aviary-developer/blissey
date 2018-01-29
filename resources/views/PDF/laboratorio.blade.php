@@ -46,7 +46,7 @@
   @endphp
   <div class="row">
     <div class="col-xs-3">
-      <img src={{asset(Storage::url($imagen->logo_laboratorio))}} class="enc_img">
+      <img src={{asset(Storage::url($imagen->logo_laboratorio))}} width="140" height="165">
     </div>
     <div class="col-xs-6">
       <center>
@@ -64,9 +64,18 @@
         </h3>
       </center>
     </div>
+    <div class="col-xs-3">
+      <img src={{asset(Storage::url($imagen->logo_hospital))}} width="160" height="160">
+    </div>
   </div>
   <div style="border: 1px solid black">
     @yield('layout')
   </div>
+<div class="row">
+  Realizado por:{{Auth::user()->nombre}}   {{Auth::user()->apellido}}</div>
+  <div class="col-xs-3">
+  FIRMA:  <img src={!! asset(Storage::url((Auth::check())?Auth::user()->firma:"NoImgen.jpg")) !!} alt="..." width="160" height="140">
+</div><div class="col-xs-3">SELLO:  <img src={!! asset(Storage::url((Auth::check())?Auth::user()->sello:"NoImgen.jpg")) !!} alt="..." width="160" height="140">
+    </div>
   </body>
 </html>

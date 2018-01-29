@@ -42,7 +42,11 @@
               </tr>
               <tr>
                 <th>Unidad de medición</th>
-                <td>{{$parametro->nombreUnidad($parametro->unidad)}}</td>
+                @if($parametro->unidad!=null)
+                <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
+                @else
+                  <td>(Vacío)</td>
+                @endif
               </tr>
               <tr>
                 <th>Valor mínimo</th>

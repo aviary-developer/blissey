@@ -96,7 +96,11 @@
                   @else
                     <td>(Vacío)</td>
                   @endif
+                  @if($parametro->unidad!=null)
                   <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
+                  @else
+                    <td>(Vacío)</td>
+                  @endif
                   <td>
                     @if ($estadoOpuesto)
                       @include('Parametros.Formularios.activate')
