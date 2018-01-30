@@ -160,7 +160,6 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarNombrePresentacion/{id}/{tipo}','TransaccionController@nombrePresentacion');
   Route::match(['get','post'],'/confirmarPedido/{id}','TransaccionController@confirmarPedido');
   Route::match(['get','post'],'/busquedaCodigo/{id}/{tipo}','TransaccionController@buscarDivision');
-  Route::match(['get','post'],'/inventario','TransaccionController@inventario');
   Route::match(['get','post'],'/buscarCliente/{cliente}','TransaccionController@buscarCliente');
   Route::match(['get','post'],'/buscarProductoVenta/{texto}','TransaccionController@buscarVenta');
   Route::match(['get','post'],'/buscarComponenteVenta/{texto}','TransaccionController@buscarComponente');
@@ -185,6 +184,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/entregarExamen/{id}/{idExamen}','SolicitudExamenController@entregarExamen');
   //Pacientes
   Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
+  //Inventarios
+  Route::resource('inventarios','InventarioController');
 });
 Auth::routes();
 //Rutas de login

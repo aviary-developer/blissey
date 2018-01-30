@@ -288,11 +288,6 @@ class TransaccionController extends Controller
         return 0;
       }
     }
-
-    public function inventario(Request $request){
-      $division_productos=DivisionProducto::all();
-      return view('Inventarios.index',compact('division_productos'));
-    }
     public static function buscarCliente($valor){
       $clientes=Paciente::where('nombre','ILIKE','%'.$valor.'%')
       ->orWhere('apellido', 'ILIKE','%'.$valor.'%')

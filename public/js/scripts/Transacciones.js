@@ -77,7 +77,7 @@ $(document).on('ready',function(){
     });
     $("#resultadoVenta").keyup(function(){
       var valor = $("#resultadoVenta").val();
-      if(valor.length==0){
+      if(valor.length<3){
         var tabla = $("#tablaBuscar");
         tabla.empty();
       }
@@ -158,6 +158,8 @@ $(document).on('ready',function(){
           });
         });
       });
+      }
+      if(radio=='3' && valor.length>3){
       }
     });
     $("#codigoBuscar").keyup(function(){
