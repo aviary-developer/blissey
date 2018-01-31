@@ -45,7 +45,7 @@
                     @if($transaccion->tipo)
                       <th>Cliente</th>
                       @if(count($transaccion->cliente)>0)
-                        <td>{{$transaccion->cliente->nombre}}</td>
+                        <td>{{$transaccion->cliente->nombre." ".$transaccion->cliente->apellido}}</td>
                       @else
                         <td>Clientes varios</td>
                       @endif
@@ -91,6 +91,7 @@
                   @foreach ($detalles as $detalle)
                     <tr>
                       <td>{{$detalle->cantidad}}</td>
+                      @if($detalle->f_servicio==null)
                       <td>
                         @if($detalle->divisionProducto->unidad==null)
                           {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
@@ -99,6 +100,10 @@
                         @endif
                       </td>
                       <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                    @else
+                      <td>{{$detalle->servicio->nombre}}</td>
+                      <td></td>
+                    @endif
                       <td>{{$detalle->descuento}}%</td>
                       @if(!$transaccion->tipo)
                       <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>

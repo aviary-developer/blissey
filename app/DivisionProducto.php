@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class DivisionProducto extends Model
 {
@@ -32,6 +33,17 @@ class DivisionProducto extends Model
     } else {
       return 0;
     }
+  }
+  public static function buscar($nombre,$estado){
+    $bitacora = DB::table('division_productos')
+      ->select('division_productos.*','productos.nombre','productos.f_presentacion','productos.f_proveedor')
+      ->join('productos','division_productos.f_producto','=','productos.id','left outer')
+      ->where('productos.nombre','ILIKE','%'.$nombre.'%')
+      ->where('productos.estado',$estado)
+      ->orderBy('productos.nombre','ASC')
+      ->paginate(10);
+      // ->get();
+      return $bitacora;
   }
 
 }

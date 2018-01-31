@@ -17,7 +17,7 @@
           </div>
           <div class="col-md-3 col-xs-12"></div>
           <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'componentes.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
+            {!!Form::open(['route'=>'inventarios.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
@@ -31,7 +31,6 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Presentación</th>
               <th>Existencias</th>
             </tr>
           </thead>
@@ -40,25 +39,20 @@
             $contador=1;
 
             @endphp
-            @foreach ($division_productos as $div)
+            @foreach ($dp as $div)
               <tr>
                 <td>{{$contador}}</td>
-                <td>{{$div->producto->nombre}}</td>
+                <td>{{$div->nombre}}</td>
                 <td>
-                  @if ($div->unidad==null)
-                    {{$div->division->nombre." ".$div->cantidad." ".$div->producto->presentacion->nombre}}
+                  @php
+                    $unidad=App\Unidad::find($div->contenido);
+                    $division=App\Division::find($div->f_division);
+                    $presentacion=App\Presentacion::find($div->f_presentacion);
+                  @endphp
+                  @if (count($unidad)==0)
+                    {{App\DivisionProducto::inventario($div->id)."--".$division->nombre." ".$div->cantidad." ".$presentacion->nombre}}
                   @else
-                    {{$div->division->nombre." ".$div->cantidad." ".$div->unidad->nombre}}
-                  @endif
-                </td>
-                @php
-                  $aux=$div->inventarioFarmaciaUltimo->last();
-                @endphp
-                <td>
-                  @if (count($aux)>0)
-                        {{$aux->existencia_nueva}}
-                  @else
-                    0
+                    {{App\DivisionProducto::inventario($div->id)."--".$division->nombre." ".$div->cantidad." ".$unidad->nombre}}
                   @endif
                 </td>
               </tr>
@@ -69,7 +63,9 @@
           </tbody>
         </table>
         <div class="ln_solid"></div>
-
+        <center>
+          {!! str_replace ('/?', '?', $dp->appends(Request::only(['nombre']))->render ()) !!}
+        </center>
       </div>
     </div>
   </div>

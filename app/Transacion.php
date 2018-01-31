@@ -46,7 +46,7 @@ class Transacion extends Model
       return $arrayP;
   }
   public function cliente(){
-    return $this->belongsTo('App\Paciente');
+    return $this->belongsTo('App\Paciente','f_cliente');
   }
   public function proveedor(){
     return $this->belongsTo('App\Proveedor','f_proveedor');

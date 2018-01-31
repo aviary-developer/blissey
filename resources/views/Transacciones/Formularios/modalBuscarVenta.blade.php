@@ -16,6 +16,9 @@
             <div class="col-md-7 col-sm-7 col-xs-12">
               Producto {!!Form::radio('busq', '1',true,['onclick'=>'cambioRadio(1)'])!!}
               Componente {!!Form::radio('busq', '2',null,['onclick'=>'cambioRadio(2)'])!!}
+              @if(Auth::user()->tipoUsuario=="Recepción")
+                Servicios {!!Form::radio('busq', '3',null,['onclick'=>'cambioRadio(3)'])!!}
+              @endif
             </div>
           </div>
           <div class="form-group">

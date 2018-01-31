@@ -77,7 +77,7 @@ $(document).on('ready',function(){
     });
     $("#resultadoVenta").keyup(function(){
       var valor = $("#resultadoVenta").val();
-      if(valor.length==0){
+      if(valor.length<3){
         var tabla = $("#tablaBuscar");
         tabla.empty();
       }
@@ -156,6 +156,31 @@ $(document).on('ready',function(){
                 }
             });
           });
+        });
+      });
+      }
+      if(radio=='3' && valor.length>2){
+        var ruta = "/blissey/public/buscarServicios/"+valor;
+        var tabla = $("#tablaBuscar");
+        $.get(ruta,function(res){
+          console.log(res);
+           tabla.empty();
+          cab="<thead>"+
+          "<th colspan='2'>Resultado</th>"+
+          "<th style='width : 80px'>Acción</th>"+
+          "</thead>";
+          tabla.append(cab);
+          $(res).each(function(key,value){
+                html="<tr>"+
+                "<td id='cu"+value.id+"'>"+value.nombre+"</td>"+
+                "<td>$ <label id='cd"+value.id+"'>"+parseFloat(value.precio).toFixed(2)+"</label></td>"+
+                "<td>"+
+                "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa("+value.id+");'>"+
+                "<i class='fa fa-arrow-right'></i>"+
+                "</button>"+
+                "</td>"+
+                "</tr>";
+                tabla.append(html);
         });
       });
       }
@@ -498,19 +523,21 @@ function limpiarTabla(){
 function limpiarTablaVenta(){
   $('#tablaBuscar').empty();
   $('#cantidad_resultado').val("1");
-  $('#resultadoVenta').val("1");
+  $('#resultadoVenta').val("");
 }
 function cambioRadio(t){
   radio=t;
+  limpiarTablaVenta();
 }
 function registrarventa(id){
   var cantidad= parseFloat($('#cantidad_resultado').val());
   var existencia=parseFloat($('#ct'+id).text());
+  c1=$('#cu'+id).text();
+  c2=$('#cd'+id).text();
+  if (radio!=3) {
   if(cantidad>existencia || componentes_agregados.includes(""+id+"")){
     alert("existencia superada o producto ya agregado");
   }else{
-    c1=$('#cu'+id).text();
-    c2=$('#cd'+id).text();
     c4=parseFloat($('#cc'+id).text()).toFixed(2);
     tabla=$('#tablaDetalle');
     html="<tr>"+
@@ -520,6 +547,7 @@ function registrarventa(id){
     "<td>$ "+c4+"</td>"+
     "<td>$ "+parseFloat(cantidad*c4).toFixed(2)+"</td>"+
     "<td>"+
+    "<input type='hidden' name='tipo_detalle[]' value='1'>"+
     "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
     "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
     "<input type='hidden' name='precio[]' value='"+c4+"'>"+
@@ -531,4 +559,25 @@ function registrarventa(id){
     tabla.append(html);
     componentes_agregados.push(""+id+"");
   }
+} else {
+  c2=parseFloat(c2).toFixed(2);
+  tabla=$('#tablaDetalle');
+  html="<tr>"+
+  "<td>"+cantidad+"</td>"+
+  "<td>"+c1+"</td>"+
+  "<td></td>"+
+  "<td>$ "+c2+"</td>"+
+  "<td>$ "+parseFloat(cantidad*c2).toFixed(2)+"</td>"+
+  "<td>"+
+  "<input type='hidden' name='tipo_detalle[]' value='2'>"+
+  "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
+  "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
+  "<input type='hidden' name='precio[]' value='"+c2+"'>"+
+  "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+  "<i class='fa fa-remove'></i>"+
+  "</button>"+
+  "</td>"+
+  "</tr>";
+  tabla.append(html);
+}
 }
