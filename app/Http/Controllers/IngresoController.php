@@ -22,10 +22,18 @@ class IngresoController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $ingresos = Ingreso::buscar($estado);
       $activos = Ingreso::where('estado','<>',2)->count();
-      return view('Ingresos.index',compact('ingresos','estado','activos'));
+      return view('Ingresos.index',compact(
+        'ingresos',
+        'estado',
+        'activos',
+        'pagina'
+      ));
     }
 
     /**
@@ -146,5 +154,11 @@ class IngresoController extends Controller
       }else{
         return null;
       }
+    }
+
+    public function acta_pdf($id){
+      $header = view('Ingresos.PDF.acta');
+      $pdf = \PDF::loadView('temporal')->setOption('footer-html',$header);
+      return $pdf->stream('nombre.pdf');
     }
 }

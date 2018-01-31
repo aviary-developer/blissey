@@ -37,45 +37,59 @@
   {!!Html::style('assets/switchery/dist/switchery.min.css')!!}
 
   {!!Html::style('assets/build/css/custom.css')!!}
+
+  <style type="text/css">
+    div.page
+    {
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+</style>
 </head>
 
 <body class="bg-white">
-  @php
-    $imagen = App\Empresa::first();
-    $telefonos = App\TelefonoEmpresa::where('tipo','laboratorio')->get();
-  @endphp
+  <div class="page">
+
+    @php
+      $imagen = App\Empresa::first();
+      $telefonos = App\TelefonoEmpresa::where('tipo','laboratorio')->get();
+    @endphp
+    <div class="row">
+      <div class="col-xs-3">
+        <img src={{asset(Storage::url($imagen->logo_laboratorio))}} width="140" height="165">
+      </div>
+      <div class="col-xs-6">
+        <center>
+          <h2>{{$imagen->nombre_laboratorio}}</h2>
+          <h3>
+            <i>
+              <small>
+                {{$imagen->direccion_laboratorio}}
+                <br>
+                @foreach ($telefonos as $telefono)
+                  {{$telefono->telefono.' '}}
+                @endforeach
+              </small>
+            </i>
+          </h3>
+        </center>
+      </div>
+      <div class="col-xs-3">
+        <img src={{asset(Storage::url($imagen->logo_hospital))}} width="160" height="160">
+      </div>
+    </div>
+    <div style="border: 1px solid black">
+      @yield('layout')
+    </div>
   <div class="row">
+    Realizado por:{{Auth::user()->nombre}}   {{Auth::user()->apellido}}</div>
     <div class="col-xs-3">
-      <img src={{asset(Storage::url($imagen->logo_laboratorio))}} width="140" height="165">
-    </div>
-    <div class="col-xs-6">
-      <center>
-        <h2>{{$imagen->nombre_laboratorio}}</h2>
-        <h3>
-          <i>
-            <small>
-              {{$imagen->direccion_laboratorio}}
-              <br>
-              @foreach ($telefonos as $telefono)
-                {{$telefono->telefono.' '}}
-              @endforeach
-            </small>
-          </i>
-        </h3>
-      </center>
-    </div>
-    <div class="col-xs-3">
-      <img src={{asset(Storage::url($imagen->logo_hospital))}} width="160" height="160">
-    </div>
+    FIRMA:  <img src={!! asset(Storage::url((Auth::check())?Auth::user()->firma:"NoImgen.jpg")) !!} alt="..." width="160" height="140">
+  </div><div class="col-xs-3">SELLO:  <img src={!! asset(Storage::url((Auth::check())?Auth::user()->sello:"NoImgen.jpg")) !!} alt="..." width="160" height="140">
+      </div>
   </div>
-  <div style="border: 1px solid black">
-    @yield('layout')
+  <div class="page">
+    HHola
   </div>
-<div class="row">
-  Realizado por:{{Auth::user()->nombre}}   {{Auth::user()->apellido}}</div>
-  <div class="col-xs-3">
-  FIRMA:  <img src={!! asset(Storage::url((Auth::check())?Auth::user()->firma:"NoImgen.jpg")) !!} alt="..." width="160" height="140">
-</div><div class="col-xs-3">SELLO:  <img src={!! asset(Storage::url((Auth::check())?Auth::user()->sello:"NoImgen.jpg")) !!} alt="..." width="160" height="140">
-    </div>
   </body>
 </html>

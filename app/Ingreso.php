@@ -25,26 +25,19 @@ class Ingreso extends Model
       }
     }
 
-    public static function nombrePaciente($id){
-      $nombre = Paciente::find($id);
-      return $nombre->apellido.', '.$nombre->nombre;
-    }
-
-    public static function nombreMedico($id){
-      $nombre = User::find($id);
-      if($nombre->sexo){
-        return 'Dr. '.$nombre->apellido.', '.$nombre->nombre;
-      }else{
-        return 'Dra. '.$nombre->apellido.', '.$nombre->nombre;
-      }
-    }
-
-    public static function numeroHabitacion($id){
-      $numero = Habitacion::find($id);
-      return 'Habitación '.$numero->numero;
-    }
-
     public function paciente(){
-      return $this->belongsTo('App\Paciente','f_paciente');
+      return $this->belongsTo('App\Paciente', 'f_paciente');
+    }
+
+    public function responsable(){
+      return $this->belongsTo('App\Paciente', 'f_responsable');
+    }
+
+    public function habitacion(){
+      return $this->belongsTo('App\Habitacion', 'f_habitacion');
+    }
+
+    public function medico(){
+      return $this->belongsTo('App\User', 'f_medico');
     }
 }

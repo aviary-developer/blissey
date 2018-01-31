@@ -13,6 +13,12 @@ thead{
 .label-purple{
   background-color: rgb(159, 45, 249);
 }
+.label-pink{
+  background-color: palevioletred;
+}
+.label-cian{
+    background-color: cornflowerblue;
+}
 .label-dark-blue{
   background-color: rgb(26, 44, 106);
 }

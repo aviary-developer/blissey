@@ -1,12 +1,12 @@
 {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
-<a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-xs btn-dark">
+<a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento">
   <i class="fa fa-print"></i>
 </a>
 @if ($ingreso->estado == 0)
-  <button type="button" class="btn btn-primary btn-xs" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
+  <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Confirmar ingreso" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!!"'eliminar(".$ingreso->id.");'"!!}/>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!!"'eliminar(".$ingreso->id.");'"!!}/>
     <i class="fa fa-remove"></i>
   </button>
 @endif

@@ -69,10 +69,26 @@
                 @endphp
                 @foreach ($ingresos as $ingreso)
                   <tr>
-                    <td>{{$correlativo}}</td>
-                    <td>{{$ingreso->nombrePaciente($ingreso->f_paciente)}}</td>
-                    <td>{{$ingreso->nombreMedico($ingreso->f_medico)}}</td>
-                    <td>{{$ingreso->numeroHabitacion($ingreso->f_habitacion)}}</td>
+                    <td>{{$correlativo + $pagina}}</td>
+                    <td>
+                      <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
+                        {{$ingreso->paciente->apellido.', '.$ingreso->paciente->nombre}}
+                      </a>
+                    </td>
+                    <td>
+                      <a href={{asset('/usuarios/'.$ingreso->f_medico)}}>
+                        @if ($ingreso->medico->sexo)
+                          {{'Dr. '.$ingreso->medico->apellido.' '.$ingreso->medico->nombre}}
+                        @else
+                          {{'Dra. '.$ingreso->medico->apellido.' '.$ingreso->medico->nombre}}
+                        @endif
+                      </a>
+                    </td>
+                    <td>
+                      <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}}>
+                        {{'Habitación '.$ingreso->habitacion->numero}}
+                      </a>
+                    </td>
                     <td>{{$ingreso->fecha_ingreso->format('d / m / Y')}}</td>
                     <td>
                       @include('Ingresos.Formularios.desactivate')

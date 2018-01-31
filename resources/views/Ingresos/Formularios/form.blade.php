@@ -1,7 +1,4 @@
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
   <br />
   <input type="hidden" id="seleccion">
   <div class="form-group">
@@ -10,8 +7,11 @@
       <div class="input-group">
         {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente','disabled']) !!}
         <span class="input-group-btn">
-          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('paciente');">
+          <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('paciente');">
             <i class="fa fa-search"></i>
+          </button>
+          <button type="button" name="button" class="btn btn-success" data-toggle="modal" data-target="#modal_persona" id="nueva_especialidad"  data-placement="top" title="Nuevo paciente" onclick="input_seleccion('paciente');">
+            <i class="fa fa-plus"></i>
           </button>
         </span>
       </div>
@@ -22,10 +22,13 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsable *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="input-group">
-        {!! Form::text('n_responsable',null,['id'=>'n_responsable','class'=>'form-control','placeholder'=>'Nombre del paciente','disabled']) !!}
+        {!! Form::text('n_responsable',null,['id'=>'n_responsable','class'=>'form-control','placeholder'=>'Nombre del responsable','disabled']) !!}
         <span class="input-group-btn">
-          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('responsable');">
+          <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('responsable');">
             <i class="fa fa-search"></i>
+          </button>
+          <button type="button" name="button" class="btn btn-success" data-toggle="modal" data-target="#modal_persona" id="nueva_especialidad"  data-placement="top" title="Nuevo paciente" onclick="input_seleccion('responsable');">
+            <i class="fa fa-plus"></i>
           </button>
         </span>
       </div>
@@ -63,6 +66,9 @@
       <input type="datetime-local" name="fecha_ingreso" class="form-control has-feedback-left" value={{$fecha->format('Y-m-d').'T'.$fecha->format('H:i')}} max={{$fecha->format('Y-m-d').'T'.$fecha->format('H:i')}}>
     </div>
   </div>
+  <center>
+    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>
@@ -72,6 +78,8 @@
     </center>
   </div>
 </div>
+
+@include('Ingresos.Formularios.modal_paciente')
 
 <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
   <div class="modal-dialog modal-lg">

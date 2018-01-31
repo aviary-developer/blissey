@@ -3,6 +3,37 @@ $(document).on('ready',function(){
   var maximo = $("#max").val();
   var desde = $("#from").val();
   var hasta = $("#to").val();
+  var ubicacion = window.location.pathname;
+
+  if (ubicacion.indexOf("/blissey/public/pacientes/") > -1) {
+    cargar_municipio();
+    cambio_residencia();
+  }
+
+  function cargar_municipio() {
+    var v_departamento = $("#departamento_select").val();
+    var municipio_select = $("#municipio_select");
+    var editado = $("#municipio_edit").val();
+
+    $.ajax({
+      type: "GET",
+      url: "/blissey/public/municipios/"+v_departamento,
+      success: function (respuesta) {
+        municipio_select.empty();
+        $(respuesta).each(function (key, value) {
+          if (editado == value) {
+            municipio_select.append("<option value='" + value + "' selected>" + value + "</option>");
+          } else {
+            municipio_select.append("<option value='" + value + "'>" + value + "</option>");
+          }
+        });
+      }
+    });
+  }
+
+  $("#departamento_select").on("change", function () {
+    cargar_municipio();
+  });
 
   $("#range_paciente_edad").ionRangeSlider({
     type: "double",
@@ -165,5 +196,22 @@ $(document).on('ready',function(){
       document.getElementById("dui_paciente").style = "display:none";
     }
   });
+
+  $('.radio-pais').on("click", function () {
+    cambio_residencia()
+  });
+
+  function cambio_residencia() {
+    var valor = $("#residencia_paciente").val();
+    if (valor == 0) {
+      document.getElementById("pais_div").style = "display:block";
+      document.getElementById("departamento_div").style = "display:none";
+      document.getElementById("municipio_div").style = "display:none";
+    } else {
+      document.getElementById("pais_div").style = "display:none";
+      document.getElementById("departamento_div").style = "display:block";
+      document.getElementById("municipio_div").style = "display:block";
+    }
+  }
 
 });

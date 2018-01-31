@@ -12,7 +12,7 @@
   @php
   $index = true;
   @endphp
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-10 col-sm-10 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Pacientes
@@ -26,7 +26,7 @@
       </div>
       <div class="x_content">
         <div class="row">
-          <div class="col-md-6 col-xs-12">
+          <div class="col-md-7 col-xs-12">
             <div class="btn-group">
               <a href={!! asset('/pacientes/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
               <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target=".bs-modal-lg" id="abrir_filtro" >
@@ -92,9 +92,9 @@
                   </td>
                   <td>
                     @if ($paciente->sexo)
-                      {{ "Masculino" }}
+                      <span class="label-lg label label-cian">Masculino</span>
                     @else
-                      {{ "Femenino" }}
+                      <span class="label-lg label label-pink">Femenino</span>
                     @endif
                   </td>
                   <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>

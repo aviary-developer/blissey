@@ -112,6 +112,11 @@ class PacienteController extends Controller
       DB::beginTransaction();
       try {
         $pacientes = Paciente::create($request->All());
+        if($pacientes->pais != null){
+          $pacientes->departamento = null;
+          $pacientes->municipio = null;
+        }
+        $pacientes->save();
       } catch (Exception $e) {
         DB::rollback();
         return redirect('/pacientes')->with('mensaje', 'Algo salio mal');
@@ -156,6 +161,10 @@ class PacienteController extends Controller
     {
         $pacientes = Paciente::find($id);
         $pacientes->fill($request->all());
+        if($pacientes->pais != null){
+          $pacientes->departamento = null;
+          $pacientes->municipio = null;
+        }
         $pacientes->save();
         Bitacora::bitacora('update','pacientes','pacientes',$id);
         if($pacientes->estado)
@@ -300,4 +309,337 @@ class PacienteController extends Controller
       $pacientes = Paciente::contar($nombre,$apellido,$sexo,$telefono,$dui,$direccion,$fecha_minima,$fecha_maxima,$estado);
       return Response::json($pacientes);
     }
+
+  function guardar_externo(Request $request){
+    DB::beginTransaction();
+    try {
+      $pacientes = Paciente::create($request->All());
+      if($pacientes->pais != null){
+        $pacientes->departamento = null;
+        $pacientes->municipio = null;
+      }
+      $pacientes->save();
+    } catch (Exception $e) {
+      DB::rollback();
+      return false;
+    }
+    DB::commit();
+    Bitacora::bitacora('store','pacientes','pacientes',$pacientes->id);
+    $respuesta = [
+      'nombre' => $pacientes->nombre,
+      'apellido' => $pacientes->apellido,
+      'id' => $pacientes->id
+    ];
+    return $respuesta;
+  }
+
+  //Funcion para cargar municipios segun el departamento
+
+  function municipios($departamento){
+    if($departamento == "San Salvador"){
+      $municipios = [
+        "San Salvador",
+        "Aguilares",
+        "Apopa",
+        "Ayutuxtepeque",
+        "Ciudad Delgado",
+        "Cuscatancingo",
+        "El Paisnal",
+        "Guazapa",
+        "Ilopango",
+        "Mejicanos",
+        "Nejapa",
+        "Panchimalco",
+        "Rosario de Mora",
+        "San Marcos",
+        "San Martín",
+        "Santiago Texacuangos",
+        "Santo Tomás",
+        "Soyapango",
+        "Tonacatepeque"
+      ];
+    }else if($departamento == "Santa Ana"){
+      $municipios = [
+        "Santa Ana",
+        "Candelaria de la Frontera",
+        "Chalchuapa",
+        "Coatepeque",
+        "El Congo",
+        "El Porvenir",
+        "Masahuat",
+        "Metapán",
+        "San Antonio Pajonal",
+        "San Sebastián Salitrillo",
+        "Santa Rosa Guachipilín",
+        "Santiago de la Frontera",
+        "Texistepeque"
+      ];
+    }else if($departamento == "San Miguel"){
+      $municipios = [
+        "San Miguel",
+        "Carolina",
+        "Chapeltique",
+        "Chirilagua",
+        "Ciudad Barrios",
+        "Comacarán",
+        "El Tránsito",
+        "Lolotique",
+        "Moncagua",
+        "Nueva Guadalupe",
+        "Nuevo Edén de San Juan",
+        "Quelepa",
+        "San Antonio del Mosco",
+        "San Gerardo",
+        "San Jorge",
+        "San Luis de la Reina",
+        "San Rafael Oriente",
+        "Sesori",
+        "Uluazapa"
+      ];
+    }else if($departamento == "La Libertad"){
+      $municipios = [
+        "Santa Tecla",
+        "Antiguo Cuscatlán",
+        "Chiltiupán",
+        "Ciudad Arce",
+        "Colón",
+        "Comasagua",
+        "Huizúcar",
+        "Jayaque",
+        "Jicalapa",
+        "La Libertad",
+        "Nuevo Cuscatlán",
+        "San Juan Opico",
+        "Quezaltepeque",
+        "Sacacoyo",
+        "San José Villanueva",
+        "San Matías",
+        "San Pablo Tacachico",
+        "Talnique",
+        "Tamanique",
+        "Teotepeque",
+        "Tepecoyo",
+        "Zaragoza"
+      ];
+    }else if($departamento == "Usulután"){
+      $municipios = [
+        "Usulután",
+        "Alegría",
+        "Berlín",
+        "California",
+        "Concepción Batres",
+        "El Triunfo",
+        "Ereguayquín",
+        "Estanzuelas",
+        "Jiquilisco",
+        "Jucuapa",
+        "Jucuarán",
+        "Mercedes Umaña",
+        "Nueva Granada",
+        "Ozatlán",
+        "Puerto El Triunfo",
+        "San Agustín",
+        "San Buenaventura",
+        "San Dionisio",
+        "San Francisco Javier",
+        "Santa Elena",
+        "Santa María",
+        "Santiago de María",
+        "Tecapán"
+      ];
+    }else if($departamento == "Sonsonate"){
+      $municipios = [
+        "Sonsonate",
+        "Acajutla",
+        "Armenia",
+        "Caluco",
+        "Cuisnahuat",
+        "Izalco",
+        "Juayúa",
+        "Nahuizalco",
+        "Nahulingo",
+        "Salcoatitán",
+        "San Antonio del Monte",
+        "San Julián",
+        "Santa Catarina Masahuat",
+        "Santa Isabel Ishuatán",
+        "Santo Domingo de Guzmán",
+        "Sonzacate"
+      ];
+    }else if($departamento == "La Unión"){
+      $municipios = [
+        "La Unión",
+        "Anamorós",
+        "Bolívar",
+        "Concepción de Oriente",
+        "Conchagua",
+        "El Carmen",
+        "El Sauce",
+        "Intipucá",
+        "Lilisque",
+        "Meanguera del Golfo",
+        "Nueva Esparta",
+        "Pasaquina",
+        "Polorós",
+        "San Alejo",
+        "San José",
+        "Santa Rosa de Lima",
+        "Yayantique",
+        "Yucuaiquín"
+      ];
+    }else if($departamento == "La Paz"){
+      $municipios = [
+        "Zacatecoluca",
+        "Cuyultitán",
+        "El Rosario",
+        "Jerusalén",
+        "Mercedes La Ceiba",
+        "Olocuilta",
+        "Paraíso de Osorio",
+        "San Antonio Masahuat",
+        "San Emigdio",
+        "San Francisco Chinameca",
+        "San Juan Nonualco",
+        "San Juan Talpa",
+        "San Juan Tepezontes",
+        "San Luis La Herradura",
+        "San Luis Talpa",
+        "San Miguel Tepezontes",
+        "San Pedro Masahuat",
+        "San Pedro Nonualco",
+        "San Rafael Obrajuelo",
+        "Santa María Ostuma",
+        "Santiago Nonualco",
+        "Tapalhuaca"
+      ];
+    }else if($departamento == "Chalatenango"){
+      $municipios = [
+        "Chalatenango",
+        "Agua Caliente",
+        "Arcatao",
+        "Azacualpa",
+        "Citalá",
+        "Comalapa",
+        "Concepción Quezaltepeque",
+        "Dulce Nombre de María",
+        "El Carrizal",
+        "El Paraíso",
+        "La Laguna",
+        "La Palma",
+        "Las Vueltas",
+        "Nombre de Jesús",
+        "Nueva Concepción",
+        "Nueva Trinidad",
+        "Ojos de Agua",
+        "Potonico",
+        "San Antonio de la Cruz",
+        "San Antonio los Ranchos",
+        "San Fernando",
+        "San Francisco Lempa",
+        "San Francisco Morazán",
+        "San Ignacio",
+        "San Isidro Labrador",
+        "San José Cancasque",
+        "San José Las Flores",
+        "San Luis del Carmen",
+        "San Miguel de Mercedes",
+        "San Rafael",
+        "Santa Rita",
+        "Tejutla"
+      ];
+    }else if($departamento == "Cuscatlán"){
+      $municipios = [
+        "Conjutepeque",
+        "Candelaria",
+        "El Carmen",
+        "El Rosario",
+        "Monte San Juan",
+        "Oratorio de Concepción",
+        "San Bartolomé Perulapía",
+        "San Cristóbal",
+        "San José Guayabal",
+        "San Pedro Perulapán",
+        "San Rafael Cedros",
+        "San Ramón",
+        "Santa Cruz Analquito",
+        "Santa Cruz Michapa",
+        "Suchitoto",
+        "Tenancingo"
+      ];
+    }else if($departamento == "Ahuachapán"){
+      $municipios = [
+        "Ahuachapán",
+        "Apaneca",
+        "Atiquizaya",
+        "Concepción de Ataco",
+        "El Refugio",
+        "Guaymango",
+        "Jujutla",
+        "San Francisco Menéndez",
+        "San Lorenzo",
+        "San Pedro Puxtla",
+        "Tacuba",
+        "Turín"
+      ];
+    }else if ($departamento == "Morazán"){
+      $municipios = [
+        "San Francisco Gotera",
+        "Arambala",
+        "Cacaopera",
+        "Chilanga",
+        "Corinto",
+        "Delicias de Concepción",
+        "El Divisadero",
+        "El Rosario",
+        "Gualococti",
+        "Guatajiagua",
+        "Joateca",
+        "Jocoaitique",
+        "Jocoro",
+        "Lolotiquillo",
+        "Meanguera",
+        "Osicala",
+        "Perquín",
+        "San Carlos",
+        "San Fernando",
+        "San Isidro",
+        "San Simón",
+        "Sensembra",
+        "Sociedad",
+        "Torola",
+        "Yamabal",
+        "Yoloaquín"
+      ];
+    }else if($departamento == "San Vicente"){
+      $municipios = [
+        "San Vicente",
+        "Apastepeque",
+        "Guadalupe",
+        "San Cayetano Istepeque",
+        "San Esteban Catarina",
+        "San Ildefonso",
+        "San Lorenzo",
+        "San Sebastián",
+        "Santa Clara",
+        "Santo Domingo",
+        "Tecoluca",
+        "Tepetitán",
+        "Verapaz"
+      ];
+    }else if($departamento == "Cabañas"){
+      $municipios = [
+        "Sensuntepeque",
+        "Cinquera",
+        "Dolores",
+        "Guacotecti",
+        "Ilobasco",
+        "Jutiapa",
+        "San Isidro",
+        "Tejutepeque",
+        "Victoria"
+      ];
+    }
+
+    return $municipios;
+  }
 }

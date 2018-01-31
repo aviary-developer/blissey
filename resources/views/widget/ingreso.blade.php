@@ -11,7 +11,9 @@
     @if (count($primero)>0)
       @foreach ($primero as $ingreso)
         <tr>
-          <td>{{$ingreso->nombrePaciente($ingreso->f_paciente)}}</td>
+          <td>{{
+            $ingreso->paciente->apellido.', '.$ingreso->paciente->nombre
+          }}</td>
           @php
             $hoy = Carbon\Carbon::now();
           @endphp

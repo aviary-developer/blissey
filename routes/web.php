@@ -56,6 +56,8 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/destroyPaciente/{id}','PacienteController@destroy');
   Route::match(['get','post'],'/paciente_pdf','PacienteController@paciente_pdf');
   Route::match(['get','post'],'/filtrarPaciente','PacienteController@filtrar');
+  Route::match(['get','post'],'/municipios/{departamento}','PacienteController@municipios');
+  Route::match(['get','post'],'/guardar_paciente','PacienteController@guardar_externo');
   //Rutas de categoria servicio
   Route::resource('categoria_servicios','CategoriaServicioController');
   Route::match(['get','post'],'/desactivateCategoriaServicio/{id}','CategoriaServicioController@desactivate');
@@ -75,6 +77,7 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::resource('ingresos','IngresoController');
   Route::match(['get','post'],'/desactivateIngreso/{id}','IngresoController@destroy');
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
+  Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
 });
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){

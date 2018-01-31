@@ -3,6 +3,7 @@
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'pacientes.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
     $fecha = Carbon\Carbon::now();
+    $create = true;
   @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">

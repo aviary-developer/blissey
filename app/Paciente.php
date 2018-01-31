@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paciente extends Model
 {
-    protected $fillable = ['nombre','apellido','direccion','telefono','sexo','fechaNacimiento','dui'];
+    protected $fillable = [
+      'nombre',
+      'apellido',
+      'direccion',
+      'telefono',
+      'sexo',
+      'fechaNacimiento',
+      'dui',
+      'pais',
+      'departamento',
+      'municipio'
+    ];
     protected $dates = ['fechaNacimiento'];
 
     public static function buscar($nombre, $apellido, $sexo, $telefono, $dui, $direccion, $fecha_minima, $fecha_maxima, $estado){
