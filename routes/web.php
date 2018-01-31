@@ -164,6 +164,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarProductoVenta/{texto}','TransaccionController@buscarVenta');
   Route::match(['get','post'],'/buscarComponenteVenta/{texto}','TransaccionController@buscarComponente');
   Route::match(['get','post'],'/eliminarPedido/{id}','TransaccionController@eliminarPedido');
+  Route::match(['get','post'],'/buscarServicios/{texto}','TransaccionController@buscarServicio');
   //Rutas de estantes
   Route::resource('estantes','EstanteController');
   Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');

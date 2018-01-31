@@ -16,6 +16,7 @@ use Auth;
 use Validator;
 use App\Paciente;
 use App\Componente;
+use App\Servicio;
 
 class TransaccionController extends Controller
 {
@@ -98,15 +99,18 @@ class TransaccionController extends Controller
       }else{
         $transaccion= new Transacion;
         $transaccion->fecha=$request->fecha;
+        $tipo_detalle=$request->tipo_detalle;
         if(isset($request->f_cliente)){
           $transaccion->f_cliente=$request->f_cliente;
         }
+        $transaccion->factura=$request->factura;
         $transaccion->tipo=$tipo;
         $transaccion->f_usuario=Auth::user()->id;
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
 
         for ($i=0; $i < count($f_producto); $i++) {
+          if($tipo_detalle[$i]==1){
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
             'f_producto'=>$f_producto[$i],
@@ -123,6 +127,15 @@ class TransaccionController extends Controller
           'existencia_nueva'=>$inventario->existencia_nueva-$cantidad[$i],
           'localizacion'=>Transacion::tipoUsuario(),
           ]);
+        }else{
+          DetalleTransacion::create([
+            'f_transaccion'=>$transaccion->id,
+            'f_servicio'=>$f_producto[$i],
+            'cantidad'=>$cantidad[$i],
+            'precio'=>$precio[$i],
+            'condicion'=>1,
+          ]);
+        }
         }
       }
       }catch(\Exception $e){
@@ -332,5 +345,9 @@ class TransaccionController extends Controller
       Transacion::destroy($id);
       return redirect('/transacciones?tipo=0');
 
+    }
+    public static function buscarServicio($texto){
+    $servicios=Servicio::where('estado',true)->where('nombre', 'ilike','%'.$texto.'%')->orderBy('nombre')->get();
+      return $servicios;
     }
 }

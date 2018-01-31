@@ -14,6 +14,9 @@ class DetalleTransacion extends Model
 public function divisionProducto(){
   return $this->belongsTo('App\DivisionProducto','f_producto');
 }
+public function servicio(){
+  return $this->belongsTo('App\Servicio','f_servicio');
+}
 public static function cuenta($id){
   $cuenta=DetalleTransacion::where('f_producto',$id)->count();
 
