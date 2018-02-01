@@ -45,10 +45,8 @@
                 <td>{{ $donacion->anticuerpos }}</td>
               </tr>
               <tr>
-              <div class="col-md-6">
                 <img src={{asset(Storage::url($donacion->pruebaCruzada))}} class="img-responsive miniperfil">
                 <center>Prueba Cruzada</center>
-              </div>
             </tr>
             <tr>
               <th>Fecha de Vencimiento</th>

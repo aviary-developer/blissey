@@ -1,20 +1,20 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/parametros/'.$parametro->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/bancosangre/'.$donacion->id)!!} class="btn btn-xs btn-info">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/parametros/'.$parametro->id.'/edit')!!} class="btn btn-xs btn-primary">
+  <a href={!! asset('/bancosangre/'.$donacion->id.'/edit')!!} class="btn btn-xs btn-primary">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$parametro->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$donacion->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$parametro->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$donacion->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
 @else
   <div class="btn-group">
-    @if (!$parametro->estado)
+    @if (!$donacion->estado)
       @php
         $regreso = "?estado=0";
       @endphp
@@ -23,21 +23,21 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/parametros'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/bancosangre'.$regreso)!!} class="btn btn-dark btn-ms">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/parametros/'.$parametro->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/bancosangre/'.$donacion->id.'/edit')!!} class="btn btn-dark btn-ms">
       <i class="fa fa-edit"></i> Editar
     </a>
-    @if ($parametro->estado)
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$parametro->id.");'" !!}>
+    @if ($donacion->estado)
+      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$donacion->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$parametro->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$donacion->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$parametro->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$donacion->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
@@ -62,7 +62,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateParametro/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateBancoSangre/'+id);
       $('#formulario').submit();
       swal(
         '¡Activado!',
@@ -96,7 +96,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyParametro/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyBancoSangre/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -129,7 +129,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateParametro/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateBancoSangre/'+id);
       $('#formulario').submit();
       swal(
         '¡Desactivado!',
