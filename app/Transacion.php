@@ -12,8 +12,13 @@ class Transacion extends Model
   ];
   protected $dates = ['fecha'];
 
-  public static function buscar($tipo,$estado){
-    return Transacion::tipo($tipo)->Localizacion()->estado($estado)->orderBy('fecha')->paginate(10);
+  public static function buscar($buscar,$tipo,$estado,$anulado){
+    return Transacion::factura($buscar)->tipo($tipo)->Localizacion()->estado($estado)->anulado($anulado)->orderBy('fecha','DESC')->paginate(10);
+  }
+  public function scopeFactura($query, $buscar){
+    if(trim($buscar)!=""){
+      $query->where('factura', 'ilike','%'.$buscar.'%');
+    }
   }
   public function scopeTipo($query, $tipo){
       $query->where('tipo', '=',$tipo);
@@ -27,6 +32,13 @@ class Transacion extends Model
         $query->where('factura', '=',null)->orWhere('factura','=','');
       }elseif($estado==0){
         $query->where('factura', '<>',null)->orWhere('factura','<>','');
+      }
+  }
+  public function scopeAnulado($query, $anulado){
+      if($anulado==0 || $anulado==""){
+        $query->where('anulado',0);
+      }elseif($anulado==1){
+        $query->where('anulado',1);
       }
   }
   public static function arrayClientes(){ //Retorna los pacientes activos usando la función buscar

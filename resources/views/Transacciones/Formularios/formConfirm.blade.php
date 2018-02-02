@@ -71,7 +71,7 @@
             <th colspan="2">Detalle</th>
             <th>Descuento</th>
             <th>Fecha de vencimiento</th>
-            <th>Precio</th>
+            <th>Precio unitario</th>
             <th>Lote</th>
             <th style="width : 80px">Acción</th>
           </thead>
