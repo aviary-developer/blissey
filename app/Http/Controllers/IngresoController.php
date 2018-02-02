@@ -157,8 +157,11 @@ class IngresoController extends Controller
     }
 
     public function acta_pdf($id){
-      $header = view('Ingresos.PDF.acta');
-      $pdf = \PDF::loadView('temporal')->setOption('footer-html',$header);
+      $ingreso = Ingreso::find($id);
+      $header = view('PDF.header.hospital');
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('Ingresos.PDF.acta',compact('ingreso'));
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
       return $pdf->stream('nombre.pdf');
     }
 }

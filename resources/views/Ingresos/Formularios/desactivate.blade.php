@@ -1,5 +1,5 @@
 {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
-<a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento">
+<a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
   <i class="fa fa-print"></i>
 </a>
 @if ($ingreso->estado == 0)

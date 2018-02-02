@@ -1,7 +1,43 @@
 *{
   font-family: sans-serif;
+  font-size: 11pt;
+  color: black;
+}
+.vivaldi{
+  font-family: "Vivaldi";
+}
+.logo-pdf{
+  width: 120px;
+  height: 120px;
+}
+.corte-abajo{
+  padding-bottom: 2px;
+  border-bottom-color: orangered;
+  border-bottom-style: double;
+}
+.numero-pagina{
+  text-align: right;
+  padding-bottom: 15px;
+}
+.subrayar {
+  padding-bottom: 0.5px;
+  border-bottom-color: white;
+  border-bottom-style: ridge;
+}
+.justificar{
+  text-align: justify;
+  text-indent: 1rem;
 }
 table{
   width: 100%;
-  font-size: 10pt;
+}
+
+th{
+  background-color: silver;
+  text-align: center;
+}
+
+th, td{
+  border: 1px black solid;
+  padding: 5px;
 }
