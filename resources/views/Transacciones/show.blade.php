@@ -74,17 +74,19 @@
                   <thead>
                     <th>Cantidad</th>
                     <th colspan='2'>Detalle</th>
-                    <th>Descuento</th>
                     @if(!$transaccion->tipo)
                     <th>Fecha de vencimiento</th>
                   @endif
-                    <th>Precio</th>
                     @if(!$transaccion->tipo)
                     <th>Lote</th>
                       @endif
+                      <th>Precio unitario</th>
+                      <th>Descuento</th>
+                      <th>Subtotal</th>
                   </thead>
                   @php
                   $detalles=$transaccion->detalleTransaccion;
+                  $total=0;
                   @endphp
 
                   <tbody>
@@ -104,17 +106,45 @@
                       <td>{{$detalle->servicio->nombre}}</td>
                       <td></td>
                     @endif
-                      <td>{{$detalle->descuento}}%</td>
+
                       @if(!$transaccion->tipo)
                       <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>
                     @endif
-                      <td>$ {{number_format($detalle->precio,2,'.','.')}}</td>
-                        @if(!$transaccion->tipo)
+                    @if(!$transaccion->tipo)
+                      @php
+                        $aux=8;
+                      @endphp
                       <td>{{$detalle->lote}}</td>
+                    @else
+                      @php
+                        $aux=6;
+                      @endphp
                     @endif
+                    @php
+                      $descontado=number_format($detalle->precio-($detalle->precio*($detalle->descuento/100)),2,'.','.');
+                    @endphp
+                    <td>$ {{number_format($detalle->precio,2,'.','.')}}</td>
+                    <td>{{$detalle->descuento}}%</td>
+                    <td>{{number_format($detalle->cantidad*$descontado,2,'.','.')}}</td>
+                    @php
+                    $total=$total+($detalle->cantidad*$descontado);
+                    @endphp
                     </tr>
                   @endforeach
+                  <tr>
+                    <td colspan='{{$aux}}'><div style="text-align:right;">
+                      @if ($transaccion->descuento>0)(Descuento {{$transaccion->descuento}}%)
+                      @else Total:
+                      @endif
+                          $ {{number_format($total,2,'.','.')}}</div></td>
+                  </tr>
+                  @if ($transaccion->descuento>0)
+                    <tr>
+                      <td colspan='{{$aux}}'><div style="text-align:right;">Total:  $ {{number_format($total-($total*($transaccion->descuento/100)),2,'.','.')}}</div></td>
+                    </tr>
+                  @endif
                   </tbody>
+
                 </table>
               </div>
             </div>

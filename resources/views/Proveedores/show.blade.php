@@ -26,7 +26,7 @@
       <div class="" role="tabpanel" data-example-id="togglable-tabs">
         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos Personales</a>
+            <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos del Proveedor</a>
           </li>
         </ul>
         {{-- Contenido del tab --}}

@@ -16,7 +16,7 @@
             @endif
           @else
             Ventas
-            @if($estado==1 || $estado=='')
+            @if($anulado==1)
             <small>Anuladas</small>
             @else
               <small>Realizadas</small>
@@ -37,7 +37,7 @@
                 <i class="fa fa-file"></i> Comfirmados
                 <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
-            @elseif($estado==0)
+            @elseif($anulado==0 || $anulado=='')
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Por confirmar
@@ -46,18 +46,18 @@
             @endif
               <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
             @else
-              @if($estado==1 || $estado=='')
+              @if($anulado==1 || $anulado=='')
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0') !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0'.'&anulado=0') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Realizadas
-                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','<>',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                <span class="label label-warning">{{ App\Transacion::where('anulado',false)->where('tipo',$tipo)->where('factura','<>',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
-            @elseif($estado==0)
+            @elseif($anulado==0)
               <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=1') !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/transacciones?tipo='.$tipo.'&estado=0'.'&anulado=1') !!} class="btn btn-dark btn-ms">
                 <i class="fa fa-file"></i> Anuladas
-                <span class="label label-warning">{{ App\Transacion::where('tipo',$tipo)->where('factura','=',null)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                <span class="label label-warning">{{ App\Transacion::where('anulado',true)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
               </a>
             @endif
               <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
@@ -73,6 +73,7 @@
               {!! Form::text('buscar',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
               <input type="hidden" value={{$tipo}} name="tipo">
               <input type="hidden" value={{$estado}} name="estado">
+              <input type="hidden" value={{$anulado}} name="anulado">
             </div>
             {!! Form::close() !!}
           </div>
@@ -83,6 +84,9 @@
             <tr>
               <th>#</th>
               <th>Fecha</th>
+              @if($tipo==0 && $estado==0 || $tipo==1)
+                <th>Factura</th>
+              @endif
               @if ($tipo==1)
                 <th>Cliente</th>
               @else
@@ -100,6 +104,9 @@
                 <tr>
                   <td>{{ $correlativo }}</td>
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
+                  @if($tipo==0 && $estado==0 || $tipo==1)
+                    <td>{{$transaccion->factura}}</td>
+                  @endif
                   @if ($tipo==1)
                   <td>
                     @if(count($transaccion->cliente)>0)
@@ -146,7 +153,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $transacciones->appends(Request::only(['buscar','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $transacciones->appends(Request::only(['buscar','estado','anulado','tipo']))->render ()) !!}
         </center>
       </div>
     </div>
