@@ -8,7 +8,7 @@ use Auth;
 class Transacion extends Model
 {
   protected $fillable = [
-    'fecha','factura','f_cliente','f_proveedor','descuento','tipo','f_usuario','localizacion'
+    'fecha','factura','f_cliente','f_proveedor','descuento','tipo','f_usuario','localizacion','anulado','comentario'
   ];
   protected $dates = ['fecha'];
 

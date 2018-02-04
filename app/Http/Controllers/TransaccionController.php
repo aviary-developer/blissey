@@ -352,4 +352,34 @@ class TransaccionController extends Controller
     $servicios=Servicio::where('estado',true)->where('nombre', 'ilike','%'.$texto.'%')->orderBy('nombre')->get();
       return $servicios;
     }
+    public static function anularVenta($id,$comentario){
+      echo $id;
+      DB::beginTransaction();
+      try {
+        $t=Transacion::find($id);
+        $t->anulado=true;
+        $t->comentario=$comentario;
+        $detalles=$t->detalleTransaccion;
+        foreach ($detalles as $d) {
+          if ($d->f_producto!=null) {
+            $ultimoInventario=InventarioFarmacia::where('f_producto',$d->f_producto)->where('localizacion',Transacion::tipoUsuario())->get()->last();
+            InventarioFarmacia::create([
+              'tipo'=>1,
+              'f_producto'=>$d->f_producto,
+              'existencia_anterior'=>$ultimoInventario->existencia_nueva,
+              'cantidad'=>$d->cantidad,
+              'existencia_nueva'=>$ultimoInventario->existencia_nueva+$d->cantidad,
+              'localizacion'=>Transacion::tipoUsuario(),
+            ]);
+          }
+        }
+
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('/transacciones?tipo=1&estado=0')->with('error', '¡Algo salio mal!');
+      }
+      $t->save();
+      DB::commit();
+      return redirect('/transacciones?tipo=1&estado=0')->with('mensaje', '¡Anulado!');
+    }
 }
