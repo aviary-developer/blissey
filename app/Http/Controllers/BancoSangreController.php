@@ -70,6 +70,7 @@ class BancoSangreController extends Controller
     public function show($id)
     {
         $donacion=BancoSangre::find($id);
+        //return \PDF::loadView('BancoSangre.pruebaCruzada',compact('donacion'))->stream('Prueba_Cruzada_'.$donacion->id.'.pdf');
         return view('BancoSangre.show',compact('donacion'));
     }
 
@@ -79,9 +80,10 @@ class BancoSangreController extends Controller
      * @param  \App\BancoSangre  $bancoSangre
      * @return \Illuminate\Http\Response
      */
-    public function edit(BancoSangre $bancoSangre)
+    public function edit($id)
     {
-        //
+      $donacion = BancoSangre::find($id);
+      return view('BancoSangre.edit',compact('donacion'));
     }
 
     /**
@@ -91,9 +93,24 @@ class BancoSangreController extends Controller
      * @param  \App\BancoSangre  $bancoSangre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BancoSangre $bancoSangre)
+    public function update(Request $request, $id)
     {
-        //
+      $donacionAnterior = BancoSangre::find($id);
+      $donacion = BancoSangre::find($id);
+      $donacion->fill($request->all());
+      if($request->hasfile('pruebaCruzada')){
+        $donacion->pruebaCruzada = $request->file('pruebaCruzada')->store('public/pruebaCruzada');
+      }else {
+        $donacion->pruebaCruzada=$donacionAnterior->pruebaCruzada;
+      }
+      $donacion->save();
+      if($donacion->estado)
+      {
+        return redirect('/bancosangre')->with('mensaje', '¡Editado!');
+      }
+      else{
+        return redirect('/bancosangre?estado=0')->with('mensaje', '¡Editado!');
+      }
     }
 
     /**
@@ -102,8 +119,24 @@ class BancoSangreController extends Controller
      * @param  \App\BancoSangre  $bancoSangre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BancoSangre $bancoSangre)
+    public function destroy($id)
     {
-        //
+      $donacion = BancoSangre::findOrFail($id);
+      $donacion->delete();
+      return redirect('/bancosangre?estado=0');
+    }
+
+    public function desactivate($id){
+      $donacion = BancoSangre::find($id);
+      $donacion->estado = false;
+      $donacion->save();
+      return Redirect::to('/bancosangre');
+    }
+
+    public function activate($id){
+      $donacion = BancoSangre::find($id);
+      $donacion->estado = true;
+      $donacion->save();
+      return Redirect::to('/bancosangre?estado=0');
     }
 }

@@ -6,11 +6,15 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
+    @if(!$transaccion->anulado)
           @if(!$transaccion->tipo)
         <h2>Pedido<small>Confirmado</small></h2>
       @else
         <h2>Venta<small>Realizada</small></h2>
       @endif
+    @else
+        <h2>Venta<small>Anulada</small></h2>
+    @endif
         <div class="clearfix"></div>
         <div class="x_content">
           <div class="row">
