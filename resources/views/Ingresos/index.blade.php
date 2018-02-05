@@ -18,7 +18,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Ingresos
+          Hospitalización
           @if ($estadoOpuesto != 2)
             <small>Alta médica</small>
           @else
@@ -56,10 +56,10 @@
           <table class="table table-striped">
             <thead>
               <th>#</th>
+              <th>Expediente</th>
               <th>Paciente</th>
               <th>Médico</th>
               <th>Habitación</th>
-              <th>Fecha de Ingreso</th>
               <th>Opciones</th>
             </thead>
             <tbody>
@@ -70,6 +70,11 @@
                 @foreach ($ingresos as $ingreso)
                   <tr>
                     <td>{{$correlativo + $pagina}}</td>
+                    <td>
+                      <a href={{asset('/ingresos/'.$ingreso->id)}}>
+                        {{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}
+                      </a>
+                    </td>
                     <td>
                       <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
                         {{$ingreso->paciente->apellido.', '.$ingreso->paciente->nombre}}
@@ -89,7 +94,6 @@
                         {{'Habitación '.$ingreso->habitacion->numero}}
                       </a>
                     </td>
-                    <td>{{$ingreso->fecha_ingreso->format('d / m / Y')}}</td>
                     <td>
                       @include('Ingresos.Formularios.desactivate')
                     </td>

@@ -1,14 +1,52 @@
 {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
-<a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
-  <i class="fa fa-print"></i>
-</a>
-@if ($ingreso->estado == 0)
-  <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Confirmar ingreso" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
-    <i class="fa fa-check"></i>
-  </button>
-  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!!"'eliminar(".$ingreso->id.");'"!!}/>
-    <i class="fa fa-remove"></i>
-  </button>
+@if ($index)
+  <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
+    <i class="fa fa-print"></i>
+  </a>
+  <a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+    <i class="fa fa-info-circle"></i>
+  </a>
+  @if ($ingreso->estado == 0)
+    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Confirmar ingreso" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
+      <i class="fa fa-check"></i>
+    </button>
+    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!!"'eliminar(".$ingreso->id.");'"!!}/>
+      <i class="fa fa-remove"></i>
+    </button>
+  @endif
+@else
+  <div class="btn-group col-xs-6">
+    @if ($ingreso->estado > 1)
+      @php
+        $regreso = "?estado=2";
+      @endphp
+    @else
+      @php
+        $regreso = "";
+      @endphp
+    @endif
+    <a href={!! asset('/ingresos'.$regreso)!!} class="btn btn-dark btn-sm">
+      <i class="fa fa-arrow-left"></i> Atras
+    </a>
+    <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" target="_blank">
+      <i class="fa fa-print"></i> Acta de consentimiento
+    </a>
+    
+    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
+      <i class="fa fa-question"></i> Ayuda
+    </a>
+  </div>
+  <div class="col-xs-1"></div>
+  <div class="btn-group alignright">
+    @if ($ingreso->estado == 0)
+      <button type="button" class="btn btn-success btn-sm" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
+        <i class="fa fa-check"></i> Confrimar ingreso
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!!"'eliminar(".$ingreso->id.");'"!!}/>
+        <i class="fa fa-remove"></i> Eliminar
+      </button>
+    @endif
+  </div>
 @endif
 {!!Form::close()!!}
 

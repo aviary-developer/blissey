@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Ingreso extends Model
 {
     protected $fillable = [
-      'fecha_ingreso', 'f_paciente', 'f_responsable',
-      'f_medico', 'f_habitacion'
+      'fecha_ingreso', 
+      'f_paciente', 
+      'f_responsable',
+      'f_medico', 
+      'f_habitacion',
+      'f_recepcion',
+      'expediente'
     ];
 
     protected $dates = ['fecha_ingreso','fecha_alta'];
@@ -39,5 +44,9 @@ class Ingreso extends Model
 
     public function medico(){
       return $this->belongsTo('App\User', 'f_medico');
+    }
+
+     public function recepcion(){
+      return $this->belongsTo('App\User', 'f_recepcion');
     }
 }

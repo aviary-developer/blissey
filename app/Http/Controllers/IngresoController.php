@@ -12,6 +12,8 @@ use DB;
 use Redirect;
 use Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\IngresoRequest;
 
 class IngresoController extends Controller
 {
@@ -54,18 +56,30 @@ class IngresoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IngresoRequest $request)
     {
         DB::beginTransaction();
         try {
+          $ultimo_registro = Ingreso::where('fecha_ingreso','>=','1-1-'.date('Y'))->where('fecha_ingreso','<=','31-12-'.date('Y'))->get()->last();
+          if($ultimo_registro->expediente == null){
+            $correlativo = 0;
+          }else{
+            $correlativo = $ultimo_registro->expediente;
+          }
           $ingresos = new Ingreso;
           $ingresos->f_paciente = $request->f_paciente;
+          if($request->c_responsable == 'on'){
           $ingresos->f_responsable = $request->f_responsable;
+          }else{
+            $ingresos->f_responsable = $request->f_paciente;
+          }
           $ingresos->f_habitacion = $request->f_habitacion;
           $ingresos->f_medico = $request->f_medico;
           $aux = explode('T',$request->fecha_ingreso);
           $fecha = $aux[0].' '.$aux[1];
           $ingresos->fecha_ingreso  = $fecha.':00';
+          $ingresos->expediente = $correlativo+1;
+          $ingresos->f_recepcion = Auth::user()->id;
           $ingresos->save();
 
           $habitacion = Habitacion::find($request->f_habitacion);
@@ -86,9 +100,10 @@ class IngresoController extends Controller
      * @param  \App\Ingreso  $ingreso
      * @return \Illuminate\Http\Response
      */
-    public function show(Ingreso $ingreso)
+    public function show($id)
     {
-        //
+        $ingreso = Ingreso::find($id);
+        return view('Ingresos.show',compact('ingreso'));
     }
 
     /**
@@ -161,7 +176,33 @@ class IngresoController extends Controller
       $header = view('PDF.header.hospital');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('Ingresos.PDF.acta',compact('ingreso'));
-      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
       return $pdf->stream('nombre.pdf');
+    }
+
+    public function buscarPersonas(Request $request)
+    {
+      $nombre = $request->nombre;
+      $tipo = $request->tipo;
+      $fecha = Carbon::now();
+      $fecha = $fecha->subYears(18);
+      if($tipo == "paciente"){
+        $pacientes = DB::table('pacientes')
+        ->whereNotExists(
+          function ($query){
+            $query->select(DB::raw(1))
+            ->from('ingresos')
+            ->whereRaw('ingresos.f_paciente = pacientes.id');
+          }
+        )->where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+      }else{
+        $pacientes = Paciente::where('fechaNacimiento','<=',$fecha->format('Y-m-d'))->where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+      }
+      if(count($pacientes)>0){
+        return Response::json($pacientes);
+        
+      }else{
+        return null;
+      }
     }
 }

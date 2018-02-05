@@ -91,7 +91,7 @@
         </span>
       </div>
       <div class="col-xs-7 subrayar">
-        <b class="red">{{' 999-PTEHDN-2018'}}</b>
+        <b>{{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}</b>
       </div>
     </div>
   </div>
@@ -120,7 +120,7 @@
         </span>
       </div>
       <div class="col-xs-10 subrayar">
-        <b class="red">Nombre del recepcionista</b>
+        <b>{{$ingreso->recepcion->nombre.' '.$ingreso->recepcion->apellido}}</b>
       </div>
     </div>
   </div>

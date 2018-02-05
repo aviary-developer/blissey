@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-8 col-sm-8 col-xs-8">
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -56,7 +56,7 @@
                         <thead>
                           <th class="col-md-2 col-sm-2">Código</th>
                           <th>Examen</th>
-                          <th>Opción</th>
+                          <th style="width: 120px">Opción</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
@@ -92,7 +92,7 @@
                         <thead>
                           <th class="col-md-2 col-sm-2">Código</th>
                           <th>Paciente</th>
-                          <th>Opción</th>
+                          <th style="width: 120px">Opción</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)

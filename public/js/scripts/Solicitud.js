@@ -5,7 +5,7 @@ $(document).on("ready", function () {
     var celda = $(this).parents('tr').find("td:eq(2)");
     var tooltip = $(".tooltip-inner").parent('div');
     var html =
-      '<button id="evaluar" type="button" class="btn btn-dark btn-xs" data-toggle="tooltip" data-placement="top" title="Evaluar" >' +
+      '<button id="evaluar" type="button" class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Evaluar" >' +
         '<i class="fa fa-paste"></i>' +
       '</button >';
     $.ajax({

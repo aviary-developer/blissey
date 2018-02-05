@@ -28,33 +28,41 @@ $(document).on('ready', function () {
 
   $("#busqueda").keyup(function(){
     var valor = $("#busqueda").val();
+    var v_tipo = $("#seleccion").val();
     if(valor.length > 2){
-      var ruta = "/blissey/public/buscarPacienteIngreso/"+valor;
       var tabla = $("#tablaPaciente");
-      $.get(ruta,function(res){
-        tabla.empty();
-        head =
-        "<thead>"+
-        "<th>Nombre</th>"+
-        "<th style='width : 80px'>Acción</th>"+
-        "</thead>";
-        tabla.append(head);
-        $(res).each(function(key,value){
-          html =
-          "<tr>"+
-          "<td>"+
-          value.apellido+', '+value.nombre+
-          "</td>"+
-          "<td>"+
-          "<input type='hidden' name='nombre_paciente[]' value ='"+value.apellido+', '+value.nombre+"'>"+
-          "<input type='hidden' name='id_paciente[]' value ='"+value.id+"'>"+
-          "<button type='button' class='btn btn-xs btn-primary' id='agregar_paciente' data-dismiss='modal'>"+
-          "<i class='fa fa-check'></i>"+
-          "</button>"+
-          "</td>"+
-          "</tr>";
-          tabla.append(html);
-        });
+      $.ajax({
+        url: "/blissey/public/buscarPersonas",
+        type: "GET",
+        data: {
+          nombre: valor,
+          tipo: v_tipo
+        },
+        success: function (res){
+          tabla.empty();
+          head =
+            "<thead>" +
+            "<th>Nombre</th>" +
+            "<th style='width : 80px'>Acción</th>" +
+            "</thead>";
+          tabla.append(head);
+          $(res).each(function (key, value) {
+            html =
+              "<tr>" +
+              "<td>" +
+              value.apellido + ', ' + value.nombre +
+              "</td>" +
+              "<td>" +
+              "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
+              "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
+              "<button type='button' class='btn btn-xs btn-primary' id='agregar_paciente' data-dismiss='modal'>" +
+              "<i class='fa fa-check'></i>" +
+              "</button>" +
+              "</td>" +
+              "</tr>";
+            tabla.append(html);
+          });
+        }
       });
     }
   });
@@ -103,51 +111,68 @@ $(document).on('ready', function () {
     var v_direccion = $("#direccion_paciente").val();
     var token = $("#tokenPaciente").val();
 
-    var opcion = $("#seleccion").val();
-    if (opcion == "paciente") {
-      var input_nombre = $("#n_paciente");
-      var input_id = $("#f_paciente");
+    if (v_nombre == "" || v_apellido == "") {
+      swal('¡Error!', 'El nombre y apellido son obligatorios, intentelo de nuevo', 'error');
     } else {
-      var input_nombre = $("#n_responsable");
-      var input_id = $("#f_responsable");
+      var opcion = $("#seleccion").val();
+      if (opcion == "paciente") {
+        var input_nombre = $("#n_paciente");
+        var input_id = $("#f_paciente");
+      } else {
+        var input_nombre = $("#n_responsable");
+        var input_id = $("#f_responsable");
+      }
+  
+      $.ajax({
+        type: "POST",
+        url: "/blissey/public/guardar_paciente",
+        headers: { 'X-CSRF-TOKEN': token },
+        data: {
+          nombre: v_nombre,
+          apellido: v_apellido,
+          sexo: v_sexo,
+          fechaNacimiento: v_fecha,
+          dui: v_dui,
+          telefono: v_telefono,
+          pais: v_pais,
+          departamento: v_departamento,
+          municipio: v_municipio,
+          direccion: v_direccion
+        },
+        success: function (respuesta) {
+          if (respuesta != false) {
+            input_id.val(respuesta.id);
+            input_nombre.val(respuesta.apellido + ", " + respuesta.nombre);
+            return swal('¡Hecho!', 'Persona guardada', 'success');
+          } else {
+            return swal('¡Algo salio mal!', 'No se almaceno la información', 'error');
+          }
+        },
+        error: function () {
+          swal('¡Aviso!', 'El registro no fue agregado, intentelo de nuevo', 'warning');
+        }
+  
+      });
+
+      $("#nombre_paciente").val("");
+      $("#apellido_paciente").val("");
+      $("#dui_paciente").val("");
+      $("#telefono_paciente").val("");
+      $("#pais_paciente").val("");
+      $("#departamento_select").val("San Vicente");
+      cargar_municipio();
+      $("#direccion_paciente").val("");
+      $("#modal_persona").modal("hide");
     }
 
-    $.ajax({
-      type: "POST",
-      url: "/blissey/public/guardar_paciente",
-      headers: { 'X-CSRF-TOKEN': token },
-      data: {
-        nombre: v_nombre,
-        apellido: v_apellido,
-        sexo: v_sexo,
-        fechaNacimiento: v_fecha,
-        dui: v_dui,
-        telefono: v_telefono,
-        pais: v_pais,
-        departamento: v_departamento,
-        municipio: v_municipio,
-        direccion: v_direccion
-      },
-      success: function (respuesta) {
-        if (respuesta != false) {
-          input_id.val(respuesta.id);
-          input_nombre.val(respuesta.apellido + ", " + respuesta.nombre);
-          return swal('¡Hecho!', 'Persona guardada', 'success');
-        } else {
-          return swal('¡Algo salio mal!', 'No se almaceno la información', 'error');
-        }
-      }
 
-    });
-    $("#nombre_paciente").val("");
-    $("#apellido_paciente").val("");
-    $("#dui_paciente").val("");
-    $("#telefono_paciente").val("");
-    $("#pais_paciente").val("");
-    $("#departamento_select").val("San Vicente");
-    cargar_municipio();
-    $("#direccion_paciente").val("");
-    $("#modal_persona").modal("hide");
+  });
 
+  $("#c_responsable").on('click', function () {
+    if (this.checked == true) {
+      document.getElementById("responsable_div").style = "display: block";
+    } else {
+      document.getElementById("responsable_div").style = "display: none";
+    }
   });
 });

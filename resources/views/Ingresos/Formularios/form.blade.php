@@ -19,6 +19,13 @@
     </div>
   </div>
   <div class="form-group">
+    <center>
+      <label>
+        <input type="checkbox" name="c_responsable" id="c_responsable" class="js-switch" unchecked /> Añadir responsable
+      </label>
+    </center>
+  </div>
+  <div class="form-group" id="responsable_div" style="display: none">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Responsable *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <div class="input-group">
@@ -106,7 +113,7 @@
               <table class="table" id="tablaPaciente">
                 <thead>
                   <th>Nombre</th>
-                  <th style="width: 80px">Opciones</th>
+                  <th style="width: 80px">Acción</th>
                 </thead>
               </table>
             </div>
