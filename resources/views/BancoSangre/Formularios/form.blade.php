@@ -1,4 +1,5 @@
 <div class="x_content">
+  <div class="col-md-6 col-xs-12">
   <center>
     <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
   </center>
@@ -30,7 +31,7 @@
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Prueba cruzada</label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <span class="fa fa-pencil form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::file('pruebaCruzada',['id'=>'','class'=>'form-control has-feedback-left']) !!}
+        {!! Form::file('pruebaCruzada',['id'=>'pruebaCruzada','class'=>'form-control has-feedback-left']) !!}
       </div>
     </div>
     <div class="form-group">
@@ -52,3 +53,38 @@
     </center>
   </div>
 </div>
+<div class="col-md-6 col-xs-12">
+  <div class="">
+    <center>
+      <output id="listPC" style="height:400px">
+        @if ($create)
+          <img src={{asset(Storage::url('noImgen.jpg'))}} style="height : 400px">
+        @else
+          <img src={{asset(Storage::url($donacion->pruebaCruzada))}} style="height : 400px">
+        @endif
+      </output>
+    </center>
+  </div>
+</div>
+</div>
+<script>
+function pruebaCruzada(evt){
+  var files = evt.target.files;
+
+  for(var i = 0, f; f = files[i]; i++){
+    if(!f.type.match('image.*')){
+      continue;
+    }
+
+    var reader = new FileReader();
+
+    reader.onload = (function(theFile){
+      return function(e){
+        document.getElementById('listPC').innerHTML = ['<img style="height: 400px" src = "', e.target.result,'"/>'].join('');
+      };
+    })(f);
+    reader.readAsDataURL(f);
+  }
+}
+document.getElementById('pruebaCruzada').addEventListener('change', pruebaCruzada, false);
+</script>
