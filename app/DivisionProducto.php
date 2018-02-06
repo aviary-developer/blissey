@@ -45,5 +45,13 @@ class DivisionProducto extends Model
       // ->get();
       return $bitacora;
   }
+  public static function inventarioFarmacia($id){
+    $existe=InventarioFarmacia::where('f_producto',$id)->where('localizacion',0)->get()->last();
+    if (count($existe)>0) {
+      return $existe->existencia_nueva;
+    } else {
+      return 0;
+    }
+  }
 
 }

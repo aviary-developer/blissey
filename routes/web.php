@@ -83,6 +83,9 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/desactivateIngreso/{id}','IngresoController@destroy');
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
+  //Rutas de Requisiciones
+  Route::resource('requisiciones','RequisicionController');
+  Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
 });
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){
@@ -205,3 +208,4 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
 Route::get ('/github', 'PdfController@github');
+Route::get ('/llenar', 'RequisicionController@index');

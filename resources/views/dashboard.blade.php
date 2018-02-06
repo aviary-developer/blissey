@@ -394,6 +394,7 @@
       {!!Html::script('js/scripts/Solicitud.js')!!}
       {!!Html::script('js/scripts/Presentaciones.js')!!}
       {!!Html::script('js/general.js')!!}
+      {!!Html::script('js/scripts/Requisiciones.js')!!}
       @section('scripts')
       @show
 
