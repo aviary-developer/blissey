@@ -1,4 +1,4 @@
-@extends('PDF.laboratorio')
+@extends('PDF.hoja')
 @section('layout')
 	@php
   $fecha = Carbon\Carbon::now();

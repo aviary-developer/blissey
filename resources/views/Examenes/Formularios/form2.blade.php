@@ -42,7 +42,7 @@
         <option value="QUIMICA SANGUINEA">Química sanguínea</option>
         <option value="INMUNOLOGIA">Inmunología</option>
         <option value="ENZIMAS">Enzimas</option>
-        <option value="PRUEBAS ESPECIALES">Pruebas especialies</option>
+        <option value="PRUEBAS ESPECIALES">Pruebas especiales</option>
         <option value="OTROS">Otros</option>
         </select>
       </div>
