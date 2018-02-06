@@ -228,6 +228,10 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    return \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'))->stream('Examen_con_solicitud_'.$solicitud->id.'.pdf');
+    $header = view('PDF.header.hospital');
+    $footer = view('PDF.footer.numero_pagina');
+    $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
+    $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+    return $pdf->stream('Examen_con_solicitud_'.$solicitud->id.'.pdf');
   }
 }
