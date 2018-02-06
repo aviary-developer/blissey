@@ -20,8 +20,11 @@ class ExamenSeccionParametro extends Model
     return $nombre->nombre;
   }
   public function nombreUnidad($id){
-    $nombre = Unidad::find($id);
-    return $nombre->nombre;
+    if($id != null){
+      $nombre = Unidad::find($id);
+      return $nombre->nombre;
+    }
+    return "-";
   }
   public function examen(){
     return $this->belongsTo('App\Examen','f_examen');

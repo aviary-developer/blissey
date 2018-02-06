@@ -2,12 +2,13 @@ $(document).on("ready", function () {
   $("#accordion").on("click", "#activar", function (e) {
     e.preventDefault();
     var id = $(this).parents('tr').find("input:eq(0)").val();
+    var examen = $(this).parents('tr').find("input:eq(1)").val();
     var celda = $(this).parents('tr').find("td:eq(2)");
     var tooltip = $(".tooltip-inner").parent('div');
     var html =
-      '<button id="evaluar" type="button" class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Evaluar" >' +
+      '<a id="evaluar" href="evaluarExamen/'+id+'/'+ examen +'" class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Evaluar" >' +
         '<i class="fa fa-paste"></i>' +
-      '</button >';
+      '</a >';
     $.ajax({
       type: "GET",
       url: "/blissey/public/aceptarSolicitudExamen/" + id,

@@ -251,15 +251,17 @@ function rellenarCombosParametros(){
    });
  }
 //////////////////PARA PARAMETROS
-$('#checkValores').click(function(){
+$('#checkValores').click(function () {
   if(this.checked == true){
     $("#valorMinimo").prop("readonly", false);
     $("#valorMaximo").prop("readonly", false);
     $("#selectUnidadParametro").removeAttr('disabled');
+    $("#unidadModal").removeAttr('disabled');
   }else{
     $("#valorMaximo").prop("readonly", true);
     $("#valorMinimo").prop("readonly", true);
     $("#selectUnidadParametro").prop('disabled', 'disabled');
+    $("#unidadModal").prop('disabled', 'disabled');
   }
 });
 //////////////////PARA EXAMENES

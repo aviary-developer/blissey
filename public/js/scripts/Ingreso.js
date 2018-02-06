@@ -73,7 +73,7 @@ $(document).on('ready', function () {
     var id = $(this).parents('tr').find('input:eq(1)').val();
     var opcion = $("#seleccion").val();
     var tabla = $("#tablaPaciente");
-    if(opcion == "paciente")
+    if(opcion == "paciente" || opcion == "solicitud")
     {
       var input_nombre = $("#n_paciente");
       var input_id = $("#f_paciente");

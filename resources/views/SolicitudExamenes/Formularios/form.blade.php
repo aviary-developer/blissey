@@ -7,7 +7,7 @@
       <div class="input-group">
         {!! Form::text('n_paciente',null,['id'=>'n_paciente','class'=>'form-control','placeholder'=>'Nombre del paciente', 'disabled']) !!}
         <span class="input-group-btn">
-          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('paciente');">
+          <button type="button" name="button" data-toggle="modal" data-target=".bs-modal-lg" class="btn btn-primary" id="agregar_paciente" onclick="input_seleccion('solicitud');">
             <i class="fa fa-search"></i>
           </button>
         </span>
@@ -259,6 +259,7 @@
       </div>
     </div>
   </div>
+  <input type="hidden" id="seleccion" value="solicitud">
   <div class="clearfix"></div>
   <center>
     <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>

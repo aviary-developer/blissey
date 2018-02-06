@@ -26,6 +26,16 @@ thead{
   background-color: white;
   color: black;
 }
+.label-gray{
+    background-color: #CCC;
+    color: white;
+}
+.black{
+    color: black;
+}
+.white{
+    color: white;
+}
 .label-lg{
     font-size: 90%;
 }

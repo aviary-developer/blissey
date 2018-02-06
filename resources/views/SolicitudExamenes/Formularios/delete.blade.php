@@ -1,4 +1,5 @@
 <input name="id" type="hidden" value={{$solicitud->id}}>
+<input name="exa" type="hidden" value={{$solicitud->f_examen}}>
 @if($solicitud->estado == 0)
   <a id="activar" href= {!! asset('/evaluarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="top" title="Aceptar"/>
     <i class="fa fa-check"></i>
