@@ -88,14 +88,10 @@ class Transacion extends Model
       "Levonorgestrel","Drospirenona","Levomefolato cálcico","Nifedipino","Iloprost trometanol",
       "Riociguat","Moxifloxacino","Ciprofloxacino","Vardenafil","Nimodipino",
       "Acetato de ciproterona","Rivaroxaban","Nifurtimox","Sorafenib","Interferon beta 1-b",
-      "Gadobutrol"];
+      "Gadobutrol",'Metocarbamol','Acetaminofén'];
 
       foreach ($componentes as $key => $c) {
-        if(Componente::where('id',$key+1)->count()==0){
           $comp= new Componente();
-        }else{
-          $comp=Componente::find($key+1);
-        }
         $comp->id=$key+1;
         $comp->nombre=$c;
         $comp->save();
@@ -106,11 +102,7 @@ class Transacion extends Model
         'Cápsulas','Ampolla','Suspensión','viales','comprimidos recubiertos',
         'Cápsulas blandas','Tabletas','Tabletas efervescentes','Sachet'];
       foreach ($presentaciones as $key => $p) {
-        if(Presentacion::where('id',$key+1)->count()==0){
           $pre= new Presentacion();
-        }else{
-          $pre=Presentacion::find($key+1);
-        }
           $pre->id=$key+1;
           $pre->nombre=$p;
           $pre->save();
@@ -120,11 +112,7 @@ class Transacion extends Model
         'Caja','Dispensador','Frasco','Tubo','Spray',
         'Blizter','Tarro'];
         foreach ($divisiones as $key => $d) {
-          if(Division::where('id',$key+1)->count()==0){
             $div= new Division();
-          }else{
-            $div=Division::find($key+1);
-          }
             $div->id=$key+1;
             $div->nombre=$d;
             $div->save();
@@ -134,11 +122,7 @@ class Transacion extends Model
         $pcorreo=['bayer@bayer.com','lopez@gmail.com','cofarma@hotmail.com','labs@suizos.es'];
         $ptelefono=['2345-5678','2256-7890','2456-6789','2123-2499'];
         for ($i=0; $i <count($pnombre) ; $i++) {
-          if(Proveedor::where('id',$i+1)->count()==0){
             $prov= new Proveedor();
-          }else{
-            $prov=Proveedor::find($i+1);
-          }
             $prov->id=$i+1;
             $prov->nombre=$pnombre[$i];
             $prov->correo=$pcorreo[$i];
