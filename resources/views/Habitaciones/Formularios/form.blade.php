@@ -11,7 +11,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Precio ($)*</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('precio',null,['class'=>'form-control has-feedback-left','placeholder'=>'Precio de la habitacion']) !!}
+      {!! Form::number('precio',null,['class'=>'form-control has-feedback-left','placeholder'=>'Precio de la habitacion','step'=>'0.01']) !!}
     </div>
   </div>
   <center>
