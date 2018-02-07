@@ -61,7 +61,9 @@ class IngresoController extends Controller
         DB::beginTransaction();
         try {
           $ultimo_registro = Ingreso::where('fecha_ingreso','>=','1-1-'.date('Y'))->where('fecha_ingreso','<=','31-12-'.date('Y'))->get()->last();
-          if($ultimo_registro->expediente == null){
+          if($ultimo_registro == null){
+            $correlativo = 0;
+          }else if($ultimo_registro->expediente == null){
             $correlativo = 0;
           }else{
             $correlativo = $ultimo_registro->expediente;
