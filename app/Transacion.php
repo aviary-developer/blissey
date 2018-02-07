@@ -92,7 +92,6 @@ class Transacion extends Model
 
       foreach ($componentes as $key => $c) {
           $comp= new Componente();
-        $comp->id=$key+1;
         $comp->nombre=$c;
         $comp->save();
       }
@@ -103,7 +102,6 @@ class Transacion extends Model
         'Cápsulas blandas','Tabletas','Tabletas efervescentes','Sachet'];
       foreach ($presentaciones as $key => $p) {
           $pre= new Presentacion();
-          $pre->id=$key+1;
           $pre->nombre=$p;
           $pre->save();
         }
@@ -113,7 +111,6 @@ class Transacion extends Model
         'Blizter','Tarro'];
         foreach ($divisiones as $key => $d) {
             $div= new Division();
-            $div->id=$key+1;
             $div->nombre=$d;
             $div->save();
           }
@@ -123,7 +120,6 @@ class Transacion extends Model
         $ptelefono=['2345-5678','2256-7890','2456-6789','2123-2499'];
         for ($i=0; $i <count($pnombre) ; $i++) {
             $prov= new Proveedor();
-            $prov->id=$i+1;
             $prov->nombre=$pnombre[$i];
             $prov->correo=$pcorreo[$i];
             $prov->telefono=$ptelefono[$i];
