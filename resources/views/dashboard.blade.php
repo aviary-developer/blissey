@@ -102,6 +102,15 @@
                                 <li>
                                   <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
                                 </li>
+                                <li>
+                                  <a href={{asset( '/inventarios')}}>Inventario</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
+                                </li>
                               </ul>
                             </li>
                           @endif
@@ -143,6 +152,9 @@
                                     <a href={{asset( '/divisiones')}}>Divisiones</a>
                                   </li>
                                   </ul>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/inventarios')}}>Inventario</a>
                                 </li>
                                 <li>
                                   <a href={{asset( '/proveedores')}}>Proveedores</a>
