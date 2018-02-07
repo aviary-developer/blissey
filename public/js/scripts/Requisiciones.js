@@ -47,7 +47,21 @@ function registrarRequisicion(id){
   c2=$('#cd'+id).text();
   c3=$('#ct'+id).text();
   if(cantidad>existencia || componentes_agregados.includes(""+id+"")){
-    alert("existencia superada o producto ya agregado");
+    if (cantidad>existencia) {
+      new PNotify({
+        title: 'Error!',
+        text: "La cantidad solicitada supera las existencias",
+        type: 'error',
+        styling: 'bootstrap3'
+      });
+    } else {
+      new PNotify({
+        title: 'Error!',
+        text: 'El producto ya se encuentra incluido',
+        type: 'error',
+        styling: 'bootstrap3'
+      });
+    }
   }else{
     tabla=$('#tablaDetalle');
     html="<tr>"+

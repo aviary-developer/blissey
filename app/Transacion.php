@@ -129,6 +129,7 @@ class Transacion extends Model
             $div->nombre=$d;
             $div->save();
           }
+          //PROVEEDORES
         $pnombre=['Bayer','Laboratorio López','Laboratorios Cofarma S.A','Laboratorios Suizos'];
         $pcorreo=['bayer@bayer.com','lopez@gmail.com','cofarma@hotmail.com','labs@suizos.es'];
         $ptelefono=['2345-5678','2256-7890','2456-6789','2123-2499'];

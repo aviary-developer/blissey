@@ -163,7 +163,6 @@ $(document).on('ready',function(){
         var ruta = "/blissey/public/buscarServicios/"+valor;
         var tabla = $("#tablaBuscar");
         $.get(ruta,function(res){
-          console.log(res);
            tabla.empty();
           cab="<thead>"+
           "<th colspan='2'>Resultado</th>"+
@@ -425,7 +424,12 @@ $(document).on('ready',function(){
         }
       });
       $('.valt').each(function(){ //Fecha
+        cop=validarFechaMenorActual($(this).val());
+        console.log(cop);
         if($(this).val().trim()==""){
+          error++;
+          v3=1;
+        }else  if(cop){
           error++;
           v3=1;
         }
@@ -497,7 +501,6 @@ $(document).on('ready',function(){
             styling: 'bootstrap3'
           });
         }
-      console.log(error);
     }
     });
 });
@@ -536,7 +539,21 @@ function registrarventa(id){
   c2=$('#cd'+id).text();
   if (radio!=3) {
   if(cantidad>existencia || componentes_agregados.includes(""+id+"")){
-    alert("existencia superada o producto ya agregado");
+    if (cantidad>existencia) {
+      new PNotify({
+        title: 'Error!',
+        text: "La cantidad solicitada supera las existencias",
+        type: 'error',
+        styling: 'bootstrap3'
+      });
+    } else {
+      new PNotify({
+        title: 'Error!',
+        text: 'El producto ya se encuentra incluido',
+        type: 'error',
+        styling: 'bootstrap3'
+      });
+    }
   }else{
     c4=parseFloat($('#cc'+id).text()).toFixed(2);
     tabla=$('#tablaDetalle');
@@ -580,4 +597,14 @@ function registrarventa(id){
   "</tr>";
   tabla.append(html);
 }
+}
+function validarFechaMenorActual(date){
+  var f = new Date();
+  actual= f.getFullYear() + "-" + (('0' + (f.getMonth()+1)).toString().slice(-2))+ "-" +'0' + (f.getDate()).toString().slice(-2) ;
+      if (date > actual){
+        return false;
+        }
+      else{
+        return true;
+      }
 }
