@@ -84,9 +84,10 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
   //Rutas de Requisiciones
-  Route::resource('requisiciones','RequisicionController');
+
   Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
 });
+  Route::resource('requisiciones','RequisicionController');
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){
   //Rutas de proveedores
