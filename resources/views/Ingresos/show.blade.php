@@ -57,7 +57,7 @@
                     </a>
                   </td>
                 </tr>
-                @if ($ingreso->f_paciente != $ingreso->f_responsable)  
+                @if ($ingreso->f_paciente != $ingreso->f_responsable)
                   <tr>
                     <th>Responsable</th>
                     <td>
@@ -71,7 +71,7 @@
                   <th>Médico</th>
                   <td>
                     <a href={{asset('/usuarios/'.$ingreso->f_medico)}}>
-                      {{($ingreso->medico->sexo)?'Dr. ':'Dra. '.$ingreso->medico->nombre.' '.$ingreso->medico->apellido}}
+                      {{(($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido}}
                     </a>
                   </td>
                 </tr>

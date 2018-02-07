@@ -31,6 +31,9 @@ class TransaccionController extends Controller
     $estado=$request->estado;
     $anulado=$request->anulado;
     $buscar=$request->buscar;
+    if($estado==""){
+      $estado=1;
+    }
     if(Auth::check()){
       $transacciones=Transacion::buscar($buscar,$tipo,$estado,$anulado);
       return view('transacciones.index',compact('transacciones','tipo','estado','anulado','buscar'));

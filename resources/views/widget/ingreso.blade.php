@@ -18,7 +18,7 @@
             $hoy = Carbon\Carbon::now();
           @endphp
           <td>
-            <span class="label label-primary">
+            <span class="label label-primary label-lg col-xs-10">
               {{$ingreso->fecha_ingreso->diffInDays($hoy).' días'}}
             </span>
           </td>

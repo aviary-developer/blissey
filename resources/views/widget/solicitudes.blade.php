@@ -13,16 +13,16 @@
         <tr>
           <td>{{$solicitud->nombrePaciente($solicitud->f_paciente)}}</td>
           <td>
-            @if ($solicitud->examenesPaciente($solicitud->f_paciente)==0)    
-              <span class="label label-default">
+            @if ($solicitud->examenesPaciente($solicitud->f_paciente)==0)
+              <span class="label label-default col-xs-10 label-lg">
                 Pendiente
               </span>
             @elseif($solicitud->examenesPaciente($solicitud->f_paciente)==1)
-              <span class="label label-warning">
+              <span class="label label-warning col-xs-10 label-lg">
                 Evaluando
               </span>
             @else
-              <span class="label label-success">
+              <span class="label label-success col-xs-10 label-lg">
                 Listo
               </span>
             @endif
