@@ -12,6 +12,7 @@
     </div>
     <center>
     {!! Form::submit('Guardar',['class'=>'btn btn-primary'])!!}
+    <a href={!! asset('/proveedores') !!} class="btn btn-default">Cancelar</a>
   </center>
   </div>
   {!!Form::close()!!}

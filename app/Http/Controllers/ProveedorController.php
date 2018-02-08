@@ -18,12 +18,22 @@ class ProveedorController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $proveedores = Proveedor::buscar($nombre,$estado);
       $activos = Proveedor::where('estado',true)->count();
       $inactivos = Proveedor::where('estado',false)->count();
-      return view('Proveedores.index',compact('proveedores','estado','nombre','activos','inactivos'));
+      return view('Proveedores.index',compact(
+        'proveedores',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

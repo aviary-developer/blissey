@@ -25,12 +25,22 @@ class ProductoController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $productos = Producto::buscar($nombre,$estado);
       $activos = Producto::where('estado',true)->count();
       $inactivos = Producto::where('estado',false)->count();
-      return view('Productos.index',compact('productos','estado','nombre','activos','inactivos'));
+      return view('Productos.index',compact(
+        'productos',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

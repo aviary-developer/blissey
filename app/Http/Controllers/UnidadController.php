@@ -17,12 +17,22 @@ class UnidadController extends Controller
    */
   public function index(Request $request)
   {
+    $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+    $pagina--;
+    $pagina *= 10;
     $estado = $request->get('estado');
     $nombre = $request->get('nombre');
     $unidades = Unidad::buscar($nombre,$estado);
     $activos = Unidad::where('estado',true)->count();
     $inactivos = Unidad::where('estado',false)->count();
-    return view('Unidades.index',compact('unidades','estado','nombre','activos','inactivos'));
+    return view('Unidades.index',compact(
+      'unidades',
+      'estado',
+      'nombre',
+      'activos',
+      'inactivos',
+      'pagina'
+    ));
   }
 
   /**

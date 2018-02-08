@@ -4,6 +4,10 @@ $(document).on('ready', function () {
     var boton_atras = "<a href='/blissey/public/usuarios' class='btn btn-default'>Cancelar</a>"
     $(".actionBar").append(boton_atras);
   }
+  if (ubicacion.indexOf("/blissey/public/productos") > -1) {
+    var boton_atras = "<a href='/blissey/public/productos' class='btn btn-default'>Cancelar</a>"
+    $(".actionBar").append(boton_atras);
+  }
   var limite = $("#contador").val();
   var especialidad_agregada = [];
   for(i=0;i<=limite;i++)

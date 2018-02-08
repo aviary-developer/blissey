@@ -19,12 +19,22 @@ class HabitacionController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $numero = $request->get('numero');
       $habitaciones = Habitacion::buscar($numero,$estado);
       $activos = Habitacion::where('estado',true)->count();
       $inactivos = Habitacion::where('estado',false)->count();
-      return view('Habitaciones.index',compact('habitaciones','estado','numero','activos','inactivos'));
+      return view('Habitaciones.index',compact(
+        'habitaciones',
+        'estado',
+        'numero',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
 
     }
 

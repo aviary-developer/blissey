@@ -1,10 +1,6 @@
 
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
-  <br/>
-
+  <h4>Datos del Proveedor</h4>
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Drogería *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
@@ -28,9 +24,7 @@
   </div>
 <!-- Campos que se agregarán en tabla dependientes cuando se esta creando un nuevo proveedor-->
 @if($bandera==1)
-<center>
-<p>Datos del visitador.</p>
-</center>
+<h4>Datos del visitador</h4>
 <div class="form-group"><!-- Temporal visitador nombre-->
   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
   <div class="col-md-9 col-sm-9 col-xs-12">
@@ -53,7 +47,9 @@
   </div>
 </div>
 <center>
-<input name="agregarVis" id="agregarVis" type="button" value="Agregar" onClick="agregarVisitador()" class="btn btn-primary"/>
+  <button type="button" class="btn btn-sm btn-primary" onClick="agregarVisitador()" name="agregarVis" id="agregarVis">
+    <i class="fa fa-plus"></i> Agregar Visitador
+  </button>
 </center>
 </div>
 @endif

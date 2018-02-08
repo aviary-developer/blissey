@@ -26,4 +26,8 @@ class Dependiente extends Model
     public function scopeF_proveedor($query, $id_p){
       $query->where('f_proveedor',$id_p);
     }
+
+  public function proveedor(){
+    return $this->belongsTo('App\Proveedor','f_proveedor');
+  }
 }

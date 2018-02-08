@@ -12,7 +12,7 @@
   @php
   $index = true;
   @endphp
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-10 col-sm-10 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Proveedores
@@ -26,11 +26,11 @@
       </div>
       <div class="x_content">
         <div class="row">
-          <div class="col-md-5 col-xs-12">
+          <div class="col-md-7 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/proveedores/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/proveedores?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/proveedores/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/proveedores?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -39,11 +39,10 @@
                   <span class="label label-warning">{{ $inactivos }}</span>
                 @endif
               </a>
-              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
-          <div class="col-md-3 col-xs-12"></div>
-          <div class="col-md-4 col-xs-12">
+          <div class="col-md-5 col-xs-12">
             {!!Form::open(['route'=>'proveedores.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
@@ -63,7 +62,7 @@
               <th>Nombre</th>
               <th>Correo</th>
               <th>Teléfono</th>
-              <th>Opciones</th>
+              <th style="width: 230px">Opciones</th>
             </tr>
           </thead>
           <tbody>
@@ -73,8 +72,12 @@
               @endphp
               @foreach ($proveedores as $proveedor)
                 <tr>
-                  <td>{{ $correlativo }}</td>
-                  <td>{{ $proveedor->nombre }}</td>
+                  <td>{{ $correlativo + $pagina}}</td>
+                  <td>
+                    <a href={{asset('/proveedores/'.$proveedor->id)}}>
+                      {{ $proveedor->nombre }}
+                    </a>
+                  </td>
                   <td>{{ $proveedor->correo }}</td>
                   <td>{{ $proveedor->telefono }}</td>
                   <td>

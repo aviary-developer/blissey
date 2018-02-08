@@ -76,7 +76,7 @@
               @endphp
               @foreach ($habitaciones as $habitacion)
                 <tr>
-                  <td>{{ $correlativo }}</td>
+                  <td>{{ $correlativo + $pagina }}</td>
                   <td>
                     <a href={{asset('/habitaciones/'.$habitacion->id)}}>
                       {{ 'Habitación '.$habitacion->numero }}
