@@ -85,11 +85,10 @@
                       @if (Auth::check())
                         <h3>Menú</h3>
                         <ul class="nav side-menu">
-
-                          @if(Auth::user()->tipoUsuario == "Recepción")
+                          @if (Auth::user()->tipoUsuario == "Recepción")
                             <li>
                               <a>
-                                <i class="fa fa-users"></i> Recepción
+                                <i class="fa fa-hospital-o"></i> Hospital
                                 <span class="fa fa-chevron-down"></span>
                               </a>
                               <ul class="nav child_menu">
@@ -100,102 +99,7 @@
                                   <a href={{asset( '/ingresos')}}>Hospitalización</a>
                                 </li>
                                 <li>
-                                  <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/inventarios')}}>Inventario</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
-                                </li>
-                              </ul>
-                            </li>
-                          @endif
-                          @if(Auth::user()->tipoUsuario == "Laboaratorio")
-                            <li>
-                              <a>
-                                <i class="fa fa-medkit"></i> Laboratorio Clínico
-                                <span class="fa fa-chevron-down"></span>
-                              </a>
-                              <ul class="nav child_menu">
-                                <li>
-                                  <a href={{asset( '/solicitudex')}}>Evaluación de examen</a>
-                                </li>
-                              </ul>
-                            </li>
-                          @endif
-                          @if(Auth::user()->tipoUsuario == "Farmacia")
-                            <li>
-                              <a>
-                                <i class="fa fa-ambulance"></i> Farmacia
-                                <span class="fa fa-chevron-down"></span>
-                              </a>
-                              <ul class="nav child_menu">
-                                <li>
-                                  <a>Productos
-                                    <span class="fa fa-chevron-down"></span>
-                                  </a>
-                                  <ul class="nav child_menu">
-                                    <li>
-                                      <a href={{asset( '/productos')}}>Productos</a>
-                                    </li>
-                                    <li>
-                                      <a href={{asset( '/presentaciones')}}>Presentaciones</a>
-                                    </li>
-                                    <li>
-                                      <a href={{asset( '/componentes')}}>Componentes</a>
-                                    </li>
-                                    <li>
-                                    <a href={{asset( '/divisiones')}}>Divisiones</a>
-                                  </li>
-                                  </ul>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/inventarios')}}>Inventario</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/proveedores')}}>Proveedores</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
-                                </li>
-                                <li>
-                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
-                                </li>
-                              </ul>
-                            </li>
-                          @endif
-                          <li>
-                            <a>
-                              <i class="fa fa-cogs"></i>Configuración
-                              <span class="fa fa-chevron-down"></span>
-                            </a>
-                            <ul class="nav child_menu">
-                              @if (Auth::check()) @if (Auth::user()->administrador)
-                                <li>
-                                  <a>Usuarios
-                                    <span class="fa fa-chevron-down"></span>
-                                  </a>
-                                  <ul class="nav child_menu">
-                                    <li>
-                                      <a href={{asset( '/usuarios')}}>Usuarios</a>
-                                    </li>
-                                    <li>
-                                      <a href={{asset( '/especialidades')}}>Especialidades Médicas</a>
-                                    </li>
-                                  </ul>
-                                </li>
-                              @else
-                                <li>
-                                  <a href={{asset( '/usuarios/'.Auth::user()->id)}}>Mi Perfil</a>
-                                </li>
-                              @endif
-                              @if (Auth::user()->tipoUsuario == "Recepción")
-                                <li>
-                                  <a>Servicios
+                                  <a>Mantenimiento
                                     <span class="fa fa-chevron-down"></span>
                                   </a>
                                   <ul class="nav child_menu">
@@ -205,23 +109,66 @@
                                     <li>
                                       <a href={{asset( '/categoria_servicios')}}>Categorias de servicios</a>
                                     </li>
+                                    <li>
+                                      <a href={{asset( '/habitaciones')}}>Habitaciones</a>
+                                    </li>
                                   </ul>
                                 </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <a>
+                                <i class="fa fa-flask"></i> Laboratorio Clínico
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
                                 <li>
-                                  <a href={{asset( '/habitaciones')}}>Habitaciones</a>
+                                <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
+                                </li> 
+                              </ul>
+                            </li>
+                            <li>
+                              <a>
+                                <i class="fa fa-medkit"></i> Botiquín
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/inventarios')}}>Inventario</a>
                                 </li>
                                 <li>
-                                  <a href={{asset( '/estantes')}}>Estantes</a>
+                                  <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                                 </li>
-                              @endif
-                              @if (Auth::user()->tipoUsuario == "Farmacia")
                                 <li>
-                                  <a href={{asset( '/estantes')}}>Estantes</a>
+                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
                                 </li>
-                              @endif
-                              @if(Auth::user()->tipoUsuario == "Laboaratorio")
                                 <li>
-                                  <a>Laboratorio Clínico
+                                  <a>Mantenimiento
+                                    <span class="fa fa-chevron-down"></span>
+                                  </a>
+                                  <ul class="nav child_menu">
+                                    <li>
+                                      <a href={{asset( '/estantes')}}>Estantes</a>
+                                    </li>
+                                  </ul>
+                                </li> 
+                              </ul>
+                            </li>   
+                          @elseif(Auth::user()->tipoUsuario == "Laboaratorio")
+                            <li>
+                              <a>
+                                <i class="fa fa-flask"></i> Laboratorio Clínico
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/solicitudex')}}>Evaluación de examen</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/bancosangre')}}>Banco de sangre</a>
+                                </li>
+                                <li>
+                                  <a>Mantenimiento
                                     <span class="fa fa-chevron-down"></span>
                                   </a>
                                   <ul class="nav child_menu">
@@ -242,9 +189,91 @@
                                     </li>
                                   </ul>
                                 </li>
-                              @endif
+                              </ul>
+                            </li>
+                          @elseif(Auth::user()->tipoUsuario == "Farmacia")
+                            <li>
+                              <a>
+                                <i class="fa fa-users"></i> Personas
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/pacientes')}}>Clientes</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/proveedores')}}>Proveedores</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <a>
+                                <i class="fa fa-medkit"></i> Farmacia
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/inventarios')}}>Inventario</a>
+                                </li>
+                                
+                                <li>
+                                  <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
+                                </li>
+                                <li>
+                                  <a>Mantenimiento
+                                    <span class="fa fa-chevron-down"></span>
+                                  </a>
+                                  <ul class="nav child_menu">
+                                    <li>
+                                      <a href={{asset( '/productos')}}>Productos</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/presentaciones')}}>Presentaciones</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/componentes')}}>Componentes</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/divisiones')}}>Divisiones</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/estantes')}}>Estantes</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/unidades')}}>Unidades de medida</a>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                          @endif
+                          @if (Auth::user()->administrador)
+                            <li>
+                              <a>
+                                <i class="fa fa-lock"></i> Administrador
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/usuarios')}}>Usuarios</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/especialidades')}}>Especialidades Médicas</a>
+                                </li>
+                              </ul>
+                            </li>
+                          @endif
+                          <li>
+                            <a>
+                              <i class="fa fa-info-circle"></i> Información
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
                               <li>
-                                <a href={{asset( '/unidades')}}>Unidades de medida</a>
+                                <a href={{asset( '/usuarios/'.Auth::user()->id)}}>Mi Perfil</a>
                               </li>
                               <li>
                                 <a href={{asset( '/grupo_promesa')}}>Grupo Promesa</a>
@@ -252,9 +281,8 @@
                               <li>
                                 <a href={{asset( '/historial')}}>Historial</a>
                               </li>
-                            @endif
-                          </ul>
-                        </li>
+                            </ul>
+                          </li>
                       </ul>
                     @else
                     <center>

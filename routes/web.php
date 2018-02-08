@@ -54,15 +54,6 @@ Route::group(['middleware'=>'laboratorio'], function(){
 //Grupo Recepción
 Route::group(['middleware'=>'recepcion'], function()
 {
-  //Rutas de pacientes
-  Route::resource('pacientes','PacienteController');
-  Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');
-  Route::match(['get','post'],'/activatePaciente/{id}','PacienteController@activate');
-  Route::match(['get','post'],'/destroyPaciente/{id}','PacienteController@destroy');
-  Route::match(['get','post'],'/paciente_pdf','PacienteController@paciente_pdf');
-  Route::match(['get','post'],'/filtrarPaciente','PacienteController@filtrar');
-  Route::match(['get','post'],'/municipios/{departamento}','PacienteController@municipios');
-  Route::match(['get','post'],'/guardar_paciente','PacienteController@guardar_externo');
   //Rutas de categoria servicio
   Route::resource('categoria_servicios','CategoriaServicioController');
   Route::match(['get','post'],'/desactivateCategoriaServicio/{id}','CategoriaServicioController@desactivate');
@@ -197,6 +188,14 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/guardarResultadosExamen','SolicitudExamenController@guardarResultadosExamen');
   Route::match(['get','post'],'/entregarExamen/{id}/{idExamen}','SolicitudExamenController@entregarExamen');
   //Pacientes
+  Route::resource('pacientes','PacienteController');
+  Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');
+  Route::match(['get','post'],'/activatePaciente/{id}','PacienteController@activate');
+  Route::match(['get','post'],'/destroyPaciente/{id}','PacienteController@destroy');
+  Route::match(['get','post'],'/paciente_pdf','PacienteController@paciente_pdf');
+  Route::match(['get','post'],'/filtrarPaciente','PacienteController@filtrar');
+  Route::match(['get','post'],'/municipios/{departamento}','PacienteController@municipios');
+  Route::match(['get','post'],'/guardar_paciente','PacienteController@guardar_externo');
   Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
   Route::match(['get','post'],'/buscarPersonas','IngresoController@buscarPersonas');
   //Inventarios
