@@ -7,13 +7,12 @@
   <div class="col-md-10 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Evaluación de examen</h2>
+        <h2>Edición de resultados de examen</h2>
         <div class="clearfix"></div>
         <h4>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}} <span class="label label-lg label-default">{{$solicitud->examen->nombreExamen}}</span></h4>
       </div>
       <div class="col-xs-12">
         <input type="hidden" name="solicitud" value={{$solicitud->id}}>
-        <input type="hidden" name="evaluar" value=true>
         <input type="hidden" name="idExamen" value={{$solicitud->f_examen}}>
         @foreach ($espr as $esp)
           <input type="hidden" name="espr[]" value={{$esp->id}}>
@@ -47,20 +46,20 @@
             </thead>
             <tbody>
               @if (count($espr)>0)
-                @foreach ($espr as $esp)
-                  @if ($esp->f_seccion==$variable)
+                @foreach ($espr as $esp=>$valor)
+                  @if ($valor->f_seccion==$variable)
                     <tr>
                       <td>{{$contadorParametros}}</td>
-                      <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
-                      <td><input type="text" class="form-control" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
-                      @if($esp->parametro->valorMinimo)
+                      <td>{{$valor->nombreParametro($valor->f_parametro)}}</th>
+                      <td><input type="text" class="form-control" name="resultados[]" value="{{$detallesResultado[$esp]->resultado}}"></input></td>
+                      @if($valor->parametro->valorMinimo)
                         <td>
                           <span class="label label-lg label-cian col-xs-12">
-                            {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}
+                            {{number_format($valor->parametro->valorMinimo, 2, '.', ',')}}
                           </span>
                         </td>
                         <td>
-                          <span class="label label-lg label-danger col-xs-12">{{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}</span>
+                          <span class="label label-lg label-danger col-xs-12">{{number_format($valor->parametro->valorMaximo, 2, '.', ',')}}</span>
                         </td>
                       @else
                         <td>
@@ -71,14 +70,14 @@
                         </td>
                       @endif
                       <td>
-                        @if ($esp->nombreUnidad($esp->parametro->unidad) == "-")
+                        @if ($valor->nombreUnidad($valor->parametro->unidad) == "-")
                           <span class="label label-lg label-gray col-xs-12">Ninguna</span>
                         @else
-                          {{$esp->nombreUnidad($esp->parametro->unidad)}}
+                          {{$valor->nombreUnidad($valor->parametro->unidad)}}
                         @endif
                       </td>
-                      @if ($esp->f_reactivo)
-                        <td>{!!Form::selectRange('datoControlado[]', 0, 4, 0,['class'=>'form-control'])!!}</td>
+                      @if ($valor->f_reactivo)
+                        <td>{!!Form::selectRange('datoControlado[]',0, 4, $detallesResultado[$esp]->dato_controlado,['class'=>'form-control'])!!}</td>
                       @else
                         <td>
                           <span class="label label-lg label-gray col-xs-12">Ninguno</span>
@@ -108,16 +107,16 @@
         <center>
           <div class="">
             <label>
-              <input type="checkbox" name="checkObservacion" id="checkObservacion" class="js-switch" unchecked /> Añadir Observación
+              <input type="checkbox" name="checkObservacion" id="checkObservacion" class="js-switch" {{($resultado->observacion)?"checked":"unchecked"}} /> Añadir Observación
             </label>
           </div>
         </center>
-        <div id="divObservacion" style="display:none;">
+        <div id="divObservacion" style={{($resultado->observacion)?"display:block;":"display:none;"}}>
           <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12">Observaciones</label>
             <div class="col-md-10 col-sm-10 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::textarea('observacion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Escriba la observación','rows'=>'3']) !!}
+              {!! Form::textarea('observacion',$resultado->observacion,['class'=>'form-control has-feedback-left','placeholder'=>'Escriba la observación','rows'=>'3']) !!}
             </div>
           </div>
         </div>
@@ -126,7 +125,7 @@
   </div>
   <div class="clearfix"></div>
   <center>
-    {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
     <button type="reset" name="button" class="btn btn-default">Limpiar</button>
     <a href={!! asset('/solicitudex') !!} class="btn btn-default">Cancelar</a>
   </center>

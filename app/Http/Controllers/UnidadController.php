@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UnidadRequest;
 use App\Http\Controllers\Controller;
 use App\Unidad;
 use Redirect;
@@ -51,7 +52,7 @@ class UnidadController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(UnidadRequest $request)
   {
     Unidad::create($request->All());
     return redirect('/unidades')->with('mensaje', '¡Guardado!');
@@ -88,7 +89,7 @@ class UnidadController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UnidadRequest $request, $id)
   {
     $unidades = Unidad::find($id);
     $unidades->fill($request->all());
