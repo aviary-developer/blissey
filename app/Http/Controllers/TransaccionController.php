@@ -61,6 +61,7 @@ class TransaccionController extends Controller
      */
     public function store(Request $request)
     {
+      $estado=$request->estado;
       $tipo=$request->tipo;
       $fecha=$request->fecha;
       $f_proveedor=$request->f_proveedor;
@@ -148,7 +149,7 @@ class TransaccionController extends Controller
         return redirect('/')->with('error', '¡Algo salio mal!');
       }
       DB::commit();
-      return redirect('/transacciones?tipo='.$tipo)->with('mensaje', '¡Guardado!');
+      return redirect('/transacciones?tipo='.$tipo."&estado=".$estado)->with('mensaje', '¡Guardado!');
     }else{
       DB::rollback();
       $tran= new Transacion;

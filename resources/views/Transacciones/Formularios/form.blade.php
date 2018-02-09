@@ -15,12 +15,14 @@
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
       <input type="hidden" id="confirmar" name="confirmar" value="{{false}}">
       @if($tipo==1)
+      <input type="hidden"name="estado" value="0">
         <label class="col-md-2 col-sm-12 col-xs-12 form-group">N° de factura *</label>
         <div class="col-md-4 col-sm-12 col-xs-12 form-group">
           <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
           {!! Form::text('factura',null,['class'=>'form-control has-feedback-left','placeholder'=>'Factura']) !!}
         </div>
       @else
+        <input type="hidden"name="estado" value="1">
         <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
         <div class="col-md-4 col-sm-12 col-xs-12 form-group">
           <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>

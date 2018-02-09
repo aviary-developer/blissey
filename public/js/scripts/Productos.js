@@ -24,10 +24,12 @@ $(document).on('ready',function(){
     if(com=="o"){
       idu=$('#v_valor').find('option:selected').val();
       unidad=$('#v_valor').find('option:selected').text();
+    }else{
+      unidad=$('#valor').val();
     }
     var vmc=valor+cantidad; //Valor más cantidad
     if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
-      if(!validarCodigo()){
+      if(!validarPresentacionE() && !validarCodigo() && !validarPrecio()){
     var html_texto =
     "<tr>"+
     "<td>"+
@@ -187,24 +189,23 @@ $(document).on('ready',function(){
         nPresentacion=obtener.text();
         $('#valor').val(nPresentacion);
     });
-});
-
-$('#contenido').click(function(){
-  if(this.checked){
-    $('#opc1').css("display","none");
-    $('#opc2').css("display","block");
-    $('#lchange').text("Contenido *");
-    $('#hchange').val("o");
-  }else{
-    $('#opc1').css("display","block");
-    $('#opc2').css("display","none");
-    $('#lchange').text("Cantidad *");
-    $('#hchange').val("a");
-  }
+    $('#contenido').click(function(){
+      if(this.checked){
+        $('#opc1').css("display","none");
+        $('#opc2').css("display","block");
+        $('#lchange').text("Contenido *");
+        $('#hchange').val("o");
+      }else{
+        $('#opc1').css("display","block");
+        $('#opc2').css("display","none");
+        $('#lchange').text("Cantidad *");
+        $('#hchange').val("a");
+      }
+    });
 });
 function validarCodigo(){
     var codigo = $("#codigo").val();
-    if(codigo!="")
+    if(codigo.trim()!=""){
     var ruta="/blissey/public/existeCodigoProducto/"+codigo;
     $.get(ruta,function(existe){
       if(existe==1){
@@ -220,4 +221,46 @@ function validarCodigo(){
       }
       return existe;
     });
+  }else{
+    swal({
+      type: 'error',
+      title: '¡Necesita proporcionar un código!',
+      showConfirmButton: false,
+      timer: 2000,
+      animation: false,
+      customClass: 'animated tada'
+    }).catch(swal.noop);
+    $("#codigo").val("");
+    return 1;
+  }
+}
+function validarPresentacionE(){
+  if($('#f_presentacion').find('option:selected').val().trim()==""){
+    swal({
+      type: 'error',
+      title: '¡Seleccione una presentación!',
+      showConfirmButton: false,
+      timer: 2000,
+      animation: false,
+      customClass: 'animated tada'
+    }).catch(swal.noop);
+    return 1;
+  }else{
+    return 0;
+  }
+}
+function validarPrecio(){
+  if(parseFloat($('#precio').val())<=0){
+    swal({
+      type: 'error',
+      title: '¡Precio debe ser mayor que $0.00!',
+      showConfirmButton: false,
+      timer: 2000,
+      animation: false,
+      customClass: 'animated tada'
+    }).catch(swal.noop);
+    return 1;
+  }else{
+    return 0;
+  }
 }
