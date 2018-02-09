@@ -36,4 +36,7 @@ class Proveedor extends Model
       return $fila->nombre;
     }
 
+    public function visitador(){
+      return $this->hasMany('App\Dependiente','f_proveedor');
+    }
 }

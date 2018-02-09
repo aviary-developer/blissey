@@ -7,7 +7,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-bars form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la sección']) !!}
+      {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la sección', 'required']) !!}
     </div>
   </div>
   <div class="ln_solid"></div>

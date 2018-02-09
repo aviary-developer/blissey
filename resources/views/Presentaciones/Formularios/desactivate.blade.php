@@ -1,11 +1,11 @@
 {!!Form::open(['url'=>['desactivatePresentacion',$presentacion->id],'method'=>'POST'])!!}
-<a href={!! asset('/presentaciones/'.$presentacion->id)!!} class="btn btn-xs btn-info">
+<a href={!! asset('/presentaciones/'.$presentacion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
   <i class="fa fa-info-circle"></i>
 </a>
-<a onclick="{{'editarPresentacion('.$presentacion->id.',"'.$presentacion->nombre.'")'}}" class="btn btn-xs btn-primary" data-toggle="modal" data-target=".bs-modal-lg">
+<a href={{asset('/presentaciones/'.$presentacion->id.'/edit')}} class="btn btn-sm btn-primary"  data-toggle="tooltip" data-placement="top" title="Editar">
   <i class="fa fa-edit"></i>
 </a>
-<button type="button" class="btn btn-danger btn-xs" onclick="
+<button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Enviar a papelera" onclick="
   return swal({
     title: 'Enviar registro a papelera',
     text: '¿Está seguro? ¡Ya no estara disponible!',

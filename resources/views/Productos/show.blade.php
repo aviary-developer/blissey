@@ -4,7 +4,7 @@
   $index = false;
   setlocale(LC_ALL,'es');
   @endphp
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-10 col-sm-10 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -24,18 +24,24 @@
         <br>
         {{-- Incio de tab --}}
         <div class="" role="tabpanel" data-example-id="togglable-tabs">
-          <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos Personales</a>
-            </li>
-            <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otro panel</a>
-            </li>
-          </ul>
+          <div class="col-xs-3">
+            <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Divisiones</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#tab_content3" id="otros-tab3" role="tab" data-toggle="tab" aria-expanded="false">Componentes</a>
+              </li>
+            </ul>
+          </div>
           {{-- Contenido del tab --}}
-          <div id="myTabContent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
-              <div class="col-md-6 col-xs-12">
+          <div class="col-xs-9">
+            <div id="myTabContent" class="tab-content">
+              <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
+                <h3>Información General</h3>
                 <table class="table">
                   <caption>Datos del producto</caption>
                   <tr>
@@ -51,9 +57,15 @@
                     <td>{{$producto->nombrePresentacion($producto->f_presentacion)}}</td>
                   </tr>
                   <tr>
-                    <th>Estado</th>
-                    <td>{{ ($producto->estado)?"Activo":"En Papelera" }}</td>
-                  </tr>
+                  <th>Estado</th>
+                  <td>
+                    @if ($producto->estado)
+                      <span class="label label-lg label-success col-xs-4">Activo</span>
+                    @else
+                      <span class="label label-lg label-danger col-xs-4">En papelera</span>
+                    @endif
+                  </td>
+                </tr>
                   <tr>
                     <th>Fecha de creación</th>
                     <td>{{ $producto->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
@@ -64,9 +76,10 @@
                   </tr>
                 </table>
               </div>
-              <div class="col-md-6 col-xs-12">
+              {{-- Otra pestaña --}}
+              <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
+                <h3>Divisiones</h3>
                 <table class="table">
-                  <caption>Divisiones</caption>
                   <thead>
                     <th>#</th>
                     <th>Código</th>
@@ -108,8 +121,10 @@
                     @endif
                   </tbody>
                 </table>
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_content3" aria-labelledby="otros-tab3">
+                <h3>Componentes</h3>
                 <table class="table">
-                  <caption>Componentes</caption>
                   <thead>
                     <th>#</th>
                     <th>Componente</th>
@@ -142,10 +157,6 @@
                   </tbody>
                 </table>
               </div>
-            </div>
-            {{-- Otra pestaña --}}
-            <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-              Otra cosa
             </div>
           </div>
         </div>

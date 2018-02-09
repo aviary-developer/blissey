@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Seccion;
 use Illuminate\Http\Request;
+use App\Http\Requests\SeccionRequest;
 use Redirect;
 use Response;
 use Carbon\Carbon;
@@ -41,7 +42,7 @@ class SeccionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SeccionRequest $request)
     {
       Seccion::create($request->All());
       return redirect('/secciones')->with('mensaje', '¡Guardado!');
@@ -78,7 +79,7 @@ class SeccionController extends Controller
      * @param  \App\Seccion  $seccion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(SeccionRequest $request,$id)
     {
       $secciones = Seccion::find($id);
       $secciones->fill($request->all());

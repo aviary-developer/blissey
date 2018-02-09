@@ -163,46 +163,89 @@ class SolicitudExamenController extends Controller
   }
   public function guardarResultadosExamen(Request $request)
   {
-    $resultadosGuardar=$request->resultados;
-    $datosControlados=$request->datoControlado;
-    $idSolicitud=$request->solicitud;
-    $observacion=$request->observacion;
-    DB::beginTransaction();
-    try{
-      $resultado= new Resultado();
-      $resultado->f_solicitud=$idSolicitud;
-      $resultado->observacion=$observacion;
-      $resultado->save();
-      $resultados=Resultado::all();
-      $idResultado=$resultados->last()->id;
-      $contadorControlados=0;
-      foreach ($request->espr as $key =>$valor) {
-        $detallesResultado= new DetalleResultado();
-        $detallesResultado->f_resultado=$idResultado;
-        $detallesResultado->f_espr=$valor;
-        $detallesResultado->resultado=$resultadosGuardar[$key];
-        $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
-        if($espr_evaluar_controlado->f_reactivo){
-          $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
-          $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
-          $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
-          $contadorControlados++;
-          $finalReactivo=Reactivo::find($reactivoUtilizado->id);
-          $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
-          $finalReactivo->save();
+    if($request->evaluar){
+      $resultadosGuardar=$request->resultados;
+      $datosControlados=$request->datoControlado;
+      $idSolicitud=$request->solicitud;
+      $observacion=$request->observacion;
+      DB::beginTransaction();
+      try{
+        $resultado= new Resultado();
+        $resultado->f_solicitud=$idSolicitud;
+        $resultado->observacion=$observacion;
+        $resultado->save();
+        $resultados=Resultado::all();
+        $idResultado=$resultados->last()->id;
+        $contadorControlados=0;
+        foreach ($request->espr as $key =>$valor) {
+          $detallesResultado= new DetalleResultado();
+          $detallesResultado->f_resultado=$idResultado;
+          $detallesResultado->f_espr=$valor;
+          $detallesResultado->resultado=$resultadosGuardar[$key];
+          $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+          if($espr_evaluar_controlado->f_reactivo){
+            $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+            $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+            $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
+            $contadorControlados++;
+            $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+            $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+            $finalReactivo->save();
+          }
+          $detallesResultado->save();
         }
-        $detallesResultado->save();
+        $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
+        $cambioEstadoSolicitud->estado=2;
+        $cambioEstadoSolicitud->save();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
       }
-      $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
-      $cambioEstadoSolicitud->estado=2;
-      $cambioEstadoSolicitud->save();
-    }catch(Exception $e){
-      DB::rollback();
-      return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      DB::commit();
+      Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
+      return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+    }else {///EDICION DE RESULTADOS DE EXAMENES
+      $idSolicitud=$request->solicitud;
+      $resultadosGuardar=$request->resultados;
+      $datosControlados=$request->datoControlado;
+      $observacion=$request->observacion;
+      DB::beginTransaction();
+      try{
+        $resultado=Resultado::where('f_solicitud','=',$idSolicitud)->first();
+        $resultado->observacion=$observacion;
+        $resultado->save();
+        $idResultado=$resultado->id;
+        $contadorControlados=0;
+        $detallesResultado=DetalleResultado::where('f_resultado','=',$idResultado)->get();
+        foreach ($request->espr as $key =>$valor) {
+          $detallesResultado[$key]->resultado=$resultadosGuardar[$key];
+          $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+          if($espr_evaluar_controlado->f_reactivo){
+            $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+            $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+            if($detallesResultado[$key]->dato_controlado<$datosControlados[$contadorControlados]){
+              $diferencia=$datosControlados[$contadorControlados]-$detallesResultado[$key]->dato_controlado;
+              $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-$diferencia;
+              $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+            }elseif($detallesResultado[$key]->dato_controlado>$datosControlados[$contadorControlados]){
+              $diferencia=$detallesResultado[$key]->dato_controlado-$datosControlados[$contadorControlados];
+              $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase+$diferencia;
+              $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+            }
+            $finalReactivo->save();
+            $detallesResultado[$key]->dato_controlado=$datosControlados[$contadorControlados];
+            $contadorControlados++;
+          }
+          $detallesResultado[$key]->save();
+        }
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      }
+      DB::commit();
+      Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
+      return redirect('/solicitudex')->with('mensaje', '¡Editado!');
     }
-    DB::commit();
-    Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
-    return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
   }
   public function entregarExamen($id,$idExamen)
   {
@@ -233,5 +276,31 @@ class SolicitudExamenController extends Controller
     $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
     return $pdf->stream('Examen_con_solicitud_'.$solicitud->id.'.pdf');
+  }
+  public function editarResultadosExamen($id,$idExamen)
+  {
+    $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+    $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
+    $contador=0;
+    $contadorSecciones=0;
+    if(count($espr)>0){
+      foreach ($espr as $esp) {
+        if($contador==0){
+          $secciones[$contadorSecciones]=$esp->f_seccion;
+        }else{
+          if($secciones[$contadorSecciones]==$esp->f_seccion)
+          {
+          }else {
+            $contadorSecciones++;
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }
+        }
+        $contador++;
+      }
+    }
+    return view('SolicitudExamenes.editarResultadosExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
   }
 }

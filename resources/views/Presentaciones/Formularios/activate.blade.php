@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/presentaciones/'.$presentacion->id)!!} class="btn btn-xs btn-info">
+  <a href={!! asset('/presentaciones/'.$presentacion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a onclick={!!asset('editarPresentacion('.$presentacion->id.','.$presentacion->nombre.')')!!} class="btn btn-xs btn-primary">
+  <a onclick={!!asset('editarPresentacion('.$presentacion->id.','.$presentacion->nombre.')')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-xs" onclick={!! "'alta(".$presentacion->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$presentacion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" onclick={!! "'eliminar(".$presentacion->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$presentacion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
     <i class="fa fa-remove"></i>
   </button>
 @else
@@ -23,25 +23,25 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/presentaciones'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/presentaciones'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
     @if ($presentacion->estado)
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$presentacion->id.");'" !!}>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$presentacion->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$presentacion->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$presentacion->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$presentacion->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$presentacion->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-ms">
+    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>
@@ -50,12 +50,12 @@
 <script type="text/javascript">
   function alta(id){
     return swal({
-      title: 'Activar registro',
+      title: 'Restaurar registro',
       text: '¿Está seguro? ¡El registro estará activo nuevamente!',
       type: 'question',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, ¡Activar!',
+      confirmButtonText: 'Si, ¡Restaurar!',
       cancelButtonText: 'No, ¡Cancelar!',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
@@ -65,7 +65,7 @@
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePresentacion/'+id);
       $('#formulario').submit();
       swal(
-        '¡Activado!',
+        '¡Restaurado!',
         'Acción realizada satisfactorimente',
         'success'
       )

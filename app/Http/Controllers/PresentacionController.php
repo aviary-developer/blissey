@@ -16,12 +16,22 @@ class PresentacionController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $presentaciones = Presentacion::buscar($nombre,$estado);
       $activos = Presentacion::where('estado',true)->count();
       $inactivos = Presentacion::where('estado',false)->count();
-      return view('Presentaciones.index',compact('presentaciones','estado','nombre','activos','inactivos'));
+      return view('Presentaciones.index',compact(
+        'presentaciones',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

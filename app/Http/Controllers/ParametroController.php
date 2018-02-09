@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\ParametroRequest;
 use App\Http\Controllers\Controller;
 use App\Parametro;
 use App\Unidad;
@@ -46,7 +46,7 @@ class ParametroController extends Controller
   * @param  \Illuminate\Http\Request  $request
   * @return \Illuminate\Http\Response
   */
-  public function store(Request $request)
+  public function store(ParametroRequest $request)
   {
     Parametro::create($request->All());
     return redirect('/parametros')->with('mensaje', '¡Guardado!');
@@ -84,7 +84,7 @@ class ParametroController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request, $id)
+  public function update(ParametroRequest $request, $id)
   {
     $parametros = Parametro::find($id);
     $parametros->fill($request->all());
@@ -128,7 +128,7 @@ class ParametroController extends Controller
     $parametros=Parametro::where('estado',true)->orderBy('nombreParametro','asc')->get();
     return Response::json($parametros);
   }
-  public function ingresoParametro(Request $request){
+  public function ingresoParametro(ParametroRequest $request){
     Parametro::create($request->All());
     return Response::json('success');
   }

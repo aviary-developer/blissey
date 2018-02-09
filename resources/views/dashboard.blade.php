@@ -39,7 +39,7 @@
   {!!Html::style('assets/build/css/custom.css')!!}
 </head>
 
-<body class="nav-md">
+<body class="nav-md footer_fixed">
   @if(Session::has('mensaje'))
     <?php $mensaje = Session::get('mensaje');
     echo "<script>swal('$mensaje', 'Acción realizada satisfactorimente', 'success')</script>";?> @endif @if(Session::has('error'))
@@ -49,7 +49,7 @@
         echo "<script>swal('$men', 'Click al botón', 'info')</script>";?> @endif
         <div class="container body">
           <div class="main_container">
-            <div class="col-md-3 left_col ">
+            <div class="col-md-3 left_col">
               <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
                   <a href={{asset( '/')}} class="site_title">
@@ -187,6 +187,9 @@
                                     <li>
                                       <a href={{asset( '/muestras')}}>Tipo de muestras</a>
                                     </li>
+                                    <li>
+                                      <a href={{asset( '/unidades')}}>Unidades de medida</a>
+                                    </li>
                                   </ul>
                                 </li>
                               </ul>
@@ -294,6 +297,7 @@
                   </div>
 
                 </div>
+                <div class="clearfix"></div>
                 <!-- /sidebar menu -->
 
                 <!-- /menu footer buttons -->
@@ -315,6 +319,7 @@
               <!-- /menu footer buttons -->
             </div>
           </div>
+          <div class="clearfix"></div>
 
           <!-- top navigation -->
           <div class="top_nav">

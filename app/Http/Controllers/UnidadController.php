@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UnidadRequest;
 use App\Http\Controllers\Controller;
 use App\Unidad;
 use Redirect;
@@ -17,12 +18,22 @@ class UnidadController extends Controller
    */
   public function index(Request $request)
   {
+    $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+    $pagina--;
+    $pagina *= 10;
     $estado = $request->get('estado');
     $nombre = $request->get('nombre');
     $unidades = Unidad::buscar($nombre,$estado);
     $activos = Unidad::where('estado',true)->count();
     $inactivos = Unidad::where('estado',false)->count();
-    return view('Unidades.index',compact('unidades','estado','nombre','activos','inactivos'));
+    return view('Unidades.index',compact(
+      'unidades',
+      'estado',
+      'nombre',
+      'activos',
+      'inactivos',
+      'pagina'
+    ));
   }
 
   /**
@@ -41,7 +52,7 @@ class UnidadController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(UnidadRequest $request)
   {
     Unidad::create($request->All());
     return redirect('/unidades')->with('mensaje', '¡Guardado!');
@@ -78,7 +89,7 @@ class UnidadController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UnidadRequest $request, $id)
   {
     $unidades = Unidad::find($id);
     $unidades->fill($request->all());

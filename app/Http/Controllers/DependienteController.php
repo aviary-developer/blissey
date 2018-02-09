@@ -14,13 +14,24 @@ class DependienteController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $id_proveedor=$request->id;
       $estado=$request->estado;
       $nombre=$request->nombre;
       $visitadores=Dependiente::buscar($id_proveedor,$estado,$nombre);
       $activos = Dependiente::where('f_proveedor','=',$id_proveedor)->where('estado',true)->count();
       $inactivos = Dependiente::where('f_proveedor','=',$id_proveedor)->where('estado',false)->count();
-      return view('Visitadores.index',compact('id_proveedor','estado','nombre','visitadores','activos','inactivos'));
+      return view('Visitadores.index',compact(
+        'id_proveedor',
+        'estado',
+        'nombre',
+        'visitadores',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
 
     }
 

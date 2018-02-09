@@ -1,7 +1,4 @@
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
   <br />
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
@@ -27,6 +24,9 @@
   @if ($bandera==1)
     <input type="hidden" name="f_proveedor" value="{{$id}}">
   @endif
+  <center>
+    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>

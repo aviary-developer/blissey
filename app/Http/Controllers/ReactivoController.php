@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\ReactivoRequest;
 use App\Http\Controllers\Controller;
 use App\Reactivo;
 use Redirect;
@@ -43,7 +43,7 @@ class ReactivoController extends Controller
   * @param  \Illuminate\Http\Request  $request
   * @return \Illuminate\Http\Response
   */
-  public function store(Request $request)
+  public function store(ReactivoRequest $request)
   {
     Reactivo::create($request->All());
     return redirect('/reactivos')->with('mensaje', '¡Guardado!');
@@ -80,7 +80,7 @@ class ReactivoController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request, $id)
+  public function update(ReactivoRequest $request, $id)
   {
     $reactivos = Reactivo::find($id);
     $reactivos->fill($request->all());
@@ -123,7 +123,7 @@ class ReactivoController extends Controller
     $reactivos=Reactivo::where('estado',true)->orderBy('nombre')->get();
     return Response::json($reactivos);
   }
-  public function ingresoReactivo(Request $request){
+  public function ingresoReactivo(ReactivoRequest $request){
     Reactivo::create($request->All());
     return Response::json('success');
   }
