@@ -124,7 +124,7 @@
                               <ul class="nav child_menu">
                                 <li>
                                 <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
-                                </li> 
+                                </li>
                               </ul>
                             </li>
                             <li>
@@ -140,7 +140,7 @@
                                   <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                                 </li>
                                 <li>
-                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
+                                  <a href={{asset( '/transacciones?tipo=1')}}>Ventas</a>
                                 </li>
                                 <li>
                                   <a>Mantenimiento
@@ -151,9 +151,9 @@
                                       <a href={{asset( '/estantes')}}>Estantes</a>
                                     </li>
                                   </ul>
-                                </li> 
+                                </li>
                               </ul>
-                            </li>   
+                            </li>
                           @elseif(Auth::user()->tipoUsuario == "Laboaratorio")
                             <li>
                               <a>
@@ -218,7 +218,7 @@
                                 <li>
                                   <a href={{asset( '/inventarios')}}>Inventario</a>
                                 </li>
-                                
+
                                 <li>
                                   <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                                 </li>

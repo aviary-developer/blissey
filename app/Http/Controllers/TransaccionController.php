@@ -10,7 +10,6 @@ use App\DetalleTransacion;
 use App\DivisionProducto;
 use App\Division;
 use App\Presentacion;
-use App\InventarioFarmacia;
 use DB;
 use Auth;
 use Validator;
@@ -28,15 +27,10 @@ class TransaccionController extends Controller
     public function index(Request $request)
     {
     $tipo= $request->tipo;
-    $estado=$request->estado;
-    $anulado=$request->anulado;
     $buscar=$request->buscar;
-    if($estado==""){
-      $estado=1;
-    }
     if(Auth::check()){
-      $transacciones=Transacion::buscar($buscar,$tipo,$estado,$anulado);
-      return view('transacciones.index',compact('transacciones','tipo','estado','anulado','buscar'));
+      $transacciones=Transacion::buscar($buscar,$tipo);
+      return view('transacciones.index',compact('transacciones','tipo','buscar'));
     }else{
       return redirect('/');
     }
@@ -84,7 +78,7 @@ class TransaccionController extends Controller
 
       if(!$valida->fails()){
         DB::beginTransaction();
-        try{
+        // try{
           if($tipo==0){
         $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
@@ -99,7 +93,6 @@ class TransaccionController extends Controller
             'f_transaccion'=>$transaccion->id,
             'f_producto'=>$request->f_producto[$i],
             'cantidad'=>$cantidad[$i],
-            'condicion'=>0,
           ]);
         }
       }else{
@@ -124,15 +117,15 @@ class TransaccionController extends Controller
             'precio'=>$precio[$i],
             'condicion'=>1,
           ]);
-          $inventario= InventarioFarmacia::where('f_producto',$f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
-          InventarioFarmacia::create([
-          'f_producto'=>$f_producto[$i],
-          'tipo'=>0,
-          'existencia_anterior'=>$inventario->existencia_nueva,
-          'cantidad'=>$cantidad[$i],
-          'existencia_nueva'=>$inventario->existencia_nueva-$cantidad[$i],
-          'localizacion'=>Transacion::tipoUsuario(),
-          ]);
+          // $inventario= InventarioFarmacia::where('f_producto',$f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
+          // InventarioFarmacia::create([
+          // 'f_producto'=>$f_producto[$i],
+          // 'tipo'=>0,
+          // 'existencia_anterior'=>$inventario->existencia_nueva,
+          // 'cantidad'=>$cantidad[$i],
+          // 'existencia_nueva'=>$inventario->existencia_nueva-$cantidad[$i],
+          // 'localizacion'=>Transacion::tipoUsuario(),
+          // ]);
         }else{
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -144,10 +137,10 @@ class TransaccionController extends Controller
         }
         }
       }
-      }catch(\Exception $e){
-        DB::rollback();
-        return redirect('/')->with('error', '¡Algo salio mal!');
-      }
+      // }catch(\Exception $e){
+      //   DB::rollback();
+      //   return redirect('/')->with('error', '¡Algo salio mal!');
+      // }
       DB::commit();
       return redirect('/transacciones?tipo='.$tipo."&estado=".$estado)->with('mensaje', '¡Guardado!');
     }else{
@@ -195,6 +188,7 @@ class TransaccionController extends Controller
         $transaccion->fecha=$request->fecha;
         $transaccion->factura=$request->factura;
         $transaccion->descuento=$request->descuentog;
+        $transaccion->tipo=1;
         $transaccion->save();
 
         $contador = count($request->estado);
@@ -213,28 +207,27 @@ class TransaccionController extends Controller
           }
           $detalle->descuento = $request->descuento[$i];
           $detalle->cantidad = $request->cantidad[$i];
-          $detalle->condicion = '1';
           $detalle->fecha_vencimiento = $request->fecha_vencimiento[$i];
           $detalle->f_transaccion=$transaccion->id;
           $detalle->precio = $request->precio[$i];
           $detalle->lote = $request->lote[$i];
           $detalle->f_producto=$request->f_producto[$i];
           $detalle->save();
-
-          $inventario= InventarioFarmacia::where('f_producto',$request->f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
-          if(count($inventario)>0){
-            $ea=$inventario->existencia_nueva;
-          }else{
-            $ea=0;
-          }
-          InventarioFarmacia::create([
-          'f_producto'=>$request->f_producto[$i],
-          'tipo'=>1,
-          'existencia_anterior'=>$ea,
-          'cantidad'=>$request->cantidad[$i],
-          'existencia_nueva'=>$ea+$request->cantidad[$i],
-          'localizacion'=>Transacion::tipoUsuario(),
-          ]);
+          //
+          // $inventario= InventarioFarmacia::where('f_producto',$request->f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
+          // if(count($inventario)>0){
+          //   $ea=$inventario->existencia_nueva;
+          // }else{
+          //   $ea=0;
+          // }
+          // InventarioFarmacia::create([
+          // 'f_producto'=>$request->f_producto[$i],
+          // 'tipo'=>1,
+          // 'existencia_anterior'=>$ea,
+          // 'cantidad'=>$request->cantidad[$i],
+          // 'existencia_nueva'=>$ea+$request->cantidad[$i],
+          // 'localizacion'=>Transacion::tipoUsuario(),
+          // ]);
         }
         DB::commit();
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
@@ -297,10 +290,10 @@ class TransaccionController extends Controller
     public function buscarDivision($codigo,$tipo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
       if(count($division)==1){
-        $division->inventario=DivisionProducto::inventario($division->id);
-        if($division->inventario<1 && $tipo=='1'){
-          return 0;
-        }
+        // $division->inventario=DivisionProducto::inventario($division->id);
+        // if($division->inventario<1 && $tipo=='1'){
+        //   return 0;
+        // }
         $division->unidad;
         return $division;
       }else{
@@ -364,19 +357,19 @@ class TransaccionController extends Controller
         $t->anulado=true;
         $t->comentario=$comentario;
         $detalles=$t->detalleTransaccion;
-        foreach ($detalles as $d) {
-          if ($d->f_producto!=null) {
-            $ultimoInventario=InventarioFarmacia::where('f_producto',$d->f_producto)->where('localizacion',Transacion::tipoUsuario())->get()->last();
-            InventarioFarmacia::create([
-              'tipo'=>1,
-              'f_producto'=>$d->f_producto,
-              'existencia_anterior'=>$ultimoInventario->existencia_nueva,
-              'cantidad'=>$d->cantidad,
-              'existencia_nueva'=>$ultimoInventario->existencia_nueva+$d->cantidad,
-              'localizacion'=>Transacion::tipoUsuario(),
-            ]);
-          }
-        }
+        // foreach ($detalles as $d) {
+        //   if ($d->f_producto!=null) {
+        //     $ultimoInventario=InventarioFarmacia::where('f_producto',$d->f_producto)->where('localizacion',Transacion::tipoUsuario())->get()->last();
+        //     InventarioFarmacia::create([
+        //       'tipo'=>1,
+        //       'f_producto'=>$d->f_producto,
+        //       'existencia_anterior'=>$ultimoInventario->existencia_nueva,
+        //       'cantidad'=>$d->cantidad,
+        //       'existencia_nueva'=>$ultimoInventario->existencia_nueva+$d->cantidad,
+        //       'localizacion'=>Transacion::tipoUsuario(),
+        //     ]);
+        //   }
+        // }
 
       } catch (\Exception $e) {
         DB::rollback();

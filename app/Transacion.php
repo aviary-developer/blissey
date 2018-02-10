@@ -12,8 +12,8 @@ class Transacion extends Model
   ];
   protected $dates = ['fecha'];
 
-  public static function buscar($buscar,$tipo,$estado,$anulado){
-    return Transacion::factura($buscar)->tipo($tipo)->Localizacion()->estado($estado)->anulado($anulado)->orderBy('fecha','DESC')->paginate(10);
+  public static function buscar($buscar,$tipo){
+    return Transacion::factura($buscar)->tipo($tipo)->Localizacion()->orderBy('fecha','DESC')->paginate(10);
   }
   public function scopeFactura($query, $buscar){
     if(trim($buscar)!=""){
