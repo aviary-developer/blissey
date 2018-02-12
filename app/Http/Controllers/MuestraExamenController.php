@@ -18,12 +18,22 @@ class MuestraExamenController extends Controller
      */
      public function index(Request $request)
      {
+       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+        $pagina--;
+        $pagina *= 10;
        $estado = $request->get('estado');
        $nombre = $request->get('nombre');
        $muestras = MuestraExamen::buscar($nombre,$estado);
        $activos = MuestraExamen::where('estado',true)->count();
        $inactivos = MuestraExamen::where('estado',false)->count();
-       return view('Muestras.index',compact('muestras','estado','nombre','activos','inactivos'));
+       return view('Muestras.index',compact(
+         'muestras',
+         'estado',
+         'nombre',
+         'activos',
+         'inactivos',
+         'pagina'
+        ));
      }
 
      /**

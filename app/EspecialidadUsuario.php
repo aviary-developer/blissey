@@ -18,4 +18,8 @@ class EspecialidadUsuario extends Model
     public function usuario(){
       return $this->belongsTo('App\User','f_usuario');
     }
+
+    public function especialidad(){
+      return $this->belongsTo('App\Especialidad','f_especialidad');
+    }
 }

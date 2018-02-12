@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <div class="x_panel">
-          <img src={{asset(Storage::url($donacion->pruebaCruzada))}}>
+          <img style="height: 400px; width: 550px; object-fit: scale-down" src={{asset(Storage::url($donacion->pruebaCruzada))}}>
         </div>
       </div>
       <div class="modal-footer">

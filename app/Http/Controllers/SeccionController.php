@@ -18,12 +18,22 @@ class SeccionController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $secciones = Seccion::buscar($nombre,$estado);
       $activos = Seccion::where('estado',true)->count();
       $inactivos = Seccion::where('estado',false)->count();
-      return view('Secciones.index',compact('secciones','estado','nombre','activos','inactivos'));
+      return view('Secciones.index',compact(
+        'secciones',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

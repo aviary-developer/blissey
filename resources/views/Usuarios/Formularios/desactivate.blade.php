@@ -38,8 +38,8 @@
       <i class="fa fa-trash"></i>
   </button>
 @else
-  <button class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No puedes desactivarte a ti mismo">
+  <a href="#" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No puedes desactivarte a ti mismo">
     <i class="fa fa-warning"></i>
-  </button>
+  </a>
 @endif
 {!!Form::close()!!}

@@ -10,6 +10,9 @@
 thead{
     background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
 }
+.borde{
+    border: 1px solid;
+}
 .label-purple{
   background-color: rgb(159, 45, 249);
 }

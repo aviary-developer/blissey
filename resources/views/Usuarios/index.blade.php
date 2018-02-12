@@ -1,9 +1,5 @@
 @extends('dashboard')
 @section('layout')
-  @if(Session::has('mensaje'))
-    <?php $mensaje = Session::get('mensaje');
-    echo "<script>swal('$mensaje', 'Acción realizada satisfactorimente', 'success')</script>";?>
-  @endif
   @if ($estado == 1 || $estado == null)
     @php
     $estadoOpuesto = 0;
@@ -67,7 +63,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th style="width: 40px"></th>
+              <th style="width: 30px"></th>
               <th>#</th>
               <th>Apellido</th>
               <th>Nombre</th>
@@ -105,49 +101,52 @@
                   </td>
                   <td>
                     @if ($usuario->sexo)
-                      {{ "Masculino" }}
+                      <span class="label-lg label label-cian col-xs-12">Masculino</span>
                     @else
-                      {{ "Femenino" }}
+                      <span class="label-lg label label-pink col-xs-12">Femenino</span>
                     @endif
                   </td>
                   <td>
-                    @if($usuario->telefono($usuario->id) == "Sin teléfono")
-                      <i style="color: red">{{ $usuario->telefono($usuario->id)}}</i>
-                    @else    
-                      {{ $usuario->telefono($usuario->id)}}
+                    
+                    @if (count($usuario->telephone)>0)
+                    <center>
+                      {{$usuario->telephone->first()->telefono}}
+                    </center>
+                    @else
+                      <span class="label label-lg label-white red borde col-xs-12">Ninguno</span>
                     @endif
                   </td>
                   <td>
                     @if($usuario->tipoUsuario == "Gerencia")
-                      <span class="label label-default col-md-12 col-sm-12 col-xs-12">Gerencia</span>
+                      <span class="label label-default label-lg col-xs-12">Gerencia</span>
                     @elseif ($usuario->tipoUsuario == "Médico")
-                      <span class="label label-primary col-md-12 col-sm-12 col-xs-12">Médico</span>
+                      <span class="label label-primary label-lg col-xs-12">Médico</span>
                     @elseif ($usuario->tipoUsuario == "Laboaratorio")
-                      <span class="label label-success col-md-12 col-sm-12 col-xs-12">Laboratorio</span>
+                      <span class="label label-success label-lg col-xs-12">Laboratorio</span>
                     @elseif ($usuario->tipoUsuario == "Ultrasonografía")
-                      <span class="label label-warning col-md-12 col-sm-12 col-xs-12">Ultrasonografía</span>
+                      <span class="label label-warning label-lg col-xs-12">Ultrasonografía</span>
                     @elseif ($usuario->tipoUsuario == "Rayos X")
-                      <span class="label label-info col-md-12 col-sm-12 col-xs-12">Rayos X</span>
+                      <span class="label label-info label-lg col-xs-12">Rayos X</span>
                     @elseif ($usuario->tipoUsuario == "Recepción")
-                      <span class="label label-danger col-md-12 col-sm-12 col-xs-12">Recepción</span>
+                      <span class="label label-danger label-lg col-xs-12">Recepción</span>
                     @elseif ($usuario->tipoUsuario == "Enfermería")
                       <span class="label label-purple">Enfermería</span>
                     @elseif ($usuario->tipoUsuario == "Farmacia")
-                      <span class="label label-dark-blue col-md-12 col-sm-12 col-xs-12">Farmacia</span>
+                      <span class="label label-dark-blue label-lg col-xs-12">Farmacia</span>
                     @endif
                   </td>
                   <td>
-                    @php
-                      $especialidad = $usuario->especialidad_principal($usuario->id);
-                    @endphp
-                    @if($especialidad != 0)
-                      <a href={{asset('/especialidades/'.$especialidad)}}>
-                        {{$usuario->nombre_especialidad_index($especialidad)}}
+                    @if (count($usuario->union)>0)
+                      @php
+                        $union = $usuario->union->where('principal',true)->first();
+                      @endphp
+                      <a href={{asset('/especialidades/'.$union->f_especialidad)}}>
+                        <center>
+                          {{$union->especialidad->nombre}}
+                        </center>
                       </a>
                     @else
-                      <i style="color: gray;">
-                        {{$usuario->nombre_especialidad_index($especialidad)}}
-                      </i>
+                      <span class="label label-lg label-gray col-xs-12">Ninguna</span>
                     @endif
                   </td>
                   <td>

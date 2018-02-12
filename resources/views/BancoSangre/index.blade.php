@@ -1,9 +1,5 @@
 @extends('dashboard')
 @section('layout')
-  @if(Session::has('mensaje'))
-    <?php $mensaje = Session::get('mensaje');
-    echo "<script>swal('$mensaje', 'Acción realizada satisfactorimente', 'success')</script>";?>
-  @endif
   @if ($estado == 1 || $estado == null)
     @php
     $estadoOpuesto = 0;
@@ -16,7 +12,7 @@
   @php
   $index = true;
   @endphp
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-8 col-sm-8 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Banco de Sangre
@@ -30,11 +26,11 @@
       </div>
       <div class="x_content">
         <div class="row">
-          <div class="col-md-5 col-xs-12">
+          <div class="col-md-7 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/bancosangre/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/bancosangre?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/bancosangre/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/bancosangre?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -43,11 +39,10 @@
                   <span class="label label-warning">{{ $inactivos }}</span>
                 @endif
               </a>
-              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
-          <div class="col-md-3 col-xs-12"></div>
-          <div class="col-md-4 col-xs-12">
+          <div class="col-md-5 col-xs-12">
             {!!Form::open(['route'=>'bancosangre.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
@@ -77,8 +72,58 @@
               @endphp
               @foreach ($donaciones as $donacion)
                 <tr>
-                  <td>{{ $correlativo }}</td>
-                    <td>{{$donacion->tipoSangre}}</td>
+                  <td>{{ $correlativo + $pagina}}</td>
+                  <td>
+                    @if ($donacion->tipoSangre == "A+")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-cian col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @elseif ($donacion->tipoSangre == "A-")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-danger col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @elseif ($donacion->tipoSangre == "B+")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-info col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @elseif ($donacion->tipoSangre == "B-")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-default col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @elseif ($donacion->tipoSangre == "AB+")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-pink col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @elseif ($donacion->tipoSangre == "AB-")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-primary col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @elseif ($donacion->tipoSangre == "O+")
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-success col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @else
+                      <a class="white" href={{asset('/bancosangre/'.$donacion->id)}}>
+                        <span class="label label-lg label-warning col-xs-12">
+                          {{$donacion->tipoSangre}}
+                        </span>
+                      </a>
+                    @endif
+                  </td>
                   <td>{{ $donacion->anticuerpos}}</td>
                   <td>{{Carbon\Carbon::parse($donacion->fechaVencimiento)->format('d-m-Y')}}</td>
                   <td>
@@ -95,7 +140,7 @@
               @endforeach
             @else
               <tr>
-                <td colspan="7">
+                <td colspan="5">
                   <center>
                     No hay registros que coincidan con los terminos de busqueda indicados
                   </center>

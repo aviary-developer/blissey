@@ -182,7 +182,7 @@
                                       <a href={{asset( '/parametros')}}>Parametros</a>
                                     </li>
                                     <li>
-                                      <a href={{asset( '/secciones')}}>Secciones</a>
+                                      <a href={{asset( '/secciones')}}>Tipo de secciones</a>
                                     </li>
                                     <li>
                                       <a href={{asset( '/muestras')}}>Tipo de muestras</a>

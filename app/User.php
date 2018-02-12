@@ -99,4 +99,12 @@ class User extends Authenticatable
       $validacion = Auth::attempt(['password' => $email]);
       return $validacion;
     }
+
+    public function union(){
+      return $this->hasMany('App\EspecialidadUsuario','f_usuario');
+    }
+
+    public function telephone(){
+      return $this->hasMany('App\TelefonoUsuario','f_usuario');
+    }
 }

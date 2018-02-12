@@ -25,12 +25,22 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
       $usuarios = User::buscar($nombre,$estado);
       $activos = User::where('estado',true)->count();
       $inactivos = User::where('estado',false)->count();
-      return view('Usuarios.index',compact('usuarios','estado','nombre','activos','inactivos'));
+      return view('Usuarios.index',compact(
+        'usuarios',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

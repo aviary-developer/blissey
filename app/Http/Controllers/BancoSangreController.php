@@ -21,10 +21,20 @@ class BancoSangreController extends Controller
     {
       $estado = $request->get('estado');
       $nombre = $request->get('tipoSangre');
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $donaciones = BancoSangre::buscar($nombre,$estado);
       $activos = BancoSangre::where('estado',true)->count();
       $inactivos = BancoSangre::where('estado',false)->count();
-      return view('BancoSangre.index',compact('donaciones','estado','nombre','activos','inactivos'));
+      return view('BancoSangre.index',compact(
+        'donaciones',
+        'estado',
+        'nombre',
+        'activos',
+        'inactivos',
+        'pagina'
+      ));
     }
 
     /**

@@ -9,6 +9,8 @@ class BancoSangre extends Model
   protected $fillable = [
     'tipoSangre', 'anticuerpos', 'pruebaCruzada', 'fechaVencimiento'
   ];
+
+  protected $dates = ['fechaVencimiento'];
   public static function buscar($nombre, $estado){
     return BancoSangre::nombre($nombre)->estado($estado)->orderBy('tipoSangre')->paginate(10);
   }

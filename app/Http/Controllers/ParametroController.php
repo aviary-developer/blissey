@@ -20,13 +20,23 @@ class ParametroController extends Controller
   */
   public function index(Request $request)
   {
+    $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+    $pagina--;
+    $pagina *= 10;
     $estado = $request->get('estado');
     $nombre = $request->get('nombre');
     $parametros = Parametro::buscar($nombre,$estado);
     $unidades = Unidad::all();
     $activos = Parametro::where('estado',true)->count();
     $inactivos = Parametro::where('estado',false)->count();
-    return view('Parametros.index',compact('parametros','estado','nombre','activos','inactivos'));
+    return view('Parametros.index',compact(
+      'parametros',
+      'estado',
+      'nombre',
+      'activos',
+      'inactivos',
+      'pagina'
+    ));
   }
 
   /**

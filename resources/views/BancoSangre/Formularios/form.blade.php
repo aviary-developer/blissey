@@ -44,12 +44,15 @@
         {!! Form::date('fechaVencimiento',$fecha,['id'=>'fecha_paciente','min'=>$ahora->addDay(1)->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
       </div>
     </div>
+  <center>
+    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>
       {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/bancoSangre') !!} class="btn btn-default">Cancelar</a>
+      <a href={!! asset('/bancosangre') !!} class="btn btn-default">Cancelar</a>
     </center>
   </div>
 </div>
@@ -58,9 +61,9 @@
     <center>
       <output id="listPC" style="height:400px">
         @if ($create)
-          <img src={{asset(Storage::url('noImgen.jpg'))}} style="height : 400px">
+          <img src={{asset(Storage::url('noImgen.jpg'))}} style="height: 400px; width: 400px; object-fit: scale-down">
         @else
-          <img src={{asset(Storage::url($donacion->pruebaCruzada))}} style="height : 400px">
+          <img src={{asset(Storage::url($donacion->pruebaCruzada))}} style="height: 400px; width: 400px; object-fit: scale-down">
         @endif
       </output>
     </center>
@@ -80,7 +83,7 @@ function pruebaCruzada(evt){
 
     reader.onload = (function(theFile){
       return function(e){
-        document.getElementById('listPC').innerHTML = ['<img style="height: 400px" src = "', e.target.result,'"/>'].join('');
+        document.getElementById('listPC').innerHTML = ['<img style="height: 400px; width: 400px; object-fit: scale-down" src = "', e.target.result,'"/>'].join('');
       };
     })(f);
     reader.readAsDataURL(f);

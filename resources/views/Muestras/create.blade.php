@@ -7,7 +7,7 @@
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Muestra<small>Nuevo</small></h2>
+        <h2>Tipo de muestra<small>Nuevo</small></h2>
         <div class="clearfix"></div>
       </div>
       @include('Muestras.Formularios.form')

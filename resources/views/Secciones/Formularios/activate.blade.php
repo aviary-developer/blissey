@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/secciones/'.$seccion->id)!!} class="btn btn-ms btn-info">
+  <a href={!! asset('/secciones/'.$seccion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/secciones/'.$seccion->id.'/edit')!!} class="btn btn-ms btn-primary">
+  <a href={!! asset('/secciones/'.$seccion->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-ms" onclick={!! "'alta(".$seccion->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$seccion->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$seccion->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$seccion->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
 @else
@@ -23,25 +23,25 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/secciones'.$regreso)!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/secciones'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/secciones/'.$seccion->id.'/edit')!!} class="btn btn-dark btn-ms">
+    <a href={!! asset('/secciones/'.$seccion->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
     @if ($seccion->estado)
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'baja(".$seccion->id.");'" !!}>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$seccion->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-ms" onclick={!! "'alta(".$seccion->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$seccion->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-ms" onclick={!! "'eliminar(".$seccion->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$seccion->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-ms">
+    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>
@@ -50,12 +50,12 @@
 <script type="text/javascript">
   function alta(id){
     return swal({
-      title: 'Activar registro',
+      title: 'Restaurar registro',
       text: '¿Está seguro? ¡El registro estará activo nuevamente!',
       type: 'question',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, ¡Activar!',
+      confirmButtonText: 'Si, ¡Restaurar!',
       cancelButtonText: 'No, ¡Cancelar!',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
@@ -65,7 +65,7 @@
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateSeccion/'+id);
       $('#formulario').submit();
       swal(
-        '¡Activado!',
+        '¡Restaurado!',
         'Acción realizada satisfactorimente',
         'success'
       )

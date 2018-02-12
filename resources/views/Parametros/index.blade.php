@@ -1,9 +1,5 @@
 @extends('dashboard')
 @section('layout')
-  @if(Session::has('mensaje'))
-    <?php $mensaje = Session::get('mensaje');
-    echo "<script>swal('$mensaje', 'Acción realizada satisfactorimente', 'success')</script>";?>
-  @endif
   @if ($estado == 1 || $estado == null)
     @php
     $estadoOpuesto = 0;
@@ -16,7 +12,7 @@
   @php
   $index = true;
   @endphp
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-10 col-sm-10 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Parametros
@@ -30,11 +26,11 @@
       </div>
       <div class="x_content">
         <div class="row">
-          <div class="col-md-5 col-xs-12">
+          <div class="col-md-7 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/parametros/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/parametros?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-ms">
+              <a href={!! asset('/parametros/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+              <a href={!! asset('/parametros?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -43,11 +39,10 @@
                   <span class="label label-warning">{{ $inactivos }}</span>
                 @endif
               </a>
-              <button class="btn btn-primary btn-ms" type="button"><i class="fa fa-question"></i> Ayuda</button>
+              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
-          <div class="col-md-3 col-xs-12"></div>
-          <div class="col-md-4 col-xs-12">
+          <div class="col-md-5 col-xs-12">
             {!!Form::open(['route'=>'parametros.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
@@ -79,27 +74,51 @@
               @endphp
               @foreach ($parametros as $parametro)
                 <tr>
-                  <td>{{ $correlativo }}</td>
-                  <td>{{ $parametro->nombreParametro}}</td>
+                  <td>{{ $correlativo + $pagina}}</td>
+                  <td>
+                    <a href={{asset('/parametros/'.$parametro->id)}}>
+                      {{ $parametro->nombreParametro}}
+                    </a>
+                  </td>
                   @if($parametro->valorMinimo!=null)
-                  <td>{{ $parametro->valorMinimo}}</td>
+                  <td>
+                    <span class="label label-lg label-cian col-xs-12">
+                      {{number_format($parametro->valorMinimo, 2, '.', ',')}}
+                    </span>
+                  </td>
                   @else
-                    <td>(Vacío)</td>
+                    <td>
+                      <span class="label label-lg label-gray col-xs-12">Ninguno</span>
+                    </td>
                   @endif
                   @if($parametro->valorMaximo!=null)
-                  <td>{{ $parametro->valorMaximo}}</td>
+                  <td>
+                    <span class="label label-lg label-danger col-xs-12">{{number_format($parametro->valorMaximo, 2, '.', ',')}}</span>
+                  </td>
                   @else
-                    <td>(Vacío)</td>
+                    <td>
+                      <span class="label label-lg label-gray col-xs-12">Ninguno</span>
+                    </td>
                   @endif
                   @if($parametro->valorPredeterminado!=null)
-                  <td>{{ $parametro->valorPredeterminado}}</td>
+                  @if (!is_numeric($parametro->valorPredeterminado))
+                      <td>
+                        <span class="label label-lg label-default col-xs-12">{{$parametro->valorPredeterminado}}</span>
+                      </td>
+                    @else
+                      <td>
+                        <span class="label label-lg label-default col-xs-12">{{number_format($parametro->valorPredeterminado, 2, '.', ',')}}</span>
+                      </td>
+                    @endif
                   @else
-                    <td>(Vacío)</td>
+                    <span class="label label-lg label-gray col-xs-12">Ninguno</span>
                   @endif
                   @if($parametro->unidad!=null)
                   <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
                   @else
-                    <td>(Vacío)</td>
+                  <td>
+                    <span class="label label-lg label-gray col-xs-12">Ninguna</span>
+                  </td>
                   @endif
                   <td>
                     @if ($estadoOpuesto)
