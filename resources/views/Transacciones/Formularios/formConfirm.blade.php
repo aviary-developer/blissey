@@ -7,6 +7,14 @@
       <input type="hidden" value="" id="divoculto">
       <input type="hidden" value="" id="nomoculto">
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
+      @php
+        $estantes=App\Estante::arrayEstante();
+        $cadena="<option value=''>Seleccione un estante</option>";
+        foreach ($estantes as $key => $e) {
+          $cadena=$cadena."<option value='".$key."'>".$e."</option>";
+        }
+      @endphp
+      <input type="hidden" id="opciones" value="{{$cadena}}">
       <input type="hidden" id="confirmar" name="confirmar" value="{{true}}">
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
@@ -67,12 +75,14 @@
         <h4 class="StepTitle">Detalles</h4>
         <table class="table" id="tablaDetalle">
           <thead>
-            <th>Cantidad</th>
+            <th style="width : 8%">Cantidad</th>
             <th colspan="2">Detalle</th>
-            <th>Descuento</th>
+            <th style="width : 8%">Descuento</th>
             <th>Fecha de vencimiento</th>
             <th>Precio unitario</th>
             <th>Lote</th>
+            <th>Estante</th>
+            <th style="width : 8%">Nivel</th>
             <th style="width : 80px">Acción</th>
           </thead>
             @php
@@ -80,29 +90,35 @@
             @endphp
             @foreach ($detalles as $key => $detalle)
               <tr>
-                <td style="width: 10%">
+                <td>
                   {!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control valu','placeholder'=>'Cantidad','min'=>'1','onKeyPress' => 'return entero( this, event,this.value);']) !!}
                 </td>
-                <td style="width: 20%">
+                <td>
                 @if ($detalle->divisionProducto->unidad==null)
                   {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
                 @else
                   {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
                 @endif
                 </td>
-                <td style="width: 15%">{{$detalle->divisionProducto->producto->nombre}}</td>
-                <td style="width: 10%">
+                <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                <td>
                     {!! Form::number('descuento[]',null,['class'=>'form-control vald','placeholder'=>'%','min'=>'0']) !!}
                 </td>
-                <td style="width: 10%">
+                <td>
                   {!! Form::date('fecha_vencimiento[]',null,['class'=>'form-control valt']) !!}
                 </td>
-                <td style="width: 10%">
+                <td>
                   {!! Form::number('precio[]',null,['class'=>'form-control valc','placeholder'=>'Precio']) !!}
                 </td>
-                <td style="width: 10%">
+                <td>
                   {!! Form::text('lote[]',null,['class'=>'form-control vali','placeholder'=>'N° de lote']) !!}
                 </td>
+                <td>{!!Form::select('f_estante[]',
+                  App\Estante::arrayEstante()
+                  ,null, ['placeholder' => 'Seleccione un estante','class'=>'form-control vals','id'=>'f_estante'.$detalle->f_producto,'onChange'=>'cambioEstante('.$detalle->f_producto.')'])!!}
+              </td>
+                <td>{!!Form::select('nivel[]',[]
+                  ,null, ['placeholder' => 'Nivel','class'=>'form-control','id'=>'nivel'.$detalle->f_producto])!!}
                 <td>
                   <input type="hidden" id='{{"f_prod".$key}}' value='{{$detalle->f_producto}}'>
                   <input type='hidden' name='estado[]' value ='{{$detalle->id}}'>
@@ -123,3 +139,20 @@
       </div>
 @include('Transacciones.Formularios.modalBuscarProducto')
     </div>
+    <script type="text/javascript">
+function cambioEstante(idp){
+  console.log(idp);
+  idEstante=$('#f_estante'+idp).find('option:selected').val();
+  console.log(idEstante);
+  $('#nivel'+idp).empty();
+  if(idEstante!=""){
+    var ruta = "/blissey/public/niveles/"+idEstante;
+    $.get(ruta,function(res){
+      cantidad=parseFloat(res);
+      for(i=1;i<=cantidad;i++){
+        $('#nivel'+idp).append("<option value="+i+">"+i+"</option>");
+      }
+    });
+  }
+}
+    </script>

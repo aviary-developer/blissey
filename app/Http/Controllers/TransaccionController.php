@@ -16,6 +16,7 @@ use Validator;
 use App\Paciente;
 use App\Componente;
 use App\Servicio;
+use App\Estante;
 
 class TransaccionController extends Controller
 {
@@ -117,15 +118,6 @@ class TransaccionController extends Controller
             'precio'=>$precio[$i],
             'condicion'=>1,
           ]);
-          // $inventario= InventarioFarmacia::where('f_producto',$f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
-          // InventarioFarmacia::create([
-          // 'f_producto'=>$f_producto[$i],
-          // 'tipo'=>0,
-          // 'existencia_anterior'=>$inventario->existencia_nueva,
-          // 'cantidad'=>$cantidad[$i],
-          // 'existencia_nueva'=>$inventario->existencia_nueva-$cantidad[$i],
-          // 'localizacion'=>Transacion::tipoUsuario(),
-          // ]);
         }else{
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -212,22 +204,9 @@ class TransaccionController extends Controller
           $detalle->precio = $request->precio[$i];
           $detalle->lote = $request->lote[$i];
           $detalle->f_producto=$request->f_producto[$i];
+          $detalle->f_estante=$request->f_estante[$i];
+          $detalle->nivel=$request->nivel[$i];
           $detalle->save();
-          //
-          // $inventario= InventarioFarmacia::where('f_producto',$request->f_producto[$i])->where('localizacion',Transacion::tipoUsuario())->get()->last();
-          // if(count($inventario)>0){
-          //   $ea=$inventario->existencia_nueva;
-          // }else{
-          //   $ea=0;
-          // }
-          // InventarioFarmacia::create([
-          // 'f_producto'=>$request->f_producto[$i],
-          // 'tipo'=>1,
-          // 'existencia_anterior'=>$ea,
-          // 'cantidad'=>$request->cantidad[$i],
-          // 'existencia_nueva'=>$ea+$request->cantidad[$i],
-          // 'localizacion'=>Transacion::tipoUsuario(),
-          // ]);
         }
         DB::commit();
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
@@ -378,5 +357,9 @@ class TransaccionController extends Controller
       $t->save();
       DB::commit();
       return redirect('/transacciones?tipo=1&estado=0')->with('mensaje', '¡Anulado!');
+    }
+    public static function niveles($id){
+      $estante=Estante::find($id);
+      return $estante->cantidad;
     }
 }

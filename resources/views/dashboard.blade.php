@@ -140,7 +140,7 @@
                                   <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                                 </li>
                                 <li>
-                                  <a href={{asset( '/transacciones?tipo=1')}}>Ventas</a>
+                                  <a href={{asset( '/transacciones?tipo=2')}}>Ventas</a>
                                 </li>
                                 <li>
                                   <a>Mantenimiento

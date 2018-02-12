@@ -10,7 +10,13 @@
         <h2>
           @if($tipo==0)Pedidos
               <small>Por confirmar</small>
-            @endif
+          @endif
+          @if($tipo==1)Pedidos
+              <small>Confirmados</small>
+          @endif
+          @if($tipo==2)Ventas
+              <small>Realizadas</small>
+          @endif
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -26,6 +32,21 @@
                     <span class="label label-warning">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
                   </a>
                 @endif
+                @if($tipo==1)
+                    <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                    <a href={!! asset('/transacciones?tipo=0') !!} class="btn btn-dark btn-ms">
+                      <i class="fa fa-file"></i> Por confirmar
+                      <span class="label label-warning">{{ App\Transacion::where('tipo',0)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                    </a>
+                @endif
+                @if($tipo==2)
+                    <a href={!! asset('/transacciones/create?tipo=1') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+                    <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                    <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
+                      <i class="fa fa-file"></i> Comfirmados
+                      <span class="label label-warning">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                    </a>
+                  @endif
             </div>
           </div>
           <div class="col-md-3 col-xs-12"></div>
@@ -45,8 +66,11 @@
             <tr>
               <th>#</th>
               <th>Fecha</th>
-              @if ($tipo==0)
+              @if ($tipo==0 || $tipo==1)
                 <th>Proveedor</th>
+              @endif
+              @if($tipo==1)
+                <th>Factura</th>
               @endif
               <th>Opciones</th>
             </tr>
@@ -60,8 +84,11 @@
                 <tr>
                   <td>{{ $correlativo }}</td>
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
-                  @if ($tipo==0)
+                  @if ($tipo==0 || $tipo==1)
                     <td>{{$transaccion->proveedor->nombre}}</td>
+                  @if($tipo==1)
+                    <td>{{$transaccion->factura}}</td>
+                  @endif
                     <td>@if($transaccion->factura==null)
                       {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
                       <button type="submit" class="btn btn-success btn-xs"/>

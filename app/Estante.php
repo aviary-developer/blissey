@@ -23,4 +23,13 @@ class Estante extends Model
     }
     $query->where('estado',$estado);
   }
+
+  public static function arrayEstante(){
+    $estantes=Estante::where('estado',1)->where('localizacion',Transacion::tipoUsuario())->get();
+    $arrayE=[];
+    foreach ($estantes as $e) {
+      $arrayE[$e->id]=$e->codigo;
+    }
+    return $arrayE;
+  }
 }

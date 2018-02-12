@@ -237,13 +237,15 @@ $(document).on('ready',function(){
             "</tr>";
         }else{
           html="<tr>"+
-          "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
-          "<td style='width: 20%'>"+division+"</td>"+
-          "<td style='width: 15%'>"+nombre+"</td>"+
-          "<td style='width: 10%'><input name='descuento[]' class='form-control vald' type='number' placeholder='%' value='0'></td>"+
-          "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control valt' type='date' placeholder=''></td>"+
-          "<td style='width: 10%'><input name='precio[]' class='form-control valc' type='number' placeholder='Precio'></td>"+
-          "<td style='width: 10%'><input name='lote[]' class='form-control vali' type='text' placeholder='N° de lote'></td>"+
+          "<td><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
+          "<td>"+division+"</td>"+
+          "<td>"+nombre+"</td>"+
+          "<td><input name='descuento[]' class='form-control vald' type='number' placeholder='%' value='0'></td>"+
+          "<td><input name='fecha_vencimiento[]' class='form-control valt' type='date' placeholder=''></td>"+
+          "<td><input name='precio[]' class='form-control valc' type='number' placeholder='Precio'></td>"+
+          "<td><input name='lote[]' class='form-control vali' type='text' placeholder='N° de lote'></td>"+
+          "<td><select name='f_estante[]' class='form-control vals' id='f_estante"+f_producto+"' onChange='cambioEstante("+f_producto+")'>"+$('#opciones').val()+"</select></td>"+
+          "<td><select name='nivel[]' class='form-control' id='nivel"+f_producto+"'><option value=''>Nivel</option></select></td>"+
           "<td>"+
           "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
           "<input type='hidden' name='estado[]' value ='nuevo'>"+
@@ -353,13 +355,15 @@ $(document).on('ready',function(){
         "</tr>";
       }else{
         html="<tr>"+
-        "<td style='width: 10%'><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
-        "<td style='width: 20%'>"+$("#divoculto").val()+"</td>"+
-        "<td style='width: 15%'>"+$("#nomoculto").val()+"</td>"+
-        "<td style='width: 10%'><input name='descuento[]' class='form-control vald' type='number' placeholder='%' value='0'></td>"+
-        "<td style='width: 10%'><input name='fecha_vencimiento[]' class='form-control valt' type='date' placeholder=''></td>"+
-        "<td style='width: 10%'><input name='precio[]' class='form-control valc' type='number' placeholder='Precio'></td>"+
-        "<td style='width: 10%'><input name='lote[]' class='form-control vali' type='text' placeholder='N° de lote'></td>"+
+        "<td><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
+        "<td>"+$("#divoculto").val()+"</td>"+
+        "<td>"+$("#nomoculto").val()+"</td>"+
+        "<td><input name='descuento[]' class='form-control vald' type='number' placeholder='%' value='0'></td>"+
+        "<td><input name='fecha_vencimiento[]' class='form-control valt' type='date' placeholder=''></td>"+
+        "<td><input name='precio[]' class='form-control valc' type='number' placeholder='Precio'></td>"+
+        "<td><input name='lote[]' class='form-control vali' type='text' placeholder='N° de lote'></td>"+
+        "<td><select name='f_estante[]' class='form-control vals' id='f_estante"+f_producto+"' onChange='cambioEstante("+f_producto+")'>"+$('#opciones').val()+"</select></td>"+
+        "<td><select name='nivel[]' class='form-control' id='nivel"+f_producto+"'><option value=''>Nivel</option></select></td>"+
         "<td>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
         "<input type='hidden' name='estado[]' value ='nuevo'>"+
@@ -410,7 +414,7 @@ $(document).on('ready',function(){
     });
     $('#confirmarPedido').on('click', function (e) {
       var error=0;
-      v1=v2=v3=v4=v5=v6=0;
+      v1=v2=v3=v4=v5=v6=v7=0;
       $('.valu').each(function(){ //Cantidad
         if($(this).val().trim()=="" || parseFloat($(this).val())<1){
           error++;
@@ -450,6 +454,12 @@ $(document).on('ready',function(){
         error++;
         v6=1;
       }
+      $('.vals').each(function(){ //Lote
+        if($(this).val().trim()==""){
+          error++;
+          v7=1;
+        }
+      });
       if(error==0){
         $('#formVender').submit();
       }else{
@@ -497,6 +507,14 @@ $(document).on('ready',function(){
           new PNotify({
             title: '¡Error!',
             text: 'El número de lote es requerido',
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+        if(v7==1){
+          new PNotify({
+            title: '¡Error!',
+            text: 'Todos los productos deben asignarsea a un estante',
             type: 'error',
             styling: 'bootstrap3'
           });

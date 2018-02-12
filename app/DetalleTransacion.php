@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DetalleTransacion extends Model
 {
   protected $fillable = [
-    'f_producto','f_servicio','precio','descuento','cantidad','condicion','fecha_vencimiento','lote','f_transaccion'
+    'f_producto','f_servicio','precio','descuento','cantidad','fecha_vencimiento','lote','f_transaccion','f_estante','nivel'
   ];
   protected $dates = ['fecha_vencimiento'];
 
