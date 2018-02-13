@@ -352,24 +352,36 @@ $("#guardarReactivoModal").on('click', function (e) {
     },
     success: function () {
       $(".modal").modal('hide');
+      swal({
+        title: '¡Reactivo registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
     }
   });
 
-  swal({
-    title: '¡Reactivo registrado!',
-    text: 'Cargando información',
-    timer: 3000,
-    onOpen: function () {
-      swal.showLoading()
-    }
-  }).then(
-    function () { },
-    function (dismiss) {
-      if (dismiss === 'timer') {
-        console.log('cerrado timer de reactivos en examenes')
-      }
-    }
-  );
 
   rellenarReactivo();
   $("#nombreReactivoModal").val("");
@@ -404,21 +416,22 @@ $("#guardarMuestraModal").on('click', function (e) {
         function () { },
         function (dismiss) {
           if (dismiss === 'timer') {
-            console.log('cerrado timer de muestras en examenes')
           }
         }
       );
     },
-    error: function() {
-      swal({
-        type: 'error',
-        title: '¡Repetido!',
-        text: 'El nombre de muestra ya ha sido agregado',
-        showConfirmButton: false,
-        timer: 1800,
-        animation: false,
-        customClass: 'animated lightSpeedIn'
-      }).catch(swal.noop);
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
     }
   });
 
@@ -454,78 +467,78 @@ $("#guardarSeccionModal").on('click', function (e) {
         function () { },
         function (dismiss) {
           if (dismiss === 'timer') {
-            console.log('cerrado timer de seccion en examenes')
           }
         }
       );
     },
-    error: function() {
-      swal({
-        type: 'error',
-        title: '¡Repetido!',
-        text: 'El nombre de sección ya ha sido agregado',
-        showConfirmButton: false,
-        timer: 1800,
-        animation: false,
-        customClass: 'animated lightSpeedIn'
-      }).catch(swal.noop);
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
     }
-  });
-
-
-  rellenarSeccion();
-  $("#nombreSeccionModal").val("");
-
-});
-
-function rellenarReactivo() {
-  var reactivos = $("#reactivo_select");
-  var ruta = "/blissey/public/llenarReactivosExamenes";
-  $.get(ruta, function (res) {
-    reactivos.empty();
-    $(res).each(function (key, value) {
-      reactivos.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
     });
-  });
-}
 
-function rellenarMuestra() {
-  var muestras = $("#tipo_muestra_select");
-  var ruta = "/blissey/public/llenarMuestrasExamenes";
-  console.log("Hola");
-  $.get(ruta, function (res) {
-    muestras.empty();
-    $(res).each(function (key, value) {
-      muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+
+    rellenarSeccion();
+    $("#nombreSeccionModal").val("");
+
+  });
+
+  function rellenarReactivo() {
+    var reactivos = $("#reactivo_select");
+    var ruta = "/blissey/public/llenarReactivosExamenes";
+    $.get(ruta, function (res) {
+      reactivos.empty();
+      $(res).each(function (key, value) {
+        reactivos.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
     });
-  });
-}
+  }
 
-function rellenarSeccion() {
-  var secciones = $("#seccion_select");
-  var ruta = "/blissey/public/llenarSeccionExamenes";
-  $.get(ruta, function (res) {
-    secciones.empty();
-    $(res).each(function (key, value) {
-      secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+  function rellenarMuestra() {
+    var muestras = $("#tipo_muestra_select");
+    var ruta = "/blissey/public/llenarMuestrasExamenes";
+    $.get(ruta, function (res) {
+      muestras.empty();
+      $(res).each(function (key, value) {
+        muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
     });
-  });
-}
+  }
 
-function reset_modal() {
-  parametros = 0;
-  bloqueo_listo();
+  function rellenarSeccion() {
+    var secciones = $("#seccion_select");
+    var ruta = "/blissey/public/llenarSeccionExamenes";
+    $.get(ruta, function (res) {
+      secciones.empty();
+      $(res).each(function (key, value) {
+        secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
+    });
+  }
 
-  var tabla = $("#tabla_parametros");
-  tabla.empty();
+  function reset_modal() {
+    parametros = 0;
+    bloqueo_listo();
 
-  var head = '<thead>' +
-  '<th>Parametro</th>' +
-  '<th>Reactivo</th>' +
-  '<th style="width: 80px">Acción</th>' +
-  '</thead>' +
-  '<tbody>' +
-  '</tbody>';
+    var tabla = $("#tabla_parametros");
+    tabla.empty();
 
-  tabla.append(head);
-}
+    var head = '<thead>' +
+    '<th>Parametro</th>' +
+    '<th>Reactivo</th>' +
+    '<th style="width: 80px">Acción</th>' +
+    '</thead>' +
+    '<tbody>' +
+    '</tbody>';
+
+    tabla.append(head);
+  }

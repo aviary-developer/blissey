@@ -25,11 +25,15 @@ class ReactivoRequest extends FormRequest
     {
       return [
           'nombre' => 'required | unique:reactivos',
+          'descripcion' => 'required',
+          'contenidoPorEnvase' => 'required',
       ];
   }
   public function messages(){
      return [
           'nombre.required'=>'El campo Nombre es obligatorio',
+          'nombre.required'=>'El campo Descripción es obligatorio',
+          'nombre.required'=>'El campo Contenido por envase es obligatorio',
           'nombre.unique'=>'El nombre ya ha sido registrado anteriormente',
      ];
   }

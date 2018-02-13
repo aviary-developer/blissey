@@ -110,8 +110,9 @@
                         <span class="label label-lg label-default col-xs-12">{{number_format($parametro->valorPredeterminado, 2, '.', ',')}}</span>
                       </td>
                     @endif
-                  @else
+                  @else<td>
                     <span class="label label-lg label-gray col-xs-12">Ninguno</span>
+                  </td>
                   @endif
                   @if($parametro->unidad!=null)
                   <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>

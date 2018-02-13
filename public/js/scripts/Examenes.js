@@ -85,24 +85,36 @@ $('#guardarParametroModal').click(function(){
     },
     success: function(){
       $(".modal").modal('hide');
+      swal({
+        title: '¡Parametro registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () {},
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      )
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
     }
   });
   var paso=-1;
-  swal({
-    title: '¡Parametro registrado!',
-    text: 'Cargando información',
-    timer: 3000,
-    onOpen: function () {
-      swal.showLoading()
-    }
-  }).then(
-    function () {},
-    function (dismiss) {
-      if (dismiss === 'timer') {
-        console.log('cerrado timer de parametros en examenes')
-      }
-    }
-  )
   // for (paso = -1; paso < contadorSelectsParametros; paso++) {
   //   rellenarCombosParametros(paso);
   // }
@@ -123,7 +135,6 @@ function rellenarCombosParametros(){
   });
 }
  function agregarParametro(paso){
-   console.log("PASo: "+paso);
    //var parametro=$("#selectParametrosExamenes"+contadorSelectsParametros);
    var valorParametro=$("#selectParametrosExamenes"+paso).val();
    var textoParametro=$("#selectParametrosExamenes"+paso+" option:selected" ).text();
@@ -162,7 +173,6 @@ function rellenarCombosParametros(){
  "</td>"+
  "</tr>";
  }
-   //alert(html_texto);
    if(verificarParametroEnTabla(tablaAVerificar,textoParametro+textoReactivo)==true){
    $(tablaActual).append(html_texto);}else{
      swal({
@@ -178,10 +188,8 @@ function rellenarCombosParametros(){
  function verificarParametroEnTabla(tabla,nombreParametro){
    var bandera=true;
    $(tabla).each(function(key,value){
-     console.log($(this).text().trim()+" : "+nombreParametro);
      if($(this).text().trim()==nombreParametro){
        bandera=false;
-       console.log($(this).text().trim()+" IGUALES "+nombreParametro);
      }
  });
  return bandera;
@@ -196,7 +204,6 @@ function rellenarCombosParametros(){
    if(!contadorEnEditar){
      contadorEnEditar=0;
    }
-   console.log(contadorEnEditar);
    $('.seccionesExamenes').append( "<div class='col-md-6 col-sm-6 col-xs-12'>"+
    "<div class='x_panel'>"+
    "<div class='x_title'>"+
@@ -217,7 +224,6 @@ function rellenarCombosParametros(){
    contadorEnEditar++;
    $("#contadorEnEdit").val(contadorEnEditar);
    $("#contadorTotal").val(contadorEnEditar);
-   alert($("#contadorTotal").val());
  });
  function cerrarSeccionEditar(seccion,paso){
    disminuiContadorSeccionesEnEditar(paso);

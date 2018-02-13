@@ -42,7 +42,7 @@
               <table class="table">
                 <tr>
                   <th>Nombre</th>
-                  <td>{{ $seccion->nombre }}</td>
+                  <td>{{ $seccion->nombre }}{{ $seccion->id }}</td>
                 </tr>
                 <tr>
                   <th>Estado</th>
