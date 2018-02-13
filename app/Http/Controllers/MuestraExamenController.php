@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\MuestraExamen;
+use App\Http\Requests\MuestraRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
@@ -52,7 +53,7 @@ class MuestraExamenController extends Controller
       * @param  \Illuminate\Http\Request  $request
       * @return \Illuminate\Http\Response
       */
-     public function store(Request $request)
+     public function store(MuestraRequest $request)
      {
        MuestraExamen::create($request->All());
        return redirect('/muestras')->with('mensaje', '¡Guardado!');
@@ -89,7 +90,7 @@ class MuestraExamenController extends Controller
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-     public function update(Request $request, $id)
+     public function update(MuestraRequest $request, $id)
      {
        $muestras = MuestraExamen::find($id);
        $muestras->fill($request->all());
@@ -134,7 +135,7 @@ class MuestraExamenController extends Controller
       $muestras=MuestraExamen::where('estado',true)->orderBy('nombre')->get();
       return Response::json($muestras);
     }
-    public function ingresoMuestra(Request $request){
+    public function ingresoMuestra(MuestraRequest $request){
       MuestraExamen::create($request->All());
       return Response::json('success');
     }

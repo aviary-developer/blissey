@@ -133,7 +133,7 @@ class SeccionController extends Controller
       return Response::json($secciones);
     }
 
-    public function ingresoSeccion(Request $request){
+    public function ingresoSeccion(SeccionRequest $request){
       Seccion::create($request->All());
       return Response::json('success');
     }
