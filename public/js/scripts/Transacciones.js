@@ -338,14 +338,14 @@ $(document).on('ready',function(){
         "<td>"+cantidad+"</td>"+
         "<td>"+$("#divoculto").val()+"</td>"+
         "<td>"+$("#nomoculto").val()+"</td>";
-        if($('#tipo').val()=='1'){
+        if($('#tipo').val()=='2'){
           html=html+"<td>$ "+parseFloat($("#preoculto").val()).toFixed(2)+"</td>"+
           "<td>$ "+(cantidad*parseFloat($("#preoculto").val())).toFixed(2)+"</td>";
         }
         html=html+"<td>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
         "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>";
-        if($('#tipo').val()=='1'){
+        if($('#tipo').val()=='2'){
           html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>";
         }
         html=html+"<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+

@@ -9,12 +9,12 @@
       <input type="hidden" value="" id="nomoculto">
       <input type="hidden" value="" id="preoculto">
       <input type="hidden" value="" id="exioculto">
-      @if($tipo==1)
+      @if($tipo==2)
         <input type="hidden" name="fecha" value="{{$fecha}}">
       @endif
       <input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
       <input type="hidden" id="confirmar" name="confirmar" value="{{false}}">
-      @if($tipo==1)
+      @if($tipo==2)
       <input type="hidden"name="estado" value="0">
         <label class="col-md-2 col-sm-12 col-xs-12 form-group">N° de factura *</label>
         <div class="col-md-4 col-sm-12 col-xs-12 form-group">
@@ -29,7 +29,7 @@
           {!! Form::date('fecha',$fecha,['class'=>'form-control has-feedback-left']) !!}
         </div>
       @endif
-      @if ($tipo==1)
+      @if ($tipo==2)
           <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cliente *</label>
           <div class="col-md-4 col-sm-12 col-xs-12 form-group">
             <div class="input-group">
@@ -90,7 +90,7 @@
           <thead>
             <th>Cantidad</th>
             <th colspan="2">Detalle</th>
-            @if($tipo==1)
+            @if($tipo==2)
             <th style="width : 120px">Precio</th>
             <th style="width : 120px">Subtotal</th>
             @endif
@@ -109,7 +109,7 @@
                 @endphp
                 <td>{{TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
                 <td>{{$pmp->nombre}}</td>
-                @if ($tipo)
+                @if ($tipo==2)
                   <td>$ {{number_format($precio[$i],2,'.','.')}}</td>
                   <td>$ {{number_format($cantidad[$i]*$precio[$i],2,'.','.')}}</td>
                 @endif
@@ -134,9 +134,10 @@
         </table>
       </div>
       </div>
-      @if ($tipo)
+      @if ($tipo==2)
         @include('Transacciones.Formularios.modalBuscarVenta')
-      @else
+      @endif
+      @if($tipo==0)
         @include('Transacciones.Formularios.modalBuscarProducto')
       @endif
 @include('Transacciones.Formularios.modalBuscarCliente')

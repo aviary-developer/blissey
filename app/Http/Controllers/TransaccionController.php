@@ -104,7 +104,7 @@ class TransaccionController extends Controller
           $transaccion->f_cliente=$request->f_cliente;
         }
         $transaccion->factura=$request->factura;
-        $transaccion->tipo=$tipo;
+        $transaccion->tipo=2;
         $transaccion->f_usuario=Auth::user()->id;
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
@@ -116,7 +116,6 @@ class TransaccionController extends Controller
             'f_producto'=>$f_producto[$i],
             'cantidad'=>$cantidad[$i],
             'precio'=>$precio[$i],
-            'condicion'=>1,
           ]);
         }else{
           DetalleTransacion::create([
@@ -124,7 +123,6 @@ class TransaccionController extends Controller
             'f_servicio'=>$f_producto[$i],
             'cantidad'=>$cantidad[$i],
             'precio'=>$precio[$i],
-            'condicion'=>1,
           ]);
         }
         }
@@ -269,10 +267,10 @@ class TransaccionController extends Controller
     public function buscarDivision($codigo,$tipo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
       if(count($division)==1){
-        // $division->inventario=DivisionProducto::inventario($division->id);
-        // if($division->inventario<1 && $tipo=='1'){
-        //   return 0;
-        // }
+        $division->inventario=DivisionProducto::inventario($division->id);
+        if($division->inventario<1 && $tipo=='2'){
+          return 0;
+        }
         $division->unidad;
         return $division;
       }else{
