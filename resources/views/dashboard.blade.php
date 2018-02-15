@@ -140,7 +140,7 @@
                                   <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                                 </li>
                                 <li>
-                                  <a href={{asset( '/transacciones?tipo=1')}}>Ventas</a>
+                                  <a href={{asset( '/transacciones?tipo=2')}}>Ventas</a>
                                 </li>
                                 <li>
                                   <a>Mantenimiento
@@ -330,7 +330,6 @@
                     <i class="fa fa-bars"></i>
                   </a>
                 </div>
-
                 <ul class="nav navbar-nav navbar-right">
                   <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -358,8 +357,44 @@
                     </li>
                   </ul>
                 </li>
+                @if(Auth::user()->tipoUsuario == "Laboaratorio")
+                    <!--INICIO DE NOTIICACIÓN-->
+                    @php
+                      $solicitudes= App\SolicitudExamen::where('estado','=',0)->get();
+                    @endphp
+                    <li role="presentation" class="dropdown">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="badge bg-green">{{count($solicitudes)}}</span>
+                      </a>
+                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        @foreach ($solicitudes as $key => $notificacion)
+                        <li>
+                          <a>
+                            <span>
+                              <span>{{$notificacion->paciente->nombre}}</span>
+                              <span class="time">{{Carbon\Carbon::now()->addSeconds(5)->diffForHumans()}}</span>
+                            </span>
+                            <span class="message">
+                            {{$notificacion->examen->nombreExamen}}
+                            </span>
+                          </a>
+                        </li>
+                        @endforeach
+                        <li>
+                          <div class="text-center">
+                            <a>
+                              <strong>See All Alerts</strong>
+                              <i class="fa fa-angle-right"></i>
+                            </a>
+                          </div>
+                        </li>
+                  </ul>
+                    </li>
+                    <!--FIN notificación-->
+                  @endif
               </ul>
-            </nav>
+              </nav>
           </div>
         </div>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

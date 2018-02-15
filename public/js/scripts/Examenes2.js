@@ -21,23 +21,23 @@ $('#agregar_parametro_x').on('click', function (e) {
   var tabla = $("#tabla_parametros");
 
   var fila = "<tr>" +
-      "<td>" +
-        n_parametro.trim() +
-      "</td>" +
-      "<td>" +
-        n_reactivo.trim() +
-      "</td>" +
-      "<td>" +
-        "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
-        "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
-        "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
-        "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
-        "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
-        "<i class='fa fa-remove'></i>"
-        "<button>"+
-      "</td>" +
-    "</tr>";
-  
+  "<td>" +
+  n_parametro.trim() +
+  "</td>" +
+  "<td>" +
+  n_reactivo.trim() +
+  "</td>" +
+  "<td>" +
+  "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
+  "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
+  "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
+  "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
+  "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
+  "<i class='fa fa-remove'></i>"
+  "<button>"+
+  "</td>" +
+  "</tr>";
+
   var tabla_verificar = $("#tabla_parametros tbody tr");
 
   if (verificarParametroEnTabla(tabla_verificar, n_parametro.trim()+n_reactivo.trim())) {
@@ -65,34 +65,34 @@ $("#listo_x").on("click", function (e) {
 
   if (parametros > 0) {
     if (agregar) {
-      
-    
+
+
       var panel = $("#panel_seccion");
       html = '<div class="btn-default col-xs-3" style="height: 130px; margin: 0px" id="x_seccion_x' + x + '">' +
-          '<input type="hidden" name="seccion_a_ver" value="seccion_x'+ x+'">' +
-          '<center>' +
-            '<i class="fa fa-flask blue" style="font-size: 300%; margin: 15px;"></i>' +
-            '<br>' +
-            '<div style="margin-bottom: 10px;">' +
-              '<span class="label label-lg label-primary" >' + n_seccion + '</span>' +
-            '</div>' +
-            '<div id="seccion_x' + x + '">' +
-              '<input type="hidden" id="y_seccion" name="y_seccion[]" value="'+ v_seccion+'">'+
-              '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
-                '<i class="fa fa-search"></i>' +
-              '</button>' +
-              '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
-                '<i class="fa fa-remove"></i>' +
-              '</button>' +
-            '</div>' +
-          '</center>' +
-        '</div>';
+      '<input type="hidden" name="seccion_a_ver" value="seccion_x'+ x+'">' +
+      '<center>' +
+      '<i class="fa fa-flask blue" style="font-size: 300%; margin: 15px;"></i>' +
+      '<br>' +
+      '<div style="margin-bottom: 10px;">' +
+      '<span class="label label-lg label-primary" >' + n_seccion + '</span>' +
+      '</div>' +
+      '<div id="seccion_x' + x + '">' +
+      '<input type="hidden" id="y_seccion" name="y_seccion[]" value="'+ v_seccion+'">'+
+      '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+      '<i class="fa fa-search"></i>' +
+      '</button>' +
+      '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
+      '<i class="fa fa-remove"></i>' +
+      '</button>' +
+      '</div>' +
+      '</center>' +
+      '</div>';
       panel.append(html);
-    
+
       var seccion = $("#seccion_x" + x);
-      
+
       var input = $("#tabla_parametros").find("input");
-    
+
       $(input).each(function (key, value) {
         if (value.name == "v_parametro") {
           var input_v_p = "<input type='hidden' name='f_parametro[]' value='" + value.value + "'>";
@@ -104,7 +104,7 @@ $("#listo_x").on("click", function (e) {
         } else {
           var input_n_r = "<input type='hidden' name='reactivo[]' value='" + value.value + "'>";
         }
-        
+
         seccion.append(input_v_s);//Id seccion
         seccion.append(input_v_p);//Id parametro
         seccion.append(input_n_p);//Nombre parametro
@@ -113,11 +113,11 @@ $("#listo_x").on("click", function (e) {
       });
       var input_n_s = '<input type="hidden" name="n_seccion[]" value="' + n_seccion + '">';
       seccion.append(input_n_s);
-    
+
       $("#modal1").modal('hide');
-      
+
       reset_modal();
-  
+
       x++;
       total_seccion++;
       parametros = 0;
@@ -126,22 +126,22 @@ $("#listo_x").on("click", function (e) {
       $('#x_' + seccion_vista).empty();
       var ficha = $("#x_" + seccion_vista);
       var html = '<input type="hidden" name="seccion_a_ver" value="' + seccion_vista + '">' +
-        '<center>' +
-        '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
-        '<br>' +
-        '<div style="margin-bottom: 10px;">' +
-        '<span class="label label-lg label-default" >' + n_seccion + '</span>' +
-        '</div>' +
-        '<div id="' + seccion_vista + '">' +
-        '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
-        '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
-        '<i class="fa fa-search"></i>' +
-        '</button>' +
-        '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
-        '<i class="fa fa-remove"></i>' +
-        '</button>' +
-        '</div>' +
-        '</center>';
+      '<center>' +
+      '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
+      '<br>' +
+      '<div style="margin-bottom: 10px;">' +
+      '<span class="label label-lg label-default" >' + n_seccion + '</span>' +
+      '</div>' +
+      '<div id="' + seccion_vista + '">' +
+      '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
+      '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+      '<i class="fa fa-search"></i>' +
+      '</button>' +
+      '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
+      '<i class="fa fa-remove"></i>' +
+      '</button>' +
+      '</div>' +
+      '</center>';
       ficha.append(html);
 
       var seccion = $('#'+seccion_vista);
@@ -159,7 +159,7 @@ $("#listo_x").on("click", function (e) {
         } else {
           var input_n_r = "<input type='hidden' name='reactivo[]' value='" + value.value + "'>";
         }
-        
+
         seccion.append(input_v_s);//Id seccion
         seccion.append(input_v_p);//Id parametro
         seccion.append(input_n_p);//Nombre parametro
@@ -193,7 +193,7 @@ $("#panel_seccion").on('click','#eliminar_ficha',function(e){
   total_seccion--;
 });
 
-$('#panel_seccion').on('click','#ver_seccion', function (e) { 
+$('#panel_seccion').on('click','#ver_seccion', function (e) {
   e.preventDefault();
 
   reset_modal();
@@ -220,22 +220,22 @@ $('#panel_seccion').on('click','#ver_seccion', function (e) {
     var tabla = $("#tabla_parametros");
 
     var fila = "<tr>" +
-      "<td>" +
-      n_parametro +
-      "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
-      "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
-      "</td>" +
-      "<td>" +
-      n_reactivo +
-      "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
-      "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
-      "</td>" +
-      "<td>" +
-      "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
-      "<i class='fa fa-remove'></i>"
+    "<td>" +
+    n_parametro +
+    "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
+    "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
+    "</td>" +
+    "<td>" +
+    n_reactivo +
+    "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
+    "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
+    "</td>" +
+    "<td>" +
+    "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
+    "<i class='fa fa-remove'></i>"
     "<button>" +
-      "</td>" +
-      "</tr>";
+    "</td>" +
+    "</tr>";
 
     tabla.append(fila);
     parametros++;
@@ -287,19 +287,19 @@ $("#guardar_examen").on("click", function (e) {
     bandera = false;
   }
   if (bandera) {
-    
+
     var seccion_agregadas = $("#panel_seccion").find('input[name="seccion_a_ver"]');
     var titulo = $('#nombre_examen').val();
     var tipo_muestra = $("#tipo_muestra_select option:selected").text();
     var area = $("#area_select option:selected").text();
 
     var html_ = "<h3 class='blue'>" + titulo + "</h3>"+
-      "<div class='ln_solid'></div>"+
-      "<span class='left'>Tipo de muestra: " +
-      "<b class='blue'>" + tipo_muestra + "</b></span>" +
-      "<br><span class='left'>Área del examen: " +
-      "<b class='blue'>" + area + "</b></span>" +
-      "<br><div class='ln_solid'></div>";
+    "<div class='ln_solid'></div>"+
+    "<span class='left'>Tipo de muestra: " +
+    "<b class='blue'>" + tipo_muestra + "</b></span>" +
+    "<br><span class='left'>Área del examen: " +
+    "<b class='blue'>" + area + "</b></span>" +
+    "<br><div class='ln_solid'></div>";
     var html_2="";
     $(seccion_agregadas).each(function (key, value) {
       var n_seccion = $("#" + value.value).find("input[name='n_seccion[]']").val();
@@ -310,19 +310,19 @@ $("#guardar_examen").on("click", function (e) {
 
       $(n_parametro).each(function (key, value) {
         html_2 += "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-sliders blue'></i> " + value.value.trim() + "</span>" +
-          "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-tint green'></i> " + n_reactivo[key].value.trim() + "</span>" +
-          "<br>";
+        "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-tint green'></i> " + n_reactivo[key].value.trim() + "</span>" +
+        "<br>";
       });
 
       html_2 += "<div class='clearfix'></div><div class='ln_solid'></div>";
     });
 
     var html_3 = "<h4 class='red'>¡Importante!<h4>"+
-      '<span>¿Está seguro que desea guardar?<br><small> Si guarda los cambios, estos no podrán ser modificados después</small></span>';  
+    '<span>¿Está seguro que desea guardar?<br><small> Si guarda los cambios, estos no podrán ser modificados después</small></span>';
 
     swal({
       title: 'Resumen',
-      html: html_ + html_2 + html_3,      
+      html: html_ + html_2 + html_3,
       showCancelButton: true,
       confirmButtonText: 'Si, ¡Guardar!',
       cancelButtonText: 'No, ¡Seguir trabajando!',
@@ -352,24 +352,36 @@ $("#guardarReactivoModal").on('click', function (e) {
     },
     success: function () {
       $(".modal").modal('hide');
+      swal({
+        title: '¡Reactivo registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
     }
   });
 
-  swal({
-    title: '¡Reactivo registrado!',
-    text: 'Cargando información',
-    timer: 3000,
-    onOpen: function () {
-      swal.showLoading()
-    }
-  }).then(
-    function () { },
-    function (dismiss) {
-      if (dismiss === 'timer') {
-        console.log('cerrado timer de reactivos en examenes')
-      }
-    }
-  );
 
   rellenarReactivo();
   $("#nombreReactivoModal").val("");
@@ -393,24 +405,36 @@ $("#guardarMuestraModal").on('click', function (e) {
     },
     success: function () {
       $(".modal").modal('hide');
+      swal({
+        title: '¡Tipo de muestra registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
     }
   });
 
-  swal({
-    title: '¡Tipo de muestra registrado!',
-    text: 'Cargando información',
-    timer: 3000,
-    onOpen: function () {
-      swal.showLoading()
-    }
-  }).then(
-    function () { },
-    function (dismiss) {
-      if (dismiss === 'timer') {
-        console.log('cerrado timer de muestras en examenes')
-      }
-    }
-    );
 
   rellenarMuestra();
   $("#nombreMuestraModal").val("");
@@ -432,72 +456,83 @@ $("#guardarSeccionModal").on('click', function (e) {
     },
     success: function () {
       $(".modal").modal('hide');
-    }
-  });
-
-  swal({
-    title: '¡Tipo de sección registrado!',
-    text: 'Cargando información',
-    timer: 3000,
-    onOpen: function () {
-      swal.showLoading()
-    }
-  }).then(
-    function () { },
-    function (dismiss) {
-      if (dismiss === 'timer') {
-        console.log('cerrado timer de seccion en examenes')
+      swal({
+        title: '¡Tipo de sección registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
       }
     }
-    );
-
-  rellenarSeccion();
-  $("#nombreSeccionModal").val("");
-
-});
-
-function rellenarReactivo() {
-  var reactivos = $("#reactivo_select");
-  var ruta = "/blissey/public/llenarReactivosExamenes";
-  $.get(ruta, function (res) {
-    reactivos.empty();
-    $(res).each(function (key, value) {
-      reactivos.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
     });
-  });
-}
 
-function rellenarMuestra() {
-  var muestras = $("#tipo_muestra_select");
-  var ruta = "/blissey/public/llenarMuestrasExamenes";
-  console.log("Hola");
-  $.get(ruta, function (res) {
-    muestras.empty();
-    $(res).each(function (key, value) {
-      muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+
+    rellenarSeccion();
+    $("#nombreSeccionModal").val("");
+
+  });
+
+  function rellenarReactivo() {
+    var reactivos = $("#reactivo_select");
+    var ruta = "/blissey/public/llenarReactivosExamenes";
+    $.get(ruta, function (res) {
+      reactivos.empty();
+      $(res).each(function (key, value) {
+        reactivos.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
     });
-  });
-}
+  }
 
-function rellenarSeccion() {
-  var secciones = $("#seccion_select");
-  var ruta = "/blissey/public/llenarSeccionExamenes";
-  $.get(ruta, function (res) {
-    secciones.empty();
-    $(res).each(function (key, value) {
-      secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+  function rellenarMuestra() {
+    var muestras = $("#tipo_muestra_select");
+    var ruta = "/blissey/public/llenarMuestrasExamenes";
+    $.get(ruta, function (res) {
+      muestras.empty();
+      $(res).each(function (key, value) {
+        muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
     });
-  });
-}
+  }
 
-function reset_modal() {
-  parametros = 0;
-  bloqueo_listo();
+  function rellenarSeccion() {
+    var secciones = $("#seccion_select");
+    var ruta = "/blissey/public/llenarSeccionExamenes";
+    $.get(ruta, function (res) {
+      secciones.empty();
+      $(res).each(function (key, value) {
+        secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
+    });
+  }
 
-  var tabla = $("#tabla_parametros");
-  tabla.empty();
+  function reset_modal() {
+    parametros = 0;
+    bloqueo_listo();
 
-  var head = '<thead>' +
+    var tabla = $("#tabla_parametros");
+    tabla.empty();
+
+    var head = '<thead>' +
     '<th>Parametro</th>' +
     '<th>Reactivo</th>' +
     '<th style="width: 80px">Acción</th>' +
@@ -505,5 +540,5 @@ function reset_modal() {
     '<tbody>' +
     '</tbody>';
 
-  tabla.append(head);
-}
+    tabla.append(head);
+  }
