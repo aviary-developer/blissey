@@ -27,6 +27,9 @@
               <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
             <li role="presentation" class="">
+              <a href="#tab_content3" id="otros-tab3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
+            </li>
+            <li role="presentation" class="">
               <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
             </li>
           </ul>
@@ -103,6 +106,9 @@
             </div>
             {{-- Otra pestaña --}}
             <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
+              Otra cosa
+            </div>
+            <div class="tab-pane fade" role="tabpanel" id="tab_content3" aria-labelledby="otros-tab3">
               Otra cosa
             </div>
           </div>

@@ -10,6 +10,17 @@
 thead{
     background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
 }
+.perfil-2 {
+    width: 120px;
+    height: 120px;
+    background: #FFF;
+
+    z-index: 1000;
+    position: inherit;
+    margin-top: 20px;
+    object-fit: cover;
+    padding: 2px
+}
 .borde{
     border: 1px solid;
 }
@@ -34,7 +45,7 @@ thead{
     color: white;
 }
 .black{
-    color: black;
+    color: #404a54;
 }
 .white{
     color: white;
@@ -51,6 +62,10 @@ thead{
   width: 150px;
   height: 150px;
   object-fit: scale-down;
+}
+.portada{
+  width: 100%;
+  object-fit: cover;
 }
 .smallperfil{
     width: 70px;

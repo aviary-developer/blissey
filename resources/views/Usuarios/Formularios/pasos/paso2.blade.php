@@ -122,11 +122,27 @@
       <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Rol *</label>
         &nbsp;&nbsp;&nbsp;
-        <div id="radioBtn" class="btn-group">
-          <a class="btn btn-primary btn-sm notActive" data-toggle="administrador" data-title="1">Administrador</a>
-          <a class="btn btn-primary btn-sm active" data-toggle="administrador" data-title="0">Ninguno</a>
-        </div>
-        <input type="hidden" name="administrador" id="administrador" value="0">
+        @if (isset($usuarios))
+          @if ($usuarios->administrador)
+            <div id="radioBtn" class="btn-group">
+              <a class="btn btn-primary btn-sm active" data-toggle="administrador" data-title="1">Administrador</a>
+              <a class="btn btn-primary btn-sm notActive" data-toggle="administrador" data-title="0">Ninguno</a>
+            </div>
+            <input type="hidden" name="administrador" id="administrador" value="1">
+          @else
+            <div id="radioBtn" class="btn-group">
+              <a class="btn btn-primary btn-sm notActive" data-toggle="administrador" data-title="1">Administrador</a>
+              <a class="btn btn-primary btn-sm active" data-toggle="administrador" data-title="0">Ninguno</a>
+            </div>
+            <input type="hidden" name="administrador" id="administrador" value="0">
+          @endif
+        @else    
+          <div id="radioBtn" class="btn-group">
+            <a class="btn btn-primary btn-sm notActive" data-toggle="administrador" data-title="1">Administrador</a>
+            <a class="btn btn-primary btn-sm active" data-toggle="administrador" data-title="0">Ninguno</a>
+          </div>
+          <input type="hidden" name="administrador" id="administrador" value="0">
+        @endif
       </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">

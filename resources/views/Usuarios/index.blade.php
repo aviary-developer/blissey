@@ -109,9 +109,10 @@
                   <td>
                     
                     @if (count($usuario->telephone)>0)
-                    <center>
-                      {{$usuario->telephone->first()->telefono}}
-                    </center>
+                      <span class="label label-lg label-white borde black col-xs-12">
+                        {{$usuario->telephone->first()->telefono}}
+                      </span>
+                    
                     @else
                       <span class="label label-lg label-white red borde col-xs-12">Ninguno</span>
                     @endif

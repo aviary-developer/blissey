@@ -33,12 +33,28 @@
           <input type="hidden" name="sexo" id="sexo" value="0">
         @endif  
       @else
-        {{--  Radios button   --}}
-        <div id="radioBtn" class="btn-group">
-          <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="1">Masculino</a>
-          <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="0">Femenino</a>
-        </div>
-        <input type="hidden" name="sexo" id="sexo" value="1">
+        @if (isset($usuarios))
+          @if ($usuarios->sexo)
+            <div id="radioBtn" class="btn-group">
+              <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="1">Masculino</a>
+              <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="0">Femenino</a>
+            </div>
+            <input type="hidden" name="sexo" id="sexo" value="1">
+          @else
+            <div id="radioBtn" class="btn-group">
+              <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="1">Masculino</a>
+              <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="0">Femenino</a>
+            </div>
+            <input type="hidden" name="sexo" id="sexo" value="0">    
+          @endif
+        @else    
+          {{--  Radios button   --}}
+          <div id="radioBtn" class="btn-group">
+            <a class="btn btn-primary btn-sm active" data-toggle="sexo" data-title="1">Masculino</a>
+            <a class="btn btn-primary btn-sm notActive" data-toggle="sexo" data-title="0">Femenino</a>
+          </div>
+          <input type="hidden" name="sexo" id="sexo" value="1">
+        @endif
       @endif
     </div>
     <div class="form-group">

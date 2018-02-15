@@ -92,7 +92,7 @@
                     @elseif($examen->area == "BACTERIOLOGIA")
                       <span class="label label-lg label-success col-xs-10">Bactereología</span>
                     @elseif($examen->area == "QUIMICA SANGUINEA")
-                      <span class="label label-lg label-white red col-xs-10">Química sanguínea</span>
+                      <span class="label label-lg label-white red col-xs-10 borde">Química sanguínea</span>
                     @elseif($examen->area == "INMUNOLOGIA")
                       <span class="label label-lg label-primary col-xs-10">Inmunología</span>
                     @elseif($examen->area == "ENZIMAS")
