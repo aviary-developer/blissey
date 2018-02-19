@@ -383,6 +383,10 @@
                             </span>
                           </a>
                         </li>
+                        @php
+                          if($key==4)
+                          {break;}
+                        @endphp
                         @endforeach
                         <li>
                           <div class="text-center">
