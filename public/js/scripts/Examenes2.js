@@ -261,6 +261,7 @@ function bloqueo_listo() {
 $("#guardar_examen").on("click", function (e) {
   e.preventDefault();
   var nombre = $("#nombre_examen").val();
+  var precio = $("#precio_campo").val();
   var bandera = true;
   if (total_seccion < 1) {
     new PNotify({
@@ -278,6 +279,18 @@ $("#guardar_examen").on("click", function (e) {
     new PNotify({
       title: '¡Error!',
       text: 'El campo nombre necesita 4 caracteres como mínimo',
+      type: 'error',
+      nonblock: {
+        nonblock: false
+      },
+      styling: 'bootstrap3'
+    });
+    bandera = false;
+  }
+  if (precio.length < 1) {
+    new PNotify({
+      title: '¡Error!',
+      text: 'El campo precio es obligatorio',
       type: 'error',
       nonblock: {
         nonblock: false

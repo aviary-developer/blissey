@@ -43,4 +43,8 @@ class Examen extends Model
     }
     $query->where('estado',$estado);
   }
+
+  public function servicio(){
+    return $this->belongsTo('App\Servicio','f_examen');
+  }
 }

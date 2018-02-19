@@ -19,7 +19,7 @@ class Ingreso extends Model
     protected $dates = ['fecha_ingreso','fecha_alta'];
 
     public static function buscar($estado){
-      return Ingreso::estado($estado)->orderBy('estado','asc')->paginate(10);
+      return Ingreso::estado($estado)->orderBy('expediente','asc')->paginate(10);
     }
 
     public function scopeEstado($query, $estado){
@@ -46,7 +46,11 @@ class Ingreso extends Model
       return $this->belongsTo('App\User', 'f_medico');
     }
 
-     public function recepcion(){
+    public function recepcion(){
       return $this->belongsTo('App\User', 'f_recepcion');
+    }
+
+    public function solicitud(){
+      return $this->hasMany('App\SolicitudExamen', 'f_ingreso');
     }
 }

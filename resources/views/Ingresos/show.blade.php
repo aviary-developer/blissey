@@ -24,20 +24,20 @@
         <div class="col-xs-2">
           <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
             <li role="presentation" class="active">
-              <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
+              <a href="#tab_show_1" id="tab_s_1" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
             <li role="presentation" class="">
-              <a href="#tab_content3" id="otros-tab3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
+              <a href="#tab_show_3" id="tab_s_3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
             </li>
             <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
+              <a href="#tab_show_2" id="tab_s_2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
             </li>
           </ul>
         </div>
         {{-- Contenido del tab --}}
         <div class="col-xs-10">
           <div id="myTabContent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
+            <div role="tabpanel" class="tab-pane fade active in" id="tab_show_1" aria-labelledby="tab_s_1">
               <h3>Información General</h3>
               <table class="table">
                 <tr>
@@ -58,6 +58,8 @@
                     <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
                       {{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}
                     </a>
+                    <input type="hidden" id="f_paciente" value={{$ingreso->f_paciente}}>
+                    <input type="hidden" id="id" value={{$ingreso->id}}>
                   </td>
                 </tr>
                 @if ($ingreso->f_paciente != $ingreso->f_responsable)
@@ -105,11 +107,59 @@
               </table>
             </div>
             {{-- Otra pestaña --}}
-            <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
+            <div class="tab-pane fade" role="tabpanel" id="tab_show_2" aria-labelledby="tab_s_2">
               Otra cosa
             </div>
-            <div class="tab-pane fade" role="tabpanel" id="tab_content3" aria-labelledby="otros-tab3">
-              Otra cosa
+            <div class="tab-pane fade" role="tabpanel" id="tab_show_3" aria-labelledby="tab_s_3">
+              <div class="row">
+                <div class="col-xs-9">
+                  <h3>Laboratorio Clínico	</h3>
+                </div>
+                <div class="col-xs-2 alignright">
+                  <button type="button" name="button" class="btn btn-primary btn-sm alignright" data-toggle="modal" data-target="#modal_examen">
+                    <i class="fa fa-plus"></i> Nuevo
+                  </button>
+                </div>
+              </div>
+              <br>
+              @if (count($ingreso->solicitud)>0)
+                <div class="row">
+                  <div class="col-xs-1"></div>
+                  <div class="col-xs-10">
+
+                    <table class="table">
+                      <thead>
+                        <th>#</th>
+                        <th style="width: 110px">Muestra</th>
+                        <th>Examen</th>
+                        <th style="width: 110px">Estado</th>
+                      </thead>
+                      <tbody>
+                        @foreach ($ingreso->solicitud as $k => $solicitud)
+                          <tr>
+                            <td>{{$k+1}}</td>
+                            <td>{{$solicitud->codigo_muestra}}</td>
+                            <td>{{$solicitud->examen->nombreExamen}}</td>
+                            <td>
+                              @if ($solicitud->estado == 0)
+                                <span class="label label-lg label-default col-xs-10">Pendiente</span>
+                              @elseif($solicitud->estado == 1)
+                                <span class="label label-lg label-warning col-xs-10">Evaluando</span>
+                              @else
+                                <span class="label label-lg label-success col-xs-10">Listo</span>
+                              @endif
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              @else
+                <div class="row">
+                  <p>No hay examenes seleccionados para este paciente</p>
+                </div>
+              @endif
             </div>
           </div>
         </div>
@@ -117,4 +167,5 @@
     </div>
   </div>
 </div>
+@include('Ingresos.Formularios.modal_examen')
 @endsection

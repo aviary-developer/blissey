@@ -23,9 +23,9 @@
   </div>
   <div class="ln_solid"></div>
   <div>
-    <div class="form-group">
-      <label class="control-label col-md-2 col-sm-2 col-xs-12">Nombre *</label>
-      <div class="col-md-10 col-sm-10 col-xs-12">
+    <div class="form-group col-xs-12 col-sm-6">
+      <label class="control-label col-md-4 col-sm-4 col-xs-12">Nombre *</label>
+      <div class="col-md-8 col-sm-8 col-xs-12">
         <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
         {!! Form::text('nombreExamen',null,['id'=>'nombre_examen','class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo examen','']) !!}
       </div>
@@ -59,6 +59,13 @@
       </div>
     </div>
   </div>
+  <div class="form-group col-xs-12 col-sm-6">
+    <label class="control-label col-md-4 col-sm-4 col-xs-12">Precio ($)*</label>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('precio',null,['id'=>'precio_campo','class'=>'form-control has-feedback-left','placeholder'=>'Precio del examen','step'=>'0.01']) !!}
+    </div>
+  </div>
   <div class="x_panel" id="panel_seccion">
     <div class="btn-success col-xs-3 btn" style="height: 130px; margin: 0px;" id="agregar_seccion_x" data-toggle="modal" data-target="#modal1" >
       <center>
@@ -74,6 +81,7 @@
   <center>
     <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
   </center>
+  <div class="clearfix"></div>
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>

@@ -8,6 +8,8 @@ use App\Examen;
 use App\Unidad;
 use App\Reactivo;
 use App\Bitacora;
+use App\CategoriaServicio;
+use App\Servicio;
 use App\MuestraExamen;
 use App\Parametro;
 use App\Seccion;
@@ -82,26 +84,22 @@ class ExamenController extends Controller
       $examenNuevo->tipoMuestra=$request->tipoMuestra;
       $examenNuevo->area=$request->area;
       $examenNuevo->save();
-      // $totalSecciones=($request->totalSecciones)-1;//Porque inicia en 0
-      // $ultimoExamen=Examen::all();
-      // $ultimoExamen=$ultimoExamen->last();
-      // if(isset($request->{"parametrosEnTabla".$totalSecciones})){//Concatenanado nombre de variable
-      //   for($seccion=0;$seccion<=$totalSecciones;$seccion++) {
-      //     $parametrosEnTablaActual=$request->{"parametrosEnTabla".$seccion};
-      //     $reactivosEnTablaActual=$request->{"reactivosEnTabla".$seccion};
-      //     echo('<pre>');
-      //     echo $seccion;
-      //     echo('</pre>');
-      //     for($parametros=0;$parametros<count($parametrosEnTablaActual);$parametros++){
-      //       $e_s_p = new ExamenSeccionParametro;
-      //       $e_s_p->f_examen = $ultimoExamen->id;
-      //       $e_s_p->f_seccion = $request->{"selectSeccion".$seccion};
-      //       $e_s_p->f_parametro = $parametrosEnTablaActual[$parametros];
-      //       $e_s_p->f_reactivo = $reactivosEnTablaActual[$parametros];
-      //       $e_s_p->save();
-      //     }
-      //   }
-      // }
+
+      //Crear una categoria de servicio asociada a los examen
+      $categoria_existe = CategoriaServicio::where('nombre','Laboratorio Clínico')->first();
+
+      if(count($categoria_existe)<1){
+        $categoria_existe = new CategoriaServicio;
+        $categoria_existe->nombre = "Laboratorio Clínico";
+        $categoria_existe->save();
+      }
+
+      $servicio = new Servicio;
+      $servicio->nombre = $request->nombreExamen;
+      $servicio->f_categoria = $categoria_existe->id;
+      $servicio->precio = $request->precio;
+      $servicio->f_examen = $examenNuevo->id;
+      $servicio->save();
 
       if(isset($request->f_parametro)){
         foreach($request->f_parametro as $k => $parametro){

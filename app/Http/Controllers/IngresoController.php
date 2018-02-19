@@ -6,6 +6,7 @@ use App\Ingreso;
 use App\Bitacora;
 use App\User;
 use App\Habitacion;
+use App\Examen;
 use App\Paciente;
 use Illuminate\Http\Request;
 use DB;
@@ -105,7 +106,11 @@ class IngresoController extends Controller
     public function show($id)
     {
         $ingreso = Ingreso::find($id);
-        return view('Ingresos.show',compact('ingreso'));
+        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+        return view('Ingresos.show',compact(
+          'ingreso',
+          'examenes'
+        ));
     }
 
     /**

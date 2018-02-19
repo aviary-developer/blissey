@@ -67,10 +67,10 @@ class SolicitudExamenController extends Controller
           $solicitud->f_paciente = $request->f_paciente;
           $solicitud->f_examen = $examen;
           $solicitud->codigo_muestra = $codigo_muestra;
+          $solicitud->f_ingreso = $request->f_ingreso;
           $solicitud->estado = 0;
-
           $solicitud->save();
-
+          
           DB::commit();
           Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
         }
@@ -79,7 +79,11 @@ class SolicitudExamenController extends Controller
       DB::rollback();
       return redirect('/solicitudex')->with('mensaje','Algo salio mal');
     }
-    return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+    if($request->f_ingreso == null){
+      return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+    }else{
+      return "Guardado";
+    }
   }
 
   /**

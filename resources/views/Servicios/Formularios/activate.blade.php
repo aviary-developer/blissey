@@ -1,15 +1,15 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/servicios/'.$servicio->id)!!} class="btn btn-xs btn-info"  data-toggle="tooltip" data-placement="top" title="Ver">
+  <a href={!! asset('/servicios/'.$servicio->id)!!} class="btn btn-sm btn-info"  data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/servicios/'.$servicio->id.'/edit')!!} class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+  <a href={!! asset('/servicios/'.$servicio->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$servicio->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$servicio->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$servicio->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$servicio->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
 @else

@@ -175,4 +175,37 @@ $(document).on('ready', function () {
       document.getElementById("responsable_div").style = "display: none";
     }
   });
+
+  $("#guardarSolicitudModal").on("click", function (e) {
+    e.preventDefault();
+    var token = $("#tokenSolicitudModal").val();
+    var examen = $("input[name='examen[]']").serializeArray();
+    var paciente = $("#f_paciente").val();
+    var id = $("#id").val();
+    var concat = [];
+    $(examen).each(function (key, value) {
+      concat.push(value.value);
+    });
+    if (concat.length > 0) {
+      $.ajax({
+        url: "/blissey/public/solicitudex",
+        headers: { 'X-CSRF-TOKEN': token },
+        type: "POST",
+        data: {
+          f_paciente: paciente,
+          examen: concat,
+          f_ingreso: id
+        },
+        success: function (respuesta) {
+          console.log(respuesta);
+          if (respuesta) {
+            swal("¡Hecho!", "Solicitud enviada satisfactoriamente", "success");
+            location.reload();
+          }
+        }
+      });
+    } else {
+      swal("¡Error!","Se debe seleccionar al menos un examen","error");
+    }
+  });
 });
