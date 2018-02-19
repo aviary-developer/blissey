@@ -40,11 +40,11 @@
                     </a>
                 @endif
                 @if($tipo==2)
-                    <a href={!! asset('/transacciones/create?tipo=1') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+                    <a href={!! asset('/transacciones/create?tipo=2') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
                     <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                    <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
-                      <i class="fa fa-file"></i> Comfirmados
-                      <span class="label label-warning">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                    <a href={!! asset('/transacciones?tipo=3') !!} class="btn btn-dark btn-ms">
+                      <i class="fa fa-file"></i> Anuladas
+                      <span class="label label-warning">{{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
                     </a>
                   @endif
             </div>

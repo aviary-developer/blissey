@@ -162,7 +162,15 @@
                               </a>
                               <ul class="nav child_menu">
                                 <li>
-                                  <a href={{asset( '/solicitudex')}}>Evaluación de examen</a>
+                                  <a>Evaluación de examen<span class="fa fa-chevron-down"></span></a>
+                                  <ul class="nav child_menu">
+                                    <li>
+                                      <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/examenesEvaluados')}}>Evaluados</a>
+                                    </li>
+                                  </ul>
                                 </li>
                                 <li>
                                   <a href={{asset( '/bancosangre')}}>Banco de sangre</a>
@@ -223,7 +231,7 @@
                                   <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
                                 </li>
                                 <li>
-                                  <a href={{asset( '/transacciones?tipo=1&estado=0')}}>Ventas</a>
+                                  <a href={{asset( '/transacciones?tipo=2')}}>Ventas</a>
                                 </li>
                                 <li>
                                   <a>Mantenimiento
@@ -360,31 +368,38 @@
                 @if(Auth::user()->tipoUsuario == "Laboaratorio")
                     <!--INICIO DE NOTIICACIÓN-->
                     @php
-                      $solicitudes= App\SolicitudExamen::where('estado','=',0)->get();
+                      $solicitudes= App\SolicitudExamen::where('estado','=',0)->orderBy('id','desc')->get();
                     @endphp
                     <li role="presentation" class="dropdown">
                       <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">{{count($solicitudes)}}</span>
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge bg-red">{{count($solicitudes)}}</span>
                       </a>
                       <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                         @foreach ($solicitudes as $key => $notificacion)
                         <li>
-                          <a>
+                          <a href="{{asset('/solicitudex?vista=paciente')}}">
                             <span>
-                              <span>{{$notificacion->paciente->nombre}}</span>
-                              <span class="time">{{Carbon\Carbon::now()->addSeconds(5)->diffForHumans()}}</span>
+                              @php
+                              $apellido = explode(" ", $notificacion->paciente->apellido);
+                            @endphp
+                              <span><strong> {{$apellido[0]}}, {{$notificacion->paciente->nombre}}</strong></span>
+                              <span class="time">{{$notificacion->created_at->diffForHumans()}}</span>
                             </span>
                             <span class="message">
-                            {{$notificacion->examen->nombreExamen}}
+                            {{$notificacion->examen->nombreExamen}} &nbsp Muestra:<strong>{{$notificacion->codigo_muestra}}</strong>
                             </span>
                           </a>
                         </li>
+                        @php
+                          if($key==4)
+                          {break;}
+                        @endphp
                         @endforeach
                         <li>
                           <div class="text-center">
-                            <a>
-                              <strong>See All Alerts</strong>
+                            <a href="{{asset('/solicitudex')}}">
+                              <strong>Ver todas las solicitudes</strong>
                               <i class="fa fa-angle-right"></i>
                             </a>
                           </div>

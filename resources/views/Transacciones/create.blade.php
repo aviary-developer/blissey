@@ -13,13 +13,11 @@
   <div class="col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        @if ($tipo==1)
+        @if ($tipo==2)
           <h2>Venta<small>Nueva</small></h2>
-        @else
+        @endif
+        @if($tipo==0)
           <h2>Compra<small>Nuevo pedido</small></h2>
-          @php
-            $tipo=0;
-          @endphp
         @endif
         <div class="clearfix"></div>
       </div>
