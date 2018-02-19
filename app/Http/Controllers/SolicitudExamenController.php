@@ -307,4 +307,16 @@ class SolicitudExamenController extends Controller
     }
     return view('SolicitudExamenes.editarResultadosExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
   }
+  public function examenesEvaluados(Request $request)
+  {
+    $vista = $request->get("vista");
+    if($vista == "paciente"){
+      $pacientes = SolicitudExamen::where('estado','=',2)->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','=',2)->orderBy('estado')->get();
+    }else{
+      $examenes = SolicitudExamen::where('estado','=',2)->distinct()->get(['f_examen']);
+      $solicitudes = SolicitudExamen::where('estado','=',2)->orderBy('estado')->get();
+    }
+    return view('SolicitudExamenes.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
+  }
 }
