@@ -162,7 +162,15 @@
                               </a>
                               <ul class="nav child_menu">
                                 <li>
-                                  <a href={{asset( '/solicitudex')}}>Evaluación de examen</a>
+                                  <a>Evaluación de examen<span class="fa fa-chevron-down"></span></a>
+                                  <ul class="nav child_menu">
+                                    <li>
+                                      <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/examenesEvaluados')}}>Evaluados</a>
+                                    </li>
+                                  </ul>
                                 </li>
                                 <li>
                                   <a href={{asset( '/bancosangre')}}>Banco de sangre</a>

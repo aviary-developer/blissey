@@ -189,6 +189,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/guardarResultadosExamen','SolicitudExamenController@guardarResultadosExamen');
   Route::match(['get','post'],'/entregarExamen/{id}/{idExamen}','SolicitudExamenController@entregarExamen');
   Route::match(['get','post'],'/editarExamen/{id}/{idExamen}','SolicitudExamenController@editarResultadosExamen');
+  Route::match(['get','post'],'/examenesEvaluados','SolicitudExamenController@examenesEvaluados');
   //Pacientes
   Route::resource('pacientes','PacienteController');
   Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');
