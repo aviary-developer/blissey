@@ -9,6 +9,7 @@ use App\Resultado;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Reactivo;
+use Response;
 use App\Paciente;
 use Illuminate\Http\Request;
 use DB;
@@ -70,7 +71,7 @@ class SolicitudExamenController extends Controller
           $solicitud->f_ingreso = $request->f_ingreso;
           $solicitud->estado = 0;
           $solicitud->save();
-          
+
           DB::commit();
           Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
         }
@@ -318,5 +319,40 @@ class SolicitudExamenController extends Controller
       $solicitudes = SolicitudExamen::where('estado','=',2)->orderBy('estado')->get();
     }
     return view('SolicitudExamenes.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
+  }
+
+  public function impresionExamenesPorPaciente(Request $request)
+  {
+    $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$request->paciente)->orderBy('estado')->get();
+    foreach ($solicitudes as $key => $solicitud) {
+      $resultados[$key]=Resultado::where('f_solicitud','=',$solicitud->id)->first();
+      $detallesResultado[$key]=DetalleResultado::where('f_resultado','=', $resultados[$key]->id)->get();
+      //$secciones=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=','true')->distinct()->get(['f_seccion']);
+      $espr[$key]=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=','true')->get();
+      $contador=0;
+      $contadorSecciones=0;
+      if(count($espr[$key])>0){
+        foreach ($espr[$key] as $esp) {
+          if($contador==0){
+            $secciones[$key][$contadorSecciones]=$esp->f_seccion;
+          }else{
+            if($secciones[$key][$contadorSecciones]==$esp->f_seccion)
+            {
+            }else {
+              $contadorSecciones++;
+              $secciones[$key][$contadorSecciones]=$esp->f_seccion;
+            }
+          }
+          $contador++;
+        }
+        print_r($secciones);
+      }
+    }
+    $header = view('PDF.header.hospital');
+    $footer = view('PDF.footer.numero_pagina');
+    //$main = view('SolicitudExamenes.entregaExamen',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));
+    //$pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+    //return $pdf->stream('Examen.pdf');
+    //return Response::json($detallesResultado);
   }
 }

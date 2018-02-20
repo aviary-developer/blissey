@@ -51,6 +51,10 @@
                   <a class="panel-heading collapsed" role="tab" id={{"H".$k}} data-toggle="collapse" data-parent="#accordion" href={{"#C".$k}}        aria-expanded="false" aria-controls={{"C".$k}}>
                     <h4 class="panel-title">
                       {{$paciente->nombrePaciente($paciente->f_paciente)}} <small><i class="fa fa-chevron-down"></i></small>
+											<ul class="nav navbar-right">
+                      <li><spam onclick={!! "'imprimirExaEvaPacie(".$solicitudes.",".$paciente->f_paciente.");'" !!} class="fa fa-print"></spam>
+                      </li>
+                    </ul>
                     </h4>
                   </a>
                   <div id={{"C".$k}} class="panel-collapse collapse" role="tabpanel" aria-labelledby={{"H".$k}}>
@@ -60,7 +64,6 @@
                           <th class="col-md-2 col-sm-2">Código</th>
                           <th>Examen</th>
 													<th>Fecha de evaluación</th>
-                          <th style="width: 120px">Opción</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
@@ -69,9 +72,6 @@
                                 <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>{{$solicitud->nombreExamen($solicitud->f_examen)}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
-                                <td id="celda">
-                                  @include('SolicitudExamenes.Formularios.delete')
-                                </td>
                               </tr>
                             @endif
                           @endforeach
@@ -97,7 +97,6 @@
                         <thead>
                           <th class="col-md-2 col-sm-2">Código</th>
                           <th>Paciente</th>
-                          <th style="width: 120px">Opción</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
@@ -106,9 +105,6 @@
                                 <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
-                                </td>
-                                <td id="celda">
-                                  @include('SolicitudExamenes.Formularios.delete')
                                 </td>
                               </tr>
                             @endif
@@ -125,4 +121,22 @@
       </div>
     </div>
   </div>
+	<input type="hidden" id="tokenExaPac" name="token" value="<?php echo csrf_token(); ?>">
+	<script type="text/javascript">
+	function imprimirExaEvaPacie(solicitudes,paciente){
+		token=$("#tokenExaPac").val();
+		$.ajax({
+			url: "/blissey/public/impresionExamenesPorPaciente",
+			headers: { 'X-CSRF-TOKEN': token },
+			type: 'POST',
+			data: {
+				paciente:paciente
+			},
+			success: function () {
+			},
+			error: function(data){
+			}
+		});
+	}
+	</script>
 @endsection
