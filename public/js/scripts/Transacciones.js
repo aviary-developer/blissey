@@ -190,7 +190,7 @@ $(document).on('ready',function(){
         conf=$('#tipo').val();
         ruta="/blissey/public/busquedaCodigo/"+codigo+"/"+conf;
         $.get(ruta,function(res){
-          if(res!=0){
+          if(res!=0 && res!=1){
             var ruta3="/blissey/public/buscarNombreDivision/"+res.f_division;
             $.get(ruta3,function(res3){
               var ruta4="/blissey/public/buscarNombrePresentacion/"+res.f_producto+"/2";
@@ -334,25 +334,35 @@ $(document).on('ready',function(){
         var tabla = $("#tablaDetalle");
         var cantidad=parseFloat($("#cantidadp").val());
         if($("#confirmar").val()==false){
-        html="<tr>"+
-        "<td>"+cantidad+"</td>"+
-        "<td>"+$("#divoculto").val()+"</td>"+
-        "<td>"+$("#nomoculto").val()+"</td>";
-        if($('#tipo').val()=='2'){
-          html=html+"<td>$ "+parseFloat($("#preoculto").val()).toFixed(2)+"</td>"+
-          "<td>$ "+(cantidad*parseFloat($("#preoculto").val())).toFixed(2)+"</td>";
-        }
-        html=html+"<td>"+
-        "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
-        "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>";
-        if($('#tipo').val()=='2'){
-          html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>";
-        }
-        html=html+"<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-        "<i class='fa fa-remove'></i>"+
-        "</button>"+
-        "</td>"+
-        "</tr>";
+          if (parseFloat($("#exioculto").val())<=cantidad || $("#tipo").val()!='2') {
+            html="<tr>"+
+            "<td>"+cantidad+"</td>"+
+            "<td>"+$("#divoculto").val()+"</td>"+
+            "<td>"+$("#nomoculto").val()+"</td>";
+            if($('#tipo').val()=='2'){
+              html=html+"<td>$ "+parseFloat($("#preoculto").val()).toFixed(2)+"</td>"+
+              "<td>$ "+(cantidad*parseFloat($("#preoculto").val())).toFixed(2)+"</td>";
+            }
+            html=html+"<td>"+
+            "<input type='hidden' name='tipo_detalle[]' value ='1'>"+
+            "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
+            "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>";
+            if($('#tipo').val()=='2'){
+              html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>";
+            }
+            html=html+"<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
+            "<i class='fa fa-remove'></i>"+
+            "</button>"+
+            "</td>"+
+            "</tr>";
+          } else {
+            new PNotify({
+              title: '¡Error!',
+              text: 'Cantidad supera las existencias',
+              type: 'error',
+              styling: 'bootstrap3'
+            });
+          }
       }else{
         html="<tr>"+
         "<td><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
@@ -625,4 +635,8 @@ function validarFechaMenorActual(date){
       else{
         return true;
       }
+}
+function limpiarCliente(){
+  $('#f_cliente').val("");
+  $('#f_clientea').val("");
 }

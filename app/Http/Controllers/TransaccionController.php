@@ -67,8 +67,15 @@ class TransaccionController extends Controller
       if($tipo==0){
         $validar['f_proveedor']='required';
         $validar['fecha']='required';
-      }else{
+      }
+      if($tipo==2){
         $validar['factura']='required';
+        $tipo_detalle=$request->tipo_detalle;
+        if(isset($request->f_clientea)){
+          $f_clientea=$request->f_clientea;
+        }else{
+          $f_clientea="";
+        }
       }
       $mensaje['fecha.required']="El campo fecha es obligatorio";
       $mensaje['f_producto.required']="No agregó nungún detalle";
@@ -99,7 +106,6 @@ class TransaccionController extends Controller
       }else{
         $transaccion= new Transacion;
         $transaccion->fecha=$request->fecha;
-        $tipo_detalle=$request->tipo_detalle;
         if(isset($request->f_cliente)){
           $transaccion->f_cliente=$request->f_cliente;
         }
@@ -136,7 +142,11 @@ class TransaccionController extends Controller
     }else{
       DB::rollback();
       $tran= new Transacion;
-      return view('transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad','precio'))->withErrors($valida->errors());
+      if($tipo==0){
+        return view('transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad','precio'))->withErrors($valida->errors());
+      }else{
+        return view('transacciones.create',compact('tran','tipo','fecha','f_clientea','f_cliente','f_producto','cantidad','precio','tipo_detalle'))->withErrors($valida->errors());
+      }
     }
     }
 
@@ -269,7 +279,7 @@ class TransaccionController extends Controller
       if(count($division)==1){
         $division->inventario=DivisionProducto::inventario($division->id);
         if($division->inventario<1 && $tipo=='2'){
-          return 0;
+          return 1;
         }
         $division->unidad;
         return $division;
@@ -331,30 +341,16 @@ class TransaccionController extends Controller
       DB::beginTransaction();
       try {
         $t=Transacion::find($id);
-        $t->anulado=true;
+        $t->tipo=3;
         $t->comentario=$comentario;
-        $detalles=$t->detalleTransaccion;
-        // foreach ($detalles as $d) {
-        //   if ($d->f_producto!=null) {
-        //     $ultimoInventario=InventarioFarmacia::where('f_producto',$d->f_producto)->where('localizacion',Transacion::tipoUsuario())->get()->last();
-        //     InventarioFarmacia::create([
-        //       'tipo'=>1,
-        //       'f_producto'=>$d->f_producto,
-        //       'existencia_anterior'=>$ultimoInventario->existencia_nueva,
-        //       'cantidad'=>$d->cantidad,
-        //       'existencia_nueva'=>$ultimoInventario->existencia_nueva+$d->cantidad,
-        //       'localizacion'=>Transacion::tipoUsuario(),
-        //     ]);
-        //   }
-        // }
 
       } catch (\Exception $e) {
         DB::rollback();
-        return redirect('/transacciones?tipo=1&estado=0')->with('error', '¡Algo salio mal!');
+        return redirect('/transacciones?tipo=2')->with('error', '¡Algo salio mal!');
       }
       $t->save();
       DB::commit();
-      return redirect('/transacciones?tipo=1&estado=0')->with('mensaje', '¡Anulado!');
+      return redirect('/transacciones?tipo=2')->with('mensaje', '¡Anulado!');
     }
     public static function niveles($id){
       $estante=Estante::find($id);
