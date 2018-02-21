@@ -9,13 +9,16 @@
       <div class="x_title">
         <h2>
           @if($tipo==0)Pedidos
-              <small>Por confirmar</small>
+            <small>Por confirmar</small>
           @endif
           @if($tipo==1)Pedidos
-              <small>Confirmados</small>
+            <small>Confirmados</small>
           @endif
           @if($tipo==2)Ventas
-              <small>Realizadas</small>
+            <small>Realizadas</small>
+          @endif
+          @if($tipo==3)Ventas
+            <small>Anuladas</small>
           @endif
         </h2>
         <div class="clearfix"></div>
@@ -25,28 +28,35 @@
           <div class="col-md-5 col-xs-12">
             <div class="btn-group">
               @if($tipo==0)
-                  <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-                  <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                  <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
-                    <i class="fa fa-file"></i> Comfirmados
-                    <span class="label label-warning">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                  </a>
-                @endif
-                @if($tipo==1)
-                    <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                    <a href={!! asset('/transacciones?tipo=0') !!} class="btn btn-dark btn-ms">
-                      <i class="fa fa-file"></i> Por confirmar
-                      <span class="label label-warning">{{ App\Transacion::where('tipo',0)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                    </a>
-                @endif
-                @if($tipo==2)
-                    <a href={!! asset('/transacciones/create?tipo=2') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-                    <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                    <a href={!! asset('/transacciones?tipo=3') !!} class="btn btn-dark btn-ms">
-                      <i class="fa fa-file"></i> Anuladas
-                      <span class="label label-warning">{{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                    </a>
-                  @endif
+                <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Comfirmados
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                </a>
+              @endif
+              @if($tipo==1)
+                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/transacciones?tipo=0') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Por confirmar
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',0)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                </a>
+              @endif
+              @if($tipo==2)
+                <a href={!! asset('/transacciones/create?tipo=2') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/transacciones?tipo=3') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Anuladas
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                </a>
+              @endif
+              @if($tipo==3)
+                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/transacciones?tipo=2') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Realizadas
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',2)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                </a>
+              @endif
             </div>
           </div>
           <div class="col-md-3 col-xs-12"></div>
@@ -69,7 +79,7 @@
               @if ($tipo==0 || $tipo==1)
                 <th>Proveedor</th>
               @endif
-              @if($tipo==1)
+              @if($tipo==1 || $tipo==2 || $tipo==3)
                 <th>Factura</th>
               @endif
               <th>Opciones</th>
@@ -86,45 +96,52 @@
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   @if ($tipo==0 || $tipo==1)
                     <td>{{$transaccion->proveedor->nombre}}</td>
-                  @if($tipo==1)
-                    <td>{{$transaccion->factura}}</td>
                   @endif
-                    <td>@if($transaccion->factura==null)
-                      {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
-                      <button type="submit" class="btn btn-success btn-xs"/>
-                      <i class="fa fa-check"></i>
-                    </button>
-                    @include('Transacciones.Formularios.eliminarPedido')
-                    {!!Form::close()!!}
-                  @else
+                  @if($tipo==1 || $tipo==2 || $tipo==3)
+                      <td>{{$transaccion->factura}}</td>
+                  @endif
+                      @if($tipo==0)
+                        <td>
+                        {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
+                        <button type="submit" class="btn btn-success btn-xs"/>
+                        <i class="fa fa-check"></i>
+                      </button>
+                      @include('Transacciones.Formularios.eliminarPedido')
+                      {!!Form::close()!!}
+                      </td>
+                    @endif
+                @if ($tipo==1 || $tipo==2 || $tipo==3)
+                  <td>
                     <a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
                       <i class="fa fa-info-circle"></i>
                     </a>
-                  @endif
+                    @if ($tipo==2)
+                      @include('Transacciones.Formularios.anularVenta')
+                    @endif
+                  </td>
                 @endif
+              </tr>
+              @php
+              $correlativo++;
+              @endphp
+            @endforeach
+          @else
+            <tr>
+              <td colspan="7">
+                <center>
+                  No hay registros que coincidan con los terminos de busqueda indicados
+                </center>
               </td>
             </tr>
-            @php
-            $correlativo++;
-            @endphp
-          @endforeach
-        @else
-          <tr>
-            <td colspan="7">
-              <center>
-                No hay registros que coincidan con los terminos de busqueda indicados
-              </center>
-            </td>
-          </tr>
-        @endif
-      </tbody>
-    </table>
-    <div class="ln_solid"></div>
-    <center>
-      {!! str_replace ('/?', '?', $transacciones->appends(Request::only(['buscar','tipo']))->render ()) !!}
-    </center>
+          @endif
+        </tbody>
+      </table>
+      <div class="ln_solid"></div>
+      <center>
+        {!! str_replace ('/?', '?', $transacciones->appends(Request::only(['buscar','tipo']))->render ()) !!}
+      </center>
+    </div>
   </div>
-</div>
 </div>
 <!-- /page content -->
 @endsection

@@ -13,6 +13,7 @@
         }
         $pantalla=1;//Crear
       @endphp
+      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       @include('Requisiciones.Formularios.form')
     </div>
   </div>

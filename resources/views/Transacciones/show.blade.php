@@ -6,13 +6,13 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-    @if(!$transaccion->anulado)
-          @if(!$transaccion->tipo)
-        <h2>Pedido<small>Confirmado</small></h2>
-      @else
+          @if($transaccion->tipo==1)
+            <h2>Pedido<small>Confirmado</small></h2>
+          @endif
+          @if($transaccion->tipo==2)
         <h2>Venta<small>Realizada</small></h2>
       @endif
-    @else
+    @if($transaccion->tipo==3)
         <h2>Venta<small>Anulada</small></h2>
     @endif
         <div class="clearfix"></div>
@@ -69,6 +69,12 @@
                   <tr>
                     <th>Fecha de modificación</th>
                     <td>{{ $transaccion->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                  </tr>
+                  <tr style="color: red;">
+                    @if ($transaccion->tipo==3)
+                      <th>Motivo de la anulación</th>
+                      <td>{{$transaccion->comentario}}</td>
+                    @endif
                   </tr>
                 </table>
               </div>

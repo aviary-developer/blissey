@@ -37,7 +37,15 @@ class RequisicionController extends Controller
      */
     public function store(Request $request)
     {
+      $f_producto=$request->f_producto;
+      $cantidad=$request->cantidad;
 
+      for ($i=0; $i <count($f_producto) ; $i++) {
+        $arrayP=divisionProducto::arrayFechas($f_producto);
+        for ($i=0; $i < count($arrayP); $i++) {
+          print_r($arrayP[$i]);
+        }
+      }
     }
 
     /**
@@ -94,7 +102,7 @@ class RequisicionController extends Controller
           if($dp->contenido!=null){
             $dp->unidad;
           }
-          $dp->inventario=DivisionProducto::inventarioFarmacia($dp->id);
+          $dp->inventario=DivisionProducto::inventario($dp->id,2);
         }
       }
       return $productos;

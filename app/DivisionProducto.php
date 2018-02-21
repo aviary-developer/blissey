@@ -26,9 +26,15 @@ class DivisionProducto extends Model
   public function inventarioFarmaciaUltimo(){
      return $this->hasMany('App\InventarioFarmacia','f_producto');
   }
-  public static function inventario($id){
+  public static function inventario($id,$nor){//$nor se refiere a consulta normal o de recepción 1 es normal y 2 es de recepcion
     $cc=0;
-    $compras=Transacion::where('tipo',1)->get();
+    if($nor==1){
+      $ts=Transacion::tipoUsuario(); //Tipo de usuario
+    }
+    if($nor==2){
+      $ts=0;
+    }
+    $compras=Transacion::where('tipo',1)->where('localizacion',$ts)->get();
     foreach ($compras as $compra) {
       $dec=$compra->detalleTransaccion;
       foreach($dec as $dc){
@@ -38,7 +44,7 @@ class DivisionProducto extends Model
       }
     }
     $cv=0;
-    $ventas=Transacion::where('tipo',2)->get();
+    $ventas=Transacion::where('tipo',2)->where('localizacion',$ts)->get();
     foreach ($ventas as $venta) {
       $dev=$venta->detalleTransaccion;
       foreach($dev as $dv){
@@ -60,13 +66,32 @@ class DivisionProducto extends Model
       // ->get();
       return $bitacora;
   }
-  public static function inventarioFarmacia($id){
-    $existe=InventarioFarmacia::where('f_producto',$id)->where('localizacion',0)->get()->last();
-    if (count($existe)>0) {
-      return $existe->existencia_nueva;
-    } else {
-      return 0;
-    }
-  }
 
+  public static function arrayFechas($id){
+    $inventario=divisionProducto::inventario($id,2);
+    $compras=DB::table('detalle_transacions')
+      ->select('detalle_transacions.*','transacions.*')
+      ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
+      ->where('transacions.tipo',1)
+      ->where('detalle_transacions.f_producto',$id)
+      ->orderBy('transacions.fecha','DESC')
+      ->get();
+      $cuenta=0;
+      $i=0;
+      $ultimos=[];
+      foreach ($compras as $compra) {
+        $cuenta=$cuenta+$compra->cantidad;
+        $ultimos[$i]=$compra;
+        if($cuenta>=$inventario)
+        break;
+        $i++;
+      }
+      $diferencia=$cuenta-$inventario;
+      if($diferencia!=0){
+        $fila=$ultimos[$i];
+        $fila->cantidad=$fila->cantidad-$diferencia;
+        $ultimos[$i]=$fila;
+      }
+      return $ultimos;
+  }
 }

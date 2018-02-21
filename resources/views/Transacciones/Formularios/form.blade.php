@@ -33,13 +33,16 @@
           <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cliente *</label>
           <div class="col-md-4 col-sm-12 col-xs-12 form-group">
             <div class="input-group">
-            <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
+            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
             {!! Form::text('f_clientea',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cliente','id'=>'f_clientea','readonly'=>'readonly']) !!}
             <input type="hidden" name="f_cliente" value="" id="f_cliente">
               <span class="input-group-btn">
-                <button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2" onclick="limpiarTabla()">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#modal2" onclick="limpiarTabla()">
                   <i class="fa fa-save"></i>
-                </button>
+                </a>
+                <a class="btn btn-danger" onclick="limpiarCliente()">
+                  <i class="fa fa-remove"></i>
+                </a>
               </span>
             </div>
           </div>
@@ -114,9 +117,10 @@
                   <td>$ {{number_format($cantidad[$i]*$precio[$i],2,'.','.')}}</td>
                 @endif
                 <td>
+                  <input type='hidden' name='tipo_detalle[]' value ={{$tipo_detalle[$i]}}>
                   <input type='hidden' name='f_producto[]' value ={{$f_producto[$i]}}>
                   <input type='hidden' name='cantidad[]' value ={{$cantidad[$i]}}>
-                  @if ($tipo)
+                  @if ($tipo==2)
                   <input type='hidden' name='precio[]' value ={{$precio[$i]}}>
                   @endif
                   <button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>
