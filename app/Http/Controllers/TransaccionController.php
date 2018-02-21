@@ -277,7 +277,7 @@ class TransaccionController extends Controller
     public function buscarDivision($codigo,$tipo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
       if(count($division)==1){
-        $division->inventario=DivisionProducto::inventario($division->id);
+        $division->inventario=DivisionProducto::inventario($division->id,1);
         if($division->inventario<1 && $tipo=='2'){
           return 1;
         }
@@ -304,7 +304,7 @@ class TransaccionController extends Controller
           if($dp->contenido!=null){
             $dp->unidad;
           }
-          $dp->inventario=DivisionProducto::inventario($dp->id);
+          $dp->inventario=DivisionProducto::inventario($dp->id,1);
         }
       }
       return $productos;
@@ -320,7 +320,7 @@ class TransaccionController extends Controller
             if($dp->contenido!=null){
               $dp->unidad;
             }
-            $dp->inventario=DivisionProducto::inventario($dp->id);
+            $dp->inventario=DivisionProducto::inventario($dp->id,1);
           }
         }
       }

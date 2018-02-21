@@ -17,6 +17,9 @@
           @if($tipo==2)Ventas
             <small>Realizadas</small>
           @endif
+          @if($tipo==3)Ventas
+            <small>Anuladas</small>
+          @endif
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -45,6 +48,13 @@
                 <a href={!! asset('/transacciones?tipo=3') !!} class="btn btn-dark btn-ms">
                   <i class="fa fa-file"></i> Anuladas
                   <span class="label label-warning">{{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                </a>
+              @endif
+              @if($tipo==3)
+                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/transacciones?tipo=2') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Realizadas
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',2)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
                 </a>
               @endif
             </div>

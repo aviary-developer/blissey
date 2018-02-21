@@ -50,9 +50,9 @@
                     $presentacion=App\Presentacion::find($div->f_presentacion);
                   @endphp
                   @if (count($unidad)==0)
-                    {{App\DivisionProducto::inventario($div->id)."--".$division->nombre." ".$div->cantidad." ".$presentacion->nombre}}
+                    {{App\DivisionProducto::inventario($div->id,1)."--".$division->nombre." ".$div->cantidad." ".$presentacion->nombre}}
                   @else
-                    {{App\DivisionProducto::inventario($div->id)."--".$division->nombre." ".$div->cantidad." ".$unidad->nombre}}
+                    {{App\DivisionProducto::inventario($div->id,1)."--".$division->nombre." ".$div->cantidad." ".$unidad->nombre}}
                   @endif
                 </td>
               </tr>
