@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Ingreso extends Model
 {
@@ -52,5 +53,37 @@ class Ingreso extends Model
 
     public function solicitud(){
       return $this->hasMany('App\SolicitudExamen', 'f_ingreso');
+    }
+
+    public static function servicio_gastos($id, $dia = -1){
+      $ingreso = Ingreso::find($id);
+      //Gastos por uso de habitaciones
+      $dias = $ingreso->fecha_ingreso->diffInDays(Carbon::now());
+      if($dia == -1){
+        $dias++;
+        $precio_habitacion = $ingreso->habitacion->precio;
+        $total = $dias * $precio_habitacion;
+        //Gastos por examenes de laboratorio
+        if(count($ingreso->solicitud)>0){
+          foreach($ingreso->solicitud as $solicitud){
+            if($solicitud->estado != 0){
+              $total += $solicitud->examen->servicio->precio;
+            }
+          }
+        }
+      }else{
+        $fecha = $ingreso->fecha_ingreso->addDays($dia);
+        $total = $ingreso->habitacion->precio;
+        //Gastos por examenes de laboratorio
+        if(count($ingreso->solicitud)>0){
+          foreach($ingreso->solicitud as $solicitud){
+            if($solicitud->estado != 0 && ($solicitud->created_at->format('d/m/Y') == $fecha->format('d/m/Y'))){
+              $total += $solicitud->examen->servicio->precio;
+            }
+          }
+        }
+      }
+
+      return $total;
     }
 }

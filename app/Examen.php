@@ -45,6 +45,6 @@ class Examen extends Model
   }
 
   public function servicio(){
-    return $this->belongsTo('App\Servicio','f_examen');
+    return $this->hasOne('App\Servicio','f_examen');
   }
 }

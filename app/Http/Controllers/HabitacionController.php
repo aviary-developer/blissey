@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Habitacion;
 use App\Bitacora;
 use App\Ingreso;
+use App\CategoriaServicio;
+use App\Servicio;
 use Illuminate\Http\Request;
 use DB;
 use Redirect;
@@ -59,13 +61,29 @@ class HabitacionController extends Controller
       DB::beginTransaction();
 
       try {
+        $categoria_existe = CategoriaServicio::where('nombre','Habitación')->first();
+
+        if(count($categoria_existe)<1){
+          $categoria_existe = new CategoriaServicio;
+          $categoria_existe->nombre = "Habitación";
+          $categoria_existe->save();
+        }
+
         $habitaciones = Habitacion::create($request->All());
+
+        $servicio = new Servicio;
+        $servicio->nombre = 'Habitación '.$request->numero;
+        $servicio->precio = $request->precio;
+        $servicio->f_categoria = $categoria_existe->id;
+        $servicio->f_habitacion = $habitaciones->id;
+        $servicio->save();
       } catch (Exception $e) {
         DB::rollback();
         return redirect('/habitaciones')->with('mensaje', 'Algo salio mal');
       }
       DB::commit();
       Bitacora::bitacora('store','habitacions','habitaciones',$habitaciones->id);
+      Bitacora::bitacora('store','servicios','servicios',$servicio->id);
       return redirect('/habitaciones')->with('mensaje', '¡Guardado!');
     }
 
@@ -114,6 +132,12 @@ class HabitacionController extends Controller
       try {
         $habitaciones->fill($request->all());
         $habitaciones->save();
+
+        $servicio = Servicio::where('f_habitacion',$id)->first();
+        $servicio->nombre = 'Habitación '.$request->numero;
+        $servicio->precio = $request->precio;
+        $servicio->save();
+
       } catch (Exception $e) {
         DB::rollback();
         if($habitaciones->estado)
@@ -126,6 +150,7 @@ class HabitacionController extends Controller
       }
       DB::commit();
       Bitacora::bitacora('update','habitacions','habitaciones',$id);
+      Bitacora::bitacora('update','servicios','servicios',$servicio->id);
       if($habitaciones->estado)
       {
         return redirect('/habitaciones')->with('mensaje', '¡Editado!');

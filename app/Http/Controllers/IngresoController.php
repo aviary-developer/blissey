@@ -107,9 +107,25 @@ class IngresoController extends Controller
     {
         $ingreso = Ingreso::find($id);
         $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+        $hoy = Carbon::now();
+        $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+
+        //Total de gastos
+        $total_gastos = $this->total_gastos($id);
+
+        //Total abonado a la deuda
+        $total_abono = $this->total_abono($id);
+
+        //Total adeudado
+        $total_deuda = $total_gastos - $total_abono;
+
         return view('Ingresos.show',compact(
           'ingreso',
-          'examenes'
+          'examenes',
+          'dias',
+          'total_gastos',
+          'total_abono',
+          'total_deuda'
         ));
     }
 
@@ -214,4 +230,28 @@ class IngresoController extends Controller
         return null;
       }
     }
+
+    protected function total_gastos($id){
+      $total = Ingreso::servicio_gastos($id);
+      //Gastos por honorarios medicos
+      $total += 50;
+      //Retorno el total de gastos
+      return $total;
+    }
+
+    protected function total_abono($id){
+      return 0;
+    }
+
+    public function resumen(Request $request){
+      $id = $request->id;
+      $dia = $request->dia;
+      $ingreso = Ingreso::find($id);
+      $total = Ingreso::servicio_gastos($id, $dia);
+      if($dia == 0){
+        $total+=50;
+      }
+      return(compact("dia","id","ingreso",'total'));
+    }
+
 }

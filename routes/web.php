@@ -203,6 +203,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarPersonas','IngresoController@buscarPersonas');
   //Inventarios
   Route::resource('inventarios','InventarioController');
+  //Ingresos
+  Route::match(['get'],'/total_resumen','IngresoController@resumen');
 });
 Auth::routes();
 //Rutas de login
