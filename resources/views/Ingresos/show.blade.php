@@ -130,12 +130,13 @@
               <br>
               @if (count($ingreso->solicitud)>0)
                 <div class="row">
-                  <div class="col-xs-1"></div>
-                  <div class="col-xs-10">
+                  
+                  <div class="col-xs-12">
 
                     <table class="table">
                       <thead>
-                        <th>#</th>
+                        <th style="width: 50px">#</th>
+                        <th style="width: 120px">Fecha</th>
                         <th style="width: 110px">Muestra</th>
                         <th>Examen</th>
                         <th style="width: 110px">Estado</th>
@@ -144,6 +145,7 @@
                         @foreach ($ingreso->solicitud as $k => $solicitud)
                           <tr>
                             <td>{{$k+1}}</td>
+                            <td>{{$solicitud->created_at->format('d / m / Y')}}</td>
                             <td>{{$solicitud->codigo_muestra}}</td>
                             <td>{{$solicitud->examen->nombreExamen}}</td>
                             <td>

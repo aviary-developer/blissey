@@ -77,7 +77,7 @@ class Ingreso extends Model
         //Gastos por examenes de laboratorio
         if(count($ingreso->solicitud)>0){
           foreach($ingreso->solicitud as $solicitud){
-            if($solicitud->estado != 0 && ($solicitud->created_at->format('d/m/Y') == $fecha->format('d/m/Y'))){
+            if($solicitud->estado != 0 && ($fecha->diffInHours($solicitud->created_at) < 24)){
               $total += $solicitud->examen->servicio->precio;
             }
           }

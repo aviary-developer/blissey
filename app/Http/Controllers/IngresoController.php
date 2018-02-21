@@ -247,11 +247,49 @@ class IngresoController extends Controller
       $id = $request->id;
       $dia = $request->dia;
       $ingreso = Ingreso::find($id);
+      setlocale(LC_ALL,'es');
+      $fecha_carbon = $fecha = $ingreso->fecha_ingreso->addDays($dia);
+      $fecha = $fecha->formatLocalized('%d de %B de %Y');
+      $medico = (($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido;
+
+      //Total gastos
+      $honorarios = 0;
       $total = Ingreso::servicio_gastos($id, $dia);
       if($dia == 0){
-        $total+=50;
+        $total+= $honorarios = 50;
       }
-      return(compact("dia","id","ingreso",'total'));
+
+      //Total abono
+      $abono = 0;
+
+      //Valor de la habitación
+      $habitacion = $ingreso->habitacion->precio;
+      
+      //Valor de laboratorio
+      $laboratorio = 0;
+      $examenes = [];
+      if(count($ingreso->solicitud)>0){
+        foreach($ingreso->solicitud as $k => $solicitud){
+          if($solicitud->estado != 0 && ($fecha_carbon->diffInHours($solicitud->created_at) < 24)){
+            $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
+            $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
+          }
+        }
+      }
+
+      return(compact(
+        "dia",
+        "id",
+        "ingreso",
+        'total',
+        'abono',
+        'fecha',
+        'habitacion',
+        'laboratorio',
+        'examenes',
+        'honorarios',
+        'medico'
+      ));
     }
 
 }
