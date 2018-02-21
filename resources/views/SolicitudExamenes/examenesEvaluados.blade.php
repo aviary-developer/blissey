@@ -132,7 +132,24 @@
 			data: {
 				paciente:paciente
 			},
-			success: function () {
+			beforeSend: function () {
+				swal({
+					title: '¡Preparando impresión!',
+					text: 'Cargando información...',
+					timer: 10000,
+					onOpen: function () {
+						swal.showLoading()
+					}
+				}).then(
+					function () { },
+					function (dismiss) {
+						if (dismiss === 'timer') {
+						}
+					}
+				);
+      },
+			success: function (data) {
+				window.open("newpage.html",'New Window');
 			},
 			error: function(data){
 			}

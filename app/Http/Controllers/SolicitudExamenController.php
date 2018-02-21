@@ -345,14 +345,12 @@ class SolicitudExamenController extends Controller
           }
           $contador++;
         }
-        print_r($secciones);
       }
     }
     $header = view('PDF.header.hospital');
     $footer = view('PDF.footer.numero_pagina');
-    //$main = view('SolicitudExamenes.entregaExamen',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));
-    //$pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
-    //return $pdf->stream('Examen.pdf');
-    //return Response::json($detallesResultado);
+    $main = view('bancosangre.create',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));
+    $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+    return $pdf->stream('Examen.pdf');
   }
 }
