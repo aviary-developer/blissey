@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Producto;
 use App\DivisionProducto;
 use App\transacion;
+use Auth;
+use App\DetalleTransacion;
 
 class RequisicionController extends Controller
 {
@@ -14,9 +16,13 @@ class RequisicionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        Transacion::llenar();
+      $tipo= $request->tipo;
+      $buscar=$request->buscar;
+        $transacciones=Transacion::buscar($buscar,$tipo);
+        return view('Requisiciones.index',compact('transacciones','tipo','buscar'));
+        //Transacion::llenar();
     }
 
     /**
@@ -39,12 +45,19 @@ class RequisicionController extends Controller
     {
       $f_producto=$request->f_producto;
       $cantidad=$request->cantidad;
-
+      $transaccion= Transacion::create([
+        'fecha'=>$request->fecha,
+        'f_usuario'=>Auth::user()->id,
+        'localizacion'=>1,
+        'tipo'=>4,
+      ]);
       for ($i=0; $i <count($f_producto) ; $i++) {
-        $arrayP=divisionProducto::arrayFechas($f_producto);
-        for ($i=0; $i < count($arrayP); $i++) {
-          print_r($arrayP[$i]);
-        }
+        DetalleTransacion::create([
+          'f_transaccion'=>$transaccion->id,
+          'cantidad'=>$cantidad[$i],
+          'f_producto'=>$f_producto[$i],
+        ]);
+        //$arrayP=divisionProducto::arrayFechas($f_producto[$i]);
       }
     }
 

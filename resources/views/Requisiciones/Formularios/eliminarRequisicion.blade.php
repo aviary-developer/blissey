@@ -5,7 +5,7 @@
 <script type="text/javascript">
 function eliminarPedido(id){
   return swal({
-    title: 'Eliminar pedido',
+    title: 'Eliminar requisición',
     text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
     type: 'warning',
     showCancelButton: true,
@@ -17,8 +17,7 @@ function eliminarPedido(id){
     buttonsStyling: false
   }).then(function () {
     var dominio = window.location.host;
-    location.href ='http://'+dominio+'/blissey/public/eliminarPedido/'+id+"/0";
-    // $('#formulario').attr('action','http://'+dominio+'/blissey/public/eliminarPedido/'+id);
+    location.href ='http://'+dominio+'/blissey/public/eliminarPedido/'+id+"/4";
     $('#formulario').submit();
     swal(
       '¡Eliminado!',
@@ -29,7 +28,7 @@ function eliminarPedido(id){
     if (dismiss === 'cancel') {
       swal(
         'Cancelado',
-        'El registro se mantiene',
+        'La requisición se mantiene',
         'info'
       )
     }
