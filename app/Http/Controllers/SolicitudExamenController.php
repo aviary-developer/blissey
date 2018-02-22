@@ -324,6 +324,14 @@ class SolicitudExamenController extends Controller
   public function impresionExamenesPorPaciente(Request $request)
   {
     $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$request->paciente)->orderBy('estado')->get();
+    if($request->bandera){
+        foreach ($solicitudes as $solicitud) {
+        $cambioEstadoSolicitud=SolicitudExamen::find($solicitud->id);
+        $cambioEstadoSolicitud->estado=3;
+        $cambioEstadoSolicitud->save();
+      }
+      return response()->json('Entregados ;)');
+    }
     foreach ($solicitudes as $key => $solicitud) {
       $resultados[$key]=Resultado::where('f_solicitud','=',$solicitud->id)->first();
       $detallesResultado[$key]=DetalleResultado::where('f_resultado','=', $resultados[$key]->id)->get();

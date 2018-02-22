@@ -124,32 +124,21 @@
 	<input type="hidden" id="tokenExaPac" name="token" value="<?php echo csrf_token(); ?>">
 	<script type="text/javascript">
 	function imprimirExaEvaPacie(solicitudes,paciente){
+		var url="{{URL::to('/impresionExamenesPorPaciente')}}"+"?="+paciente;
+		window.open(url,'_blank');
 		token=$("#tokenExaPac").val();
 		$.ajax({
 			url: "/blissey/public/impresionExamenesPorPaciente",
 			headers: { 'X-CSRF-TOKEN': token },
 			type: 'POST',
 			data: {
+				bandera:true,
 				paciente:paciente
 			},
 			beforeSend: function () {
-				swal({
-					title: '¡Preparando impresión!',
-					text: 'Cargando información...',
-					timer: 10000,
-					onOpen: function () {
-						swal.showLoading()
-					}
-				}).then(
-					function () { },
-					function (dismiss) {
-						if (dismiss === 'timer') {
-						}
-					}
-				);
       },
-			success: function (data) {
-				window.open("newpage.html",'New Window');
+			success: function () {
+				location.reload();
 			},
 			error: function(data){
 			}
