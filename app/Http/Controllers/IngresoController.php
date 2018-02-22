@@ -270,7 +270,7 @@ class IngresoController extends Controller
       $examenes = [];
       if(count($ingreso->solicitud)>0){
         foreach($ingreso->solicitud as $k => $solicitud){
-          if($solicitud->estado != 0 && ($fecha_carbon->diffInHours($solicitud->created_at) < 24)){
+          if($solicitud->estado != 0 && ($fecha_carbon->diffInHours($solicitud->created_at,false) < 24) && ($fecha_carbon->diffInHours($solicitud->created_at,false) >= 0)){
             $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
             $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
           }
