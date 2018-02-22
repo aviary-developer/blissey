@@ -29,12 +29,8 @@ class TransaccionController extends Controller
     {
     $tipo= $request->tipo;
     $buscar=$request->buscar;
-    if(Auth::check()){
       $transacciones=Transacion::buscar($buscar,$tipo);
       return view('transacciones.index',compact('transacciones','tipo','buscar'));
-    }else{
-      return redirect('/');
-    }
     }
 
     /**
@@ -326,11 +322,14 @@ class TransaccionController extends Controller
       }
       return $componentes;
     }
-    public function eliminarPedido($id){
+    public function eliminarPedido($id,$tipo){
       DetalleTransacion::where('f_transaccion',$id)->delete();
       Transacion::destroy($id);
-      return redirect('/transacciones?tipo=0');
-
+      if($tipo==0){
+      return redirect('/transacciones?tipo='.$tipo);
+    }else{
+      return redirect('/requisiciones?tipo='.$tipo);
+    }
     }
     public static function buscarServicio($texto){
     $servicios=Servicio::where('estado',true)->where('nombre', 'ilike','%'.$texto.'%')->orderBy('nombre')->get();

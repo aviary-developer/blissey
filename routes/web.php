@@ -166,7 +166,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarCliente/{cliente}','TransaccionController@buscarCliente');
   Route::match(['get','post'],'/buscarProductoVenta/{texto}','TransaccionController@buscarVenta');
   Route::match(['get','post'],'/buscarComponenteVenta/{texto}','TransaccionController@buscarComponente');
-  Route::match(['get','post'],'/eliminarPedido/{id}','TransaccionController@eliminarPedido');
+  Route::match(['get','post'],'/eliminarPedido/{id}/{tipo}','TransaccionController@eliminarPedido');
   Route::match(['get','post'],'/buscarServicios/{texto}','TransaccionController@buscarServicio');
   Route::match(['get','post'],'/anularVenta/{id}/{comentario}','TransaccionController@anularVenta');
   Route::match(['get','post'],'/niveles/{id}','TransaccionController@niveles');

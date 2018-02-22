@@ -92,6 +92,10 @@ class DivisionProducto extends Model
         $fila->cantidad=$fila->cantidad-$diferencia;
         $ultimos[$i]=$fila;
       }
-      return $ultimos;
+      for ($b=$i; $b>=0 ; $b--) {
+        $fila=$ultimos[$b];
+        echo $fila->cantidad;
+        echo "<br>";
+      }
   }
 }
