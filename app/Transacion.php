@@ -14,7 +14,10 @@ class Transacion extends Model
 
   public static function buscar($buscar,$tipo){
     return Transacion::factura($buscar)->tipo($tipo)->Localizacion()->orderBy('fecha','DESC')->paginate(10);
-  }
+}
+    public static function pendientes($buscar,$tipo){
+      return Transacion::factura($buscar)->tipo($tipo)->orderBy('fecha','DESC')->paginate(10);
+    }
   public function scopeFactura($query, $buscar){
     if(trim($buscar)!=""){
       $query->where('factura', 'ilike','%'.$buscar.'%');

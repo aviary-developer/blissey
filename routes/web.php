@@ -75,10 +75,9 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
   //Rutas de Requisiciones
-
   Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
-});
   Route::resource('requisiciones','RequisicionController');
+});
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){
   //Rutas de proveedores
@@ -115,6 +114,9 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/desactivateDivision/{id}','DivisionController@desactivate');
   Route::match(['get','post'],'/activateDivision/{id}','DivisionController@activate');
   Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
+  //Rutas requisiciones acceso Farmacia
+  Route::match(['get','post'],'/verrequisiciones','RequisicionController@verrequisiciones');
+    Route::match(['get','post'],'/confirmarRequisicion/{id}','RequisicionController@confirmar');
 });
 //Grupo Administrador
 Route::group(['middleware'=>'admin'], function()

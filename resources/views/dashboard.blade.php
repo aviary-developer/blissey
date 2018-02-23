@@ -143,6 +143,9 @@
                                   <a href={{asset( '/transacciones?tipo=2')}}>Ventas</a>
                                 </li>
                                 <li>
+                                  <a href={{asset( '/requisiciones?tipo=4')}}>Requisiciones</a>
+                                </li>
+                                <li>
                                   <a>Mantenimiento
                                     <span class="fa fa-chevron-down"></span>
                                   </a>
