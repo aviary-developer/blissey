@@ -8,7 +8,11 @@ use App\User;
 use App\Habitacion;
 use App\Examen;
 use App\Paciente;
+use App\Servicio;
+use App\CategoriaServicio;
 use Illuminate\Http\Request;
+use App\Transacion;
+use App\DetalleTransacion;
 use DB;
 use Redirect;
 use Response;
@@ -88,6 +92,53 @@ class IngresoController extends Controller
           $habitacion = Habitacion::find($request->f_habitacion);
           $habitacion->ocupado = true;
           $habitacion->save();
+
+          $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+
+          if($ultima_factura == null){
+            $factura = 1;
+          }else{
+            $factura = $ultima_factura->factura;
+            $factura++;
+          }
+
+          $transaccion = new Transacion;
+          $transaccion->fecha = $ingresos->fecha_ingreso;
+          $transaccion->f_cliente = $ingresos->f_paciente;
+          $transaccion->f_ingreso = $ingresos->id;
+          $transaccion->tipo = 2;
+          $transaccion->factura = 1;
+          $transaccion->f_usuario = Auth::user()->id;
+          $transaccion->localizacion = 1;
+          $transaccion->save();
+
+          if($request->precio > -1){
+            $categoria = new CategoriaServicio;
+            $categoria->nombre = "Honorarios";
+            $categoria->save();
+
+            $servicio = new Servicio;
+            $servicio->nombre = "Honorarios médicos por ingreso";
+            $servicio->precio = $request->precio;
+            $servicio->f_categoria = $categoria->id;
+            $servicio->save();
+          }else{
+            $servicio = Servicio::where('nombre','Honorarios médicos por ingreso')->first();
+          }
+
+          $detalle = new DetalleTransacion;
+          $detalle->f_servicio = $servicio->id;
+          $detalle->precio = $servicio->precio;
+          $detalle->cantidad = 1;
+          $detalle->f_transaccion = $transaccion->id;
+          $detalle->save();
+
+          $detalle = new DetalleTransacion;
+          $detalle->f_servicio = $habitacion->servicio->id;
+          $detalle->precio = $habitacion->servicio->precio;
+          $detalle->cantidad = 1;
+          $detalle->f_transaccion = $transaccion->id;
+          $detalle->save();
         } catch (Exception $e) {
           DB::rollback();
           return redirect('/ingresos')->with('mensaje', 'Algo salio mal');
@@ -235,6 +286,8 @@ class IngresoController extends Controller
       $total = Ingreso::servicio_gastos($id);
       //Gastos por honorarios medicos
       $total += 50;
+      //Gastos por medicinas
+      $total += Ingreso::tratamiento_gastos($id);
       //Retorno el total de gastos
       return $total;
     }
@@ -243,18 +296,41 @@ class IngresoController extends Controller
       return 0;
     }
 
+    public function tratamiento(Request $request){
+      DB::beginTransaction();
+      try{
+        $detalle = new DetalleTransacion;
+        if($request->tipo_detalle == 1){
+          $detalle->f_producto = $request->f_producto;
+        }else{
+          $detalle->f_servicio = $request->f_producto;
+        }
+        $detalle->f_transaccion = $request->transaccion;
+        $detalle->cantidad = $request->cantidad;
+        $detalle->precio = $request->precio;
+        $detalle->save();
+      }catch(Exception $e){
+        DB::rollback();
+        return 0;
+      }
+      DB::commit();
+      return 1;
+    }
+
     public function resumen(Request $request){
       $id = $request->id;
       $dia = $request->dia;
       $ingreso = Ingreso::find($id);
       setlocale(LC_ALL,'es');
       $fecha_carbon = $fecha = $ingreso->fecha_ingreso->addDays($dia);
+      $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
       $fecha = $fecha->formatLocalized('%d de %B de %Y');
       $medico = (($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido;
 
       //Total gastos
       $honorarios = 0;
       $total = Ingreso::servicio_gastos($id, $dia);
+      $total += Ingreso::tratamiento_gastos($id, $dia);
       if($dia == 0){
         $total+= $honorarios = 50;
       }
@@ -269,10 +345,32 @@ class IngresoController extends Controller
       $laboratorio = 0;
       $examenes = [];
       if(count($ingreso->solicitud)>0){
-        foreach($ingreso->solicitud as $k => $solicitud){
-          if($solicitud->estado != 0 && ($fecha_carbon->diffInHours($solicitud->created_at,false) < 24) && ($fecha_carbon->diffInHours($solicitud->created_at,false) >= 0)){
+        $k = 0;
+        foreach($ingreso->solicitud as$solicitud){
+          if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_carbon, $fecha_mayor))){
             $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
             $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
+            $k++;
+          }
+        }
+      }
+
+      //Valor de tratamiento
+      $tratamiento = 0;
+      $medicina = [];
+      if(count($ingreso->transaccion->detalleTransaccion)>0){
+        $k = 0;
+        foreach($ingreso->transaccion->detalleTransaccion as $detalle){
+          if($detalle->f_servicio == null && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
+            $tratamiento += $medicina[$k]["precio"] = $detalle->precio * $detalle->cantidad;
+            if($detalle->divisionProducto->unidad == null){
+              $medicina[$k]["presentacion"] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre;
+            }else{
+              $medicina[$k]["presentacion"] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre;
+            }
+            $medicina[$k]["nombre"] = $detalle->divisionProducto->producto->nombre;
+            $medicina[$k]["cantidad"] = $detalle->cantidad;
+            $k++;
           }
         }
       }
@@ -288,7 +386,9 @@ class IngresoController extends Controller
         'laboratorio',
         'examenes',
         'honorarios',
-        'medico'
+        'medico',
+        'tratamiento',
+        'medicina'
       ));
     }
 

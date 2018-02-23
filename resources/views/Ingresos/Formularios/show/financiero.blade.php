@@ -99,7 +99,7 @@
                       <th>Servicios Hospitalarios</th>
                       @php
                         $total = $servicio = $ingreso->servicio_gastos($ingreso->id,$i);
-                        $total += $tratamiento = 0;
+                        $total += $tratamiento = $ingreso->tratamiento_gastos($ingreso->id, $i);
                         if($i == 0){
                           $total += $honorarios = 50;
                         }
