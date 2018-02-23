@@ -58,13 +58,12 @@
                   <td>{{ $correlativo }}</td>
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   <td>
-                    <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
-                      <i class="fa fa-info-circle"></i>
-                    </a>
-                    @if ($tipo=4)
-                      @include('Requisiciones.Formularios.eliminarRequisicion')
-                    @endif
-                    </td>
+                    {!!Form::open(['url'=>['confirmarRequisicion',$transaccion->id],'method'=>'POST'])!!}
+                    <button type="submit" class="btn btn-success btn-xs"/>
+                    <i class="fa fa-check"></i>
+                  </button>
+                  {!!Form::close()!!}
+                  </td>
               </tr>
               @php
               $correlativo++;

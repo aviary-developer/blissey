@@ -21,7 +21,7 @@ class RequisicionController extends Controller
       $tipo= $request->tipo;
       $buscar=$request->buscar;
         $transacciones=Transacion::buscar($buscar,$tipo);
-        return view('Requisiciones.index',compact('transacciones','tipo','buscar'));
+        return view('Requisiciones.index',compact('transacciones','tipo','buscar'));//index recepción
         //Transacion::llenar();
     }
 
@@ -57,8 +57,10 @@ class RequisicionController extends Controller
           'cantidad'=>$cantidad[$i],
           'f_producto'=>$f_producto[$i],
         ]);
+        }
         //$arrayP=divisionProducto::arrayFechas($f_producto[$i]);
-      }
+       return redirect('requisiciones?tipo=4')->with('mensaje', '¡Requisición Enviada!');
+
     }
 
     /**
@@ -69,7 +71,8 @@ class RequisicionController extends Controller
      */
     public function show($id)
     {
-        //
+      $transaccion=Transacion::find($id);
+      return view('Requisiciones.show',compact('transaccion'));
     }
 
     /**
@@ -119,5 +122,16 @@ class RequisicionController extends Controller
         }
       }
       return $productos;
+    }
+    function verrequisiciones(Request $request){
+      $tipo= $request->tipo;
+      $buscar=$request->buscar;
+        $transacciones=Transacion::pendientes($buscar,$tipo);
+        return view('Requisiciones.indexf',compact('transacciones','tipo','buscar'));//index farmacia
+    }
+
+    function confirmar($id){
+      $transaccion=Transacion::find($id);
+      return view('Requisiciones.confirmar');
     }
 }
