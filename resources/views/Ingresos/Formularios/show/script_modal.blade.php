@@ -1,6 +1,6 @@
 <script>
   function resumen(id, dia){
-    var body = $("#cuerpo");
+    var super_body = $("#cuerpo");
     $.ajax({
       url: "/blissey/public/total_resumen",
       type: "get",
@@ -9,8 +9,7 @@
         dia: dia
       },
       success: function(respuesta){
-        console.log(respuesta.total);
-        body.empty();
+        super_body.empty();
 
         html = '<div class = "row">'+
           '<h3>'+
@@ -22,7 +21,7 @@
         '</div>'+
         '<div class="ln_solid"></div>';
 
-        body.append(html);
+        super_body.append(html);
 
         html = "<div class='row'>"+
           '<div class="col-xs-6 tile_stats_count">'+
@@ -51,44 +50,47 @@
           '</div>'+
         "</div>";
 
-        body.append(html);
+        super_body.append(html);
         
-        html = '<div class="row">'+
-          '<h2>'+
+        html = '<div class="row" id="fila_main"><div class="col-xs-6"><div class="x_panel" id="gasto_body"></div></div></div>';
+
+        super_body.append(html);
+
+        var body = $("#gasto_body");
+
+        html = '<div class="row bg-danger">'+
+          '<h3 class="white">'+
             '<center>'+
-              '<small class="red">'+
                 '<i class="fa fa-arrow-down"></i>'+' '+
                 "Gastos"+
-              '</small>'+
             '</center>'+
-          '</h2>'+
+          '</h3>'+
         '</div>';
 
         body.append(html);
 
-        html = '<div class = "row">'+
+        html = '<div class = "row bg-gray" style="padding: 5px 0px 5px 0px">'+
           '<div class="col-xs-12">'+
-            '<h4>'+
+            '<span class="black"><b>'+
               '<center><i class="fa fa-hospital-o"></i>'+
                 ' Servicios Hospitalarios'+
               '</center>'+
-            '</h4>'+
+            '</b></span>'+
           '</div>'+
         '</div>';
 
         body.append(html);
 
         html = '<div class = "row">'+
-          '<div class="col-xs-1"></div>'+
-          '<div class="col-xs-8">'+
-            '<h4><b>'+
+          '<div class="col-xs-9">'+
+            '<span><b>'+
               'Habitación'+
-            '</b></h4>'+
+            '</b></span>'+
           '</div>'+
-          '<div class="col-xs-2">'+
-            '<h4 class="text-right">'+
+          '<div class="col-xs-3 text-right">'+
+            '<span>'+
               '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(respuesta.habitacion)+
-            '</h4>'+
+            '</span>'+
           '</div>'+
         '</div>';
 
@@ -96,31 +98,30 @@
 
         if(respuesta.laboratorio != 0){
           html = '<div class = "row">'+
-            '<div class="col-xs-1"></div>'+
-            '<div class="col-xs-8">'+
-              '<h4><b>'+
+            '<div class="col-xs-9">'+
+              '<span><b>'+
                 'Laboratorio'+
-              '</b></h4>'+
+              '</b></span>'+
             '</div>'+
-            '<div class="col-xs-2">'+
-              '<h4 class="text-right">'+
+            '<div class="col-xs-3 text-right">'+
+              '<span>'+
                 '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(respuesta.laboratorio)+
-              '</h4>'+
+              '</span>'+
             '</div>'+
           '</div>';
 
           $(respuesta.examenes).each(function(key, value){
             html += '<div class = "row">'+
-              '<div class="col-xs-2"></div>'+
-              '<div class="col-xs-5">'+
-                '<h5>'+
+              '<div class="col-xs-1"></div>'+
+              '<div class="col-xs-7">'+
+                '<span><i>'+
                   value.nombre+
-                '</h5>'+
+                '</i></span>'+
               '</div>'+
-              '<div class="col-xs-2">'+
-                '<h5 class="text-right">'+
+              '<div class="col-xs-2 text-right">'+
+                '<span><i>'+
                   '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(value.precio)+
-                '</h5>'+
+                '</i></span>'+
               '</div>'+
             '</div>';
           });
@@ -129,59 +130,96 @@
         }
 
         if(respuesta.honorarios != 0){
-          html = '<div class = "row">'+
+          html = '<br><div class = "row bg-gray" style="padding: 5px 0px 5px 0px">'+
             '<div class="col-xs-12">'+
-              '<h4>'+
+              '<span class="black"><b>'+
                 '<center><i class="fa fa-stethoscope"></i>'+
                   ' Honorarios Médicos'+
                 '</center>'+
-              '</h4>'+
+              '</b></span>'+
             '</div>'+
           '</div>';
 
           body.append(html);
 
           html = '<div class = "row">'+
-            '<div class="col-xs-1"></div>'+
-            '<div class="col-xs-8">'+
-              '<h4><b>'+
+            '<div class="col-xs-9">'+
+              '<span><b>'+
                 respuesta.medico+
-              '</b></h4>'+
+              '</b></span>'+
             '</div>'+
-            '<div class="col-xs-2">'+
-              '<h4 class="text-right">'+
+            '<div class="col-xs-3 text-right">'+
+              '<span>'+
                 '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(respuesta.honorarios)+
-              '</h4>'+
+              '</span>'+
             '</div>'+
           '</div>';
 
           body.append(html);
         }
 
-        html = '<div class="row">'+
-          '<h2>'+
+        if(respuesta.tratamiento != 0){
+          html = '<br><div class = "row bg-gray" style="padding: 5px 0px 5px 0px">'+
+            '<div class="col-xs-12">'+
+              '<span class="black"><b>'+
+                '<center><i class="fa fa-medkit"></i>'+
+                  ' Tratamiento'+
+                '</center>'+
+              '</b></span>'+
+            '</div>'+
+          '</div>';
+
+          $(respuesta.medicina).each(function(key, value){
+            html += '<div class = "row">'+
+              '<div class="col-xs-4">'+
+                '<span>'+
+                  value.cantidad+
+                  '<small> '+value.presentacion +'</small> '+
+                '</span>'+
+                '</div>'+
+                '<div class="col-xs-6">'+
+                '<span>'+
+                value.nombre+
+                '</span>'+
+              '</div>'+
+              '<div class="col-xs-2 text-right">'+
+                '<span>'+
+                  '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(value.precio)+
+                '</span>'+
+              '</div>'+
+            '</div>';
+          });
+
+          body.append(html);
+        }
+
+        html = '<div class="col-xs-6"><div class="x_panel" id="ingreso_body"></div></div>';
+
+        $("#fila_main").append(html);
+
+        var body = $("#ingreso_body");
+
+        html = '<div class="row bg-green">'+
+          '<h3 class="white">'+
             '<center>'+
-              '<small class="green">'+
                 '<i class="fa fa-arrow-up"></i>'+' '+
                 "Ingresos"+
-              '</small>'+
             '</center>'+
-          '</h2>'+
+          '</h3>'+
         '</div>';
 
         body.append(html);
 
         html = '<div class = "row">'+
-          '<div class="col-xs-1"></div>'+
-          '<div class="col-xs-8">'+
-            '<h4><b>'+
+          '<div class="col-xs-9">'+
+            '<span><b>'+
               'Abono'+
-            '</b></h4>'+
+            '</b></span>'+
           '</div>'+
-          '<div class="col-xs-2">'+
-            '<h4 class="text-right">'+
+          '<div class="col-xs-3 text-right">'+
+            '<span>'+
               '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(respuesta.abono)+
-            '</h4>'+
+            '</span>'+
           '</div>'+
         '</div>';
 

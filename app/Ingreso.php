@@ -55,6 +55,10 @@ class Ingreso extends Model
       return $this->hasMany('App\SolicitudExamen', 'f_ingreso');
     }
 
+    public function transaccion(){
+      return $this->hasOne('App\Transacion', 'f_ingreso');
+    }
+
     public static function servicio_gastos($id, $dia = -1){
       $ingreso = Ingreso::find($id);
       //Gastos por uso de habitaciones
@@ -72,13 +76,40 @@ class Ingreso extends Model
           }
         }
       }else{
+        $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
         $fecha = $ingreso->fecha_ingreso->addDays($dia);
         $total = $ingreso->habitacion->precio;
         //Gastos por examenes de laboratorio
         if(count($ingreso->solicitud)>0){
           foreach($ingreso->solicitud as $solicitud){
-            if($solicitud->estado != 0 && ($fecha->diffInHours($solicitud->created_at,false) < 24) && ($fecha->diffInHours($solicitud->created_at,false) >= 0)){
+            if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha, $fecha_mayor))){
               $total += $solicitud->examen->servicio->precio;
+            }
+          }
+        }
+      }
+
+      return $total;
+    }
+
+    public static function tratamiento_gastos($id, $dia = -1){
+      $ingreso = Ingreso::find($id);
+      $total = 0;
+      if($dia == -1){
+        if(count($ingreso->transaccion->detalleTransaccion)>0){
+          foreach($ingreso->transaccion->detalleTransaccion as $detalle){
+            if($detalle->f_servicio == null){
+              $total += $detalle->precio * $detalle->cantidad;
+            }
+          }
+        }
+      }else{
+        $fecha = $ingreso->fecha_ingreso->addDays($dia);
+        $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
+        if(count($ingreso->transaccion->detalleTransaccion)>0){
+          foreach($ingreso->transaccion->detalleTransaccion as $detalle){
+            if($detalle->f_servicio == null && ($detalle->created_at->between($fecha, $fecha_mayor))){
+              $total += $detalle->precio * $detalle->cantidad;
             }
           }
         }

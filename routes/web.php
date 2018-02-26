@@ -147,6 +147,12 @@ Route::group(['middleware'=>'general'], function(){
     ));
   });
 
+  //Ver si existe el servicio de honorarios médicos
+  Route::get('/servicio_honorario', function(){
+    $servicio = App\Servicio::where('nombre','Honorarios médicos por ingreso')->count();
+    return $servicio;
+  });
+
   //Ruta de usuario
   Route::match(['get','post'],'/psw','UserController@psw');
 
@@ -207,7 +213,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::resource('inventarios','InventarioController');
   //Ingresos
   Route::match(['get'],'/total_resumen','IngresoController@resumen');
-  //Requisiciones farmacia y recepcion
+  Route::match(['post'],'/tratamiento','IngresoController@tratamiento');
+//Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
 });
 Auth::routes();

@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {{Form::open(['class'=>'form-horizontal form-label-left input_mask', 'route'=>'ingresos.store', 'method'=>'POST', 'autocomplete'=>'off'])}}
+  {{Form::open(['class'=>'form-horizontal form-label-left input_mask', 'route'=>'ingresos.store', 'method'=>'POST', 'autocomplete'=>'off','id'=>'ingreso_form'])}}
   @php
     $ruta = '/ingresos';
     $fecha = Carbon\Carbon::now();

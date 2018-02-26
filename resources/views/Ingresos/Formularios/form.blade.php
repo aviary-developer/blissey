@@ -18,6 +18,7 @@
       <input type="hidden" name="f_paciente" id="f_paciente">
     </div>
   </div>
+  <input type="hidden" name="precio" id="precio" value="-1">
   <div class="form-group">
     <center>
       <label>
@@ -79,7 +80,7 @@
   <div class="ln_solid"></div>
   <div class="form-group">
     <center>
-      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+      <button type="button" class="btn btn-primary" id="guardar_ingreso">Guardar</button>
       <button type="reset" name="button" class="btn btn-default">Limpiar</button>
       <a href={!! asset($ruta) !!} class="btn btn-default">Cancelar</a>
     </center>
