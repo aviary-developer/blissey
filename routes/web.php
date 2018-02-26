@@ -76,7 +76,6 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
   //Rutas de Requisiciones
   Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
-  Route::resource('requisiciones','RequisicionController');
 });
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){
@@ -208,6 +207,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::resource('inventarios','InventarioController');
   //Ingresos
   Route::match(['get'],'/total_resumen','IngresoController@resumen');
+  //Requisiciones farmacia y recepcion
+  Route::resource('requisiciones','RequisicionController');
 });
 Auth::routes();
 //Rutas de login

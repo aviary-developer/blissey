@@ -68,14 +68,8 @@ class DivisionProducto extends Model
   }
 
   public static function arrayFechas($id){
-    $inventario=divisionProducto::inventario($id,2);
-    $compras=DB::table('detalle_transacions')
-      ->select('detalle_transacions.*','transacions.*')
-      ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
-      ->where('transacions.tipo',1)
-      ->where('detalle_transacions.f_producto',$id)
-      ->orderBy('transacions.fecha','DESC')
-      ->get();
+    $inventario=DivisionProducto::inventario($id,2);
+      $compras=DivisionProducto::compras($id);
       $cuenta=0;
       $i=0;
       $ultimos=[];
@@ -97,5 +91,14 @@ class DivisionProducto extends Model
         echo $fila->cantidad;
         echo "<br>";
       }
+  }
+  public static function compras($id){
+    return DB::table('detalle_transacions')
+    ->select('detalle_transacions.*')
+    ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
+    ->where('transacions.tipo',1)
+    ->where('detalle_transacions.f_producto',$id)
+    ->orderBy('transacions.fecha','DESC')
+    ->get();
   }
 }

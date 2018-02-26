@@ -95,7 +95,7 @@ class RequisicionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo "ddd";
     }
 
     /**
@@ -132,6 +132,6 @@ class RequisicionController extends Controller
 
     function confirmar($id){
       $transaccion=Transacion::find($id);
-      return view('Requisiciones.confirmar');
+      return view('Requisiciones.confirmar',compact('transaccion'));
     }
 }
