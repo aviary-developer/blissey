@@ -8,6 +8,7 @@ use App\DivisionProducto;
 use App\transacion;
 use Auth;
 use App\DetalleTransacion;
+use DB;
 
 class RequisicionController extends Controller
 {
@@ -95,14 +96,14 @@ class RequisicionController extends Controller
     {
         DB::beginTransaction();
         try {
-
-        } catch (\Exception $e) {
           $transaccion=Transacion::find($id);
+          $transaccion->tipo=5;
+          $transaccion->save();
           $detalles=$transaccion->detalleTransaccion;
-          detalleTransaccion::where('f_transaccion',$id)->delete();
+          DetalleTransacion::where('f_transaccion',$id)->delete();
           foreach ($detalles as $detalle) {
-            $inventario=App\DivisionProducto::inventario($detalle->f_producto,2);
-              $compras=App\DivisionProducto::compras($detalle->f_producto);
+            $inventario=DivisionProducto::inventario($detalle->f_producto,2);
+              $compras=DivisionProducto::compras($detalle->f_producto);
               $cuenta=0;
               $i=0;
               $ultimos=[];
@@ -122,21 +123,33 @@ class RequisicionController extends Controller
               $regresivo=$detalle->cantidad;
               for ($b=$i; $b>=0 ; $b--) {
                 $fila=$ultimos[$b];
-                $inv=App\DetalleTransacion::find($fila->id);
+                $inv=DetalleTransacion::find($fila->id);
                 if($fila->cantidad<$regresivo){
                   DetalleTransacion::create([
-                    'cantidad'=>,
-                    'fecha_vencimiento'=>,
-                    'f_transaccion'=>,
-                    'lote'=>,
-                    'f_producto'=>,
+                    'cantidad'=>$fila->cantidad,
+                    'fecha_vencimiento'=>$inv->fecha_vencimiento,
+                    'f_transaccion'=>$transaccion->id,
+                    'lote'=>$fila->lote,
+                    'f_producto'=>$detalle->f_producto,
                   ]);
                 $regresivo=$regresivo-$fila->cantidad;
               }elseif($regresivo!=0){
+                DetalleTransacion::create([
+                  'cantidad'=>$regresivo,
+                  'fecha_vencimiento'=>$inv->fecha_vencimiento,
+                  'f_transaccion'=>$transaccion->id,
+                  'lote'=>$fila->lote,
+                  'f_producto'=>$detalle->f_producto,
+                ]);
                 $regresivo=0;
               }
               }
           }
+          DB::commit();
+          echo "Guardado";
+        } catch (\Exception $e) {
+          DB::rollback();
+          echo "Error";
         }
 
 

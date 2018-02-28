@@ -34,7 +34,7 @@ class DivisionProducto extends Model
     if($nor==2){
       $ts=0;
     }
-    $compras=Transacion::where('tipo',1)->where('localizacion',$ts)->get();
+    $compras=Transacion::where('tipo',1)->where('localizacion',$ts)->get(); //compras
     foreach ($compras as $compra) {
       $dec=$compra->detalleTransaccion;
       foreach($dec as $dc){
@@ -44,7 +44,7 @@ class DivisionProducto extends Model
       }
     }
     $cv=0;
-    $ventas=Transacion::where('tipo',2)->where('localizacion',$ts)->get();
+    $ventas=Transacion::where('tipo',2)->where('localizacion',$ts)->get(); //ventas
     foreach ($ventas as $venta) {
       $dev=$venta->detalleTransaccion;
       foreach($dev as $dv){
@@ -52,6 +52,31 @@ class DivisionProducto extends Model
           $cv=$cv+$dv->cantidad;
         }
       }
+    }
+    $ce=0;
+    $envios=transaccion::where('tipo',5)->get();//envios a recepción no comfirmados
+    foreach ($envios as $envio) {
+      $dee=$envio->detalleTransaccion;
+      foreach($dee as $de){
+        if($de->f_producto==$id){
+          $ce=$ce+$de->cantidad;
+        }
+      }
+    }
+    $cr=0;
+    $requisiciones=transaccion::where('tipo',6)->get(); //envios a recepción confirmados
+    foreach ($requisiciones as $requisicion) {
+      $der=$requisicion->detalleTransaccion;
+      foreach($der as $dr){
+        if($dr->f_producto==$id){
+          $cr=$cr+$dr->cantidad;
+        }
+      }
+    }
+    if($st==0){
+      
+    }elseif($st==1){
+
     }
     return $cc-$cv;
   }
