@@ -66,32 +66,6 @@ class DivisionProducto extends Model
       // ->get();
       return $bitacora;
   }
-
-  public static function arrayFechas($id){
-    $inventario=DivisionProducto::inventario($id,2);
-      $compras=DivisionProducto::compras($id);
-      $cuenta=0;
-      $i=0;
-      $ultimos=[];
-      foreach ($compras as $compra) {
-        $cuenta=$cuenta+$compra->cantidad;
-        $ultimos[$i]=$compra;
-        if($cuenta>=$inventario)
-        break;
-        $i++;
-      }
-      $diferencia=$cuenta-$inventario;
-      if($diferencia!=0){
-        $fila=$ultimos[$i];
-        $fila->cantidad=$fila->cantidad-$diferencia;
-        $ultimos[$i]=$fila;
-      }
-      for ($b=$i; $b>=0 ; $b--) {
-        $fila=$ultimos[$b];
-        echo $fila->cantidad;
-        echo "<br>";
-      }
-  }
   public static function compras($id){
     return DB::table('detalle_transacions')
     ->select('detalle_transacions.*')

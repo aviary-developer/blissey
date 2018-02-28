@@ -21,11 +21,11 @@ $detalles=$transaccion->detalleTransaccion;
       </div>
       <table class="table table-striped">
         <tr>
-          <td>Cantidad</th>
-          <th>Fecha de vencimiento</th>
-          <th>Lote</th>
-          <th>Estante</th>
-          <th>Nivel</th>
+          <td><b>Cantidad</b></td>
+          <td><b>Fecha de vencimiento</b></td>
+          <td><b>Lote</b></td>
+          <td><b>Estante</b></td>
+          <td><b>Nivel</b></td>
         </tr>
         <tbody>
             @php
@@ -84,6 +84,7 @@ $detalles=$transaccion->detalleTransaccion;
         </tbody>
       </table>
       @endforeach
+      {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!}
     </div>
   </div>
 </div>
