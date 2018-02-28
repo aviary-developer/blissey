@@ -84,7 +84,7 @@
                   <thead>
                     <th>Cantidad</th>
                     <th colspan='2'>Detalle</th>
-                    @if(!$transaccion->tipo)
+                    @if($transaccion->tipo==1)
                     <th>Fecha de vencimiento</th>
                   @endif
                     @if(!$transaccion->tipo)
@@ -117,7 +117,7 @@
                       <td></td>
                     @endif
 
-                      @if(!$transaccion->tipo)
+                      @if($transaccion->tipo==1)
                       <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>
                     @endif
                     @if(!$transaccion->tipo)

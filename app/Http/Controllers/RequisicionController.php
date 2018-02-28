@@ -58,9 +58,7 @@ class RequisicionController extends Controller
           'f_producto'=>$f_producto[$i],
         ]);
         }
-        //$arrayP=divisionProducto::arrayFechas($f_producto[$i]);
        return redirect('requisiciones?tipo=4')->with('mensaje', '¡Requisición Enviada!');
-
     }
 
     /**
@@ -95,7 +93,53 @@ class RequisicionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+
+        } catch (\Exception $e) {
+          $transaccion=Transacion::find($id);
+          $detalles=$transaccion->detalleTransaccion;
+          detalleTransaccion::where('f_transaccion',$id)->delete();
+          foreach ($detalles as $detalle) {
+            $inventario=App\DivisionProducto::inventario($detalle->f_producto,2);
+              $compras=App\DivisionProducto::compras($detalle->f_producto);
+              $cuenta=0;
+              $i=0;
+              $ultimos=[];
+              foreach ($compras as $compra) {
+                $cuenta=$cuenta+$compra->cantidad;
+                $ultimos[$i]=$compra;
+                if($cuenta>=$inventario)
+                break;
+                $i++;
+              }
+              $diferencia=$cuenta-$inventario;
+              if($diferencia!=0){
+                $fila=$ultimos[$i];
+                $fila->cantidad=$fila->cantidad-$diferencia;
+                $ultimos[$i]=$fila;
+              }
+              $regresivo=$detalle->cantidad;
+              for ($b=$i; $b>=0 ; $b--) {
+                $fila=$ultimos[$b];
+                $inv=App\DetalleTransacion::find($fila->id);
+                if($fila->cantidad<$regresivo){
+                  DetalleTransacion::create([
+                    'cantidad'=>,
+                    'fecha_vencimiento'=>,
+                    'f_transaccion'=>,
+                    'lote'=>,
+                    'f_producto'=>,
+                  ]);
+                $regresivo=$regresivo-$fila->cantidad;
+              }elseif($regresivo!=0){
+                $regresivo=0;
+              }
+              }
+          }
+        }
+
+
     }
 
     /**
@@ -132,6 +176,6 @@ class RequisicionController extends Controller
 
     function confirmar($id){
       $transaccion=Transacion::find($id);
-      return view('Requisiciones.confirmar');
+      return view('Requisiciones.confirmar',compact('transaccion'));
     }
 }

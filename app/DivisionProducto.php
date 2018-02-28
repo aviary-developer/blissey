@@ -66,36 +66,13 @@ class DivisionProducto extends Model
       // ->get();
       return $bitacora;
   }
-
-  public static function arrayFechas($id){
-    $inventario=divisionProducto::inventario($id,2);
-    $compras=DB::table('detalle_transacions')
-      ->select('detalle_transacions.*','transacions.*')
-      ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
-      ->where('transacions.tipo',1)
-      ->where('detalle_transacions.f_producto',$id)
-      ->orderBy('transacions.fecha','DESC')
-      ->get();
-      $cuenta=0;
-      $i=0;
-      $ultimos=[];
-      foreach ($compras as $compra) {
-        $cuenta=$cuenta+$compra->cantidad;
-        $ultimos[$i]=$compra;
-        if($cuenta>=$inventario)
-        break;
-        $i++;
-      }
-      $diferencia=$cuenta-$inventario;
-      if($diferencia!=0){
-        $fila=$ultimos[$i];
-        $fila->cantidad=$fila->cantidad-$diferencia;
-        $ultimos[$i]=$fila;
-      }
-      for ($b=$i; $b>=0 ; $b--) {
-        $fila=$ultimos[$b];
-        echo $fila->cantidad;
-        echo "<br>";
-      }
+  public static function compras($id){
+    return DB::table('detalle_transacions')
+    ->select('detalle_transacions.*')
+    ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
+    ->where('transacions.tipo',1)
+    ->where('detalle_transacions.f_producto',$id)
+    ->orderBy('transacions.fecha','DESC')
+    ->get();
   }
 }

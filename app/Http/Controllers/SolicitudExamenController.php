@@ -372,7 +372,6 @@ class SolicitudExamenController extends Controller
     foreach ($solicitudes as $key => $solicitud) {
       $resultados[$key]=Resultado::where('f_solicitud','=',$solicitud->id)->first();
       $detallesResultado[$key]=DetalleResultado::where('f_resultado','=', $resultados[$key]->id)->get();
-      //$secciones=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=','true')->distinct()->get(['f_seccion']);
       $espr[$key]=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=','true')->get();
       $contador=0;
       $contadorSecciones=0;
@@ -394,7 +393,7 @@ class SolicitudExamenController extends Controller
     }
     $header = view('PDF.header.hospital');
     $footer = view('PDF.footer.numero_pagina');
-    $main = view('bancosangre.create',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));
+    $main = view('SolicitudExamenes.entregaTodosExamenes',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
     return $pdf->stream('Examen.pdf');
   }
