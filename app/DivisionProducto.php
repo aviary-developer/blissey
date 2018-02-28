@@ -54,7 +54,7 @@ class DivisionProducto extends Model
       }
     }
     $ce=0;
-    $envios=transaccion::where('tipo',5)->get();//envios a recepción no comfirmados
+    $envios=transacion::where('tipo',5)->get();//envios a recepción no comfirmados
     foreach ($envios as $envio) {
       $dee=$envio->detalleTransaccion;
       foreach($dee as $de){
@@ -64,7 +64,7 @@ class DivisionProducto extends Model
       }
     }
     $cr=0;
-    $requisiciones=transaccion::where('tipo',6)->get(); //envios a recepción confirmados
+    $requisiciones=transacion::where('tipo',6)->get(); //envios a recepción confirmados
     foreach ($requisiciones as $requisicion) {
       $der=$requisicion->detalleTransaccion;
       foreach($der as $dr){
@@ -74,7 +74,7 @@ class DivisionProducto extends Model
       }
     }
     if($st==0){
-      
+
     }elseif($st==1){
 
     }
