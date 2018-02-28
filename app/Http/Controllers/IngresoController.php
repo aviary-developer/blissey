@@ -9,6 +9,7 @@ use App\Habitacion;
 use App\Examen;
 use App\Paciente;
 use App\Servicio;
+use App\Abono;
 use App\CategoriaServicio;
 use Illuminate\Http\Request;
 use App\Transacion;
@@ -107,7 +108,7 @@ class IngresoController extends Controller
           $transaccion->f_cliente = $ingresos->f_paciente;
           $transaccion->f_ingreso = $ingresos->id;
           $transaccion->tipo = 2;
-          $transaccion->factura = 1;
+          $transaccion->factura = $factura;
           $transaccion->f_usuario = Auth::user()->id;
           $transaccion->localizacion = 1;
           $transaccion->save();
@@ -285,7 +286,7 @@ class IngresoController extends Controller
     protected function total_gastos($id){
       $total = Ingreso::servicio_gastos($id);
       //Gastos por honorarios medicos
-      $total += 50;
+      $total += Ingreso::honorario_gastos($id);
       //Gastos por medicinas
       $total += Ingreso::tratamiento_gastos($id);
       //Retorno el total de gastos
@@ -317,6 +318,21 @@ class IngresoController extends Controller
       return 1;
     }
 
+    public function abonar(Request $request){
+      DB::beginTransaction();
+      try{
+        $abono = new Abono;
+        $abono->f_transaccion = $request->transaccion;
+        $abono->monto = $request->abono;
+        $abono->save();
+      }catch(Exception $e){
+        DB::rollback();
+        return 0;
+      }
+      DB::commit();
+      return 1;
+    }
+
     public function resumen(Request $request){
       $id = $request->id;
       $dia = $request->dia;
@@ -332,7 +348,7 @@ class IngresoController extends Controller
       $total = Ingreso::servicio_gastos($id, $dia);
       $total += Ingreso::tratamiento_gastos($id, $dia);
       if($dia == 0){
-        $total+= $honorarios = 50;
+        $total+= $honorarios = Ingreso::honorario_gastos($id, $dia);
       }
 
       //Total abono
@@ -341,12 +357,27 @@ class IngresoController extends Controller
       //Valor de la habitación
       $habitacion = $ingreso->habitacion->precio;
       
+      //Servicios
+      $servicios = [];
+      $total_servicios = 0;
+      if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null))>0){
+        $k = 0;
+        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
+            $servicios[$k]["nombre"] = $detalle->servicio->nombre;
+            $servicios[$k]["precio"] = $detalle->precio;
+            $k++;
+            $total_servicios++;
+          }
+        }
+      }
+      
       //Valor de laboratorio
       $laboratorio = 0;
       $examenes = [];
-      if(count($ingreso->solicitud)>0){
+      if(count($ingreso->transaccion->solicitud)>0){
         $k = 0;
-        foreach($ingreso->solicitud as$solicitud){
+        foreach($ingreso->transaccion->solicitud as$solicitud){
           if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_carbon, $fecha_mayor))){
             $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
             $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
@@ -388,7 +419,9 @@ class IngresoController extends Controller
         'honorarios',
         'medico',
         'tratamiento',
-        'medicina'
+        'medicina',
+        'servicios',
+        'total_servicios'
       ));
     }
 

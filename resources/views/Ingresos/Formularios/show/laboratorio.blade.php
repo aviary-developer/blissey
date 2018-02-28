@@ -9,7 +9,7 @@
   </div>
 </div>
 <br>
-@if (count($ingreso->solicitud)>0)
+@if (count($ingreso->transaccion->solicitud)>0)
   <div class="row">
     
     <div class="col-xs-12">
@@ -23,7 +23,7 @@
           <th style="width: 110px">Estado</th>
         </thead>
         <tbody>
-          @foreach ($ingreso->solicitud as $k => $solicitud)
+          @foreach ($ingreso->transaccion->solicitud as $k => $solicitud)
             <tr>
               <td>{{$k+1}}</td>
               <td>{{$solicitud->created_at->format('d / m / Y')}}</td>

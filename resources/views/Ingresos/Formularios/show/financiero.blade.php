@@ -1,4 +1,13 @@
-<h3>Estado Financiero</h3>
+<div class="row">
+  <div class="col-xs-9">
+    <h3>Estado Financiero</h3>
+  </div>
+  <div class="col-xs-2 alignright">
+    <button type="button" class="btn btn-primary btn-sm" id="nuevo_abono">
+      <i class="fa fa-plus"></i> Abono
+    </button>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-3 col-sm-3 col-xs-6 tile_stats_count">
     <span class="count_top">
@@ -101,7 +110,7 @@
                         $total = $servicio = $ingreso->servicio_gastos($ingreso->id,$i);
                         $total += $tratamiento = $ingreso->tratamiento_gastos($ingreso->id, $i);
                         if($i == 0){
-                          $total += $honorarios = 50;
+                          $total += $honorarios = $ingreso->honorario_gastos($ingreso->id, $i);
                         }
                         $abono = 0;
                       @endphp

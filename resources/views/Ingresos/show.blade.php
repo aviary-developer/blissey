@@ -35,6 +35,9 @@
             <li role="presentation" class="">
               <a href="#tab_show_2" id="tab_s_2" role="tab" data-toggle="tab" aria-expanded="false">Tratamiento</a>
             </li>
+            <li role="presentation" class="">
+              <a href="#tab_show_5" id="tab_s_5" role="tab" data-toggle="tab" aria-expanded="false">Servicios Hospitalarios</a>
+            </li>
           </ul>
         </div>
         {{-- Contenido del tab --}}
@@ -119,12 +122,17 @@
             <div class="tab-pane fade" role="tabpanel" id="tab_show_3" aria-labelledby="tab_s_3">
               @include('Ingresos.Formularios.show.laboratorio')
             </div>
+            <div class="tab-pane fade" role="tabpanel" id="tab_show_5" aria-labelledby="tab_s_5">
+              @include('Ingresos.Formularios.show.servicio')
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<input type="hidden" id="transaccion" value={{$ingreso->transaccion->id}}>
+<input type="hidden" id="tokenTransaccion" name="tokenTransaccion" value="<?php echo csrf_token(); ?>">
 @include('Ingresos.Formularios.modal_examen')
 @include('Ingresos.Formularios.show.modal_transaccion')
 @endsection

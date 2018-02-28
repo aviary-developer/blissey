@@ -215,6 +215,7 @@ Route::group(['middleware'=>'general'], function(){
   //Ingresos
   Route::match(['get'],'/total_resumen','IngresoController@resumen');
   Route::match(['post'],'/tratamiento','IngresoController@tratamiento');
+  Route::post('/abonar','IngresoController@abonar');
 });
 Auth::routes();
 //Rutas de login

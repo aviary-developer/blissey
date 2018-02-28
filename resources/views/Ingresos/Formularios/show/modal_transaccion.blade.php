@@ -11,7 +11,7 @@
 
       <div class="modal-body">
         <div class="x_panel">
-          <div class="form-group col-xs-12">
+          <div class="form-group col-xs-12" id="radios">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar por: </label>
               <div class="col-md-7 col-sm-7 col-xs-12">
                 <div id="radioBtn" class="btn-group">

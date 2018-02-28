@@ -180,6 +180,7 @@ $(document).on('ready', function () {
     var token = $("#tokenSolicitudModal").val();
     var examen = $("input[name='examen[]']").serializeArray();
     var paciente = $("#f_paciente").val();
+    var transaccion_id = $("#transaccion").val();
     var id = $("#id").val();
     var concat = [];
     $(examen).each(function (key, value) {
@@ -193,7 +194,8 @@ $(document).on('ready', function () {
         data: {
           f_paciente: paciente,
           examen: concat,
-          f_ingreso: id
+          f_ingreso: id,
+          transaccion: transaccion_id,
         },
         success: function (respuesta) {
           console.log(respuesta);
@@ -347,9 +349,46 @@ $(document).on('ready', function () {
     });
   });
 });
+
+$("#nuevo_abono").on('click', function (e) {
+  e.preventDefault();
+  var token = $("#tokenTransaccion").val();
+  var transaccion_id = $("#transaccion").val();
+  var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar">';
+
+  swal({
+    title: 'Nuevo abono',
+    type: 'info',
+    html: html_,
+    showCancelButton: true,
+    confirmButtonText: '¡Guardar!',
+    cancelButtonText: 'Cancelar',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-default'
+  }).then(function(){
+    $.ajax({
+      url: "/blissey/public/abonar",
+      type: "POST",
+      headers: { 'X-CSRF-TOKEN': token },
+      data: {
+        transaccion: transaccion_id,
+        abono: $("#monto").val(),
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal("¡Hecho!", "Acción realizada exitosamente", 'success');
+          location.reload();
+        } else {
+          swal("¡Algo salio mal!", 'No se guardo', 'error');
+        }
+      }
+    });
+  }).catch(swal.noop);
+});
 //Agregar a la nueva tabla
 function registrarventa_(id) {
-  var transaccion_count = $("#transaccion_count").val();
+  var transaccion_count_p = $("#transaccion_count_p").val();
+  var transaccion_count_s = $("#transaccion_count_s").val();
   var cantidad = parseFloat($('#cantidad_resultado').val());
   var existencia = parseFloat($('#ct' + id).text());
   var token = $("#tokenTransaccion").val();
@@ -366,30 +405,8 @@ function registrarventa_(id) {
         styling: 'bootstrap3'
       });
     } else {
-      if (transaccion_count == 0) {
-        $("#mensaje_provisional").empty();
-
-        html_2 = '<div class="col-xs-12">' +
-          '<table class="table" id="tablaDetalle">' +
-          '<thead>' +
-          '<th style="width: 120px">Fecha</th>' +
-          '<th style="width: 110px">Cantidad</th>' +
-          '<th colspan="2">Detalle</th>' +
-          '</thead>' +
-          '</table>' +
-          '</div>';
-        
-        $("#mensaje_provisional").append(html_2);
-      }
       c4 = parseFloat($('#cc' + id).text()).toFixed(2);
-      tabla = $('#tablaDetalle');
-      html = "<tr>" +
-        "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" + 
-        "<td>" + cantidad +" "+c2 + "</td>" +
-        "<td>" + c1 + "</td>" +
-        "</tr>";
-      tabla.append(html);
-
+      
       $.ajax({
         url: "/blissey/public/tratamiento",
         headers: { 'X-CSRF-TOKEN': token },
@@ -402,7 +419,33 @@ function registrarventa_(id) {
           precio: c4
         },
         success: function (res) {
+          console.log(res);
           if (res == 1) {
+            if (transaccion_count_p == 0) {
+              $("#mensaje_provisional").empty();
+
+              html_2 = '<div class="col-xs-12">' +
+                '<table class="table" id="tablaDetalle">' +
+                '<thead>' +
+                '<th style="width: 120px">Fecha</th>' +
+                '<th style="width: 110px">Cantidad</th>' +
+                '<th colspan="2">Detalle</th>' +
+                '</thead>' +
+                '</table>' +
+                '</div>';
+
+              $("#mensaje_provisional").append(html_2);
+            }
+
+            tabla = $('#tablaDetalle');
+            html = "<tr>" +
+              "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +
+              "<td>" + cantidad + " " + c2 + "</td>" +
+              "<td>" + c1 + "</td>" +
+              "</tr>";
+
+            tabla.append(html);
+            
             new PNotify({
               title: '¡Hecho!',
               text: "Medicamento almacenado",
@@ -421,24 +464,69 @@ function registrarventa_(id) {
       });
     }
   } else {
+    
     c2 = parseFloat(c2).toFixed(2);
-    tabla = $('#tablaDetalle');
-    html = "<tr>" +
-      "<td>" + cantidad + "</td>" +
-      "<td>" + c1 + "</td>" +
-      "<td></td>" +
-      "<td>$ " + c2 + "</td>" +
-      "<td>$ " + parseFloat(cantidad * c2).toFixed(2) + "</td>" +
-      "<td>" +
-      "<input type='hidden' name='tipo_detalle[]' value='2'>" +
-      "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
-      "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
-      "<input type='hidden' name='precio[]' value='" + c2 + "'>" +
-      "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>" +
-      "<i class='fa fa-remove'></i>" +
-      "</button>" +
-      "</td>" +
-      "</tr>";
-    tabla.append(html);
+    
+    $.ajax({
+      url: "/blissey/public/tratamiento",
+      headers: { 'X-CSRF-TOKEN': token },
+      type: "POST",
+      data: {
+        transaccion: transaccion_id,
+        tipo_detalle: 2,
+        f_producto: id,
+        cantidad: cantidad,
+        precio: c2
+      },
+      success: function (res) {
+        if (res == 1) {
+          if (transaccion_count_s == 0) {
+            $("#mensaje_provisional_s").empty();
+
+            html_2 = '<div class="col-xs-12">' +
+              '<table class="table" id="tablaDetalle">' +
+              '<thead>' +
+              '<th style="width: 120px">Fecha</th>' +
+              '<th style="width: 110px">Cantidad</th>' +
+              '<th colspan="2">Detalle</th>' +
+              '</thead>' +
+              '</table>' +
+              '</div>';
+
+            $("#mensaje_provisional_s").append(html_2);
+          }
+
+          tabla = $('#tablaDetalle_s');
+          html = "<tr>" +
+            "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +  
+            "<td>" + cantidad + "</td>" +
+            "<td>" + c1 + "</td>" +
+            "</tr>";
+          tabla.append(html);
+
+          new PNotify({
+            title: '¡Hecho!',
+            text: "Servicio almacenado",
+            type: 'info',
+            styling: 'bootstrap3'
+          });
+        } else {
+          new PNotify({
+            title: '¡Error!',
+            text: "Algo salio mal",
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        }
+      }
+    });
+  }
+}
+function cambio_radios_especial(i) {
+  cambioRadio(i);
+  if (i == 3) {
+    document.getElementById('radios').style = "display: none";
+  } else {
+    document.getElementById('radios').style = "display: block";
   }
 }

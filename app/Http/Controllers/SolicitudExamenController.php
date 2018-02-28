@@ -9,9 +9,13 @@ use App\Resultado;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Reactivo;
+use App\Transacion;
+use App\DetalleTransacion;
 use Response;
 use App\Paciente;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class SolicitudExamenController extends Controller
@@ -57,6 +61,30 @@ class SolicitudExamenController extends Controller
     try{
       $año = date('Y');
       if(isset($request->examen)){
+        if($request->f_ingreso == null){
+          $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+  
+          if($ultima_factura == null){
+            $factura = 1;
+          }else{
+            $factura = $ultima_factura->factura;
+            $factura++;
+          }
+  
+          $transaccion = new Transacion;
+          $transaccion->fecha = Carbon::now();
+          $transaccion->f_cliente = $request->f_paciente;
+          $transaccion->f_ingreso = $request->f_ingreso;
+          $transaccion->tipo = 2;
+          $transaccion->factura = $factura;
+          $transaccion->f_usuario = Auth::user()->id;
+          $transaccion->localizacion = 1;
+          $transaccion->save();
+          $transaccion_id = $transaccion->id;
+        }else{
+          $transaccion_id = $request->transaccion;
+        }
+
         foreach ($request->examen as $examen) {
           // Generar codigo de la muestra
           $cantidad_examenes = SolicitudExamen::where('f_examen',$examen)->where('created_at','>',$año.'-01-01')->where('created_at','<=',$año.'-12-31')->count();
@@ -68,12 +96,21 @@ class SolicitudExamenController extends Controller
           $solicitud->f_paciente = $request->f_paciente;
           $solicitud->f_examen = $examen;
           $solicitud->codigo_muestra = $codigo_muestra;
-          $solicitud->f_ingreso = $request->f_ingreso;
           $solicitud->estado = 0;
+          $solicitud->f_transaccion = $transaccion_id;
           $solicitud->save();
+
+          //Detalle de transaccion
+          $detalle = new DetalleTransacion;
+          $detalle->f_servicio = $solicitud->examen->servicio->id;
+          $detalle->precio = $solicitud->examen->servicio->precio;
+          $detalle->cantidad = 1;
+          $detalle->f_transaccion = $transaccion_id;
+          $detalle->save();
 
           DB::commit();
           Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
+          Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
         }
       }
     }catch(Exception $e){

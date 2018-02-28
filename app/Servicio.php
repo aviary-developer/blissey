@@ -31,4 +31,8 @@ class Servicio extends Model
       $nombre = CategoriaServicio::find($id);
       return $nombre->nombre;
     }
+
+    public function categoria(){
+      return $this->belongsTo('App\CategoriaServicio','f_categoria');
+    } 
 }

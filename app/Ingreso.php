@@ -51,10 +51,6 @@ class Ingreso extends Model
       return $this->belongsTo('App\User', 'f_recepcion');
     }
 
-    public function solicitud(){
-      return $this->hasMany('App\SolicitudExamen', 'f_ingreso');
-    }
-
     public function transaccion(){
       return $this->hasOne('App\Transacion', 'f_ingreso');
     }
@@ -68,11 +64,16 @@ class Ingreso extends Model
         $precio_habitacion = $ingreso->habitacion->precio;
         $total = $dias * $precio_habitacion;
         //Gastos por examenes de laboratorio
-        if(count($ingreso->solicitud)>0){
-          foreach($ingreso->solicitud as $solicitud){
+        if(count($ingreso->transaccion->solicitud)>0){
+          foreach($ingreso->transaccion->solicitud as $solicitud){
             if($solicitud->estado != 0){
               $total += $solicitud->examen->servicio->precio;
             }
+          }
+        }
+        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico"){
+            $total += $detalle->precio;
           }
         }
       }else{
@@ -80,11 +81,16 @@ class Ingreso extends Model
         $fecha = $ingreso->fecha_ingreso->addDays($dia);
         $total = $ingreso->habitacion->precio;
         //Gastos por examenes de laboratorio
-        if(count($ingreso->solicitud)>0){
-          foreach($ingreso->solicitud as $solicitud){
+        if(count($ingreso->transaccion->solicitud)>0){
+          foreach($ingreso->transaccion->solicitud as $solicitud){
             if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha, $fecha_mayor))){
               $total += $solicitud->examen->servicio->precio;
             }
+          }
+        }
+        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($fecha, $fecha_mayor))){
+            $total += $detalle->precio;
           }
         }
       }
@@ -110,6 +116,33 @@ class Ingreso extends Model
           foreach($ingreso->transaccion->detalleTransaccion as $detalle){
             if($detalle->f_servicio == null && ($detalle->created_at->between($fecha, $fecha_mayor))){
               $total += $detalle->precio * $detalle->cantidad;
+            }
+          }
+        }
+      }
+
+      return $total;
+    }
+
+    public static function honorario_gastos($id,$dia = -1){
+      $ingreso = Ingreso::find($id);
+      $fecha = $ingreso->fecha_ingreso->addDays($dia);
+      $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
+      $total = 0;
+
+      if($dia == -1){
+        if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)) > 0){
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+            if($detalle->servicio->nombre == 'Honorarios médicos por ingreso'){
+              $total += $detalle->precio;
+            }
+          }
+        }
+      }else{
+        if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)) > 0){
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+            if($detalle->servicio->nombre == 'Honorarios médicos por ingreso' && ($detalle->created_at->between($fecha, $fecha_mayor))){
+              $total += $detalle->precio;
             }
           }
         }

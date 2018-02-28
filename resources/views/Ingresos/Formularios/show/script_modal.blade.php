@@ -129,6 +129,25 @@
           body.append(html);
         }
 
+        if(respuesta.total_servicios != 0){
+          $(respuesta.servicios).each(function(key, value){
+            html = '<div class = "row">'+
+              '<div class="col-xs-9">'+
+                '<span><b>'+
+                  value.nombre +
+                '</b></span>'+
+              '</div>'+
+              '<div class="col-xs-3 text-right">'+
+                '<span>'+
+                  '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(value.precio)+
+                '</span>'+
+              '</div>'+
+            '</div>';
+            body.append(html);
+          });
+        }
+
+
         if(respuesta.honorarios != 0){
           html = '<br><div class = "row bg-gray" style="padding: 5px 0px 5px 0px">'+
             '<div class="col-xs-12">'+
