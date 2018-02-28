@@ -61,7 +61,7 @@
                 <tr>
                   <th>Paciente</th>
                   <td>
-                    <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
+                    <a href="#" data-toggle="modal" data-target="#modal_datos_paciente">
                       {{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}
                     </a>
                     <input type="hidden" id="f_paciente" value={{$ingreso->f_paciente}}>
@@ -135,4 +135,5 @@
 <input type="hidden" id="tokenTransaccion" name="tokenTransaccion" value="<?php echo csrf_token(); ?>">
 @include('Ingresos.Formularios.modal_examen')
 @include('Ingresos.Formularios.show.modal_transaccion')
+@include('Ingresos.Formularios.show.modal_datos_paciente')
 @endsection

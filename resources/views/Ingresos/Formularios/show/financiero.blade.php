@@ -112,7 +112,7 @@
                         if($i == 0){
                           $total += $honorarios = $ingreso->honorario_gastos($ingreso->id, $i);
                         }
-                        $abono = 0;
+                        $abono = $ingreso->abonos($ingreso->id,$i);
                       @endphp
                       <td class="text-right">{{"$ ".number_format($servicio,2,'.',',')}}</td>
                     </tr>

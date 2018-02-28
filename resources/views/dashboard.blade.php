@@ -368,7 +368,8 @@
                     </li>
                   </ul>
                 </li>
-                @if(Auth::user()->tipoUsuario == "Laboaratorio")
+                @if (Auth::check())
+                  @if(Auth::user()->tipoUsuario == "Laboaratorio")
                     <!--INICIO DE NOTIICACIÓN-->
                     @php
                       $solicitudes= App\SolicitudExamen::where('estado','=',0)->orderBy('id','desc')->get();
@@ -411,6 +412,8 @@
                     </li>
                     <!--FIN notificación-->
                   @endif
+                @endif
+                
               </ul>
               </nav>
           </div>

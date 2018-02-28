@@ -84,6 +84,9 @@ class Transacion extends Model
       return 2;
     }
   }
+  public function abono(){
+    return $this->hasMany('App\Abono', 'f_transaccion');
+  }
   public static function llenar(){
     //COMPONENTES
     $componentes = [

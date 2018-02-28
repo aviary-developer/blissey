@@ -140,6 +140,7 @@ Route::group(['middleware'=>'general'], function(){
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
     }
     $empresa = App\Empresa::latest()->first();
+    // App\Transacion::llenar();
     return view('main', compact(
       "empresa",
       "primero",

@@ -166,10 +166,12 @@ class IngresoController extends Controller
         $total_gastos = $this->total_gastos($id);
 
         //Total abonado a la deuda
-        $total_abono = $this->total_abono($id);
+        $total_abono = Ingreso::abonos($id);
 
         //Total adeudado
         $total_deuda = $total_gastos - $total_abono;
+
+        $paciente = $ingreso->paciente;
 
         return view('Ingresos.show',compact(
           'ingreso',
@@ -177,7 +179,8 @@ class IngresoController extends Controller
           'dias',
           'total_gastos',
           'total_abono',
-          'total_deuda'
+          'total_deuda',
+          'paciente'
         ));
     }
 
@@ -293,10 +296,6 @@ class IngresoController extends Controller
       return $total;
     }
 
-    protected function total_abono($id){
-      return 0;
-    }
-
     public function tratamiento(Request $request){
       DB::beginTransaction();
       try{
@@ -352,7 +351,7 @@ class IngresoController extends Controller
       }
 
       //Total abono
-      $abono = 0;
+      $abono = Ingreso::abonos($id,$dia);
 
       //Valor de la habitación
       $habitacion = $ingreso->habitacion->precio;

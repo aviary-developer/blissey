@@ -150,4 +150,27 @@ class Ingreso extends Model
 
       return $total;
     }
+
+    public static function abonos($id, $dia = -1){
+      $ingreso = Ingreso::find($id);
+      $total = 0;
+      
+      if(count($ingreso->transaccion->abono)>0){
+        if($dia == -1){
+          foreach($ingreso->transaccion->abono as $abono){
+            $total += $abono->monto;
+          }
+        }else{
+          $fecha = $ingreso->fecha_ingreso->addDays($dia);
+          $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia +1));
+          foreach($ingreso->transaccion->abono as $abono){
+            if($abono->created_at->between($fecha, $fecha_mayor)){
+              $total += $abono->monto;
+            }
+          }
+        }
+      }
+
+      return $total;
+    }
 }
