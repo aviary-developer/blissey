@@ -94,64 +94,6 @@ class RequisicionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::beginTransaction();
-        try {
-          $transaccion=Transacion::find($id);
-          $transaccion->tipo=5;
-          $transaccion->save();
-          $detalles=$transaccion->detalleTransaccion;
-          DetalleTransacion::where('f_transaccion',$id)->delete();
-          foreach ($detalles as $detalle) {
-            $inventario=DivisionProducto::inventario($detalle->f_producto,2);
-              $compras=DivisionProducto::compras($detalle->f_producto);
-              $cuenta=0;
-              $i=0;
-              $ultimos=[];
-              foreach ($compras as $compra) {
-                $cuenta=$cuenta+$compra->cantidad;
-                $ultimos[$i]=$compra;
-                if($cuenta>=$inventario)
-                break;
-                $i++;
-              }
-              $diferencia=$cuenta-$inventario;
-              if($diferencia!=0){
-                $fila=$ultimos[$i];
-                $fila->cantidad=$fila->cantidad-$diferencia;
-                $ultimos[$i]=$fila;
-              }
-              $regresivo=$detalle->cantidad;
-              for ($b=$i; $b>=0 ; $b--) {
-                $fila=$ultimos[$b];
-                $inv=DetalleTransacion::find($fila->id);
-                if($fila->cantidad<$regresivo){
-                  DetalleTransacion::create([
-                    'cantidad'=>$fila->cantidad,
-                    'fecha_vencimiento'=>$inv->fecha_vencimiento,
-                    'f_transaccion'=>$transaccion->id,
-                    'lote'=>$fila->lote,
-                    'f_producto'=>$detalle->f_producto,
-                  ]);
-                $regresivo=$regresivo-$fila->cantidad;
-              }elseif($regresivo!=0){
-                DetalleTransacion::create([
-                  'cantidad'=>$regresivo,
-                  'fecha_vencimiento'=>$inv->fecha_vencimiento,
-                  'f_transaccion'=>$transaccion->id,
-                  'lote'=>$fila->lote,
-                  'f_producto'=>$detalle->f_producto,
-                ]);
-                $regresivo=0;
-              }
-              }
-          }
-          DB::commit();
-          echo "Guardado";
-        } catch (\Exception $e) {
-          DB::rollback();
-          echo "Error";
-        }
-
 
     }
 
@@ -190,5 +132,71 @@ class RequisicionController extends Controller
     function confirmar($id){
       $transaccion=Transacion::find($id);
       return view('Requisiciones.confirmar',compact('transaccion'));
+    }
+
+    function atenderPeticion($id){
+      echo $id;
+      DB::beginTransaction();
+      try {
+        $transaccion=Transacion::find($id);
+        $transaccion->tipo=5;
+        $transaccion->save();
+        $detalles=$transaccion->detalleTransaccion;
+        DetalleTransacion::where('f_transaccion',$id)->delete();
+        foreach ($detalles as $detalle) {
+          $inventario=DivisionProducto::inventario($detalle->f_producto,2);
+            $compras=DivisionProducto::compras($detalle->f_producto);
+            $cuenta=0;
+            $i=0;
+            $ultimos=[];
+            foreach ($compras as $compra) {
+              $cuenta=$cuenta+$compra->cantidad;
+              $ultimos[$i]=$compra;
+              if($cuenta>=$inventario)
+              break;
+              $i++;
+            }
+            $diferencia=$cuenta-$inventario;
+            if($diferencia!=0){
+              $fila=$ultimos[$i];
+              $fila->cantidad=$fila->cantidad-$diferencia;
+              $ultimos[$i]=$fila;
+            }
+            $regresivo=$detalle->cantidad;
+            for ($b=$i; $b>=0 ; $b--) {
+              $fila=$ultimos[$b];
+              $inv=DetalleTransacion::find($fila->id);
+              if($fila->cantidad<$regresivo){
+                DetalleTransacion::create([
+                  'cantidad'=>$fila->cantidad,
+                  'fecha_vencimiento'=>$inv->fecha_vencimiento,
+                  'f_transaccion'=>$transaccion->id,
+                  'lote'=>$fila->lote,
+                  'f_producto'=>$detalle->f_producto,
+                ]);
+              $regresivo=$regresivo-$fila->cantidad;
+            }elseif($regresivo!=0){
+              DetalleTransacion::create([
+                'cantidad'=>$regresivo,
+                'fecha_vencimiento'=>$inv->fecha_vencimiento,
+                'f_transaccion'=>$transaccion->id,
+                'lote'=>$fila->lote,
+                'f_producto'=>$detalle->f_producto,
+              ]);
+              $regresivo=0;
+            }
+            }
+        }
+        DB::commit();
+        echo "Guardado";
+      } catch (\Exception $e) {
+        DB::rollback();
+        echo "Error";
+      }
+    }
+    function asignar($id){
+      echo "Asignar estante a requisición";
+      // $transaccion=Transacion::find($id);
+      // return view('Requisiciones.confirmar',compact('transaccion'));
     }
 }

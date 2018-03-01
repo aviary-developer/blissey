@@ -23,7 +23,7 @@
                 <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
                 <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
                   <i class="fa fa-file"></i> Atendidos
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',5)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',5)->count() }}</span>
                 </a>
               @endif
             </div>

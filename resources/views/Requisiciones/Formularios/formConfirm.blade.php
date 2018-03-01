@@ -84,7 +84,7 @@ $detalles=$transaccion->detalleTransaccion;
         </tbody>
       </table>
       @endforeach
-      {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!}
+      <a href={!! asset('/atenderPeticion/'.$transaccion->id) !!} class="btn btn-primary">Confirmar</a>
     </div>
   </div>
 </div>

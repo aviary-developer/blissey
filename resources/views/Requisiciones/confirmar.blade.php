@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {!! Form::model($transaccion,['route'=>['requisiciones.update',$transaccion->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','id'=>'formVender','autocomplete'=>'off']) !!}
+{{-- {!! Form::model($transaccion,['route'=>['requisiciones.update',$transaccion->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','id'=>'formVender','autocomplete'=>'off']) !!} --}}
   <div class="col-xs-12">
       <div class="x_panel">
         <div class="x_title">
@@ -12,5 +12,5 @@
   <center>
 </center>
 </div>
-{!!Form::close()!!}
+{{-- {!!Form::close()!!} --}}
 @endsection

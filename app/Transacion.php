@@ -24,7 +24,11 @@ class Transacion extends Model
     }
   }
   public function scopeTipo($query, $tipo){
+    if($tipo!=5){
       $query->where('tipo', '=',$tipo);
+    }else{
+      $query->where('tipo', '=',$tipo)->orWhere('tipo', '=',6);
+    }
   }
   public function scopeLocalizacion($query){
     $tipoUsuario=Transacion::tipoUsuario();

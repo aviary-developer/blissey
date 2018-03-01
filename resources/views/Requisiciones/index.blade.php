@@ -11,6 +11,9 @@
           @if($tipo==4)Requisiciones
             <small>Pendientes</small>
           @endif
+          @if($tipo==5)Requisiciones
+            <small>Atendidas</small>
+          @endif
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -21,9 +24,17 @@
               @if($tipo==4)
                 <a href={!! asset('/requisiciones/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
                 <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Atendidos
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',5)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                <a href={!! asset('/requisiciones?tipo=5') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Atendidas
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',5)->orWhere('tipo',6)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                </a>
+              @endif
+              @if($tipo==5)
+                <a href={!! asset('/requisiciones/create') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
+                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                <a href={!! asset('/requisiciones?tipo=4') !!} class="btn btn-dark btn-ms">
+                  <i class="fa fa-file"></i> Pendientes
+                  <span class="label label-warning">{{ App\Transacion::where('tipo',4)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
                 </a>
               @endif
             </div>
@@ -58,11 +69,20 @@
                   <td>{{ $correlativo }}</td>
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   <td>
-                    <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
-                      <i class="fa fa-info-circle"></i>
-                    </a>
-                    @if ($tipo=4)
+                    @if ($transaccion->tipo==6 || $tipo==4)
+                      <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
+                        <i class="fa fa-info-circle"></i>
+                      </a>
+                    @endif
+                    @if ($tipo==4)
                       @include('Requisiciones.Formularios.eliminarRequisicion')
+                    @endif
+                    @if ($transaccion->tipo==5)
+                      {!!Form::open(['url'=>['asignarRequisicion',$transaccion->id],'method'=>'POST'])!!}
+                      <button type="submit" class="btn btn-success btn-xs"/>
+                      <i class="fa fa-check"></i>
+                    </button>
+                    {!!Form::close()!!}
                     @endif
                     </td>
               </tr>

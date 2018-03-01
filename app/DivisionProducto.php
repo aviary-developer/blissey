@@ -74,11 +74,10 @@ class DivisionProducto extends Model
       }
     }
     if($ts==0){
-
+      return $cc-$cv-$ce-$cr;
     }elseif($ts==1){
-
+      return $cc-$cv+$cr;
     }
-    return $cc-$cv;
   }
   public static function buscar($nombre,$estado){
     $bitacora = DB::table('division_productos')
