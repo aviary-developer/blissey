@@ -73,9 +73,9 @@ class DivisionProducto extends Model
         }
       }
     }
-    if($st==0){
+    if($ts==0){
 
-    }elseif($st==1){
+    }elseif($ts==1){
 
     }
     return $cc-$cv;
