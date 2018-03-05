@@ -72,6 +72,7 @@ class ProductoController extends Controller
           'nombre'=>$request->nombre,
           'f_presentacion'=>$request->f_presentacion,
           'f_proveedor'=>$request->f_proveedor,
+          'f_categoria'=>$request->f_categoria,
         ]);
         if(isset($request->divisiones)){
           foreach ($request->divisiones as $key => $division) {
