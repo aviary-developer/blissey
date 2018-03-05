@@ -18,7 +18,6 @@ $(document).on('ready',function(){
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
-    var stock = $('#minimo').val();
     var com=$('#hchange').val(); //Cantidad o contenido
     var idu=0;
     var unidad="";
@@ -30,7 +29,7 @@ $(document).on('ready',function(){
     }
     var vmc=valor+cantidad; //Valor más cantidad
     if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
-      if(!validarPresentacionE() && !validarCodigo() && !validarPrecio() && !validarStock()){
+      if(!validarPresentacionE() && !validarCodigo() && !validarPrecio()){
     var html_texto =
     "<tr>"+
     "<td>"+
@@ -255,21 +254,6 @@ function validarPrecio(){
     swal({
       type: 'error',
       title: '¡Precio debe ser mayor que $0.00!',
-      showConfirmButton: false,
-      timer: 2000,
-      animation: false,
-      customClass: 'animated tada'
-    }).catch(swal.noop);
-    return 1;
-  }else{
-    return 0;
-  }
-}
-function validarStock(){
-  if(parseFloat($('#minimo').val())<=0){
-    swal({
-      type: 'error',
-      title: '¡Stock debe ser mayor que cero!',
       showConfirmButton: false,
       timer: 2000,
       animation: false,

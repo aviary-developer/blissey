@@ -245,9 +245,6 @@
                                       <a href={{asset( '/productos')}}>Productos</a>
                                     </li>
                                     <li>
-                                      <a href={{asset( '/categoria_productos')}}>Categorías de productos</a>
-                                    </li>
-                                    <li>
                                       <a href={{asset( '/presentaciones')}}>Presentaciones</a>
                                     </li>
                                     <li>
@@ -416,7 +413,7 @@
                     <!--FIN notificación-->
                   @endif
                 @endif
-
+                
               </ul>
               </nav>
           </div>

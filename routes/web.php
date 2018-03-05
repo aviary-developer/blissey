@@ -220,11 +220,6 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/abonar','IngresoController@abonar');
 //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
-  //Categoria $productos
-  Route::resource('categoria_productos','CategoriaProductoController');
-  Route::match(['get','post'],'/desactivateCategoriaProducto/{id}','CategoriaProductoController@desactivate');
-  Route::match(['get','post'],'/activateCategoriaProducto/{id}','CategoriaProductoController@activate');
-  Route::match(['get','post'],'/destroyCategoriaProducto/{id}','CategoriaProductoController@destroy');
 });
 Auth::routes();
 //Rutas de login
