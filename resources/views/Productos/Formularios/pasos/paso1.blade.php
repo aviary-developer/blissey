@@ -17,6 +17,15 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Categoría *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
+      {!!Form::select('f_categoria',
+        App\CategoriaProducto::arrayCategorias()
+        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_categoria','placeholder'=>'Selecciones una categoría'])!!}
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Droguería *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
@@ -75,6 +84,13 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
       {!! Form::number('precio','0.00',['id'=>'precio','class'=>'form-control has-feedback-left','placeholder'=>'Precio por división','min'=>'1.00','step'=>'0.05']) !!}
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Stock mínimo *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('minimo','40',['id'=>'minimo','class'=>'form-control has-feedback-left','placeholder'=>'Stock mínimo','min'=>'1.00','step'=>'0']) !!}
     </div>
   </div>
   <center>
