@@ -47,6 +47,8 @@
       @include('Usuarios.Formularios.pasos.paso3')
     </div>
   </div>
+  <input type="hidden" name="precio" id="precio">
+  <input type="hidden" name="retencion" id="retencion">
 </div>
 <script type="text/javascript">
   var cuenta1 = 0;

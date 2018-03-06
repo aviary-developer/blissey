@@ -3,6 +3,8 @@ $(document).on('ready', function () {
   if (ubicacion.indexOf("/blissey/public/usuarios")>-1) {
     var boton_atras = "<a href='/blissey/public/usuarios' class='btn btn-default'>Cancelar</a>"
     $(".actionBar").append(boton_atras);
+    $(".buttonFinish").addClass("stop_ex");
+    $(".buttonFinish").addClass("usuario_ex");
   }
   if (ubicacion.indexOf("/blissey/public/productos") > -1) {
     var boton_atras = "<a href='/blissey/public/productos' class='btn btn-default'>Cancelar</a>"
@@ -18,6 +20,32 @@ $(document).on('ready', function () {
   var wrapper = $('#tablaTelefono');
   var wrapper2 = $('#tablaEspecialidad');
   var contador_especialidad = 0;
+
+  $(".usuario_ex").on("click", function (e) {
+    e.preventDefault();
+    var tipo_usuario = $("#tipoUsuario").val();
+    
+    if (tipo_usuario == "Médico" || tipo_usuario == "Gerencia") {
+      var usuario = (tipo_usuario == "Médico") ? "Médico" : "Gerencia";
+      var html_ = "<p>Para almacenar un usuario de tipo <span class='blue'>" + usuario + "</span> necesitamos saber el precio de sus honorarios por consulta:</p> <input type='number' class='swal2-input' step='0.01' min='0.00' placeholder='Precio' id='precio_swal'><p>También necesitamos saber el valor que le retiene el hospital por consulta:</p><input class='swal2-input' id='retencion_swal' type='number' step='0.01' min='0.00' placeholder='Retención'>";
+      
+      swal({
+        title: '¡Importante!',
+        html: html_,
+        showCancelButton: true,
+        confirmButtonText: '¡Guardar!',
+        cancelButtonText: 'Cancelar',
+        confirmButtonClass: 'btn btn-primary',
+        cancelButtonClass: 'btn btn-default'
+      }).then(function () {
+        $("#precio").val($("#precio_swal").val());
+        $("#retencion").val($("#retencion_swal").val());
+        $("#form").submit();
+      }).catch(swal.noop);
+    } else {
+      $("#form").submit();
+    }
+  });
 
   $('#agregar_telefono').click(function(){
     var contenido = $('#telefono_usuario').val();

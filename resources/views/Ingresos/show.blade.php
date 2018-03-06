@@ -26,18 +26,20 @@
             <li role="presentation" class="active">
               <a href="#tab_show_1" id="tab_s_1" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
-            <li role="presentation" class="">
-              <a href="#tab_show_4" id="tab_s_4" role="tab" data-toggle="tab" aria-expanded="false">Estado Financiero</a>
-            </li>
-            <li role="presentation" class="">
-              <a href="#tab_show_3" id="tab_s_3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
-            </li>
-            <li role="presentation" class="">
-              <a href="#tab_show_2" id="tab_s_2" role="tab" data-toggle="tab" aria-expanded="false">Tratamiento</a>
-            </li>
-            <li role="presentation" class="">
-              <a href="#tab_show_5" id="tab_s_5" role="tab" data-toggle="tab" aria-expanded="false">Servicios Hospitalarios</a>
-            </li>
+            @if ($ingreso->estado != 0) 
+              <li role="presentation" class="">
+                <a href="#tab_show_4" id="tab_s_4" role="tab" data-toggle="tab" aria-expanded="false">Estado Financiero</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#tab_show_3" id="tab_s_3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#tab_show_2" id="tab_s_2" role="tab" data-toggle="tab" aria-expanded="false">Tratamiento</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#tab_show_5" id="tab_s_5" role="tab" data-toggle="tab" aria-expanded="false">Servicios Hospitalarios</a>
+              </li>
+            @endif
           </ul>
         </div>
         {{-- Contenido del tab --}}
@@ -113,27 +115,29 @@
               </table>
             </div>
             {{-- Otra pestaña --}}
-            <div class="tab-pane fade" role="tabpanel" id="tab_show_2" aria-labelledby="tab_s_2">
-              @include('Ingresos.Formularios.show.medicamento')
-            </div>
-            <div class="tab-pane fade" role="tabpanel" id="tab_show_4" aria-labelledby="tab_s_4">
-              @include('Ingresos.Formularios.show.financiero')
-            </div>
-            <div class="tab-pane fade" role="tabpanel" id="tab_show_3" aria-labelledby="tab_s_3">
-              @include('Ingresos.Formularios.show.laboratorio')
-            </div>
-            <div class="tab-pane fade" role="tabpanel" id="tab_show_5" aria-labelledby="tab_s_5">
-              @include('Ingresos.Formularios.show.servicio')
+            @if ($ingreso->estado != 0)    
+              <div class="tab-pane fade" role="tabpanel" id="tab_show_2" aria-labelledby="tab_s_2">
+                @include('Ingresos.Formularios.show.medicamento')
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_show_4" aria-labelledby="tab_s_4">
+                @include('Ingresos.Formularios.show.financiero')
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_show_3" aria-labelledby="tab_s_3">
+                @include('Ingresos.Formularios.show.laboratorio')
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_show_5" aria-labelledby="tab_s_5">
+                @include('Ingresos.Formularios.show.servicio')
+              </div>
+              <input type="hidden" id="transaccion" value={{$ingreso->transaccion->id}}>
+              <input type="hidden" id="tokenTransaccion" name="tokenTransaccion" value="<?php echo csrf_token(); ?>">
+              @include('Ingresos.Formularios.modal_examen')
+              @include('Ingresos.Formularios.show.modal_transaccion')
+              @endif
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<input type="hidden" id="transaccion" value={{$ingreso->transaccion->id}}>
-<input type="hidden" id="tokenTransaccion" name="tokenTransaccion" value="<?php echo csrf_token(); ?>">
-@include('Ingresos.Formularios.modal_examen')
-@include('Ingresos.Formularios.show.modal_transaccion')
-@include('Ingresos.Formularios.show.modal_datos_paciente')
+  @include('Ingresos.Formularios.show.modal_datos_paciente')
 @endsection

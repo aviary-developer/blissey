@@ -94,52 +94,27 @@ class IngresoController extends Controller
           $habitacion->ocupado = true;
           $habitacion->save();
 
-          $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+          // if($request->precio > -1){
+          //   $categoria = new CategoriaServicio;
+          //   $categoria->nombre = "Honorarios";
+          //   $categoria->save();
 
-          if($ultima_factura == null){
-            $factura = 1;
-          }else{
-            $factura = $ultima_factura->factura;
-            $factura++;
-          }
+          //   $servicio = new Servicio;
+          //   $servicio->nombre = "Honorarios médicos por ingreso";
+          //   $servicio->precio = $request->precio;
+          //   $servicio->f_categoria = $categoria->id;
+          //   $servicio->save();
+          // }else{
+          //   $servicio = Servicio::where('nombre','Honorarios médicos por ingreso')->first();
+          // }
 
-          $transaccion = new Transacion;
-          $transaccion->fecha = $ingresos->fecha_ingreso;
-          $transaccion->f_cliente = $ingresos->f_paciente;
-          $transaccion->f_ingreso = $ingresos->id;
-          $transaccion->tipo = 2;
-          $transaccion->factura = $factura;
-          $transaccion->f_usuario = Auth::user()->id;
-          $transaccion->localizacion = 1;
-          $transaccion->save();
+          // $detalle = new DetalleTransacion;
+          // $detalle->f_servicio = $servicio->id;
+          // $detalle->precio = $servicio->precio;
+          // $detalle->cantidad = 1;
+          // $detalle->f_transaccion = $transaccion->id;
+          // $detalle->save();
 
-          if($request->precio > -1){
-            $categoria = new CategoriaServicio;
-            $categoria->nombre = "Honorarios";
-            $categoria->save();
-
-            $servicio = new Servicio;
-            $servicio->nombre = "Honorarios médicos por ingreso";
-            $servicio->precio = $request->precio;
-            $servicio->f_categoria = $categoria->id;
-            $servicio->save();
-          }else{
-            $servicio = Servicio::where('nombre','Honorarios médicos por ingreso')->first();
-          }
-
-          $detalle = new DetalleTransacion;
-          $detalle->f_servicio = $servicio->id;
-          $detalle->precio = $servicio->precio;
-          $detalle->cantidad = 1;
-          $detalle->f_transaccion = $transaccion->id;
-          $detalle->save();
-
-          $detalle = new DetalleTransacion;
-          $detalle->f_servicio = $habitacion->servicio->id;
-          $detalle->precio = $habitacion->servicio->precio;
-          $detalle->cantidad = 1;
-          $detalle->f_transaccion = $transaccion->id;
-          $detalle->save();
         } catch (Exception $e) {
           DB::rollback();
           return redirect('/ingresos')->with('mensaje', 'Algo salio mal');
@@ -158,19 +133,26 @@ class IngresoController extends Controller
     public function show($id)
     {
         $ingreso = Ingreso::find($id);
-        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
         $hoy = Carbon::now();
-        $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
 
-        //Total de gastos
-        $total_gastos = $this->total_gastos($id);
-
-        //Total abonado a la deuda
-        $total_abono = Ingreso::abonos($id);
-
-        //Total adeudado
-        $total_deuda = $total_gastos - $total_abono;
-
+        if($ingreso->estado != 0){
+          $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+          $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+  
+          //Total de gastos
+          $total_gastos = $this->total_gastos($id);
+  
+          //Total abonado a la deuda
+          $total_abono = Ingreso::abonos($id);
+  
+          //Total adeudado
+          $total_deuda = $total_gastos - $total_abono;
+  
+        }else{
+          $examenes = null;
+          $dias = 0;
+          $total_abono = $total_abono = $total_deuda = 0;
+        }
         $paciente = $ingreso->paciente;
 
         return view('Ingresos.show',compact(
@@ -230,6 +212,32 @@ class IngresoController extends Controller
       try{
         $ingreso->estado = 1;
         $ingreso->save();
+
+        $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+
+        if($ultima_factura == null){
+          $factura = 1;
+        }else{
+          $factura = $ultima_factura->factura;
+          $factura++;
+        }
+
+        $transaccion = new Transacion;
+        $transaccion->fecha = $ingreso->fecha_ingreso;
+        $transaccion->f_cliente = $ingreso->f_paciente;
+        $transaccion->f_ingreso = $ingreso->id;
+        $transaccion->tipo = 2;
+        $transaccion->factura = $factura;
+        $transaccion->f_usuario = Auth::user()->id;
+        $transaccion->localizacion = 1;
+        $transaccion->save();
+
+        $detalle = new DetalleTransacion;
+        $detalle->f_servicio = $ingreso->habitacion->servicio->id;
+        $detalle->precio = $ingreso->habitacion->servicio->precio;
+        $detalle->cantidad = 1;
+        $detalle->f_transaccion = $transaccion->id;
+        $detalle->save();
         DB::commit();
       }catch(Exception $e){
         DB::rollback();

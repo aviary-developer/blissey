@@ -322,31 +322,32 @@ $(document).on('ready', function () {
 
   //Ver si existen los honorarios
   $("#guardar_ingreso").on("click", function (e) {
-    $.ajax({
-      type: 'get',
-      url: '/blissey/public/servicio_honorario',
-      success: function (r) {
-        if (r == 0) {
-          var html_ = '<p class="text-justify">Parece que no se ha registrado el servicio por <span class="blue">Honorarios Médicos</span>, pero podemos hacerlo por tí en este momento, por favor indicanos cual es el precio en dólares que se cobra por este servicio:</p><input type="number" class="swal2-input" step="0.01" id="aux" min="0.00" placehorlder="Precio en dólares">';
+    // $.ajax({
+    //   type: 'get',
+    //   url: '/blissey/public/servicio_honorario',
+    //   success: function (r) {
+    //     if (r == 0) {
+    //       var html_ = '<p class="text-justify">Parece que no se ha registrado el servicio por <span class="blue">Honorarios Médicos</span>, pero podemos hacerlo por tí en este momento, por favor indicanos cual es el precio en dólares que se cobra por este servicio:</p><input type="number" class="swal2-input" step="0.01" id="aux" min="0.00" placehorlder="Precio en dólares">';
 
-          swal({
-            title: '¡Antes de guardar!',
-            html: html_,
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonText: '¡Guardar!',
-            cancelButtonText: 'Cancelar',
-            confirmButtonClass: 'btn btn-primary',
-            cancelButtonClass: 'btn btn-default'
-          }).then(function () {
-            $("#precio").val($("#aux").val());
-            $("#ingreso_form").submit();
-          }).catch(swal.noop);
-        } else {
-          $("#ingreso_form").submit();
-        }
-      }
-    });
+    //       swal({
+    //         title: '¡Antes de guardar!',
+    //         html: html_,
+    //         type: 'info',
+    //         showCancelButton: true,
+    //         confirmButtonText: '¡Guardar!',
+    //         cancelButtonText: 'Cancelar',
+    //         confirmButtonClass: 'btn btn-primary',
+    //         cancelButtonClass: 'btn btn-default'
+    //       }).then(function () {
+    //         $("#precio").val($("#aux").val());
+    //         $("#ingreso_form").submit();
+    //       }).catch(swal.noop);
+    //     } else {
+    //       $("#ingreso_form").submit();
+    //     }
+    //   }
+    // });
+    $("#ingreso_form").submit();
   });
 });
 
