@@ -18,6 +18,7 @@ $(document).on('ready',function(){
     var valor = $('#division').find('option:selected').val();
     var cantidad = $('#cantidad').val();
     var precio = $('#precio').val();
+    var stock = $('#minimo').val();
     var com=$('#hchange').val(); //Cantidad o contenido
     var idu=0;
     var unidad="";
@@ -29,7 +30,7 @@ $(document).on('ready',function(){
     }
     var vmc=valor+cantidad; //Valor más cantidad
     if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
-      if(!validarPresentacionE() && !validarCodigo() && !validarPrecio()){
+      if(!validarPresentacionE() && !validarCodigo() && !validarPrecio() && !validarStock()){
     var html_texto =
     "<tr>"+
     "<td>"+
@@ -45,11 +46,15 @@ $(document).on('ready',function(){
         "$ "+precio+
       "</td>"+
       "<td>"+
+      stock+
+      "</td>"+
+      "<td>"+
         "<input type='hidden' name='divisiones[]' value='"+valor+"'/>"+
         "<input type='hidden' name='codigos[]' value='"+codigo+"'/>"+
         "<input type='hidden' name='cantidades[]' value='"+cantidad+"'/>"+
         "<input type='hidden' name='precios[]' value='"+precio+"'/>"+
         "<input type='hidden' name='idus[]' value='"+idu+"'/>"+
+        "<input type='hidden' name='stocks[]' value='"+stock+"'/>"+
         "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
           "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -61,6 +66,8 @@ $(document).on('ready',function(){
       $("#tablaDivision").append(html_texto);
       $("#cantidad").val("1");
       $("#precio").val("0.00");
+      $("#codigo").val("");
+      $("#minimo").val("");
     }
     }
   });
@@ -254,6 +261,21 @@ function validarPrecio(){
     swal({
       type: 'error',
       title: '¡Precio debe ser mayor que $0.00!',
+      showConfirmButton: false,
+      timer: 2000,
+      animation: false,
+      customClass: 'animated tada'
+    }).catch(swal.noop);
+    return 1;
+  }else{
+    return 0;
+  }
+}
+function validarStock(){
+  if(parseFloat($('#minimo').val())<=0){
+    swal({
+      type: 'error',
+      title: '¡Stock debe ser mayor que cero!',
       showConfirmButton: false,
       timer: 2000,
       animation: false,
