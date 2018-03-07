@@ -10,6 +10,7 @@ use App\Examen;
 use App\Paciente;
 use App\Servicio;
 use App\Abono;
+use App\Especialidad;
 use App\CategoriaServicio;
 use Illuminate\Http\Request;
 use App\Transacion;
@@ -133,6 +134,7 @@ class IngresoController extends Controller
     public function show($id)
     {
         $ingreso = Ingreso::find($id);
+        $especialidades = Especialidad::orderBy('nombre')->get();
         $hoy = Carbon::now();
 
         if($ingreso->estado != 0){
@@ -162,7 +164,8 @@ class IngresoController extends Controller
           'total_gastos',
           'total_abono',
           'total_deuda',
-          'paciente'
+          'paciente',
+          'especialidades'
         ));
     }
 

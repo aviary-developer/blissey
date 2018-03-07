@@ -31,6 +31,9 @@
                 <a href="#tab_show_4" id="tab_s_4" role="tab" data-toggle="tab" aria-expanded="false">Estado Financiero</a>
               </li>
               <li role="presentation" class="">
+                <a href="#tab_show_6" id="tab_s_6" role="tab" data-toggle="tab" aria-expanded="false">Servicios Médicos</a>
+              </li>
+              <li role="presentation" class="">
                 <a href="#tab_show_3" id="tab_s_3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
               </li>
               <li role="presentation" class="">
@@ -128,10 +131,14 @@
               <div class="tab-pane fade" role="tabpanel" id="tab_show_5" aria-labelledby="tab_s_5">
                 @include('Ingresos.Formularios.show.servicio')
               </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_show_6" aria-labelledby="tab_s_6">
+                @include('Ingresos.Formularios.show.medicos')
+              </div>
               <input type="hidden" id="transaccion" value={{$ingreso->transaccion->id}}>
               <input type="hidden" id="tokenTransaccion" name="tokenTransaccion" value="<?php echo csrf_token(); ?>">
               @include('Ingresos.Formularios.modal_examen')
               @include('Ingresos.Formularios.show.modal_transaccion')
+              @include('Ingresos.Formularios.show.modal_medico')
               @endif
             </div>
           </div>
