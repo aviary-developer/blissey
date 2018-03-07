@@ -8,7 +8,7 @@ use DB;
 class DivisionProducto extends Model
 {
   protected $fillable = [
-    'f_division','f_producto','cantidad','precio','codigo','contenido'
+    'f_division','f_producto','cantidad','precio','codigo','contenido','stock'
   ];
   public function nombreDivision($id){
     $nombre = Division::find($id);

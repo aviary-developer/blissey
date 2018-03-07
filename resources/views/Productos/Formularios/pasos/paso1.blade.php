@@ -4,7 +4,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-cube form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo producto']) !!}
+      {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo producto','id'=>'nombre']) !!}
     </div>
   </div>
   <div class="form-group">
@@ -30,6 +30,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
       <select class="form-control has-feedback-left" name="f_proveedor">
+          <option value="0">Seleccione un proveedor</option>
         @foreach ($proveedores as $proveedor)
           <option value={{ $proveedor->id }}>{{ $proveedor->nombre }}</option>
         @endforeach
@@ -108,6 +109,7 @@
       <th>División</th>
       <th>Cantidad/Contenido</th>
       <th>Precio</th>
+      <th>Stock</th>
       <th style="width : 80px">Acción</th>
     </thead>
     <tbody>
@@ -126,6 +128,7 @@
             {{$division->cantidad.' '.$productos->nombrePresentacion($productos->f_presentacion)}}
           @endif</td>
             <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
+            <td>{{$division->stock}}</td>
             <td>
               <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
               <input type="hidden" value={{$division->id}}>

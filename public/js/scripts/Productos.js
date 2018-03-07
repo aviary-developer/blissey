@@ -46,11 +46,15 @@ $(document).on('ready',function(){
         "$ "+precio+
       "</td>"+
       "<td>"+
+      stock+
+      "</td>"+
+      "<td>"+
         "<input type='hidden' name='divisiones[]' value='"+valor+"'/>"+
         "<input type='hidden' name='codigos[]' value='"+codigo+"'/>"+
         "<input type='hidden' name='cantidades[]' value='"+cantidad+"'/>"+
         "<input type='hidden' name='precios[]' value='"+precio+"'/>"+
         "<input type='hidden' name='idus[]' value='"+idu+"'/>"+
+        "<input type='hidden' name='stocks[]' value='"+stock+"'/>"+
         "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
           "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -62,6 +66,8 @@ $(document).on('ready',function(){
       $("#tablaDivision").append(html_texto);
       $("#cantidad").val("1");
       $("#precio").val("0.00");
+      $("#codigo").val("");
+      $("#minimo").val("");
     }
     }
   });
