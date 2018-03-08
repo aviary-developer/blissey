@@ -205,7 +205,7 @@ $(document).on('ready',function(){
                 $('#divoculto').val(n_division);
                 $('#nomoculto').val(res4.nombre);
                 $('#preoculto').val(res.precio);
-                $('#exioculto').val(res4.inventario);
+                $('#exioculto').val(res.inventario);
               });
             });
           }else{
@@ -217,6 +217,14 @@ $(document).on('ready',function(){
     $("#tablaBuscar").on('click',"#agregar_resultado",function(e){
       var v=validarCantidad();
       var f_producto = $(this).parents('tr').find('input:eq(2)').val();
+      if (componentes_agregados.includes(f_producto)) {
+        new PNotify({
+          title: 'Error!',
+          text: 'Ya fue agregado',
+          type: 'error',
+          styling: 'bootstrap3'
+        });
+      }
       if(v==true && !componentes_agregados.includes(f_producto)){
         var division=$(this).parents('tr').find('input:eq(0)').val();
         var nombre = $(this).parents('tr').find('input:eq(1)').val();
@@ -257,6 +265,12 @@ $(document).on('ready',function(){
         }
         tabla.append(html);
         componentes_agregados.push(f_producto);
+        new PNotify({
+          title: 'Hecho!',
+          text: 'Ha sido agregado en detalles',
+          type: 'info',
+          styling: 'bootstrap3'
+        });
       }
     });
     $("#tablaDetalle").on('click','#eliminar_detalle',function(e){
@@ -303,11 +317,11 @@ $(document).on('ready',function(){
       c=0;
       var error =[];
       valor=true;
-      if($("#cantidad").val()==""){
+      if($("#cantidadp").val()==""){
         error[c]='El campo cantidad es requerido';
         c=c+1;
         valor=false;
-      }if(parseFloat($("#cantidad").val())<=0){
+      }if(parseFloat($("#cantidadp").val())<=0){
         error[c]='La cantidad debe ser mayor a cero';
         c=c+1;
         valor=false;
@@ -328,13 +342,15 @@ $(document).on('ready',function(){
       return valor;
     }
     $("#agregar").on("click",function(){
+      gd=false;
       var v=validaciones();
       f_producto=$('#idoculto').val();
       if(v==true && !componentes_agregados.includes(f_producto)){
         var tabla = $("#tablaDetalle");
         var cantidad=parseFloat($("#cantidadp").val());
         if($("#confirmar").val()==false){
-          if (parseFloat($("#exioculto").val())<=cantidad || $("#tipo").val()!='2') {
+          if (parseFloat($("#exioculto").val())>=cantidad || $("#tipo").val()!='2') {
+            gd=true;
             html="<tr>"+
             "<td>"+cantidad+"</td>"+
             "<td>"+$("#divoculto").val()+"</td>"+
@@ -355,6 +371,12 @@ $(document).on('ready',function(){
             "</button>"+
             "</td>"+
             "</tr>";
+            new PNotify({
+              title: 'Hecho!',
+              text: 'Ha sido agregado en detalles',
+              type: 'info',
+              styling: 'bootstrap3'
+            });
           } else {
             new PNotify({
               title: '¡Error!',
@@ -364,6 +386,7 @@ $(document).on('ready',function(){
             });
           }
       }else{
+        gd=true;
         html="<tr>"+
         "<td><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control valu' value='"+cantidad+"'></td>"+
         "<td>"+$("#divoculto").val()+"</td>"+
@@ -382,7 +405,14 @@ $(document).on('ready',function(){
         "</button>"+
         "</td>"+
         "</tr>";
+        new PNotify({
+          title: 'Hecho!',
+          text: 'Ha sido agregado en detalles',
+          type: 'info',
+          styling: 'bootstrap3'
+        });
       }
+      if(gd){  
         tabla.append(html);
         $('#idoculto').val("");
         $('#divoculto').val("");
@@ -391,6 +421,7 @@ $(document).on('ready',function(){
         $('#producto').val("");
         $('#cantidadp').val("1");
         componentes_agregados.push(f_producto);
+      }
       }
     });
     $("#resultadoCliente").keyup(function(){

@@ -141,6 +141,9 @@
                   <i class="fa fa-warning"></i>
                 </button>
               @endif
+              <button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+                <i class="fa fa-edit"></i>
+              </button>
             </td>
           </tr>
           @php
