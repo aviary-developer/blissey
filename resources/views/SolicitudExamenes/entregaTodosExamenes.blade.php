@@ -3,8 +3,9 @@
 	@php
   $fecha = Carbon\Carbon::now();
 @endphp
+@foreach ($solicitudes as $key => $solicitud)
+
 <div class="col-md-12 col-xs-12">
-	@foreach ($solicitudes as $key => $solicitud)
   <div class="x_panel">
     <div class="x_title">{{$fecha->format('d-m-Y h:i:s A')}}<center>
       <h2>Examen Realizado:	{{$solicitud->examen->nombreExamen}}</h2>
@@ -79,6 +80,6 @@
         <div class="clearfix"></div>
       </div>
     </div>
-	@endforeach
   </div>
+	@endforeach
 	@endsection
