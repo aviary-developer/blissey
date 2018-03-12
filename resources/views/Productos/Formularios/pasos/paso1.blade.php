@@ -141,7 +141,7 @@
                   <i class="fa fa-warning"></i>
                 </button>
               @endif
-              <button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+              <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}})">
                 <i class="fa fa-edit"></i>
               </button>
             </td>
@@ -155,3 +155,11 @@
     </tbody>
   </table>
 </div>
+<script type="text/javascript">
+function llenarDivision(id,codigo,precio,stock){
+$('#idDiv').val(id);
+$('#pre').val(precio);
+$('#stock').val(stock);
+$('#cod').val(codigo);
+}
+</script>
