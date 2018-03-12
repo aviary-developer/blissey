@@ -36,6 +36,38 @@ $(function () {
     }
     init();
   });
+
+  $(".checkbox-img").each(function () {
+    var option = $(this);
+    var $checkbox = option.find('input:checkbox');
+    var image = option.find('img');
+    
+    $(image).on("click", function () {
+
+      $checkbox.prop('checked', !$checkbox.is(':checked'));
+      $checkbox.triggerHandler('change');
+      updateDisplay();
+    });
+
+    $($checkbox).on("change", function () {
+      updateDisplay();
+    });
+
+    function initial() {
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      var isChecked = $checkbox.is(':checked');
+
+      if (isChecked) {
+        option.append('<i class="fa fa-check-circle green checkbox-check"></i>');
+      } else {
+        option.find('i').remove();
+      }
+    }
+    initial();
+  });
 });
 
 $('#radioBtn a').on('click', function () {
@@ -46,3 +78,4 @@ $('#radioBtn a').on('click', function () {
   $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
   $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
 });
+

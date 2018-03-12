@@ -218,6 +218,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get'],'/total_resumen','IngresoController@resumen');
   Route::match(['post'],'/tratamiento','IngresoController@tratamiento');
   Route::post('/abonar','IngresoController@abonar');
+  Route::post('/servicio_medicos','IngresoController@servicio_medicos');
 //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

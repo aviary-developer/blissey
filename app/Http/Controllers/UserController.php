@@ -170,7 +170,7 @@ class UserController extends Controller
           }
 
           $categoria_existe = CategoriaServicio::where('nombre','Honorarios')->first();
-          if(count($categoria_existe) > 0){
+          if(count($categoria_existe) < 1){
             $categoria = new CategoriaServicio;
             $categoria->nombre = "Honorarios";
             $categoria->save();
@@ -183,6 +183,7 @@ class UserController extends Controller
           $servicio->precio = $request->precio;
           $servicio->retencion = $request->retencion;
           $servicio->f_categoria = $categoria->id;
+          $servicio->f_medico = $user->id;
           $servicio->save();
 
           DB::commit();

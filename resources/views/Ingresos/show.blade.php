@@ -49,7 +49,19 @@
         <div class="col-xs-10">
           <div id="myTabContent" class="tab-content">
             <div role="tabpanel" class="tab-pane fade active in" id="tab_show_1" aria-labelledby="tab_s_1">
-              <h3>Información General</h3>
+              <div class="row">
+                <div class="col-xs-9">
+                  <h3>Información General</h3>
+                </div>
+                <div class="col-xs-2 alignright">
+                  @if ($ingreso->estado == 1)
+                    <input type="hidden" value={{$total_deuda}} id="deuda_para_alta">
+                    <button id="dar_alta" type="button" class="btn btn-sm btn-success alignright">
+                      <i class="fa fa-arrow-right"></i> Dar de alta
+                    </button>
+                  @endif
+                </div>
+              </div>
               <table class="table">
                 <tr>
                   <th>Expediente</th>

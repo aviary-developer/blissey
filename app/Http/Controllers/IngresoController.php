@@ -136,10 +136,22 @@ class IngresoController extends Controller
         $ingreso = Ingreso::find($id);
         $especialidades = Especialidad::orderBy('nombre')->get();
         $hoy = Carbon::now();
+        $medicos_general = DB::table('users')
+        ->whereNotExists(
+          function ($query){
+            $query->select(DB::raw(1))
+            ->from('especialidad_usuarios')
+            ->whereRaw('especialidad_usuarios.f_usuario = users.id');
+          }
+        )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
 
         if($ingreso->estado != 0){
+          if($ingreso->estado == 1){
+            $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+          }else{
+            $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);  
+          }
           $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-          $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
   
           //Total de gastos
           $total_gastos = $this->total_gastos($id);
@@ -149,7 +161,6 @@ class IngresoController extends Controller
   
           //Total adeudado
           $total_deuda = $total_gastos - $total_abono;
-  
         }else{
           $examenes = null;
           $dias = 0;
@@ -165,7 +176,8 @@ class IngresoController extends Controller
           'total_abono',
           'total_deuda',
           'paciente',
-          'especialidades'
+          'especialidades',
+          'medicos_general'
         ));
     }
 
@@ -335,6 +347,12 @@ class IngresoController extends Controller
         $abono->f_transaccion = $request->transaccion;
         $abono->monto = $request->abono;
         $abono->save();
+        if(isset($request->ingreso)){
+          $ingreso = Ingreso::find($request->ingreso);
+          $ingreso->fecha_alta = Carbon::now();
+          $ingreso->estado = 2;
+          $ingreso->save();
+        }
       }catch(Exception $e){
         DB::rollback();
         return 0;
@@ -357,8 +375,18 @@ class IngresoController extends Controller
       $honorarios = 0;
       $total = Ingreso::servicio_gastos($id, $dia);
       $total += Ingreso::tratamiento_gastos($id, $dia);
-      if($dia == 0){
-        $total+= $honorarios = Ingreso::honorario_gastos($id, $dia);
+      //Honorarios
+      $total+= $honorarios = Ingreso::honorario_gastos($id, $dia);
+      $medicos = [];
+      if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null))>0){
+        $k = 0;
+        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+          if($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
+            $medicos[$k]["nombre"] = $detalle->servicio->nombre;
+            $medicos[$k]["precio"] = $detalle->precio;
+            $k++;
+          }
+        }
       }
 
       //Total abono
@@ -427,12 +455,36 @@ class IngresoController extends Controller
         'laboratorio',
         'examenes',
         'honorarios',
-        'medico',
+        'medicos',
         'tratamiento',
         'medicina',
         'servicios',
         'total_servicios'
       ));
     }
-
+  
+  public function servicio_medicos(Request $request){
+    DB::beginTransaction();
+    try{
+      if(isset($request->f_medico)){
+        foreach($request->f_medico as $medico){
+          $servicio = Servicio::find($medico);
+  
+          $detalle = new DetalleTransacion;
+          $detalle->cantidad = 1;
+          $detalle->f_transaccion = $request->f_transaccion;
+          $detalle->precio = $servicio->precio + $servicio->retencion;
+          $detalle->f_servicio = $servicio->id;
+          $detalle->save();
+        }
+        DB::commit();
+        return 1;
+      }else{
+        return 0;
+      }
+    }catch(Exception $e){
+      DB::rollback();
+      return 0;
+    }
+  }
 }

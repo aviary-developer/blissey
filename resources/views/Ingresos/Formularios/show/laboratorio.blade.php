@@ -3,9 +3,11 @@
     <h3>Laboratorio Clínico	</h3>
   </div>
   <div class="col-xs-2 alignright">
-    <button type="button" name="button" class="btn btn-primary btn-sm alignright" data-toggle="modal" data-target="#modal_examen">
-      <i class="fa fa-plus"></i> Nuevo
-    </button>
+    @if ($ingreso->estado != 2)    
+      <button type="button" name="button" class="btn btn-primary btn-sm alignright" data-toggle="modal" data-target="#modal_examen">
+        <i class="fa fa-plus"></i> Nuevo
+      </button>
+    @endif
   </div>
 </div>
 <br>

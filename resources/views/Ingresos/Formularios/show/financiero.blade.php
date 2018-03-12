@@ -3,9 +3,11 @@
     <h3>Estado Financiero</h3>
   </div>
   <div class="col-xs-2 alignright">
-    <button type="button" class="btn btn-primary btn-sm" id="nuevo_abono">
-      <i class="fa fa-plus"></i> Abono
-    </button>
+    @if ($ingreso->estado != 2)    
+      <button type="button" class="btn btn-primary btn-sm" id="nuevo_abono">
+        <i class="fa fa-plus"></i> Abono
+      </button>
+    @endif
   </div>
 </div>
 <div class="row">
@@ -109,9 +111,7 @@
                       @php
                         $total = $servicio = $ingreso->servicio_gastos($ingreso->id,$i);
                         $total += $tratamiento = $ingreso->tratamiento_gastos($ingreso->id, $i);
-                        if($i == 0){
-                          $total += $honorarios = $ingreso->honorario_gastos($ingreso->id, $i);
-                        }
+                        $total += $honorarios = $ingreso->honorario_gastos($ingreso->id, $i);
                         $abono = $ingreso->abonos($ingreso->id,$i);
                       @endphp
                       <td class="text-right">{{"$ ".number_format($servicio,2,'.',',')}}</td>
@@ -120,12 +120,10 @@
                       <th>Tratamiento</th>
                       <td class="text-right">{{"$ ".number_format($tratamiento,2,'.',',')}}</td>
                     </tr>
-                    @if ($i==0)
-                      <tr>
-                        <th>Honorarios Médicos</th>
-                        <td class="text-right">{{"$ ".number_format($honorarios,2,'.',',')}}</td>
-                      </tr>
-                    @endif
+                    <tr>
+                      <th>Honorarios Médicos</th>
+                      <td class="text-right">{{"$ ".number_format($honorarios,2,'.',',')}}</td>
+                    </tr>
                     <tr>
                       <th>Total</th>
                       <td class="text-right">

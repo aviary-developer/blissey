@@ -161,20 +161,21 @@
 
           body.append(html);
 
-          html = '<div class = "row">'+
-            '<div class="col-xs-9">'+
-              '<span><b>'+
-                respuesta.medico+
-              '</b></span>'+
-            '</div>'+
-            '<div class="col-xs-3 text-right">'+
-              '<span>'+
-                '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(respuesta.honorarios)+
-              '</span>'+
-            '</div>'+
-          '</div>';
-
-          body.append(html);
+          $(respuesta.medicos).each(function(key, value){
+            html = '<div class = "row">'+
+              '<div class="col-xs-9">'+
+                '<span><b>'+
+                  value.nombre +
+                '</b></span>'+
+              '</div>'+
+              '<div class="col-xs-3 text-right">'+
+                '<span>'+
+                  '$ '+ new Intl.NumberFormat('mx-MX',{style:"decimal", minimumFractionDigits: 2}).format(value.precio)+
+                '</span>'+
+              '</div>'+
+            '</div>';
+            body.append(html);
+          });
         }
 
         if(respuesta.tratamiento != 0){

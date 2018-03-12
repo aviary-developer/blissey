@@ -104,7 +104,16 @@ class User extends Authenticatable
       return $this->hasMany('App\EspecialidadUsuario','f_usuario');
     }
 
+    public function servicio(){
+      return $this->hasOne('App\Servicio','f_medico');
+    }
+
     public function telephone(){
       return $this->hasMany('App\TelefonoUsuario','f_usuario');
+    }
+
+    public static function buscar_servicio($id){
+      $r = User::find($id);
+      return $r->servicio->id;
     }
 }

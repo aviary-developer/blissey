@@ -133,7 +133,7 @@ class Ingreso extends Model
       if($dia == -1){
         if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)) > 0){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->nombre == 'Honorarios médicos por ingreso'){
+            if($detalle->servicio->categoria->nombre == 'Honorarios'){
               $total += $detalle->precio;
             }
           }
@@ -141,7 +141,7 @@ class Ingreso extends Model
       }else{
         if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)) > 0){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->nombre == 'Honorarios médicos por ingreso' && ($detalle->created_at->between($fecha, $fecha_mayor))){
+            if($detalle->servicio->categoria->nombre == 'Honorarios' && ($detalle->created_at->between($fecha, $fecha_mayor))){
               $total += $detalle->precio;
             }
           }

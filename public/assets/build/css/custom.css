@@ -21,6 +21,17 @@ thead{
     object-fit: cover;
     padding: 2px
 }
+.checkbox-img{
+    position: relative;
+    cursor: pointer;
+}
+.checkbox-check{
+    position: absolute;
+    right: 5px;
+    bottom: 0px;
+    font-size: 300%;
+    z-index: 1001;;
+}
 .borde{
     border: 1px solid;
 }

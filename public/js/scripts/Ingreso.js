@@ -175,6 +175,38 @@ $(document).on('ready', function () {
     }
   });
 
+  $("#guardarMedicoModal").on("click", function (e) {
+    e.preventDefault();
+    var token = $("#tokenTransaccion").val();
+    var transaccion_id = $("#transaccion").val();
+    var medicos = $("input[name='medicos[]']").serializeArray();
+    var union = [];
+    $(medicos).each(function (key, value) {
+      union.push(value.value);
+    });
+    if (union.length > 0) {
+      $.ajax({
+        url: "/blissey/public/servicio_medicos",
+        headers: { 'X-CSRF-TOKEN': token },
+        type: "POST",
+        data: {
+          f_transaccion: transaccion_id,
+          f_medico: union
+        },
+        success: function (res) {
+          if (res) {
+            swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+            location.reload();
+          } else {
+            swal("¡Error!","Algo salio mal", "error");      
+          }
+        }
+      });
+    } else {
+      swal("¡Error!", "Se debe seleccionar al menos un médico","error");
+    }
+  });
+
   $("#guardarSolicitudModal").on("click", function (e) {
     e.preventDefault();
     var token = $("#tokenSolicitudModal").val();
@@ -198,7 +230,6 @@ $(document).on('ready', function () {
           transaccion: transaccion_id,
         },
         success: function (respuesta) {
-          console.log(respuesta);
           if (respuesta) {
             swal("¡Hecho!", "Solicitud enviada satisfactoriamente", "success");
             location.reload();
@@ -319,6 +350,44 @@ $(document).on('ready', function () {
       });
     }
   });
+
+  $("#dar_alta").on("click", function (e) {
+    e.preventDefault();
+    var token = $("#tokenTransaccion").val();
+    var transaccion_id = $("#transaccion").val();
+    var deuda = $("#deuda_para_alta").val();
+    var id = $("#id").val();
+    swal({
+      title: "¡Advertencia!",
+      text: "Al dar de alta el paciente debe haber cancelado $" + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(deuda),
+      showCancelButton: true,
+      confirmButtonText: '¡Guardar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-default',
+      type: "warning"
+    }).then(function(){
+      $.ajax({
+        url: "/blissey/public/abonar",
+        type: "POST",
+        headers: { 'X-CSRF-TOKEN': token },
+        data: {
+          transaccion: transaccion_id,
+          abono: deuda,
+          ingreso: id,
+        },
+        success: function (r) {
+          console.log(r);
+          if (r == 1) {
+            swal("¡Hecho!", "Acción realizada exitosamente", 'success');
+            location.reload();
+          } else {
+            swal("¡Algo salio mal!", 'No se guardo', 'error');
+          }
+        }
+      });
+    }).catch(swal.noop);
+   });
 
   //Ver si existen los honorarios
   $("#guardar_ingreso").on("click", function (e) {

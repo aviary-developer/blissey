@@ -3,8 +3,10 @@ $(document).on('ready', function () {
   if (ubicacion.indexOf("/blissey/public/usuarios")>-1) {
     var boton_atras = "<a href='/blissey/public/usuarios' class='btn btn-default'>Cancelar</a>"
     $(".actionBar").append(boton_atras);
-    $(".buttonFinish").addClass("stop_ex");
-    $(".buttonFinish").addClass("usuario_ex");
+    if (!(ubicacion.indexOf('edit') > -1)) {
+      $(".buttonFinish").addClass("stop_ex");
+      $(".buttonFinish").addClass("usuario_ex");
+    }
   }
   if (ubicacion.indexOf("/blissey/public/productos") > -1) {
     var boton_atras = "<a href='/blissey/public/productos' class='btn btn-default'>Cancelar</a>"

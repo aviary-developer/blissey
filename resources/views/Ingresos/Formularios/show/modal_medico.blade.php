@@ -1,4 +1,4 @@
-<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_medico">
+<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_medico" >
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
@@ -9,7 +9,7 @@
       </div>
 
       <div class="modal-body">
-        <div class="x_panel">
+        <div class="x_panel" style="min-height: 400px;">
 
           @include('Ingresos.Formularios.show.medicos_seleccion')
 
