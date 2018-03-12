@@ -14,4 +14,5 @@
     </div>
   </div>
   {!!Form::close()!!}
+    @include('Productos.Formularios.modalDivision')
 @endsection

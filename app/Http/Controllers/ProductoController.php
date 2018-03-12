@@ -256,4 +256,11 @@ class ProductoController extends Controller
     public function existeCodigo($codigo){
       return DivisionProducto::where('codigo',$codigo)->count();
     }
+    function editarDivision(Request $request){
+      $division=DivisionProducto::find($request->idDiv);
+      $division->precio=$request->pre;
+      $division->stock=$request->stock;
+      $division->save();
+      return redirect('/productos/'.$division->f_producto.'/edit')->with('mensaje', '¡Editado!');
+    }
 }
