@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {!!Form::model($productos,['class' =>'form-horizontal form-label-left input_mask','route' =>['productos.update',$productos->id],'method' =>'PUT','autocomplete'=>'off'])!!}
+  {!!Form::model($productos,['class' =>'form-horizontal form-label-left input_mask','route' =>['productos.update',$productos->id],'method' =>'PUT','autocomplete'=>'off','id'=>'form'])!!}
   @php
     $create = false;
   @endphp

@@ -7,6 +7,7 @@ use App\CategoriaProducto;
 use App\Transacion;
 use App\Bitacora;
 use Redirect;
+use App\Http\Requests\CategoriaProductoRequest;
 
 class CategoriaProductoController extends Controller
 {
@@ -51,7 +52,7 @@ class CategoriaProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriaProductoRequest $request)
     {
       $division=new CategoriaProducto;
       $division->fill($request->all());

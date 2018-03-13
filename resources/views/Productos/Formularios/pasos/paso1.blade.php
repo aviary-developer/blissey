@@ -29,7 +29,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Droguería *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-      <select class="form-control has-feedback-left" name="f_proveedor">
+      <select class="form-control has-feedback-left" name="f_proveedor" id="f_proveedor">
           <option value="0">Seleccione un proveedor</option>
         @foreach ($proveedores as $proveedor)
           <option value={{ $proveedor->id }}>{{ $proveedor->nombre }}</option>

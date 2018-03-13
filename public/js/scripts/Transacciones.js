@@ -218,12 +218,7 @@ $(document).on('ready',function(){
       var v=validarCantidad();
       var f_producto = $(this).parents('tr').find('input:eq(2)').val();
       if (componentes_agregados.includes(f_producto)) {
-        new PNotify({
-          title: 'Error!',
-          text: 'Ya fue agregado',
-          type: 'error',
-          styling: 'bootstrap3'
-        });
+        notaError('Ya fue agregado');
       }
       if(v==true && !componentes_agregados.includes(f_producto)){
         var division=$(this).parents('tr').find('input:eq(0)').val();
@@ -265,12 +260,7 @@ $(document).on('ready',function(){
         }
         tabla.append(html);
         componentes_agregados.push(f_producto);
-        new PNotify({
-          title: 'Hecho!',
-          text: 'Ha sido agregado en detalles',
-          type: 'info',
-          styling: 'bootstrap3'
-        });
+        notaInfo('Ha sido agregado en detalles');
       }
     });
     $("#tablaDetalle").on('click','#eliminar_detalle',function(e){
@@ -304,12 +294,7 @@ $(document).on('ready',function(){
         valor=false;
       }
       for (var i = 0; i < c; i++) {
-        new PNotify({
-          title: 'Error!',
-          text: error[i],
-          type: 'error',
-          styling: 'bootstrap3'
-        });
+        notaError(error[i]);
       }
       return valor;
     }
@@ -332,12 +317,7 @@ $(document).on('ready',function(){
         valor=false;
       }
       for (var i = 0; i < c; i++) {
-        new PNotify({
-          title: 'Error!',
-          text: error[i],
-          type: 'error',
-          styling: 'bootstrap3'
-        });
+        notaError(error[i]);
       }
       return valor;
     }
@@ -371,19 +351,9 @@ $(document).on('ready',function(){
             "</button>"+
             "</td>"+
             "</tr>";
-            new PNotify({
-              title: 'Hecho!',
-              text: 'Ha sido agregado en detalles',
-              type: 'info',
-              styling: 'bootstrap3'
-            });
+            notaInfo('Ha sido agregado en detalles');
           } else {
-            new PNotify({
-              title: '¡Error!',
-              text: 'Cantidad supera las existencias',
-              type: 'error',
-              styling: 'bootstrap3'
-            });
+            notaError('Cantidad supera las existencias');
           }
       }else{
         gd=true;
@@ -405,14 +375,9 @@ $(document).on('ready',function(){
         "</button>"+
         "</td>"+
         "</tr>";
-        new PNotify({
-          title: 'Hecho!',
-          text: 'Ha sido agregado en detalles',
-          type: 'info',
-          styling: 'bootstrap3'
-        });
+        notaInfo('Ha sido agregado en detalles');
       }
-      if(gd){  
+      if(gd){
         tabla.append(html);
         $('#idoculto').val("");
         $('#divoculto').val("");
@@ -505,60 +470,25 @@ $(document).on('ready',function(){
         $('#formVender').submit();
       }else{
         if(v6==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'El campo factura es obligatorio',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('El campo factura es obligatorio');
         }
         if(v1==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'Cantidad debe ser un valor mayor a cero',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('Cantidad debe ser un valor mayor a cero');
         }
         if(v2==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'Descuento debe entre 0% a 100%',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('Descuento debe entre 0% a 100%');
         }
         if(v3==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'Ingrese fecha de vencimiento valida',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('Ingrese fecha de vencimiento valida');
         }
         if(v4==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'El precio debe ser mayor que $0.00',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('El precio debe ser mayor que $0.00');
         }
         if(v5==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'El número de lote es requerido',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('El número de lote es requerido');
         }
         if(v7==1){
-          new PNotify({
-            title: '¡Error!',
-            text: 'Todos los productos deben asignarsea a un estante',
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError('Todos los productos deben asignarsea a un estante');
         }
     }
     });
@@ -599,19 +529,9 @@ function registrarventa(id){
   if (radio!=3) {
   if(cantidad>existencia || componentes_agregados.includes(""+id+"")){
     if (cantidad>existencia) {
-      new PNotify({
-        title: 'Error!',
-        text: "La cantidad solicitada supera las existencias",
-        type: 'error',
-        styling: 'bootstrap3'
-      });
+      notaError("La cantidad solicitada supera las existencias");
     } else {
-      new PNotify({
-        title: 'Error!',
-        text: 'El producto ya se encuentra incluido',
-        type: 'error',
-        styling: 'bootstrap3'
-      });
+      notaError('El producto ya se encuentra incluido');
     }
   }else{
     c4=parseFloat($('#cc'+id).text()).toFixed(2);
@@ -670,4 +590,21 @@ function validarFechaMenorActual(date){
 function limpiarCliente(){
   $('#f_cliente').val("");
   $('#f_clientea').val("");
+}
+
+function notaError(sms){
+  new PNotify({
+    title: 'Error!',
+    text: sms,
+    type: 'error',
+    styling: 'bootstrap3'
+  });
+}
+function notaInfo(sms){
+  new PNotify({
+    title: 'Hecho!',
+    text: sms,
+    type: 'info',
+    styling: 'bootstrap3'
+  });
 }

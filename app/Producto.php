@@ -57,6 +57,6 @@ class Producto extends Model
     return $arrayP;
   }
   public function divisionProducto(){
-    return $this->hasMany('App\DivisionProducto','f_producto')->select(['id','f_division','f_producto','cantidad','precio','codigo','contenido']);
+    return $this->hasMany('App\DivisionProducto','f_producto')->select(['id','f_division','f_producto','cantidad','precio','codigo','contenido','stock']);
   }
 }
