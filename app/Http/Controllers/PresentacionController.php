@@ -6,6 +6,7 @@ use App\Presentacion;
 use Illuminate\Http\Request;
 use App\Bitacora;
 use Redirect;
+use App\Http\Requests\PresentacionRequest;
 
 class PresentacionController extends Controller
 {
@@ -50,7 +51,7 @@ class PresentacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(presentacionRequest $request)
     {
       $presentaciones = Presentacion::create($request->All());
       Bitacora::bitacora('store','presentacions','presentaciones',$presentaciones->id);

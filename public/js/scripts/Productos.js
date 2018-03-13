@@ -32,7 +32,7 @@ $(document).on('ready',function(){
     if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
       if(!validarPresentacionE() && !validarCodigo() && !validarPrecio() && !validarStock()){
     var html_texto =
-    "<tr>"+
+    "<tr class='divis'>"+
     "<td>"+
       codigo+
     "</td>"+
@@ -209,6 +209,17 @@ $(document).on('ready',function(){
         $('#hchange').val("a");
       }
     });
+    $(".producto_ex").on("click", function (e) {
+      e.preventDefault();
+      n=vnombre();
+      p=vpresentacion();
+      c=vcategoria();
+      v=vproveedor();
+      d=vdivision();
+      if(n && p && c && v && d){
+        $('#form').submit();
+      }
+    });
 });
 function validarCodigo(){
     var codigo = $("#codigo").val();
@@ -216,41 +227,20 @@ function validarCodigo(){
     var ruta="/blissey/public/existeCodigoProducto/"+codigo;
     $.get(ruta,function(existe){
       if(existe==1){
-        swal({
-          type: 'error',
-          title: '¡Ya existe una división con el código '+codigo+'!',
-          showConfirmButton: false,
-          timer: 2000,
-          animation: false,
-          customClass: 'animated tada'
-        }).catch(swal.noop);
+        mensajeError('¡Ya existe una división con el código '+codigo+'!');
         $("#codigo").val("");
       }
       return existe;
     });
   }else{
-    swal({
-      type: 'error',
-      title: '¡Necesita proporcionar un código!',
-      showConfirmButton: false,
-      timer: 2000,
-      animation: false,
-      customClass: 'animated tada'
-    }).catch(swal.noop);
+    mensajeError('¡Necesita proporcionar un código!');
     $("#codigo").val("");
     return 1;
   }
 }
 function validarPresentacionE(){
   if($('#f_presentacion').find('option:selected').val().trim()==""){
-    swal({
-      type: 'error',
-      title: '¡Seleccione una presentación!',
-      showConfirmButton: false,
-      timer: 2000,
-      animation: false,
-      customClass: 'animated tada'
-    }).catch(swal.noop);
+    mensajeError('¡Seleccione una presentación!');
     return 1;
   }else{
     return 0;
@@ -258,14 +248,7 @@ function validarPresentacionE(){
 }
 function validarPrecio(){
   if(parseFloat($('#precio').val())<=0){
-    swal({
-      type: 'error',
-      title: '¡Precio debe ser mayor que $0.00!',
-      showConfirmButton: false,
-      timer: 2000,
-      animation: false,
-      customClass: 'animated tada'
-    }).catch(swal.noop);
+    mensajeError('¡Precio debe ser mayor que $0.00!');
     return 1;
   }else{
     return 0;
@@ -273,16 +256,66 @@ function validarPrecio(){
 }
 function validarStock(){
   if(parseFloat($('#minimo').val())<=0){
-    swal({
-      type: 'error',
-      title: '¡Stock debe ser mayor que cero!',
-      showConfirmButton: false,
-      timer: 2000,
-      animation: false,
-      customClass: 'animated tada'
-    }).catch(swal.noop);
+    mensajeError('¡Stock debe ser mayor que cero!');
     return 1;
   }else{
     return 0;
   }
+}
+function mensajeError(sms){
+  swal({
+    type: 'error',
+    title: sms,
+    showConfirmButton: false,
+    timer: 2000,
+    animation: false,
+    customClass: 'animated tada'
+  }).catch(swal.noop);
+}
+function vnombre(){
+  if($('#nombre').val().trim()==""){
+    notaError('El campo nombre es obligatorio');
+    return 0;
+  }else{
+    return 1;
+  }
+}
+function vpresentacion(){
+  p=$('#f_presentacion').val();
+  if(p.trim()=="" || parseFloat(p)<1 ){
+    notaError('Seleccione una presentación válida');
+    return 0;
+  }else{
+    return 1;
+  }
+}
+function vcategoria(){
+  c=$('#f_categoria').val();
+  if(c.trim()=="" || parseFloat(c)<1 ){
+    notaError('Seleccione una categoría válida');
+    return 0;
+  }else{
+    return 1;
+  }
+}
+function vproveedor(){
+  p=$('#f_proveedor').val();
+  if(p.trim()=="" || parseFloat(p)<1 ){
+    notaError('Seleccione una droguería válida');
+    return 0;
+  }else{
+    return 1;
+  }
+}
+function vdivision(){
+  c=0;
+$('.divis').each(function(){
+  c++;
+});
+if(c==0){
+  notaError('No se agregó ninguna división');
+  return 0;
+}else{
+  return 1;
+}
 }

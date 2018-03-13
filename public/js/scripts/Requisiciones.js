@@ -11,6 +11,7 @@ $(document).on('ready',function(){
         "<th>Código</th>"+
         "<th colspan='2'>Producto</th>"+
         "<th>Existencias</th>"+
+        "<th>Stock</th>"+
         "<th>Acción</th>"+
         "</thead>";
         tabla.append(head);
@@ -26,10 +27,20 @@ $(document).on('ready',function(){
             "<td id='cd"+value2.id+"'>"+value.nombre+"</td>"+
             "<td id='ct"+value2.id+"'>"+" "+value2.division.nombre+" "+value2.cantidad+" "+aux+"</td>"+
             "<td id='ca"+value2.id+"'>"+value2.inventario+"</td>"+
-            "<td>"+
-            "<button type='button' class='btn btn-xs btn-primary' onclick='registrarRequisicion("+value2.id+");'>"+
-            "<i class='fa fa-arrow-right'></i>"+
-            "</button>"+
+            "<td id='ci"+value2.id+"'>"+value2.stock+"</td>"+
+            "<td>";
+            if(parseFloat(value2.inventario)>parseFloat(value2.stock)){
+              html=html+
+              "<button type='button' class='btn btn-xs btn-primary' onclick='registrarRequisicion("+value2.id+");'>"+
+              "<i class='fa fa-arrow-right'></i>"+
+              "</button>";
+            }else{
+              html=html+
+              "<button type='button' class='btn btn-xs btn-danger disabled' data-toggle='tooltip' data-placement='top' title='Inventario en inferior al stock mínimo'>"+
+              "<i class='fa fa-warning'></i>"+
+              "</button>";
+            }
+            html=html+
             "</td>"+
             "</tr>";
             tabla.append(html);
@@ -39,28 +50,19 @@ $(document).on('ready',function(){
   }
   });
 });
-
 function registrarRequisicion(id){
   var cantidad= parseFloat($('#cantidad_resultado').val());
   var existencia=parseFloat($('#ca'+id).text());
   c1=$('#cu'+id).text();
   c2=$('#cd'+id).text();
   c3=$('#ct'+id).text();
-  if(cantidad>existencia || componentes_agregados.includes(""+id+"")){
-    if (cantidad>existencia) {
-      new PNotify({
-        title: 'Error!',
-        text: "La cantidad solicitada supera las existencias",
-        type: 'error',
-        styling: 'bootstrap3'
-      });
+  c4=$('#ci'+id).text(); //Stock mínimo
+  disponible=existencia-parseFloat(c4);
+  if(cantidad>disponible || componentes_agregados.includes(""+id+"")){
+    if (cantidad>disponible) {
+      notaError('La cantidad solicitada supera las unidades disponibles sobre el stock mínimo');
     } else {
-      new PNotify({
-        title: 'Error!',
-        text: 'El producto ya se encuentra incluido',
-        type: 'error',
-        styling: 'bootstrap3'
-      });
+      notaError('El producto ya se encuentra incluido');
     }
   }else{
     tabla=$('#tablaDetalle');
@@ -78,6 +80,7 @@ function registrarRequisicion(id){
     "</td>"+
     "</tr>";
     tabla.append(html);
+    notaInfo('Ha sido agregado en detalles');
     componentes_agregados.push(""+id+"");
   }
 }
