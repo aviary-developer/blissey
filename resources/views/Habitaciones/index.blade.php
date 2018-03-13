@@ -16,7 +16,7 @@
   @php
   $index = true;
   @endphp
-  <div class="col-md-8 col-sm-8 col-xs-12">
+  <div class="col-md-9 col-sm-9 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Habitaciones
@@ -65,6 +65,7 @@
               <th>#</th>
               <th>Numero</th>
               <th>Precio</th>
+              <th>Área</th>
               <th>Disponibilidad</th>
               <th>Opciones</th>
             </tr>
@@ -84,10 +85,17 @@
                   </td>
                   <td>{{ '$ '.number_format($habitacion->precio,2,'.',',')}}</td>
                   <td>
-                    @if ($habitacion->ocupado)
-                      <span class="label label-danger col-md-8 col-sm-8 col-xs-8 label-lg">Ocupada</span>
+                    @if ($habitacion->tipo)
+                      <span class="label label-lg label-white borde blue col-xs-10">Hospital</span>
                     @else
-                      <span class="label label-success col-md-8 col-sm-8 col-xs-8 label-lg">Disponible</span>
+                      <span class="label label-lg label-primary  col-xs-10">Observación</span>
+                    @endif
+                  </td>
+                  <td>
+                    @if ($habitacion->ocupado)
+                      <span class="label label-danger col-md-10 col-sm-10 col-xs-10 label-lg">Ocupada</span>
+                    @else
+                      <span class="label label-success col-md-10 col-sm-10 col-xs-10 label-lg">Disponible</span>
                     @endif
                   </td>
                   <td>

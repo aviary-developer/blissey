@@ -53,7 +53,7 @@ class IngresoController extends Controller
     public function create()
     {
       $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
-      $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->orderBy('numero')->get();
+      $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
       return view('Ingresos.create',compact('medicos','habitaciones'));
     }
 
@@ -94,27 +94,6 @@ class IngresoController extends Controller
           $habitacion = Habitacion::find($request->f_habitacion);
           $habitacion->ocupado = true;
           $habitacion->save();
-
-          // if($request->precio > -1){
-          //   $categoria = new CategoriaServicio;
-          //   $categoria->nombre = "Honorarios";
-          //   $categoria->save();
-
-          //   $servicio = new Servicio;
-          //   $servicio->nombre = "Honorarios médicos por ingreso";
-          //   $servicio->precio = $request->precio;
-          //   $servicio->f_categoria = $categoria->id;
-          //   $servicio->save();
-          // }else{
-          //   $servicio = Servicio::where('nombre','Honorarios médicos por ingreso')->first();
-          // }
-
-          // $detalle = new DetalleTransacion;
-          // $detalle->f_servicio = $servicio->id;
-          // $detalle->precio = $servicio->precio;
-          // $detalle->cantidad = 1;
-          // $detalle->f_transaccion = $transaccion->id;
-          // $detalle->save();
 
         } catch (Exception $e) {
           DB::rollback();
@@ -167,6 +146,9 @@ class IngresoController extends Controller
           $total_abono = $total_abono = $total_deuda = 0;
         }
         $paciente = $ingreso->paciente;
+        $habitacion = $ingreso->habitacion;
+        $habitaciones_h = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
+        $habitaciones_o = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
 
         return view('Ingresos.show',compact(
           'ingreso',
@@ -177,7 +159,10 @@ class IngresoController extends Controller
           'total_deuda',
           'paciente',
           'especialidades',
-          'medicos_general'
+          'medicos_general',
+          'habitacion',
+          'habitaciones_h',
+          'habitaciones_o'
         ));
     }
 
@@ -247,12 +232,12 @@ class IngresoController extends Controller
         $transaccion->localizacion = 1;
         $transaccion->save();
 
-        $detalle = new DetalleTransacion;
-        $detalle->f_servicio = $ingreso->habitacion->servicio->id;
-        $detalle->precio = $ingreso->habitacion->servicio->precio;
-        $detalle->cantidad = 1;
-        $detalle->f_transaccion = $transaccion->id;
-        $detalle->save();
+        // $detalle = new DetalleTransacion;
+        // $detalle->f_servicio = $ingreso->habitacion->servicio->id;
+        // $detalle->precio = $ingreso->habitacion->servicio->precio;
+        // $detalle->cantidad = 1;
+        // $detalle->f_transaccion = $transaccion->id;
+        // $detalle->save();
         DB::commit();
       }catch(Exception $e){
         DB::rollback();
@@ -352,6 +337,10 @@ class IngresoController extends Controller
           $ingreso->fecha_alta = Carbon::now();
           $ingreso->estado = 2;
           $ingreso->save();
+
+          $habitacion = Habitacion::find($ingreso->f_habitacion);
+          $habitacion->ocupado = false;
+          $habitacion->save();
         }
       }catch(Exception $e){
         DB::rollback();
@@ -482,6 +471,21 @@ class IngresoController extends Controller
       }else{
         return 0;
       }
+    }catch(Exception $e){
+      DB::rollback();
+      return 0;
+    }
+  }
+
+  public function cambio_ingreso(Request $request){
+    DB::beginTransaction();
+    try{
+      $ingreso = Ingreso::find($request->ingreso);
+      $ingreso->f_habitacion = $request->f_habitacion;
+      $ingreso->tipo = $request->tipo;
+      $ingreso->save();
+      DB::commit();
+      return 1;
     }catch(Exception $e){
       DB::rollback();
       return 0;

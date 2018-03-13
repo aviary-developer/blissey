@@ -70,7 +70,7 @@
                 <tr>
                   <th>Habitación</th>
                   <td>
-                    <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}}>
+                    <a href="#" data-toggle="modal" data-target="#modal_habitacion">
                       {{'Habitación '.$ingreso->habitacion->numero}}
                     </a>
                   </td>
@@ -159,4 +159,5 @@
     </div>
   </div>
   @include('Ingresos.Formularios.show.modal_datos_paciente')
+  @include('Ingresos.Formularios.show.modal_habitacion')
 @endsection

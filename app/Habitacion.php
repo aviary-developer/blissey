@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Habitacion extends Model
 {
     protected $fillable = [
-      'numero', 'precio'
+      'numero', 'precio', 'tipo'
     ];
 
     public static function buscar($numero, $estado){
