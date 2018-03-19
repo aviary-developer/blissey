@@ -24,7 +24,15 @@ class ComponenteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required | unique:componentes',
+            'nombre'=>'required | unique:componentes | min:2 | max:30',
         ];
+    }
+    public function messages(){
+       return [
+            'nombre.required'=>'El campo nombre es obligatorio',
+            'nombre.unique'=>'El nombre ya ha sido registrado anteriormente',
+            'nombre.min'=>'El campo nombre necesita 2 caracteres como mínimo',
+            'nombre.max'=>'El campo nombre soporta 30 caracteres como máximo',
+       ];
     }
 }

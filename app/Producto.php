@@ -39,6 +39,9 @@ class Producto extends Model
   public function presentacion(){
     return $this->belongsTo('App\Presentacion','f_presentacion')->select(['id','nombre']);
   }
+  public function categoriaProducto(){
+    return $this->belongsTo('App\CategoriaProducto','f_categoria')->select(['id','nombre']);
+  }
 
   public static function arrayUnidades(){
     $unidades=Unidad::where('estado','=','true')->orderBy('nombre')->get();
