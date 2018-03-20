@@ -9,6 +9,9 @@
           @if($transaccion->tipo==4)
             <h2>Requisición<small>Pendiente</small></h2>
           @endif
+          @if($transaccion->tipo==5)
+            <h2>Requisición<small>Atendida</small></h2>
+          @endif
         <div class="clearfix"></div>
         <div class="x_content">
           <div class="row">
@@ -47,6 +50,9 @@
                   <thead>
                     <th>Cantidad</th>
                     <th colspan='2'>Detalle</th>
+                    @if ($transaccion->tipo==5)
+                      <th>Lote</th>
+                    @endif
                   </thead>
                   @php
                   $detalles=$transaccion->detalleTransaccion;
@@ -65,6 +71,11 @@
                           {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
                         @endif
                       </td>
+                      @if ($transaccion->tipo==5)
+                        <td>
+                        {{$detalle->lote}}
+                      </td>
+                      @endif
                     @endforeach
                   </tbody>
 

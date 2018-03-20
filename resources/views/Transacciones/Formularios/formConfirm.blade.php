@@ -119,6 +119,7 @@
               </td>
                 <td>{!!Form::select('nivel[]',[]
                   ,null, ['placeholder' => 'Nivel','class'=>'form-control','id'=>'nivel'.$detalle->f_producto])!!}
+                </td>
                 <td>
                   <input type="hidden" id='{{"f_prod".$key}}' value='{{$detalle->f_producto}}'>
                   <input type='hidden' name='estado[]' value ='{{$detalle->id}}'>

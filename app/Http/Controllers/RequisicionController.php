@@ -94,7 +94,17 @@ class RequisicionController extends Controller
      */
     public function update(Request $request, $id)
     {
+      DB::beginTransaction();
+      $transaccion=Transacion::find($id);
+      $transaccion->tipo=6;
+      $transaccion->save();
 
+      for ($i=0; $i <count($request->detalle_id) ; $i++) {
+        $detalle=DetalleTransacion::find($request->detalle_id[$i]);
+        $detalle->f_estante=$request->f_estante[$i];
+        $detalle->nivel=$request->nivel[$i];
+        $detalle->save();
+      }
     }
 
     /**
@@ -195,8 +205,7 @@ class RequisicionController extends Controller
       }
     }
     function asignar($id){
-      echo "Asignar estante a requisición";
-      // $transaccion=Transacion::find($id);
-      // return view('Requisiciones.confirmar',compact('transaccion'));
+      $transaccion=Transacion::find($id);
+      return view('Requisiciones.asignar',compact('transaccion'));
     }
 }
