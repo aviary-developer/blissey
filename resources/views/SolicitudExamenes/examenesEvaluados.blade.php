@@ -124,11 +124,12 @@
 	<input type="hidden" id="tokenExaPac" name="token" value="<?php echo csrf_token(); ?>">
 	<script type="text/javascript">
 	function imprimirExaEvaPacie(solicitudes,paciente){
-		var url="{{URL::to('/impresionExamenesPorPaciente')}}"+"?="+paciente;
+		var bandera=true;
+		var url="{{URL::to('/impresionExamenesPorPaciente')}}"+"/"+paciente+"/"+bandera;
 		window.open(url,'_blank');
 		token=$("#tokenExaPac").val();
 		$.ajax({
-			url: "/blissey/public/impresionExamenesPorPaciente",
+			url: "/blissey/public/impresionExamenesPorPaciente/",
 			headers: { 'X-CSRF-TOKEN': token },
 			type: 'POST',
 			data: {
