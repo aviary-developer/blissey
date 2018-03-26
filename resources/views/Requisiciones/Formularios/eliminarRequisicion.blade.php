@@ -1,4 +1,4 @@
-<a class="btn btn-danger btn-xs" onclick={!! "'eliminarPedido(".$transaccion->id.");'" !!}/>
+<a class="btn btn-danger btn-xs" onclick={!! "'eliminarPedido(".$transaccion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
   <i class="fa fa-remove"></i>
 </a>
 {{-- href={!! asset('/eliminarPedido/'.$transaccion->id)!!} --}}

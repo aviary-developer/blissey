@@ -95,16 +95,24 @@ class RequisicionController extends Controller
     public function update(Request $request, $id)
     {
       DB::beginTransaction();
-      $transaccion=Transacion::find($id);
-      $transaccion->tipo=6;
-      $transaccion->save();
+      try {
+        $transaccion=Transacion::find($id);
+        $transaccion->tipo=6;
+        $transaccion->save();
 
-      for ($i=0; $i <count($request->detalle_id) ; $i++) {
-        $detalle=DetalleTransacion::find($request->detalle_id[$i]);
-        $detalle->f_estante=$request->f_estante[$i];
-        $detalle->nivel=$request->nivel[$i];
-        $detalle->save();
+        for ($i=0; $i <count($request->detalle_id) ; $i++) {
+          $detalle=DetalleTransacion::find($request->detalle_id[$i]);
+          $detalle->f_estante=$request->f_estante[$i];
+          $detalle->nivel=$request->nivel[$i];
+          $detalle->save();
+        }
+        DB::commit();
+        return redirect('requisiciones?tipo=5')->with('mensaje', '¡Ubicaciones asignadas correctamente!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('requisiciones?tipo=5')->with('error', '¡Algo salió mal!');
       }
+
     }
 
     /**
@@ -198,10 +206,10 @@ class RequisicionController extends Controller
             }
         }
         DB::commit();
-        echo "Guardado";
+        return redirect('verrequisiciones?tipo=4')->with('mensaje', '¡Requisición atendida correctamente!');
       } catch (\Exception $e) {
         DB::rollback();
-        echo "Error";
+        return redirect('verrequisiciones?tipo=4')->with('error', '¡Algo salió mal!');
       }
     }
     function asignar($id){
