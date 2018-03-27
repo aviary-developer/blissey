@@ -29,7 +29,7 @@ $(document).on('ready', function () {
   $("#busqueda").keyup(function () {
     var valor = $("#busqueda").val();
     var v_tipo = $("#seleccion").val();
-    if (valor.length > 2) {
+    if (valor.length > 0) {
       var tabla = $("#tablaPaciente");
       $.ajax({
         url: "/blissey/public/buscarPersonas",
@@ -243,11 +243,7 @@ $(document).on('ready', function () {
 
   $("#resultadoVenta_").keyup(function () {
     var valor = $("#resultadoVenta_").val();
-    if (valor.length < 3) {
-      var tabla = $("#tablaBuscar");
-      tabla.empty();
-    }
-    if (radio == '1' && valor.length > 2) {
+    if (radio == '1') {
       var ruta = "/blissey/public/buscarProductoVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
@@ -284,7 +280,7 @@ $(document).on('ready', function () {
         });
       });
     }
-    if (radio == '2' && valor.length > 3) {
+    if (radio == '2') {
       var ruta = "/blissey/public/buscarComponenteVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
@@ -325,7 +321,7 @@ $(document).on('ready', function () {
         });
       });
     }
-    if (radio == '3' && valor.length > 2) {
+    if (radio == '3') {
       var ruta = "/blissey/public/buscarServicios/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
@@ -475,6 +471,7 @@ function registrarventa_(id) {
                 '<th style="width: 120px">Fecha</th>' +
                 '<th style="width: 110px">Cantidad</th>' +
                 '<th colspan="2">Detalle</th>' +
+                '<th style="width: 120px">Opciones</th>'
                 '</thead>' +
                 '</table>' +
                 '</div>';
@@ -487,6 +484,7 @@ function registrarventa_(id) {
               "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +
               "<td>" + cantidad + " " + c2 + "</td>" +
               "<td>" + c1 + "</td>" +
+              "<td><button type='button' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-sm btn-danger'><i class='fa fa-remove'></i></button></td>"+
               "</tr>";
 
             tabla.append(html);
@@ -529,11 +527,12 @@ function registrarventa_(id) {
             $("#mensaje_provisional_s").empty();
 
             html_2 = '<div class="col-xs-12">' +
-              '<table class="table" id="tablaDetalle">' +
+              '<table class="table" id="tablaDetalle_s">' +
               '<thead>' +
               '<th style="width: 120px">Fecha</th>' +
               '<th style="width: 110px">Cantidad</th>' +
-              '<th colspan="2">Detalle</th>' +
+              '<th>Detalle</th>' +
+              '<th style="width: 120px">Opciones</th>'
               '</thead>' +
               '</table>' +
               '</div>';
@@ -546,6 +545,7 @@ function registrarventa_(id) {
             "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +  
             "<td>" + cantidad + "</td>" +
             "<td>" + c1 + "</td>" +
+            "<td><button type='button' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-sm btn-danger'><i class='fa fa-remove'></i></button></td>" +
             "</tr>";
           tabla.append(html);
 
@@ -567,6 +567,10 @@ function registrarventa_(id) {
     });
   }
 }
+function recarga() {
+  limpiarTablaVenta();
+  location.reload();
+}
 function cambio_radios_especial(i) {
   cambioRadio(i);
   if (i == 3) {
@@ -575,43 +579,158 @@ function cambio_radios_especial(i) {
     document.getElementById('radios').style = "display: block";
   }
 }
+var aux;
 function cambio_habitacion(i) {
+  var tipo = $("#tipo_i").val();
+  var tipo_text;
+  var cambio_text;
+  if (tipo == 0) {
+    tipo_text = "Ingreso";
+  } else if(tipo == 1) {
+    tipo_text = "Medi ingreso";
+  } else {
+    tipo_text = "Observación";
+  }
   if (i == 0) {
+    cambio_text = "Observación";
+  } else if (i == 1) {
+    cambio_text = "Medi ingreso";
+  } else {
+    cambio_text = "Ingreso";
+  }
+
+  if (cambio_text == tipo_text) {
+    $("#p").text("Por favor seleccione la nueva habitación donde se ubicará al paciente");
+    $("#p_").text("Por favor seleccione la nueva habitación donde se ubicará al paciente");
+    $("#h").text("Cambio de habitación");
+    $("#h_").text("Cambio de habitación");
+  } else {
+    $("#p").text("Se cambiará el " + tipo_text + " a " + cambio_text + ", por favor seleccione la nueva habitación donde se ubicará al paciente");
+    $("#p_").text("Se cambiará el " + tipo_text + " a " + cambio_text + ", por favor seleccione la nueva habitación donde se ubicará al paciente");
+    $("#h").text("Cambio a " + cambio_text);
+    $("#h_").text("Cambio a " + cambio_text);
+  }
+
+  if (i == 0 || i == 1) {
     document.getElementById("go").style = "display:none";
     document.getElementById("vista_1").style = "display:none";
     document.getElementById("vista_2").style = "display:block; min-height: 200px;";
+    document.getElementById("vista_3").style = "display:none";
     document.getElementById("ret").style = "display:inline-block";
   } else if (i == -1) {
     document.getElementById("go").style = "display:inline-block";
     document.getElementById("vista_1").style = "display:block; min-height: 200px;";
     document.getElementById("vista_2").style = "display:none";
+    document.getElementById("vista_3").style = "display:none";
     document.getElementById("ret").style = "display:none";
+  } else {
+    document.getElementById("go").style = "display:none";
+    document.getElementById("vista_1").style = "display:none";
+    document.getElementById("vista_3").style = "display:block; min-height: 200px;";
+    document.getElementById("vista_2").style = "display:none";
+    document.getElementById("ret").style = "display:inline-block";
   }
+  aux = i;
 }
 function guardar_cambio(i) {
-  var habitacion = $("#h_hab").val();
   var token = $("#tokenTransaccion").val();
   var id = $("#id").val();
+  console.log(habitacion);
   if (i == 0) {
     var estado = 2;
+    var habitacion = $("#h_hab").val();
+  } else if (i == 0 && aux == 1) {
+    var estado = 1;
+    var habitacion = $("#h_hab").val();
+  } else {
+    var estado = 0;
+    var habitacion = $("#h_hab_").val();
   }
-  $.ajax({
-    url: "/blissey/public/cambio_ingreso",
-    type: "post",
-    headers: { 'X-CSRF-TOKEN': token },
-    data: {
-      tipo: estado,
-      f_habitacion: habitacion,
-      ingreso: id,
-    },
-    success: function (r) {
-      if (r == 1) {
-        swal('¡Hecho!', 'Cambio exitoso', 'success');
-        location.reload();
-      } else {
-        swal('¡Error!', 'Algo salio mal', 'error');
+  if (habitacion != null) {
+    $.ajax({
+      url: "/blissey/public/cambio_ingreso",
+      type: "post",
+      headers: { 'X-CSRF-TOKEN': token },
+      data: {
+        tipo: estado,
+        f_habitacion: habitacion,
+        ingreso: id,
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal('¡Hecho!', 'Cambio exitoso', 'success');
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
       }
-    }
-  });
+    });
+  } else {
+    swal('¡Error!','Es necesario que haya al menos una habitación disponible','error');
+  }
 
+}
+function accion24(tipo, id) {
+  //0: Eliminar y 1: Editar
+  var token = $("#tokenTransaccion").val();
+  if (tipo == 1) {
+    var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad">';
+
+    swal({
+      title: "Editar",
+      html: html_,
+      showCancelButton: true,
+      confirmButtonText: '¡Guardar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-default'
+    }).then(function() {
+      var cantidad= $("#edit_cantidad").val();
+      $.ajax({
+        url: "/blissey/public/editar24",
+        type: "post",
+        headers: { 'X-CSRF-TOKEN': token },
+        data: {
+          id: id,
+          cantidad: cantidad
+        },
+        success: function (res) {
+          if (res) {
+            swal('¡Hecho!', 'Acción realizada satisfactoriamente', 'success');
+            location.reload();
+          } else {
+            swal('¡Error!', 'Algo salio mal', 'error');
+          }
+        }
+      });
+    }).catch(swal.noop);
+  } else {
+    swal({
+      title: 'Eliminar registro',
+      text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: "Si, ¡Eliminar!",
+      cancelButtonText: "No, ¡Cancelar!",
+      confirmButtonClass: 'btn btn-danger',
+      cancelButtonClass: 'btn btn-default',
+    }).then(function () {
+      $.ajax({
+        url: "/blissey/public/eliminar24",
+        type: "post",
+        headers: { 'X-CSRF-TOKEN': token },
+        data: {
+          id: id
+        },
+        success: function (res) {
+          if (res) {
+            swal('¡Eliminado!', 'Acción realizada satisfactoriamente', 'success');
+            location.reload();
+          } else {
+            swal('¡Error!', 'Algo salio mal', 'error');
+          }
+        }
+      });
+    }).catch(swal.noop);
+  }
 }

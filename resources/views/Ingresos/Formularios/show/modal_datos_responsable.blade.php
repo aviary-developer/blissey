@@ -1,5 +1,5 @@
 {{--  MODAL INICIO--}}
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal_datos_paciente" data-backdrop="static">
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal_datos_responsable" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -13,7 +13,7 @@
         <div class="x_panel">
           <h3>Datos del Paciente</h3>
           <table class="table">
-            @include('Pacientes.Formularios.datos')
+            @include('Pacientes.Formularios.datos_')
           </table>
         </div>
       </div>

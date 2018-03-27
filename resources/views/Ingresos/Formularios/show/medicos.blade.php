@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-9">
-    <h3>Servicios Médicos</h3>
+    <h3>Médicos</h3>
   </div>
   <div class="col-xs-2 alignright">
     @if ($ingreso->estado != 2)    
@@ -25,6 +25,7 @@
         <thead>
           <th style="width: 120px">Fecha</th>
           <th>Detalle</th>
+          <th style="width: 120px">Opciones</th>
         </thead>
         <tbody>
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $k => $detalle)
@@ -33,6 +34,11 @@
               <td>{{$detalle->created_at->format('d / m / Y')}}</td>
               <td>
                 {{$detalle->servicio->nombre}}
+              </td>
+              <td>
+                @if ($detalle->created_at->between($ultima24,$ultima48))
+                  <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                @endif
               </td>
             </tr>
           @endif
@@ -43,6 +49,6 @@
   </div>
 @else
   <div class="row" id="mensaje_provisional_s">
-    <p>No hay servicios seleccionados para este paciente</p>
+    <p>No hay médicos seleccionados para este paciente</p>
   </div>
 @endif

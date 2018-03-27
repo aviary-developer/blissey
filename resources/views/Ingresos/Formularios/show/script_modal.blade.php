@@ -84,7 +84,7 @@
         html = '<div class = "row">'+
           '<div class="col-xs-9">'+
             '<span><b>'+
-              'Habitación'+
+              respuesta.habitacion_nombre +
             '</b></span>'+
           '</div>'+
           '<div class="col-xs-3 text-right">'+

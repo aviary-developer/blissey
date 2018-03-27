@@ -221,6 +221,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/abonar','IngresoController@abonar');
   Route::post('/servicio_medicos','IngresoController@servicio_medicos');
   Route::post('/cambio_ingreso','IngresoController@cambio_ingreso');
+  Route::post('/editar24','IngresoController@editar24');
+  Route::post('/eliminar24','IngresoController@eliminar24');
 //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

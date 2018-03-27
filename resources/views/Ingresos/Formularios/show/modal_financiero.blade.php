@@ -1,4 +1,4 @@
-<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_financiero">
+<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_financiero" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 

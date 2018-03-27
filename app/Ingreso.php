@@ -62,7 +62,7 @@ class Ingreso extends Model
       if($dia == -1){
         $dias++;
         $precio_habitacion = $ingreso->habitacion->precio;
-        $total = $dias * $precio_habitacion;
+        $total = $precio_habitacion;
         //Gastos por examenes de laboratorio
         if(count($ingreso->transaccion->solicitud)>0){
           foreach($ingreso->transaccion->solicitud as $solicitud){
@@ -75,11 +75,19 @@ class Ingreso extends Model
           if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico"){
             $total += $detalle->precio;
           }
+          if($detalle->servicio->categoria->nombre == "Habitación"){
+            $total += $detalle->precio;
+          }
         }
       }else{
         $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
         $fecha = $ingreso->fecha_ingreso->addDays($dia);
-        $total = $ingreso->habitacion->precio;
+        $habitacion = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha)->count();
+        if($habitacion == 0){
+          $total = $ingreso->habitacion->precio;
+        }else{
+          $total = 0;
+        }
         //Gastos por examenes de laboratorio
         if(count($ingreso->transaccion->solicitud)>0){
           foreach($ingreso->transaccion->solicitud as $solicitud){
@@ -90,6 +98,9 @@ class Ingreso extends Model
         }
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
           if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($fecha, $fecha_mayor))){
+            $total += $detalle->precio;
+          }
+          if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha)){
             $total += $detalle->precio;
           }
         }

@@ -19,7 +19,7 @@
           @endphp
           <td>
             <span class="label label-primary label-lg col-xs-10">
-              {{$ingreso->fecha_ingreso->diffInDays($hoy).' días'}}
+              {{($ingreso->fecha_ingreso->diffInDays($hoy)+1).' días'}}
             </span>
           </td>
         </tr>

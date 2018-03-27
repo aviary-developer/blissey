@@ -29,6 +29,7 @@
           <th style="width: 120px">Fecha</th>
           <th style="width: 100px">Cantidad</th>
           <th>Detalle</th>
+          <th style="width: 120px">Opcion</th>
         </thead>
         <tbody>
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $k => $detalle)
@@ -40,6 +41,12 @@
               </td>
               <td>
                 {{$detalle->servicio->nombre}}
+              </td>
+              <td>
+                @if ($detalle->created_at->between($ultima24,$ultima48))
+                  <button class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" onclick={{"accion24(1,".$detalle->id.")"}}><i class="fa fa-edit" ></i></button>
+                  <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                @endif
               </td>
             </tr>
           @endif

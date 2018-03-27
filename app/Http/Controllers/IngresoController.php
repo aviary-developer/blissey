@@ -112,58 +112,87 @@ class IngresoController extends Controller
      */
     public function show($id)
     {
-        $ingreso = Ingreso::find($id);
-        $especialidades = Especialidad::orderBy('nombre')->get();
-        $hoy = Carbon::now();
-        $medicos_general = DB::table('users')
-        ->whereNotExists(
-          function ($query){
-            $query->select(DB::raw(1))
-            ->from('especialidad_usuarios')
-            ->whereRaw('especialidad_usuarios.f_usuario = users.id');
-          }
-        )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
-
-        if($ingreso->estado != 0){
-          if($ingreso->estado == 1){
-            $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
-          }else{
-            $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);  
-          }
-          $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-  
-          //Total de gastos
-          $total_gastos = $this->total_gastos($id);
-  
-          //Total abonado a la deuda
-          $total_abono = Ingreso::abonos($id);
-  
-          //Total adeudado
-          $total_deuda = $total_gastos - $total_abono;
-        }else{
-          $examenes = null;
-          $dias = 0;
-          $total_abono = $total_abono = $total_deuda = 0;
+      $ingreso = Ingreso::find($id);
+      $especialidades = Especialidad::orderBy('nombre')->get();
+      $ultima48 = $ultima24 = $hoy = Carbon::now();
+      $medicos_general = DB::table('users')
+      ->whereNotExists(
+        function ($query){
+          $query->select(DB::raw(1))
+          ->from('especialidad_usuarios')
+          ->whereRaw('especialidad_usuarios.f_usuario = users.id');
         }
-        $paciente = $ingreso->paciente;
-        $habitacion = $ingreso->habitacion;
-        $habitaciones_h = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
-        $habitaciones_o = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+      )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
 
-        return view('Ingresos.show',compact(
-          'ingreso',
-          'examenes',
-          'dias',
-          'total_gastos',
-          'total_abono',
-          'total_deuda',
-          'paciente',
-          'especialidades',
-          'medicos_general',
-          'habitacion',
-          'habitaciones_h',
-          'habitaciones_o'
-        ));
+      if($ingreso->estado != 0){
+        if($ingreso->estado == 1){
+          $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+          $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+          $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+          $habitacion_detalle_count = 0;
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+            if($detalle->servicio->categoria->nombre == "Habitación"){
+              $habitacion_detalle_count++;
+            }
+          }
+          $diff_dias_count = $dias - $habitacion_detalle_count;
+          if($diff_dias_count > 0){
+            for($i = 0; $i < $diff_dias_count; $i++){
+              $fecha_aux = $ingreso->fecha_ingreso->addDays($i);
+              $is_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
+              if($is_detalle == 0){
+                $detalle_n = new DetalleTransacion;
+                $detalle_n->f_servicio = $ingreso->habitacion->servicio->id;
+                $detalle_n->f_transaccion = $ingreso->transaccion->id;
+                $detalle_n->cantidad = 1;
+                $detalle_n->precio = $ingreso->habitacion->servicio->precio;
+                $detalle_n->created_at = $fecha_aux;
+                $detalle_n->save();
+              }
+            }
+          }
+        }else{
+          $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+          $utlima48 = $ultima24 = $ingreso->fecha_ingreso->subDays(1);
+        }
+        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+
+        //Total de gastos
+        $total_gastos = $this->total_gastos($id);
+
+        //Total abonado a la deuda
+        $total_abono = Ingreso::abonos($id);
+
+        //Total adeudado
+        $total_deuda = $total_gastos - $total_abono;
+      }else{
+        $examenes = null;
+        $dias = 0;
+        $total_abono = $total_abono = $total_deuda = 0;
+      }
+      $paciente = $ingreso->paciente;
+      $responsable = $ingreso->responsable;
+      $habitacion = $ingreso->habitacion;
+      $habitaciones_h = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
+      $habitaciones_o = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+
+      return view('Ingresos.show',compact(
+        'ingreso',
+        'examenes',
+        'dias',
+        'total_gastos',
+        'total_abono',
+        'total_deuda',
+        'paciente',
+        'especialidades',
+        'medicos_general',
+        'habitacion',
+        'habitaciones_h',
+        'habitaciones_o',
+        'responsable',
+        'ultima24',
+        'ultima48'
+      ));
     }
 
     /**
@@ -278,6 +307,7 @@ class IngresoController extends Controller
           function ($query){
             $query->select(DB::raw(1))
             ->from('ingresos')
+            ->where('ingresos.estado','<>',2)
             ->whereRaw('ingresos.f_paciente = pacientes.id');
           }
         )->where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
@@ -382,7 +412,14 @@ class IngresoController extends Controller
       $abono = Ingreso::abonos($id,$dia);
 
       //Valor de la habitación
-      $habitacion = $ingreso->habitacion->precio;
+      $habitacion_count = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_carbon)->count();
+      if($habitacion_count == 0){
+        $habitacion = $ingreso->habitacion->precio;
+        $habitacion_nombre = 'Habitación '.$ingreso->habitacion->numero;
+      }else{
+        $habitacion = 0;
+        $habitacion_nombre = "Habitación 0";
+      }
       
       //Servicios
       $servicios = [];
@@ -395,6 +432,10 @@ class IngresoController extends Controller
             $servicios[$k]["precio"] = $detalle->precio;
             $k++;
             $total_servicios++;
+          }
+          if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha_carbon)){
+            $habitacion = $detalle->precio;
+            $habitacion_nombre = $detalle->servicio->nombre;
           }
         }
       }
@@ -448,7 +489,8 @@ class IngresoController extends Controller
         'tratamiento',
         'medicina',
         'servicios',
-        'total_servicios'
+        'total_servicios',
+        'habitacion_nombre'
       ));
     }
   
@@ -481,9 +523,48 @@ class IngresoController extends Controller
     DB::beginTransaction();
     try{
       $ingreso = Ingreso::find($request->ingreso);
+      $habitacion_actual = $ingreso->f_habitacion;
       $ingreso->f_habitacion = $request->f_habitacion;
       $ingreso->tipo = $request->tipo;
       $ingreso->save();
+
+      $habitacion_ = Habitacion::find($habitacion_actual);
+      $habitacion_->ocupado = false;
+      $habitacion_->save();
+
+      $habitacion = Habitacion::find($request->f_habitacion);
+      $habitacion->ocupado = true;
+      $habitacion->save();
+      DB::commit();
+      return 1;
+    }catch(Exception $e){
+      DB::rollback();
+      return 0;
+    }
+  }
+
+  public function editar24 (Request $request){
+    $id = $request->id;
+    $cantidad = $request->cantidad;
+    DB::beginTransaction();
+    try{
+      $detalle = DetalleTransacion::find($id);
+      $detalle->cantidad = $cantidad;
+      $detalle->save();
+      DB::commit();
+      return 1;
+    }catch(Exception $e){
+      DB::rollback();
+      return 0;
+    }
+  }
+
+  public function eliminar24 (Request $request){
+    $id = $request->id;
+    DB::beginTransaction();
+    try{
+      $detalle = DetalleTransacion::find($id);
+      $detalle->delete();
       DB::commit();
       return 1;
     }catch(Exception $e){

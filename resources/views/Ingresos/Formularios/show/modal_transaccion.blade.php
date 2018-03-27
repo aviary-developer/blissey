@@ -1,5 +1,5 @@
 {{--  MODAL INICIO--}}
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal_transaccion">
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal_transaccion" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -50,7 +50,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarTablaVenta()">Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="recarga()">Cerrar</button>
       </div>
     </div>
   </div>
