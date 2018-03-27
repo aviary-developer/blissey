@@ -53,7 +53,7 @@
                       <td>{{$contadorParametros}}</td>
                       <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
                       <td><input type="text" class="form-control" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
-                      @if($esp->parametro->valorMinimo)
+                      @if($esp->parametro->valorMinimo!=null)
                         <td>
                           <span class="label label-lg label-cian col-xs-12">
                             {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}

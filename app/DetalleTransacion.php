@@ -17,6 +17,9 @@ public function divisionProducto(){
 public function servicio(){
   return $this->belongsTo('App\Servicio','f_servicio');
 }
+public function estante(){
+  return $this->belongsTo('App\Estante','f_estante');
+}
 public static function cuenta($id){
   $cuenta=DetalleTransacion::where('f_producto',$id)->count();
 

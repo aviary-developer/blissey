@@ -488,9 +488,23 @@ $(document).on('ready',function(){
           notaError('El número de lote es requerido');
         }
         if(v7==1){
-          notaError('Todos los productos deben asignarsea a un estante');
+          notaError('Todos los productos deben asignarse a un estante');
         }
     }
+    });
+    $('#confirmarAsignacion').on('click', function (e) {
+      var error=v=0;
+      $('.vals').each(function(){ //Lote
+        if($(this).val().trim()==""){
+          error++;
+          v=1;
+        }
+      });
+      if(v==1){
+        notaError('Todos los productos deben asignarse a un estante');
+      }else{
+        $("#formAsignar").submit();
+      }
     });
 });
 function entero(obj,e,valor){

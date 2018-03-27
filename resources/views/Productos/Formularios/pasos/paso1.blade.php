@@ -29,12 +29,9 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Droguería *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-      <select class="form-control has-feedback-left" name="f_proveedor" id="f_proveedor">
-          <option value="0">Seleccione un proveedor</option>
-        @foreach ($proveedores as $proveedor)
-          <option value={{ $proveedor->id }}>{{ $proveedor->nombre }}</option>
-        @endforeach
-      </select>
+      {!!Form::select('f_proveedor',
+        App\Proveedor::arrayProveedores()
+        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_proveedor','placeholder'=>'Selecciones un proveedor'])!!}
     </div>
   </div>
   <h4 class="StepTitle">División del producto</h4>
@@ -119,7 +116,7 @@
         @endphp
         <input type="hidden" name="divisiones_eliminadas[]" value="ninguno" id="division_eliminada">
         @foreach ($divisiones_productos  as $key => $division)
-          <tr>
+          <tr class="divis">
             <td>{{$division->codigo}}</td>
             <td>{{$division->nombreDivision($division->f_division)}}</td>
             <td>@if ($division->contenido!=null)

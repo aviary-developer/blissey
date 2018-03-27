@@ -24,13 +24,14 @@ class EspecialidadRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required | min:2 | max:30'
+            'nombre' => 'required | unique:especialidads | min:2 | max:30'
         ];
     }
 
     public function messages(){
        return [
             'nombre.required'=>'El campo nombre es obligatorio',
+            'nombre.unique'=>'El nombre ya ha sido registrado anteriormente',
             'nombre.min'=>'El campo nombre necesita 2 caracteres como mínimo',
             'nombre.max'=>'El campo nombre soporta 30 caracteres como máximo',
        ];

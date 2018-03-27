@@ -63,14 +63,14 @@ class SolicitudExamenController extends Controller
       if(isset($request->examen)){
         if($request->f_ingreso == null){
           $ultima_factura = Transacion::where('tipo',2)->latest()->first();
-  
+
           if($ultima_factura == null){
             $factura = 1;
           }else{
             $factura = $ultima_factura->factura;
             $factura++;
           }
-  
+
           $transaccion = new Transacion;
           $transaccion->fecha = Carbon::now();
           $transaccion->f_cliente = $request->f_paciente;
@@ -358,16 +358,15 @@ class SolicitudExamenController extends Controller
     return view('SolicitudExamenes.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
   }
 
-  public function impresionExamenesPorPaciente(Request $request)
+  public function impresionExamenesPorPaciente($paciente,$bandera)
   {
-    $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$request->paciente)->orderBy('estado')->get();
-    if($request->bandera){
+    $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$paciente)->orderBy('estado')->get();
+    if($bandera){
         foreach ($solicitudes as $solicitud) {
-        $cambioEstadoSolicitud=SolicitudExamen::find($solicitud->id);
+        /*$cambioEstadoSolicitud=SolicitudExamen::find($solicitud->id);
         $cambioEstadoSolicitud->estado=3;
-        $cambioEstadoSolicitud->save();
+        $cambioEstadoSolicitud->save();*/
       }
-      return response()->json('Entregados ;)');
     }
     foreach ($solicitudes as $key => $solicitud) {
       $resultados[$key]=Resultado::where('f_solicitud','=',$solicitud->id)->first();
@@ -391,6 +390,7 @@ class SolicitudExamenController extends Controller
         }
       }
     }
+    dd($secciones);
     $header = view('PDF.header.hospital');
     $footer = view('PDF.footer.numero_pagina');
     $main = view('SolicitudExamenes.entregaTodosExamenes',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));

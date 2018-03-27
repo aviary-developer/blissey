@@ -49,6 +49,10 @@
                     <td>{{ $producto->nombre }}</td>
                   </tr>
                   <tr>
+                    <th>Categoría</th>
+                    <td>{{$producto->categoriaProducto->nombre}}</td>
+                  </tr>
+                  <tr>
                     <th>Droguería</th>
                     <td>{{$producto->nombreProveedor($producto->f_proveedor)}}</td>
                   </tr>

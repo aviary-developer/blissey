@@ -415,6 +415,78 @@
                     </li>
                     <!--FIN notificación-->
                   @endif
+                  {{--inicio notificaciones de farmacia --}}
+                  @if(Auth::user()->tipoUsuario == "Farmacia")
+                    @php
+                      $requisiciones= App\Transacion::where('tipo',4)->count();
+                      $ultima= App\Transacion::where('tipo',4)->orderBy('id','asc')->get()->last();
+
+                      $stock=0;
+                      $porvencer=0;
+                      $vencidos=0;
+                      $total=$requisiciones+$stock+$porvencer+$vencidos;
+                    @endphp
+                    <li role="presentation" class="dropdown">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge bg-red">{{$total}}</span>
+                      </a>
+                      @if ($total>0)
+                        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                            @if ($requisiciones>0)
+                              <li>
+                              <a href="{{asset('/verrequisiciones?tipo=4')}}">
+                                <span>
+                                  <span><strong>Requisiciones del hospital</strong></span>
+                                  <span class="time">Cantidad: <strong>{{$requisiciones}}</strong></span>
+                                </span>
+                                <span class="message">
+                                  Más reciente: <strong>{{$ultima->created_at->diffForHumans()}}</strong>
+                                </span>
+                              </a>
+                            </li>
+                            @endif
+                    </ul>
+                      @endif
+                    </li>
+                  @endif
+                  {{--fin notificaciones de farmacia--}}
+                  {{--inicio notificaciones de farmacia --}}
+                  @if(Auth::user()->tipoUsuario == "Recepción")
+                    @php
+                      $requisiciones= App\Transacion::where('tipo',5)->count();
+                      $ultima= App\Transacion::where('tipo',5)->orderBy('id','asc')->get()->last();
+
+                      $stock=0;
+                      $porvencer=0;
+                      $vencidos=0;
+                      $total=$requisiciones+$stock+$porvencer+$vencidos;
+                    @endphp
+                    <li role="presentation" class="dropdown">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge bg-red">{{$total}}</span>
+                      </a>
+                      @if ($total>0)
+                        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                            @if ($requisiciones>0)
+                              <li>
+                              <a href="{{asset('/requisiciones?tipo=5')}}">
+                                <span>
+                                  <span><strong>Requisiciones por ubicar</strong></span>
+                                  <span class="time">Cantidad: <strong>{{$requisiciones}}</strong></span>
+                                </span>
+                                <span class="message">
+                                  Más reciente: <strong>{{$ultima->created_at->diffForHumans()}}</strong>
+                                </span>
+                              </a>
+                            </li>
+                            @endif
+                    </ul>
+                      @endif
+                    </li>
+                  @endif
+                  {{--fin notificaciones de farmacia--}}
                 @endif
 
               </ul>

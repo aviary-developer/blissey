@@ -39,4 +39,13 @@ class Proveedor extends Model
     public function visitador(){
       return $this->hasMany('App\Dependiente','f_proveedor');
     }
+
+    public static function arrayProveedores(){
+      $pro=Proveedor::where('estado',true)->orderBy('nombre')->get();
+      $arrayP= [];
+      foreach($pro as $p){
+        $arrayP[$p->id]=$p->nombre;
+      }
+      return $arrayP;
+    }
 }
