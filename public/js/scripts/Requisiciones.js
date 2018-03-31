@@ -1,7 +1,7 @@
 $(document).on('ready',function(){
   $("#resultadoRequisicion").keyup(function(){
     valor=$("#resultadoRequisicion").val();
-    if(valor.length>2){
+    if(valor.length>0){
       var ruta = "/blissey/public/buscarProductoRequisicion/"+valor;
       var tabla = $("#tablaRequisicion");
       $.get(ruta,function(res){

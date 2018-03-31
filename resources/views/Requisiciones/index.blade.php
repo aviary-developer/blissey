@@ -70,7 +70,7 @@
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   <td>
                     @if ($transaccion->tipo==6 || $tipo==4)
-                      <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+                      <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
                         <i class="fa fa-info-circle"></i>
                       </a>
                     @endif
@@ -79,7 +79,7 @@
                     @endif
                     @if ($transaccion->tipo==5)
                       {!!Form::open(['url'=>['asignarRequisicion',$transaccion->id],'method'=>'POST'])!!}
-                      <button type="submit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Asignar ubicación"/>
+                      <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Asignar ubicación"/>
                       <i class="fa fa-check"></i>
                     </button>
                     {!!Form::close()!!}

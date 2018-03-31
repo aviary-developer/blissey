@@ -232,6 +232,11 @@ class TransaccionController extends Controller
         foreach($productos as $producto){
           $producto->presentacion;
         }
+        $divisiones=$producto->divisionProducto;
+        foreach($divisiones as $division){
+            $division->division;
+            $division->unidad;
+        }
         return Response::json($productos);
       }else{
         return null;

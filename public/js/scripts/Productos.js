@@ -86,7 +86,7 @@ $(document).on('ready',function(){
 
   $("#componente").keyup(function(){
     var valor = $("#componente").val();
-    if(valor.length > 2){
+    if(valor.length > 0){
       var ruta = "/blissey/public/buscarComponenteProducto/"+valor;
       var tabla = $("#tablaBuscarComponente");
       $.get(ruta,function(res){

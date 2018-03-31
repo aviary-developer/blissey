@@ -16,7 +16,7 @@ $(document).on('ready',function(){
       var confirmar=$("#confirmar").val();
       if(laboratorio!=""){
         conteo=valor.length;
-        if(conteo > 1 && (conteo%2)==0){
+        if(conteo > 0){
           if(confirmar==true||tipo==0){ //Venta a clientes
             var ruta = "/blissey/public/buscarProductoTransaccion/"+laboratorio+"/"+valor;
             var tabla = $("#tablaBuscar");
@@ -29,9 +29,10 @@ $(document).on('ready',function(){
               "</thead>";
               tabla.append(head);
               $(res).each(function(key,value){
-                var ruta2= "/blissey/public/buscarDivisionTransaccion/"+value.id;
-                $.get(ruta2,function(res2){
+                console.log(value.nombre);
+                var res2=value.division_producto;
                   $(res2).each(function(key2,value2){
+                    console.log(value2.codigo);
                     if (value2.unidad==null) {
                       n_division=value2.division.nombre+" "+value2.cantidad+" "+value.presentacion.nombre;
                     } else {
@@ -56,7 +57,6 @@ $(document).on('ready',function(){
                       "</tr>";
                       tabla.append(html);
                   });
-                });
               });
             });
 
@@ -77,11 +77,11 @@ $(document).on('ready',function(){
     });
     $("#resultadoVenta").keyup(function(){
       var valor = $("#resultadoVenta").val();
-      if(valor.length<3){
+      if(valor.length<1){
         var tabla = $("#tablaBuscar");
         tabla.empty();
       }
-      if(radio=='1' && valor.length>2){
+      if(radio=='1' && valor.length>0){
         var ruta = "/blissey/public/buscarProductoVenta/"+valor;
         var tabla = $("#tablaBuscar");
         $.get(ruta,function(res){
@@ -118,7 +118,7 @@ $(document).on('ready',function(){
           });
         });
       }
-      if(radio=='2' && valor.length>3){
+      if(radio=='2' && valor.length>0){
         var ruta = "/blissey/public/buscarComponenteVenta/"+valor;
         var tabla = $("#tablaBuscar");
         $.get(ruta,function(res){
@@ -159,7 +159,7 @@ $(document).on('ready',function(){
         });
       });
       }
-      if(radio=='3' && valor.length>2){
+      if(radio=='3' && valor.length>0){
         var ruta = "/blissey/public/buscarServicios/"+valor;
         var tabla = $("#tablaBuscar");
         $.get(ruta,function(res){
@@ -393,7 +393,7 @@ $(document).on('ready',function(){
       var valor = $("#resultadoCliente").val();
       conteo=valor.length;
       var tabla = $("#tablaBuscarCliente");
-      if(conteo >1){
+      if(conteo >0){
         var ruta = "/blissey/public/buscarCliente/"+valor;
         $.get(ruta,function(res){
           tabla.empty();
