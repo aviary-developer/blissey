@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-xs-2 alignright">
                   @if ($ingreso->estado == 1)
-                    <input type="hidden" value={{$total_deuda}} id="deuda_para_alta">
+                    <input type="hidden" value={{number_format($total_deuda,2,'.','')}} id="deuda_para_alta">
                     <button id="dar_alta" type="button" class="btn btn-sm btn-success alignright">
                       <i class="fa fa-arrow-right"></i> Dar de alta
                     </button>
@@ -181,6 +181,7 @@
               @include('Ingresos.Formularios.modal_examen')
               @include('Ingresos.Formularios.show.modal_transaccion')
               @include('Ingresos.Formularios.show.modal_medico')
+              @include('Ingresos.Formularios.show.modal_informe')
               @endif
             </div>
           </div>

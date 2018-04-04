@@ -1,13 +1,18 @@
 <div class="row">
-  <div class="col-xs-9">
+  <div class="col-xs-7">
     <h3>Estado Financiero</h3>
   </div>
-  <div class="col-xs-2 alignright">
-    @if ($ingreso->estado != 2)    
-      <button type="button" class="btn btn-primary btn-sm" id="nuevo_abono">
-        <i class="fa fa-plus"></i> Abono
+  <div class="col-xs-4 alignright">
+    <div class="btn-group alignright">
+      <button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal_informe">
+        <i class="fa fa-file"></i> Informe
       </button>
-    @endif
+      @if ($ingreso->estado != 2)    
+        <button type="button" class="btn btn-primary btn-sm" id="nuevo_abono">
+          <i class="fa fa-plus"></i> Abono
+        </button>
+      @endif
+    </div>
   </div>
 </div>
 <div class="row">

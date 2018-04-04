@@ -10,6 +10,23 @@
 thead{
     background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
 }
+.table-simple{
+  width: 100%;
+}
+
+.table-simple th{
+  background-color: silver;
+  text-align: center;
+}
+
+.table-simple thead{
+    background: silver;
+}
+
+.table-simple th,.table-simple td{
+  border: 1px black solid;
+  padding: 2px 5px 2px 5px;
+}
 .perfil-2 {
     width: 120px;
     height: 120px;
