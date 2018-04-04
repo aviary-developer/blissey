@@ -103,7 +103,7 @@
                       @if($tipo==0)
                         <td>
                         {!!Form::open(['url'=>['confirmarPedido',$transaccion->id],'method'=>'POST'])!!}
-                        <button type="submit" class="btn btn-success btn-xs"/>
+                        <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Confirmar"/>
                         <i class="fa fa-check"></i>
                       </button>
                       @include('Transacciones.Formularios.eliminarPedido')
@@ -112,7 +112,7 @@
                     @endif
                 @if ($tipo==1 || $tipo==2 || $tipo==3)
                   <td>
-                    <a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
+                    <a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
                       <i class="fa fa-info-circle"></i>
                     </a>
                     @if ($tipo==2)

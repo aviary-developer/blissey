@@ -1,4 +1,4 @@
-<a class="btn btn-danger btn-xs" onclick={!! "'anularVenta(".$transaccion->id.");'" !!}/>
+<a class="btn btn-danger btn-sm" onclick={!! "'anularVenta(".$transaccion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Anular"/>
   <i class="fa fa-remove"></i>
 </a>
 <script type="text/javascript">

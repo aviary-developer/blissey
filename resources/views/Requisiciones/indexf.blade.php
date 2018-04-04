@@ -69,13 +69,13 @@
                   <td>
                   @if ($tipo==4)
                     {!!Form::open(['url'=>['confirmarRequisicion',$transaccion->id],'method'=>'POST'])!!}
-                    <button type="submit" class="btn btn-success btn-xs"/>
+                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Atender"/>
                     <i class="fa fa-check"></i>
                     </button>
                     {!!Form::close()!!}
                   @endif
                   @if ($tipo==5)
-                    <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-xs btn-info">
+                    <a href={!! asset('/requisiciones/'.$transaccion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
                       <i class="fa fa-info-circle"></i>
                     </a>
                   @endif
