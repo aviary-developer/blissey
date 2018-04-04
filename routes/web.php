@@ -141,7 +141,7 @@ Route::group(['middleware'=>'general'], function(){
     if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
-      $tercero = App\Reactivo::where((int)'contenidoPorEnvase','<=',10)->get();
+      $tercero = App\Reactivo::where('contenidoPorEnvase','<',10)->get();
     }
     $empresa = App\Empresa::latest()->first();
     // App\Transacion::llenar();
@@ -223,8 +223,6 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/abonar','IngresoController@abonar');
   Route::post('/servicio_medicos','IngresoController@servicio_medicos');
   Route::post('/cambio_ingreso','IngresoController@cambio_ingreso');
-  Route::post('/editar24','IngresoController@editar24');
-  Route::post('/eliminar24','IngresoController@eliminar24');
 //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos
@@ -232,9 +230,6 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/desactivateCategoriaProducto/{id}','CategoriaProductoController@desactivate');
   Route::match(['get','post'],'/activateCategoriaProducto/{id}','CategoriaProductoController@activate');
   Route::match(['get','post'],'/destroyCategoriaProducto/{id}','CategoriaProductoController@destroy');
-  //rutas relacionadas con el stock mínimo
-  Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
-  Route::match(['get'],'/stockProveedor','DivisionProductoController@stockProveedor');
 });
 Auth::routes();
 //Rutas de login

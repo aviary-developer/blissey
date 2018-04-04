@@ -75,18 +75,18 @@
   <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">
-        @if (Auth::user()->tipoUsuario == "Laboaratorio")
+        @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio")
           @include('widget.reactivos')
         @endif
       </div>
     </div>
-    @if (Auth::user()->tipoUsuario == "Recepción")
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">
+        @if (Auth::user()->tipoUsuario == "Recepción")
           @include('widget.ingreso')
+        @endif
       </div>
     </div>
-  @endif
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">
         @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio")
