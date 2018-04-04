@@ -137,17 +137,19 @@ Route::group(['middleware'=>'admin'], function()
 });
 Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {
-    $primero = $segundo = "Nada";
-    if(Auth::user()->tipoUsuario == "Recepción"){
+    $primero = $segundo = $tercero = "Nada";
+    if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
+      $tercero = App\Reactivo::where((int)'contenidoPorEnvase','<=',10)->get();
     }
     $empresa = App\Empresa::latest()->first();
     // App\Transacion::llenar();
     return view('main', compact(
       "empresa",
       "primero",
-      "segundo"
+      "segundo",
+      "tercero"
     ));
   });
 

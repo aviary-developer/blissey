@@ -49,8 +49,8 @@
                   <td>{{ $reactivo->descripcion }}</td>
                 </tr>
                 <tr>
-                  <th>Contenido por envase</th>
-                  <td>{{ $reactivo->contenidoPorEnvase.' ml' }}</td>
+                  <th>Existencias</th>
+                  <td>{{ $reactivo->contenidoPorEnvase.' ' }}</td>
                 </tr>
                 <tr>
                   <th>Estado</th>
