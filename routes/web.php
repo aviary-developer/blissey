@@ -230,6 +230,9 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/desactivateCategoriaProducto/{id}','CategoriaProductoController@desactivate');
   Route::match(['get','post'],'/activateCategoriaProducto/{id}','CategoriaProductoController@activate');
   Route::match(['get','post'],'/destroyCategoriaProducto/{id}','CategoriaProductoController@destroy');
+  //rutas relacionadas con el stock mínimo
+  Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
+  Route::match(['get'],'/stockProveedor','DivisionProductoController@stockProveedor');
 });
 Auth::routes();
 //Rutas de login

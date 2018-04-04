@@ -420,8 +420,11 @@
                     @php
                       $requisiciones= App\Transacion::where('tipo',4)->count();
                       $ultima= App\Transacion::where('tipo',4)->orderBy('id','asc')->get()->last();
-
+                      $conteostock=App\DivisionProducto::conteo();
                       $stock=0;
+                      if($conteostock>0){
+                        $stock=1;
+                      }
                       $porvencer=0;
                       $vencidos=0;
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
@@ -446,18 +449,34 @@
                               </a>
                             </li>
                             @endif
+                            @if ($stock>0)
+                              <li>
+                              <a onclick="verstockbajo()">
+                                <span>
+                                  <span><strong>Invetario bajo</strong></span>
+                                  <span class="time">Cantidad: <strong>{{$conteostock}}</strong></span>
+                                </span>
+                                <span class="message">
+                                  Existen <strong>{{$conteostock}} productos</strong>  bajo el stock mínimo
+                                </span>
+                              </a>
+                            </li>
+                            @endif
                     </ul>
                       @endif
                     </li>
                   @endif
                   {{--fin notificaciones de farmacia--}}
-                  {{--inicio notificaciones de farmacia --}}
+                  {{--inicio notificaciones de Recepción --}}
                   @if(Auth::user()->tipoUsuario == "Recepción")
                     @php
                       $requisiciones= App\Transacion::where('tipo',5)->count();
                       $ultima= App\Transacion::where('tipo',5)->orderBy('id','asc')->get()->last();
-
+                      $conteostock=App\DivisionProducto::conteo();
                       $stock=0;
+                      if($conteostock>0){
+                        $stock=1;
+                      }
                       $porvencer=0;
                       $vencidos=0;
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
@@ -482,11 +501,24 @@
                               </a>
                             </li>
                             @endif
+                            @if ($stock>0)
+                              <li>
+                              <a onclick="verstockbajo()">
+                                <span>
+                                  <span><strong>Invetario bajo</strong></span>
+                                  <span class="time">Cantidad: <strong>{{$conteostock}}</strong></span>
+                                </span>
+                                <span class="message">
+                                  Existen <strong>{{$conteostock}} productos</strong>  bajo el stock mínimo
+                                </span>
+                              </a>
+                            </li>
+                            @endif
                     </ul>
                       @endif
                     </li>
                   @endif
-                  {{--fin notificaciones de farmacia--}}
+                  {{--fin notificaciones de Recepción--}}
                 @endif
 
               </ul>
@@ -588,3 +620,25 @@
         styling: 'bootstrap3'
       });
       </script>");?> @endforeach
+      <script type="text/javascript">
+      function verstockbajo(){
+        return swal({
+          title: 'Seleccione una opción',
+          text: "Como desea ver los productos que estan bajo el stock mínimo!",
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'Todos los productos',
+          cancelButtonText: 'Por proveedor',
+          confirmButtonClass: 'btn btn-info',
+          cancelButtonClass: 'btn btn-info',
+          buttonsStyling: false
+        }).then(function () {
+          var dominio = window.location.host;
+          location.href ='http://'+dominio+'/blissey/public/stockTodos/';
+        }, function (dismiss) {
+          if (dismiss === 'cancel') {
+            location.href ='http://'+dominio+'/blissey/public/stockProveedor/';
+          }
+        });
+        }
+      </script>

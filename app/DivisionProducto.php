@@ -23,10 +23,7 @@ class DivisionProducto extends Model
   public function unidad(){
     return $this->belongsTo('App\Unidad','contenido')->select(['id','nombre']);
   }
-  public function inventarioFarmaciaUltimo(){
-     return $this->hasMany('App\InventarioFarmacia','f_producto');
-  }
-  public static function inventario($id,$nor){//$nor se refiere a consulta normal o de recepción 1 es normal y 2 es de recepcion
+  public static function inventario($id,$nor){//$nor se refiere a consulta 1 es normal dependiendo del ususario y 2 dos es consultar solo por farmacia
     $cc=0;
     if($nor==1){
       $ts=Transacion::tipoUsuario(); //Tipo de usuario
@@ -98,5 +95,24 @@ class DivisionProducto extends Model
     ->where('detalle_transacions.f_producto',$id)
     ->orderBy('transacions.fecha','DESC')
     ->get();
+  }
+  public static function conteo(){
+    $divisiones=DivisionProducto::all();
+    $conteo=0;
+    foreach ($divisiones as $division) {
+      if($division->stock>DivisionProducto::inventario($division->id,1) && $division->producto->estado){
+        $conteo++;
+      }
+    }
+    return $conteo;
+  }
+  public static function menor($id,$stock){
+    $inventario=DivisionProducto::inventario($id,1);
+    if($inventario<$stock){
+      return true;
+    }else{
+      return false;
+    }
+
   }
 }
