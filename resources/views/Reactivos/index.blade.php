@@ -61,7 +61,7 @@
               <th>#</th>
               <th>Nombre</th>
               <th>Descripción</th>
-              <th>Existencias</th>
+              <th colspan="2">Existencias</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -79,7 +79,8 @@
                     </a>
                   </td>
                   <td>{{ $reactivo->descripcion }}</td>
-                  <td>{{ $reactivo->contenidoPorEnvase.' '}}</td>
+                  <td><strong>{{ $reactivo->contenidoPorEnvase.' '}}</strong>
+                    @include('Reactivos.Formularios.agregarExistencias')</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Reactivos.Formularios.activate')
