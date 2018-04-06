@@ -24,7 +24,7 @@ class ComponenteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required | unique:componentes | min:2 | max:30',
+            'nombre'=>'required | min:2 | max:30',
         ];
     }
     public function messages(){

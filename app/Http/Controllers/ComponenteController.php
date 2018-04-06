@@ -52,7 +52,7 @@ class ComponenteController extends Controller
      */
     public function store(ComponenteRequest $request)
     {
-      $componente=new Componente;
+      $componente=new Componente();
       $componente->fill($request->all());
       $componente->save();
         return redirect('/componentes')->with('mensaje','¡Guardado!');
