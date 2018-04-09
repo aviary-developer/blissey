@@ -39,6 +39,11 @@
         {{'$ '.number_format($total_gastos,2,'.',',')}}
       </h2>
     </center>
+    <span class="count_bottom">
+      <center>
+        IVA incluido
+      </center>
+    </span>
   </div>
   <div class="col-md-3 col-sm-3 col-xs-6 tile_stats_count">
     <span class="count_top">
@@ -162,5 +167,5 @@
     </div>
   </div>
 </div>
-@include('Ingresos.Formularios.show.modal_financiero')
-@include('Ingresos.Formularios.show.script_modal')
+@include('Ingresos.Formularios.show.modal.modal_financiero')
+@include('Ingresos.Formularios.show.modal.script_modal')

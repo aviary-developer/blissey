@@ -19,7 +19,7 @@
       </div>
 
       <div class="modal-footer">
-        <a href={{asset('/pacientes/'.$paciente->id)}} class="btn btn-primary">Ir a registro</a>
+        <a href={{asset('/informe_financiero/'.$ingreso->id)}} class="btn btn-primary" target="_blank">Ir a registro</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

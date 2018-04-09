@@ -70,10 +70,10 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/activateHabitacion/{id}','HabitacionController@activate');
   Route::match(['get','post'],'/destroyHabitacion/{id}','HabitacionController@destroy');
   //Rutas de Ingresos
-  Route::resource('ingresos','IngresoController');
   Route::match(['get','post'],'/desactivateIngreso/{id}','IngresoController@destroy');
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
+  Route::get('/informe_financiero/{id}','IngresoController@informe_pdf');
   //Rutas de Requisiciones
   Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
       Route::match(['get','post'],'/asignarRequisicion/{id}','RequisicionController@asignar');
@@ -216,6 +216,7 @@ Route::group(['middleware'=>'general'], function(){
   //Inventarios
   Route::resource('inventarios','InventarioController');
   //Ingresos
+  Route::resource('ingresos','IngresoController');
   Route::match(['get'],'/total_resumen','IngresoController@resumen');
   Route::match(['post'],'/tratamiento','IngresoController@tratamiento');
   Route::post('/abonar','IngresoController@abonar');
@@ -233,6 +234,8 @@ Route::group(['middleware'=>'general'], function(){
   //rutas relacionadas con el stock mínimo
   Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
   Route::match(['get'],'/stockProveedor','DivisionProductoController@stockProveedor');
+  //Signos vitales
+  Route::resource('signos','SignoVitalController');
 });
 Auth::routes();
 //Rutas de login

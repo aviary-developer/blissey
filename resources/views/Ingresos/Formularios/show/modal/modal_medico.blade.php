@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="x_panel" style="min-height: 400px;">
 
-          @include('Ingresos.Formularios.show.medicos_seleccion')
+          @include('Ingresos.Formularios.show.vistas.medicos_seleccion')
 
         </div>
       </div>

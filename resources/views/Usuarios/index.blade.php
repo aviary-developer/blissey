@@ -26,7 +26,7 @@
       </div>
       <div class="x_content">
         <div class="row">
-          <div class="col-md-6 col-xs-12">
+          <div class="col-md-7 col-xs-12">
             <div class="btn-group">
               <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('/usuarios/'.Auth::user()->id) !!} class="btn btn-dark btn-sm"><i class="fa fa-user"></i> Mi Perfil</a>
@@ -47,7 +47,7 @@
               <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
-          <div class="col-md-4 col-xs-12 alignright">
+          <div class="col-md-3 col-xs-12 alignright">
             {!!Form::open(['route'=>'usuarios.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
@@ -131,7 +131,7 @@
                     @elseif ($usuario->tipoUsuario == "Recepción")
                       <span class="label label-danger label-lg col-xs-12">Recepción</span>
                     @elseif ($usuario->tipoUsuario == "Enfermería")
-                      <span class="label label-purple">Enfermería</span>
+                      <span class="label label-purple label-lg col-xs-12">Enfermería</span>
                     @elseif ($usuario->tipoUsuario == "Farmacia")
                       <span class="label label-dark-blue label-lg col-xs-12">Farmacia</span>
                     @endif

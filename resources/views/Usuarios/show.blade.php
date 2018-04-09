@@ -42,7 +42,7 @@
               @elseif ($usuario->tipoUsuario == "Recepción")
                 <span class="label label-danger label-lg col-xs-12">Recepción</span>
               @elseif ($usuario->tipoUsuario == "Enfermería")
-                <span class="label label-purple">Enfermería</span>
+                <span class="label label-purple label-lg col-xs-12">Enfermería</span>
               @elseif ($usuario->tipoUsuario == "Farmacia")
                 <span class="label label-dark-blue label-lg col-xs-12">Farmacia</span>
               @endif

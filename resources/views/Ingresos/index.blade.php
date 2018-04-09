@@ -28,29 +28,31 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-12">
-            <div class="btn-group">
-              <a href={{asset('/ingresos/create')}} class="btn btn-sm btn-dark">
-                <i class="fa fa-plus"></i> Nuevo
-              </a>
-              <a href={{asset('#')}} class="btn btn-sm btn-dark">
-                <i class="fa fa-file"></i> Reporte
-              </a>
-              <a href={{asset('/ingresos?estado='.$estadoOpuesto)}} class="btn btn-sm btn-dark">
-                @if ($estadoOpuesto != 2)
-                  <i class="fa fa-medkit"></i> Actuales
-                  <span class="label label-success">{{$activos}}</span>
-                @else
-                  <i class="fa fa-check"></i> En alta
-                @endif
-              </a>
-              <a href={{'#'}} class="btn btn-primary btn-sm">
-                <i class="fa fa-question"></i> Ayuda
-              </a>
+        @if (Auth::user()->tipoUsuario == "Recepción")
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-12">
+              <div class="btn-group">
+                <a href={{asset('/ingresos/create')}} class="btn btn-sm btn-dark">
+                  <i class="fa fa-plus"></i> Nuevo
+                </a>
+                <a href={{asset('#')}} class="btn btn-sm btn-dark">
+                  <i class="fa fa-file"></i> Reporte
+                </a>
+                <a href={{asset('/ingresos?estado='.$estadoOpuesto)}} class="btn btn-sm btn-dark">
+                  @if ($estadoOpuesto != 2)
+                    <i class="fa fa-medkit"></i> Actuales
+                    <span class="label label-success">{{$activos}}</span>
+                  @else
+                    <i class="fa fa-check"></i> En alta
+                  @endif
+                </a>
+                <a href={{'#'}} class="btn btn-primary btn-sm">
+                  <i class="fa fa-question"></i> Ayuda
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        @endif
         <br>
         <div class="row">
           <table class="table table-striped">
@@ -81,18 +83,31 @@
                       </a>
                     </td>
                     <td>
-                      <a href={{asset('/usuarios/'.$ingreso->f_medico)}}>
+                      @if (Auth::user()->administrador)
+                        <a href={{asset('/usuarios/'.$ingreso->f_medico)}}>
+                          @if ($ingreso->medico->sexo)
+                            {{'Dr. '.$ingreso->medico->apellido.' '.$ingreso->medico->nombre}}
+                          @else
+                            {{'Dra. '.$ingreso->medico->apellido.' '.$ingreso->medico->nombre}}
+                          @endif
+                        </a>
+                      @else
                         @if ($ingreso->medico->sexo)
                           {{'Dr. '.$ingreso->medico->apellido.' '.$ingreso->medico->nombre}}
                         @else
                           {{'Dra. '.$ingreso->medico->apellido.' '.$ingreso->medico->nombre}}
                         @endif
-                      </a>
+                      @endif
+                      
                     </td>
                     <td>
-                      <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}}>
+                      @if (Auth::user()->tipoUsuario == "Recepción")
+                        <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}}>
                         {{'Habitación '.$ingreso->habitacion->numero}}
-                      </a>
+                        </a>
+                      @else
+                        {{'Habitación '.$ingreso->habitacion->numero}}
+                      @endif
                     </td>
                     <td>
                       @include('Ingresos.Formularios.desactivate')

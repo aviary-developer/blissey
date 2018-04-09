@@ -28,16 +28,23 @@
   text-align: justify;
   text-indent: 1rem;
 }
-table{
+.table-simple{
   width: 100%;
 }
 
-th{
+.table-simple th{
   background-color: silver;
   text-align: center;
 }
 
-th, td{
+.table-simple thead{
+    background: silver;
+}
+
+.table-simple th,.table-simple td{
   border: 1px black solid;
-  padding: 5px;
+  padding: 2px 5px 2px 5px;
+}
+h4 center{
+  font-size: 14pt;
 }

@@ -137,17 +137,23 @@ class IngresoController extends Controller
           }
           $diff_dias_count = $dias - $habitacion_detalle_count;
           if($diff_dias_count > 0){
-            for($i = 0; $i < $diff_dias_count; $i++){
+            for($i = 0; $i < $dias; $i++){
               $fecha_aux = $ingreso->fecha_ingreso->addDays($i);
               $is_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
               if($is_detalle == 0){
-                $detalle_n = new DetalleTransacion;
-                $detalle_n->f_servicio = $ingreso->habitacion->servicio->id;
-                $detalle_n->f_transaccion = $ingreso->transaccion->id;
-                $detalle_n->cantidad = 1;
-                $detalle_n->precio = $ingreso->habitacion->servicio->precio;
-                $detalle_n->created_at = $fecha_aux;
-                $detalle_n->save();
+                DB::beginTransaction();
+                try{
+                  $detalle_n = new DetalleTransacion;
+                  $detalle_n->f_servicio = $ingreso->habitacion->servicio->id;
+                  $detalle_n->f_transaccion = $ingreso->transaccion->id;
+                  $detalle_n->cantidad = 1;
+                  $detalle_n->precio = $ingreso->habitacion->servicio->precio;
+                  $detalle_n->created_at = $fecha_aux;
+                  $detalle_n->save();
+                  DB::commit();
+                }catch(Exception $e){
+                  DB::rollback();
+                }
               }
             }
           }
@@ -159,7 +165,8 @@ class IngresoController extends Controller
 
         //Total de gastos
         $total_gastos = $this->total_gastos($id);
-
+        $iva = $total_gastos * 0.13;
+        $total_gastos += $iva;
         //Total abonado a la deuda
         $total_abono = Ingreso::abonos($id);
 
@@ -291,6 +298,21 @@ class IngresoController extends Controller
       $header = view('PDF.header.hospital');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('Ingresos.PDF.acta',compact('ingreso'));
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+      return $pdf->stream('nombre.pdf');
+    }
+
+    public function informe_pdf($id){
+      $ingreso = Ingreso::find($id);
+      $hoy = Carbon::now();
+      if($ingreso->estado != 0){
+        $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+      }else{
+        $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+      }
+      $header = view('PDF.header.hospital');
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('Ingresos.PDF.informe',compact('ingreso','dias'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
       return $pdf->stream('nombre.pdf');
     }

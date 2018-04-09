@@ -13,7 +13,20 @@ thead{
 .table-simple{
   width: 100%;
 }
-
+.tag_tab{
+    text-align: center;
+    color: #404a54;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: bold;
+    font-size: 11px;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    text-shadow: 1px 1px #000;
+    padding-bottom: 3px;
+    background: #CCC;
+    border-radius: 2px;
+}
 .table-simple th{
   background-color: silver;
   text-align: center;

@@ -55,6 +55,10 @@ class Ingreso extends Model
       return $this->hasOne('App\Transacion', 'f_ingreso');
     }
 
+    public function signos(){
+      return $this->hasMany('App\SignoVital', 'f_ingreso');
+    }
+
     public static function servicio_gastos($id, $dia = -1){
       $ingreso = Ingreso::find($id);
       //Gastos por uso de habitaciones

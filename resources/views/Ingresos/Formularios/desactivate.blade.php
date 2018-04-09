@@ -1,12 +1,14 @@
 {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
 @if ($index)
-  <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
-    <i class="fa fa-print"></i>
-  </a>
+  @if (Auth::user()->tipoUsuario == "Recepción")    
+    <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
+      <i class="fa fa-print"></i>
+    </a>
+  @endif
   <a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  @if ($ingreso->estado == 0)
+  @if ($ingreso->estado == 0 && Auth::user()->tipoUsuario == "Recepción")
     <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Confirmar ingreso" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
       <i class="fa fa-check"></i>
     </button>
@@ -28,17 +30,18 @@
     <a href={!! asset('/ingresos'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" target="_blank">
-      <i class="fa fa-print"></i> Acta de consentimiento
-    </a>
-    
+    @if (Auth::user()->tipoUsuario == "Recepción")    
+      <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" target="_blank">
+        <i class="fa fa-print"></i> Acta de consentimiento
+      </a>
+    @endif
     <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda
     </a>
   </div>
   <div class="col-xs-1"></div>
   <div class="btn-group alignright">
-    @if ($ingreso->estado == 0)
+    @if ($ingreso->estado == 0 && Auth::user()->tipoUsuario == "Recepción")
       <button type="button" class="btn btn-success btn-sm" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
         <i class="fa fa-check"></i> Confrimar ingreso
       </button>

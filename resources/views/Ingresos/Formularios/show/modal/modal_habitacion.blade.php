@@ -1,5 +1,5 @@
 {{--  MODAL INICIO--}}
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal_habitacion">
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal_habitacion" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -12,7 +12,7 @@
       <div class="modal-body">
         <div class="x_panel" id="vista_1" style="min-height: 200px;">
           <div class="row">
-            <div class={{($ingreso->estado == 1)?"col-sm-7 col-xs-12":"col-xs-12"}}>
+            <div class={{($ingreso->estado == 1 && Auth::user()->tipoUsuario == "Recepción")?"col-sm-7 col-xs-12":"col-xs-12"}}>
               <div class="row">
                 <center>
                   <div class="bg-green">
@@ -43,7 +43,7 @@
                 </table>
               </div>
             </div>
-            @if ($ingreso->estado == 1)    
+            @if ($ingreso->estado == 1 && Auth::user()->tipoUsuario == "Recepción")    
               <div class="col-sm-5 col-xs-12">
                 <div class="col-sm-12 col-xs-4 borde green" style="margin: 2px 2px 2px 2px">
                   <center>
@@ -162,7 +162,9 @@
 
       <div class="modal-footer">
         <button type="button" id="ret" class="btn btn-default" onclick="cambio_habitacion(-1)" style="display:none">Regresar</button>
-        <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}} class="btn btn-primary" id="go">Ir a registro</a>
+        @if (Auth::user()->tipoUsuario == "Recepción")
+          <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}} class="btn btn-primary" id="go">Ir a registro</a>
+        @endif
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

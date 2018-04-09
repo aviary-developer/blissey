@@ -169,29 +169,33 @@ class UserController extends Controller
             }
           }
 
-          $categoria_existe = CategoriaServicio::where('nombre','Honorarios')->first();
-          if(count($categoria_existe) < 1){
-            $categoria = new CategoriaServicio;
-            $categoria->nombre = "Honorarios";
-            $categoria->save();
-          }else{
-            $categoria = $categoria_existe;
+          if($request->tipoUsuario == "Médico" || $request->tipoUsuario == "Gerencia"){
+            $categoria_existe = CategoriaServicio::where('nombre','Honorarios')->first();
+            if(count($categoria_existe) < 1){
+              $categoria = new CategoriaServicio;
+              $categoria->nombre = "Honorarios";
+              $categoria->save();
+            }else{
+              $categoria = $categoria_existe;
+            }
+  
+            $servicio = new Servicio;
+            $servicio->nombre = (($user->sexo)?"Dr. ":"Dra. ").$user->nombre.' '.$user->apellido;
+            $servicio->precio = $request->precio;
+            $servicio->retencion = $request->retencion;
+            $servicio->f_categoria = $categoria->id;
+            $servicio->f_medico = $user->id;
+            $servicio->save();
+
+            Bitacora::bitacora('store','servicios','servicios',$servicio->id);
           }
 
-          $servicio = new Servicio;
-          $servicio->nombre = (($user->sexo)?"Dr. ":"Dra. ").$user->nombre.' '.$user->apellido;
-          $servicio->precio = $request->precio;
-          $servicio->retencion = $request->retencion;
-          $servicio->f_categoria = $categoria->id;
-          $servicio->f_medico = $user->id;
-          $servicio->save();
 
           DB::commit();
         }catch(Exception $e){
           DB::rollback();
           return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');  
         }
-        Bitacora::bitacora('store','servicios','servicios',$servicio->id);
         Bitacora::bitacora('store','users','usuarios',$user->id);
         return redirect('/usuarios')->with('mensaje', '¡Guardado!');
       }

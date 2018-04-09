@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-6 col-xs-12">
+  <div class="col-xs-6">
     <h4><center>Medicamentos</center></h4>
     <table class="table-simple">
       <thead>
@@ -48,7 +48,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-xs-12 col-sm-6">
+  <div class="col-xs-6">
     <h4><center>Servicios hospitalarios</center></h4>
     <table class="table-simple">
       <thead>
@@ -224,6 +224,91 @@
           <td class="text-right blue"><b>{{'$ '.number_format(($total_abonado),2,'.',',')}}</b></td>
         </tr>
       </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <br>
+  <h4><center>Resumen</center></h4>
+  <div class="col-xs-4">
+    <table style="width: 100%">
+      <tr>
+        <td>Habitación</td>
+        <td class="text-right">{{'$ '.number_format(($total_habitacion),2,'.',',')}}</td>
+      </tr>
+      <tr>
+        <td>Laboratorio Clínico</td>
+        <td class="text-right">{{'$ '.number_format(($total_laboratorio),2,'.',',')}}</td>
+      </tr>
+      <tr>
+        <td>Servicios</td>
+        <td class="text-right">{{'$ '.number_format(($total_servicio),2,'.',',')}}</td>
+      </tr>
+      @php
+        $total_servicio_hospitalario = number_format(($total_habitacion),2,'.',',') + number_format(($total_servicio),2,'.',',') + number_format(($total_laboratorio),2,'.',',');
+      @endphp
+      <tr style="border-top: 1px black double">
+        <td><b>Total servicios hospitalarios</b></td>
+        <td class="text-right blue">{{'$ '.number_format(($total_servicio_hospitalario),2,'.',',')}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-xs-4" style="border-left: 1px black solid; border-right: 1px black solid;">
+    <table style="width: 100%">
+      <tr>
+        <td>Servicios hospitalarios</td>
+        <td class="text-right">{{'$ '.number_format(($total_servicio_hospitalario),2,'.',',')}}</td>
+      </tr>
+      <tr>
+        <td>Medicamentos</td>
+        <td class="text-right">{{'$ '.number_format(($total_med),2,'.',',')}}</td>
+      </tr>
+      <tr>
+        <td>Honorarios médicos</td>
+        <td class="text-right">{{'$ '.number_format(($total_honorario),2,'.',',')}}</td>
+      </tr>
+      @php
+        $subtotal = number_format(($total_servicio_hospitalario),2,'.',',') + number_format(($total_med),2,'.',',') + number_format(($total_honorario),2,'.',',');
+      @endphp
+      <tr style="border-top: 1px black double">
+        <td><b>Subtotal</b></td>
+        <td class="text-right blue">{{'$ '.number_format(($subtotal),2,'.',',')}}</td>
+      </tr>
+      @php
+        $iva = number_format(($subtotal),2,'.',',') * 0.13;
+        $total = number_format(($subtotal),2,'.',',') + number_format($iva,2,'.',',');
+      @endphp
+      <tr>
+        <td>IVA (13%)</td>
+        <td class="text-right">{{'$ '.number_format(($iva),2,'.',',')}}</td>
+      </tr>
+      <tr style="border-top: 1px black double">
+        <td><b>Total</b></td>
+        <td class="text-right blue">{{'$ '.number_format(($total),2,'.',',')}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-xs-4">
+    <table style="width: 100%">
+      <tr>
+        <td>Total</td>
+        <td class="text-right">{{'$ '.number_format(($total),2,'.',',')}}</td>
+      </tr>
+      <tr>
+        <td>(-) Abonos</td>
+        <td class="text-right">{{'$ '.number_format(($total_abonado),2,'.',',')}}</td>
+      </tr>
+      @php
+        $a_pagar = number_format(($total),2,'.',',') - number_format(($total_abonado),2,'.',',');
+      @endphp
+      <tr style="border-top: 1px black double">
+        <td><b>Saldo pendiente</b></td>
+        @if ($a_pagar > 0)
+          <td class="text-right red">{{'$ '.number_format(($a_pagar),2,'.',',')}}</td>
+        @else
+          <td class="text-right">{{'$ '.number_format(($a_pagar),2,'.',',')}}</td>
+        @endif
+      </tr>
     </table>
   </div>
 </div>

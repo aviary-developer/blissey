@@ -12,12 +12,12 @@
       $horas_print = $ingreso->fecha_alta->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
     }
   @endphp
-  @if ($horas > 1 && $ingreso->tipo == 2 && $ingreso->estado != 2)
+  @if ($horas > 1 && $ingreso->tipo == 2 && $ingreso->estado != 2 && Auth::user()->tipoUsuario == "Recepción")
     <script>
       swal('¡Advertencia!',"El paciente ha superado el tiempo estimado de observación, por favor dar de alta o cambiar tipo de ingreso.", "warning");
     </script>
   @endif
-  @if ($horas > 5 && $ingreso->tipo == 1 && $ingreso->estado != 2)
+  @if ($horas > 5 && $ingreso->tipo == 1 && $ingreso->estado != 2 && Auth::user()->tipoUsuario == "Recepción")
     <script>
       swal('¡Advertencia!',"El paciente ha superado el tiempo estimado de medi ingreso, por favor dar de alta o cambiar tipo de ingreso.", "warning");
     </script>
@@ -41,24 +41,37 @@
       <div class="" role="tabpanel" data-example-id="togglable-tabs">
         <div class="col-xs-2">
           <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
+            <h3 class="tag_tab">General</h3>
             <li role="presentation" class="active">
               <a href="#tab_show_1" id="tab_s_1" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
             @if ($ingreso->estado != 0) 
-              <li role="presentation" class="">
-                <a href="#tab_show_4" id="tab_s_4" role="tab" data-toggle="tab" aria-expanded="false">Estado Financiero</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#tab_show_6" id="tab_s_6" role="tab" data-toggle="tab" aria-expanded="false">Médicos</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#tab_show_3" id="tab_s_3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
-              </li>
+              @if (Auth::user()->tipoUsuario == "Recepción")    
+                <h3 class="tag_tab">Financiero</h3>
+                <li role="presentation" class="">
+                  <a href="#tab_show_4" id="tab_s_4" role="tab" data-toggle="tab" aria-expanded="false">Estado Financiero</a>
+                </li>
+              @endif
+              <h3 class="tag_tab">Servicios</h3>
+              @if (Auth::user()->tipoUsuario == "Recepción")    
+                <li role="presentation" class="">
+                  <a href="#tab_show_6" id="tab_s_6" role="tab" data-toggle="tab" aria-expanded="false">Médicos</a>
+                </li>
+              @endif
+              @if (Auth::user()->tipoUsuario == "Recepción")    
+                <li role="presentation" class="">
+                  <a href="#tab_show_3" id="tab_s_3" role="tab" data-toggle="tab" aria-expanded="false">Laboratorio Clínico</a>
+                </li>
+              @endif
               <li role="presentation" class="">
                 <a href="#tab_show_2" id="tab_s_2" role="tab" data-toggle="tab" aria-expanded="false">Tratamiento</a>
               </li>
               <li role="presentation" class="">
                 <a href="#tab_show_5" id="tab_s_5" role="tab" data-toggle="tab" aria-expanded="false">Servicios Hospitalarios</a>
+              </li>
+              <h3 class="tag_tab">Procedimiento Médico</h3>
+              <li role="presentation" class="">
+                <a href="#tab_show_7" id="tab_s_7" role="tab" data-toggle="tab" aria-expanded="false">Signos Vitales</a>
               </li>
             @endif
           </ul>
@@ -72,7 +85,7 @@
                   <h3>Información General</h3>
                 </div>
                 <div class="col-xs-2 alignright">
-                  @if ($ingreso->estado == 1)
+                  @if ($ingreso->estado == 1 && Auth::user()->tipoUsuario == "Recepción")
                     <input type="hidden" value={{number_format($total_deuda,2,'.','')}} id="deuda_para_alta">
                     <button id="dar_alta" type="button" class="btn btn-sm btn-success alignright">
                       <i class="fa fa-arrow-right"></i> Dar de alta
@@ -162,26 +175,30 @@
             {{-- Otra pestaña --}}
             @if ($ingreso->estado != 0)    
               <div class="tab-pane fade" role="tabpanel" id="tab_show_2" aria-labelledby="tab_s_2">
-                @include('Ingresos.Formularios.show.medicamento')
+                @include('Ingresos.Formularios.show.vistas.medicamento')
               </div>
               <div class="tab-pane fade" role="tabpanel" id="tab_show_4" aria-labelledby="tab_s_4">
-                @include('Ingresos.Formularios.show.financiero')
+                @include('Ingresos.Formularios.show.vistas.financiero')
               </div>
               <div class="tab-pane fade" role="tabpanel" id="tab_show_3" aria-labelledby="tab_s_3">
-                @include('Ingresos.Formularios.show.laboratorio')
+                @include('Ingresos.Formularios.show.vistas.laboratorio')
               </div>
               <div class="tab-pane fade" role="tabpanel" id="tab_show_5" aria-labelledby="tab_s_5">
-                @include('Ingresos.Formularios.show.servicio')
+                @include('Ingresos.Formularios.show.vistas.servicio')
               </div>
               <div class="tab-pane fade" role="tabpanel" id="tab_show_6" aria-labelledby="tab_s_6">
-                @include('Ingresos.Formularios.show.medicos')
+                @include('Ingresos.Formularios.show.vistas.medicos')
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_show_7" aria-labelledby="tab_s_7">
+                @include('Ingresos.Formularios.show.vistas.signos_vitales')
               </div>
               <input type="hidden" id="transaccion" value={{$ingreso->transaccion->id}}>
               <input type="hidden" id="tokenTransaccion" name="tokenTransaccion" value="<?php echo csrf_token(); ?>">
-              @include('Ingresos.Formularios.modal_examen')
-              @include('Ingresos.Formularios.show.modal_transaccion')
-              @include('Ingresos.Formularios.show.modal_medico')
-              @include('Ingresos.Formularios.show.modal_informe')
+              @include('Ingresos.Formularios.show.modal.modal_examen')
+              @include('Ingresos.Formularios.show.modal.modal_transaccion')
+              @include('Ingresos.Formularios.show.modal.modal_medico')
+              @include('Ingresos.Formularios.show.modal.modal_informe')
+              @include('Ingresos.Formularios.show.modal.modal_signos')
               @endif
             </div>
           </div>
@@ -189,7 +206,7 @@
       </div>
     </div>
   </div>
-  @include('Ingresos.Formularios.show.modal_datos_paciente')
-  @include('Ingresos.Formularios.show.modal_datos_responsable')
-  @include('Ingresos.Formularios.show.modal_habitacion')
+  @include('Ingresos.Formularios.show.modal.modal_datos_paciente')
+  @include('Ingresos.Formularios.show.modal.modal_datos_responsable')
+  @include('Ingresos.Formularios.show.modal.modal_habitacion')
 @endsection

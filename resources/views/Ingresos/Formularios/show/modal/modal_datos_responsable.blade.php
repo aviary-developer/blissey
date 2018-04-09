@@ -19,7 +19,9 @@
       </div>
 
       <div class="modal-footer">
-        <a href={{asset('/pacientes/'.$paciente->id)}} class="btn btn-primary">Ir a registro</a>
+        @if (Auth::user()->tipoUsuario == "Recepción")
+          <a href={{asset('/pacientes/'.$paciente->id)}} class="btn btn-primary">Ir a registro</a>
+        @endif
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

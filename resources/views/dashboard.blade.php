@@ -266,6 +266,18 @@
                                 </li>
                               </ul>
                             </li>
+                          @elseif (Auth::user()->tipoUsuario == "Enfermería")
+                            <li>
+                              <a>
+                                <i class="fa fa-hospital-o"></i> Hospital
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/ingresos')}}>Hospitalización</a>
+                                </li>     
+                              </ul>
+                            </li>
                           @endif
                           @if (Auth::user()->administrador)
                             <li>
@@ -597,6 +609,7 @@
       {!!Html::script('js/scripts/Productos.js')!!}
       {!!Html::script('js/scripts/Transacciones.js')!!}
       {!!Html::script('js/scripts/Ingreso.js')!!}
+      {!!Html::script('js/scripts/Ingreso2.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}
       {!!Html::script('js/scripts/Solicitud.js')!!}
