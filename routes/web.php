@@ -246,3 +246,8 @@ Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
 Route::get ('/github', 'PdfController@github');
 Route::get ('/llenar', 'RequisicionController@index');
+
+Route::resource('/ultrasonografias','UltrasonografiaController');
+Route::match(['get','post'],'/desactivateUltrasonografia/{id}','UltrasonografiaController@desactivate');
+Route::match(['get','post'],'/activateUltrasonografia/{id}','UltrasonografiaController@activate');
+Route::match(['get','post'],'/destroyUltrasonografia/{id}','UltrasonografiaController@destroy');

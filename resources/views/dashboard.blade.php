@@ -275,7 +275,19 @@
                               <ul class="nav child_menu">
                                 <li>
                                   <a href={{asset( '/ingresos')}}>Hospitalización</a>
-                                </li>     
+                                </li>
+                              </ul>
+                            </li>
+                          @elseif (Auth::user()->tipoUsuario == "Ultrasonografía")
+                            <li>
+                              <a>
+                                <i class="fa fa-search-plus"></i> Ultrasonografía
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/ultrasonografias')}}>Ultrasonografías</a>
+                                </li>
                               </ul>
                             </li>
                           @endif
