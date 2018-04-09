@@ -390,7 +390,6 @@ class SolicitudExamenController extends Controller
         }
       }
     }
-    dd($secciones);
     $header = view('PDF.header.hospital');
     $footer = view('PDF.footer.numero_pagina');
     $main = view('SolicitudExamenes.entregaTodosExamenes',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));

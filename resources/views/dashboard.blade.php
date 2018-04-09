@@ -463,7 +463,7 @@
                             @endif
                             @if ($stock>0)
                               <li>
-                              <a onclick="verstockbajo()">
+                              <a href="{{asset('/stockTodos')}}">
                                 <span>
                                   <span><strong>Invetario bajo</strong></span>
                                   <span class="time">Cantidad: <strong>{{$conteostock}}</strong></span>
@@ -633,25 +633,3 @@
         styling: 'bootstrap3'
       });
       </script>");?> @endforeach
-      <script type="text/javascript">
-      function verstockbajo(){
-        return swal({
-          title: 'Seleccione una opción',
-          text: "Como desea ver los productos que estan bajo el stock mínimo!",
-          type: 'info',
-          showCancelButton: true,
-          confirmButtonText: 'Todos los productos',
-          cancelButtonText: 'Por proveedor',
-          confirmButtonClass: 'btn btn-info',
-          cancelButtonClass: 'btn btn-info',
-          buttonsStyling: false
-        }).then(function () {
-          var dominio = window.location.host;
-          location.href ='http://'+dominio+'/blissey/public/stockTodos/';
-        }, function (dismiss) {
-          if (dismiss === 'cancel') {
-            location.href ='http://'+dominio+'/blissey/public/stockProveedor/';
-          }
-        });
-        }
-      </script>

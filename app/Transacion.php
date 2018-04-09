@@ -102,7 +102,7 @@ class Transacion extends Model
         "Levonorgestrel","Drospirenona","Levomefolato cálcico","Nifedipino","Iloprost trometanol",
         "Riociguat","Moxifloxacino","Ciprofloxacino","Vardenafil","Nimodipino",
         "Acetato de ciproterona","Rivaroxaban","Nifurtimox","Sorafenib","Interferon beta 1-b",
-        "Gadobutrol",'Metocarbamol','Acetaminofén'];
+        "Gadobutrol",'Metocarbamol','Acetaminofén','Etinilestradiol','Nafazolina','Antazolina fosfato'];
 
         foreach ($componentes as $key => $c) {
           $comp= new Componente();
@@ -113,9 +113,9 @@ class Transacion extends Model
       //PRESENTACIONES
       if (Presentacion::count()==0) {
         $presentaciones=[
-          'Grageas','Jeringa prellenada','Comprimidos','Endoceptivos',
-          'Cápsulas','Ampolla','Suspensión','viales','comprimidos recubiertos',
-          'Cápsulas blandas','Tabletas','Tabletas efervescentes','Sachet'];
+          'Grageas','Inyectable','Comprimidos','Endoceptivos',
+          'Cápsulas','Ampolla','Suspensión','Viales','Comprimidos recubiertos',
+          'Cápsulas blandas','Tabletas','Tabletas efervescentes','Sachet','Solución oftálmica','Crema'];
           foreach ($presentaciones as $key => $p) {
             $pre= new Presentacion();
             $pre->nombre=$p;
@@ -126,7 +126,7 @@ class Transacion extends Model
         if (Division::count()==0) {
           $divisiones=[
             'Caja','Dispensador','Frasco','Tubo','Spray',
-            'Blizter','Tarro'];
+            'Blizter','Tarro','Jeringa prellenada','Lata'];
             foreach ($divisiones as $key => $d) {
               $div= new Division();
               $div->nombre=$d;
@@ -155,6 +155,113 @@ class Transacion extends Model
               $cat->nombre=$c;
               $cat->save();
             }
-          }  
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Gynera','Grageas','Bayer','Anticonceptivos');
+          if($producto!=0){
+            Transacion::crearComponente('Etinilestradiol',$producto,0.03,'Mg');
+            Transacion::crearComponente('Gestodeno',$producto,0.075,'Mg');
+            Transacion::crearDivision('Caja',$producto,11.14,21,"","0004",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Gynera 75/20','Grageas','Bayer','Anticonceptivos');
+          if($producto!=0){
+            Transacion::crearComponente('Etinilestradiol',$producto,0.02,'Mg');
+            Transacion::crearComponente('Gestodeno',$producto,0.075,'Mg');
+            Transacion::crearDivision('Caja',$producto,10.55,21,"","0005",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Mesigyna','Inyectable','Bayer','Anticonceptivos');
+          if($producto!=0){
+            Transacion::crearComponente('Valerato de estradiol',$producto,5,'Mg');
+            Transacion::crearComponente('Enantato de noretisterona',$producto,50,'Mg');
+            Transacion::crearDivision('Jeringa prellenada',$producto,6.17,1,'Ml',"0006",10);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Microgynon','Grageas','Bayer','Anticonceptivos');
+          if($producto!=0){
+            Transacion::crearComponente('Etinilestradiol',$producto,0.03,'Mg');
+            Transacion::crearComponente('Levonorgestrel',$producto,0.15,'Mg');
+            Transacion::crearDivision('Caja',$producto,5.15,21,"","0007",30);
+            Transacion::crearDivision('Caja',$producto,7.19,28,"","0008",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Mirelle','comprimidos recubiertos','Bayer','Anticonceptivos');
+          if($producto!=0){
+            Transacion::crearComponente('Etinilestradiol',$producto,0.015,'Mg');
+            Transacion::crearComponente('Gestodeno',$producto,0.06,'Mg');
+            Transacion::crearDivision('Caja',$producto,10.84,28,"","0009",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Mirena evo','Endoceptivos','Bayer','Anticonceptivos');
+          if($producto!=0){
+            Transacion::crearComponente('Levonorgestrel',$producto,52,'Mg');
+            Transacion::crearDivision('Caja',$producto,133.8,1,"","0010",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Adalat 10 mg','Cápsulas','Bayer','Cardiológicos');
+          if($producto!=0){
+            Transacion::crearComponente('Nifedipino',$producto,10,'Mg');
+            Transacion::crearDivision('Caja',$producto,20.18,30,"","0011",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Adalat Oros 20 mg','Comprimidos recubiertos','Bayer','Cardiológicos');
+          if($producto!=0){
+            Transacion::crearComponente('Nifedipino',$producto,20,'Mg');
+            Transacion::crearDivision('Caja',$producto,11.68,30,"","0012",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Adalat Oros 30 mg','Comprimidos recubiertos','Bayer','Cardiológicos');
+          if($producto!=0){
+            Transacion::crearComponente('Nifedipino',$producto,30,'Mg');
+            Transacion::crearDivision('Caja',$producto,21.90,30,"","0013",30);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Alerfín','Solución oftálmica','Laboratorio López','Oftalmológicos');
+          if($producto!=0){
+            Transacion::crearComponente('Nafazolina',$producto,0.5,'Mg');
+            Transacion::crearComponente('Antazolina fosfato',$producto,2.5,'Mg');
+            Transacion::crearDivision('Frasco',$producto,1.45,15,'Ml',"0014",20);
+          }
+          //LLENADO DE PRODUCTOS
+          $producto=Transacion::crearProducto('Alerfín crema','Crema','Laboratorio López','Antibióticos');
+          if($producto!=0){
+            Transacion::crearComponente('Clorfenamina maleato',$producto,10,'Mg');
+            Transacion::crearDivision('Lata',$producto,0.90,12,'G',"0015",15);
+          }
+        }
+        public static function crearProducto($nom,$pre,$pro,$cat){
+          if(Producto::where('nombre',$nom)->count()==0){
+            $prod=new Producto();
+            $prod->nombre=$nom;
+            $prod->f_presentacion=Presentacion::where('nombre',$pre)->get()->first()->id;
+            $prod->f_proveedor=Proveedor::where('nombre',$pro)->get()->first()->id;
+            $prod->f_categoria=CategoriaProducto::where('nombre',$cat)->get()->first()->id;
+            $prod->save();
+            return $prod->id;
+          }else{
+            return 0;
+          }
+        }
+        public static function crearComponente($com,$id,$can,$uni){
+          $c=new ComponenteProducto();
+          $c->f_componente=Componente::where('nombre',$com)->get()->first()->id;
+          $c->f_producto=$id;
+          $c->cantidad=$can;
+          $c->f_unidad=Unidad::where('nombre',$uni)->get()->first()->id;
+          $c->save();
+
+        }
+        public static function crearDivision($div,$id,$pre,$can,$con,$cod,$stock){
+          $d= new DivisionProducto();
+          $d->f_division=Division::where('nombre',$div)->get()->first()->id;
+          $d->f_producto=$id;
+          $d->precio=$pre;
+          $d->cantidad=$can;
+          if($con!="")
+          {$d->contenido=Unidad::where('nombre',$con)->get()->first()->id;}
+          $d->codigo=$cod;
+          $d->stock=$stock;
+          $d->save();
         }
       }

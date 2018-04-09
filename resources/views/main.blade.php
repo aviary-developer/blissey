@@ -6,7 +6,7 @@
   <div class="x_panel">
     <div class="row">
       <center>
-        @if (isset($empresa))            
+        @if (isset($empresa))
           <img src={{asset(Storage::url($empresa->logo_hospital))}} class="img-responsive avatar-view smallperfil">
           <h3>Grupo Promesa
             <br><small>Divino Niño</small>
@@ -15,7 +15,7 @@
           <img src={{asset(Storage::url("NoImgen.jpg"))}} class="img-responsive avatar-view smallperfil">
           <h3>Grupo Promesa
             <br><small>Divino Niño</small>
-          </h3>      
+          </h3>
         @endif
       </center>
     </div>
@@ -75,6 +75,13 @@
   <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">
+        @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio")
+          @include('widget.reactivos')
+        @endif
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-1">
+      <div class="x_panel">
         @if (Auth::user()->tipoUsuario == "Recepción")
           @include('widget.ingreso')
         @endif
@@ -82,7 +89,7 @@
     </div>
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">
-        @if (Auth::user()->tipoUsuario == "Recepción")
+        @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio")
           @include('widget.solicitudes')
         @endif
       </div>

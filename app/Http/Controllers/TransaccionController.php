@@ -82,7 +82,7 @@ class TransaccionController extends Controller
 
       if(!$valida->fails()){
         DB::beginTransaction();
-        // try{
+        try{
           if($tipo==0){
         $transaccion=Transacion::create([
           'fecha'=>$request->fecha,
@@ -129,10 +129,10 @@ class TransaccionController extends Controller
         }
         }
       }
-      // }catch(\Exception $e){
-      //   DB::rollback();
-      //   return redirect('/')->with('error', '¡Algo salio mal!');
-      // }
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/')->with('error', '¡Algo salio mal!');
+      }
       DB::commit();
       return redirect('/transacciones?tipo='.$tipo."&estado=".$estado)->with('mensaje', '¡Guardado!');
     }else{

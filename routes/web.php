@@ -137,17 +137,19 @@ Route::group(['middleware'=>'admin'], function()
 });
 Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {
-    $primero = $segundo = "Nada";
-    if(Auth::user()->tipoUsuario == "Recepción"){
+    $primero = $segundo = $tercero = "Nada";
+    if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
+      $tercero = App\Reactivo::where('contenidoPorEnvase','<',10)->get();
     }
     $empresa = App\Empresa::latest()->first();
     // App\Transacion::llenar();
     return view('main', compact(
       "empresa",
       "primero",
-      "segundo"
+      "segundo",
+      "tercero"
     ));
   });
 
@@ -222,8 +224,6 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/abonar','IngresoController@abonar');
   Route::post('/servicio_medicos','IngresoController@servicio_medicos');
   Route::post('/cambio_ingreso','IngresoController@cambio_ingreso');
-  Route::post('/editar24','IngresoController@editar24');
-  Route::post('/eliminar24','IngresoController@eliminar24');
 //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

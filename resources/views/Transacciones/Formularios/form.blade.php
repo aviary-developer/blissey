@@ -117,7 +117,9 @@
                   <td>$ {{number_format($cantidad[$i]*$precio[$i],2,'.','.')}}</td>
                 @endif
                 <td>
+                @if ($tipo==2)
                   <input type='hidden' name='tipo_detalle[]' value ={{$tipo_detalle[$i]}}>
+                @endif
                   <input type='hidden' name='f_producto[]' value ={{$f_producto[$i]}}>
                   <input type='hidden' name='cantidad[]' value ={{$cantidad[$i]}}>
                   @if ($tipo==2)
