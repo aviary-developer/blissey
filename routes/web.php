@@ -18,6 +18,7 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
   Route::match(['get','post'],'/llenarReactivosExamenes','ReactivoController@llenarReactivosExamenes');
   Route::match(['get','post'],'/ingresoReactivo','ReactivoController@ingresoReactivo');
+  Route::match(['get','post'],'/actualizarExistenciaReactivos','ReactivoController@actualizarExistenciaReactivos');
 
   //Rutas de Secciones Examenes
   Route::resource('secciones','SeccionController');

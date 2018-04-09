@@ -79,7 +79,12 @@
                     </a>
                   </td>
                   <td>{{ $reactivo->descripcion }}</td>
-                  <td><strong>{{ $reactivo->contenidoPorEnvase.' '}}</strong>
+                  <td>
+                  @if($reactivo->contenidoPorEnvase<10)
+                    <span class="label label-lg label-danger col-xs-10">{{ $reactivo->contenidoPorEnvase.' '}}</span>
+                  @else
+                    <span class="label label-lg label-dark-blue col-xs-10">{{ $reactivo->contenidoPorEnvase.' '}}</span>
+                  @endif
                     @include('Reactivos.Formularios.agregarExistencias')</td>
                   <td>
                     @if ($estadoOpuesto)

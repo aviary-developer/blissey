@@ -127,4 +127,10 @@ class ReactivoController extends Controller
     Reactivo::create($request->All());
     return Response::json('success');
   }
+  public function actualizarExistenciaReactivos(Request $request){
+    $reactivos = Reactivo::find($request->id);
+    $reactivos->contenidoPorEnvase = $request->contenidoPorEnvase;
+    $reactivos->save();
+    return Response::json('sucess');
+  }
 }
