@@ -75,15 +75,10 @@
   <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">
-        @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio")
-          @include('widget.reactivos')
-        @endif
-      </div>
-    </div>
-    <div class="col-md-6 col-sm-6 col-xs-1">
-      <div class="x_panel">
         @if (Auth::user()->tipoUsuario == "Recepción")
           @include('widget.ingreso')
+        @elseif (Auth::user()->tipoUsuario == "Laboaratorio")
+          @include('widget.reactivos')
         @endif
       </div>
     </div>

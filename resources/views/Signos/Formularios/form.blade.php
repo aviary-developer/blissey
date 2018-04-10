@@ -2,7 +2,7 @@
   <label class="control-label col-md-4 col-sm-4 col-xs-12">Peso</label>
   <div class="col-md-4 col-sm-4 col-xs-6">
     <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-    {!! Form::number('peso',null,['class'=>'form-control has-feedback-left','placeholder'=>'Peso','min'=>'0.00','step'=>'0.10','id'=>'peso']) !!}
+    {!! Form::number('peso',null,['class'=>'form-control has-feedback-left','placeholder'=>'Peso','min'=>'0.01','step'=>'0.10','id'=>'peso']) !!}
   </div>
   <div class="col-md-4 col-sm-4 col-xs-6">
     <select name="medida" id="medida" class="form-control">
@@ -15,7 +15,7 @@
   <label class="control-label col-md-4 col-sm-4 col-xs-12">Altura (cm)</label>
   <div class="col-md-8 col-sm-8 col-xs-12">
     <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-    {!! Form::number('altura',null,['class'=>'form-control has-feedback-left','placeholder'=>'Altura en centimetros','min'=>'0','step'=>'1','id'=>'altura']) !!}
+    {!! Form::number('altura',null,['class'=>'form-control has-feedback-left','placeholder'=>'Altura en centimetros','min'=>'1','step'=>'1','id'=>'altura']) !!}
   </div>
 </div>
 <div class="form-group col-xs-12">

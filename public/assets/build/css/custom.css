@@ -3,6 +3,11 @@
     --secundario: #3ec8ca;
     --terciario: #1f7b7d;
 }
+canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
 .modal-header{
     border-radius: 6px 6px 0px 0px;
     background: linear-gradient(var(--principal), var(--secundario)), var(--terciario);

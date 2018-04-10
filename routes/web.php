@@ -236,6 +236,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get'],'/stockProveedor','DivisionProductoController@stockProveedor');
   //Signos vitales
   Route::resource('signos','SignoVitalController');
+  Route::get('/signo_lista','SignoVitalController@listar');
 });
 Auth::routes();
 //Rutas de login
@@ -245,3 +246,6 @@ Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
 Route::get ('/github', 'PdfController@github');
 Route::get ('/llenar', 'RequisicionController@index');
+Route::get('/hola', function() {
+  return view('basic');
+});

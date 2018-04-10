@@ -557,14 +557,16 @@
     </div>
 
     {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
+    <!-- Chart.js -->
+    {!!Html::script('assets/chart.js2/chart.js/dist/Chart.min.js')!!}
+    {!!Html::script('assets/chart.js2/chart.js/samples/utils.js')!!}
     <!-- Bootstrap -->
     {!!Html::script('assets/bootstrap/dist/js/bootstrap.min.js')!!}
     <!-- FastClick -->
     {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
     <!-- NProgress -->
     {!!Html::script('assets/nprogress/nprogress.js')!!}
-    <!-- Chart.js -->
-    {!!Html::script('assets/Chart.js/dist/Chart.min.js')!!}
+    
     <!-- gauge.js -->
     {!!Html::script('assets/gauge.js/dist/gauge.min.js')!!}
     <!-- bootstrap-progressbar -->
