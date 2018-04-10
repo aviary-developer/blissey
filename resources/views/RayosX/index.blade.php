@@ -15,7 +15,7 @@
   <div class="col-md-8 col-sm-8 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Ultrasonografías
+        <h2>Rayos X
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
@@ -28,9 +28,9 @@
         <div class="row">
           <div class="col-md-7 col-xs-12">
             <div class="btn-group">
-              <a href={!! asset('/ultrasonografias/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <a href={!! asset('/rayosx/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/ultrasonografias?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
+              <a href={!! asset('/rayosx?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
                   <i class="fa fa-check"></i> Activos
                   <span class="label label-success">{{ $activos }}</span>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="col-md-5 col-xs-12">
-            {!!Form::open(['route'=>'ultrasonografias.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
+            {!!Form::open(['route'=>'rayosx.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
@@ -64,19 +64,19 @@
             </tr>
           </thead>
           <tbody>
-            @if (count($ultrasonografias)>0)
+            @if (count($rayosx)>0)
               @php
               $correlativo = 1;
               @endphp
-              @foreach ($ultrasonografias as $ultrasonografia)
+              @foreach ($rayosx as $rayox)
                 <tr>
                   <td>{{ $correlativo + $pagina}}</td>
-                  <td>{{ $ultrasonografia->nombre}}</td>
+                  <td>{{ $rayox->nombre}}</td>
                   <td>
                     @if ($estadoOpuesto)
-                      @include('Ultrasonografias.Formularios.activate')
+                      @include('RayosX.Formularios.activate')
                     @else
-                      @include('Ultrasonografias.Formularios.desactivate')
+                      @include('RayosX.Formularios.desactivate')
                     @endif
                   </td>
                 </tr>
@@ -97,7 +97,7 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $ultrasonografias->appends(Request::only(['nombre','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $rayosx->appends(Request::only(['nombre','estado']))->render ()) !!}
         </center>
       </div>
     </div>

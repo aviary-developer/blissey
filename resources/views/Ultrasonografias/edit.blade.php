@@ -7,7 +7,7 @@
   <div class="col-md-7 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Donación<small>Editar</small></h2>
+        <h2>Ultrasonografía<small>Editar</small></h2>
         <div class="clearfix"></div>
       </div>
       @include('Ultrasonografias.Formularios.form')

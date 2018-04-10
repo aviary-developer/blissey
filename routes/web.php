@@ -252,3 +252,8 @@ Route::resource('/ultrasonografias','UltrasonografiaController');
 Route::match(['get','post'],'/desactivateUltrasonografia/{id}','UltrasonografiaController@desactivate');
 Route::match(['get','post'],'/activateUltrasonografia/{id}','UltrasonografiaController@activate');
 Route::match(['get','post'],'/destroyUltrasonografia/{id}','UltrasonografiaController@destroy');
+
+Route::resource('/rayosx','RayosxController');
+Route::match(['get','post'],'/desactivateRayosx/{id}','RayosxController@desactivate');
+Route::match(['get','post'],'/activateRayosx/{id}','RayosxController@activate');
+Route::match(['get','post'],'/destroyRayosx/{id}','RayosxController@destroy');

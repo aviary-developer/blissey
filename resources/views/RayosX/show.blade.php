@@ -10,14 +10,14 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Ultrasonografia
+          Rayos X
         </h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
         <div class="row">
           <div class="col-md-6 col-xs-12">
-            @include('Ultrasonografias.Formularios.activate')
+            @include('RayosX.Formularios.activate')
           </div>
         </div>
         <br>
@@ -37,18 +37,18 @@
                 <h3>Información General</h3>
                 <table class="table">
                   <tr>
-                    <th>Tipo de Sangre</th>
+                    <th>Rayos X</th>
                       <td>
-                          {{$ultrasonografia->nombre}}
+                          {{$rayox->nombre}}
                     </td>
                   </tr>
                   <tr>
                     <th>Fecha de creación</th>
-                    <td>{{ $ultrasonografia->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                    <td>{{ $rayox->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                   </tr>
                   <tr>
                     <th>Fecha de modificación</th>
-                    <td>{{ $ultrasonografia->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                    <td>{{ $rayox->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                   </tr>
                 </table>
               </div>

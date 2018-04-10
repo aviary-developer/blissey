@@ -290,7 +290,19 @@
                                 </li>
                               </ul>
                             </li>
-                          @endif
+                        @elseif (Auth::user()->tipoUsuario == "Rayos X")
+                          <li>
+                            <a>
+                              <i class="fa fa-times-circle-o"></i>Departamento Rayos X
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a href={{asset( '/rayosx')}}>Rayos X</a>
+                              </li>
+                            </ul>
+                          </li>
+                        @endif
                           @if (Auth::user()->administrador)
                             <li>
                               <a>

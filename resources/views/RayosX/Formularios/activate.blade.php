@@ -1,20 +1,20 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/ultrasonografias/'.$ultrasonografia->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+  <a href={!! asset('/rayosx/'.$rayox->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/ultrasonografias/'.$ultrasonografia->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+  <a href={!! asset('/rayosx/'.$rayox->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$ultrasonografia->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$rayox->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$ultrasonografia->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$rayox->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
 @else
   <div class="btn-group">
-    @if (!$ultrasonografia->estado)
+    @if (!$rayox->estado)
       @php
         $regreso = "?estado=0";
       @endphp
@@ -23,21 +23,21 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/ultrasonografias'.$regreso)!!} class="btn btn-dark btn-sm">
+    <a href={!! asset('/rayosx'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/ultrasonografias/'.$ultrasonografia->id.'/edit')!!} class="btn btn-dark btn-sm">
+    <a href={!! asset('/rayosx/'.$rayox->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
-    @if ($ultrasonografia->estado)
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$ultrasonografia->id.");'" !!}>
+    @if ($rayox->estado)
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$rayox->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$ultrasonografia->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$rayox->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$ultrasonografia->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$rayox->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
@@ -62,7 +62,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateUltrasonografia/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateRayosx/'+id);
       $('#formulario').submit();
       swal(
         '¡Restaurado!',
@@ -96,7 +96,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyUltrasonografia/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyRayosx/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -129,7 +129,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateUltrasonografia/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateRayosx/'+id);
       $('#formulario').submit();
       swal(
         '¡Desactivado!',

@@ -37,7 +37,7 @@
                 <h3>Información General</h3>
                 <table class="table">
                   <tr>
-                    <th>Tipo de Sangre</th>
+                    <th>Ultrasonografía</th>
                       <td>
                           {{$ultrasonografia->nombre}}
                     </td>

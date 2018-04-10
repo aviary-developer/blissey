@@ -1,8 +1,8 @@
-{!!Form::open(['url'=>['desactivateUltrasonografia',$ultrasonografia->id],'method'=>'POST'])!!}
-<a href={!! asset('/ultrasonografias/'.$ultrasonografia->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+{!!Form::open(['url'=>['desactivateRayosx',$rayox->id],'method'=>'POST'])!!}
+<a href={!! asset('/rayosx/'.$rayox->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
   <i class="fa fa-info-circle"></i>
 </a>
-<a href={!! asset('/ultrasonografias/'.$ultrasonografia->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+<a href={!! asset('/rayosx/'.$rayox->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
   <i class="fa fa-edit"></i>
 </a>
 <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Enviar a papelera" onclick="

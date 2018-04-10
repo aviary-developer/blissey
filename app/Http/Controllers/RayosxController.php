@@ -24,11 +24,11 @@ class RayosxController extends Controller
       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
       $pagina--;
       $pagina *= 10;
-      $ultrasonografias = ultrasonografia::buscar($nombre,$estado);
-      $activos = ultrasonografia::where('estado',true)->count();
-      $inactivos = ultrasonografia::where('estado',false)->count();
-      return view('Ultrasonografias.index',compact(
-        'ultrasonografias',
+      $rayosx = Rayosx::buscar($nombre,$estado);
+      $activos = Rayosx::where('estado',true)->count();
+      $inactivos = Rayosx::where('estado',false)->count();
+      return view('RayosX.index',compact(
+        'rayosx',
         'estado',
         'nombre',
         'activos',
@@ -44,7 +44,7 @@ class RayosxController extends Controller
      */
     public function create()
     {
-        return view('Ultrasonografias.create');
+        return view('RayosX.create');
     }
 
     /**
@@ -55,8 +55,8 @@ class RayosxController extends Controller
      */
     public function store(Request $request)
     {
-      ultrasonografia::create($request->All());
-      return redirect('/ultrasonografias')->with('mensaje', '¡Guardado!');
+      Rayosx::create($request->All());
+      return redirect('/rayosx')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -67,8 +67,8 @@ class RayosxController extends Controller
      */
     public function show($id)
     {
-      $ultrasonografia = ultrasonografia::find($id);
-      return view('Ultrasonografias.show',compact('ultrasonografia'));
+      $rayox = Rayosx::find($id);
+      return view('RayosX.show',compact('rayox'));
     }
 
     /**
@@ -79,8 +79,8 @@ class RayosxController extends Controller
      */
     public function edit($id)
     {
-      $ultrasonografia = ultrasonografia::find($id);
-      return view('Ultrasonografias.edit',compact('ultrasonografia'));
+      $rayox = Rayosx::find($id);
+      return view('RayosX.edit',compact('rayox'));
     }
 
     /**
@@ -92,15 +92,15 @@ class RayosxController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $ultrasonografias = ultrasonografia::find($id);
-      $ultrasonografias->fill($request->all());
-      $ultrasonografias->save();
-      if($ultrasonografias->estado)
+      $rayosx = Rayosx::find($id);
+      $rayosx->fill($request->all());
+      $rayosx->save();
+      if($rayosx->estado)
       {
-        return redirect('/ultrasonografias')->with('mensaje', '¡Editado!');
+        return redirect('/rayosx')->with('mensaje', '¡Editado!');
       }
       else{
-        return redirect('/ultrasonografias?estado=0')->with('mensaje', '¡Editado!');
+        return redirect('/rayosx?estado=0')->with('mensaje', '¡Editado!');
       }
     }
 
@@ -112,21 +112,21 @@ class RayosxController extends Controller
      */
     public function destroy($id)
     {
-      $ultrasonografias = ultrasonografia::findOrFail($id);
-      $ultrasonografias->delete();
-      return redirect('/ultrasonografias?estado=0');
+      $rayosx = Rayosx::findOrFail($id);
+      $rayosx->delete();
+      return redirect('/rayosx?estado=0');
     }
     public function desactivate($id){
-      $ultrasonografias = ultrasonografia::find($id);
-      $ultrasonografias->estado = false;
-      $ultrasonografias->save();
-      return Redirect::to('/ultrasonografias');
+      $rayosx = Rayosx::find($id);
+      $rayosx->estado = false;
+      $rayosx->save();
+      return Redirect::to('/rayosx');
     }
 
     public function activate($id){
-      $ultrasonografias = ultrasonografia::find($id);
-      $ultrasonografias->estado = true;
-      $ultrasonografias->save();
-      return Redirect::to('/ultrasonografias?estado=0');
+      $rayosx = Rayosx::find($id);
+      $rayosx->estado = true;
+      $rayosx->save();
+      return Redirect::to('/rayosx?estado=0');
     }
 }
