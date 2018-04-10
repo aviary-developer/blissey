@@ -126,7 +126,7 @@ class RequisicionController extends Controller
         //
     }
     public static function buscar($texto){
-      $productos=Producto::where('nombre','ILIKE','%'.$texto.'%')->where('estado',1)->get(['id','nombre','f_presentacion']);
+      $productos=Producto::where('nombre','ILIKE','%'.$texto.'%')->where('estado',1)->take(3)->get(['id','nombre','f_presentacion']);
       foreach ($productos as $p) {
         $p->presentacion;
         $p->divisionProducto;

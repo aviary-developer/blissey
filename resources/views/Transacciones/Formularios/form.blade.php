@@ -88,7 +88,7 @@
         {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-        <h4 class="StepTitle">Detalles</h4>
+        <h4 class="StepTitle">Detalles *</h4>
         <table class="table" id="tablaDetalle">
           <thead>
             <th>Cantidad</th>

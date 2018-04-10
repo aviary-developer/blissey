@@ -17,6 +17,9 @@
           <div class="col-md-5 col-xs-12">
             <div class="btn-group">
                 <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
+                @if ($f_proveedor!="")
+                <a href={!! asset('/stockProveedor/'.$f_proveedor) !!} class="btn btn-dark btn-ms"><i class="fa fa-cart-plus"></i> Pedido</a>
+                @endif
             </div>
           </div>
           <div class="col-md-3 col-xs-12"></div>
@@ -75,9 +78,6 @@
           </tbody>
       </table>
       <div class="ln_solid"></div>
-      <center>
-        {{-- {!! str_replace ('/?', '?', $divisiones->appends(Request::only(['buscar']))->render ()) !!} --}}
-      </center>
     </div>
   </div>
 </div>
