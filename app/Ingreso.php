@@ -56,7 +56,7 @@ class Ingreso extends Model
     }
 
     public function signos(){
-      return $this->hasMany('App\SignoVital', 'f_ingreso');
+      return $this->hasMany('App\SignoVital', 'f_ingreso')->orderBy('created_at','desc');
     }
 
     public static function servicio_gastos($id, $dia = -1){

@@ -234,9 +234,10 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/destroyCategoriaProducto/{id}','CategoriaProductoController@destroy');
   //rutas relacionadas con el stock mínimo
   Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
-  Route::match(['get'],'/stockProveedor','DivisionProductoController@stockProveedor');
+  Route::match(['get'],'/stockProveedor/{f_proveedor}','DivisionProductoController@stockProveedor');
   //Signos vitales
   Route::resource('signos','SignoVitalController');
+  Route::get('/signo_lista','SignoVitalController@listar');
 });
 Auth::routes();
 //Rutas de login

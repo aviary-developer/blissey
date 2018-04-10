@@ -498,9 +498,9 @@
                       $ultima= App\Transacion::where('tipo',5)->orderBy('id','asc')->get()->last();
                       $conteostock=App\DivisionProducto::conteo();
                       $stock=0;
-                      if($conteostock>0){
-                        $stock=1;
-                      }
+                      // if($conteostock>0){
+                      //   $stock=1;
+                      // }
                       $porvencer=0;
                       $vencidos=0;
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
@@ -525,7 +525,7 @@
                               </a>
                             </li>
                             @endif
-                            @if ($stock>0)
+                            {{-- @if ($stock>0)
                               <li>
                               <a onclick="verstockbajo()">
                                 <span>
@@ -537,7 +537,7 @@
                                 </span>
                               </a>
                             </li>
-                            @endif
+                            @endif --}}
                     </ul>
                       @endif
                     </li>
@@ -569,14 +569,16 @@
     </div>
 
     {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
+    <!-- Chart.js -->
+    {!!Html::script('assets/chart.js2/chart.js/dist/Chart.min.js')!!}
+    {!!Html::script('assets/chart.js2/chart.js/samples/utils.js')!!}
     <!-- Bootstrap -->
     {!!Html::script('assets/bootstrap/dist/js/bootstrap.min.js')!!}
     <!-- FastClick -->
     {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
     <!-- NProgress -->
     {!!Html::script('assets/nprogress/nprogress.js')!!}
-    <!-- Chart.js -->
-    {!!Html::script('assets/Chart.js/dist/Chart.min.js')!!}
+
     <!-- gauge.js -->
     {!!Html::script('assets/gauge.js/dist/gauge.min.js')!!}
     <!-- bootstrap-progressbar -->
@@ -628,6 +630,7 @@
       {!!Html::script('js/scripts/Presentaciones.js')!!}
       {!!Html::script('js/general.js')!!}
       {!!Html::script('js/scripts/Requisiciones.js')!!}
+      {!!Html::script('js/scripts/StockProveedor.js')!!}
       @section('scripts')
       @show
 

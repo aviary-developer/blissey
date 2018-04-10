@@ -199,6 +199,7 @@
               @include('Ingresos.Formularios.show.modal.modal_medico')
               @include('Ingresos.Formularios.show.modal.modal_informe')
               @include('Ingresos.Formularios.show.modal.modal_signos')
+              @include('Ingresos.Formularios.show.modal.modal_grafico_signo')
               @endif
             </div>
           </div>

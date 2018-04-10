@@ -40,6 +40,11 @@ class SignoVitalController extends Controller
         DB::beginTransaction();
         try{
             $signos = SignoVital::create($request->All());
+            $ultimo = SignoVital::where('f_ingreso',$request->f_ingreso)->first();
+            if(count($ultimo) > 0 && $signos->altura == null){
+                $signos->altura = $ultimo->altura;
+                $signos->save();
+            }
             Bitacora::bitacora('store','signo_vitals','signos',$signos->id);
             DB::commit();
             return 3;
@@ -92,5 +97,11 @@ class SignoVitalController extends Controller
     public function destroy(SignoVital $signoVital)
     {
         //
+    }
+
+    public function listar(Request $request){
+        $id = $request->id;
+        $signos = SignoVital::where('f_ingreso',$id)->orderBy('created_at','asc')->get();
+        return $signos;
     }
 }
