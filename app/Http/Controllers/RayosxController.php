@@ -7,10 +7,10 @@ use Redirect;
 use DB;
 use Response;
 use Carbon\Carbon;
-use App\ultrasonografia;
+use App\Rayosx;
 use Illuminate\Http\Request;
 
-class UltrasonografiaController extends Controller
+class RayosxController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -62,7 +62,7 @@ class UltrasonografiaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ultrasonografia  $ultrasonografia
+     * @param  \App\Rayosx  $rayosx
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -74,7 +74,7 @@ class UltrasonografiaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ultrasonografia  $ultrasonografia
+     * @param  \App\Rayosx  $rayosx
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -87,7 +87,7 @@ class UltrasonografiaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ultrasonografia  $ultrasonografia
+     * @param  \App\Rayosx  $rayosx
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -107,16 +107,15 @@ class UltrasonografiaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ultrasonografia  $ultrasonografia
+     * @param  \App\Rayosx  $rayosx
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $ultrasonografias = ultrasonografia::findOrFail($id);
-        $ultrasonografias->delete();
-        return redirect('/ultrasonografias?estado=0');
+      $ultrasonografias = ultrasonografia::findOrFail($id);
+      $ultrasonografias->delete();
+      return redirect('/ultrasonografias?estado=0');
     }
-
     public function desactivate($id){
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->estado = false;
@@ -130,13 +129,4 @@ class UltrasonografiaController extends Controller
       $ultrasonografias->save();
       return Redirect::to('/ultrasonografias?estado=0');
     }
-
-   public function llenarUltrasonografiasExamenes(){
-     $ultrasonografias=ultrasonografia::where('estado',true)->orderBy('nombre')->get();
-     return Response::json($ultrasonografias);
-   }
-   public function ingresoMuestra(MuestraRequest $request){
-     ultrasonografia::create($request->All());
-     return Response::json('success');
-   }
 }

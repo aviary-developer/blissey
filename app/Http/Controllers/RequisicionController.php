@@ -22,7 +22,7 @@ class RequisicionController extends Controller
       $tipo= $request->tipo;
       $buscar=$request->buscar;
         $transacciones=Transacion::buscar($buscar,$tipo);
-        Transacion::llenar();
+        //Transacion::llenar();
         return view('Requisiciones.index',compact('transacciones','tipo','buscar'));//index recepción
     }
 
