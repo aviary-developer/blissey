@@ -115,4 +115,19 @@ class DivisionProducto extends Model
     }
 
   }
+  public static function stock($f_proveedor){
+    $divs=DivisionProducto::whereHas('producto',function ($query) {
+      $query->where('estado',true);
+    })->with('producto')->orderBy('codigo')->get();
+      foreach ($divs as $division) {
+        $division->menos=DivisionProducto::menor($division->id,$division->stock);
+        $division->inventario=DivisionProducto::inventario($division->id,1);
+      }
+      if($f_proveedor!=""){
+      $divisiones=$divs->where('menos',true)->where('producto.f_proveedor',$f_proveedor);
+    }else{
+      $divisiones=$divs->where('menos',true);
+    }
+    return $divisiones;
+  }
 }

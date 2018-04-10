@@ -18,6 +18,7 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/destroyReactivo/{id}','ReactivoController@destroy');
   Route::match(['get','post'],'/llenarReactivosExamenes','ReactivoController@llenarReactivosExamenes');
   Route::match(['get','post'],'/ingresoReactivo','ReactivoController@ingresoReactivo');
+  Route::match(['get','post'],'/actualizarExistenciaReactivos','ReactivoController@actualizarExistenciaReactivos');
 
   //Rutas de Secciones Examenes
   Route::resource('secciones','SeccionController');
@@ -233,7 +234,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/destroyCategoriaProducto/{id}','CategoriaProductoController@destroy');
   //rutas relacionadas con el stock mínimo
   Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
-  Route::match(['get'],'/stockProveedor','DivisionProductoController@stockProveedor');
+  Route::match(['get'],'/stockProveedor/{f_proveedor}','DivisionProductoController@stockProveedor');
   //Signos vitales
   Route::resource('signos','SignoVitalController');
   Route::get('/signo_lista','SignoVitalController@listar');

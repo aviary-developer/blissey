@@ -29,10 +29,8 @@ $(document).on('ready',function(){
               "</thead>";
               tabla.append(head);
               $(res).each(function(key,value){
-                console.log(value.nombre);
                 var res2=value.division_producto;
                   $(res2).each(function(key2,value2){
-                    console.log(value2.codigo);
                     if (value2.unidad==null) {
                       n_division=value2.division.nombre+" "+value2.cantidad+" "+value.presentacion.nombre;
                     } else {
@@ -435,7 +433,6 @@ $(document).on('ready',function(){
       });
       $('.valt').each(function(){ //Fecha
         cop=validarFechaMenorActual($(this).val());
-        console.log(cop);
         if($(this).val().trim()==""){
           error++;
           v3=1;

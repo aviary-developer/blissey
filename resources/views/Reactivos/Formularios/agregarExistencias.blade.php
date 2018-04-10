@@ -1,4 +1,4 @@
-<td><button value={{ $reactivo->contenidoPorEnvase}}  onclick="botonExistencias(this,'{{$reactivo->nombre}}');" type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modalExistencias">
+<td><button value={{ $reactivo->contenidoPorEnvase}}  onclick="botonExistencias(this,'{{$reactivo->nombre}}','{{$reactivo->id}}');" type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modalExistencias">
   <i class="fa fa-unsorted"></i>
 </button></td>
 <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modalExistencias">
@@ -25,8 +25,8 @@
             </div>
           </div>
 
-          <input type="hidden" id="tokenMuestraModal" name="tokenMuestraModal" value="<?php echo csrf_token(); ?>">
-
+          <input type="hidden" id="tokenExistenciaModal" name="tokenExistenciaModal" value="<?php echo csrf_token(); ?>">
+<input type="hidden" id="idReactivo" name="idReactivo" value="">
         </div>
         <center>
           <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
@@ -42,9 +42,10 @@
   </div>
 </div>
 <script>
-function botonExistencias(existencias,nombre) {
+function botonExistencias(existencias,nombre,id) {
   $("#spanExistenciasActuales").text(existencias.value);
   $("#spanNomReac").text(nombre);
+  $("#idReactivo").val(id);
 $("#cerrar_modalExistencias").on('click', function () {
   $("#cantidadExistencias").val("");
 });
@@ -83,7 +84,7 @@ function comprobacionTemporal(){
       cancelButtonClass: 'btn btn-default',
       buttonsStyling: false
     }).then(function () {
-      guardarExistencias();
+      guardarExistencias(total);
     }, function (dismiss) {
       if (dismiss === 'cancel') {
         swal(
@@ -95,25 +96,53 @@ function comprobacionTemporal(){
     });
   }
   else if(total>0){
-  guardarExistencias();
+  guardarExistencias(total);
 }
 }
-function guardarExistencias(){
-  $(".modal").modal('hide');
-  swal({
-    title: '¡Cantidad registrada!',
-    text: 'Actualizando existencias',
-    timer: 2500,
-    onOpen: function () {
-      swal.showLoading()
-    }
-  }).then(
-    function () { },
-    function (dismiss) {
-      if (dismiss === 'timer') {
+function guardarExistencias(total){
+  var ruta="/blissey/public/actualizarExistenciaReactivos";
+  var token = $('#tokenExistenciaModal').val();
+  var id = $('#idReactivo').val();
+  $.ajax({
+    url:ruta,
+    headers:{'X-CSRF-TOKEN':token},
+    type:'POST',
+    data: {
+      id:id,
+      contenidoPorEnvase:total
+    },
+    success: function(){
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Cantidad registrada!',
+        text: 'Actualizando existencias',
+        timer: 2500,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+      location.reload();
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
       }
     }
-  );
+  });
   $("#cantidadExistencias").val("");
 }
 </script>
