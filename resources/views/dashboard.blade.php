@@ -288,6 +288,9 @@
                                 <li>
                                   <a href={{asset( '/ultrasonografias')}}>Ultrasonografías</a>
                                 </li>
+                                <li>
+                                  <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                                </li>
                               </ul>
                             </li>
                         @elseif (Auth::user()->tipoUsuario == "Rayos X")

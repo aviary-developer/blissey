@@ -9,6 +9,7 @@ use Response;
 use Carbon\Carbon;
 use App\Rayosx;
 use Illuminate\Http\Request;
+use App\Http\Requests\RayoxRequest;
 
 class RayosxController extends Controller
 {
@@ -53,7 +54,7 @@ class RayosxController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RayoxRequest $request)
     {
       Rayosx::create($request->All());
       return redirect('/rayosx')->with('mensaje', '¡Guardado!');
@@ -90,7 +91,7 @@ class RayosxController extends Controller
      * @param  \App\Rayosx  $rayosx
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RayoxRequest $request, $id)
     {
       $rayosx = Rayosx::find($id);
       $rayosx->fill($request->all());

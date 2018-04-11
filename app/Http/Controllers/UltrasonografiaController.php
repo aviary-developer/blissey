@@ -9,6 +9,7 @@ use Response;
 use Carbon\Carbon;
 use App\ultrasonografia;
 use Illuminate\Http\Request;
+use App\Http\Requests\UltrasonografiaRequest;
 
 class UltrasonografiaController extends Controller
 {
@@ -53,7 +54,7 @@ class UltrasonografiaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UltrasonografiaRequest $request)
     {
       ultrasonografia::create($request->All());
       return redirect('/ultrasonografias')->with('mensaje', '¡Guardado!');
@@ -90,7 +91,7 @@ class UltrasonografiaController extends Controller
      * @param  \App\ultrasonografia  $ultrasonografia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UltrasonografiaRequest $request, $id)
     {
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->fill($request->all());
