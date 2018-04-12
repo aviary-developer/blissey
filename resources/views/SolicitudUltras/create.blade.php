@@ -8,10 +8,10 @@
   <div class="col-md-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Solicitud de Examen<small>Nuevo</small></h2>
+        <h2>Solicitud de Ultrasonografías<small>Nuevo</small></h2>
         <div class="clearfix"></div>
       </div>
-      @include('SolicitudExamenes.Formularios.form')
+      @include('SolicitudUltras.Formularios.form')
     </div>
   </div>
   {!!Form::close()!!}

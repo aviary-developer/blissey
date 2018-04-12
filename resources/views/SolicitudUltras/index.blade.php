@@ -54,7 +54,6 @@
                     <div class="panel-body">
                       <table class="table">
                         <thead>
-                          <th class="col-md-2 col-sm-2">Código</th>
                           <th>Examen</th>
                           <th style="width: 120px">Opción</th>
                         </thead>
@@ -62,7 +61,6 @@
                           @foreach($solicitudes as $solicitud)
                             @if($solicitud->f_paciente == $paciente->f_paciente)
                               <tr>
-                                <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>{{$solicitud->ultrasonografia->nombre}}</td>
                                 <td id="celda">
                                   @include('SolicitudUltras.Formularios.delete')
@@ -90,7 +88,6 @@
                     <div class="panel-body">
                       <table class="table">
                         <thead>
-                          <th class="col-md-2 col-sm-2">Código</th>
                           <th>Paciente</th>
                           <th style="width: 120px">Opción</th>
                         </thead>
@@ -98,12 +95,11 @@
                           @foreach($solicitudes as $solicitud)
                             @if($solicitud->f_examen == $examen->f_examen)
                               <tr>
-                                <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                                 </td>
                                 <td id="celda">
-                                  @include('SolicitudExamenes.Formularios.delete')
+                                  @include('SolicitudUltras.Formularios.delete')
                                 </td>
                               </tr>
                             @endif

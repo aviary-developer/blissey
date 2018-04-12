@@ -7,6 +7,8 @@ use Redirect;
 use DB;
 use Response;
 use Carbon\Carbon;
+use App\CategoriaServicio;
+use App\Servicio;
 use App\ultrasonografia;
 use Illuminate\Http\Request;
 use App\Http\Requests\UltrasonografiaRequest;
@@ -54,11 +56,38 @@ class UltrasonografiaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UltrasonografiaRequest $request)
-    {
-      ultrasonografia::create($request->All());
-      return redirect('/ultrasonografias')->with('mensaje', '¡Guardado!');
-    }
+     public function store(UltrasonografiaRequest $request)
+     {
+       DB::beginTransaction();
+
+       try{
+         $ultraNueva = new ultrasonografia;
+         $ultraNueva->nombre=$request->nombre;
+         $ultraNueva->save();
+         //Crear una categoria de servicio asociada a los examen
+         $categoria_existe = CategoriaServicio::where('nombre','Ultrasonografía')->first();
+
+         if(count($categoria_existe)<1){
+           $categoria_existe = new CategoriaServicio;
+           $categoria_existe->nombre = "Ultrasonografía";
+           $categoria_existe->save();
+         }
+
+         $servicio = new Servicio;
+         $servicio->nombre = $request->nombre;
+         $servicio->f_categoria = $categoria_existe->id;
+         $servicio->precio = $request->precio;
+         $servicio->f_ultrasonografia = $ultraNueva->id;
+         $servicio->save();
+       }catch(\Exception $e){
+         DB::rollback();
+         return $e;
+         return redirect('/ultrasonografias')->with('mensaje', $e);
+       }
+       DB::commit();
+       Bitacora::bitacora('store','ultrasonografias','ultrasonografias',$ultraNueva->id);
+       return redirect('/ultrasonografias')->with('mensaje', '¡Guardado!');
+     }
 
     /**
      * Display the specified resource.

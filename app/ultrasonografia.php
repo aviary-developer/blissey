@@ -24,4 +24,7 @@ class ultrasonografia extends Model
     }
     $query->where('estado',$estado);
   }
+  public function servicio(){
+    return $this->hasOne('App\Servicio','f_ultrasonografia');
+  }
 }
