@@ -457,10 +457,13 @@
                   {{--inicio notificaciones de farmacia --}}
                   @if(Auth::user()->tipoUsuario == "Farmacia")
                     @php
-                      $requisiciones= App\Transacion::where('tipo',4)->count();
+                      $conteore= App\Transacion::where('tipo',4)->count();
                       $ultima= App\Transacion::where('tipo',4)->orderBy('id','asc')->get()->last();
                       $conteostock=App\DivisionProducto::conteo();
                       $stock=0;
+                      if($conteore>0){
+                        $requisiciones=1;
+                      }
                       if($conteostock>0){
                         $stock=1;
                       }

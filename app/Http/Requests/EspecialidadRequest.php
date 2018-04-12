@@ -24,7 +24,7 @@ class EspecialidadRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required | unique:especialidads | min:2 | max:30'
+            'nombre' => 'required|unique:especialidads|min:2|max:30'
         ];
     }
 
