@@ -163,7 +163,7 @@ class RequisicionController extends Controller
         DetalleTransacion::where('f_transaccion',$id)->delete();
         foreach ($detalles as $detalle) {
           $inventario=DivisionProducto::inventario($detalle->f_producto,2);
-            $compras=DivisionProducto::compras($detalle->f_producto);
+            $compras=DivisionProducto::compras($detalle->f_producto,2);
             $cuenta=0;
             $i=0;
             $ultimos=[];

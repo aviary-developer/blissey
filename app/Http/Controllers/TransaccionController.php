@@ -231,11 +231,11 @@ class TransaccionController extends Controller
       if(count($productos)>0){
         foreach($productos as $producto){
           $producto->presentacion;
-        }
-        $divisiones=$producto->divisionProducto;
-        foreach($divisiones as $division){
-            $division->division;
-            $division->unidad;
+          $divisiones=$producto->divisionProducto;
+          foreach($divisiones as $division){
+              $division->division;
+              $division->unidad;
+          }
         }
         return Response::json($productos);
       }else{
