@@ -1,8 +1,5 @@
 <?php use App\Http\Controllers\TransaccionController; ?>
 <div class="x_content">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
     <div class="row">
       <input type="hidden" value="" id="idoculto">
       <input type="hidden" value="" id="divoculto">
@@ -138,6 +135,9 @@
             <input type='hidden' id='contador' value ={{$conteo}}>
           @endif
         </table>
+        <center>
+          <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+        </center>
       </div>
       </div>
       @if ($tipo==2)

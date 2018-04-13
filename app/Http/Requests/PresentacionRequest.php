@@ -15,7 +15,7 @@ class PresentacionRequest extends FormRequest
     public function rules()
     {
           return [
-              'nombre'=>'required | min:2 | max:30',
+              'nombre'=>'required|unique:presentacions|min:2|max:30',
           ];
     }
     public function messages(){

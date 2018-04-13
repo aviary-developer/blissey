@@ -52,7 +52,7 @@ class DivisionController extends Controller
      */
     public function store(DivisionRequest $request)
     {
-      $division=new Division;
+      $division=new Division();
       $division->fill($request->all());
       $division->save();
         return redirect('/divisiones')->with('mensaje','¡Guardado!');

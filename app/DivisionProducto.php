@@ -87,12 +87,19 @@ class DivisionProducto extends Model
       // ->get();
       return $bitacora;
   }
-  public static function compras($id){
+  public static function compras($id,$nor){
+    if($nor==1){
+      $ts=Transacion::tipoUsuario(); //Tipo de usuario
+    }
+    if($nor==2){
+      $ts=0;//farmacia
+    }
     return DB::table('detalle_transacions')
     ->select('detalle_transacions.*')
     ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
     ->where('transacions.tipo',1)
     ->where('detalle_transacions.f_producto',$id)
+    ->where('transacions.localizacion',$ts)
     ->orderBy('transacions.fecha','DESC')
     ->get();
   }

@@ -30,6 +30,12 @@ class SolicitudExamen extends Model
     public function examen(){
       return $this->belongsTo('App\Examen','f_examen');
     }
+    public function ultrasonografia(){
+      return $this->belongsTo('App\ultrasonografia','f_ultrasonografia');
+    }
+    public function rayox(){
+      return $this->belongsTo('App\Rayosx','f_rayox');
+    }
     public function muestra(){
       return $this->belongsTo('App\Examen','tipoMuestra');
     }

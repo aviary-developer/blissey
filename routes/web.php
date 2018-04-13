@@ -241,6 +241,9 @@ Route::group(['middleware'=>'general'], function(){
   //Signos vitales
   Route::resource('signos','SignoVitalController');
   Route::get('/signo_lista','SignoVitalController@listar');
+  //Fechas de vencimiento
+  Route::resource('cambio_productos','CambioProductoController');
+  Route::get('/descartarVencidos','CambioProductoController@descartar');
 });
 Auth::routes();
 //Rutas de login
@@ -250,6 +253,13 @@ Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
 Route::get ('/github', 'PdfController@github');
 Route::get ('/llenar', 'RequisicionController@index');
-Route::get('/hola', function() {
-  return view('basic');
-});
+
+Route::resource('/ultrasonografias','UltrasonografiaController');
+Route::match(['get','post'],'/desactivateUltrasonografia/{id}','UltrasonografiaController@desactivate');
+Route::match(['get','post'],'/activateUltrasonografia/{id}','UltrasonografiaController@activate');
+Route::match(['get','post'],'/destroyUltrasonografia/{id}','UltrasonografiaController@destroy');
+
+Route::resource('/rayosx','RayosxController');
+Route::match(['get','post'],'/desactivateRayosx/{id}','RayosxController@desactivate');
+Route::match(['get','post'],'/activateRayosx/{id}','RayosxController@activate');
+Route::match(['get','post'],'/destroyRayosx/{id}','RayosxController@destroy');

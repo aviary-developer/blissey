@@ -21,6 +21,7 @@ $(document).on('ready',function(){
             var ruta = "/blissey/public/buscarProductoTransaccion/"+laboratorio+"/"+valor;
             var tabla = $("#tablaBuscar");
             $.get(ruta,function(res){
+              console.log(res);
               tabla.empty();
               head =
               "<thead>"+

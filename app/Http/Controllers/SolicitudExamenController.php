@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SolicitudExamen;
 use App\Examen;
+use App\ultrasonografia;
 use App\DetalleResultado;
 use App\Resultado;
 use App\ExamenSeccionParametro;
@@ -27,15 +28,27 @@ class SolicitudExamenController extends Controller
   */
   public function index(Request $request)
   {
+    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $vista = $request->get("vista");
+      if($vista == "paciente"){
+        $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
+      }else{
+        $examenes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_ultrasonografia']);
+        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
+      }
+      return view('SolicitudUltras.index',compact('pacientes','solicitudes','examenes','vista'));
+    }else{
     $vista = $request->get("vista");
     if($vista == "paciente"){
-      $pacientes = SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','<>',3)->orderBy('estado')->get();
+      $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->orderBy('estado')->get();
     }else{
-      $examenes = SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','<>',3)->orderBy('estado')->get();
+      $examenes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
+      $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->orderBy('estado')->get();
     }
     return view('SolicitudExamenes.index',compact('pacientes','solicitudes','examenes','vista'));
+  }
   }
 
   /**
@@ -45,8 +58,13 @@ class SolicitudExamenController extends Controller
   */
   public function create()
   {
-    $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-    return view('SolicitudExamenes.create',compact('examenes'));
+    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
+      return view('SolicitudUltras.create',compact('ultras'));
+    } else {
+      $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+      return view('SolicitudExamenes.create',compact('examenes'));
+    }
   }
 
   /**
@@ -57,6 +75,59 @@ class SolicitudExamenController extends Controller
   */
   public function store(Request $request)
   {
+    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      DB::beginTransaction();
+      try{
+        $año = date('Y');
+        if(isset($request->ultrasonografia)){
+          if($request->f_ingreso == null){
+            $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+
+            if($ultima_factura == null){
+              $factura = 1;
+            }else{
+              $factura = $ultima_factura->factura;
+              $factura++;
+            }
+
+            $transaccion = new Transacion;
+            $transaccion->fecha = Carbon::now();
+            $transaccion->f_cliente = $request->f_paciente;
+            $transaccion->f_ingreso = $request->f_ingreso;
+            $transaccion->tipo = 2;
+            $transaccion->factura = $factura;
+            $transaccion->f_usuario = Auth::user()->id;
+            $transaccion->localizacion = 1;
+            $transaccion->save();
+            $transaccion_id = $transaccion->id;
+          }else{
+            $transaccion_id = $request->transaccion;
+          }
+            $solicitud = new SolicitudExamen;
+            $solicitud->f_paciente = $request->f_paciente;
+            $solicitud->f_ultrasonografia = $request->ultrasonografia;
+            $solicitud->estado = 0;
+            $solicitud->f_transaccion = $transaccion_id;
+            $solicitud->save();
+
+            //Detalle de transaccion
+            $detalle = new DetalleTransacion;
+            $detalle->f_servicio = $solicitud->ultrasonografia->servicio->id;
+            $detalle->precio = $solicitud->ultrasonografia->servicio->precio;
+            $detalle->cantidad = 1;
+            $detalle->f_transaccion = $transaccion_id;
+            $detalle->save();
+
+            DB::commit();
+            Bitacora::bitacora('store','solicitud_examens','ultrasonografias',$solicitud->id);
+            Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
+
+        }
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      }
+    }else {
     DB::beginTransaction();
     try{
       $año = date('Y');
@@ -116,6 +187,7 @@ class SolicitudExamenController extends Controller
     }catch(Exception $e){
       DB::rollback();
       return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+    }
     }
     if($request->f_ingreso == null){
       return redirect('/solicitudex')->with('mensaje', '¡Guardado!');

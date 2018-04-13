@@ -278,7 +278,34 @@
                                 </li>
                               </ul>
                             </li>
-                          @endif
+                          @elseif (Auth::user()->tipoUsuario == "Ultrasonografía")
+                            <li>
+                              <a>
+                                <i class="fa fa-search-plus"></i> Ultrasonografía
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/ultrasonografias')}}>Ultrasonografías</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                                </li>
+                              </ul>
+                            </li>
+                        @elseif (Auth::user()->tipoUsuario == "Rayos X")
+                          <li>
+                            <a>
+                              <i class="fa fa-times-circle-o"></i>Departamento Rayos X
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a href={{asset( '/rayosx')}}>Rayos X</a>
+                              </li>
+                            </ul>
+                          </li>
+                        @endif
                           @if (Auth::user()->administrador)
                             <li>
                               <a>
@@ -430,10 +457,13 @@
                   {{--inicio notificaciones de farmacia --}}
                   @if(Auth::user()->tipoUsuario == "Farmacia")
                     @php
-                      $requisiciones= App\Transacion::where('tipo',4)->count();
+                      $conteore= App\Transacion::where('tipo',4)->count();
                       $ultima= App\Transacion::where('tipo',4)->orderBy('id','asc')->get()->last();
                       $conteostock=App\DivisionProducto::conteo();
                       $stock=0;
+                      if($conteore>0){
+                        $requisiciones=1;
+                      }
                       if($conteostock>0){
                         $stock=1;
                       }
@@ -566,7 +596,7 @@
     {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
     <!-- NProgress -->
     {!!Html::script('assets/nprogress/nprogress.js')!!}
-    
+
     <!-- gauge.js -->
     {!!Html::script('assets/gauge.js/dist/gauge.min.js')!!}
     <!-- bootstrap-progressbar -->

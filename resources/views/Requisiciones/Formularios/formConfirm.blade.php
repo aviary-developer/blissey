@@ -30,7 +30,7 @@ $detalles=$transaccion->detalleTransaccion;
         <tbody>
             @php
             $inventario=App\DivisionProducto::inventario($detalle->f_producto,2);
-              $compras=App\DivisionProducto::compras($detalle->f_producto);
+              $compras=App\DivisionProducto::compras($detalle->f_producto,2);
               $cuenta=0;
               $i=0;
               $ultimos=[];

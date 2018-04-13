@@ -227,15 +227,15 @@ class TransaccionController extends Controller
         //
     }
     public function buscarProductos($id,$texto){
-      $productos=Producto::where('f_proveedor','=',$id)->where('nombre','ilike','%'.$texto.'%')->get();
+      $productos=Producto::where('nombre','ilike','%'.$texto.'%')->get();
       if(count($productos)>0){
         foreach($productos as $producto){
           $producto->presentacion;
-        }
-        $divisiones=$producto->divisionProducto;
-        foreach($divisiones as $division){
-            $division->division;
-            $division->unidad;
+          $divisiones=$producto->divisionProducto;
+          foreach($divisiones as $division){
+              $division->division;
+              $division->unidad;
+          }
         }
         return Response::json($productos);
       }else{
