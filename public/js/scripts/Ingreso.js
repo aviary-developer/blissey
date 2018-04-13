@@ -434,6 +434,7 @@ function registrarventa_(id) {
   var existencia = parseFloat($('#ct' + id).text());
   var token = $("#tokenTransaccion").val();
   var transaccion_id = $("#transaccion").val();
+  var tipo_usuario = $("#tipo_usuario").val();
   c1 = $('#cu' + id).text();
   c2 = $('#cd' + id).text();
   var fecha = new Date();
@@ -483,9 +484,13 @@ function registrarventa_(id) {
             html = "<tr>" +
               "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +
               "<td>" + cantidad + " " + c2 + "</td>" +
-              "<td>" + c1 + "</td>" +
-              "<td><button type='button' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-sm btn-danger'><i class='fa fa-remove'></i></button></td>"+
-              "</tr>";
+              "<td>" + c1 + "</td>";
+            if (tipo_usuario == "Enfermería") {
+              html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
+            } else {
+              html += "<td><button type='button' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-sm btn-danger'><i class='fa fa-remove'></i></button></td>";
+            }
+              html += "</tr>";
 
             tabla.append(html);
             
@@ -542,11 +547,16 @@ function registrarventa_(id) {
 
           tabla = $('#tablaDetalle_s');
           html = "<tr>" +
-            "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +  
+            "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +
             "<td>" + cantidad + "</td>" +
-            "<td>" + c1 + "</td>" +
-            "<td><button type='button' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-sm btn-danger'><i class='fa fa-remove'></i></button></td>" +
-            "</tr>";
+            "<td>" + c1 + "</td>";
+          if (tipo_usuario == "Enfermería") {
+            html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
+          } else {
+            html += "<td><button type='button' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-sm btn-danger'><i class='fa fa-remove'></i></button></td>" +
+              "</tr>";
+          }
+            
           tabla.append(html);
 
           new PNotify({
@@ -671,7 +681,7 @@ function guardar_cambio(i) {
 
 }
 function accion24(tipo, id) {
-  //0: Eliminar y 1: Editar
+  //0: Eliminar, 1: Editar y 2: Cambiar estado
   var token = $("#tokenTransaccion").val();
   if (tipo == 1) {
     var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad">';
@@ -704,6 +714,23 @@ function accion24(tipo, id) {
         }
       });
     }).catch(swal.noop);
+  } else if (tipo == 2) { 
+    $.ajax({
+      url: '/blissey/public/cambiar_estado',
+      type: 'post',
+      headers: { 'X-CSRF-TOKEN': token },
+      data: {
+        id: id
+      },
+      success: function (r) {
+        if (r) {
+          swal('¡Hecho!', '¡Acción realizada satisfactoriamente!', 'success');
+          location.reload();
+        } else {
+          swal('¡Erro!', 'Algo salio mal', 'error');
+        }
+      }
+    });
   } else {
     swal({
       title: 'Eliminar registro',

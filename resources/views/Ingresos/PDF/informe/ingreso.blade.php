@@ -23,7 +23,7 @@
               <td class="text-right blue"><b>{{'$ '.number_format(($total_med),2,'.',',')}}</b></td>
             </tr>
           @endif
-          @foreach ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null) as $medicamento)
+          @foreach ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->where('estado',true) as $medicamento)
             @if ($medicamento->created_at->between($date_after_origen,$date_next_after))
               <tr>
                 <td class="text-center">
@@ -142,7 +142,7 @@
             $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
             $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
           @endphp
-          @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
+          @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle)
               @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($date_after_origen,$date_next_after)))
                 <tr>
                   <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>

@@ -54,11 +54,37 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="control-label col-md-3 col-xs-12">Tipo de servicio médico *</label>
+    <div class="col-md-9 col-xs-12">
+      <select class="form-control" name="tipo" id="tipo_ingreso">
+        <option value="3">Consulta médica</option>
+        <option value="0">Ingreso</option>
+        <option value="1">Observación</option>
+        <option value="2">Medi ingreso</option>
+        <option value="4">Cumplimiento</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group" id="observaciones_form_ingreso" style="display:none">
+    <label class="control-label col-md-3 col-xs-12">Habitación *</label>
+    <div class="col-md-9 col-xs-12">
+      <select class="form-control" name="f_habitacion">
+        @if (count($observaciones)==0)
+            <option value="0" disabled>No hay habitaciones disponibles</option>
+        @else
+          @foreach ($observaciones as $habitacion)
+            <option value={{$habitacion->id}}>{{'Habitación '.$habitacion->numero}}</option>
+          @endforeach
+        @endif
+      </select>
+    </div>
+  </div>
+  <div class="form-group" id="habitacion_form_ingreso" style="display:none">
     <label class="control-label col-md-3 col-xs-12">Habitación *</label>
     <div class="col-md-9 col-xs-12">
       <select class="form-control" name="f_habitacion">
         @if (count($habitaciones)==0)
-            <option value="0" disabled>No ha habitaciones disponibles</option>
+            <option value="0" disabled>No hay habitaciones disponibles</option>
         @else
           @foreach ($habitaciones as $habitacion)
             <option value={{$habitacion->id}}>{{'Habitación '.$habitacion->numero}}</option>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TipoIngreso extends Migration
+class HabitacionNullableIngreso extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,7 @@ class TipoIngreso extends Migration
     public function up()
     {
         Schema::table('ingresos', function (Blueprint $table) {
-            $table->integer('tipo')->default(0);
-            /**
-             * 0: Ingreso
-             * 1: Medi ingreso
-             * 2: Observación
-             * 3: Consulta
-             */
+            $table->integer('f_habitacion')->unsigned()->nullable()->change();
         });
     }
 
@@ -32,7 +26,7 @@ class TipoIngreso extends Migration
     public function down()
     {
         Schema::table('ingresos', function (Blueprint $table) {
-            $table->dropColumn('tipo');
+            $table->integer('f_habitacion')->unsigned()->change();            
         });
     }
 }

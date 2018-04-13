@@ -80,7 +80,7 @@ class Transacion extends Model
     return $this->hasMany('App\SolicitudExamen', 'f_transaccion');
   }
   public static function tipoUsuario(){
-    if(Auth::user()->tipoUsuario=='Recepción'){
+    if(Auth::user()->tipoUsuario=='Recepción' || Auth::user()->tipoUsuario == "Enfermería"){
       return 1;
     }elseif(Auth::user()->tipoUsuario=='Farmacia'){
       return 0;

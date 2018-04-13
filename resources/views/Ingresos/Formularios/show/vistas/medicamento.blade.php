@@ -37,9 +37,18 @@
               </td>
               <td>{{$detalle->divisionProducto->producto->nombre}}</td>
               <td>
-                @if ($detalle->created_at->between($ultima24,$ultima48))
-                  <button class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" onclick={{"accion24(1,".$detalle->id.")"}}><i class="fa fa-edit" ></i></button>
-                  <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                @if (!$detalle->estado)
+                  @if (Auth::user()->tipoUsuario == "Enfermería")
+                    <span class="label label-lg label-warning col-xs-12">Pendiente</span>
+                  @else
+                    <button class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Confirmar" onclick={{"accion24(2,".$detalle->id.")"}}><i class="fa fa-check" ></i></button>
+                    <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                  @endif
+                @else
+                  @if ($detalle->created_at->between($ultima24,$ultima48) && Auth::user()->tipoUsuario != "Enfermería")
+                    <button class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar" onclick={{"accion24(1,".$detalle->id.")"}}><i class="fa fa-edit" ></i></button>
+                    <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                  @endif
                 @endif
               </td>
             </tr>

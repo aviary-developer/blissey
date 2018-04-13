@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TipoIngreso extends Migration
+class EstadoDetalleTransaccion extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class TipoIngreso extends Migration
      */
     public function up()
     {
-        Schema::table('ingresos', function (Blueprint $table) {
-            $table->integer('tipo')->default(0);
+        Schema::table('detalle_transacions', function (Blueprint $table) {
+            $table->boolean('estado')->default(true);
             /**
-             * 0: Ingreso
-             * 1: Medi ingreso
-             * 2: Observación
-             * 3: Consulta
+             * Estado
+             * 0: Inactivo
+             * 1: Activo
              */
         });
     }
@@ -31,8 +30,8 @@ class TipoIngreso extends Migration
      */
     public function down()
     {
-        Schema::table('ingresos', function (Blueprint $table) {
-            $table->dropColumn('tipo');
+        Schema::table('detalle_transacions', function (Blueprint $table) {
+            $table->dropColumn('estado');
         });
     }
 }

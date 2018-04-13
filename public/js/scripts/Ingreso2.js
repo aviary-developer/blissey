@@ -28,6 +28,21 @@ $(document).on('ready', function () {
     });
   });
 
+  $("#tipo_ingreso").on('change', function () {
+    tipo = $("#tipo_ingreso").val();
+    console.log(tipo);
+    if (tipo == 0 || tipo == 2) {
+      document.getElementById('habitacion_form_ingreso').style = "display: block";
+      document.getElementById('observaciones_form_ingreso').style = "display: none";
+    } else if (tipo == 1 || tipo == 4) {
+      document.getElementById('habitacion_form_ingreso').style = "display: none";
+      document.getElementById('observaciones_form_ingreso').style = "display: block";
+    } else {
+      document.getElementById('habitacion_form_ingreso').style = "display: none";
+      document.getElementById('observaciones_form_ingreso').style = "display: none";
+    }
+  });
+
   $("#evaluar_signo").on("click", function (e) {
     e.preventDefault();
     id = $("#id").val();
@@ -154,19 +169,19 @@ $(document).on('ready', function () {
             labels: fecha_format,
             datasets: [
               {
-                data: sistole_,
-                label: 'Sistole',
-                lineTension: 0.1,
-                backgroundColor: 'rgba(236,112,99,0.5)',
-                borderColor: 'rgba(236,112,99)',
-                spanGaps: true
-              },
-              {
                 data: diastole_,
                 label: 'Díastole',
                 lineTension: 0.1,
                 backgroundColor: 'rgba(93,173,226,0.5)',
                 borderColor: 'rgba(93,173,226)',
+                spanGaps: true
+              },
+              {
+                data: sistole_,
+                label: 'Sistole',
+                lineTension: 0.1,
+                backgroundColor: 'rgba(236,112,99,0.5)',
+                borderColor: 'rgba(236,112,99)',
                 spanGaps: true
               }
             ]

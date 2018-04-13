@@ -266,7 +266,7 @@
                                 </li>
                               </ul>
                             </li>
-                          @elseif (Auth::user()->tipoUsuario == "Enfermería")
+                          @elseif (Auth::user()->tipoUsuario == "Enfermería" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencía")
                             <li>
                               <a>
                                 <i class="fa fa-hospital-o"></i> Hospital

@@ -220,11 +220,14 @@ Route::group(['middleware'=>'general'], function(){
   Route::resource('inventarios','InventarioController');
   //Ingresos
   Route::resource('ingresos','IngresoController');
-  Route::match(['get'],'/total_resumen','IngresoController@resumen');
-  Route::match(['post'],'/tratamiento','IngresoController@tratamiento');
+  Route::get('/total_resumen','IngresoController@resumen');
+  Route::post('/tratamiento','IngresoController@tratamiento');
   Route::post('/abonar','IngresoController@abonar');
   Route::post('/servicio_medicos','IngresoController@servicio_medicos');
   Route::post('/cambio_ingreso','IngresoController@cambio_ingreso');
+  Route::post('/editar24','IngresoController@editar24');
+  Route::post('/eliminar24','IngresoController@eliminar24');
+  Route::post('/cambiar_estado','IngresoController@cambiar_estado');
 //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

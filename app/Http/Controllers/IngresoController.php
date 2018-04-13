@@ -35,13 +35,21 @@ class IngresoController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $ingresos = Ingreso::buscar($estado);
-      $activos = Ingreso::where('estado','<>',2)->count();
+      $tipo = $request->get('tipo');
+      $usuario = null;
+      if(Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencía"){
+        if($tipo == 3){
+          $usuario = Auth::user()->id;
+        }
+      }
+      $ingresos = Ingreso::buscar($estado, $tipo,$usuario);
+      $activos = Ingreso::where('estado','<>',2)->where('tipo', $tipo)->count();
       return view('Ingresos.index',compact(
         'ingresos',
         'estado',
         'activos',
-        'pagina'
+        'pagina',
+        'tipo'
       ));
     }
 
@@ -54,7 +62,12 @@ class IngresoController extends Controller
     {
       $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
       $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
-      return view('Ingresos.create',compact('medicos','habitaciones'));
+      $observaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+      return view('Ingresos.create',compact(
+        'medicos',
+        'habitaciones',
+        'observaciones'
+      ));
     }
 
     /**
@@ -67,13 +80,16 @@ class IngresoController extends Controller
     {
         DB::beginTransaction();
         try {
-          $ultimo_registro = Ingreso::where('fecha_ingreso','>=','1-1-'.date('Y'))->where('fecha_ingreso','<=','31-12-'.date('Y'))->get()->last();
-          if($ultimo_registro == null){
-            $correlativo = 0;
-          }else if($ultimo_registro->expediente == null){
-            $correlativo = 0;
-          }else{
-            $correlativo = $ultimo_registro->expediente;
+          $correlativo = 0;
+          if($request->tipo != 3){
+            $ultimo_registro = Ingreso::where('fecha_ingreso','>=','1-1-'.date('Y'))->where('fecha_ingreso','<=','31-12-'.date('Y'))->where('tipo','<>',3)->where('tipo','<>',4)->get()->last();
+            if($ultimo_registro == null){
+              $correlativo = 0;
+            }else if($ultimo_registro->expediente == null){
+              $correlativo = 0;
+            }else{
+              $correlativo = $ultimo_registro->expediente;
+            }
           }
           $ingresos = new Ingreso;
           $ingresos->f_paciente = $request->f_paciente;
@@ -82,18 +98,42 @@ class IngresoController extends Controller
           }else{
             $ingresos->f_responsable = $request->f_paciente;
           }
-          $ingresos->f_habitacion = $request->f_habitacion;
+          if($request->tipo == 2 || $request->tipo == 0){
+            $ingresos->f_habitacion = $request->f_habitacion;
+          }
           $ingresos->f_medico = $request->f_medico;
           $aux = explode('T',$request->fecha_ingreso);
           $fecha = $aux[0].' '.$aux[1];
           $ingresos->fecha_ingreso  = $fecha.':00';
           $ingresos->expediente = $correlativo+1;
           $ingresos->f_recepcion = Auth::user()->id;
+          $ingresos->tipo = $request->tipo;
           $ingresos->save();
 
-          $habitacion = Habitacion::find($request->f_habitacion);
-          $habitacion->ocupado = true;
-          $habitacion->save();
+          if($request->tipo != 3){
+            $habitacion = Habitacion::find($request->f_habitacion);
+            $habitacion->ocupado = true;
+            $habitacion->save();
+          }else{
+            $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+
+            if($ultima_factura == null){
+              $factura = 1;
+            }else{
+              $factura = $ultima_factura->factura;
+              $factura++;
+            }
+
+            $transaccion = new Transacion;
+            $transaccion->fecha = $ingresos->fecha_ingreso;
+            $transaccion->f_cliente = $ingresos->f_paciente;
+            $transaccion->f_ingreso = $ingresos->id;
+            $transaccion->tipo = 2;
+            $transaccion->factura = $factura;
+            $transaccion->f_usuario = Auth::user()->id;
+            $transaccion->localizacion = 1;
+            $transaccion->save();
+          }
 
         } catch (Exception $e) {
           DB::rollback();
@@ -268,12 +308,6 @@ class IngresoController extends Controller
         $transaccion->localizacion = 1;
         $transaccion->save();
 
-        // $detalle = new DetalleTransacion;
-        // $detalle->f_servicio = $ingreso->habitacion->servicio->id;
-        // $detalle->precio = $ingreso->habitacion->servicio->precio;
-        // $detalle->cantidad = 1;
-        // $detalle->f_transaccion = $transaccion->id;
-        // $detalle->save();
         DB::commit();
       }catch(Exception $e){
         DB::rollback();
@@ -368,6 +402,9 @@ class IngresoController extends Controller
         $detalle->f_transaccion = $request->transaccion;
         $detalle->cantidad = $request->cantidad;
         $detalle->precio = $request->precio;
+        if(Auth::user()->tipoUsuario == 'Enfermería'){
+          $detalle->estado = false;
+        }
         $detalle->save();
       }catch(Exception $e){
         DB::rollback();
@@ -446,9 +483,9 @@ class IngresoController extends Controller
       //Servicios
       $servicios = [];
       $total_servicios = 0;
-      if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null))>0){
+      if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true))>0){
         $k = 0;
-        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
           if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
             $servicios[$k]["nombre"] = $detalle->servicio->nombre;
             $servicios[$k]["precio"] = $detalle->precio;
@@ -479,9 +516,9 @@ class IngresoController extends Controller
       //Valor de tratamiento
       $tratamiento = 0;
       $medicina = [];
-      if(count($ingreso->transaccion->detalleTransaccion)>0){
+      if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
         $k = 0;
-        foreach($ingreso->transaccion->detalleTransaccion as $detalle){
+        foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
           if($detalle->f_servicio == null && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
             $tratamiento += $medicina[$k]["precio"] = $detalle->precio * $detalle->cantidad;
             if($detalle->divisionProducto->unidad == null){
@@ -587,6 +624,21 @@ class IngresoController extends Controller
     try{
       $detalle = DetalleTransacion::find($id);
       $detalle->delete();
+      DB::commit();
+      return 1;
+    }catch(Exception $e){
+      DB::rollback();
+      return 0;
+    }
+  }
+
+  public function cambiar_estado(Request $request){
+    $id = $request->id;
+    DB::beginTransaction();
+    try{
+      $detalle = DetalleTransacion::find($id);
+      $detalle->estado = true;
+      $detalle->save();
       DB::commit();
       return 1;
     }catch(Exception $e){
