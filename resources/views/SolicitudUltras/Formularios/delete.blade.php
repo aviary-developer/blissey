@@ -1,13 +1,6 @@
 <input name="id" type="hidden" value={{$solicitud->id}}>
 <input name="exa" type="hidden" value={{$solicitud->f_ultrasonografia}}>
-@if($solicitud->estado == 0)
-  <a id="activar" href= {!! asset('/evaluarExamen/'.$solicitud->id.'/'.$solicitud->f_ultrasonografia)!!} class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="top" title="Aceptar"/>
-    <i class="fa fa-check"></i>
-  </a>
-  <button id="eliminar" type="button" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Eliminar"/>
-    <i class="fa fa-remove"></i>
-  </button>
-@elseif($solicitud->estado == 1)
+@if($solicitud->estado == 1)
   <a id="evaluar" href= {!! asset('/evaluarExamen/'.$solicitud->id.'/'.$solicitud->f_ultrasonografia)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Evaluar"/>
     <i class="fa fa-paste"></i>
   </a>

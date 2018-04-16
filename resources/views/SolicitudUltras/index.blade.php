@@ -27,7 +27,7 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href={{asset("/solicitudex")}}>Por Examen</a>
+                  <li><a href={{asset("/solicitudex")}}>Por Ultrasonografías</a>
                   </li>
                   <li><a href={{asset("/solicitudex?vista=paciente")}}>Por Paciente</a>
                   </li>

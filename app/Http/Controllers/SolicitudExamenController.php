@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SolicitudExamen;
 use App\Examen;
+use App\DetalleUltrasonografia;
 use App\ultrasonografia;
 use App\DetalleResultado;
 use App\Resultado;
@@ -253,6 +254,11 @@ class SolicitudExamenController extends Controller
   }
 
   public function evaluarExamen($id,$idExamen){
+    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_ultrasonografia','=',$idExamen)->first();
+      return view('SolicitudUltras.evaluarUltrasonografia',compact('solicitud'));
+    }
+    else {
     $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
     $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
@@ -275,8 +281,38 @@ class SolicitudExamenController extends Controller
     }
     return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones','contadorSecciones'));
   }
+}
   public function guardarResultadosExamen(Request $request)
   {
+    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $idSolicitud=$request->solicitud;
+      $observacion=$request->observacion;
+      DB::beginTransaction();
+      try{
+        $resultado= new Resultado();
+        $resultado->f_solicitud=$idSolicitud;
+        $resultado->observacion=$observacion;
+        $resultado->save();
+        $resultados=Resultado::all();
+        $idResultado=$resultados->last()->id;
+        $detalleUltrasonografia= new DetalleUltrasonografia;
+        $detalleUltrasonografia->f_resultado=$idResultado;
+        if($request->hasfile('ultrasonografia')){
+          $detalleUltrasonografia->ultrasonografia = $request->file('ultrasonografia')->store('public/ultrasonografia');
+        }
+        $detalleUltrasonografia->save();
+        $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
+        $cambioEstadoSolicitud->estado=2;
+        $cambioEstadoSolicitud->save();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      }
+      DB::commit();
+      Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
+      return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+    }
+    else {
     if($request->evaluar){
       $resultadosGuardar=$request->resultados;
       $datosControlados=$request->datoControlado;
@@ -360,6 +396,7 @@ class SolicitudExamenController extends Controller
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
       return redirect('/solicitudex')->with('mensaje', '¡Editado!');
     }
+  }
   }
   public function entregarExamen($id,$idExamen)
   {
