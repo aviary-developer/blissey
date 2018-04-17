@@ -107,7 +107,7 @@ class SolicitudExamenController extends Controller
             $solicitud = new SolicitudExamen;
             $solicitud->f_paciente = $request->f_paciente;
             $solicitud->f_ultrasonografia = $request->ultrasonografia;
-            $solicitud->estado = 0;
+            $solicitud->estado = 1;
             $solicitud->f_transaccion = $transaccion_id;
             $solicitud->save();
 
@@ -214,9 +214,12 @@ class SolicitudExamenController extends Controller
   * @param  \App\SolicitudExamen  $solicitudExamen
   * @return \Illuminate\Http\Response
   */
-  public function edit(SolicitudExamen $solicitudExamen)
+  public function edit($id)
   {
-    //
+    $solicitud = SolicitudExamen::find($id);
+    $resultado = Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado = DetalleUltrasonografia::where('f_resultado','=',$resultado->id)->first();
+    return view('SolicitudUltras.edit',compact('solicitud','resultado','detallesResultado'));
   }
 
   /**
@@ -226,9 +229,19 @@ class SolicitudExamenController extends Controller
   * @param  \App\SolicitudExamen  $solicitudExamen
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request, SolicitudExamen $solicitudExamen)
+  public function update(Request $request,$id)
   {
-    //
+    $solicitudAnterior = SolicitudExamen::find($id);
+    $resultadoAnterior = Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultadoAnterior = DetalleUltrasonografia::where('f_resultado','=',$resultadoAnterior->id)->first();
+    $resultadoAnterior->observacion=$request->observacion;
+    if($request->hasfile('ultrasonografia')){
+      $detallesResultadoAnterior->ultrasonografia = $request->file('ultrasonografia')->store('public/ultrasonografia');
+    }
+    $resultadoAnterior->save();
+    $detallesResultadoAnterior->save();
+    Bitacora::bitacora('update','resultados','solicitudex',$resultadoAnterior->id);
+    return redirect('/solicitudex')->with('mensaje', '¡Editado!');
   }
 
   /**
@@ -239,11 +252,17 @@ class SolicitudExamenController extends Controller
   */
   public function destroy($id)
   {
+    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $solicitud = SolicitudExamen::findOrFail($id);
+      $solicitud->delete();
+      return redirect()->action('SolicitudExamenController@index');
+  }else{
     $solicitud = SolicitudExamen::findOrFail($id);
     $paciente = $solicitud->f_paciente;
     $solicitud->delete();
     $examenes = SolicitudExamen::where('f_paciente',$paciente)->where('estado','<',3)->count();
     return $examenes;
+  }
   }
 
   public function aceptar($id){

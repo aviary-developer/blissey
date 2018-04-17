@@ -93,7 +93,7 @@
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
-                            @if($solicitud->f_examen == $examen->f_examen)
+                            @if($solicitud->f_ultrasonografia == $examen->f_ultrasonografia)
                               <tr>
                                 <td>
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
