@@ -7,6 +7,8 @@ use Redirect;
 use DB;
 use Response;
 use Carbon\Carbon;
+use App\CategoriaServicio;
+use App\Servicio;
 use App\Rayosx;
 use Illuminate\Http\Request;
 use App\Http\Requests\RayoxRequest;
@@ -56,7 +58,33 @@ class RayosxController extends Controller
      */
     public function store(RayoxRequest $request)
     {
-      Rayosx::create($request->All());
+      DB::beginTransaction();
+      try{
+        $rayoxNuevo = new Rayosx;
+        $rayoxNuevo->nombre=$request->nombre;
+        $rayoxNuevo->save();
+        //Crear una categoria de servicio asociada a los examen
+        $categoria_existe = CategoriaServicio::where('nombre','Rayos X')->first();
+
+        if(count($categoria_existe)<1){
+          $categoria_existe = new CategoriaServicio;
+          $categoria_existe->nombre = "Rayos X";
+          $categoria_existe->save();
+        }
+
+        $servicio = new Servicio;
+        $servicio->nombre = $request->nombre;
+        $servicio->f_categoria = $categoria_existe->id;
+        $servicio->precio = $request->precio;
+        $servicio->f_rayox = $rayoxNuevo->id;
+        $servicio->save();
+      }catch(\Exception $e){
+        DB::rollback();
+        return $e;
+        return redirect('/rayosx')->with('mensaje', $e);
+      }
+      DB::commit();
+      Bitacora::bitacora('store','rayosxes','rayosx',$rayoxNuevo->id);
       return redirect('/rayosx')->with('mensaje', '¡Guardado!');
     }
 

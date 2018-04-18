@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\SolicitudExamen;
 use App\Examen;
 use App\DetalleUltrasonografia;
+use App\DetalleRayox;
 use App\ultrasonografia;
+use App\Rayosx;
 use App\DetalleResultado;
 use App\Resultado;
 use App\ExamenSeccionParametro;
@@ -29,7 +31,18 @@ class SolicitudExamenController extends Controller
   */
   public function index(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $vista = $request->get("vista");
+      if($vista == "paciente"){
+        $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->orderBy('estado')->get();
+      }else{
+        $examenes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->distinct()->get(['f_rayox']);
+        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->orderBy('estado')->get();
+      }
+      return view('SolicitudRayosx.index',compact('pacientes','solicitudes','examenes','vista'));
+    }
+    else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
       $vista = $request->get("vista");
       if($vista == "paciente"){
         $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_paciente']);
@@ -59,7 +72,11 @@ class SolicitudExamenController extends Controller
   */
   public function create()
   {
-    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
+      return view('SolicitudRayosx.create',compact('rayosx'));
+    }
+    else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
       $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
       return view('SolicitudUltras.create',compact('ultras'));
     } else {
@@ -76,7 +93,59 @@ class SolicitudExamenController extends Controller
   */
   public function store(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      DB::beginTransaction();
+      try{
+        $año = date('Y');
+        if(isset($request->rayox)){
+          if($request->f_ingreso == null){
+            $ultima_factura = Transacion::where('tipo',2)->latest()->first();
+
+            if($ultima_factura == null){
+              $factura = 1;
+            }else{
+              $factura = $ultima_factura->factura;
+              $factura++;
+            }
+
+            $transaccion = new Transacion;
+            $transaccion->fecha = Carbon::now();
+            $transaccion->f_cliente = $request->f_paciente;
+            $transaccion->f_ingreso = $request->f_ingreso;
+            $transaccion->tipo = 2;
+            $transaccion->factura = $factura;
+            $transaccion->f_usuario = Auth::user()->id;
+            $transaccion->localizacion = 1;
+            $transaccion->save();
+            $transaccion_id = $transaccion->id;
+          }else{
+            $transaccion_id = $request->transaccion;
+          }
+            $solicitud = new SolicitudExamen;
+            $solicitud->f_paciente = $request->f_paciente;
+            $solicitud->f_rayox = $request->rayox;
+            $solicitud->estado = 1;
+            $solicitud->f_transaccion = $transaccion_id;
+            $solicitud->save();
+
+            //Detalle de transaccion
+            $detalle = new DetalleTransacion;
+            $detalle->f_servicio = $solicitud->rayox->servicio->id;
+            $detalle->precio = $solicitud->rayox->servicio->precio;
+            $detalle->cantidad = 1;
+            $detalle->f_transaccion = $transaccion_id;
+            $detalle->save();
+
+            DB::commit();
+            Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
+            Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
+
+        }
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      }
+    }else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
       DB::beginTransaction();
       try{
         $año = date('Y');
@@ -216,10 +285,17 @@ class SolicitudExamenController extends Controller
   */
   public function edit($id)
   {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $solicitud = SolicitudExamen::find($id);
+      $resultado = Resultado::where('f_solicitud','=',$id)->first();
+      $detallesResultado = DetalleRayox::where('f_resultado','=',$resultado->id)->first();
+      return view('SolicitudRayosx.edit',compact('solicitud','resultado','detallesResultado'));
+    }else{
     $solicitud = SolicitudExamen::find($id);
     $resultado = Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado = DetalleUltrasonografia::where('f_resultado','=',$resultado->id)->first();
     return view('SolicitudUltras.edit',compact('solicitud','resultado','detallesResultado'));
+  }
   }
 
   /**
@@ -231,6 +307,19 @@ class SolicitudExamenController extends Controller
   */
   public function update(Request $request,$id)
   {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $solicitudAnterior = SolicitudExamen::find($id);
+      $resultadoAnterior = Resultado::where('f_solicitud','=',$id)->first();
+      $detallesResultadoAnterior = DetalleRayox::where('f_resultado','=',$resultadoAnterior->id)->first();
+      $resultadoAnterior->observacion=$request->observacion;
+      if($request->hasfile('rayox')){
+        $detallesResultadoAnterior->rayox = $request->file('rayox')->store('public/radiografia');
+      }
+      $resultadoAnterior->save();
+      $detallesResultadoAnterior->save();
+      Bitacora::bitacora('update','resultados','solicitudex',$resultadoAnterior->id);
+      return redirect('/solicitudex')->with('mensaje', '¡Editado!');
+    }else{
     $solicitudAnterior = SolicitudExamen::find($id);
     $resultadoAnterior = Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultadoAnterior = DetalleUltrasonografia::where('f_resultado','=',$resultadoAnterior->id)->first();
@@ -243,6 +332,7 @@ class SolicitudExamenController extends Controller
     Bitacora::bitacora('update','resultados','solicitudex',$resultadoAnterior->id);
     return redirect('/solicitudex')->with('mensaje', '¡Editado!');
   }
+  }
 
   /**
   * Remove the specified resource from storage.
@@ -252,7 +342,12 @@ class SolicitudExamenController extends Controller
   */
   public function destroy($id)
   {
-    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $solicitud = SolicitudExamen::findOrFail($id);
+      $solicitud->delete();
+      return redirect()->action('SolicitudExamenController@index');
+  }else
+  if (Auth::user()->tipoUsuario == "Ultrasonografía") {
       $solicitud = SolicitudExamen::findOrFail($id);
       $solicitud->delete();
       return redirect()->action('SolicitudExamenController@index');
@@ -273,6 +368,10 @@ class SolicitudExamenController extends Controller
   }
 
   public function evaluarExamen($id,$idExamen){
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_rayox','=',$idExamen)->first();
+      return view('SolicitudRayosx.evaluarRadiografia',compact('solicitud'));
+    }else
     if (Auth::user()->tipoUsuario == "Ultrasonografía") {
       $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_ultrasonografia','=',$idExamen)->first();
       return view('SolicitudUltras.evaluarUltrasonografia',compact('solicitud'));
@@ -303,7 +402,35 @@ class SolicitudExamenController extends Controller
 }
   public function guardarResultadosExamen(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $idSolicitud=$request->solicitud;
+      $observacion=$request->observacion;
+      DB::beginTransaction();
+      try{
+        $resultado= new Resultado();
+        $resultado->f_solicitud=$idSolicitud;
+        $resultado->observacion=$observacion;
+        $resultado->save();
+        $resultados=Resultado::all();
+        $idResultado=$resultados->last()->id;
+        $detalleRadiografia= new DetalleRayox;
+        $detalleRadiografia->f_resultado=$idResultado;
+        if($request->hasfile('rayox')){
+          $detalleRadiografia->rayox = $request->file('rayox')->store('public/radiografia');
+        }
+        $detalleRadiografia->save();
+        $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
+        $cambioEstadoSolicitud->estado=2;
+        $cambioEstadoSolicitud->save();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      }
+      DB::commit();
+      Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
+      return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+    }
+    else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
       $idSolicitud=$request->solicitud;
       $observacion=$request->observacion;
       DB::beginTransaction();

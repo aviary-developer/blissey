@@ -303,6 +303,9 @@
                               <li>
                                 <a href={{asset( '/rayosx')}}>Rayos X</a>
                               </li>
+                              <li>
+                                <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                              </li>
                             </ul>
                           </li>
                         @endif

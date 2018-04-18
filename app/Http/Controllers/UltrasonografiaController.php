@@ -59,7 +59,6 @@ class UltrasonografiaController extends Controller
      public function store(UltrasonografiaRequest $request)
      {
        DB::beginTransaction();
-
        try{
          $ultraNueva = new ultrasonografia;
          $ultraNueva->nombre=$request->nombre;
