@@ -33,15 +33,21 @@ class CambioProducto extends Model
       $date = \Carbon\Carbon::now();
       $date = $date->format('Y-m-d');
       if($fila->fecha_vencimiento<=$date){
-        // $cambio=new CambioProducto();
-        // $cambio->fecha=$date;
-        // $cambio->f_detalle_transaccion=$fila->id;
-        // $cambio->cantidad=$fila->cantidad;
-        // $cambio->estado=0;
-        // $cambio->save();
+        if($fila->cantidad>0){
+          $cambio=new CambioProducto();
+          $cambio->fecha=$date;
+          $cambio->f_detalle_transaccion=$fila->id;
+          $cambio->cantidad=$fila->cantidad;
+          $cambio->estado=0;
+          $cambio->save();
+        }
         $total_vencidos=$total_vencidos+$fila->cantidad;
       }
     }
     return $total_vencidos;
   }
+  public static function buscar($estado){
+    return $retirados=CambioProducto::where('estado',$estado)->paginate(10);
+  }
+
 }

@@ -70,10 +70,20 @@ class DivisionProducto extends Model
         }
       }
     }
+    $cm=0;
+    $movidos=transacion::where('tipo',7)->where('localizacion',$ts)->get(); //movidos ya sea por vencimiento o próximos a vencer 
+    foreach ($movidos as $movido) {
+      $dem=$movido->detalleTransaccion;
+      foreach($dem as $dm){
+        if($dm->f_producto==$id){
+          $cm=$cm+$dm->cantidad;
+        }
+      }
+    }
     if($ts==0){
-      return $cc-$cv-$ce-$cr;
+      return $cc-$cv-$ce-$cr-$cm;
     }elseif($ts==1){
-      return $cc-$cv+$cr;
+      return $cc-$cv+$cr-$cm;
     }
   }
   public static function buscar($nombre,$estado){

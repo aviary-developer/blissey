@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Producto;
 use App\DivisionProducto;
 use App\CambioProducto;
+use App\Transacion;
+use Auth;
+use App\DetalleTransacion;
 class CambioProductoController extends Controller
 {
     /**
@@ -13,9 +16,16 @@ class CambioProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+      $estado=$request->estado;
+      if($estado==null){
+        $retirados=CambioProducto::paginate(10);
+      }else{
+        $retirados=CambioProducto::buscar($estado);
+      }
+
+      return view('CambioProductos.index',compact('retirados'));
     }
 
     /**
@@ -103,11 +113,13 @@ class CambioProductoController extends Controller
               $transaccion->save();
               $activo=true;
             }
-            $detalle=new DetalleTransacion();
-            $detalle->cantidad=$cantidad;
-            $detalle->f_transaccion=$transaccion->id;
-            $detalle->f_producto=$division->id;
-            $detalle->save();
+            if($cantidad>0){
+              $detalle=new DetalleTransacion();
+              $detalle->cantidad=$cantidad;
+              $detalle->f_transaccion=$transaccion->id;
+              $detalle->f_producto=$division->id;
+              $detalle->save();
+            }
           }
 
         }
