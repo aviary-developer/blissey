@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CambioProducto extends Model
 {
-  protected $fillable=['fecha','f_detalle_transaccion','cantidad','estado'];
+  protected $fillable=['fecha','f_detalle_transaccion','cantidad','estado','localizacion'];
+    protected $dates = ['fecha'];
   public static function mover($id){
     $inventario=DivisionProducto::inventario($id,1);
     $compras=DivisionProducto::compras($id,1);
@@ -39,6 +40,7 @@ class CambioProducto extends Model
           $cambio->f_detalle_transaccion=$fila->id;
           $cambio->cantidad=$fila->cantidad;
           $cambio->estado=0;
+          $cambio->localizacion=Transacion::tipoUsuario();
           $cambio->save();
         }
         $total_vencidos=$total_vencidos+$fila->cantidad;
@@ -47,7 +49,10 @@ class CambioProducto extends Model
     return $total_vencidos;
   }
   public static function buscar($estado){
-    return $retirados=CambioProducto::where('estado',$estado)->paginate(10);
+    return $retirados=CambioProducto::where('estado',$estado)->orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->paginate(10);
+  }
+  public function transaccion(){
+    return $this->belongsTo('App\DetalleTransacion','f_detalle_transaccion');
   }
 
 }
