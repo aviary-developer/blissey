@@ -457,6 +457,92 @@
                     </li>
                     <!--FIN notificación-->
                   @endif
+                  @if(Auth::user()->tipoUsuario == "Ultrasonografía")
+                    <!--INICIO DE NOTIICACIÓN DE ULTRASONOGRAFIA-->
+                    @php
+                      $solicitudes= App\SolicitudExamen::where('estado','=',1)->where('f_ultrasonografia','!=',null)->orderBy('id','desc')->get();
+                    @endphp
+                    <li role="presentation" class="dropdown">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge bg-red">{{count($solicitudes)}}</span>
+                      </a>
+                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        @foreach ($solicitudes as $key => $notificacion)
+                        <li>
+                          <a href="{{asset('/solicitudex?vista=paciente')}}">
+                            <span>
+                              @php
+                              $apellido = explode(" ", $notificacion->paciente->apellido);
+                            @endphp
+                              <span><strong> {{$apellido[0]}}, {{$notificacion->paciente->nombre}}</strong></span>
+                              <span class="time">{{$notificacion->created_at->diffForHumans()}}</span>
+                            </span>
+                            <span class="message">
+                            {{$notificacion->ultrasonografia->nombre}}
+                            </span>
+                          </a>
+                        </li>
+                        @php
+                          if($key==4)
+                          {break;}
+                        @endphp
+                        @endforeach
+                        <li>
+                          <div class="text-center">
+                            <a href="{{asset('/solicitudex')}}">
+                              <strong>Ver todas las solicitudes</strong>
+                              <i class="fa fa-angle-right"></i>
+                            </a>
+                          </div>
+                        </li>
+                  </ul>
+                    </li>
+                    <!--FIN notificación-->
+                  @endif
+                  @if(Auth::user()->tipoUsuario == "Rayos X")
+                    <!--INICIO DE NOTIICACIÓN DE Rayos x-->
+                    @php
+                      $solicitudes= App\SolicitudExamen::where('estado','=',1)->where('f_rayox','!=',null)->orderBy('id','desc')->get();
+                    @endphp
+                    <li role="presentation" class="dropdown">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge bg-red">{{count($solicitudes)}}</span>
+                      </a>
+                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        @foreach ($solicitudes as $key => $notificacion)
+                        <li>
+                          <a href="{{asset('/solicitudex?vista=paciente')}}">
+                            <span>
+                              @php
+                              $apellido = explode(" ", $notificacion->paciente->apellido);
+                            @endphp
+                              <span><strong> {{$apellido[0]}}, {{$notificacion->paciente->nombre}}</strong></span>
+                              <span class="time">{{$notificacion->created_at->diffForHumans()}}</span>
+                            </span>
+                            <span class="message">
+                            {{$notificacion->rayox->nombre}}
+                            </span>
+                          </a>
+                        </li>
+                        @php
+                          if($key==4)
+                          {break;}
+                        @endphp
+                        @endforeach
+                        <li>
+                          <div class="text-center">
+                            <a href="{{asset('/solicitudex')}}">
+                              <strong>Ver todas las solicitudes</strong>
+                              <i class="fa fa-angle-right"></i>
+                            </a>
+                          </div>
+                        </li>
+                  </ul>
+                    </li>
+                    <!--FIN notificación-->
+                  @endif
                   {{--inicio notificaciones de farmacia --}}
                   @if(Auth::user()->tipoUsuario == "Farmacia")
                     @php
