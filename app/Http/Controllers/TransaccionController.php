@@ -27,10 +27,13 @@ class TransaccionController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
     $tipo= $request->tipo;
     $buscar=$request->buscar;
       $transacciones=Transacion::buscar($buscar,$tipo);
-      return view('transacciones.index',compact('transacciones','tipo','buscar'));
+      return view('transacciones.index',compact('transacciones','tipo','buscar','pagina'));
     }
 
     /**
@@ -227,7 +230,7 @@ class TransaccionController extends Controller
         //
     }
     public function buscarProductos($id,$texto){
-      $productos=Producto::where('nombre','ilike','%'.$texto.'%')->get();
+      $productos=Producto::where('nombre','ilike','%'.$texto.'%')->take(3)->get();
       if(count($productos)>0){
         foreach($productos as $producto){
           $producto->presentacion;
@@ -311,7 +314,7 @@ class TransaccionController extends Controller
       return $productos;
     }
     public static function buscarComponente($texto){
-      $componentes=Componente::where('nombre','ILIKE','%'.$texto.'%')->get(['id','nombre']);
+      $componentes=Componente::where('nombre','ILIKE','%'.$texto.'%')->take(4)->get(['id','nombre']);
       foreach ($componentes as $c) {
         foreach ($c->componenteProducto as $cp) {
           $cp->producto;

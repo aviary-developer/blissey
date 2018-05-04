@@ -92,7 +92,7 @@
               @endphp
               @foreach ($transacciones as $transaccion)
                 <tr>
-                  <td>{{ $correlativo }}</td>
+                  <td>{{ $correlativo + $pagina}}</td>
                   <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   @if ($tipo==0 || $tipo==1)
                     <td>{{$transaccion->proveedor->nombre}}</td>

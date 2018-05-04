@@ -138,9 +138,11 @@
                   <i class="fa fa-warning"></i>
                 </button>
               @endif
-              <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}})">
+              <a data-toggle="tooltip" data-placement="top" title="Editar">
+                <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}})">
                 <i class="fa fa-edit"></i>
               </button>
+            </a>
             </td>
           </tr>
           @php
