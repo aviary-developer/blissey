@@ -731,6 +731,7 @@
       {!!Html::script('js/scripts/Transacciones.js')!!}
       {!!Html::script('js/scripts/Ingreso.js')!!}
       {!!Html::script('js/scripts/Ingreso2.js')!!}
+      {!!Html::script('js/scripts/Consulta.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}
       {!!Html::script('js/scripts/Solicitud.js')!!}

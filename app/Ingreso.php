@@ -73,6 +73,10 @@ class Ingreso extends Model
       return $this->hasMany('App\SignoVital', 'f_ingreso')->orderBy('created_at','desc');
     }
 
+    public function comsulta(){
+      return $this->hasMany('App\Consulta','f_ingreso')->orderBy('created_at','desc');
+    }
+
     public static function servicio_gastos($id, $dia = -1){
       $ingreso = Ingreso::find($id);
       //Gastos por uso de habitaciones

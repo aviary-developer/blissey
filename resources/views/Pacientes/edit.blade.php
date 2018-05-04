@@ -5,7 +5,7 @@
     $fecha = $pacientes->fechaNacimiento;
     $create = false;
   @endphp
-  <div class="col-md-6 col-xs-12">
+  <div class="col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Paciente<small>Editar</small></h2>

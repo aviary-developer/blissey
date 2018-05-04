@@ -4,7 +4,7 @@
   </div>
   <div class="col-xs-2 alignright">
     @if ($ingreso->estado != 2)
-      <button type="button" name="button" class="btn btn-primary btn-sm alignright" data-toggle="modal" data-target="#modal_signos">
+      <button type="button" name="button" class="btn btn-primary btn-sm alignright" data-toggle="modal" data-target="#modal_consulta" id="consulta_btn_modal">
         <i class="fa fa-plus"></i> Nuevo
       </button>
     @endif

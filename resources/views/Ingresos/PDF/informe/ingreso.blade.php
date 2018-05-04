@@ -213,7 +213,7 @@
                 <td>{{$date_after_origen->formatLocalized('%d de %B de %Y')}}</td>
                 <td class="text-right">{{'$ '.number_format(($abono->monto),2,'.',',')}}</td>
                 @php
-                  $total_abonado += number_format(($abono->monto),2,'.',',');
+                  $total_abonado += floatval($abono->monto);
                 @endphp
               </tr>
             @endif
@@ -232,21 +232,26 @@
   <h4><center>Resumen</center></h4>
   <div class="col-xs-4">
     <table style="width: 100%">
+      @php
+        $var_habitacion = number_format($total_habitacion,2,'.','');
+        $var_laboratorio = number_format($total_laboratorio,2,'.','');
+        $var_servicio = number_format($total_servicio,2,'.','');
+        $total_servicio_hospitalario = 0;
+        $total_servicio_hospitalario += floatval($total_habitacion);
+        $total_servicio_hospitalario += floatval($total_laboratorio) + floatval($total_servicio);
+      @endphp
       <tr>
         <td>Habitación</td>
-        <td class="text-right">{{'$ '.number_format(($total_habitacion),2,'.',',')}}</td>
+        <td class="text-right">{{'$ '.$var_habitacion}}</td>
       </tr>
       <tr>
         <td>Laboratorio Clínico</td>
-        <td class="text-right">{{'$ '.number_format(($total_laboratorio),2,'.',',')}}</td>
+        <td class="text-right">{{'$ '.$var_laboratorio}}</td>
       </tr>
       <tr>
         <td>Servicios</td>
-        <td class="text-right">{{'$ '.number_format(($total_servicio),2,'.',',')}}</td>
+        <td class="text-right">{{'$ '.$var_servicio}}</td>
       </tr>
-      @php
-        $total_servicio_hospitalario = number_format(($total_habitacion),2,'.',',') + number_format(($total_servicio),2,'.',',') + number_format(($total_laboratorio),2,'.',',');
-      @endphp
       <tr style="border-top: 1px black double">
         <td><b>Total servicios hospitalarios</b></td>
         <td class="text-right blue">{{'$ '.number_format(($total_servicio_hospitalario),2,'.',',')}}</td>
@@ -268,15 +273,17 @@
         <td class="text-right">{{'$ '.number_format(($total_honorario),2,'.',',')}}</td>
       </tr>
       @php
-        $subtotal = number_format(($total_servicio_hospitalario),2,'.',',') + number_format(($total_med),2,'.',',') + number_format(($total_honorario),2,'.',',');
+        $subtotal = 0;
+        $subtotal += floatval($total_servicio_hospitalario);
+        $subtotal += floatval($total_med) + floatval($total_honorario);
       @endphp
       <tr style="border-top: 1px black double">
         <td><b>Subtotal</b></td>
         <td class="text-right blue">{{'$ '.number_format(($subtotal),2,'.',',')}}</td>
       </tr>
       @php
-        $iva = number_format(($subtotal),2,'.',',') * 0.13;
-        $total = number_format(($subtotal),2,'.',',') + number_format($iva,2,'.',',');
+        $iva = floatval($subtotal) * 0.13;
+        $total = floatval($subtotal) + floatval($iva);
       @endphp
       <tr>
         <td>IVA (13%)</td>
@@ -299,7 +306,7 @@
         <td class="text-right">{{'$ '.number_format(($total_abonado),2,'.',',')}}</td>
       </tr>
       @php
-        $a_pagar = number_format(($total),2,'.',',') - number_format(($total_abonado),2,'.',',');
+        $a_pagar = floatval($total) - floatval($total_abonado);
       @endphp
       <tr style="border-top: 1px black double">
         <td><b>Saldo pendiente</b></td>

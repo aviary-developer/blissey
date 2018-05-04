@@ -65,7 +65,9 @@
                   <a href="#tab_show_4" id="tab_s_4" role="tab" data-toggle="tab" aria-expanded="false">Estado Financiero</a>
                 </li>
               @endif
-              <h3 class="tag_tab">Servicios</h3>
+              @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Enfermería")
+                <h3 class="tag_tab">Servicios</h3>
+              @endif
               @if (Auth::user()->tipoUsuario == "Recepción")    
                 <li role="presentation" class="">
                   <a href="#tab_show_6" id="tab_s_6" role="tab" data-toggle="tab" aria-expanded="false">Médicos</a>
@@ -243,6 +245,7 @@
                   <input type="hidden" id="tipo_usuario" value={{Auth::user()->tipoUsuario}}>
                   @include('Ingresos.Formularios.show.modal.modal_signos')
                   @include('Ingresos.Formularios.show.modal.modal_grafico_signo')
+                  @include('Ingresos.Formularios.show.modal.modal_consulta')
                 @endif
               </div>
             </div>

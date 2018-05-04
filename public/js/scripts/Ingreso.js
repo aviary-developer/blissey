@@ -102,7 +102,8 @@ $(document).on('ready', function () {
     var v_apellido = $("#apellido_paciente").val();
     var v_sexo = $("#sexo").val();
     var v_fecha = $("#fecha_paciente").val();
-    var v_dui = $("#dui_paciente").val();
+    var v_dui = $("#dui_paciente_campo").val();
+    var v_alergia = $("#alergia_paciente").val();
     var v_telefono = $("#telefono_paciente").val();
     var v_pais = $("#pais_paciente").val();
     var v_departamento = $("#departamento_select").val();
@@ -136,7 +137,8 @@ $(document).on('ready', function () {
           pais: v_pais,
           departamento: v_departamento,
           municipio: v_municipio,
-          direccion: v_direccion
+          direccion: v_direccion,
+          alergia: v_alergia
         },
         success: function (respuesta) {
           if (respuesta != false) {

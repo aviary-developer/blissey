@@ -26,7 +26,7 @@
     <th>DUI</th>
     <td>
       @if (strlen($paciente->dui) != 10)
-        <i style="color:red">Sin DUI</i>
+        <span class="label label-lg label-white red col-xs-4 borde">Sin DUI</span>
       @else
         {{ $paciente->dui }}
       @endif
@@ -37,7 +37,7 @@
   <th>Teléfono</th>
   <td>
     @if (strlen($paciente->telefono) != 9)
-      <i style="color:red">Sin teléfono</i>
+      <span class="label label-lg label-white red col-xs-4 borde">Sin télefono</span>
     @else
       {{ $paciente->telefono }}
     @endif
@@ -55,9 +55,19 @@
   <th>Dirección</th>
   <td>
     @if ($paciente->direccion == null)
-      <i style="color:red">Sin dirección</i>
+      <span class="label label-lg label-white red col-xs-4 borde">Sin dirección</span>
     @else
       {{ $paciente->direccion }}
+    @endif
+  </td>
+</tr>
+<tr>
+  <th>Alergias</th>
+  <td>
+    @if ($paciente->alergia == null)
+      <span class="label label-lg label-gray col-xs-4">Ninguna</span>
+    @else
+      {{ $paciente->alergia }}
     @endif
   </td>
 </tr>

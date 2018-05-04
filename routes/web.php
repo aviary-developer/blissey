@@ -244,6 +244,9 @@ Route::group(['middleware'=>'general'], function(){
   //Fechas de vencimiento
   Route::resource('cambio_productos','CambioProductoController');
   Route::get('/descartarVencidos','CambioProductoController@descartar');
+
+  //Rutas medicas
+  Route::get('/historial_medico','ConsultaController@historial_medico');
 });
 Auth::routes();
 //Rutas de login

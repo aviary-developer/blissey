@@ -16,6 +16,7 @@ class Paciente extends Model
       'dui',
       'pais',
       'departamento',
+      'alergia',
       'municipio'
     ];
     protected $dates = ['fechaNacimiento'];
@@ -87,5 +88,9 @@ class Paciente extends Model
       if($registro->fechaNacimiento->age >= 18 && strlen($registro->dui) != 10)
         return true;
       return false;
+    }
+
+    public function ingreso(){
+      return $this->hasMany('App\Ingreso', 'f_paciente')->orderBy('created_at','desc');
     }
 }

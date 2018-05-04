@@ -9,9 +9,8 @@
       </div>
 
       <div class="modal-body">
-        <div class="col-sm-2 col-xs-12"></div>
-        <div class="col-sm-8 col-xs-12">
-          <div class="x_panel">
+        <div class="x_panel">
+          <div class="col-sm-6 col-xs-12">
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
               <div class="col-md-9 col-sm-9 col-xs-12">
@@ -49,7 +48,7 @@
               <label class="control-label col-md-3 col-sm-3 col-xs-12">DUI</label>
               <div class="col-md-9 col-sm-9 col-xs-12">
                 <span class="fa fa-credit-card form-control-feedback left" aria-hidden="true"></span>
-                {!! Form::text('dui',null,['id'=>'dui_paciente','class'=>'form-control has-feedback-left','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
+                {!! Form::text('dui',null,['id'=>'dui_paciente_campo','class'=>'form-control has-feedback-left','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
               </div>
             </div>
             <div class="form-group">
@@ -59,6 +58,8 @@
                 {!! Form::text('telefono',null,['id'=>'telefono_paciente','class'=>'form-control has-feedback-left','placeholder'=>'Ej. 7000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
               </div>
             </div>
+          </div>
+          <div class="col-sm-6 col-xs-12">           
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Residencia </label>
               &nbsp;&nbsp;&nbsp;
@@ -113,10 +114,17 @@
                 {!! Form::textarea('direccion',null,['id'=>'direccion_paciente','class'=>'form-control has-feedback-left','placeholder'=>'Dirección del nuevo paciente','rows'=>'3']) !!}
               </div>
             </div>
-            <center>
-              <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
-            </center>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Alergia a</label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                <span class="fa fa-medkit form-control-feedback left" aria-hidden="true"></span>
+                {!! Form::textarea('alergia',null,['id'=>'alergia_paciente','class'=>'form-control has-feedback-left','placeholder'=>'Alergias del paciente','rows'=>'2']) !!}
+              </div>
+            </div>
           </div>
+          <center class="col-xs-12">
+            <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+          </center>
         </div>
         <input type="hidden" id="tokenPaciente" name="tokenPaciente" value="<?php echo csrf_token(); ?>">
         <div class="clearfix"></div>
