@@ -39,6 +39,9 @@ class SolicitudExamen extends Model
     public function muestra(){
       return $this->belongsTo('App\Examen','tipoMuestra');
     }
+    public function resultado(){
+      return $this->belongsTo('App\Resultado','f_solicitud');
+    }
 
     public function examenesPaciente($id){
         $examenes = SolicitudExamen::where('f_paciente',$id)->where('estado','<>',3)->orderBy('estado')->get();

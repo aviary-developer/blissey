@@ -70,7 +70,7 @@
                             @if($solicitud->f_paciente == $paciente->f_paciente)
                               <tr>
                                 <td>{{$solicitud->codigo_muestra}}</td>
-                                <td>{{$solicitud->nombreExamen($solicitud->f_examen)}}</td>
+                                <td>{{$solicitud->examen->nombreExamen}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
                               </tr>
                             @endif
