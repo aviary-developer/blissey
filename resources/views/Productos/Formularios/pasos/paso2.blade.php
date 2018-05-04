@@ -54,7 +54,7 @@
             <td>
               <input type="hidden" id={{"componente".$key}} value={{$componente->f_componente}}>
               <input type="hidden" value={{$componente->id}}>
-              <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_componente_antiguo">
+              <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_componente_antiguo" data-toggle="tooltip" data-placement="top" title="Eliminar">
                 <i class="fa fa-remove"></i>
               </button>
             </td>

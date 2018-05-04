@@ -127,7 +127,7 @@
                       <td>{{$detalle->lote}}</td>
                     @else
                       @php
-                        $aux=6;
+                        $aux=7;
                       @endphp
                     @endif
                     @php
@@ -143,7 +143,7 @@
                   @endforeach
                   <tr>
                     <td colspan='{{$aux}}'><div style="text-align:right;">
-                      @if ($transaccion->descuento>0)(Descuento {{$transaccion->descuento}}%)
+                      @if ($transaccion->descuento>0)(Descuento general {{$transaccion->descuento}}%)
                       @else Total:
                       @endif
                           $ {{number_format($total,2,'.','.')}}</div></td>

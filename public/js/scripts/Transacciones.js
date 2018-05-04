@@ -21,7 +21,6 @@ $(document).on('ready',function(){
             var ruta = "/blissey/public/buscarProductoTransaccion/"+laboratorio+"/"+valor;
             var tabla = $("#tablaBuscar");
             $.get(ruta,function(res){
-              console.log(res);
               tabla.empty();
               head =
               "<thead>"+
@@ -267,6 +266,7 @@ $(document).on('ready',function(){
       var indice = componentes_agregados.indexOf(elemento);
       componentes_agregados.splice(indice,1);
       $(this).parent('td').parent('tr').remove();
+      notaNotice("El producto fue removido");
     });
     $("#tablaDetalle").on('click','#eliminar_fila_pedido',function(e){
     var elemento = $(this).parents('tr').find('input:eq(5)').val();
@@ -278,6 +278,7 @@ $(document).on('ready',function(){
         var eliminado ="<input type='hidden' name='eliminado[]' value='"+estado+"'>";
         $('#eliminados').append(eliminado);
       }
+      notaNotice("El producto fue removido");
     });
     function validarCantidad(){ //Campo cantidad_resultado
       c=0;
@@ -324,7 +325,8 @@ $(document).on('ready',function(){
       gd=false;
       var v=validaciones();
       f_producto=$('#idoculto').val();
-      if(v==true && !componentes_agregados.includes(f_producto)){
+      v2=componentes_agregados.includes(f_producto);
+      if(v==true && !v2){
         var tabla = $("#tablaDetalle");
         var cantidad=parseFloat($("#cantidadp").val());
         if($("#confirmar").val()==false){
@@ -339,11 +341,11 @@ $(document).on('ready',function(){
               "<td>$ "+(cantidad*parseFloat($("#preoculto").val())).toFixed(2)+"</td>";
             }
             html=html+"<td>"+
-            "<input type='hidden' name='tipo_detalle[]' value ='1'>"+
             "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
             "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>";
             if($('#tipo').val()=='2'){
-              html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>";
+              html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>"+
+              "<input type='hidden' name='tipo_detalle[]' value ='1'>";
             }
             html=html+"<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
             "<i class='fa fa-remove'></i>"+
@@ -386,6 +388,9 @@ $(document).on('ready',function(){
         $('#cantidadp').val("1");
         componentes_agregados.push(f_producto);
       }
+    }else if(v2)
+      {
+        notaError('El producto ya se encuentra incluido');
       }
     });
     $("#resultadoCliente").keyup(function(){
@@ -555,10 +560,10 @@ function registrarventa(id){
     "<td>$ "+c4+"</td>"+
     "<td>$ "+parseFloat(cantidad*c4).toFixed(2)+"</td>"+
     "<td>"+
-    "<input type='hidden' name='tipo_detalle[]' value='1'>"+
     "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
     "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
     "<input type='hidden' name='precio[]' value='"+c4+"'>"+
+    "<input type='hidden' name='tipo_detalle[]' value='1'>"+
     "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
     "<i class='fa fa-remove'></i>"+
     "</button>"+
@@ -577,10 +582,10 @@ function registrarventa(id){
   "<td>$ "+c2+"</td>"+
   "<td>$ "+parseFloat(cantidad*c2).toFixed(2)+"</td>"+
   "<td>"+
-  "<input type='hidden' name='tipo_detalle[]' value='2'>"+
   "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
   "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
   "<input type='hidden' name='precio[]' value='"+c2+"'>"+
+  "<input type='hidden' name='tipo_detalle[]' value='2'>"+
   "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
   "<i class='fa fa-remove'></i>"+
   "</button>"+
@@ -617,6 +622,14 @@ function notaInfo(sms){
     title: 'Hecho!',
     text: sms,
     type: 'info',
+    styling: 'bootstrap3'
+  });
+}
+function notaNotice(sms){
+  new PNotify({
+    title: 'Hecho!',
+    text: sms,
+    type: 'notice',
     styling: 'bootstrap3'
   });
 }

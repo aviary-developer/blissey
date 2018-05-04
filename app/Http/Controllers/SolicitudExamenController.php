@@ -568,7 +568,7 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    $header = view('PDF.header.hospital');
+    $header = view('PDF.header.laboratorio');
     $footer = view('PDF.footer.numero_pagina');
     $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
@@ -604,11 +604,11 @@ class SolicitudExamenController extends Controller
   {
     $vista = $request->get("vista");
     if($vista == "paciente"){
-      $pacientes = SolicitudExamen::where('estado','=',2)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','=',2)->orderBy('estado')->get();
+      $pacientes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->orderBy('estado')->get();
     }else{
-      $examenes = SolicitudExamen::where('estado','=',2)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','=',2)->orderBy('estado')->get();
+      $examenes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
+      $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->orderBy('estado')->get();
     }
     return view('SolicitudExamenes.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
   }
@@ -645,7 +645,7 @@ class SolicitudExamenController extends Controller
         }
       }
     }
-    $header = view('PDF.header.hospital');
+    $header = view('PDF.header.laboratorio');
     $footer = view('PDF.footer.numero_pagina');
     $main = view('SolicitudExamenes.entregaTodosExamenes',compact('solicitudes','espr','secciones','contadorSecciones','resultados','detallesResultado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);

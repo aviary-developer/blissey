@@ -65,6 +65,9 @@
           </h4>
         </center>
       </div>
+      <div class="col-xs-2">
+        <img src={{asset(Storage::url($empresa->logo_hospital))}} class="logo-pdf">
+      </div>
     </div>
   </body>
 </html>
