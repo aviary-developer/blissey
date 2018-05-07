@@ -33,7 +33,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <td>Fecha</td>
+              <th>Fecha</th>
               <th>Código</th>
               <th>Nombre</th>
               <th>Cantidad retirada</th>
@@ -73,7 +73,7 @@
                   @endif
                   </td>
                   <td>{{$retirado->cantidad}}</td>
-                  <td><a href={!! asset('#')!!} class="btn btn-sm btn-info"  data-toggle="tooltip" data-placement="top" title="Ver">
+                  <td><a href={!! asset('/cambio_productos/'.$retirado->id)!!} class="btn btn-sm btn-info"  data-toggle="tooltip" data-placement="top" title="Ver">
                     <i class="fa fa-info-circle"></i>
                     </a>
                   </td>

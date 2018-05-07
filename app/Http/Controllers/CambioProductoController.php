@@ -56,7 +56,8 @@ class CambioProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        $retirado=CambioProducto::find($id);
+        return view('CambioProductos.show',compact('retirado'));
     }
 
     /**
@@ -92,8 +93,11 @@ class CambioProductoController extends Controller
     {
         //
     }
-
     public static function descartar(){
+      CambioProductoController::lugar(2); //farmacia
+      CambioProductoController::lugar(3); //Recepción hospital
+    }
+    public static function lugar($tipo){//tipo 1=según el logueo 2=farmacia 3= recepción
       $productos=Producto::where('estado',1)->orderBy('nombre')->get();
       $activo=false;
       $transaccion=new Transacion();
@@ -101,12 +105,12 @@ class CambioProductoController extends Controller
       $f = $f->format('Y-m-d');
       $transaccion->fecha=$f;
       $transaccion->f_usuario=Auth::user()->id;
-      $transaccion->localizacion=Transacion::tipoUsuario();
+      $transaccion->localizacion=DivisionProducto::busquedaTipo($tipo);
       $transaccion->tipo=7;
       foreach ($productos as $producto) {
         $divisiones=$producto->divisionProducto;
         foreach ($divisiones as $division) {
-          $cantidad= CambioProducto::mover($division->id);
+          $cantidad= CambioProducto::mover($division->id,$tipo);
           if($cantidad>0){
             if(!$activo){
               $transaccion->save();

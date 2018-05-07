@@ -25,12 +25,7 @@ class DivisionProducto extends Model
   }
   public static function inventario($id,$nor){//$nor se refiere a consulta 1 es normal dependiendo del ususario y 2 dos es consultar solo por farmacia
     $cc=0;
-    if($nor==1){
-      $ts=Transacion::tipoUsuario(); //Tipo de usuario
-    }
-    if($nor==2){
-      $ts=0;
-    }
+    $ts=DivisionProducto::busquedaTipo($nor);
     $compras=Transacion::where('tipo',1)->where('localizacion',$ts)->get(); //compras
     foreach ($compras as $compra) {
       $dec=$compra->detalleTransaccion;
@@ -71,7 +66,7 @@ class DivisionProducto extends Model
       }
     }
     $cm=0;
-    $movidos=transacion::where('tipo',7)->where('localizacion',$ts)->get(); //movidos ya sea por vencimiento o próximos a vencer 
+    $movidos=transacion::where('tipo',7)->where('localizacion',$ts)->get(); //movidos ya sea por vencimiento o próximos a vencer
     foreach ($movidos as $movido) {
       $dem=$movido->detalleTransaccion;
       foreach($dem as $dm){
@@ -98,12 +93,7 @@ class DivisionProducto extends Model
       return $bitacora;
   }
   public static function compras($id,$nor){
-    if($nor==1){
-      $ts=Transacion::tipoUsuario(); //Tipo de usuario
-    }
-    if($nor==2){
-      $ts=0;//farmacia
-    }
+    $ts=DivisionProducto::busquedaTipo($nor);
     return DB::table('detalle_transacions')
     ->select('detalle_transacions.*')
     ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
@@ -146,5 +136,16 @@ class DivisionProducto extends Model
       $divisiones=$divs->where('menos',true);
     }
     return $divisiones;
+  }
+  public static function busquedaTipo($nor){
+    if($nor==1){
+      return Transacion::tipoUsuario(); //Tipo de usuario
+    }
+    if($nor==2){
+      return 0;//farmacia
+    }
+    if($nor==3){
+      return 1;//Recepción
+    }
   }
 }

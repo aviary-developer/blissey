@@ -8,9 +8,9 @@ class CambioProducto extends Model
 {
   protected $fillable=['fecha','f_detalle_transaccion','cantidad','estado','localizacion'];
     protected $dates = ['fecha'];
-  public static function mover($id){
-    $inventario=DivisionProducto::inventario($id,1);
-    $compras=DivisionProducto::compras($id,1);
+  public static function mover($id,$tipo){//tipo 1=según el logueo 2=farmacia 3= recepción
+    $inventario=DivisionProducto::inventario($id,$tipo);
+    $compras=DivisionProducto::compras($id,$tipo);
     $cuenta=0;
     $i=0;
     $ultimos=[];
@@ -22,7 +22,7 @@ class CambioProducto extends Model
       $i++;
     }
     $diferencia=$cuenta-$inventario;
-    if($diferencia!=0){
+    if($diferencia>0){
       $fila=$ultimos[$i];
       $fila->cantidad=$fila->cantidad-$diferencia;
       $ultimos[$i]=$fila;
@@ -40,7 +40,7 @@ class CambioProducto extends Model
           $cambio->f_detalle_transaccion=$fila->id;
           $cambio->cantidad=$fila->cantidad;
           $cambio->estado=0;
-          $cambio->localizacion=Transacion::tipoUsuario();
+          $cambio->localizacion=DivisionProducto::busquedaTipo($tipo);;
           $cambio->save();
         }
         $total_vencidos=$total_vencidos+$fila->cantidad;
