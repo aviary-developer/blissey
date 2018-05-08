@@ -549,15 +549,14 @@
                       $conteore= App\Transacion::where('tipo',4)->count();
                       $ultima= App\Transacion::where('tipo',4)->orderBy('id','asc')->get()->last();
                       $conteostock=App\DivisionProducto::conteo();
+                      $conteovencidos=App\CambioProducto::conteo();
                       $stock=0;
-                      if($conteore>0){
-                        $requisiciones=1;
-                      }
-                      if($conteostock>0){
-                        $stock=1;
-                      }
+                      //($request->get('page')!=null)?$request->get('page'):1;
+                      $requisiciones=($conteore>0)?1:0;
+                      $stock=($conteostock>0)?1:0;
+                      $vencidos=($conteovencidos)?1:0;
+
                       $porvencer=0;
-                      $vencidos=0;
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
                     @endphp
                     <li role="presentation" class="dropdown">
@@ -589,6 +588,19 @@
                                 </span>
                                 <span class="message">
                                   Existen <strong>{{$conteostock}} productos</strong>  bajo el stock mínimo
+                                </span>
+                              </a>
+                            </li>
+                            @endif
+                            @if ($vencidos>0)
+                              <li>
+                              <a href="{{asset('/cambio_productos?estado=0')}}">
+                                <span>
+                                  <span><strong>Lotes vencidos</strong></span>
+                                  <span class="time">Cantidad: <strong>{{$conteovencidos}}</strong></span>
+                                </span>
+                                <span class="message">
+                                  Existen <strong>{{$conteovencidos}} lotes de productos vencidos</strong>, necesita confirmar  que fueron retirados de los estantes
                                 </span>
                               </a>
                             </li>

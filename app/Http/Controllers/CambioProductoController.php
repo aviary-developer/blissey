@@ -18,13 +18,16 @@ class CambioProductoController extends Controller
      */
     public function index(Request $request)
     {
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
       $estado=$request->estado;
       if($estado==null){
         $retirados=CambioProducto::orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->paginate(10);
       }else{
         $retirados=CambioProducto::buscar($estado);
       }
-      return view('CambioProductos.index',compact('retirados'));
+      return view('CambioProductos.index',compact('retirados','estado','pagina'));
     }
 
     /**
@@ -127,5 +130,9 @@ class CambioProductoController extends Controller
 
         }
       }
+    }
+    public static function confirmarRetiro(){
+      CambioProducto::where('estado',0)->update(['estado'=>1]);
+      return redirect('cambio_productos')->with('mensaje','¡Confirmado!');
     }
 }

@@ -54,5 +54,8 @@ class CambioProducto extends Model
   public function transaccion(){
     return $this->belongsTo('App\DetalleTransacion','f_detalle_transaccion');
   }
+  public static function conteo(){
+    return CambioProducto::where('estado',0)->get()->count();
+  }
 
 }

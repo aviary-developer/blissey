@@ -11,22 +11,18 @@
         $dv=$retirado->transaccion->divisionProducto;
       @endphp
       <h2>
-        Producto:
-        <small>
-          {{$dv->producto->nombre." ".$dv->division->nombre." "}}
-          @if ($dv->contenido!=null)
-            {{$dv->cantidad." ".$dv->unidad->nombre}}
-          @else
-            {{$dv->cantidad." ".$dv->producto->Presentacion->nombre}}
-          @endif
-        </small>
+        Producto
       </h2>
       <div class="clearfix"></div>
     </div>
     <div class="x_content">
       <div class="row">
         <div class="col-md-6 col-xs-12">
-          @include('Presentaciones.Formularios.activate')
+          <div class="btn-group">
+            <a href={!! asset('/cambio_productos')!!} class="btn btn-dark btn-sm"><i class="fa fa-arrow-left"></i> Atras</a>
+            <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+            <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
+          </div>
         </div>
       </div>
       <br>
@@ -49,26 +45,61 @@
               <h3>Información General</h3>
               <table class="table">
                 <tr>
-                  <th>Nombre</th>
-                  <td>{{ $presentacion->nombre }}</td>
+                  <th>Código</th>
+                  <td>{{$dv->codigo}}</td>
                 </tr>
                 <tr>
-                  <th>Estado</th>
+                  <th>Nombre</th>
                   <td>
-                    @if ($presentacion->estado)
-                      <span class="label label-lg label-success col-xs-4">Activo</span>
+                    {{$dv->producto->nombre." ".$dv->division->nombre." "}}
+                    @if ($dv->contenido!=null)
+                      {{$dv->cantidad." ".$dv->unidad->nombre}}
                     @else
-                      <span class="label label-lg label-danger col-xs-4">En papelera</span>
+                      {{$dv->cantidad." ".$dv->producto->Presentacion->nombre}}
                     @endif
                   </td>
                 </tr>
                 <tr>
+                  <th>Cantidad</th>
+                  <td>{{$retirado->cantidad}}</td>
+                </tr>
+                <tr>
+                  <th>Lote</th>
+                  <td>{{$retirado->transaccion->lote}}</td>
+                </tr>
+                <tr>
+                  <th>Estado</th>
+                  <td>
+                    @if ($retirado->estado==0)
+                      <span class="label label-danger label-lg col-xs-8">
+                        Falta retirar del estante
+                      </span>
+                    @elseif($retirado->estado==1)
+                      <span class="label label-dark-blue label-lg col-xs-8">
+                        Retirado del estante sin cambio
+                      </span>
+                    @else
+                      <span class="label label-success label-lg col-xs-8">
+                        Producto cambiado por el proveedor
+                      </span>
+                    @endif
+                  </td>
+                </tr>
+                <tr>
+                  <th>@if ($retirado->estado==0)
+                    Ubicación
+                  @else
+                    Retirado de
+                  @endif</th>
+                  <td>Estante: {{$retirado->transaccion->estante->codigo}} Nivel: {{$retirado->transaccion->nivel}}</td>
+                </tr>
+                <tr>
                   <th>Fecha de creación</th>
-                  <td>{{ $presentacion->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                  <td>{{ $retirado->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                 </tr>
                 <tr>
                   <th>Fecha de modificación</th>
-                  <td>{{ $presentacion->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
+                  <td>{{ $retirado->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                 </tr>
               </table>
             </div>
