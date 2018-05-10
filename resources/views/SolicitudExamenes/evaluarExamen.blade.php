@@ -4,7 +4,7 @@
   @php
     $fecha = Carbon\Carbon::now();
   @endphp
-  <div class="col-md-10 col-xs-12">
+  <div class="col-md-10 col-xs-12" style="margin: 0px 0px 40px 0px;">
     <div class="x_panel">
       <div class="x_title">
         <h2>Evaluación de examen</h2>
