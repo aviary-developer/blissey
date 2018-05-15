@@ -247,6 +247,7 @@ Route::group(['middleware'=>'general'], function(){
 
   //Rutas medicas
   Route::get('/historial_medico','ConsultaController@historial_medico');
+  Route::resource('/consulta','ConsultaController');
 });
 Auth::routes();
 //Rutas de login

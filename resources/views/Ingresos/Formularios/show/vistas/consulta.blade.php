@@ -11,4 +11,41 @@
   </div>
 </div>
 <br>
-<input type="hidden" id="consulta_count" value={{count($ingreso->signos)}}>
+@if (count($ingreso->consulta) > 0)
+  <div class="row">
+    @foreach ($ingreso->consulta as $consulta)
+      <div class="row borde" style="border-radius: 3px; margin: 5px; paddign: 5px;">
+        <div class="row bg-blue" style="margin: 5px;">
+          <center>
+            <h4><i class="fa fa-calendar"></i> {{$consulta->created_at->formatLocalized('%d de %B de %Y a las %H:%M')}}</h4>
+          </center>
+        </div>
+        <div class="row bg-gray" style="margin: 0px 5px 0px 5px;">
+          <center>
+            <span class="black">
+              <b>
+                Consulta por
+              </b>
+            </span>
+          </center>
+        </div>
+        <div class="row" style="margin: 0px 10px 0px 10px;">
+          <span>{{$consulta->motivo}}</span>
+        </div>
+        <div class="row bg-gray" style="margin: 0px 5px 0px 5px;">
+          <center>
+            <span class="black">
+              <b>
+                Diagnostico
+              </b>
+            </span>
+          </center>
+        </div>
+        <div class="row" style="margin: 0px 10px 0px 10px;">
+          <span>{{$consulta->diagnostico}}</span>
+        </div>
+      </div>
+    @endforeach
+  </div>
+@else
+@endif  

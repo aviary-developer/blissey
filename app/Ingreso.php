@@ -73,7 +73,7 @@ class Ingreso extends Model
       return $this->hasMany('App\SignoVital', 'f_ingreso')->orderBy('created_at','desc');
     }
 
-    public function comsulta(){
+    public function consulta(){
       return $this->hasMany('App\Consulta','f_ingreso')->orderBy('created_at','desc');
     }
 
