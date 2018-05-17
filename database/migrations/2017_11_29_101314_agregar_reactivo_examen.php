@@ -14,8 +14,6 @@ class AgregarReactivoExamen extends Migration
     public function up()
     {
         Schema::table('examen_seccion_parametros', function (Blueprint $table) {
-          $table->integer('f_reactivo')->unsigned();
-          $table->foreign('f_reactivo')->references('id')->on('reactivos');
         });
     }
 

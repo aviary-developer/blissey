@@ -21,7 +21,7 @@ class ChangeVariosTable extends Migration
           $table->integer('f_transaccion')->unsigned();
           $table->foreign('f_transaccion')->references('id')->on('transacions');
           $table->double('precio')->unsigned()->nullable();
-          $table->string('lote',15)->unsigned()->nullable();
+          $table->string('lote',15)->nullable();
       });
       Schema::table('productos', function (Blueprint $table) {
           $table->dropColumn('precio');

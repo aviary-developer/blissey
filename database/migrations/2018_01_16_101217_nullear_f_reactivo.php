@@ -14,9 +14,6 @@ class NullearFReactivo extends Migration
     public function up()
     {
         Schema::table('examen_seccion_parametros', function (Blueprint $table) {
-            $table->dropColumn('f_reactivo');
-        });
-        Schema::table('examen_seccion_parametros', function (Blueprint $table) {
           $table->integer('f_reactivo')->unsigned()->nullable();
           $table->foreign('f_reactivo')->references('id')->on('reactivos');
         });

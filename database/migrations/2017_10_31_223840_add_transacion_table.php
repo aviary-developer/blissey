@@ -14,7 +14,7 @@ class AddTransacionTable extends Migration
     public function up()
     {
       Schema::table('transacions', function (Blueprint $table) {
-          $table->string('factura',10)->unsigned()->nullable();
+          $table->string('factura',10)->nullable();
       });
     }
 

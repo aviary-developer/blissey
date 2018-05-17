@@ -22,7 +22,6 @@ class CambioVarios extends Migration
       });
       Schema::table('detalle_transacions', function (Blueprint $table) {
           $table->dropColumn('condicion');
-          $table->dropColumn('f_reactivo');
       });
       Schema::table('detalle_transacions', function (Blueprint $table) {
           $table->integer('f_estante')->unsigned()->nullable();

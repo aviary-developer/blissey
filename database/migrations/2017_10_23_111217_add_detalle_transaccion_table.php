@@ -14,8 +14,6 @@ class AddDetalleTransaccionTable extends Migration
     public function up()
     {
       Schema::table('detalle_transacions', function (Blueprint $table) {
-          $table->integer('f_reactivo')->unsigned()->nullable();
-          $table->foreign('f_reactivo')->references('id')->on('reactivos');
       });
     }
 

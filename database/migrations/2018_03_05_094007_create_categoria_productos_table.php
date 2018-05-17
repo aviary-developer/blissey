@@ -16,7 +16,7 @@ class CreateCategoriaProductosTable extends Migration
         Schema::create('categoria_productos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',35);
-            $table->boolean('estado')->default('true');
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }

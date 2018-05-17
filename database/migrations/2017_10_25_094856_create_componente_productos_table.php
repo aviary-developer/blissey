@@ -15,10 +15,10 @@ class CreateComponenteProductosTable extends Migration
     {
         Schema::create('componente_productos', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('f_componente');
-          $table->integer('f_producto');
+          $table->integer('f_componente')->unsigned()->nullable();
+          $table->integer('f_producto')->unsigned()->nullable();
           $table->double('cantidad');
-          $table->integer('f_unidad');
+          $table->integer('f_unidad')->unsigned()->nullable();
           $table->foreign('f_componente')->references('id')->on('componentes');
           $table->foreign('f_producto')->references('id')->on('productos');
           $table->foreign('f_unidad')->references('id')->on('unidads');
