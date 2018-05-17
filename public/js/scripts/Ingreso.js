@@ -385,7 +385,45 @@ $(document).on('ready', function () {
         }
       });
     }).catch(swal.noop);
-   });
+  });
+  
+  $("#fin_consulta").on("click", function (e) {
+    e.preventDefault();
+    var token = $("#tokenTransaccion").val();
+    var transaccion_id = $("#transaccion").val();
+    var deuda = $("#precio_consulta").val();
+    var id = $("#id").val();
+    swal({
+      title: "¡Advertencia!",
+      text: "Al dar de alta el paciente debe haber cancelado $" + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(deuda),
+      showCancelButton: true,
+      confirmButtonText: '¡Guardar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-default',
+      type: "warning"
+    }).then(function () {
+      $.ajax({
+        url: "/blissey/public/abonar",
+        type: "POST",
+        headers: { 'X-CSRF-TOKEN': token },
+        data: {
+          transaccion: transaccion_id,
+          abono: deuda,
+          ingreso: id,
+        },
+        success: function (r) {
+          console.log(r);
+          if (r == 1) {
+            swal("¡Hecho!", "Acción realizada exitosamente", 'success');
+            location.reload();
+          } else {
+            swal("¡Algo salio mal!", 'No se guardo', 'error');
+          }
+        }
+      });
+    }).catch(swal.noop);
+  });
 
   //Ver si existen los honorarios
   $("#guardar_ingreso").on("click", function (e) {

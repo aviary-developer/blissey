@@ -105,7 +105,7 @@ class Ingreso extends Model
         $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
         $fecha = $ingreso->fecha_ingreso->addDays($dia);
         $habitacion = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha)->count();
-        if($habitacion == 0){
+        if($habitacion == 0 && $ingreso->habitacion != null){
           $total = $ingreso->habitacion->precio;
         }else{
           $total = 0;

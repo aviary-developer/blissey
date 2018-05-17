@@ -58,7 +58,7 @@
             <li role="presentation" class="active">
               <a href="#tab_show_1" id="tab_s_1" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
-            @if ($ingreso->estado != 0) 
+            @if ($ingreso->estado != 0 && $ingreso->tipo != 3) 
               @if (Auth::user()->tipoUsuario == "Recepción")    
                 <h3 class="tag_tab">Financiero</h3>
                 <li role="presentation" class="">
@@ -110,10 +110,15 @@
                     <h3>Información General</h3>
                   </div>
                   <div class="col-xs-2 alignright">
-                    @if ($ingreso->estado == 1 && Auth::user()->tipoUsuario == "Recepción")
+                    @if ($ingreso->estado == 1 && Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)
                       <input type="hidden" value={{number_format($total_deuda,2,'.','')}} id="deuda_para_alta">
                       <button id="dar_alta" type="button" class="btn btn-sm btn-success alignright">
                         <i class="fa fa-arrow-right"></i> Dar de alta
+                      </button>
+                    @elseif($ingreso->estado == 0 && Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo == 3 && $ingreso->consulta->count() > 0)
+                    <input type="hidden" id="precio_consulta" value={{floatval($ingreso->medico->servicio->precio)}}>
+                      <button type="button" class="btn-sm btn btn-success alignright" id="fin_consulta">
+                        <i class="fa fa-arrow-right"></i> Cobrar
                       </button>
                     @endif
                   </div>
@@ -212,7 +217,7 @@
                 </table>
               </div>
               {{-- Otra pestaña --}}
-              @if ($ingreso->estado != 0)    
+              @if ($ingreso->estado != 0 && $ingreso->tipo != 3)    
                 <div class="tab-pane fade" role="tabpanel" id="tab_show_2" aria-labelledby="tab_s_2">
                   @include('Ingresos.Formularios.show.vistas.medicamento')
                 </div>

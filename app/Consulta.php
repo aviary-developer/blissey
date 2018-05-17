@@ -13,4 +13,8 @@ class Consulta extends Model
         'diagnostico',
         'f_ingreso'
     ];
+
+    public function medico(){
+        return $this->belongsTo('App\Users','f_medico');
+    }
 }

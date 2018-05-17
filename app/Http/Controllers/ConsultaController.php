@@ -8,6 +8,7 @@ use App\Paciente;
 use App\Bitacora;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class ConsultaController extends Controller
 {
@@ -42,6 +43,8 @@ class ConsultaController extends Controller
         DB::beginTransaction();
         try{
             $consulta = Consulta::create($request->All());
+            $consulta->f_medico = Auth::user()->id;
+            $consulta->save();
             DB::commit();
             Bitacora::bitacora('store', 'consultas', 'consultas', $consulta->id);
         }catch(Exception $e){

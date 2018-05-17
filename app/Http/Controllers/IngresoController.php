@@ -198,20 +198,28 @@ class IngresoController extends Controller
             }
           }
         }else{
-          $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
-          $utlima48 = $ultima24 = $ingreso->fecha_ingreso->subDays(1);
+          if($ingreso->tipo < 3){
+            $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+            $utlima48 = $ultima24 = $ingreso->fecha_ingreso->subDays(1);
+          }
         }
-        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-
-        //Total de gastos
-        $total_gastos = $this->total_gastos($id);
-        $iva = $total_gastos * 0.13;
-        $total_gastos += $iva;
-        //Total abonado a la deuda
-        $total_abono = Ingreso::abonos($id);
-
-        //Total adeudado
-        $total_deuda = $total_gastos - $total_abono;
+        if($ingreso->tipo < 3){
+          $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+  
+          //Total de gastos
+          $total_gastos = $this->total_gastos($id);
+          $iva = $total_gastos * 0.13;
+          $total_gastos += $iva;
+          //Total abonado a la deuda
+          $total_abono = Ingreso::abonos($id);
+  
+          //Total adeudado
+          $total_deuda = $total_gastos - $total_abono;
+        }else{
+          $examenes = null;
+          $dias = 0;
+          $total_abono = $total_gastos = $total_abono = $total_deuda = 0;  
+        }
       }else{
         $examenes = null;
         $dias = 0;
@@ -223,6 +231,18 @@ class IngresoController extends Controller
       $habitaciones_h = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
       $habitaciones_o = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
 
+      //Datos de las consultas
+      $extraccion = $paciente->ingreso;
+      $indx = 0;
+      $consultas = [];
+      foreach($extraccion as $ingresos_){
+        if($ingresos_->consulta != null){
+          foreach($ingresos_->consulta as $consulta){
+            $consultas[$indx] = $consulta;
+            $indx++;
+          }
+        }
+      }
       return view('Ingresos.show',compact(
         'ingreso',
         'examenes',
@@ -427,9 +447,11 @@ class IngresoController extends Controller
           $ingreso->estado = 2;
           $ingreso->save();
 
-          $habitacion = Habitacion::find($ingreso->f_habitacion);
-          $habitacion->ocupado = false;
-          $habitacion->save();
+          if($ingreso->f_habitacion != null){
+            $habitacion = Habitacion::find($ingreso->f_habitacion);
+            $habitacion->ocupado = false;
+            $habitacion->save();
+          }
         }
       }catch(Exception $e){
         DB::rollback();
