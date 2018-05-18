@@ -47,35 +47,14 @@
             <div class="col-xs-12 col-sm-6 ">
               <div class="x_panel" style = "height: 394px;">
                 <div class="row" id = "contenido__" style="height: 90%;">
-                  <div id="stats__" class="row">
-                    <div class="row">
-                      <center>
-                        <img src={{asset((($paciente->sexo)?'img/hombre.png':'img/mujer.png'))}} class="img-circle perfil-2" style="width: 80px; height: 80px;">
-                      </center>
-                    </div>
-                    <div class="row">
-                      <center>
-                        <h3>{{$paciente->nombre.' '.$paciente->apellido}}</h3>
-                      </center>
-                    </div>
-                    <div class="row">
-                      <center>
-                        <h5>{{$paciente->fechaNacimiento->age.' años'}}</h5>
-                      </center>
-                    </div>
-                    <div class="ln_solid" style="margin: 5px 20px;"></div>
-                    <div class="row">
-                      <center>
-                        <h5 class={{($paciente->alegia == null)?"label label-lg label-gray":"label label-lg label-warning"}} style="padding-left: 30px; padding-right: 30px;">Alergias</h5>
-                      </center>
-                    </div>
-                  </div>
+                  @include('Ingresos.Formularios.consulta.informacion')
+                  @include('Ingresos.Formularios.consulta.lista_consulta')
                 </div>
                 <div class="ln_solid" style="margin: 5px 0;"></div>
                 <div class="row">
                   <div class="btn-group col-xs-12">
-                    <button type="button" class="btn btn-sm btn-primary col-xs-2" data-toggle="tooltip" data-placement="top" title="Información"><i class="fa fa-user"></i></button>
-                    <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Consultas"><i class="fa fa-list"></i></button>
+                    <button type="button" class="btn btn-sm btn-primary col-xs-2" data-toggle="tooltip" data-placement="top" title="Información" id="btn_info"><i class="fa fa-user"></i></button>
+                    <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Consultas" id="btn_lista"><i class="fa fa-list"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Examenes Clínicos"><i class="fa fa-check-square"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Signos Vitales"><i class="fa-heartbeat fa"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Tratamiento"><i class="fa fa-medkit"></i></button>

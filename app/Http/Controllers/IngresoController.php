@@ -258,7 +258,8 @@ class IngresoController extends Controller
         'habitaciones_o',
         'responsable',
         'ultima24',
-        'ultima48'
+        'ultima48',
+        'consultas'
       ));
     }
 

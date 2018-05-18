@@ -14,7 +14,7 @@
 @if (count($ingreso->consulta) > 0)
   <div class="row">
     @foreach ($ingreso->consulta as $consulta)
-      <div class="row borde" style="border-radius: 3px; margin: 5px; paddign: 5px;">
+      <div class="row borde" style="border-radius: 3px; margin: 5px; padding: 5px;">
         <div class="row bg-blue" style="margin: 5px;">
           <center>
             <h4><i class="fa fa-calendar"></i> {{$consulta->created_at->formatLocalized('%d de %B de %Y a las %H:%M')}}</h4>
@@ -36,7 +36,7 @@
           <center>
             <span class="black">
               <b>
-                Diagnostico
+                Diagnóstico
               </b>
             </span>
           </center>

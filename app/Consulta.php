@@ -15,6 +15,6 @@ class Consulta extends Model
     ];
 
     public function medico(){
-        return $this->belongsTo('App\Users','f_medico');
+        return $this->belongsTo('App\User','f_medico');
     }
 }

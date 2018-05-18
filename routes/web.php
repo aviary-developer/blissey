@@ -216,6 +216,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/guardar_paciente','PacienteController@guardar_externo');
   Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
   Route::match(['get','post'],'/buscarPersonas','IngresoController@buscarPersonas');
+  Route::post('/editar_alergia','PacienteController@editar_alergia');
   //Inventarios
   Route::resource('inventarios','InventarioController');
   //Ingresos

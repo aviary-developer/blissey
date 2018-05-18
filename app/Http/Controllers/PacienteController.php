@@ -642,4 +642,20 @@ class PacienteController extends Controller
 
     return $municipios;
   }
+
+  public function editar_alergia(Request $request){
+    $id = $request->id;
+    $alergia = $request->alergia;
+    $paciente = Paciente::find($id);
+    DB::beginTransaction();
+    try{
+      $paciente->alergia = $alergia;
+      $paciente->save();
+      DB::commit();
+    }catch(Exception $e){
+      DB::rollback();
+      return 0;
+    }
+    return 1;
+  }
 }
