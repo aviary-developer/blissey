@@ -16,8 +16,6 @@ class CreateCambioProductosTable extends Migration
         Schema::create('cambio_productos', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
-            $table->integer('f_detalle_transaccion')->unsigned();
-            $table->foreign('f_detalle_transaccion')->references('id')->on('transacions');
             $table->integer('cantidad');
             $table->integer('estado');//0-En estante (Muestra alerta), 1-Retirado, 2-Cambiado
             $table->timestamps();

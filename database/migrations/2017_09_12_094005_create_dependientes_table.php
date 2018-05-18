@@ -18,7 +18,7 @@ class CreateDependientesTable extends Migration
             $table->string('nombre',30);
             $table->string('apellido',30);
             $table->string('telefono',9);
-            $table->boolean('estado')->default('true');
+            $table->boolean('estado')->default(true);
             $table->integer('f_proveedor')->unsigned();
             $table->foreign('f_proveedor')->references('id')->on('proveedors');
             $table->timestamps();

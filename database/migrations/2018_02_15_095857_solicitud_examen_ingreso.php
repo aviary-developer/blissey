@@ -14,8 +14,6 @@ class SolicitudExamenIngreso extends Migration
     public function up()
     {
         Schema::table('solicitud_examens', function (Blueprint $table) {
-            $table->integer('f_ingreso')->unsigned()->nullable();
-            $table->foreign('f_ingreso')->references('id')->on('ingresos');
         });
     }
 

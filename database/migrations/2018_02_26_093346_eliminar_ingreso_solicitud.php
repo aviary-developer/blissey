@@ -14,7 +14,6 @@ class EliminarIngresoSolicitud extends Migration
     public function up()
     {
         Schema::table('solicitud_examens', function (Blueprint $table) {
-            $table->dropColumn("f_ingreso");
             $table->integer('f_transaccion')->unsigned()->nullable();
             $table->foreign('f_transaccion')->references('id')->on('transacions');
         });
@@ -28,8 +27,6 @@ class EliminarIngresoSolicitud extends Migration
     public function down()
     {
         Schema::table('solicitud_examens', function (Blueprint $table) {
-            $table->integer('f_ingreso')->unsigned()->nullable();
-            $table->foreign('f_ingreso')->references('id')->on('ingresos');
             $table->dropColumn('f_transaccion');
         });
     }

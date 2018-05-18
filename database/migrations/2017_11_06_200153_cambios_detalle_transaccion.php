@@ -14,11 +14,6 @@ class CambiosDetalleTransaccion extends Migration
     public function up()
     {
       Schema::table('detalle_transacions', function (Blueprint $table) {
-          $table->dropColumn('f_producto');
-      });
-      Schema::table('detalle_transacions', function (Blueprint $table) {
-          $table->integer('f_producto')->unsigned()->nullable();
-          $table->foreign('f_producto')->references('id')->on('detalle_transacions');
       });
     }
 

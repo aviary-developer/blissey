@@ -181,6 +181,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         //Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        //Para respaldos y Restore
+        BackupManager\Laravel\Laravel5ServiceProvider::class,
     ],
 
     /*

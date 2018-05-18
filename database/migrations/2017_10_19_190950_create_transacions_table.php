@@ -22,7 +22,7 @@ class CreateTransacionsTable extends Migration
             $table->double('descuento')->dafault(0);
             $table->boolean('tipo');
             //1 - Ingreso / 0 - Egreso
-            $table->integer('f_usuario');
+            $table->integer('f_usuario')->unsigned()->nullable();
             $table->boolean('localizacion');
             //1 - Recepcion / 0 - Farmacia
             $table->foreign('f_cliente')->references('id')->on('pacientes');
