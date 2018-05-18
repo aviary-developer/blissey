@@ -732,7 +732,6 @@
       {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
       {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
       {!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
-      {!!Html::script('assets/iCheck/icheck.min.js')!!}
       {!!Html::script('assets/switchery/dist/switchery.min.js')!!}
       <!--js agregados -->
       {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->

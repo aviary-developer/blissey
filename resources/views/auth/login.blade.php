@@ -38,7 +38,7 @@
               </div>
               <div>
                 {!! Form::submit('Ingresar',['class'=>'btn btn-primary']) !!}
-                <a class="reset_pass" href="#">Olvidé mi contraseña</a>
+                <a class="reset_pass" href={{asset( '/recuperar')}}>Olvidé mi contraseña</a>
               </div>
 
               <div class="clearfix"></div>
