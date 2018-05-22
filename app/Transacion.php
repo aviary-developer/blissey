@@ -20,7 +20,7 @@ class Transacion extends Model
   }
   public function scopeFactura($query, $buscar){
     if(trim($buscar)!=""){
-      $query->where('factura', 'ilike','%'.$buscar.'%');
+      $query->where('factura', 'like','%'.$buscar.'%');
     }
   }
   public function scopeTipo($query, $tipo){

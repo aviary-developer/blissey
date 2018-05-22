@@ -49,6 +49,7 @@
   </div>
   <input type="hidden" name="precio" id="precio">
   <input type="hidden" name="retencion" id="retencion">
+  <input type="hidden" id="token" name="token" value="<?php echo csrf_token(); ?>">
 </div>
 <script type="text/javascript">
   var cuenta1 = 0;

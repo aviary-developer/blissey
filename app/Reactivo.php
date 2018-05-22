@@ -15,7 +15,7 @@ class Reactivo extends Model
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('nombre', 'ilike','%'.$nombre.'%')->orWhere('nombre', 'ilike','%'.$nombre.'%')->orWhere('descripcion', 'ilike','%'.$nombre.'%');
+      $query->where('nombre', 'like','%'.$nombre.'%')->orWhere('nombre', 'like','%'.$nombre.'%')->orWhere('descripcion', 'like','%'.$nombre.'%');
     }
   }
 

@@ -13,7 +13,7 @@ class Estante extends Model
   }
   public function scopeCodigo($query, $codigo){
     if(trim($codigo)!=""){
-      $query->where('codigo', 'ilike','%'.$codigo.'%');
+      $query->where('codigo', 'like','%'.$codigo.'%');
     }
   }
 

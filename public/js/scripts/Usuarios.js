@@ -130,13 +130,14 @@ $(document).on('ready', function () {
     var v_nombre = $("#nombre_especialidad");
     var s_especialidad = $("#select_especialidad");
     var modal = $("#modal");
+    var token = $("#token").val();
     $.ajax({
-      type: "GET",
-      url: "/blissey/public/guardarEspecialidad",
+      type: "POST",
+      url: "/blissey/public/guardar_especialidad",
+      headers: { 'X-CSRF-TOKEN': token },
       data: {
         nombre: v_nombre.val()
       },
-      dateType: 'json',
       success: function (respuesta) {
         if (respuesta > 0) {
           var html = "<option value = '" + respuesta + "'>" + v_nombre.val() + "</option>";

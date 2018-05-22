@@ -16,7 +16,7 @@ class BancoSangre extends Model
   }
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('tipoSangre', 'ilike','%'.$nombre.'%')->orWhere('anticuerpos', 'ilike','%'.$nombre.'%')->orWhere('fechaVencimiento', 'ilike','%'.$nombre.'%');
+      $query->where('tipoSangre', 'like','%'.$nombre.'%')->orWhere('anticuerpos', 'like','%'.$nombre.'%')->orWhere('fechaVencimiento', 'like','%'.$nombre.'%');
     }
   }
 

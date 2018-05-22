@@ -340,7 +340,7 @@ class IngresoController extends Controller
 
     public function buscarPaciente($nombre)
     {
-      $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+      $pacientes = Paciente::where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       if(count($pacientes)>0){
         return Response::json($pacientes);
       }else{
@@ -387,11 +387,11 @@ class IngresoController extends Controller
             ->where('ingresos.estado','<>',2)
             ->whereRaw('ingresos.f_paciente = pacientes.id');
           }
-        )->where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+        )->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }else if($tipo == "solicitud"){
-        $pacientes = Paciente::where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+        $pacientes = Paciente::where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }else{
-        $pacientes = Paciente::where('fechaNacimiento','<=',$fecha->format('Y-m-d'))->where('nombre','ilike','%'.$nombre.'%')->orWhere('apellido','ilike','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+        $pacientes = Paciente::where('fechaNacimiento','<=',$fecha->format('Y-m-d'))->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }
       if(count($pacientes)>0){
         return Response::json($pacientes);

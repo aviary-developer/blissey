@@ -15,7 +15,7 @@ class Unidad extends Model
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('nombre', 'ilike','%'.$nombre.'%');
+      $query->where('nombre', 'like','%'.$nombre.'%');
     }
   }
 

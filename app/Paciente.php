@@ -31,13 +31,13 @@ class Paciente extends Model
 
     public function scopeNombre($query, $nombre){
       if(trim($nombre)!=""){
-        $query->where('nombre', 'ilike','%'.$nombre.'%');
+        $query->where('nombre', 'like','%'.$nombre.'%');
       }
     }
 
     public function scopeApellido($query, $apellido){
       if(trim($apellido)!=""){
-        $query->Where('apellido', 'ilike','%'.$apellido.'%');
+        $query->Where('apellido', 'like','%'.$apellido.'%');
       }
     }
 
@@ -51,19 +51,19 @@ class Paciente extends Model
 
     public function scopeTelefono($query, $telefono){
       if(trim($telefono)!=""){
-        $query->where('telefono','ilike',$telefono."%");
+        $query->where('telefono','like',$telefono."%");
       }
     }
 
     public function scopeDui($query, $dui){
       if(trim($dui)!=""){
-        $query->where('dui','ilike',$dui."%");
+        $query->where('dui','like',$dui."%");
       }
     }
 
     public function scopeDireccion($query, $direccion){
       if(trim($direccion)!=""){
-        $query->where('direccion','ilike','%'.$direccion.'%');
+        $query->where('direccion','like','%'.$direccion.'%');
       }
     }
 

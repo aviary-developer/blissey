@@ -85,7 +85,7 @@ class DivisionProducto extends Model
     $bitacora = DB::table('division_productos')
       ->select('division_productos.*','productos.nombre','productos.f_presentacion','productos.f_proveedor')
       ->join('productos','division_productos.f_producto','=','productos.id','left outer')
-      ->where('productos.nombre','ILIKE','%'.$nombre.'%')
+      ->where('productos.nombre','like','%'.$nombre.'%')
       ->where('productos.estado',$estado)
       ->orderBy('productos.nombre','ASC')
       ->paginate(10);

@@ -15,7 +15,7 @@ class Examen extends Model
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('nombreExamen', 'ilike','%'.$nombre.'%')->orWhere('nombreExamen', 'ilike','%'.$nombre.'%')->orWhere('tipoMuestra', 'ilike','%'.$nombre.'%');
+      $query->where('nombreExamen', 'like','%'.$nombre.'%')->orWhere('nombreExamen', 'like','%'.$nombre.'%')->orWhere('tipoMuestra', 'like','%'.$nombre.'%');
     }
   }
 

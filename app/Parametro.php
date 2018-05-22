@@ -16,7 +16,7 @@ class Parametro extends Model
 
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){
-      $query->where('nombreParametro', 'ilike','%'.$nombre.'%')->orWhere('nombreParametro', 'ilike','%'.$nombre.'%')->orWhere('unidad', 'ilike','%'.$nombre.'%');
+      $query->where('nombreParametro', 'like','%'.$nombre.'%')->orWhere('nombreParametro', 'like','%'.$nombre.'%')->orWhere('unidad', 'like','%'.$nombre.'%');
     }
   }
 

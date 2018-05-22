@@ -230,7 +230,7 @@ class TransaccionController extends Controller
         //
     }
     public function buscarProductos($id,$texto){
-      $productos=Producto::where('nombre','ilike','%'.$texto.'%')->take(3)->get();
+      $productos=Producto::where('nombre','like','%'.$texto.'%')->take(3)->get();
       if(count($productos)>0){
         foreach($productos as $producto){
           $producto->presentacion;
@@ -292,14 +292,14 @@ class TransaccionController extends Controller
       }
     }
     public static function buscarCliente($valor){
-      $clientes=Paciente::where('nombre','ILIKE','%'.$valor.'%')
-      ->orWhere('apellido', 'ILIKE','%'.$valor.'%')
-      ->orWhere('telefono', 'ILIKE','%'.$valor.'%')
-      ->orWhere('dui', 'ILIKE','%'.$valor.'%')->orderBy('nombre')->get();
+      $clientes=Paciente::where('nombre','like','%'.$valor.'%')
+      ->orWhere('apellido', 'like','%'.$valor.'%')
+      ->orWhere('telefono', 'like','%'.$valor.'%')
+      ->orWhere('dui', 'like','%'.$valor.'%')->orderBy('nombre')->get();
       return $clientes;
     }
     public static function buscarVenta($texto){
-      $productos=Producto::where('nombre','ILIKE','%'.$texto.'%')->where('estado',1)->get(['id','nombre','f_presentacion']);
+      $productos=Producto::where('nombre','like','%'.$texto.'%')->where('estado',1)->get(['id','nombre','f_presentacion']);
       foreach ($productos as $p) {
         $p->presentacion;
         $p->divisionProducto;
@@ -314,7 +314,7 @@ class TransaccionController extends Controller
       return $productos;
     }
     public static function buscarComponente($texto){
-      $componentes=Componente::where('nombre','ILIKE','%'.$texto.'%')->take(4)->get(['id','nombre']);
+      $componentes=Componente::where('nombre','like','%'.$texto.'%')->take(4)->get(['id','nombre']);
       foreach ($componentes as $c) {
         foreach ($c->componenteProducto as $cp) {
           $cp->producto;
@@ -340,7 +340,7 @@ class TransaccionController extends Controller
     }
     }
     public static function buscarServicio($texto){
-    $servicios=Servicio::where('estado',true)->where('nombre', 'ilike','%'.$texto.'%')->orderBy('nombre')->get();
+    $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
       return $servicios;
     }
     public static function anularVenta($id,$comentario){
