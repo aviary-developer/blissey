@@ -1,47 +1,87 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+    <title>Blissey</title>
+    <!-- Bootstrap -->
+    {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
+    <!-- Font Awesome -->
+    {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
+    <!-- NProgress -->
+    {!!Html::style('assets/nprogress/nprogress.css')!!}
+    <!-- Animate.css -->
+    {!!Html::style('assets/iCheck/skins/flat/green.css')!!}
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    {!!Html::style('assets/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
+    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
+    {!!Html::style('assets/build/css/custom.min.css')!!}
+    {{--  --}}
+  </head>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            {!!Form::open(['route'=>'password.email','method'=>'POST','autocomplete'=>'off'])!!}
+              {{ csrf_field()}}
+              <h1>Recupera tu cuenta</h1>
+              <div>
+                {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'Correo electrónico','id'=>'email'])!!}
+              </div>
+              <div>
+                {!! Form::submit('Enviar',['class'=>'btn btn-primary']) !!}
+                <h5>Enviaremos en enlace a tu correo</h5>
+                <a class="reset_pass" href={{asset( '/')}}>Regresar</a>
+              </div>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+              <div class="clearfix"></div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-medkit"></i>&nbsp;Blissey</h1>
+                  <p>©2017 Universidad de El Salvador - Facultad Multidisciplinaria Paracentral</p>
                 </div>
-            </div>
+              </div>
+              {!! Form::close() !!}
+          </section>
         </div>
+      </div>
     </div>
-</div>
-@endsection
+  </body>
+  {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
+  {!!Html::script('assets/bootstrap/dist/js/bootstrap.min.js')!!}
+  {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
+  {!!Html::script('assets/nprogress/nprogress.js')!!}
+  {!!Html::script('assets/bootstrap-progressbar/bootstrap-progressbar.min.js')!!}
+  {!!Html::script('assets/iCheck/icheck.min.js')!!}
+
+  {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
+  {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+
+{!!Html::script('assets/build/js/custom.js')!!}
+
+</html>
+@foreach ($errors->all() as $error)
+  <?php echo("<script language='javascript' >
+  new PNotify({
+    title: '¡Error!',
+    text: '".$error."',
+    type: 'error',
+    styling: 'bootstrap3'
+  });
+  </script>");?> @endforeach
