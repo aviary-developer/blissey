@@ -271,5 +271,4 @@ Route::match(['get','post'],'/desactivateRayosx/{id}','RayosxController@desactiv
 Route::match(['get','post'],'/activateRayosx/{id}','RayosxController@activate');
 Route::match(['get','post'],'/destroyRayosx/{id}','RayosxController@destroy');
 
-Route::get('/recuperar','CorreoController@vista');
-Route::post('/correo','CorreoController@envio');
+Route::get('/password/email','Auth\ForgotPasswordController@form');
