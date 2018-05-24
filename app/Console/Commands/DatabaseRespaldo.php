@@ -14,7 +14,7 @@ class DatabaseRespaldo extends Command
      *
      * @var string
      */
-    protected $signature = 'prueba:log';
+    protected $signature = 'respaldo:backup';
 
     /**
      * The console command description.

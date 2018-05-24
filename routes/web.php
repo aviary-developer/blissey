@@ -272,3 +272,9 @@ Route::match(['get','post'],'/activateRayosx/{id}','RayosxController@activate');
 Route::match(['get','post'],'/destroyRayosx/{id}','RayosxController@destroy');
 
 Route::get('/password/email','Auth\ForgotPasswordController@form');
+
+Route::resource('respaldos', 'RespaldoController');
+Route::get('/crearRespaldo', 'RespaldoController@crear');
+Route::get('/restaurarRespaldo/{file_name}', 'RespaldoController@restaurar');
+Route::get('/descargarRespaldo/{file_name}', 'RespaldoController@descargar');
+Route::get('/eliminarRespaldo/{file_name}', 'RespaldoController@eliminar');
