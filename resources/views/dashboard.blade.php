@@ -342,6 +342,17 @@
                               </li>
                             </ul>
                           </li>
+                          <li>
+                            <a>
+                              <i class="fa fa-database"></i> Respaldo
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a href={{asset('/respaldos')}}>Administración de respaldos</a>
+                              </li>
+                            </ul>
+                          </li>
                       </ul>
                     @else
                     <center>

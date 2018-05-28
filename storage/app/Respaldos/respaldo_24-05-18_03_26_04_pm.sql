@@ -91,7 +91,7 @@ CREATE TABLE `bitacoras` (
   PRIMARY KEY (`id`),
   KEY `bitacoras_f_usuario_foreign` (`f_usuario`),
   CONSTRAINT `bitacoras_f_usuario_foreign` FOREIGN KEY (`f_usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `bitacoras` (
 
 LOCK TABLES `bitacoras` WRITE;
 /*!40000 ALTER TABLE `bitacoras` DISABLE KEYS */;
-INSERT INTO `bitacoras` VALUES (1,'login','usuarios','users',1,1,'2018-05-17 17:44:10','2018-05-17 17:44:10'),(2,'login','usuarios','users',1,1,'2018-05-17 20:02:37','2018-05-17 20:02:37'),(3,'login','usuarios','users',1,1,'2018-05-17 20:03:15','2018-05-17 20:03:15');
+INSERT INTO `bitacoras` VALUES (1,'login','usuarios','users',1,1,'2018-05-17 17:44:10','2018-05-17 17:44:10'),(2,'login','usuarios','users',1,1,'2018-05-17 20:02:37','2018-05-17 20:02:37'),(3,'login','usuarios','users',1,1,'2018-05-17 20:03:15','2018-05-17 20:03:15'),(4,'login','usuarios','users',1,1,'2018-05-17 20:34:00','2018-05-17 20:34:00'),(5,'login','usuarios','users',1,1,'2018-05-18 18:44:06','2018-05-18 18:44:06'),(6,'login','usuarios','users',1,1,'2018-05-23 16:10:38','2018-05-23 16:10:38'),(7,'login','usuarios','users',1,1,'2018-05-23 20:14:09','2018-05-23 20:14:09'),(8,'login','usuarios','users',1,1,'2018-05-24 15:26:56','2018-05-24 15:26:56');
 /*!40000 ALTER TABLE `bitacoras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1375,7 +1375,7 @@ CREATE TABLE `unidads` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1384,6 +1384,7 @@ CREATE TABLE `unidads` (
 
 LOCK TABLES `unidads` WRITE;
 /*!40000 ALTER TABLE `unidads` DISABLE KEYS */;
+INSERT INTO `unidads` VALUES (1,'mg/dl',1,'2018-05-24 21:02:47','2018-05-24 21:02:47');
 /*!40000 ALTER TABLE `unidads` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1444,4 +1445,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-17 14:25:39
+-- Dump completed on 2018-05-24 15:26:12
