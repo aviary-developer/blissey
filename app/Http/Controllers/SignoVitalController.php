@@ -26,7 +26,7 @@ class SignoVitalController extends Controller
      */
     public function create()
     {
-        //
+        return view('Signos.create');
     }
 
     /**

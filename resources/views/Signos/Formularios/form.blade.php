@@ -6,8 +6,8 @@
   </div>
   <div class="col-md-4 col-sm-4 col-xs-6">
     <select name="medida" id="medida" class="form-control">
-      <option value="true">Kilogramos</option>
-      <option value="false">Libras</option>
+      <option value="1">Kilogramos</option>
+      <option value="0">Libras</option>
     </select>
   </div>
 </div>

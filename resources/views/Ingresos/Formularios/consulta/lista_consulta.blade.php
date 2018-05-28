@@ -8,7 +8,7 @@
     <div style="overflow-y: scroll; height: 297px; width:97%">
     @foreach ($consultas as $cst)
         <div class="row borde" style="border-radius: 3px; margin: 10px; padding: 5px;">
-          <div class="col-xs-10">
+          <div class="col-xs-12">
             <div class="row">
               <div class="col-xs-3">Fecha:</div>
               <div class="col-xs-9"><b class="blue">{{$cst->created_at->formatLocalized('%d de %B de %Y a las %H:%M')}}</b></div>
@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-2"><button type="button" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></button></div>
+          <div class="row"><button type="button" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></button></div>
         </div>
       @endforeach
     </div>

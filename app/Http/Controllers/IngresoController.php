@@ -98,7 +98,7 @@ class IngresoController extends Controller
           }else{
             $ingresos->f_responsable = $request->f_paciente;
           }
-          if($request->tipo == 2 || $request->tipo == 0){
+          if($request->tipo == 2 || $request->tipo == 0 || $request->tipo == 1){
             $ingresos->f_habitacion = $request->f_habitacion;
           }
           $ingresos->f_medico = $request->f_medico;
