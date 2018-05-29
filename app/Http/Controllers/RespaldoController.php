@@ -8,6 +8,7 @@ use Alert;
 use Artisan;
 use Log;
 use App\Unidad;
+use Illuminate\Http\Request;
 
 class RespaldoController extends Controller
 {
@@ -73,6 +74,14 @@ class RespaldoController extends Controller
           Flash::error($e->getMessage());
           return redirect()->back();
       }
+    }
+
+    public function subir(Request $request)
+    {
+      $file = $request->file('subirRespaldo');
+      $nombre = $file->getClientOriginalName();
+      Storage::disk('local')->put('/Respaldos/'.$nombre,\File::get($file));
+      return redirect()->back()->with('mensaje', '¡Respaldo agregado!');
     }
 
     public function descargar($file_name)

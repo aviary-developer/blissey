@@ -278,3 +278,4 @@ Route::get('/crearRespaldo', 'RespaldoController@crear');
 Route::get('/restaurarRespaldo/{file_name}', 'RespaldoController@restaurar');
 Route::get('/descargarRespaldo/{file_name}', 'RespaldoController@descargar');
 Route::get('/eliminarRespaldo/{file_name}', 'RespaldoController@eliminar');
+Route::match(['get','post'],'/subirRespaldo', 'RespaldoController@subir');
