@@ -12,9 +12,12 @@
       </div>
       <div class="x_content">
         <div class="row">
+          {!!Form::open(['id'=>'formCrearRespaldo','url' =>'/crearRespaldo','method' =>'GET'])!!}
+          {!! Form::close() !!}
           <div class="col-md-7 col-xs-12">
             <div class="btn-group">
-              <a class="btn btn-dark btn-sm" href={{ url('/crearRespaldo') }}><i class="fa fa-plus"></i> Nuevo</a>
+              <button class="btn btn-dark btn-sm" onclick="confirmarRespaldo()"><i class="fa fa-plus"></i> Nuevo</button>
+              <button class="btn btn-dark btn-sm" data-toggle="modal" data-target=".bs-modal-lg" data-placement="top" title="Subir Respaldo"><i class="fa fa-upload"></i> Subir</button>
               <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
           </div>
@@ -102,38 +105,45 @@
   </div>
   <!-- /page content -->
   @endsection
-  <!--<div class="modal-body">
-  <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal4">
-    <div class="modal-dialog">
+  <script>
+  function confirmarRespaldo(){
+    swal({
+  title: 'Confirmar respaldo',
+  text: "¡El proceso tarda en realizarse!",
+  type: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Si, realizar respaldo!',
+  cancelmButtonText: 'No, cancelar'
+}).then(function () {
+  $("#formCrearRespaldo").submit();
+}).catch(swal.noop);
+  }
+  </script>
+  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
-
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          <button class="close" type="button" data-dismiss="modal">
+            <span aria-hidden="true">x</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Respaldo<span class="label label-lg label-primary">Nuevo</span></h4>
+          <h4 class="modal-title">Respaldo <small> Subir</small></h4>
         </div>
-        @php
-        $fecha=Carbon\Carbon::now();
-        @endphp
-          <div class="x_panel">
-            <div class="row">
-              <div class="col-md-2 col-xs-12">
-              <label class="control-label col-sm-3 col-xs-12">Nombre: </label>
-            </div>
-              <div class="col-md-5 col-xs-12">
-                <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-                {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de respaldo']) !!}
-              </div>
-              <div class="col-md-5 col-xs-12">
-              {!! Form::text('nombre',$fecha->format('_d-m-Y_h-i-s').'.sql',['readonly','class'=>'form-control']) !!}</div>
+        <div class="modal-body">
+          {!!Form::open(['url' =>'/subirRespaldo','method' =>'POST','enctype'=>'multipart/form-data'])!!}
+          <div class="form-group">
+            <label class="control-label">Archivo: </label>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <input type="file" name="subirRespaldo" accept=".sql" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Hacer respaldo</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button class="btn btn-primary" type="submit">Subir</button>
+          <button class="btn btn-default" type="button" data-dismiss="modal">Cancelar</button>
         </div>
-
+        {!!Form::close()!!}
       </div>
     </div>
-  </div>-->
+  </div>
