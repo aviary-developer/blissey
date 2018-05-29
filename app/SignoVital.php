@@ -19,4 +19,8 @@ class SignoVital extends Model
         'f_ingreso',
         'glucosa'
     ];
+
+    public function ingreso(){
+      return $this->belongsTo('App\Ingreso', 'f_ingreso');
+    }
 }

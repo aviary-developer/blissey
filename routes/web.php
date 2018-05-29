@@ -249,7 +249,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/confirmarRetiroVencidos','CambioProductoController@confirmarRetiro');
 
   //Rutas medicas
-  Route::get('/historial_medico','ConsultaController@historial_medico');
+  Route::get('/consultar','ConsultaController@consulta');
+  Route::get('/ver_signos', 'SignoVitalController@ver_signo');
   Route::resource('/consulta','ConsultaController');
 });
 Auth::routes();

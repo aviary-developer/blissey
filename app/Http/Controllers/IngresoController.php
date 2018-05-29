@@ -233,13 +233,20 @@ class IngresoController extends Controller
 
       //Datos de las consultas
       $extraccion = $paciente->ingreso;
-      $indx = 0;
+      $indx = $indx2 = 0;
       $consultas = [];
+      $signos_vital = [];
       foreach($extraccion as $ingresos_){
         if($ingresos_->consulta != null){
           foreach($ingresos_->consulta as $consulta){
             $consultas[$indx] = $consulta;
             $indx++;
+          }
+        }
+        if($ingresos_->signos != null){
+          foreach($ingresos_->signos as $signo){
+            $signos_vital[$indx2] = $signo;
+            $indx2++;
           }
         }
       }
@@ -259,7 +266,8 @@ class IngresoController extends Controller
         'responsable',
         'ultima24',
         'ultima48',
-        'consultas'
+        'consultas',
+        'signos_vital'
       ));
     }
 

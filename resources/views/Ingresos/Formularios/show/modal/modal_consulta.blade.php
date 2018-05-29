@@ -49,6 +49,9 @@
                 <div class="row" id = "contenido__" style="height: 90%;">
                   @include('Ingresos.Formularios.consulta.informacion')
                   @include('Ingresos.Formularios.consulta.lista_consulta')
+                  @include('Ingresos.Formularios.consulta.consulta')
+                  @include('Ingresos.Formularios.consulta.lista_signos')
+                  @include('Ingresos.Formularios.consulta.signo')
                 </div>
                 <div class="ln_solid" style="margin: 5px 0;"></div>
                 <div class="row">
@@ -56,7 +59,7 @@
                     <button type="button" class="btn btn-sm btn-primary col-xs-2" data-toggle="tooltip" data-placement="top" title="Información" id="btn_info"><i class="fa fa-user"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Consultas" id="btn_lista"><i class="fa fa-list"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Examenes Clínicos"><i class="fa fa-check-square"></i></button>
-                    <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Signos Vitales"><i class="fa-heartbeat fa"></i></button>
+                    <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Signos Vitales" id="btn_signos"><i class="fa-heartbeat fa"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Tratamiento"><i class="fa fa-medkit"></i></button>
                     <button type="button" class="btn btn-sm btn-dark col-xs-2" data-toggle="tooltip" data-placement="top" title="Estadística"><i class="fa fa-line-chart"></i></button>
                   </div>
