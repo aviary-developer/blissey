@@ -46,19 +46,20 @@ class Handler extends ExceptionHandler
     {
       if($this->isHttpException($exception)){
           switch ($exception->getStatusCode()) {
-              // PAGINA NO ENCONTRADA
-              case 404:
+              case 404:// PAGINA NO ENCONTRADA
                   return response()->view('errors.404',[],404);
               break;
-              // ERROR INTERNO DEL SERVIDOR
-              // case '500':
-              //     return response()->view('errors.500',[],500);
-              // break;
-              // default:
-              //     return $this->renderHttpException($exception);
+              case 500:// ERROR INTERNO DEL SERVIDOR
+                  return response()->view('errors.500',[],500);
+              break;
+              default:
+                  return $this->renderHttpException($exception);
               break;
           }
       }
+        if ($exception instanceof \Illuminate\Database\QueryException) {
+            return response()->view('errors.error',['msm'=>'No hay conexión con la base de datos']);
+        }
         return parent::render($request, $exception);
     }
 

@@ -41,7 +41,7 @@
               </div>
               <div>
                 {!! Form::submit('Enviar',['class'=>'btn btn-primary']) !!}
-                <h5>Enviaremos en enlace a tu correo</h5>
+                <h5>Enviaremos un enlace a tu correo</h5>
                 <a class="reset_pass" href={{asset( '/')}}>Regresar</a>
               </div>
 
