@@ -88,7 +88,7 @@ class ExamenController extends Controller
       //Crear una categoria de servicio asociada a los examen
       $categoria_existe = CategoriaServicio::where('nombre','Laboratorio Clínico')->first();
 
-      if(count($categoria_existe)<1){
+      if($categoria_existe==null){
         $categoria_existe = new CategoriaServicio;
         $categoria_existe->nombre = "Laboratorio Clínico";
         $categoria_existe->save();

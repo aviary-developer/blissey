@@ -549,11 +549,11 @@ class SolicitudExamenController extends Controller
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
-    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
-    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
     $contador=0;
     $contadorSecciones=0;
-    if(count($espr)>0){
+    if($espr!=null){
       foreach ($espr as $esp) {
         if($contador==0){
           $secciones[$contadorSecciones]=$esp->f_seccion;
@@ -626,10 +626,10 @@ class SolicitudExamenController extends Controller
     foreach ($solicitudes as $key => $solicitud) {
       $resultados[$key]=Resultado::where('f_solicitud','=',$solicitud->id)->first();
       $detallesResultado[$key]=DetalleResultado::where('f_resultado','=', $resultados[$key]->id)->get();
-      $espr[$key]=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=','true')->get();
+      $espr[$key]=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=',1)->get();
       $contador=0;
       $contadorSecciones=0;
-      if(count($espr[$key])>0){
+      if($espr[$key]!=null){
         foreach ($espr[$key] as $esp) {
           if($contador==0){
             $secciones[$key][$contadorSecciones]=$esp->f_seccion;
