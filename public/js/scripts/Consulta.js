@@ -226,6 +226,79 @@ function signos_load(id) {
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
+      //Pulso
+      html_ = '<div class="row" style="margin: 5px;">' +
+        '<div class="col-xs-8">Pulso: </div>' +
+        '<div class="col-xs-4">';
+      if (r.signos.pulso == null) {
+        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+      } else if (r.signos.pulso > 59 && r.signos.pulso < 121) {
+        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.pulso + '  lpm</span>';
+      } else {
+        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.pulso + '  lpm</span>';
+      }
+      html_ += '</div>' +
+        '</div>';
+      panel.append(html_);
+      //Glucosa
+      html_ = '<div class="row" style="margin: 5px;">' +
+        '<div class="col-xs-8">Glucosa: </div>' +
+        '<div class="col-xs-4">';
+      if (r.signos.glucosa == null) {
+        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+      } else if (r.signos.glucosa >= 70  && r.signos.glucosa <= 110) {
+        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.glucosa + '  mg / dl </span>';
+      } else {
+        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.glucosa + '  mg / dl</span>';
+      }
+      html_ += '</div>' +
+        '</div>';
+      panel.append(html_);
+      //Altura
+      html_ = '<div class="row" style="margin: 5px;">' +
+        '<div class="col-xs-8">Altura: </div>' +
+        '<div class="col-xs-4">';
+      if (r.signos.altura == null) {
+        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+      } else {
+        html_ += '<span class="label label-lg label-white col-xs-12">' + r.signos.altura + '  cm</span>';
+      }
+      html_ += '</div>' +
+        '</div>';
+      panel.append(html_);
+      //Frecuencia cardiaca
+      html_ = '<div class="row" style="margin: 5px;">' +
+        '<div class="col-xs-8">Frecuencia Cardiaca: </div>' +
+        '<div class="col-xs-4">';
+      if (r.signos.frecuencia_cardiaca == null) {
+        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+      } else if (r.signos.frecuencia_cardiaca >= 60 && r.signos.frecuencia_cardiaca <= 101) {
+        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.frecuencia_cardiaca + '  lpm </span>';
+      } else {
+        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.frecuencia_cardiaca + ' lpm</span>';
+      }
+      html_ += '</div>' +
+        '</div>';
+      panel.append(html_);
+      //Frecuencia Respiratoria
+      html_ = '<div class="row" style="margin: 5px;">' +
+        '<div class="col-xs-8">Frecuencia Respiratoria: </div>' +
+        '<div class="col-xs-4">';
+      if (r.signos.frecuencia_respiratoria == null) {
+        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+      } else if (r.signos.frecuencia_respiratoria >= 12 && r.signos.frecuencia_respiratoria <= 20) {
+        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.frecuencia_respiratoria + '  rpm </span>';
+      } else {
+        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.frecuencia_respiratoria + ' rpm</span>';
+      }
+      html_ += '</div>' +
+        '</div>';
+      panel.append(html_);
+      //Indice de masa corporal
+      if (r.signos.altura != null && r.signos.peso != null) {
+        var peso = parseFloat(r.signos.peso);
+        peso *= (r.signos.medida) ? 1 : 0.453592;
+      }
     }
   });
 }

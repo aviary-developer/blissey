@@ -378,8 +378,8 @@ class SolicitudExamenController extends Controller
     }
     else {
     $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
-    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->distinct()->get(['f_seccion']);;
-    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',true)->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',true)->get();
     $contador=0;
     $contadorSecciones=0;
     if(count($espr)>0){
