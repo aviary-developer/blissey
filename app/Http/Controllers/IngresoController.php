@@ -11,6 +11,7 @@ use App\Paciente;
 use App\Servicio;
 use App\Abono;
 use App\Especialidad;
+use App\SolicitudExamen;
 use App\CategoriaServicio;
 use Illuminate\Http\Request;
 use App\Transacion;
@@ -250,6 +251,8 @@ class IngresoController extends Controller
           }
         }
       }
+      //Lista de examenes del paciente
+      $examenes_paciente = SolicitudExamen::where('f_paciente',$ingreso->f_paciente)->where('estado','>',1)->orderBy('created_at','desc')->get();
       return view('Ingresos.show',compact(
         'ingreso',
         'examenes',
@@ -267,7 +270,8 @@ class IngresoController extends Controller
         'ultima24',
         'ultima48',
         'consultas',
-        'signos_vital'
+        'signos_vital',
+        'examenes_paciente'
       ));
     }
 

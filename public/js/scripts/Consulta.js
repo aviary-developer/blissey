@@ -72,6 +72,7 @@ $(document).on("ready", function () {
     $("#ver_consulta__").hide();
     $("#signos__").hide();
     $("#ver_signo__").hide();
+    $("#examenes__").hide();
   });
 
   $("#btn_signos").on("click", function(e){
@@ -82,12 +83,17 @@ $(document).on("ready", function () {
     lista_signos();
   });
 
+  $("#btn_examen").on('click', function (e) {
+    lista_examen();
+  });
+
   function lista_signos() {
     $("#informacion__").hide();
     $("#consultas__").hide();
     $("#ver_consulta__").hide();
     $("#signos__").show();
     $("#ver_signo__").hide();
+    $("#examenes__").hide();
   }
 
   function lista() {
@@ -96,6 +102,16 @@ $(document).on("ready", function () {
     $("#ver_consulta__").hide();
     $("#signos__").hide();
     $("#ver_signo__").hide();
+    $("#examenes__").hide();
+  }
+
+  function lista_examen() {
+    $("#informacion__").hide();
+    $("#consultas__").hide();
+    $("#ver_consulta__").hide();
+    $("#signos__").hide();
+    $("#ver_signo__").hide();
+    $("#examenes__").show();
   }
 
 });
@@ -110,6 +126,7 @@ function consulta_load(id) {
   $("#ver_consulta__").show();
   $("#signos__").hide();
   $("#ver_signo__").hide();
+  $("#examenes___").hide();
 
   $.ajax({
     type: 'get',
@@ -153,6 +170,7 @@ function signos_load(id) {
   $("#ver_consulta__").hide();
   $("#signos__").hide();
   $("#ver_signo__").show();
+  $("#examenes___").hide();
 
   $.ajax({
     type: 'get',
