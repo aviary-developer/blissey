@@ -154,4 +154,10 @@ class PresentacionController extends Controller
         return redirect('/presentaciones?estado=0')->with('mensaje', '¡Editado!');
       }
     }
+  public static function llenarPresentacion(){
+
+  }
+  public static function ingresoPresentacion(){
+
+  }
 }

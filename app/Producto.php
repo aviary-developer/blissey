@@ -44,7 +44,7 @@ class Producto extends Model
   }
 
   public static function arrayUnidades(){
-    $unidades=Unidad::where('estado','=','true')->orderBy('nombre')->get();
+    $unidades=Unidad::where('estado','=',true)->orderBy('nombre')->get();
     $arrayU= [];
     foreach($unidades as $unidad){
       $arrayU[$unidad->id]=$unidad->nombre;
@@ -52,7 +52,7 @@ class Producto extends Model
     return $arrayU;
   }
   public static function arrayPresentaciones(){
-    $presentaciones=Presentacion::where('estado','=','true')->orderBy('nombre')->get();
+    $presentaciones=Presentacion::where('estado','=',true)->orderBy('nombre')->get();
     $arrayP= [];
     foreach($presentaciones as $presentacion){
       $arrayP[$presentacion->id]=$presentacion->nombre;

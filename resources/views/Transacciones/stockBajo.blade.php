@@ -47,6 +47,7 @@
             </tr>
           </thead>
           <tbody>
+            @if (count($divisiones)>0)
             @php
               $correlativo=1;
             @endphp
@@ -75,6 +76,15 @@
                 $correlativo++;
               @endphp
             @endforeach
+          @else
+            <tr>
+              <td colspan="7">
+                <center>
+                  No hay registros que coincidan con los terminos de busqueda indicados
+                </center>
+              </td>
+            </tr>
+          @endif
           </tbody>
       </table>
       <div class="ln_solid"></div>

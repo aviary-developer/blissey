@@ -319,3 +319,64 @@ if(c==0){
   return 1;
 }
 }
+
+//Modales de Productos
+$("#guardarPresentacionModal").on('click', function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombrePresentacionModal").val();
+
+  var token = $("#tokenPresentacionModal").val();
+
+  $.ajax({
+    url: "/blissey/public/ingresoPresentacion",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Categoría registrada!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+  rellenarPresentacion();
+  $("#nombrePresentacionModal").val("");
+
+});
+
+function rellenarPresentacion() {
+  var presentacion = $("#f_presentacion");
+  var ruta = "/blissey/public/llenarPresentacion";
+  $.get(ruta, function (res) {
+    presentacion.empty();
+    $(res).each(function (key, value) {
+      presentacion.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}

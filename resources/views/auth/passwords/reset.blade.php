@@ -36,7 +36,6 @@
             {!!Form::open(['route'=>'password.request','method'=>'POST','autocomplete'=>'off'])!!}
               {{ csrf_field()}}
               <input type="hidden" name="token" value="{{ $token }}">
-              {{$token}}
               <h1>Recuperar contraseña</h1>
               <div>
                 <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" placeholder="Correo electrónico" required autofocus>
