@@ -54,7 +54,7 @@ class RespaldoController extends Controller
     }
     public function restaurar($file_name)
     {
-      set_time_limit(300);
+      set_time_limit(300);//5 minutes
       $respaldo = $file_name;
       try {
           // start the backup process

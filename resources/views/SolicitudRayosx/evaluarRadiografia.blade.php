@@ -22,7 +22,7 @@
           <label class="control-label col-md-4 col-sm-4 col-xs-12">Ultrasonografía:</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-camera form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::file('rayox',['id'=>'idRadiografia','class'=>'form-control has-feedback-left']) !!}
+            <input type="file" name="rayox" id="idRadiografia" accept="image/*" class="form-control has-feedback-left">
           </div>
         </div>
             <div class="form-group">
