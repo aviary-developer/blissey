@@ -1,11 +1,11 @@
-<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_presentacion">
+<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_categoria">
   <div class="modal-dialog">
     <div class="modal-content">
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">Presentación <span class="label label-lg label-primary">Nuevo</span></h4>
+        <h4 class="modal-title" id="myModalLabel">Categoría <span class="label label-lg label-primary">Nueva</span></h4>
       </div>
 
       <div class="modal-body">
@@ -15,11 +15,11 @@
             <label class="control-label col-sm-3 col-xs-12">Nombre *</label>
             <div class="col-sm-9 col-xs-12">
               <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la nueva presentación','id'=>'nombrePresentacionModal']) !!}
+              {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la nueva categoría','id'=>'nombreCategoriaModal']) !!}
             </div>
           </div>
 
-          <input type="hidden" id="tokenPresentacionModal" name="tokenPresentacionModal" value="<?php echo csrf_token(); ?>">
+          <input type="hidden" id="tokenCategoriaModal" name="tokenCategoriaModal" value="<?php echo csrf_token(); ?>">
 
         </div>
         <center>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" id="guardarPresentacionModal" class="btn btn-primary">Guardar</button>
+        <button type="button" id="guardarCategoriaModal" class="btn btn-primary">Guardar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
       </div>
 

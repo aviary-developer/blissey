@@ -7,6 +7,7 @@ use App\CategoriaProducto;
 use App\Transacion;
 use App\Bitacora;
 use Redirect;
+use Response;
 use App\Http\Requests\CategoriaProductoRequest;
 
 class CategoriaProductoController extends Controller
@@ -132,5 +133,13 @@ class CategoriaProductoController extends Controller
       $categoria_productos->save();
       Bitacora::bitacora('activate','categoria_productos','categoria_productos',$id);
       return Redirect::to('/categoria_productos?estado=0');
+    }
+    public static function ingresoCategoria(CategoriaProductoRequest $request){
+      CategoriaProducto::create($request->All());
+      return Response::json('success');
+    }
+    public static function llenarCategoria(){
+      $categorias=CategoriaProducto::where('estado',true)->orderBy('nombre')->get();
+      return Response::json($categorias);
     }
 }

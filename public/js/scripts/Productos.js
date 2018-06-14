@@ -337,7 +337,7 @@ $("#guardarPresentacionModal").on('click', function (e) {
     success: function () {
       $(".modal").modal('hide');
       swal({
-        title: '¡Categoría registrada!',
+        title: '¡Presentación registrada!',
         text: 'Cargando información',
         timer: 3000,
         onOpen: function () {
@@ -367,7 +367,6 @@ $("#guardarPresentacionModal").on('click', function (e) {
   });
   rellenarPresentacion();
   $("#nombrePresentacionModal").val("");
-
 });
 
 function rellenarPresentacion() {
@@ -375,8 +374,68 @@ function rellenarPresentacion() {
   var ruta = "/blissey/public/llenarPresentacion";
   $.get(ruta, function (res) {
     presentacion.empty();
+    presentacion.attr('placeholder','Seleccione una presentación');
     $(res).each(function (key, value) {
       presentacion.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}
+$("#guardarCategoriaModal").on('click', function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreCategoriaModal").val();
+
+  var token = $("#tokenCategoriaModal").val();
+
+  $.ajax({
+    url: "/blissey/public/ingresoCategoria",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Categoría registrada!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+  rellenarCategoria();
+  $("#nombreCategoriaModal").val("");
+});
+
+function rellenarCategoria() {
+  var categoria = $("#f_categoria");
+  var ruta = "/blissey/public/llenarCategoria";
+  $.get(ruta, function (res) {
+    categoria.empty();
+    categoria.attr('placeholder','Seleccione una categoría');
+    $(res).each(function (key, value) {
+      categoria.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
     });
   });
 }
