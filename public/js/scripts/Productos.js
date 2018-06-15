@@ -321,13 +321,13 @@ if(c==0){
 }
 
 //Modales de Productos
-$("#guardarPresentacionModal").on('click', function (e) {
+$("#guardarPresentacionModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombrePresentacionModal").val();
 
   var token = $("#tokenPresentacionModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoPresentacion",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
@@ -380,13 +380,13 @@ function rellenarPresentacion() {
     });
   });
 }
-$("#guardarCategoriaModal").on('click', function (e) {
+$("#guardarCategoriaModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreCategoriaModal").val();
 
   var token = $("#tokenCategoriaModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoCategoria",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
@@ -439,3 +439,166 @@ function rellenarCategoria() {
     });
   });
 }
+$("#guardarDivisionModal").on('click', async function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreDivisionModal").val();
+
+  var token = $("#tokenDivisionModal").val();
+
+  await $.ajax({
+    url: "/blissey/public/ingresoDivision",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡División registrada!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+  rellenarDivision();
+  $("#nombreDivisionModal").val("");
+});
+
+function rellenarDivision() {
+  var division = $("#division");
+  var ruta = "/blissey/public/llenarDivision";
+  $.get(ruta, function (res) {
+    division.empty();
+    division.attr('placeholder','Seleccione una división');
+    $(res).each(function (key, value) {
+      division.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}
+$("#guardarUnidadModal").on('click', async function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreUnidadModal").val();
+
+  var token = $("#tokenUnidadModal").val();
+
+  await $.ajax({
+    url: "/blissey/public/ingresoUnidad",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Unidad registrada!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+  rellenarUnidad();
+  $("#nombreUnidadModal").val("");
+});
+
+function rellenarUnidad() {
+  var unidad= $("#v_valor");
+  var ruta = "/blissey/public/llenarUnidad";
+  $.get(ruta, function (res) {
+    unidad.empty();
+    $(res).each(function (key, value) {
+      unidad.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}
+$("#guardarComponenteModal").on('click', async function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreComponenteModal").val();
+
+  var token = $("#tokenComponenteModal").val();
+
+  await $.ajax({
+    url: "/blissey/public/ingresoComponente",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Componente registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+  $("#nombreComponenteModal").val("");
+});

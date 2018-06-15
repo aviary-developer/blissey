@@ -6,6 +6,7 @@ use App\Division;
 use Illuminate\Http\Request;
 use App\Http\Requests\DivisionRequest;
 use Redirect;
+use Response;
 
 class DivisionController extends Controller
 {
@@ -127,5 +128,13 @@ class DivisionController extends Controller
       $divisiones->estado = true;
       $divisiones->save();
       return Redirect::to('/divisiones?estado=0');
+    }
+    public static function ingresoDivision(DivisionRequest $request){
+      Division::create($request->All());
+      return Response::json('success');
+    }
+    public static function llenarDivision(){
+      $divisiones=Division::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
+      return Response::json($divisiones);
     }
 }

@@ -160,7 +160,7 @@ class PresentacionController extends Controller
     return Response::json('success');
   }
   public static function llenarPresentacion(){
-    $presentaciones=Presentacion::where('estado',true)->orderBy('nombre')->get();
+    $presentaciones=Presentacion::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
     return Response::json($presentaciones);
   }
 }

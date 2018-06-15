@@ -113,11 +113,14 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/desactivateComponente/{id}','ComponenteController@desactivate');
   Route::match(['get','post'],'/activateComponente/{id}','ComponenteController@activate');
   Route::match(['get','post'],'/destroyComponente/{id}','ComponenteController@destroy');
+    Route::match(['get','post'],'/ingresoComponente','ComponenteController@ingresoComponente');
   //Rutas de divisiones
   Route::resource('divisiones','DivisionController');
   Route::match(['get','post'],'/desactivateDivision/{id}','DivisionController@desactivate');
   Route::match(['get','post'],'/activateDivision/{id}','DivisionController@activate');
   Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
+  Route::match(['get','post'],'/llenarDivision','DivisionController@llenarDivision');
+  Route::match(['get','post'],'/ingresoDivision','DivisionController@ingresoDivision');
   //Rutas requisiciones acceso Farmacia
   Route::match(['get','post'],'/verrequisiciones','RequisicionController@verrequisiciones');
     Route::match(['get','post'],'/confirmarRequisicion/{id}','RequisicionController@confirmar');
@@ -197,6 +200,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/desactivateUnidad/{id}','UnidadController@desactivate');
   Route::match(['get','post'],'/activateUnidad/{id}','UnidadController@activate');
   Route::match(['get','post'],'/destroyUnidad/{id}','UnidadController@destroy');
+  Route::match(['get','post'],'/llenarUnidad','UnidadController@llenarUnidad');
+  Route::match(['get','post'],'/ingresoUnidad','UnidadController@ingresoUnidad');
   //Rutas de Solicitud de examenes
   Route::resource('solicitudex','SolicitudExamenController');
   Route::match(['get','post'],'/evaluarExamen/{id}/{idExamen}','SolicitudExamenController@evaluarExamen');

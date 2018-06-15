@@ -139,7 +139,7 @@ class CategoriaProductoController extends Controller
       return Response::json('success');
     }
     public static function llenarCategoria(){
-      $categorias=CategoriaProducto::where('estado',true)->orderBy('nombre')->get();
+      $categorias=CategoriaProducto::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
       return Response::json($categorias);
     }
 }
