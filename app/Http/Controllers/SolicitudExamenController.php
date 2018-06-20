@@ -555,6 +555,15 @@ class SolicitudExamenController extends Controller
       $main = view('SolicitudRayosx.entregaExamen',compact('solicitud','resultado','detallesResultado'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
       return $pdf->stream('Radiografia_con_solicitud_'.$solicitud->id.'.pdf');
+    }elseif (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $resultado=Resultado::where('f_solicitud','=',$id)->first();
+      $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_ultrasonografia','=',$idExamen)->first();
+      $header = view('PDF.header.laboratorio');
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('SolicitudUltras.entregaExamen',compact('solicitud','resultado','detallesResultado'));
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+      return $pdf->stream('Ultrasonografia_con_solicitud_'.$solicitud->id.'.pdf');
     }
       else{
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
