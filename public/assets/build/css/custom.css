@@ -3,6 +3,10 @@
     --secundario: #3ec8ca;
     --terciario: #1f7b7d;
 }
+.big-text{
+    font-size: 120%;
+    font-weight: bold;
+}
 canvas{
 		-moz-user-select: none;
 		-webkit-user-select: none;
@@ -14,6 +18,16 @@ canvas{
 }
 thead{
     background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
+}
+.table-basic{
+    width: 100%;
+}
+.table-basic th{
+    background-color: #ddd;
+}
+.table-basic th,.table-basic td{
+  border-bottom: 1px #bbb solid;
+  padding: 2px 5px 2px 5px;
 }
 .table-simple{
   width: 100%;

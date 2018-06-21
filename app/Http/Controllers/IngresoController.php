@@ -154,124 +154,85 @@ class IngresoController extends Controller
     public function show($id)
     {
       $ingreso = Ingreso::find($id);
-      $especialidades = Especialidad::orderBy('nombre')->get();
-      $ultima48 = $ultima24 = $hoy = Carbon::now();
-      $medicos_general = DB::table('users')
-      ->whereNotExists(
-        function ($query){
-          $query->select(DB::raw(1))
-          ->from('especialidad_usuarios')
-          ->whereRaw('especialidad_usuarios.f_usuario = users.id');
-        }
-      )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
-
-      if($ingreso->estado != 0){
-        if($ingreso->estado == 1){
-          $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
-          $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-          $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
-          $habitacion_detalle_count = 0;
-          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->categoria->nombre == "Habitación"){
-              $habitacion_detalle_count++;
-            }
+      /**Este segmento de codigo es unicamente para que siga funcionando pero a su vez mostrar el neuvo dashboard */
+      if($ingreso->tipo != 0){
+        return $this->dash($id);
+      }
+      /**Notas a tener en cuenta para la elaboración de esta pantalla
+       * 
+       * Tipos de ingreso:
+       * 0 - Ingreso
+       * 1 - Medi ingreso
+       * 2 - Observación
+       * 3 - Consulta médica
+       * 4 - Cumplimiento
+       * 
+       * Estados del registro
+       * 0 - Pendiente
+       * 1 - Ingresado
+       * 2 - Alta
+       */
+      /**Extracción de los datos del paciente */
+      $paciente = $ingreso->paciente;
+      /**Calculo de días que ha estado ingresado el paciente */
+      $hoy = Carbon::now();
+      /**Inicialización de las variables a utilizar */
+      $total_gastos = $total_abono = $total_deuda = $dias = 0;
+      if($ingreso->estado == 1){
+        $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+        /**Generador automatico de transacciones por uso de la habitación */
+        $habitacion_dia_guardado_count = 0;
+        /**Contar cuantos dias se ha guardado el gasto por habitación del paciente */
+        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+          if($detalle->servicio->categoria->nombre == "Habitación"){
+            $habitacion_dia_guardado_count++;
           }
-          $diff_dias_count = $dias - $habitacion_detalle_count;
-          if($diff_dias_count > 0){
-            for($i = 0; $i < $dias; $i++){
-              $fecha_aux = $ingreso->fecha_ingreso->addDays($i);
-              $is_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
-              if($is_detalle == 0){
-                DB::beginTransaction();
-                try{
-                  $detalle_n = new DetalleTransacion;
-                  $detalle_n->f_servicio = $ingreso->habitacion->servicio->id;
-                  $detalle_n->f_transaccion = $ingreso->transaccion->id;
-                  $detalle_n->cantidad = 1;
-                  $detalle_n->precio = $ingreso->habitacion->servicio->precio;
-                  $detalle_n->created_at = $fecha_aux;
-                  $detalle_n->save();
-                  DB::commit();
-                }catch(Exception $e){
-                  DB::rollback();
-                }
+        }
+        /**Diferencia entre los días guardados hasta el día de hoy */
+        $habitacion_dia_no_guardado_count = $dias - $habitacion_dia_guardado_count;
+        /**Si la diferencia no es 0 recorrer en un for desde el dia de ingreso hasta la fecha de hoy para revisar  el día que no se ha registrado y crearlo*/
+        if($habitacion_dia_no_guardado_count > 0){
+          for($i=0; $i<$dias; $i++){
+            $fecha_aux = $ingreso->fecha_ingreso->addDays($i);
+            /**Comprobar si existe el detalle este día */
+            $exist_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
+            /**Si no existe se crea la transaccion */
+            if($exist_detalle == 0){
+              DB::beginTransaction();
+              try{
+                $detalle_new = new DetalleTransacion;
+                $detalle_new->f_servicio = $ingreso->habitacion->servicio->id;
+                $detalle_new->f_transaccion = $ingreso->transaccion->id;
+                $detalle_new->cantidad = 1;
+                $detalle_new->precio = $ingreso->habitacion->servicio->precio;
+                $detalle_new->created_at = $fecha_aux;
+                $detalle_new->save();
+                DB::commit();
+              }catch(Exception $e){
+                DB::rollbalk();
               }
             }
           }
-        }else{
-          if($ingreso->tipo < 3){
-            $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
-            $utlima48 = $ultima24 = $ingreso->fecha_ingreso->subDays(1);
-          }
         }
-        if($ingreso->tipo < 3){
-          $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-  
-          //Total de gastos
-          $total_gastos = $this->total_gastos($id);
-          $iva = $total_gastos * 0.13;
-          $total_gastos += $iva;
-          //Total abonado a la deuda
-          $total_abono = Ingreso::abonos($id);
-  
-          //Total adeudado
-          $total_deuda = $total_gastos - $total_abono;
-        }else{
-          $examenes = null;
-          $dias = 0;
-          $total_abono = $total_gastos = $total_abono = $total_deuda = 0;  
-        }
-      }else{
-        $examenes = null;
-        $dias = 0;
-        $total_abono = $total_abono = $total_deuda = 0;
       }
-      $paciente = $ingreso->paciente;
-      $responsable = $ingreso->responsable;
-      $habitacion = $ingreso->habitacion;
-      $habitaciones_h = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
-      $habitaciones_o = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+      if($ingreso->tipo < 3){
+        /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
+        $total_gastos = $this->total_gastos($id);
+        $iva = $total_gastos * 0.13;
+        $total_gastos += $iva;
+        /**Total abonado a la deuda */
+        $total_abono = Ingreso::abonos($id);
+        /**Total adeudado a la cuenta */
+        $total_deuda = $total_gastos - $total_abono;
+      }
 
-      //Datos de las consultas
-      $extraccion = $paciente->ingreso;
-      $indx = $indx2 = 0;
-      $consultas = [];
-      $signos_vital = [];
-      foreach($extraccion as $ingresos_){
-        if($ingresos_->consulta != null){
-          foreach($ingresos_->consulta as $consulta){
-            $consultas[$indx] = $consulta;
-            $indx++;
-          }
-        }
-        if($ingresos_->signos != null){
-          foreach($ingresos_->signos as $signo){
-            $signos_vital[$indx2] = $signo;
-            $indx2++;
-          }
-        }
-      }
-      //Lista de examenes del paciente
-      $examenes_paciente = SolicitudExamen::where('f_paciente',$ingreso->f_paciente)->where('estado','>',1)->orderBy('created_at','desc')->get();
-      return view('Ingresos.show',compact(
+      return view('Ingresos.dashboard.show',compact(
         'ingreso',
-        'examenes',
+        'paciente',
         'dias',
         'total_gastos',
         'total_abono',
-        'total_deuda',
-        'paciente',
-        'especialidades',
-        'medicos_general',
-        'habitacion',
-        'habitaciones_h',
-        'habitaciones_o',
-        'responsable',
-        'ultima24',
-        'ultima48',
-        'consultas',
-        'signos_vital',
-        'examenes_paciente'
+        'total_deuda'
       ));
     }
 
@@ -680,5 +641,150 @@ class IngresoController extends Controller
       DB::rollback();
       return 0;
     }
+  }
+
+  public function chart_financiero(Request $request){
+    $id = $request->id;
+
+    $ingreso = Ingreso::find($id);
+    $hoy = Carbon::now();
+    $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+
+    /**Recorrer en un for todos los días desde el inicio hasta hoy, para ver todos los gastos hechos por día */
+    $monto = [];
+    $fecha = [];
+    for($i=0; $i<$dias+1; $i++){
+      $monto[$i]=Ingreso::servicio_gastos($id,$i);
+      $monto[$i]+=Ingreso::honorario_gastos($id,$i);
+      $monto[$i]+=Ingreso::tratamiento_gastos($id,$i);
+      $iva = $monto[$i]*0.13;
+      $monto[$i]+=$iva;
+      $fecha[$i]=$ingreso->fecha_ingreso->addDays($i)->format('m-d-Y');
+    }
+
+    return (compact('monto','fecha','dias'));
+  }
+
+  public function dash ($id){
+    $ingreso = Ingreso::find($id);
+      $especialidades = Especialidad::orderBy('nombre')->get();
+      $ultima48 = $ultima24 = $hoy = Carbon::now();
+      $medicos_general = DB::table('users')
+      ->whereNotExists(
+        function ($query){
+          $query->select(DB::raw(1))
+          ->from('especialidad_usuarios')
+          ->whereRaw('especialidad_usuarios.f_usuario = users.id');
+        }
+      )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
+
+      if($ingreso->estado != 0){
+        if($ingreso->estado == 1){
+          $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+          $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+          $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+          $habitacion_detalle_count = 0;
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+            if($detalle->servicio->categoria->nombre == "Habitación"){
+              $habitacion_detalle_count++;
+            }
+          }
+          $diff_dias_count = $dias - $habitacion_detalle_count;
+          if($diff_dias_count > 0){
+            for($i = 0; $i < $dias; $i++){
+              $fecha_aux = $ingreso->fecha_ingreso->addDays($i);
+              $is_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
+              if($is_detalle == 0){
+                DB::beginTransaction();
+                try{
+                  $detalle_n = new DetalleTransacion;
+                  $detalle_n->f_servicio = $ingreso->habitacion->servicio->id;
+                  $detalle_n->f_transaccion = $ingreso->transaccion->id;
+                  $detalle_n->cantidad = 1;
+                  $detalle_n->precio = $ingreso->habitacion->servicio->precio;
+                  $detalle_n->created_at = $fecha_aux;
+                  $detalle_n->save();
+                  DB::commit();
+                }catch(Exception $e){
+                  DB::rollback();
+                }
+              }
+            }
+          }
+        }else{
+          if($ingreso->tipo < 3){
+            $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+            $utlima48 = $ultima24 = $ingreso->fecha_ingreso->subDays(1);
+          }
+        }
+        if($ingreso->tipo < 3){
+          $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+  
+          //Total de gastos
+          $total_gastos = $this->total_gastos($id);
+          $iva = $total_gastos * 0.13;
+          $total_gastos += $iva;
+          //Total abonado a la deuda
+          $total_abono = Ingreso::abonos($id);
+  
+          //Total adeudado
+          $total_deuda = $total_gastos - $total_abono;
+        }else{
+          $examenes = null;
+          $dias = 0;
+          $total_abono = $total_gastos = $total_abono = $total_deuda = 0;  
+        }
+      }else{
+        $examenes = null;
+        $dias = 0;
+        $total_abono = $total_abono = $total_deuda = 0;
+      }
+      $paciente = $ingreso->paciente;
+      $responsable = $ingreso->responsable;
+      $habitacion = $ingreso->habitacion;
+      $habitaciones_h = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
+      $habitaciones_o = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+
+      //Datos de las consultas
+      $extraccion = $paciente->ingreso;
+      $indx = $indx2 = 0;
+      $consultas = [];
+      $signos_vital = [];
+      foreach($extraccion as $ingresos_){
+        if($ingresos_->consulta != null){
+          foreach($ingresos_->consulta as $consulta){
+            $consultas[$indx] = $consulta;
+            $indx++;
+          }
+        }
+        if($ingresos_->signos != null){
+          foreach($ingresos_->signos as $signo){
+            $signos_vital[$indx2] = $signo;
+            $indx2++;
+          }
+        }
+      }
+      //Lista de examenes del paciente
+      $examenes_paciente = SolicitudExamen::where('f_paciente',$ingreso->f_paciente)->where('estado','>',1)->orderBy('created_at','desc')->get();
+      return view('Ingresos.show',compact(
+        'ingreso',
+        'examenes',
+        'dias',
+        'total_gastos',
+        'total_abono',
+        'total_deuda',
+        'paciente',
+        'especialidades',
+        'medicos_general',
+        'habitacion',
+        'habitaciones_h',
+        'habitaciones_o',
+        'responsable',
+        'ultima24',
+        'ultima48',
+        'consultas',
+        'signos_vital',
+        'examenes_paciente'
+      ));
   }
 }

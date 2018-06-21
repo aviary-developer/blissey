@@ -78,6 +78,7 @@ Route::group(['middleware'=>'recepcion'], function()
   //Rutas de Requisiciones
   Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
       Route::match(['get','post'],'/asignarRequisicion/{id}','RequisicionController@asignar');
+  Route::get('/chart_financiero','IngresoController@chart_financiero');
 });
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){
