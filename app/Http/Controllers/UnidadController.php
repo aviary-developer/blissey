@@ -7,6 +7,7 @@ use App\Http\Requests\UnidadRequest;
 use App\Http\Controllers\Controller;
 use App\Unidad;
 use Redirect;
+use Response;
 use Carbon\Carbon;
 
 class UnidadController extends Controller
@@ -128,5 +129,13 @@ class UnidadController extends Controller
     $unidades->estado = true;
     $unidades->save();
     return Redirect::to('/unidades?estado=0');
+  }
+  public static function ingresoUnidad(UnidadRequest $request){
+    Unidad::create($request->All());
+    return Response::json('success');
+  }
+  public static function llenarUnidad(){
+    $unidades=Unidad::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
+    return Response::json($unidades);
   }
 }

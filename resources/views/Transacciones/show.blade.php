@@ -34,11 +34,7 @@
               <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
                 <table class="table">
                   <tr>
-                      @if(!$transaccion->tipo)
-                    <th>Fecha del confirmación</th>
-                  @else
-                    <th>Fecha de venta</th>
-                  @endif
+                      <th>Fecha</th>
                     <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
                   </tr>
                   <tr>

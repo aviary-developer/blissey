@@ -11,6 +11,7 @@
         <h2>Producto<small>Nuevo</small></h2>
         <div class="clearfix"></div>
       </div>
+      @include('Productos.Formularios.opciones')
       @include('Productos.Formularios.form')
     </div>
   </div>

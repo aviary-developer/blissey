@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Ultrasonografías:</label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Radiografías:</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
       <select class="form-control has-feedback-left" name="rayox">

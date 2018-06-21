@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Auth\Notifications\ResetPassword;
 
-class MyResetPassword extends ResetPassword
+class MyResetPassword extends Notification
 {
       public $token;
 

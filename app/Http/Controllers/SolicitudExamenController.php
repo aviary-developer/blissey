@@ -546,6 +546,26 @@ class SolicitudExamenController extends Controller
   }
   public function entregarExamen($id,$idExamen)
   {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+      $resultado=Resultado::where('f_solicitud','=',$id)->first();
+      $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_rayox','=',$idExamen)->first();
+      $header = view('PDF.header.laboratorio');
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('SolicitudRayosx.entregaExamen',compact('solicitud','resultado','detallesResultado'));
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+      return $pdf->stream('Radiografia_con_solicitud_'.$solicitud->id.'.pdf');
+    }elseif (Auth::user()->tipoUsuario == "Ultrasonografía") {
+      $resultado=Resultado::where('f_solicitud','=',$id)->first();
+      $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_ultrasonografia','=',$idExamen)->first();
+      $header = view('PDF.header.laboratorio');
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('SolicitudUltras.entregaExamen',compact('solicitud','resultado','detallesResultado'));
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+      return $pdf->stream('Ultrasonografia_con_solicitud_'.$solicitud->id.'.pdf');
+    }
+      else{
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
@@ -573,6 +593,7 @@ class SolicitudExamenController extends Controller
     $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
     return $pdf->stream('Examen_con_solicitud_'.$solicitud->id.'.pdf');
+  }
   }
   public function editarResultadosExamen($id,$idExamen)
   {

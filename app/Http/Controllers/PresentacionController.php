@@ -6,6 +6,7 @@ use App\Presentacion;
 use Illuminate\Http\Request;
 use App\Bitacora;
 use Redirect;
+use Response;
 use App\Http\Requests\PresentacionRequest;
 
 class PresentacionController extends Controller
@@ -154,4 +155,12 @@ class PresentacionController extends Controller
         return redirect('/presentaciones?estado=0')->with('mensaje', '¡Editado!');
       }
     }
+  public static function ingresoPresentacion(PresentacionRequest $request){
+    Presentacion::create($request->All());
+    return Response::json('success');
+  }
+  public static function llenarPresentacion(){
+    $presentaciones=Presentacion::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
+    return Response::json($presentaciones);
+  }
 }
