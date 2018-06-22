@@ -9,7 +9,7 @@
       <div class="x_title">
         <h2>Evaluación de examen</h2>
         <div class="clearfix"></div>
-        <h4>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}} <span class="label label-lg label-default">{{$solicitud->examen->nombreExamen}}</span></h4>
+        <h4>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}   <strong>{{$solicitud->paciente->fechaNacimiento->age}} años </strong>   <span class="label label-lg label-default">{{$solicitud->examen->nombreExamen}}</span></h4>
       </div>
       <div class="col-xs-12">
         <input type="hidden" name="solicitud" value={{$solicitud->id}}>
@@ -34,7 +34,11 @@
                 <th style="width: 25%" rowspan="2">Resultado</th>
                 <th colspan="2">
                   <center>
-                    Valores normales
+                    @if ($solicitud->paciente->sexo==0)
+                      <span class="label-lg label label-pink col-xs-12">Valores normales femeninos</span>
+                    @else
+                        <span class="label-lg label label-primary col-xs-12">Valores normales masculinos</span>
+                    @endif
                   </center>
                 </th>
                 <th rowspan="2" style="width: 15%">Unidades</th>
@@ -56,11 +60,21 @@
                       @if($esp->parametro->valorMinimo!=null)
                         <td>
                           <span class="label label-lg label-cian col-xs-12">
+                            @if ($solicitud->paciente->sexo==0)
+                              {{number_format($esp->parametro->valorMinimoFemenino, 2, '.', ',')}}
+                          @else
                             {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}
+                          @endif
                           </span>
                         </td>
                         <td>
-                          <span class="label label-lg label-danger col-xs-12">{{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}</span>
+                          <span class="label label-lg label-danger col-xs-12">
+                            @if ($solicitud->paciente->sexo==0)
+                              {{number_format($esp->parametro->valorMaximoFemenino, 2, '.', ',')}}
+                          @else
+                            {{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}
+                          @endif
+                          </span>
                         </td>
                       @else
                         <td>

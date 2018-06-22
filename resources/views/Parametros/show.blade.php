@@ -55,11 +55,25 @@
                   @endif
                 </tr>
                 <tr>
+                  <th>Valores normales</th>
+                  <td>
+                    <span class="label-lg label label-primary col-xs-4">Masculino</span>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                    </div>
+                    <span class="label-lg label label-pink col-xs-4">Femenino</span>
+                  </td>
+                </tr>
+                <tr>
                   <th>Valor mínimo</th>
                   @if($parametro->valorMinimo!=null)
                   <td>
                     <span class="label label-lg label-cian col-xs-4">
                       {{number_format($parametro->valorMinimo, 2, '.', ',')}}
+                    </span>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                    </div>
+                    <span class="label label-lg label-cian col-xs-4">
+                      {{number_format($parametro->valorMinimoFemenino, 2, '.', ',')}}
                     </span>
                   </td>
                   @else
@@ -73,6 +87,9 @@
                   @if($parametro->valorMaximo!=null)
                   <td>
                     <span class="label label-lg label-danger col-xs-4">{{number_format($parametro->valorMaximo, 2, '.', ',')}}</span>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                    </div>
+                    <span class="label label-lg label-danger col-xs-4">{{number_format($parametro->valorMaximoFemenino, 2, '.', ',')}}</span>
                   </td>
                   @else
                     <td>

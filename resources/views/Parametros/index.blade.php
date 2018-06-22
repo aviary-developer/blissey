@@ -60,8 +60,6 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Valor Mínimo</th>
-              <th>Valor Máximo</th>
               <th>Valor Predeterminado</th>
               <th>Unidad de medida</th>
               <th>Opciones</th>
@@ -80,27 +78,7 @@
                       {{ $parametro->nombreParametro}}
                     </a>
                   </td>
-                  @if($parametro->valorMinimo!=null)
-                  <td>
-                    <span class="label label-lg label-cian col-xs-12">
-                      {{number_format($parametro->valorMinimo, 2, '.', ',')}}
-                    </span>
-                  </td>
-                  @else
-                    <td>
-                      <span class="label label-lg label-gray col-xs-12">Ninguno</span>
-                    </td>
-                  @endif
-                  @if($parametro->valorMaximo!=null)
-                  <td>
-                    <span class="label label-lg label-danger col-xs-12">{{number_format($parametro->valorMaximo, 2, '.', ',')}}</span>
-                  </td>
-                  @else
-                    <td>
-                      <span class="label label-lg label-gray col-xs-12">Ninguno</span>
-                    </td>
-                  @endif
-                  @if($parametro->valorPredeterminado!=null)
+                @if($parametro->valorPredeterminado!=null)
                   @if (!is_numeric($parametro->valorPredeterminado))
                       <td>
                         <span class="label label-lg label-default col-xs-12">{{$parametro->valorPredeterminado}}</span>
@@ -111,14 +89,14 @@
                       </td>
                     @endif
                   @else<td>
-                    <span class="label label-lg label-gray col-xs-12">Ninguno</span>
+                    <span class="label label-lg label-gray col-xs-6">Ninguno</span>
                   </td>
                   @endif
                   @if($parametro->unidad!=null)
                   <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
                   @else
                   <td>
-                    <span class="label label-lg label-gray col-xs-12">Ninguna</span>
+                    <span class="label label-lg label-gray col-xs-6">Ninguna</span>
                   </td>
                   @endif
                   <td>
