@@ -259,13 +259,19 @@ function rellenarCombosParametros(){
 //////////////////PARA PARAMETROS
 $('#checkValores').click(function () {
   if(this.checked == true){
+    $("#divValoresNormales").show();
     $("#valorMinimo").prop("readonly", false);
     $("#valorMaximo").prop("readonly", false);
+    $("#valorMinimoFemenino").prop("readonly", false);
+    $("#valorMaximoFemenino").prop("readonly", false);
     $("#selectUnidadParametro").removeAttr('disabled');
     $("#unidadModal").removeAttr('disabled');
   }else{
+    $("#divValoresNormales").hide();
     $("#valorMaximo").prop("readonly", true);
     $("#valorMinimo").prop("readonly", true);
+    $("#valorMaximoFemenino").prop("readonly", true);
+    $("#valorMinimoFemenino").prop("readonly", true);
     $("#selectUnidadParametro").prop('disabled', 'disabled');
     $("#unidadModal").prop('disabled', 'disabled');
   }

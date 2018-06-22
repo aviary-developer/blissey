@@ -604,7 +604,7 @@ class SolicitudExamenController extends Controller
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=','true')->get();
     $contador=0;
     $contadorSecciones=0;
-    if(count($espr)>0){
+    if($espr!=null){
       foreach ($espr as $esp) {
         if($contador==0){
           $secciones[$contadorSecciones]=$esp->f_seccion;
