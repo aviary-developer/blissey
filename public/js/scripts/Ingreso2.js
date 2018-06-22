@@ -333,7 +333,6 @@ $(document).on('ready', function () {
           $(r.monto).each(function (key, value) {
             monto.push(value);
             fecha = new Date(r.fecha[key]);
-            console.log(fecha);
             fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
           });
 
