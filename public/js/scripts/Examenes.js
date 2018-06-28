@@ -63,77 +63,6 @@ function llenarReactivos(){
     });
   });
 }
-$('#guardarParametroModal').click(function(){
-  var nombre = $("#nombreParametroModal").val();
-  var unidad = $("#unidadModal").val();
-  var valorMinimo= $('#valorMinimo').val();
-  var valorMaximo= $('#valorMaximo').val();
-  var valorPredeterminado= $('#valorPredeterminado').val();
-  var ruta="/blissey/public/ingresoParametro";
-  var token = $('#tokenParametroModal').val();
-
-  $.ajax({
-    url:ruta,
-    headers:{'X-CSRF-TOKEN':token},
-    type:'POST',
-    data: {
-      nombreParametro: nombre,
-      unidad: unidad,
-      valorMinimo: valorMinimo,
-      valorMaximo: valorMaximo,
-      valorPredeterminado: valorPredeterminado
-    },
-    success: function(){
-      $(".modal").modal('hide');
-      swal({
-        title: '¡Parametro registrado!',
-        text: 'Cargando información',
-        timer: 3000,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () {},
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      )
-    },
-    error: function(data){
-      if (data.status === 422 ) {
-        var errors = $.parseJSON(data.responseText);
-        $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
-        });
-      }
-    }
-  });
-  var paso=-1;
-  // for (paso = -1; paso < contadorSelectsParametros; paso++) {
-  //   rellenarCombosParametros(paso);
-  // }
-  rellenarCombosParametros();
-  $("#nombreParametroModal").val("");
-  $('#valorMinimo').val("");
-  $('#valorMaximo').val("");
-  $('#valorPredeterminado').val("");
-});
-function rellenarCombosParametros(){
-  var parametros = $("#parametro_select");
-  var ruta="/blissey/public/llenarParametrosExamenes";
-  $.get(ruta,function(res){
-    parametros.empty();
-    $(res).each(function(key,value){
-      parametros.append("<option value='"+value.id+"'>"+value.nombreParametro+"</option>");
-    });
-  });
-}
  function agregarParametro(paso){
    //var parametro=$("#selectParametrosExamenes"+contadorSelectsParametros);
    var valorParametro=$("#selectParametrosExamenes"+paso).val();
@@ -259,13 +188,19 @@ function rellenarCombosParametros(){
 //////////////////PARA PARAMETROS
 $('#checkValores').click(function () {
   if(this.checked == true){
+    $("#divValoresNormales").show();
     $("#valorMinimo").prop("readonly", false);
     $("#valorMaximo").prop("readonly", false);
+    $("#valorMinimoFemenino").prop("readonly", false);
+    $("#valorMaximoFemenino").prop("readonly", false);
     $("#selectUnidadParametro").removeAttr('disabled');
     $("#unidadModal").removeAttr('disabled');
   }else{
+    $("#divValoresNormales").hide();
     $("#valorMaximo").prop("readonly", true);
     $("#valorMinimo").prop("readonly", true);
+    $("#valorMaximoFemenino").prop("readonly", true);
+    $("#valorMinimoFemenino").prop("readonly", true);
     $("#selectUnidadParametro").prop('disabled', 'disabled');
     $("#unidadModal").prop('disabled', 'disabled');
   }

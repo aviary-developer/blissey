@@ -66,7 +66,7 @@ class UltrasonografiaController extends Controller
          //Crear una categoria de servicio asociada a los examen
          $categoria_existe = CategoriaServicio::where('nombre','Ultrasonografía')->first();
 
-         if(count($categoria_existe)<1){
+         if($categoria_existe==null){
            $categoria_existe = new CategoriaServicio;
            $categoria_existe->nombre = "Ultrasonografía";
            $categoria_existe->save();

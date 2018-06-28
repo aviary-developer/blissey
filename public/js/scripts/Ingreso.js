@@ -801,3 +801,8 @@ function accion24(tipo, id) {
     }).catch(swal.noop);
   }
 }
+
+
+$(".modal").on('shown.bs.modal', function () {
+  $(this).find("input:visible:first").focus();
+});

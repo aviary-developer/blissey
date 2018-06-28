@@ -312,6 +312,69 @@ $(document).on('ready', function () {
       }
     });
   });
+
+  /**Invocación del grafico financiero */
+  chart_fin();
+
+  /**Función para dibujar el grafico financiero */
+  function chart_fin() {
+    var tipo_u = $("#tipo_usuario").val();
+    var id = $("#id").val();
+    if (tipo_u == "Recepción") {
+      $.ajax({
+        type: 'get',
+        url: '/blissey/public/chart_financiero',
+        data: {
+          id: id,
+        },
+        success: function (r) {
+          var monto = [];
+          var fecha_format = [];
+          $(r.monto).each(function (key, value) {
+            monto.push(value);
+            fecha = new Date(r.fecha[key]);
+            fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
+          });
+
+          var canva = $("#chart_financiero");
+          var chart = new Chart(canva, {
+            type: 'line',
+            data: {
+              labels: fecha_format,
+              datasets: [{
+                data: monto,
+                label: 'Monto',
+                lineTension: 0.1,
+                backgroundColor: 'rgba(236,112,99,0.5)',
+                borderColor: 'rgba(236,112,99)'
+              }]
+            },
+            options: {
+              scales: {
+                yAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Dolares'
+                  },
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }],
+                xAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Fecha'
+                  }
+                }]
+              }
+            }
+          });
+        }
+      });
+    }
+  }
   
   function mes(x) {
     if (x == 0) {

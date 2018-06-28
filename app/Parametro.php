@@ -8,7 +8,7 @@ use App\Unidad;
 class Parametro extends Model
 {
   protected $fillable = [
-      'nombreParametro', 'valorMinimo','valorMaximo','valorPredeterminado','unidad'
+      'nombreParametro', 'valorMinimo','valorMaximo', 'valorMinimoFemenino','valorMaximoFemenino','valorPredeterminado','unidad'
   ];
   public static function buscar($nombre, $estado){
     return Parametro::nombre($nombre)->estado($estado)->orderBy('nombreParametro')->paginate(10);

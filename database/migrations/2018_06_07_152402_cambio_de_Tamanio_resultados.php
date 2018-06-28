@@ -17,7 +17,7 @@ class CambioDeTamanioResultados extends Migration
           $table->dropColumn('observacion');
       });
       Schema::table('resultados', function (Blueprint $table) {
-        $table->text('observacion');
+        $table->text('observacion')->nullable();
       });
     }
 

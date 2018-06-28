@@ -12,6 +12,8 @@
   <!-- jQuery -->
   <!-- Bootstrap -->
   {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
+  <!-- bootstrap-wysiwyg -->
+  {!!Html::style('assets/google-code-prettify/bin/prettify.min.css')!!}
   <!-- Font Awesome -->
   {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
   <!-- NProgress -->
@@ -708,7 +710,10 @@
     {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
     <!-- NProgress -->
     {!!Html::script('assets/nprogress/nprogress.js')!!}
-
+    <!-- bootstrap-wysiwyg -->
+  {!!Html::script('assets/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js')!!}
+    {!!Html::script('assets/jquery.hotkeys/jquery.hotkeys.js')!!}
+  {!!Html::script('assets/google-code-prettify/src/prettify.js')!!}
     <!-- gauge.js -->
     {!!Html::script('assets/gauge.js/dist/gauge.min.js')!!}
     <!-- bootstrap-progressbar -->
@@ -753,6 +758,7 @@
       {!!Html::script('js/scripts/Transacciones.js')!!}
       {!!Html::script('js/scripts/Ingreso.js')!!}
       {!!Html::script('js/scripts/Ingreso2.js')!!}
+      {!!Html::script('js/scripts/IngresoX.js')!!}
       {!!Html::script('js/scripts/Consulta.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}

@@ -36,7 +36,11 @@
                       <td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
                         <td><center>{{$detallesResultado[$esp]->resultado}}</center></td>
                         @if ($valor->parametro->valorMinimo!=null)
-                          <td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
+													@if ($solicitud->paciente->sexo==0)
+														<td><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
+												@else
+													<td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
+												@endif
                           <td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
                         @else
                           <th>-</th><th>-</th>

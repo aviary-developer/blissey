@@ -12,11 +12,12 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
   <div class="">
     <label>
-      <input type="checkbox"name="checkValores" id="checkValores" class="js-switch" unchecked /> Valores Normales
+      <input type="checkbox"name="checkValores" id="checkValores" class="js-switch" unchecked /> Información avanzada
     </label>
   </div>
   </div>
   </div>
+  <div id="divValoresNormales" style="display:none;">
   <div class="form-group" id="grupoUnidadParametro">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición</label>
     <div class="col-md-9 col-sm-9 col-xs-12" id="unidadParametro">
@@ -30,26 +31,45 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor normal mínimo</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="col-md-2 col-sm-2 col-xs-2">
+    </div>
+    <span class="label-lg label label-cian col-xs-4">Masculino</span>
+    <div class="col-md-2 col-sm-2 col-xs-2">
+    </div>
+    <span class="label-lg label label-pink col-xs-4">Femenino</span>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Mínimo</label>
+    <div class="col-md-3 col-sm-3 col-xs-12">
       <span class="fa fa-arrow-circle-o-down form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('valorMinimo',null,['id'=>'valorMinimo','class'=>'form-control has-feedback-left','placeholder'=>'Valor mínimo','step'=>'any','readonly']) !!}
+      {!! Form::number('valorMinimo',null,['id'=>'valorMinimo','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
+    </div>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Mínimo</label>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <span class="fa fa-arrow-circle-o-down form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('valorMinimoFemenino',null,['id'=>'valorMinimoFemenino','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor normal máximo</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Máximo</label>
+    <div class="col-md-3 col-sm-3 col-xs-12">
       <span class="fa fa-arrow-circle-o-up form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('valorMaximo',null,['id'=>'valorMaximo','class'=>'form-control has-feedback-left','placeholder'=>'Valor máximo','step'=>'any','readonly']) !!}
+      {!! Form::number('valorMaximo',null,['id'=>'valorMaximo','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
     </div>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Máximo</label>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <span class="fa fa-arrow-circle-o-up form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::number('valorMaximoFemenino',null,['id'=>'valorMaximoFemenino','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
+    </div>
+  </div>
   </div>
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor predeterminado</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-check-circle-o form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('valorPredeterminado',null,['class'=>'form-control has-feedback-left','placeholder'=>'Valor fijo','step'=>'any']) !!}
+      {!! Form::text('valorPredeterminado',null,['class'=>'form-control has-feedback-left','placeholder'=>'']) !!}
     </div>
-  </div>
+</div>
     <center>
     <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
   </center>
