@@ -113,7 +113,7 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/desactivateComponente/{id}','ComponenteController@desactivate');
   Route::match(['get','post'],'/activateComponente/{id}','ComponenteController@activate');
   Route::match(['get','post'],'/destroyComponente/{id}','ComponenteController@destroy');
-    Route::match(['get','post'],'/ingresoComponente','ComponenteController@ingresoComponente');
+  Route::match(['get','post'],'/ingresoComponente','ComponenteController@ingresoComponente');
   //Rutas de divisiones
   Route::resource('divisiones','DivisionController');
   Route::match(['get','post'],'/desactivateDivision/{id}','DivisionController@desactivate');

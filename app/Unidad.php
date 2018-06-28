@@ -25,4 +25,9 @@ class Unidad extends Model
     }
     $query->where('estado',$estado);
   }
+  public static function foreanos($id){
+    $valor=ComponenteProducto::where('f_unidad',$id)->count();
+    $valor=$valor+Parametro::where('unidad',$id)->count();
+    return $valor;
+  }
 }

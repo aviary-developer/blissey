@@ -26,4 +26,7 @@ class Presentacion extends Model
     }
     $query->where('estado',$estado);
   }
+  public static function foreanos($id){
+    return Producto::where('f_presentacion',$id)->count();
+  }
 }

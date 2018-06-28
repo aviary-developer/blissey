@@ -347,14 +347,14 @@ $("#guardar_examen").on("click", function (e) {
   }
 });
 
-$("#guardarReactivoModal").on('click', function (e) {
+$("#guardarReactivoModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreReactivoModal").val();
   var v_descripcion = $("#descripcionReactivoModal").val();
   var contenido = $("#contenidoReactivoModal").val();
   var token = $("#tokenReactivoModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoReactivo",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
@@ -403,13 +403,13 @@ $("#guardarReactivoModal").on('click', function (e) {
 
 });
 
-$("#guardarMuestraModal").on('click', function (e) {
+$("#guardarMuestraModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreMuestraModal").val();
 
   var token = $("#tokenMuestraModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoMuestra",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
@@ -454,13 +454,13 @@ $("#guardarMuestraModal").on('click', function (e) {
 
 });
 
-$("#guardarSeccionModal").on('click', function (e) {
+$("#guardarSeccionModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreSeccionModal").val();
 
   var token = $("#tokenSeccionModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoSeccion",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
