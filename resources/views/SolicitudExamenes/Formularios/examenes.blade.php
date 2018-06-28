@@ -61,7 +61,7 @@
                 @if($examen->area == "BACTERIOLOGIA")
                   <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
                     <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                      {{ $examen->nombreExamen }}
+                      {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                     </button>
                     <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                   </span>
@@ -82,7 +82,7 @@
                 @if($examen->area == "EXAMENES DE HECES")
                   <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
                     <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                      {{ $examen->nombreExamen }}
+                      {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                     </button>
                     <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                   </span>
@@ -103,7 +103,7 @@
               @if($examen->area == "EXAMENES DE ORINA")
                 <span class="button-checkbox col-md-4 col-sm-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
@@ -124,7 +124,7 @@
               @if($examen->area == "HEMATOLOGIA")
                 <span class="button-checkbox col-md-4 col-xs-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
@@ -145,7 +145,7 @@
               @if($examen->area == "INMUNOLOGIA")
                 <span class="button-checkbox col-md-4 col-xs-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
@@ -166,7 +166,7 @@
               @if($examen->area == "QUIMICA SANGUINEA")
                 <span class="button-checkbox col-md-4 col-xs-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
@@ -187,7 +187,7 @@
               @if($examen->area == "ENZIMAS")
                 <span class="button-checkbox col-md-4 col-xs-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
@@ -208,7 +208,7 @@
               @if($examen->area == "PRUEBAS ESPECIALES")
                 <span class="button-checkbox col-md-4 col-xs-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
@@ -229,7 +229,7 @@
               @if($examen->area == "OTROS")
                 <span class="button-checkbox col-md-4 col-xs-4 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12" data-color="success">
-                    {{ $examen->nombreExamen }}
+                    {{ $examen->nombreExamen }} | <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                   </button>
                   <input type="checkbox" class="hidden" name="examen[]" value={{$examen->id}}>
                 </span>
