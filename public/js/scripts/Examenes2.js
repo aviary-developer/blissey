@@ -454,57 +454,6 @@ $("#guardarMuestraModal").on('click', async function (e) {
 
 });
 
-$("#guardarSeccionModal").on('click', async function (e) {
-  e.preventDefault();
-  var v_nombre = $("#nombreSeccionModal").val();
-
-  var token = $("#tokenSeccionModal").val();
-
-  await $.ajax({
-    url: "/blissey/public/ingresoSeccion",
-    headers: { 'X-CSRF-TOKEN': token },
-    type: 'POST',
-    data: {
-      nombre: v_nombre,
-    },
-    success: function () {
-      $(".modal").modal('hide');
-      swal({
-        title: '¡Tipo de sección registrado!',
-        text: 'Cargando información',
-        timer: 3000,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      );
-    },
-    error: function(data){
-      if (data.status === 422 ) {
-        var errors = $.parseJSON(data.responseText);
-        $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
-        });
-      }
-    }
-    });
-
-
-    rellenarSeccion();
-    $("#nombreSeccionModal").val("");
-
-  });
-
   function rellenarReactivo() {
     var reactivos = $("#reactivo_select");
     var ruta = "/blissey/public/llenarReactivosExamenes";
@@ -527,16 +476,7 @@ $("#guardarSeccionModal").on('click', async function (e) {
     });
   }
 
-  function rellenarSeccion() {
-    var secciones = $("#seccion_select");
-    var ruta = "/blissey/public/llenarSeccionExamenes";
-    $.get(ruta, function (res) {
-      secciones.empty();
-      $(res).each(function (key, value) {
-        secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
-      });
-    });
-  }
+
 
   function reset_modal() {
     parametros = 0;
