@@ -36,12 +36,12 @@
   </div>
 </div>
 <script>
-function guardarSeccionModal(e) {
+async function guardarSeccionModal(e) {
   var v_nombre = $("#nombreSeccionModal").val();
 
   var token = $("#tokenSeccionModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoSeccion",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',

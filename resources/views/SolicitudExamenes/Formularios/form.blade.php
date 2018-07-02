@@ -18,17 +18,22 @@
   @include('SolicitudExamenes.Formularios.examenes')
   <input type="hidden" id="seleccion" value="solicitud">
   <div class="clearfix"></div>
-  <center>
-    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
-  </center>
+    <!--<div class="row">
+    <div class="col-md-6">
+    <div class="alert alert-success alert-dismissible fade in" role="alert">
+      <strong>Resumen:<i>
+        <div id="totalSolicitudes">
+      </div></i></strong>
+    </div>
+    </div>
+  </div>-->
 
-  <div class="ln_solid"></div>
   <div class="form-group">
     <center>
       {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
       <a href={!! asset($ruta) !!} class="btn btn-default">Cancelar</a>
     </center>
-  </div>
+  </div><br>
 </div>
 
 <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
@@ -71,7 +76,36 @@
   </div>
 </div>
 <script type="text/javascript">
+var solicitudes=0;
   function input_seleccion(e){
     document.getElementById('seleccion').value = e;
   }
+  async function agregarExamenEnSolicitud(boton){
+        if (boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-defualt") {
+          solicitudes=solicitudes+1;
+          $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
+          new PNotify({
+            title: 'Solicitud de:',
+            type: 'success',
+            text: '<strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
+            nonblock: {
+              nonblock: true
+            },
+            styling: 'bootstrap3',
+            addclass: 'info'
+          });
+        } else if(boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-success") {
+          solicitudes=solicitudes-1;
+          new PNotify({
+            title: 'Solicitud de:',
+            type: 'warning',
+            text:  '<strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
+            nonblock: {
+              nonblock: true
+            },
+            styling: 'bootstrap3',
+            addclass: 'info'
+          });
+        }
+            }
 </script>

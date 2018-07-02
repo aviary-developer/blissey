@@ -104,7 +104,7 @@
 </div>
 <script>
 
-function agregarParametroDesdeModal(){
+async function agregarParametroDesdeModal(){
   var nombre = $("#nombreParametro").val();
   var unidad = $("#selectUnidadParametro").val();
   var valorMinimo= $('#valorMinimo').val();
@@ -115,7 +115,7 @@ function agregarParametroDesdeModal(){
   var ruta="/blissey/public/ingresoParametro";
   var token = $('#tokenParametroModal').val();
 
-  $.ajax({
+  await $.ajax({
     url:ruta,
     headers:{'X-CSRF-TOKEN':token},
     type:'POST',
