@@ -9,9 +9,18 @@
   <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$presentacion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
     <i class="fa fa-check"></i>
   </button>
+  @php
+    $cuenta=App\Presentacion::foreanos($presentacion->id);
+  @endphp
+  @if ($cuenta>0)
+    <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No se puede eliminar">
+      <i class="fa fa-warning"></i>
+    </button>
+  @else
   <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$presentacion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
     <i class="fa fa-remove"></i>
   </button>
+  @endif
 @else
   <div class="btn-group">
     @if (!$presentacion->estado)

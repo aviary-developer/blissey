@@ -24,4 +24,7 @@ class Componente extends Model
     public function componenteProducto(){
       return $this->hasMany('App\ComponenteProducto','f_componente')->select(['id','f_componente','f_producto','cantidad','f_unidad']);
     }
+    public static function foreanos($id){
+      return ComponenteProducto::where('f_componente',$id)->count();
+    }
 }

@@ -18,7 +18,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido por envase</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('contenidoPorEnvase',null,['min'=>0,'class'=>'form-control has-feedback-left','placeholder'=>'Contenido en ml','required']) !!}
+      {!! Form::number('contenidoPorEnvase',null,['min'=>0,'class'=>'form-control has-feedback-left','placeholder'=>'Contenido en unidades','required']) !!}
     </div>
   </div>
     <center>

@@ -18,7 +18,7 @@
             <div class="alert alert-success alert-dismissible fade in" role="alert">
                     Actualmente tiene: <strong><span id="spanExistenciasActuales"></span> <span id="spanNomReac"></span> en existencias</strong>
                   </div>
-            <label class="control-label col-sm-3 col-xs-12">Nombre *</label>
+            <label class="control-label col-sm-3 col-xs-12">Cantidad</label>
             <div class="col-sm-9 col-xs-12">
               <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
               {!! Form::number('cantidadExistencias',null,['id'=>'cantidadExistencias','class'=>'form-control has-feedback-left','placeholder'=>'0']) !!}

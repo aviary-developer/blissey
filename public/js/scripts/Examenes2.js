@@ -347,14 +347,14 @@ $("#guardar_examen").on("click", function (e) {
   }
 });
 
-$("#guardarReactivoModal").on('click', function (e) {
+$("#guardarReactivoModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreReactivoModal").val();
   var v_descripcion = $("#descripcionReactivoModal").val();
   var contenido = $("#contenidoReactivoModal").val();
   var token = $("#tokenReactivoModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoReactivo",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
@@ -403,13 +403,13 @@ $("#guardarReactivoModal").on('click', function (e) {
 
 });
 
-$("#guardarMuestraModal").on('click', function (e) {
+$("#guardarMuestraModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreMuestraModal").val();
 
   var token = $("#tokenMuestraModal").val();
 
-  $.ajax({
+  await $.ajax({
     url: "/blissey/public/ingresoMuestra",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
@@ -454,57 +454,6 @@ $("#guardarMuestraModal").on('click', function (e) {
 
 });
 
-$("#guardarSeccionModal").on('click', function (e) {
-  e.preventDefault();
-  var v_nombre = $("#nombreSeccionModal").val();
-
-  var token = $("#tokenSeccionModal").val();
-
-  $.ajax({
-    url: "/blissey/public/ingresoSeccion",
-    headers: { 'X-CSRF-TOKEN': token },
-    type: 'POST',
-    data: {
-      nombre: v_nombre,
-    },
-    success: function () {
-      $(".modal").modal('hide');
-      swal({
-        title: '¡Tipo de sección registrado!',
-        text: 'Cargando información',
-        timer: 3000,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      );
-    },
-    error: function(data){
-      if (data.status === 422 ) {
-        var errors = $.parseJSON(data.responseText);
-        $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
-        });
-      }
-    }
-    });
-
-
-    rellenarSeccion();
-    $("#nombreSeccionModal").val("");
-
-  });
-
   function rellenarReactivo() {
     var reactivos = $("#reactivo_select");
     var ruta = "/blissey/public/llenarReactivosExamenes";
@@ -527,16 +476,7 @@ $("#guardarSeccionModal").on('click', function (e) {
     });
   }
 
-  function rellenarSeccion() {
-    var secciones = $("#seccion_select");
-    var ruta = "/blissey/public/llenarSeccionExamenes";
-    $.get(ruta, function (res) {
-      secciones.empty();
-      $(res).each(function (key, value) {
-        secciones.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
-      });
-    });
-  }
+
 
   function reset_modal() {
     parametros = 0;

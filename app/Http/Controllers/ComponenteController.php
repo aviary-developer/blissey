@@ -6,6 +6,7 @@ use App\Componente;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComponenteRequest;
 use Redirect;
+use Response;
 
 class ComponenteController extends Controller
 {
@@ -124,5 +125,9 @@ class ComponenteController extends Controller
       $componentes->estado = true;
       $componentes->save();
       return Redirect::to('/componentes?estado=0');
+    }
+    public static function ingresoComponente(ComponenteRequest $request){
+      Componente::create($request->All());
+      return Response::json('success');
     }
 }

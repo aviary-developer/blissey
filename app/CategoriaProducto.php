@@ -29,4 +29,10 @@ class CategoriaProducto extends Model
     }
     return $arrayC;
   }
+  public static function foreanos($id){
+    return Producto::where('f_categoria',$id)->count();
+  }
+  public static function productos($id){
+    return Producto::where('f_categoria',$id)->where('estado',true)->orderBy('nombre','ASC')->get(['nombre']);
+  }
 }

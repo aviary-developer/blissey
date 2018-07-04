@@ -12,7 +12,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
   <div class="">
     <label>
-      <input type="checkbox"name="checkValores" id="checkValores" class="js-switch" unchecked /> Valores Normales
+      <input type="checkbox"name="checkValores" id="checkValores" class="js-switch" unchecked /> Información avanzada
     </label>
   </div>
   </div>

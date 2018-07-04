@@ -32,4 +32,7 @@ class Estante extends Model
     }
     return $arrayE;
   }
+  public static function foreanos($id){
+    return DetalleTransacion::where('f_estante',$id)->count();
+  }
 }

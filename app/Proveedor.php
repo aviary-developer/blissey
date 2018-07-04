@@ -48,4 +48,7 @@ class Proveedor extends Model
       }
       return $arrayP;
     }
+    public static function foreanos($id){
+      return Producto::where('f_proveedor',$id)->count();
+    }
 }

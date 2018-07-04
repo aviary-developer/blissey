@@ -12,7 +12,7 @@
   @php
   $index = true;
   @endphp
-  <div class="col-md-8 col-sm-8 col-xs-12">
+  <div class="col-md-9 col-sm-9 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>Productos
@@ -61,6 +61,7 @@
               <th>#</th>
               <th>Nombre</th>
               <th>Proveedor</th>
+              <th>Categoría</th>
               <th style="width: 200px">Opciones</th>
             </tr>
           </thead>
@@ -81,6 +82,7 @@
                     <a href={{asset('/proveedores/'.$producto->f_proveedor)}}></a>
                     {{ $producto->nombreProveedor($producto->f_proveedor) }}
                   </td>
+                  <td>{{$producto->categoriaProducto->nombre}}</td>
                   <td>
                     @if ($estadoOpuesto)
                       @include('Productos.Formularios.activate')
