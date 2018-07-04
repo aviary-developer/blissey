@@ -178,8 +178,12 @@ class IngresoController extends Controller
       $hoy = Carbon::now();
       /**Inicialización de las variables a utilizar */
       $total_gastos = $total_abono = $total_deuda = $dias = 0;
+
       if($ingreso->estado == 1){
         $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+        /**Determinar cuales son las ultimas 24 horas */
+        $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+        $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
         /**Generador automatico de transacciones por uso de la habitación */
         $habitacion_dia_guardado_count = 0;
         /**Contar cuantos dias se ha guardado el gasto por habitación del paciente */
@@ -215,6 +219,23 @@ class IngresoController extends Controller
           }
         }
       }
+      /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
+      if($ingreso->estado > 0){
+        $detalle_p = [];
+        $indice_detalle_p = 0;
+        /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
+        $count_m24 = 0;
+        if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_servicio',null) as $detalle){
+            $detalle_p[$indice_detalle_p] = $detalle;
+            $indice_detalle_p++;
+            if($detalle->created_at->between($ultima24,$ultima48)){
+              $count_m24++;
+            }
+          }
+          $detalle_p = array_reverse($detalle_p);
+        }
+      }
       if($ingreso->tipo < 3){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
         $total_gastos = $this->total_gastos($id);
@@ -232,7 +253,12 @@ class IngresoController extends Controller
         'dias',
         'total_gastos',
         'total_abono',
-        'total_deuda'
+        'total_deuda',
+        'detalle_p',
+        'ultima24',
+        'ultima48',
+        'count_m24',
+        'hoy'
       ));
     }
 
@@ -399,13 +425,13 @@ class IngresoController extends Controller
         if(Auth::user()->tipoUsuario == 'Enfermería'){
           $detalle->estado = false;
         }
-        $detalle->save();
+        $detalle->save();       
+        DB::commit();
+        return $detalle->id;
       }catch(Exception $e){
         DB::rollback();
-        return 0;
+        return -1;
       }
-      DB::commit();
-      return 1;
     }
 
     public function abonar(Request $request){
@@ -663,6 +689,45 @@ class IngresoController extends Controller
     }
 
     return (compact('monto','fecha','dias'));
+  }
+
+  public function lista_producto(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha24 = $fecha24->addDays(1);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
+      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+    }
+    $lista = $ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+    $productos = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      $productos[$indice]['id']=$detalle->id;
+      $productos[$indice]['hora']=$detalle->created_at->format('H:i.s');
+      $productos[$indice]['cantidad'] = $detalle->cantidad;
+      if($detalle->divisionProducto->unidad == null){
+        $productos[$indice]['division'] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre;
+      }else{
+        $productos[$indice]['division'] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre;
+      }
+      $productos[$indice]['nombre'] = $detalle->divisionProducto->producto->nombre;
+      if($dias != -1 && $detalle->created_at->between($ultima24,$ultima48)){
+        $productos[$indice]['estado'] = 1;
+      }else{
+        $productos[$indice]['estado'] = 0;
+      }
+      $indice++;
+    }
+    $productos = array_reverse($productos);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return (compact('productos','indice','fecha_f'));
   }
 
   public function dash ($id){

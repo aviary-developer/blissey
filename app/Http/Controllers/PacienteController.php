@@ -549,7 +549,7 @@ class PacienteController extends Controller
       ];
     }else if($departamento == "Cuscatlán"){
       $municipios = [
-        "Conjutepeque",
+        "Cojutepeque",
         "Candelaria",
         "El Carmen",
         "El Rosario",

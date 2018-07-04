@@ -31,7 +31,7 @@
               {{ csrf_field()}}
               <h1>Bienvenido</h1>
               <div>
-                {!! Form::text('name',null,['class'=>'form-control','placeholder'=>'Usuario','required'=>''])!!}
+                {!! Form::text('name',null,['class'=>'form-control','placeholder'=>'Usuario','required'=>'','autofocus'=>''])!!}
               </div>
               <div>
                 {!! Form::password('password',['class'=>'form-control','placeholder'=>'Contraseña','required'=>''])!!}

@@ -67,3 +67,62 @@ function confirmar_ingreso(id) {
     }
   });
 }
+
+$("#btn_v_p").on('click', function (e) {
+  e.preventDefault();
+  medicamento_fecha()
+});
+$("#fecha_producto").on('change', function () {
+  medicamento_fecha()
+});
+
+function medicamento_fecha() {
+  var fecha = $("#fecha_producto").val();
+  var id = $("#id").val();
+  console.log(id);
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/lista_producto',
+    data: {
+      id: id,
+      fecha: fecha
+    },
+    success: function (r) {
+      var panel = $("#mensaje_v_p");
+      fecha_title = $("#date_");
+      fecha_title.text(r.fecha_f);
+      if (r.indice > 0) {
+        panel.empty();
+        html = '<div class="col-xs-12">' +
+          '<table class="table" id="tabla_v_p">' +
+          '<thead>' +
+          '<th>Hora</th>'+
+          '<th>Detalle</th>' +
+          '<th style="width: 40px">Acción</th>'
+        '</thead>' +
+          '</table>' +
+          '</div>';
+        panel.append(html);
+        tabla = $("#tabla_v_p");
+        $(r.productos).each(function (key, value) {
+          html = '<tr>' +
+            '<td>'+ value.hora +'</td>'+
+            '<td>' +
+            value.cantidad + " " + value.division + ' <b class="big-text">' + value.nombre + '</b>'+
+            '</td>';
+          if (value.estado == 1) {
+            html += '<td><button type="button" id = "'+ value.id +'" class="btn btn-danger btn-xs" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-remove"></i></button></td>';
+          } else {
+            html += '<td><button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button></td>';
+          }
+          html += '</tr>';
+          tabla.append(html);
+        });
+      } else {
+        panel.empty();
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun medicamento al paciente en esta fecha</span></center>';
+        panel.append(html);
+      }
+    }
+  });
+}

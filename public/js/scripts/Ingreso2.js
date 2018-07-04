@@ -331,7 +331,7 @@ $(document).on('ready', function () {
           var monto = [];
           var fecha_format = [];
           $(r.monto).each(function (key, value) {
-            monto.push(value);
+            monto.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value));
             fecha = new Date(r.fecha[key]);
             fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
           });

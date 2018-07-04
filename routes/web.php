@@ -238,7 +238,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/editar24','IngresoController@editar24');
   Route::post('/eliminar24','IngresoController@eliminar24');
   Route::post('/cambiar_estado','IngresoController@cambiar_estado');
-//Requisiciones farmacia
+  Route::get('/lista_producto','IngresoController@lista_producto');
+  //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos
   Route::resource('categoria_productos','CategoriaProductoController');

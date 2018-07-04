@@ -34,18 +34,36 @@
           </div>
         </div>
         <div class="row">
-          <div class="x_panel m_panel">
+          <div class="x_panel m_panel" style="height: 360px">
             <div class="row">
               <h4>Resultado de la busqueda</h4>
+            </div>
+            <div class="row">
+              <div style="overflow-x:hidden; overflow-y:scroll; height: 290px">
+                <table class="table" id="tablaBuscar">
+                  <thead>
+                  </thead>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-xs-6">
-        <div class="x_panel m_panel">
-          Que tal todos
+        <div class="x_panel m_panel" style="height: 553px">
+          <div class="row">
+            <h4>Medicamento agregado</h4>
+          </div>
+          <div class="row">
+            <div style="overflow-x: hidden; overflow-y: scroll; height: 483px">
+              <div id="mensaje_provisional"></div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="row alignright">
+      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" onclick="location.reload();">Cerrar</button>
     </div>
   </div>
 </div>

@@ -99,7 +99,7 @@
         <div class="col-xs-3">
           <center>
             <span>
-              <i class="fa fa-arrow-down"></i> {{$ingreso->fecha_ingreso->format('d / m / Y')}}
+              <i class="fa fa-arrow-down"></i> {{$ingreso->fecha_ingreso->formatLocalized('%d / %b / %Y a las %H:%M:%S')}}
             </span>
           </center>
         </div>
@@ -114,7 +114,7 @@
           <center>
             @if ($ingreso->fecha_alta != null)
               <span>
-                <i class="fa fa-arrow-up"></i> {{$ingreso->fecha_alta->format('d / m / Y')}}
+                <i class="fa fa-arrow-up"></i> {{$ingreso->fecha_alta->formatLocalized('%d / %b / %Y a las %H:%M:%S')}}
               </span>
             @endif
           </center>
@@ -143,4 +143,7 @@
   {{-- Datos del usuario activo --}}
   <input type="hidden" id="tipo_usuario" value={{Auth::user()->tipoUsuario}}>
   <input type="hidden" id="id_u" value={{Auth::user()->id}}>
+  {{-- Id de la transacción que usa el ingreso --}}
+  <input type="hidden" id="id_t" value={{$ingreso->transaccion->id}}>
+  
 @endsection

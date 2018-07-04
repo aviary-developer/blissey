@@ -53,7 +53,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="x_panel"></div>
+        <div class="x_panel">
+          @include('Ingresos.dashboard.partes.servicio_r')
+        </div>
       </div>
     </div>
   </div>
