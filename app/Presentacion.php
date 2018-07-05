@@ -29,4 +29,7 @@ class Presentacion extends Model
   public static function foreanos($id){
     return Producto::where('f_presentacion',$id)->count();
   }
+  public static function productos($id){
+    return Producto::where('f_presentacion',$id)->where('estado',true)->orderBy('nombre','ASC')->get(['nombre']);
+  }
 }

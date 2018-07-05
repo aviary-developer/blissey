@@ -1,9 +1,9 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/componente/'.$componente->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+  <a href={!! asset('/componentes/'.$componente->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/componente/'.$componente->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+  <a href={!! asset('/componentes/'.$componente->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
   <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$componente->id.");'" !!}/>
@@ -35,7 +35,7 @@
     <a href={!! asset('/componentes'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/componente/'.$componente->id.'/edit')!!} class="btn btn-dark btn-sm">
+    <a href={!! asset('/componentes/'.$componente->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
     @if ($componente->estado)
