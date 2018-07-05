@@ -403,78 +403,7 @@ $("#guardarReactivoModal").on('click', async function (e) {
 
 });
 
-$("#guardarMuestraModal").on('click', async function (e) {
-  e.preventDefault();
-  var v_nombre = $("#nombreMuestraModal").val();
 
-  var token = $("#tokenMuestraModal").val();
-
-  await $.ajax({
-    url: "/blissey/public/ingresoMuestra",
-    headers: { 'X-CSRF-TOKEN': token },
-    type: 'POST',
-    data: {
-      nombre: v_nombre,
-    },
-    success: function () {
-      $(".modal").modal('hide');
-      swal({
-        title: '¡Tipo de muestra registrado!',
-        text: 'Cargando información',
-        timer: 3000,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      );
-    },
-    error: function(data){
-      if (data.status === 422 ) {
-        var errors = $.parseJSON(data.responseText);
-        $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
-        });
-      }
-    }
-  });
-
-
-  rellenarMuestra();
-  $("#nombreMuestraModal").val("");
-
-});
-
-  function rellenarReactivo() {
-    var reactivos = $("#reactivo_select");
-    var ruta = "/blissey/public/llenarReactivosExamenes";
-    $.get(ruta, function (res) {
-      reactivos.empty();
-      $(res).each(function (key, value) {
-        reactivos.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
-      });
-    });
-  }
-
-  function rellenarMuestra() {
-    var muestras = $("#tipo_muestra_select");
-    var ruta = "/blissey/public/llenarMuestrasExamenes";
-    $.get(ruta, function (res) {
-      muestras.empty();
-      $(res).each(function (key, value) {
-        muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
-      });
-    });
-  }
 
 
 
