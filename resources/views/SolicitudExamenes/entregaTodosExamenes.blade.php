@@ -14,12 +14,14 @@
       	<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
     		<div class="clearfix"></div>
     	<center><p><big><i>RESULTADO:</i></big><p></center>
+        <div class="row">
             @foreach ($secciones[$key] as $keySec => $seccion)
-              <div class="x_content">
-      				<div class="row">
-      					<div class="col-md-12 col-sm-12 col-12">
+              @if($keySec%2==0)
+    						<div class="row">
+    						@endif
+      					<div class="col-xs-6">
       				<center>
-              <table class="table">
+              <table class="table-simple">
                 <div class="x_title">
                     <span><big>{{$espr[$key][$keySec]->nombreSeccion($seccion)}}</big></span>
                     <div class="clearfix"></div>
@@ -59,6 +61,9 @@
                   </table>
       					</center>
               </div>
+              @if($keySec%2!=0)
+              </div>
+                @endif
                 @endforeach
                 @if($resultados[$key]->observacion!=null)
               <div id="divObservacion" style="display:block;">
@@ -78,7 +83,6 @@
       				</div>
       			</center>
       			</div>
-          </div>
           </div>
           </div>
           </div>
