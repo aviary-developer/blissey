@@ -32,6 +32,9 @@
             <li role="presentation" class="">
               <a href="#tab_content2" id="datos-tab2" role="tab" data-toggle="tab" aria-expanded="False">Visitadores</a>
             </li>
+            <li role="presentation" class="">
+              <a href="#tab_content3" id="datos-tab3" role="tab" data-toggle="tab" aria-expanded="False">Productos</a>
+            </li>
           </ul>
         </div>
         {{-- Contenido del tab --}}
@@ -76,7 +79,7 @@
               <h3>Visitadores</h3>
               @if (count($proveedor->visitador)>0)
                 <div class="col-xs-10">
-                  
+
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -119,6 +122,36 @@
               @else
                 <span>No hay visitadores asociados a este proveedor</span>
               @endif
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="datos-tab3">
+              <h3>Productos del proveedor: <small>{{$proveedor->nombre}}</small></h3>
+              <table class="table">
+                @php
+                $productos=App\Proveedor::productos($proveedor->id);
+                $contador=1;
+                @endphp
+                @if (count($productos)>0)
+                <tr>
+                  <th>#</th>
+                  <th>Productos</th>
+                </tr>
+                  @foreach ($productos as $producto)
+                    <tr>
+                      <td>{{$contador}}</td>
+                      <td>{{$producto->nombre}}</td>
+                  </tr>
+                  @php
+                  $contador++;
+                  @endphp
+                  @endforeach
+                @else
+                  <tr><td colspan="2">
+                    <center>
+                      No hay productos asociados a este proveedor
+                    </center>
+                  </td></tr>
+                @endif
+              </table>
             </div>
           </div>
         </div>

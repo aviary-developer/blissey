@@ -56,6 +56,7 @@ class DivisionController extends Controller
       $division=new Division();
       $division->fill($request->all());
       $division->save();
+      Bitacora::bitacora('store','divisions','divisiones',$division->id);
         return redirect('/divisiones')->with('mensaje','¡Guardado!');
     }
 
@@ -100,6 +101,7 @@ class DivisionController extends Controller
         $this->validate($request,$validar);
         $division->fill($request->all());
         $division->save();
+        Bitacora::bitacora('update','divisions','divisiones',$division->id);
         return redirect('/divisiones')->with('mensaje','¡Editado!');
       }
     }
@@ -114,6 +116,7 @@ class DivisionController extends Controller
     {
       $division = Division::findOrFail($id);
       $division->delete();
+      Bitacora::bitacora('destroy','divisions','divisiones',$id);
       return redirect('/divisiones?estado=0');
     }
 
@@ -121,16 +124,19 @@ class DivisionController extends Controller
       $divisiones = Division::find($id);
       $divisiones->estado = false;
       $divisiones->save();
+      Bitacora::bitacora('desactivate','divisions','divisiones',$id);
       return Redirect::to('/divisiones');
     }
     public function activate($id){
       $divisiones = Division::find($id);
       $divisiones->estado = true;
       $divisiones->save();
+      Bitacora::bitacora('activate','divisions','divisiones',$id);
       return Redirect::to('/divisiones?estado=0');
     }
     public static function ingresoDivision(DivisionRequest $request){
-      Division::create($request->All());
+      $d=Division::create($request->All());
+      Bitacora::bitacora('store','divisions','divisiones',$d->id);
       return Response::json('success');
     }
     public static function llenarDivision(){

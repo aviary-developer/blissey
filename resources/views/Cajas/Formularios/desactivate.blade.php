@@ -1,4 +1,4 @@
-{!!Form::open(['url'=>['desactivatecaja',$caja->id],'method'=>'POST'])!!}
+{!!Form::open(['url'=>['desactivateCaja',$caja->id],'method'=>'POST'])!!}
 <a href={!! asset('/cajas/'.$caja->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
   <i class="fa fa-info-circle"></i>
 </a>

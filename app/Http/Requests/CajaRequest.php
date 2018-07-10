@@ -30,9 +30,9 @@ class CajaRequest extends FormRequest
      }
      public function messages(){
         return [
-             'caja.required'=>'El campo código identificador es obligatorio',
-             'caja.min'=>'El campo código identificador necesita 5 caracteres mínimos',
-             'caja.max'=>'El campo código identificador necesita 30 caracteres máximo',
+             'caja.required'=>'El campo nombre es obligatorio',
+             'caja.min'=>'El campo nombre necesita 5 caracteres mínimos',
+             'caja.max'=>'El campo nombre necesita 30 caracteres máximo',
              'caja.unique'=>'El campo nombre ya ha sido registrado',
 
              'localizacion.required'=>'El campo localización es obligatorio',

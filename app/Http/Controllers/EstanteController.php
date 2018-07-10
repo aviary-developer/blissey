@@ -56,6 +56,7 @@ class EstanteController extends Controller
       $estante=new Estante;
       $estante->fill($request->all());
       $estante->save();
+        Bitacora::bitacora('store','estantes','estantes',$estante->id);
         return redirect('/estantes')->with('mensaje','¡Guardado!');
     }
 
@@ -120,6 +121,7 @@ class EstanteController extends Controller
           $this->validate($request,$validar,$mensaje);
           $estante->fill($request->all());
           $estante->save();
+          Bitacora::bitacora('update','estantes','estantes',$estante->id);
           return redirect('/estantes')->with('mensaje','¡Editado!');
         }
     }
@@ -134,6 +136,7 @@ class EstanteController extends Controller
     {
       $estantes = Estante::findOrFail($id);
       $estantes->delete();
+      Bitacora::bitacora('destroy','estantes','estantes',$id);
       return redirect('/estantes?estado=0');
     }
 
@@ -141,12 +144,14 @@ class EstanteController extends Controller
       $estantes = Estante::find($id);
       $estantes->estado = false;
       $estantes->save();
+      Bitacora::bitacora('desactivate','estantes','estantes',$id);
       return Redirect::to('/estantes');
     }
     public function activate($id){
       $estantes = Estante::find($id);
       $estantes->estado = true;
       $estantes->save();
+      Bitacora::bitacora('activate','estantes','estantes',$id);
       return Redirect::to('/estantes?estado=0');
     }
 }

@@ -22,4 +22,7 @@ class Caja extends Model
     }
     $query->where('estado',$estado);
   }
+  public static function foreanos($id){
+    return DetalleCaja::where('f_caja',$id)->count();
+  }
 }

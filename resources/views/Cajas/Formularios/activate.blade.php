@@ -10,7 +10,7 @@
     <i class="fa fa-check"></i>
   </button>
   @php
-    $cuenta=App\caja::foreanos($caja->id);
+    $cuenta=App\Caja::foreanos($caja->id);
   @endphp
   @if ($cuenta>0)
     <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No se puede eliminar">

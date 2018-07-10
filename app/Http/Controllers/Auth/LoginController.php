@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Bitacora;
+use App\Comprobacion;
+use App\CambioProducto;
 
 class LoginController extends Controller
 {
@@ -53,6 +55,13 @@ class LoginController extends Controller
     {
         if (Auth::attempt(['name' => $request['name'], 'password' => $request['password'], 'estado' => true])) {
             Bitacora::bitacora('login','users','usuarios',Auth::user()->id);
+            $fecha=date('Y').'-'.date('m').'-'.date('d');
+            if(Comprobacion::where('fecha',$fecha)->count()<1){
+              CambioProducto::descartar();
+              $comprobar= new Comprobacion();
+              $comprobar->fecha=date('Y').'-'.date('m').'-'.date('d');
+              $comprobar->save();
+            }
             return redirect('/');
         }
         return redirect('login');

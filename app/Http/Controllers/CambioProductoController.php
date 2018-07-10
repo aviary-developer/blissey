@@ -96,10 +96,6 @@ class CambioProductoController extends Controller
     {
         //
     }
-    public static function descartar(){
-      CambioProductoController::lugar(2); //farmacia
-      CambioProductoController::lugar(3); //Recepción hospital
-    }
     public static function lugar($tipo){//tipo 1=según el logueo 2=farmacia 3= recepción
       $productos=Producto::where('estado',1)->orderBy('nombre')->get();
       $activo=false;
