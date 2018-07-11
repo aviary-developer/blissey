@@ -178,6 +178,7 @@ class IngresoController extends Controller
       $hoy = Carbon::now();
       /**Inicialización de las variables a utilizar */
       $total_gastos = $total_abono = $total_deuda = $dias = 0;
+      $examenes = null;
 
       if($ingreso->estado == 1){
         $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
@@ -222,7 +223,11 @@ class IngresoController extends Controller
       /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
       if($ingreso->estado > 0){
         $detalle_p = [];
+        $detalle_s = [];
+        $detalle_l = [];
         $indice_detalle_p = 0;
+        $indice_detalle_s = 0;
+        $indice_detalle_l = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
         $count_m24 = 0;
         if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
@@ -235,6 +240,30 @@ class IngresoController extends Controller
           }
           $detalle_p = array_reverse($detalle_p);
         }
+        /**Contador de cuantos servicios han sido asignados en las últimas 24 horas */
+        $count_s24 = 0;
+        if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->count() > 0){
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Habitación"){
+              $detalle_s[$indice_detalle_s] = $detalle;
+              $indice_detalle_s++;
+              if($detalle->created_at->between($ultima24, $ultima48)){
+                $count_s24++;
+              }
+            }
+          }
+        }
+        /**Contador de cuantos examenes han sido asignados en las últimas 24 horas */
+        $count_l24 = 0;
+        if($ingreso->transaccion->solicitud->count()>0){
+          foreach($ingreso->transaccion->solicitud as $solicitud){
+            $detalle_l[$indice_detalle_l] = $solicitud;
+            $indice_detalle_l++;
+            if($solicitud->created_at->between($ultima24, $ultima48)){
+              $count_l24++;
+            }
+          }
+        }
       }
       if($ingreso->tipo < 3){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
@@ -245,6 +274,9 @@ class IngresoController extends Controller
         $total_abono = Ingreso::abonos($id);
         /**Total adeudado a la cuenta */
         $total_deuda = $total_gastos - $total_abono;
+
+        /**Examenes que se puede realizar el paciente */
+        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
       }
 
       return view('Ingresos.dashboard.show',compact(
@@ -255,10 +287,15 @@ class IngresoController extends Controller
         'total_abono',
         'total_deuda',
         'detalle_p',
+        'detalle_s',
+        'detalle_l',
         'ultima24',
         'ultima48',
         'count_m24',
-        'hoy'
+        'count_s24',
+        'count_l24',
+        'hoy',
+        'examenes'
       ));
     }
 
@@ -689,6 +726,42 @@ class IngresoController extends Controller
     }
 
     return (compact('monto','fecha','dias'));
+  }
+
+  public function lista_servicio(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha24 = $fecha24->addDays(1);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
+      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+    }
+    $lista = $ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+    $servicios = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico"){
+        $servicios[$indice]['id'] = $detalle->id;
+        $servicios[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+        $servicios[$indice]['cantidad'] = $detalle->cantidad;
+        $servicios[$indice]['nombre'] = $detalle->servicio->nombre;
+        if($dias != -1 && $detalle->created_at->between($ultima24,$ultima48)){
+          $servicios[$indice]['estado'] = 1;
+        }else{
+          $servicios[$indice]['estado'] = 0;
+        }
+        $indice++;
+      }
+    }
+    $servicios = array_reverse($servicios);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return(compact('servicios','indice','fecha_f'));
   }
 
   public function lista_producto(Request $request){

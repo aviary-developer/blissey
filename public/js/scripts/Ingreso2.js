@@ -353,6 +353,9 @@ $(document).on('ready', function () {
               scales: {
                 yAxes: [{
                   display: true,
+                  ticks: {
+                    beginAtZero: false,
+                  },
                   scaleLabel: {
                     display: true,
                     labelString: 'Dolares'

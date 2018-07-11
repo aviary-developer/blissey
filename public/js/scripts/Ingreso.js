@@ -2,6 +2,7 @@ $(document).on('ready', function () {
   var ubicacion = window.location.pathname;
   //Variables globales
   transaccion_count_p = 0;
+  transaccion_count_s = 0;
 
   if (ubicacion.indexOf("/blissey/public/ingresos/create") > -1) {
     cargar_municipio();
@@ -213,9 +214,9 @@ $(document).on('ready', function () {
 
   $("#guardarSolicitudModal").on("click", function (e) {
     e.preventDefault();
-    var token = $("#tokenSolicitudModal").val();
+    var token = $("#token").val();
     var examen = $("input[name='examen[]']").serializeArray();
-    var paciente = $("#f_paciente").val();
+    var paciente = $("#id_p").val();
     var transaccion_id = $("#id_t").val();
     var id = $("#id").val();
     var concat = [];
@@ -236,6 +237,12 @@ $(document).on('ready', function () {
         success: function (respuesta) {
           if (respuesta) {
             swal("¡Hecho!", "Solicitud enviada satisfactoriamente", "success");
+            swal({
+              title: "¡Hecho!",
+              text: "Solicitud enviada satisfactoriamente",
+              type: "success",
+              showConfirmButton: false,
+            });
             location.reload();
           }
         }
@@ -325,13 +332,18 @@ $(document).on('ready', function () {
         });
       });
     }
+  });
+
+  $("#resultadoVentaS_").keyup(function () {
+    var valor = $("#resultadoVentaS_").val();
     if (radio == '3') {
       var ruta = "/blissey/public/buscarServicios/" + valor;
-      var tabla = $("#tablaBuscar");
+      var tabla = $("#tablaBuscarS");
       $.get(ruta, function (res) {
         tabla.empty();
         cab = "<thead>" +
-          "<th colspan='2'>Resultado</th>" +
+          "<th>Resultado</th>" +
+          "<th>Precio</th>" +
           "<th style='width : 80px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
@@ -470,7 +482,6 @@ $("#nuevo_abono").on('click', function (e) {
 });
 //Agregar a la nueva tabla
 function registrarventa_(id) {
-  var transaccion_count_s = $("#transaccion_count_s").val();
   var cantidad = parseFloat($('#cantidad_resultado').val());
   var existencia = parseFloat($('#ct' + id).text());
   var token = $("#token").val();
@@ -520,7 +531,7 @@ function registrarventa_(id) {
             }
 
             tabla = $('#tablaDetalle');
-            html = "<tr>" +
+            html = "<tr id='r" + res + "'>" +
               "<td>" + cantidad + " " + c2 +  "<b class='big-text'> " + c1 + "</b></td>";
             if (tipo_usuario == "Enfermería") {
               html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
@@ -565,17 +576,15 @@ function registrarventa_(id) {
         precio: c2
       },
       success: function (res) {
-        if (res == 1) {
+        if (res != -1) {
           if (transaccion_count_s == 0) {
             $("#mensaje_provisional_s").empty();
 
             html_2 = '<div class="col-xs-12">' +
               '<table class="table" id="tablaDetalle_s">' +
               '<thead>' +
-              '<th style="width: 120px">Fecha</th>' +
-              '<th style="width: 110px">Cantidad</th>' +
               '<th>Detalle</th>' +
-              '<th style="width: 120px">Opciones</th>'
+              '<th style="width: 40px">Acción</th>'
               '</thead>' +
               '</table>' +
               '</div>';
@@ -584,18 +593,17 @@ function registrarventa_(id) {
           }
 
           tabla = $('#tablaDetalle_s');
-          html = "<tr>" +
-            "<td>" + fecha.getDate() + " / " + (fecha.getMonth() + 1) + " / " + fecha.getFullYear() + "</td>" +
-            "<td>" + cantidad + "</td>" +
-            "<td>" + c1 + "</td>";
+          html = "<tr id='r" + res + "'>" +
+            "<td>" + cantidad + " " +
+            "<b class='big-text'>" + c1 + "</b></td>";
           if (tipo_usuario == "Enfermería") {
             html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
           } else {
-            html += "<td><button type='button' class='btn btn-xs btn-primary'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='fa fa-remove'></i></button></td>" +
-              "</tr>";
+            html += "<td><center><button type='button' id='" + res + "' class='btn btn-xs btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-remove'></i></button></center></td>";
           }
             
           tabla.append(html);
+          transaccion_count_s = 1;
 
           new PNotify({
             title: '¡Hecho!',
@@ -618,14 +626,6 @@ function registrarventa_(id) {
 function recarga() {
   limpiarTablaVenta();
   location.reload();
-}
-function cambio_radios_especial(i) {
-  cambioRadio(i);
-  if (i == 3) {
-    document.getElementById('radios').style = "display: none";
-  } else {
-    document.getElementById('radios').style = "display: block";
-  }
 }
 var aux;
 function cambio_habitacion(i) {
@@ -779,7 +779,8 @@ function accion24(tipo, id, objeto = null) {
         },
         success: function (res) {
           if (res) {
-            $("#" + objeto.id).parent('td').parent('tr').remove();
+            console.log($('#r' + objeto.id));
+            $("#r" + objeto.id).remove();
             new PNotify({
               title: '¡Hecho!',
               text: "Medicamento eliminado",

@@ -39,7 +39,9 @@
           <div class="x_panel"></div>
         </div>
         <div class="col-xs-6">
-          <div class="x_panel"></div>
+          <div class="x_panel">
+            @include('Ingresos.dashboard.partes.laboratorio_r')
+          </div>
         </div>
       </div>
     </div>

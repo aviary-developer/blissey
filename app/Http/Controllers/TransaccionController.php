@@ -340,8 +340,18 @@ class TransaccionController extends Controller
     }
     }
     public static function buscarServicio($texto){
-    $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
-      return $servicios;
+      $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
+      $service = [];
+      $i = 0;
+      if($servicios != null){
+        foreach($servicios as $servicio){
+          if($servicio->categoria->nombre != "Honorarios" && $servicio->categoria->nombre != "Habitación" && $servicio->categoria->nombre != "Laboratorio Clínico" &&$servicio->categoria->nombre != "Rayos X"){
+            $service[$i] = $servicio;
+            $i++;
+          }
+        }
+      }
+      return $service;
     }
     public static function anularVenta($id,$comentario){
       echo $id;
