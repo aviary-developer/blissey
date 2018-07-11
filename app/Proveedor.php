@@ -51,4 +51,7 @@ class Proveedor extends Model
     public static function foreanos($id){
       return Producto::where('f_proveedor',$id)->count();
     }
+    public static function productos($id){
+      return Producto::where('f_proveedor',$id)->where('estado',true)->orderBy('nombre','ASC')->get(['nombre']);
+    }
 }

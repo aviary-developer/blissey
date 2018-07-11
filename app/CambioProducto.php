@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\CambioProductoController;
 
 class CambioProducto extends Model
 {
@@ -57,5 +58,8 @@ class CambioProducto extends Model
   public static function conteo(){
     return CambioProducto::where('estado',0)->get()->count();
   }
-
+  public static function descartar(){
+    CambioProductoController::lugar(2); //farmacia
+    CambioProductoController::lugar(3); //Recepción hospital
+  }
 }

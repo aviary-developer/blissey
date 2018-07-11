@@ -1,29 +1,29 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/componentes/'.$componente->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+  <a href={!! asset('/cajas/'.$caja->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/componentes/'.$componente->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+  <a href={!! asset('/cajas/'.$caja->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$componente->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$caja->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
   @php
-    $cuenta=App\Componente::foreanos($componente->id);
+    $cuenta=App\Caja::foreanos($caja->id);
   @endphp
   @if ($cuenta>0)
     <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No se puede eliminar">
       <i class="fa fa-warning"></i>
     </button>
   @else
-  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$componente->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$caja->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
   @endif
 @else
   <div class="btn-group">
-    @if (!$componente->estado)
+    @if (!$caja->estado)
       @php
         $regreso = "?estado=0";
       @endphp
@@ -32,21 +32,21 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/componentes'.$regreso)!!} class="btn btn-dark btn-sm">
+    <a href={!! asset('/cajas'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
-    <a href={!! asset('/componentes/'.$componente->id.'/edit')!!} class="btn btn-dark btn-sm">
+    <a href={!! asset('/cajas/'.$caja->id.'/edit')!!} class="btn btn-dark btn-sm">
       <i class="fa fa-edit"></i> Editar
     </a>
-    @if ($componente->estado)
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$componente->id.");'" !!}>
+    @if ($caja->estado)
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$caja->id.");'" !!}>
         <i class="fa fa-trash"></i> Papelera
       </button>
     @else
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$componente->id.");'" !!}/>
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$caja->id.");'" !!}/>
         <i class="fa fa-check"></i> Restaurar
       </button>
-      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$componente->id.");'" !!}/>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$caja->id.");'" !!}/>
         <i class="fa fa-remove"></i> Eliminar
       </button>
     @endif
@@ -71,7 +71,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateComponente/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateCaja/'+id);
       $('#formulario').submit();
       swal(
         '¡Restaurado!',
@@ -105,7 +105,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyComponente/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyCaja/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -138,7 +138,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateComponente/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateCaja/'+id);
       $('#formulario').submit();
       swal(
         '¡Desactivado!',

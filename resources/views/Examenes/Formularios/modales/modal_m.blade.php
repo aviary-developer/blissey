@@ -28,10 +28,73 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" id="guardarMuestraModal" class="btn btn-primary">Guardar</button>
+        <button type="button" id="guardarMuestraModal" onclick="guardarMuestraModal();" class="btn btn-primary">Guardar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
       </div>
 
     </div>
   </div>
 </div>
+<script>
+async function guardarMuestraModal() {
+  e.preventDefault();
+  var v_nombre = $("#nombreMuestraModal").val();
+
+  var token = $("#tokenMuestraModal").val();
+
+  await $.ajax({
+    url: "/blissey/public/ingresoMuestra",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Tipo de muestra registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+
+
+  rellenarMuestra();
+  $("#nombreMuestraModal").val("");
+
+});
+
+  function rellenarMuestra() {
+    var muestras = $("#tipo_muestra_select");
+    var ruta = "/blissey/public/llenarMuestrasExamenes";
+    $.get(ruta, function (res) {
+      muestras.empty();
+      $(res).each(function (key, value) {
+        muestras.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      });
+    });
+  }
+</script>

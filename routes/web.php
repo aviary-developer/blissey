@@ -191,6 +191,12 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarServicios/{texto}','TransaccionController@buscarServicio');
   Route::match(['get','post'],'/anularVenta/{id}/{comentario}','TransaccionController@anularVenta');
   Route::match(['get','post'],'/niveles/{id}','TransaccionController@niveles');
+  //Rutas apertura y cierre de cajas
+    Route::resource('cajas','CajaController');
+    Route::match(['get','post'],'/desactivateCaja/{id}','CajaController@desactivate');
+    Route::match(['get','post'],'/activateCaja/{id}','CajaController@activate');
+    Route::match(['get','post'],'/destroyCaja/{id}','CajaController@destroy');
+    Route::resource('detallecajas','DetalleCajaController');
   //Rutas de estantes
   Route::resource('estantes','EstanteController');
   Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');

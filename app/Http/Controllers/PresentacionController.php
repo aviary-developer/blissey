@@ -54,8 +54,15 @@ class PresentacionController extends Controller
      */
     public function store(presentacionRequest $request)
     {
-      $presentaciones = Presentacion::create($request->All());
-      Bitacora::bitacora('store','presentacions','presentaciones',$presentaciones->id);
+      DB::beginTransaction();
+      try{
+      $presentacion = Presentacion::create($request->All());
+    }catch(Exception $e){
+      DB::rollback();
+      return redirect('/presentaciones')->with('mensaje', '¡Algo salio mal!');
+    }
+      DB::commit();
+      Bitacora::bitacora('store','presentacions','presentaciones',$presentacion->id);
       return redirect('/presentaciones')->with('mensaje', '¡Guardado!');
     }
 
@@ -95,7 +102,7 @@ class PresentacionController extends Controller
       $presentaciones = Presentacion::find($id);
       $presentaciones->fill($request->all());
       $presentaciones->save();
-      Bitacora::bitacora('update','especialidads','presentaciones',$id);
+      Bitacora::bitacora('update','presentacions','presentaciones',$id);
       if($presentaciones->estado)
       {
         return redirect('/presentaciones')->with('mensaje', '¡Editado!');
@@ -115,7 +122,7 @@ class PresentacionController extends Controller
     {
       $presentaciones = Presentacion::findOrFail($id);
       $presentaciones->delete();
-      Bitacora::bitacora('destroy','especialidads','presentaciones',$id);
+      Bitacora::bitacora('destroy','presentacions','presentaciones',$id);
       return redirect('/presentaciones?estado=0');
     }
 
@@ -123,7 +130,7 @@ class PresentacionController extends Controller
       $presentaciones = Presentacion::find($id);
       $presentaciones->estado = false;
       $presentaciones->save();
-      Bitacora::bitacora('desactivate','especialidads','presentaciones',$id);
+      Bitacora::bitacora('desactivate','presentacions','presentaciones',$id);
       return Redirect::to('/presentaciones');
     }
 
@@ -131,22 +138,22 @@ class PresentacionController extends Controller
       $presentaciones = Presentacion::find($id);
       $presentaciones->estado = true;
       $presentaciones->save();
-      Bitacora::bitacora('activate','especialidads','presentaciones',$id);
+      Bitacora::bitacora('activate','presentacions','presentaciones',$id);
       return Redirect::to('/presentaciones?estado=0');
     }
     public function guardar($nombre)
     {
-      $presentaciones = Presentacion::create([
+      $presentacion = Presentacion::create([
         'nombre'=>$nombre,
       ]);
-      Bitacora::bitacora('store','presentacions','presentaciones',$presentaciones->id);
+      Bitacora::bitacora('store','presentacions','presentaciones',$presentacion->id);
       return redirect('/presentaciones')->with('mensaje', '¡Guardado!');
     }
     public function editar($id,$nombre){
       $pre=Presentacion::find($id);
       $pre->nombre=$nombre;
       $pre->save();
-      Bitacora::bitacora('update','especialidads','presentaciones',$id);
+      Bitacora::bitacora('update','presentacions','presentaciones',$id);
       if($pre->estado)
       {
         return redirect('/presentaciones')->with('mensaje', '¡Editado!');
@@ -156,7 +163,8 @@ class PresentacionController extends Controller
       }
     }
   public static function ingresoPresentacion(PresentacionRequest $request){
-    Presentacion::create($request->All());
+    $presentacion=Presentacion::create($request->All());
+    Bitacora::bitacora('store','presentacions','presentaciones',$presentacion->id);
     return Response::json('success');
   }
   public static function llenarPresentacion(){

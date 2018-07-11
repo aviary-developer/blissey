@@ -38,7 +38,7 @@ class EstanteRequest extends FormRequest
 
             'cantidad.required'=>'El campo n° de niveles es obligatorio',
 
-            'localizacion.required'=>'El localización es obligatorio',
+            'localizacion.required'=>'El campo localización es obligatorio',
        ];
     }
 }

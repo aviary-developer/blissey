@@ -30,7 +30,7 @@
               <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
             <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
+              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Productos</a>
             </li>
           </ul>
         </div>
@@ -66,7 +66,34 @@
             </div>
             {{-- Otra pestaña --}}
             <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-              Otra cosa
+              <h3>Productos con la presentación: <small>{{$presentacion->nombre}}</small></h3>
+              <table class="table">
+                @php
+                $productos=App\Presentacion::productos($presentacion->id);
+                $contador=1;
+                @endphp
+                @if (count($productos)>0)
+                <tr>
+                  <th>#</th>
+                  <th>Productos</th>
+                </tr>
+                  @foreach ($productos as $producto)
+                    <tr>
+                      <td>{{$contador}}</td>
+                      <td>{{$producto->nombre}}</td>
+                  </tr>
+                  @php
+                  $contador++;
+                  @endphp
+                  @endforeach
+                @else
+                  <tr><td colspan="2">
+                    <center>
+                      No hay productos asociados a esta presentación
+                    </center>
+                  </td></tr>
+                @endif
+              </table>
             </div>
           </div>
         </div>

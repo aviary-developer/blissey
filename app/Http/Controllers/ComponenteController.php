@@ -56,7 +56,8 @@ class ComponenteController extends Controller
       $componente=new Componente();
       $componente->fill($request->all());
       $componente->save();
-        return redirect('/componentes')->with('mensaje','¡Guardado!');
+      Bitacora::bitacora('store','componentes','componentes',$componente->id);
+      return redirect('/componentes')->with('mensaje','¡Guardado!');
     }
 
     /**
@@ -97,6 +98,7 @@ class ComponenteController extends Controller
           $this->validate($request,$validar);
           $componente->fill($request->all());
           $componente->save();
+          Bitacora::bitacora('update','componentes','componentes',$componente->id);
           return redirect('/componentes')->with('mensaje','¡Editado!');
         }
     }
@@ -111,6 +113,7 @@ class ComponenteController extends Controller
     {
       $componente = Componente::findOrFail($id);
       $componente->delete();
+      Bitacora::bitacora('destroy','componentes','componentes',$id);
       return redirect('/componentes?estado=0');
     }
 
@@ -118,16 +121,19 @@ class ComponenteController extends Controller
       $componentes = Componente::find($id);
       $componentes->estado = false;
       $componentes->save();
+      Bitacora::bitacora('desactivate','componentes','componentes',$id);
       return Redirect::to('/componentes');
     }
     public function activate($id){
       $componentes = Componente::find($id);
       $componentes->estado = true;
       $componentes->save();
+      Bitacora::bitacora('activate','componentes','componentes',$id);
       return Redirect::to('/componentes?estado=0');
     }
     public static function ingresoComponente(ComponenteRequest $request){
-      Componente::create($request->All());
+      $c=Componente::create($request->All());
+      Bitacora::bitacora('store','componentes','componentes',$c->id);
       return Response::json('success');
     }
 }

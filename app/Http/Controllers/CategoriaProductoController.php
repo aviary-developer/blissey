@@ -1,22 +1,22 @@
-<?php
+  <?php
 
-namespace App\Http\Controllers;
+  namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\CategoriaProducto;
-use App\Transacion;
-use App\Bitacora;
-use Redirect;
-use Response;
-use App\Http\Requests\CategoriaProductoRequest;
+  use Illuminate\Http\Request;
+  use App\CategoriaProducto;
+  use App\Transacion;
+  use App\Bitacora;
+  use Redirect;
+  use Response;
+  use App\Http\Requests\CategoriaProductoRequest;
 
-class CategoriaProductoController extends Controller
-{
+  class CategoriaProductoController extends Controller
+  {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index(Request $request)
     {
       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
@@ -38,47 +38,55 @@ class CategoriaProductoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
-        return view('CategoriaProductos.create');
+      return view('CategoriaProductos.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(CategoriaProductoRequest $request)
     {
-      $division=new CategoriaProducto;
-      $division->fill($request->all());
-      $division->save();
+      DB::beginTransaction();
+      try{
+        $categoria=new CategoriaProducto;
+        $categoria->fill($request->all());
+        $categoria->save();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/categoria_productos')->with('mensaje', '¡Algo salio mal!');
+      }
+      DB::commit();
+      Bitacora::bitacora('store','categoria_productos','categoria_productos',$categoria->id);
       return redirect('/categoria_productos')->with('mensaje','¡Guardado!');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show($id)
     {
-        $categoria=CategoriaProducto::find($id);
-        return view('CategoriaProductos.show',compact('categoria'));
+      $categoria=CategoriaProducto::find($id);
+      return view('CategoriaProductos.show',compact('categoria'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function edit($id)
     {
       $categoria=CategoriaProducto::find($id);
@@ -86,32 +94,41 @@ class CategoriaProductoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, $id)
     {
       $categoria=CategoriaProducto::find($id);
       if($request->nombre==$categoria->nombre){
         return redirect('/categoria_productos?estado'.$categoria->estado)->with('info', '¡No hay cambios!');
       }else{
-        $validar['nombre']='required';
-        $this->validate($request,$validar);
-        $categoria->fill($request->all());
-        $categoria->save();
+        DB::beginTransaction();
+        try{
+          $validar['nombre']='required';
+          $this->validate($request,$validar);
+          $categoria->fill($request->all());
+          $categoria->save();
+        }catch(Exception $e){
+          DB::rollback();
+          return redirect('/categoria_productos')->with('mensaje', '¡Algo salio mal!');
+        }
+        DB::commit();
+        Bitacora::bitacora('update','categoria_productos','categoria_productos',$categoria->id);
         return redirect('/categoria_productos')->with('mensaje','¡Editado!');
       }
+
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function destroy($id)
     {
       $categoria_productos = CategoriaProducto::findOrFail($id);
@@ -135,11 +152,12 @@ class CategoriaProductoController extends Controller
       return Redirect::to('/categoria_productos?estado=0');
     }
     public static function ingresoCategoria(CategoriaProductoRequest $request){
-      CategoriaProducto::create($request->All());
+      $categoria=CategoriaProducto::create($request->All());
+      Bitacora::bitacora('store','categoria_productos','categoria_productos',$categoria->id);
       return Response::json('success');
     }
     public static function llenarCategoria(){
       $categorias=CategoriaProducto::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
       return Response::json($categorias);
     }
-}
+  }

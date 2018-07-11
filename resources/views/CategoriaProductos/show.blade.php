@@ -69,15 +69,15 @@
             <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
               <h3>Productos de la categoría: <small>{{$categoria->nombre}}</small></h3>
               <table class="table">
+                @php
+                $productos=App\CategoriaProducto::productos($categoria->id);
+                $contador=1;
+                @endphp
+                @if (count($productos)>0)
                 <tr>
                   <th>#</th>
                   <th>Productos</th>
                 </tr>
-                @php
-                  $productos=App\CategoriaProducto::productos($categoria->id);
-                  $contador=1;
-                @endphp
-                @if (count($productos)>0)
                   @foreach ($productos as $producto)
                     <tr>
                       <td>{{$contador}}</td>
@@ -90,7 +90,7 @@
                 @else
                   <tr><td colspan="2">
                     <center>
-                      No hay registros que coincidan con los terminos de busqueda indicados
+                      No hay productos asociados a esta categoría
                     </center>
                   </td></tr>
                 @endif
