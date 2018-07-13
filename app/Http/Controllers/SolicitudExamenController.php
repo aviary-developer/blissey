@@ -672,4 +672,18 @@ class SolicitudExamenController extends Controller
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
     return $pdf->stream('Examen.pdf');
   }
+  public function verExamen($id,$idExamen)
+  {
+    if (Auth::user()->tipoUsuario == "Rayos X") {
+    $solicitud=SolicitudExamen::where('id',$id)->first();
+    $resultado=Resultado::where('f_solicitud',$id)->first();
+    $detalleResultadoRayox=DetalleRayox::where('f_resultado','=',$resultado->id)->first();
+    return view('SolicitudRayosx.show',compact('solicitud','resultado','detalleResultadoRayox'));
+  }if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    $solicitud=SolicitudExamen::where('id',$id)->first();
+    $resultado=Resultado::where('f_solicitud',$id)->first();
+    $detalleResultadoUltrasonografia=DetalleUltrasonografia::where('f_resultado','=',$resultado->id)->first();
+    return view('SolicitudUltras.show',compact('solicitud','resultado','detalleResultadoUltrasonografia'));
+  }
+  }
 }

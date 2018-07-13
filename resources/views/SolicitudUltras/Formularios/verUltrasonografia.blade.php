@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <div class="x_panel">
-            <img style="height: 400px; width: 550px; object-fit: scale-down" src={{asset(Storage::url($detalleResultadoRayox->rayox))}}>
+            <img style="height: 400px; width: 550px; object-fit: scale-down" src={{asset(Storage::url($detalleResultadoUltrasonografia->ultrasonografia))}}>
         </div>
       </div>
       <div class="modal-footer">
