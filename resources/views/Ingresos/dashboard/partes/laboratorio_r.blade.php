@@ -52,3 +52,4 @@
   </div>
 @endif
 @include('Ingresos.dashboard.modales.examenes')
+@include('Ingresos.dashboard.modales.ver_laboratorio')

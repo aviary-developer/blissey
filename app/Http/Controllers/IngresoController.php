@@ -803,6 +803,36 @@ class IngresoController extends Controller
     return (compact('productos','indice','fecha_f'));
   }
 
+  public function lista_laboratorio(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha24 = $fecha24->addDays(1);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
+      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+    }
+    $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+    $laboratorio = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      $laboratorio[$indice]['id'] = $detalle->id;
+      $laboratorio[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      $laboratorio[$indice]['muestra'] = $detalle->codigo_muestra;
+      $laboratorio[$indice]['nombre'] = $detalle->examen->nombreExamen;
+      $laboratorio[$indice]['estado'] = $detalle->estado;
+      $indice++;
+    }
+    $laboratorio = array_reverse($laboratorio);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return (compact('laboratorio','indice','fecha_f'));
+  }
+
   public function dash ($id){
     $ingreso = Ingreso::find($id);
       $especialidades = Especialidad::orderBy('nombre')->get();

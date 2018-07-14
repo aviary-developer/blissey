@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="row alignright">
-      <button type="button" class="btn btn-default btn-xs" data-dismiss="modal" onclick="location.reload()">Cerrar</button>
+      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" onclick="location.reload()">Cerrar</button>
     </div>
   </div>
 </div>

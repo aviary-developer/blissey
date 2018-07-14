@@ -1,9 +1,16 @@
 <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="laboratorio_m" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="x_panel m_panel">
-          @include('SolicitudExamenes.Formularios.examenes')
+      <div role="tabpanel" data-example-id="togglable-tabs">
+        <div class="col-xs-3">
+          <div class="x_panel m_panel">
+            @include('SolicitudExamenes.Formularios.opciones')
+          </div>
+        </div>
+        <div class="col-xs-9">
+          <div class="x_panel m_panel" style="height: 447px">
+            @include('SolicitudExamenes.Formularios.contenido')
+          </div>
         </div>
       </div>
     </div>
