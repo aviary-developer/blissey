@@ -55,7 +55,7 @@
                       <table class="table">
                         <thead>
                           <th>Radiografía</th>
-                          <th style="width: 120px">Opción</th>
+                          <th style="width: 150px">Opción</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
@@ -89,7 +89,7 @@
                       <table class="table">
                         <thead>
                           <th>Paciente</th>
-                          <th style="width: 120px">Opción</th>
+                          <th style="width: 150px">Opción</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
