@@ -86,7 +86,7 @@ class Ingreso extends Model
         $precio_habitacion = $ingreso->habitacion->precio;
         $total = $precio_habitacion;
         //Gastos por examenes de laboratorio
-        if(count($ingreso->transaccion->solicitud)>0){
+        if($ingreso->transaccion->solicitud != null){
           foreach($ingreso->transaccion->solicitud as $solicitud){
             if($solicitud->estado != 0){
               $total += $solicitud->examen->servicio->precio;

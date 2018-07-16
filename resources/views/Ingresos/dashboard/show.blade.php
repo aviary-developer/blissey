@@ -146,7 +146,9 @@
   <input type="hidden" id="tipo_usuario" value={{Auth::user()->tipoUsuario}}>
   <input type="hidden" id="id_u" value={{Auth::user()->id}}>
   {{-- Id de la transacción que usa el ingreso --}}
-  <input type="hidden" id="id_t" value={{$ingreso->transaccion->id}}>
+  @if ($ingreso->transaccion != null)
+    <input type="hidden" id="id_t" value={{$ingreso->transaccion->id}}>
+  @endif
   {{-- Id del paciente --}}
   <input type="hidden" id="id_p" value={{$ingreso->f_paciente}}>
 @endsection

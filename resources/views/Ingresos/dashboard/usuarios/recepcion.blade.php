@@ -62,4 +62,6 @@
     </div>
   </div>
 @endif
-@include('Ingresos.dashboard.modales.acciones_r')
+@include('Ingresos.dashboard.modales.acciones')
+@include('Ingresos.dashboard.modales.cambio_habitacion')
+@include('Ingresos.dashboard.modales.cambio_hospitalizacion')

@@ -365,6 +365,7 @@ $(document).on('ready', function () {
 
   $("#dar_alta").on("click", function (e) {
     e.preventDefault();
+    $("#acciones").modal('toggle');
     var token = $("#token").val();
     var transaccion_id = $("#id_t").val();
     var deuda = $("#deuda_para_alta").val();
@@ -628,96 +629,7 @@ function recarga() {
   location.reload();
 }
 var aux;
-function cambio_habitacion(i) {
-  var tipo = $("#tipo_i").val();
-  var tipo_text;
-  var cambio_text;
-  if (tipo == 0) {
-    tipo_text = "Ingreso";
-  } else if(tipo == 1) {
-    tipo_text = "Medi ingreso";
-  } else {
-    tipo_text = "Observación";
-  }
-  if (i == 0) {
-    cambio_text = "Observación";
-  } else if (i == 1) {
-    cambio_text = "Medi ingreso";
-  } else {
-    cambio_text = "Ingreso";
-  }
 
-  if (cambio_text == tipo_text) {
-    $("#p").text("Por favor seleccione la nueva habitación donde se ubicará al paciente");
-    $("#p_").text("Por favor seleccione la nueva habitación donde se ubicará al paciente");
-    $("#h").text("Cambio de habitación");
-    $("#h_").text("Cambio de habitación");
-  } else {
-    $("#p").text("Se cambiará el " + tipo_text + " a " + cambio_text + ", por favor seleccione la nueva habitación donde se ubicará al paciente");
-    $("#p_").text("Se cambiará el " + tipo_text + " a " + cambio_text + ", por favor seleccione la nueva habitación donde se ubicará al paciente");
-    $("#h").text("Cambio a " + cambio_text);
-    $("#h_").text("Cambio a " + cambio_text);
-  }
-
-  if (i == 0 || i == 1) {
-    document.getElementById("go").style = "display:none";
-    document.getElementById("vista_1").style = "display:none";
-    document.getElementById("vista_2").style = "display:block; min-height: 200px;";
-    document.getElementById("vista_3").style = "display:none";
-    document.getElementById("ret").style = "display:inline-block";
-  } else if (i == -1) {
-    document.getElementById("go").style = "display:inline-block";
-    document.getElementById("vista_1").style = "display:block; min-height: 200px;";
-    document.getElementById("vista_2").style = "display:none";
-    document.getElementById("vista_3").style = "display:none";
-    document.getElementById("ret").style = "display:none";
-  } else {
-    document.getElementById("go").style = "display:none";
-    document.getElementById("vista_1").style = "display:none";
-    document.getElementById("vista_3").style = "display:block; min-height: 200px;";
-    document.getElementById("vista_2").style = "display:none";
-    document.getElementById("ret").style = "display:inline-block";
-  }
-  aux = i;
-}
-function guardar_cambio(i) {
-  var token = $("#token").val();
-  var id = $("#id").val();
-  console.log(habitacion);
-  if (i == 0) {
-    var estado = 2;
-    var habitacion = $("#h_hab").val();
-  } else if (i == 0 && aux == 1) {
-    var estado = 1;
-    var habitacion = $("#h_hab").val();
-  } else {
-    var estado = 0;
-    var habitacion = $("#h_hab_").val();
-  }
-  if (habitacion != null) {
-    $.ajax({
-      url: "/blissey/public/cambio_ingreso",
-      type: "post",
-      headers: { 'X-CSRF-TOKEN': token },
-      data: {
-        tipo: estado,
-        f_habitacion: habitacion,
-        ingreso: id,
-      },
-      success: function (r) {
-        if (r == 1) {
-          swal('¡Hecho!', 'Cambio exitoso', 'success');
-          location.reload();
-        } else {
-          swal('¡Error!', 'Algo salio mal', 'error');
-        }
-      }
-    });
-  } else {
-    swal('¡Error!','Es necesario que haya al menos una habitación disponible','error');
-  }
-
-}
 function accion24(tipo, id, objeto = null) {
   //0: Eliminar, 1: Editar y 2: Cambiar estado
   var token = $("#token").val();

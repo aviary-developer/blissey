@@ -10,8 +10,10 @@
             {{-- Total de la deuda para dar de alta al usuario --}}
             <input type="hidden" value={{number_format($total_deuda,2,'.','')}} id="deuda_para_alta">
             <button type="button" class="btn btn-lg btn-primary  col-xs-12" id="dar_alta">Dar de alta</button>
-            <button type="button" class="btn btn-lg btn-primary  col-xs-12">Cambiar de habitación</button>
-            <button type="button" class="btn btn-lg btn-primary  col-xs-12">Cambiar tipo de hospitalización</button>
+            <button type="button" class="btn btn-lg btn-primary  col-xs-12" data-target="#cambio_habitacion" data-toggle="modal" data-dismiss="modal">Cambiar de habitación</button>
+            @if ($horas <= 6 || $ingreso->tipo != 0)  
+              <button type="button" class="btn btn-lg btn-primary  col-xs-12" data-toggle="modal" data-target="#cambio_hospitalizacion" data-dismiss="modal">Cambiar tipo de hospitalización</button>
+            @endif
           </div>
         </div>
       </div>

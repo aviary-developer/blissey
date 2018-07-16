@@ -153,9 +153,10 @@ class IngresoController extends Controller
      */
     public function show($id)
     {
+      setlocale(LC_ALL,'es');
       $ingreso = Ingreso::find($id);
       /**Este segmento de codigo es unicamente para que siga funcionando pero a su vez mostrar el neuvo dashboard */
-      if($ingreso->tipo != 0){
+      if($ingreso->tipo > 2){
         return $this->dash($id);
       }
       /**Notas a tener en cuenta para la elaboración de esta pantalla
@@ -177,14 +178,21 @@ class IngresoController extends Controller
       /**Calculo de días que ha estado ingresado el paciente */
       $hoy = Carbon::now();
       /**Inicialización de las variables a utilizar */
-      $total_gastos = $total_abono = $total_deuda = $dias = 0;
-      $examenes = null;
+      $total_gastos = $total_abono = $total_deuda = $dias = $horas = 0;
+      $examenes  = $horas_f = null;
+
+      /**Obtener las habitaciones para realizar el cambio de habitacion */
+      $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
+      $observaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
 
       if($ingreso->estado == 1){
         $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
         /**Determinar cuales son las ultimas 24 horas */
         $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
         $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+        /**Determinar horas de ingreso */
+        $horas = $ingreso->fecha_ingreso->diffInHours($hoy);
+        $horas_f = $hoy->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
         /**Generador automatico de transacciones por uso de la habitación */
         $habitacion_dia_guardado_count = 0;
         /**Contar cuantos dias se ha guardado el gasto por habitación del paciente */
@@ -224,6 +232,9 @@ class IngresoController extends Controller
         /**Determinar cuales son las ultimas 24 horas */
         $ultima24 = $ingreso->fecha_ingreso->subDays(1);
         $ultima48 = $ingreso->fecha_alta->addDays(1);
+        /**Determinar las horas que paso ingresado el paciente antes del alta medica */
+        $horas = $ingreso->fecha_ingreso->diffInHours($fecha_alta);
+        $horas_f = $ingreso->fecha_alta->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
       }
       /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
       if($ingreso->estado > 0){
@@ -270,7 +281,7 @@ class IngresoController extends Controller
           }
         }
       }
-      if($ingreso->tipo < 3){
+      if($ingreso->tipo > 0 || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
         $total_gastos = $this->total_gastos($id);
         $iva = $total_gastos * 0.13;
@@ -283,7 +294,27 @@ class IngresoController extends Controller
         /**Examenes que se puede realizar el paciente */
         $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
       }
-
+      /**Determinar cual opcion de cambio de tipo de hospitalizacion estará activa */
+      $obs = $med = $ing = false;
+      $activo = 0;
+      if($ingreso->tipo < 3 && $horas <= 2){
+        $obs = true;
+        $med = true;
+        $ing = true;
+        $activo = 2;
+      }else{
+        $obs = false;
+        if($ingreso->tipo < 2 && $horas <= 6){
+          $activo = ($ingreso->tipo == 2)?0:1;
+          $med = true;
+          $ing = true;
+        }else{
+          $activo = 0;
+          $med = false;
+          $ing = true;
+        }
+      }
+      
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
         'paciente',
@@ -300,7 +331,15 @@ class IngresoController extends Controller
         'count_s24',
         'count_l24',
         'hoy',
-        'examenes'
+        'examenes',
+        'habitaciones',
+        'observaciones',
+        'horas',
+        'horas_f',
+        'obs',
+        'med',
+        'ing',
+        'activo'
       ));
     }
 
@@ -648,7 +687,9 @@ class IngresoController extends Controller
       $ingreso = Ingreso::find($request->ingreso);
       $habitacion_actual = $ingreso->f_habitacion;
       $ingreso->f_habitacion = $request->f_habitacion;
-      $ingreso->tipo = $request->tipo;
+      if($request->tipo != null){
+        $ingreso->tipo = $request->tipo;
+      }
       $ingreso->save();
 
       $habitacion_ = Habitacion::find($habitacion_actual);

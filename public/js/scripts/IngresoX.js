@@ -290,3 +290,80 @@ function laboratorio_pendientes_ver() {
     }
   });
 }
+
+$("#guardar_cambio_habitacion").on("click", function (e) { 
+  e.preventDefault();
+  habitacion = $("#f_habitacion").val();
+  id = $("#id").val();
+  token = $("#token").val();
+  if (habitacion != 0) {
+    $.ajax({
+      url: "/blissey/public/cambio_ingreso",
+      type: "post",
+      headers: { 'X-CSRF-TOKEN': token },
+      data: {
+        f_habitacion: habitacion,
+        ingreso: id,
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
+      }
+    });
+  } else {
+    swal('¡Error!', 'Es necesario que haya al menos una habitación disponible', 'error');
+  }
+});
+
+function cambio_tipo_activo(tipo) {
+  $("#activo").val(tipo);
+}
+
+$("#cambio_hospitalizacion_").on("click", function (e) { 
+  activo = $("#activo").val();
+  if (activo == 0) {
+    habitacion = $("#f_habitacion_i").val();
+  } else if (activo == 1) {
+    habitacion = $("#f_habitacion_m").val();
+  } else {
+    habitacion = $("#f_habitacion_o").val();
+  }
+  id = $("#id").val();
+  token = $("#token").val();
+  if (habitacion != 0) {
+    $.ajax({
+      url: "/blissey/public/cambio_ingreso",
+      type: "post",
+      headers: { 'X-CSRF-TOKEN': token },
+      data: {
+        tipo: activo,
+        f_habitacion: habitacion,
+        ingreso: id,
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
+      }
+    });
+  } else {
+    swal('¡Error!', 'Es necesario que haya al menos una habitación disponible', 'error');
+  }
+});
