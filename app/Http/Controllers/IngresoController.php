@@ -219,6 +219,11 @@ class IngresoController extends Controller
             }
           }
         }
+      }else if($ingreso->estado == 2){
+        $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+        /**Determinar cuales son las ultimas 24 horas */
+        $ultima24 = $ingreso->fecha_ingreso->subDays(1);
+        $ultima48 = $ingreso->fecha_alta->addDays(1);
       }
       /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
       if($ingreso->estado > 0){
@@ -816,12 +821,20 @@ class IngresoController extends Controller
       $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
       $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
     }
-    $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+    if($request->pendiente == null){
+      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+    }else{
+      $lista = $ingreso->transaccion->solicitud->where('estado',0);
+    }
     $laboratorio = [];
     $indice = 0;
     foreach($lista as $detalle){
       $laboratorio[$indice]['id'] = $detalle->id;
-      $laboratorio[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      if($request->pendiente == null){
+        $laboratorio[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      }else{
+        $laboratorio[$indice]['hora'] = $detalle->created_at->format('d / m / Y');
+      }
       $laboratorio[$indice]['muestra'] = $detalle->codigo_muestra;
       $laboratorio[$indice]['nombre'] = $detalle->examen->nombreExamen;
       $laboratorio[$indice]['estado'] = $detalle->estado;

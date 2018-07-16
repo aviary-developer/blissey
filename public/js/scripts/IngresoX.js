@@ -82,11 +82,19 @@ $("#btn_v_s").on('click', function (e) {
   e.preventDefault();
   servicio_fecha()
 });
+$("#fecha_examen").on('change', function () {
+  laboratorio_fecha()
+});
+$("#btn_v_l").on('click', function (e) {
+  e.preventDefault();
+  laboratorio_fecha();
+  laboratorio_pendientes_ver();
+});
 
 function medicamento_fecha() {
   var fecha = $("#fecha_producto").val();
   var id = $("#id").val();
-  console.log(id);
+  
   $.ajax({
     type: 'get',
     url: '/blissey/public/lista_producto',
@@ -137,7 +145,7 @@ function medicamento_fecha() {
 function servicio_fecha() {
   var fecha = $("#fecha_servicio").val();
   var id = $("#id").val();
-  console.log(id);
+  
   $.ajax({
     type: 'get',
     url: '/blissey/public/lista_servicio',
@@ -179,6 +187,104 @@ function servicio_fecha() {
       } else {
         panel.empty();
         html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun servicio al paciente en esta fecha</span></center>';
+        panel.append(html);
+      }
+    }
+  });
+}
+
+function laboratorio_fecha() {
+  var fecha = $("#fecha_examen").val();
+  var id = $("#id").val();
+  
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/ingreso/lista_laboratorio',
+    data: {
+      id: id,
+      fecha: fecha
+    },
+    success: function (r) {
+      var panel = $("#mensaje_v_l");
+      fecha_title = $("#date_l");
+      fecha_title.text(r.fecha_f);
+      if (r.indice > 0) {
+        panel.empty();
+        html = '<div class="col-xs-12">' +
+          '<table class="table" id="tabla_v_l">' +
+          '<thead>' +
+          '<th>Hora</th>' +
+          '<th>Detalle</th>' +
+          '<th style="width: 40px">Acción</th>'
+        '</thead>' +
+          '</table>' +
+          '</div>';
+        panel.append(html);
+        tabla = $("#tabla_v_l");
+        $(r.laboratorio).each(function (key, value) {
+          html = '<tr id="r' + value.id + '">' +
+            '<td>' + value.hora + '</td>' +
+            '<td>' +
+            value.muestra + " " + ' <b class="big-text">' + value.nombre + '</b>' +
+            '</td>';
+          if (value.estado == 0) {
+            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+          } else if(value.estado == 1) {
+            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+          } else {
+            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+          }
+          html += '</tr>';
+          tabla.append(html);
+        });
+      } else {
+        panel.empty();
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun examen al paciente en esta fecha</span></center>';
+        panel.append(html);
+      }
+    }
+  });
+}
+
+function laboratorio_pendientes_ver() {
+  var fecha = $("#fecha_examen").val();
+  var id = $("#id").val();
+  
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/ingreso/lista_laboratorio',
+    data: {
+      id: id,
+      fecha: fecha,
+      pendiente: true
+    },
+    success: function (r) {
+      var panel = $("#mensaje_l");
+      
+      if (r.indice > 0) {
+        panel.empty();
+        html = '<div class="col-xs-12">' +
+          '<table class="table" id="tabla_l">' +
+          '<thead>' +
+          '<th style="width: 100px;">Fecha</th>' +
+          '<th>Detalle</th>' +
+        '</thead>' +
+          '</table>' +
+          '</div>';
+        panel.append(html);
+        tabla = $("#tabla_l");
+        $(r.laboratorio).each(function (key, value) {
+          html = '<tr id="r' + value.id + '">' +
+            '<td>' + value.hora + '</td>' +
+            '<td>' +
+            value.muestra + " " + ' <b class="big-text">' + value.nombre + '</b>' +
+            '</td>';
+          html += '</tr>';
+          tabla.append(html);
+        });
+      } else {
+        panel.empty();
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No hay examenes pendiente de evaluación de este paciente</span></center>';
         panel.append(html);
       }
     }

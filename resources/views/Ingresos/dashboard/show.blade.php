@@ -64,7 +64,9 @@
         
         <div class="col-xs-1">
           <div class="row">
-            <button type="button" class="btn btn-xs btn-dark col-xs-12"><i class="fa fa-cog"></i> Acciones</button>
+            @if ($ingreso->estado == 1)  
+              <button type="button" class="btn btn-xs btn-dark col-xs-12" data-toggle="modal" data-target="#acciones"><i class="fa fa-cog"></i> Acciones</button>
+            @endif
           </div>
           <div class="row">
             <button type="button" class="btn btn-dark btn-xs col-xs-12" data-target="#datos_paciente" data-toggle="modal"><i class="fa fa-user"></i> Paciente</button>

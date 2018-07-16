@@ -4,7 +4,9 @@
   </div>
   <div class="col-xs-4">
     <div class="btn-group alignright">
-      <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#laboratorio_m" ><i class="fa fa-plus"></i></button>
+      @if ($ingreso->estado == 1)  
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#laboratorio_m" ><i class="fa fa-plus"></i></button>
+      @endif
       <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_laboratorio" id="btn_v_l"><i class="fa fa-eye"></i></button>
     </div>
   </div>
@@ -28,9 +30,9 @@
                 <b class="big-text">{{$solicitud->examen->nombreExamen}}</b></td>
               <td>
                 @if ($solicitud->estado == 0)
-                  <span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span>
                 @elseif($solicitud->estado == 1)
-                   <span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog fa-spin"></i></span>
+                   <span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span>
                 @else
                    <span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span>
                 @endif

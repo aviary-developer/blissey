@@ -4,7 +4,9 @@
   </div>
   <div class="col-xs-4">
     <div class="btn-group alignright">
-      <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#productos_m" ><i class="fa fa-plus"></i></button>
+      @if ($ingreso->estado == 1)  
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#productos_m" ><i class="fa fa-plus"></i></button>
+      @endif
       <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_productos" id="btn_v_p"><i class="fa fa-eye"></i></button>
     </div>
   </div>
@@ -36,7 +38,11 @@
               </td>
               <td>
                 <center>
-                  <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                  @if ($ingreso->estado == 2)
+                    <button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button>
+                  @else
+                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                  @endif
                 </center>
               </td>
             </tr>

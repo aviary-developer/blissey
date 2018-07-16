@@ -21,9 +21,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="x_panel m_panel">
+          <div class="x_panel m_panel" style="height: 447px">
             <div class="row">
-              <h4>Estadísticas</h4>
+              <h4>Examenes pendientes</h4>
+            </div>
+            <div class="row">
+              <div style="overflow-x: hidden; overflow-y: scroll; height: 377px">
+                <div id="mensaje_l"></div>
+              </div>
             </div>
           </div>
         </div>
