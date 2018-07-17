@@ -20,13 +20,6 @@
       </select>
     </div>
   </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Anticuerpos</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-check-circle-o form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('anticuerpos',null,['class'=>'form-control has-feedback-left','placeholder'=>'Describa anticuerpos']) !!}
-    </div>
-  </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Prueba cruzada</label>
       <div class="col-md-9 col-sm-9 col-xs-12">

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reactivo extends Model
 {
   protected $fillable = [
-      'nombre', 'descripcion', 'contenidoPorEnvase',
+      'nombre', 'fechaVencimiento', 'contenidoPorEnvase',
   ];
   public static function buscar($nombre, $estado){
     return Reactivo::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);

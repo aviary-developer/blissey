@@ -60,7 +60,7 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Descripción</th>
+              <th>Fecha de vencimiento</th>
               <th colspan="2">Existencias</th>
               <th>Opciones</th>
             </tr>
@@ -78,7 +78,7 @@
                       {{ $reactivo->nombre }}
                     </a>
                   </td>
-                  <td>{{ $reactivo->descripcion }}</td>
+                  <td>{{Carbon\Carbon::parse($reactivo->fechaVencimiento)->format('d-m-Y')}}</td>
                   <td>
                   @if($reactivo->contenidoPorEnvase<10)
                     <span class="label label-lg label-danger col-xs-10">{{ $reactivo->contenidoPorEnvase.' '}}</span>

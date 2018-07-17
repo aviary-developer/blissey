@@ -8,12 +8,15 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Descripción *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('descripcion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Descripción del nuevo reactivo','required']) !!}
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de vencimiento</label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+        @php
+          $ahora = Carbon\Carbon::now();
+        @endphp
+        {!! Form::date('fechaVencimiento',$fecha,['min'=>$ahora->addDay(1)->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+      </div>
     </div>
-  </div>
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido por envase</label>
     <div class="col-md-9 col-sm-9 col-xs-12">

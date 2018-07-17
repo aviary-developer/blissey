@@ -45,8 +45,8 @@
                   <td>{{ $reactivo->nombre }}</td>
                 </tr>
                 <tr>
-                  <th>Descripción</th>
-                  <td>{{ $reactivo->descripcion }}</td>
+                  <th>Fecha de vencimiento</th>
+                  <td>{{ $reactivo->fechaVencimiento }}</td>
                 </tr>
                 <tr>
                   <th>Existencias</th>
