@@ -35,13 +35,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-12">
           <div class="x_panel"></div>
-        </div>
-        <div class="col-xs-6">
-          <div class="x_panel">
-            @include('Ingresos.dashboard.partes.laboratorio_r')
-          </div>
         </div>
       </div>
     </div>
@@ -58,6 +53,23 @@
         <div class="x_panel">
           @include('Ingresos.dashboard.partes.servicio_r')
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="x_panel">
+        @include('Ingresos.dashboard.partes.laboratorio_r')
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="x_panel">
+
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="x_panel">
+
       </div>
     </div>
   </div>
