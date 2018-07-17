@@ -60,7 +60,6 @@
             <tr>
               <th>#</th>
               <th>Tipo de sangre</th>
-              <th>Anticuerpos</th>
               <th>Fecha de vencimiento</th>
               <th>Opciones</th>
             </tr>
@@ -124,7 +123,6 @@
                       </a>
                     @endif
                   </td>
-                  <td>{{ $donacion->anticuerpos}}</td>
                   <td>{{Carbon\Carbon::parse($donacion->fechaVencimiento)->format('d-m-Y')}}</td>
                   <td>
                     @if ($estadoOpuesto)

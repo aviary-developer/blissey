@@ -78,10 +78,6 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>Anticuerpos</th>
-                    <td>{{ $donacion->anticuerpos }}</td>
-                  </tr>
-                  <tr>
                     <th>Prueba Cruzada</th>
                     <td>
                     <button type="button" class="btn btn-xs btn-success col-xs-4" data-toggle="modal" data-target="#modalPruebaCruzada">

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BancoSangre extends Model
 {
   protected $fillable = [
-    'tipoSangre', 'anticuerpos', 'pruebaCruzada', 'fechaVencimiento'
+    'tipoSangre', 'pruebaCruzada', 'fechaVencimiento'
   ];
 
   protected $dates = ['fechaVencimiento'];
