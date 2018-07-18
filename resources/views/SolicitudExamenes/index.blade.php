@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 col-12">
             <div class="btn-group">
-              <a href={{asset('/solicitudex/create')}} class="btn btn-sm btn-dark">
+              <a href={{asset('/solicitudex/create?tipo=examenes')}} class="btn btn-sm btn-dark">
                 <i class="fa fa-plus"></i> Nuevo
               </a>
               <a href={{asset('#')}} class="btn btn-sm btn-dark">
@@ -27,9 +27,9 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href={{asset("/solicitudex")}}>Por Examen</a>
+                  <li><a href={{asset("/solicitudex?tipo=examenes")}}>Por Examen</a>
                   </li>
-                  <li><a href={{asset("/solicitudex?vista=paciente")}}>Por Paciente</a>
+                  <li><a href={{asset("/solicitudex?vista=paciente&tipo=examenes")}}>Por Paciente</a>
                   </li>
                 </ul>
               </div>

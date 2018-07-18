@@ -26,6 +26,7 @@
   </select>
       </div>
   </div>
+  <input type="hidden" name="tipo" value="rayosx">
 
 
   <input type="hidden" id="seleccion" value="solicitud">

@@ -17,7 +17,7 @@
   </div>
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Ultrasonografías:</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="col-md-5 col-sm-5 col-xs-12">
       <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
       <select class="form-control has-feedback-left" name="ultrasonografia">
     @foreach($ultras as $item)
@@ -26,7 +26,7 @@
   </select>
       </div>
   </div>
-
+<input type="hidden" name="tipo" value="ultras">
 
   <input type="hidden" id="seleccion" value="solicitud">
   <div class="clearfix"></div>

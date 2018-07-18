@@ -125,7 +125,7 @@
                               </a>
                               <ul class="nav child_menu">
                                 <li>
-                                <a href={{asset( '/solicitudex')}}>Solicitud de examen</a>
+                                <a href={{asset( '/solicitudex?tipo=examenes')}}>Solicitud de examen</a>
                                 </li>
                               </ul>
                             </li>
@@ -136,7 +136,7 @@
                               </a>
                               <ul class="nav child_menu">
                                 <li>
-                                  <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                                  <a href={{asset( '/solicitudex?tipo=ultras')}}>Solicitudes</a>
                                 </li>
                               </ul>
                             </li>
@@ -147,7 +147,7 @@
                               </a>
                               <ul class="nav child_menu">
                                 <li>
-                                  <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                                  <a href={{asset( '/solicitudex?tipo=rayosx')}}>Solicitudes</a>
                                 </li>
                               </ul>
                             </li>

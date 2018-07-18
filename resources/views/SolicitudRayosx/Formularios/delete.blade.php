@@ -55,4 +55,3 @@ function eliminarSolicitud(id){
 }
 </script>
 {!!Form::close()!!}
-@include('SolicitudRayosx.Formularios.verRadiografia')

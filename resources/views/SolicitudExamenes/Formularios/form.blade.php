@@ -17,6 +17,7 @@
   </div>
   @include('SolicitudExamenes.Formularios.examenes')
   <input type="hidden" id="seleccion" value="solicitud">
+  <input type="hidden" name="tipo" value="examenes">
   <div class="clearfix"></div>
     <!--<div class="row">
     <div class="col-md-6">

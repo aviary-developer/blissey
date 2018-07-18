@@ -31,7 +31,7 @@ class SolicitudExamenController extends Controller
   */
   public function index(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "Rayos X") {
+    if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
       $vista = $request->get("vista");
       if($vista == "paciente"){
         $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->distinct()->get(['f_paciente']);
@@ -42,7 +42,7 @@ class SolicitudExamenController extends Controller
       }
       return view('SolicitudRayosx.index',compact('pacientes','solicitudes','examenes','vista'));
     }
-    else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    else if (Auth::user()->tipoUsuario == "Ultrasonografía" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
       $vista = $request->get("vista");
       if($vista == "paciente"){
         $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_paciente']);
@@ -52,7 +52,7 @@ class SolicitudExamenController extends Controller
         $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
       }
       return view('SolicitudUltras.index',compact('pacientes','solicitudes','examenes','vista'));
-    }else{
+    }else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
     $vista = $request->get("vista");
     if($vista == "paciente"){
       $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
@@ -70,16 +70,16 @@ class SolicitudExamenController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function create()
+  public function create(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "Rayos X") {
+    if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
       $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
       return view('SolicitudRayosx.create',compact('rayosx'));
     }
-    else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    else if (Auth::user()->tipoUsuario == "Ultrasonografía" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
       $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
       return view('SolicitudUltras.create',compact('ultras'));
-    } else {
+    } else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
       $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
       return view('SolicitudExamenes.create',compact('examenes'));
     }
@@ -93,7 +93,7 @@ class SolicitudExamenController extends Controller
   */
   public function store(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "Rayos X") {
+    if (Auth::user()->tipoUsuario == "Rayos X"|| (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
       DB::beginTransaction();
       try{
         $año = date('Y');
@@ -143,9 +143,9 @@ class SolicitudExamenController extends Controller
         }
       }catch(Exception $e){
         DB::rollback();
-        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+        return redirect('/solicitudex?tipo=rayosx')->with('mensaje','Algo salio mal');
       }
-    }else if (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    }else if (Auth::user()->tipoUsuario == "Ultrasonografía"|| (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
       DB::beginTransaction();
       try{
         $año = date('Y');
@@ -195,9 +195,9 @@ class SolicitudExamenController extends Controller
         }
       }catch(Exception $e){
         DB::rollback();
-        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+        return redirect('/solicitudex?tipo=ultras')->with('mensaje','Algo salio mal');
       }
-    }else {
+    }else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
     DB::beginTransaction();
     try{
       $año = date('Y');
@@ -256,11 +256,17 @@ class SolicitudExamenController extends Controller
       }
     }catch(Exception $e){
       DB::rollback();
-      return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+      return redirect('/solicitudex?tipo=examenes')->with('mensaje','Algo salio mal');
     }
     }
     if($request->f_ingreso == null){
-      return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+      if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
+      return redirect('/solicitudex?tipo=examenes')->with('mensaje', '¡Guardado!');
+    }elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
+      return redirect('/solicitudex?tipo=rayosx')->with('mensaje', '¡Guardado!');
+    } elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
+      return redirect('/solicitudex?tipo=ultras')->with('mensaje', '¡Guardado!');
+    }
     }else{
       return "Guardado";
     }
@@ -673,8 +679,8 @@ class SolicitudExamenController extends Controller
     return $pdf->stream('Examen.pdf');
   }
   public function verExamen($id,$idExamen)
-  {
-    if (Auth::user()->tipoUsuario == "Rayos X") {
+  { return $request->tipo;
+    if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo="rayosx")) {
     $solicitud=SolicitudExamen::where('id',$id)->first();
     $resultado=Resultado::where('f_solicitud',$id)->first();
     $detalleResultadoRayox=DetalleRayox::where('f_resultado','=',$resultado->id)->first();
