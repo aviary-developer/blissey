@@ -19,7 +19,7 @@
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
-            <small>Activos</small>
+            <small>Activas</small>
           @endif
         </h2>
         <div class="clearfix"></div>

@@ -29,6 +29,9 @@
             <li role="presentation" class="active">
               <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
+            <li role="presentation" class="">
+              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Productos</a>
+            </li>
           </ul>
         </div>
         {{-- Contenido del tab --}}
@@ -59,6 +62,36 @@
                   <th>Fecha de modificación</th>
                   <td>{{ $division->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                 </tr>
+              </table>
+            </div>
+            <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
+              <h3>Productos con la división: <small>{{$division->nombre}}</small></h3>
+              <table class="table">
+                @php
+                $productos=App\DivisionProducto::productos($division->id);
+                $contador=1;
+                @endphp
+                @if (count($productos)>0)
+                <tr>
+                  <th>#</th>
+                  <th>Productos</th>
+                </tr>
+                  @foreach ($productos as $producto)
+                    <tr>
+                      <td>{{$contador}}</td>
+                      <td>{{$producto->nombre}}</td>
+                  </tr>
+                  @php
+                  $contador++;
+                  @endphp
+                  @endforeach
+                @else
+                  <tr><td colspan="2">
+                    <center>
+                      No hay productos asociados a esta división
+                    </center>
+                  </td></tr>
+                @endif
               </table>
             </div>
           </div>

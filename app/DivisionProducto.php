@@ -148,4 +148,13 @@ class DivisionProducto extends Model
       return 1;//Recepción
     }
   }
+  public static function productos($id){
+    return DB::table('division_productos')
+    ->select('division_productos.*','productos.*')
+    ->join('productos','division_productos.f_producto','=','productos.id','left outer')
+    ->where('division_productos.f_division',$id)
+    ->where('productos.estado',true)
+    ->orderBy('productos.nombre','ASC')
+    ->get();
+  }
 }
