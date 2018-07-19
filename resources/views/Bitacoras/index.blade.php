@@ -13,7 +13,7 @@
             <div class="btn-group">
               <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target=".bs-modal-lg">
                 <i class="fa fa-search"></i>
-                Busqueda
+                Búsqueda
               </button>
               <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
               <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
@@ -39,7 +39,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Busqueda</h4>
+          <h4 class="modal-title" id="myModalLabel">Búsqueda</h4>
         </div>
         <div class="modal-body">
           <div class="x_panel">
@@ -75,7 +75,7 @@
                   <label class="control-label col-md-12 col-sm-12 col-xs-12">Acción</label>
                 </center>
               </div>
-              
+
               <div class="row">
                 <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
                   <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success">

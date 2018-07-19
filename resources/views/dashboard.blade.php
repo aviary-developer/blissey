@@ -109,7 +109,7 @@
                                       <a href={{asset( '/servicios')}}>Servicios</a>
                                     </li>
                                     <li>
-                                      <a href={{asset( '/categoria_servicios')}}>Categorias de servicios</a>
+                                      <a href={{asset( '/categoria_servicios')}}>Categorías de servicios</a>
                                     </li>
                                     <li>
                                       <a href={{asset( '/habitaciones')}}>Habitaciones</a>
@@ -285,6 +285,9 @@
                                     </li>
                                     <li>
                                       <a href={{asset( '/unidades')}}>Unidades de medida</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/cajas')}}>Cajas</a>
                                     </li>
                                   </ul>
                                 </li>

@@ -139,14 +139,14 @@ $(document).on('ready',function(){
         p.empty();
         if (respuesta > 0 && respuesta < 3){
           var html =
-          "La busqueda generará "+
+          "La búsqueda generará "+
           "<b style = 'color: rgb(0,128,64);'>"+
             respuesta + " registros" +
           "</b>" +
           " es óptimo para reportes";
         }else{
           var html =
-          "La busqueda generará "+
+          "La búsqueda generará "+
           "<b style = 'color: rgb(255,60,60);'>"+
             respuesta + " registros" +
           "</b>" +
@@ -186,7 +186,7 @@ $(document).on('ready',function(){
       if (mes == (hoy.getMonth() + 1) && dia > hoy.getDay()) {
         edad--;
       }
-      
+
       if (edad > 17) {
         document.getElementById("dui_paciente").style = "display:block";
       } else {

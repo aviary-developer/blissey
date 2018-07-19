@@ -15,7 +15,7 @@
   <div class="col-md-8 col-sm-8 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>cajas
+        <h2>Cajas
           @if ($estadoOpuesto)
             <small>Papelera</small>
           @else
@@ -100,7 +100,7 @@
               <tr>
                 <td colspan="5">
                   <center>
-                    No hay registros que coincidan con los terminos de busqueda indicados
+                    No hay registros que coincidan con los términos de búsqueda indicados
                   </center>
                 </td>
               </tr>

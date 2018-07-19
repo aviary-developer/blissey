@@ -16,7 +16,16 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Localizacón *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-        {!!Form::select('localizacion', ['1'=> 'Recepción','0'=> 'Farmacia'],$opcion, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
+      @php
+      if(Auth::user()->administrador){
+        $opciones=['0'=> 'Farmacia','1'=> 'Recepción'];
+      }elseif(Auth::user()->tipoUsuario=='Farmacia'){
+        $opciones=['0'=> 'Farmacia'];
+      }elseif(Auth::user()->tipoUsuario=='Recepción'){
+        $opciones=['1'=> 'Recepción'];
+      }
+      @endphp
+        {!!Form::select('localizacion',$opciones,$opcion, ['class'=>'form-control has-feedback-left'])!!}
     </div>
   </div>
   <center>
