@@ -18,9 +18,9 @@ class CreateDetalleCajasTable extends Migration
             $table->integer('f_caja')->unsigned();
             $table->foreign('f_caja')->references('id')->on('cajas');
             $table->integer('tipo');
-            //Valores que localización
+            //Valores de tipo
             //1-Apertura
-            //1-Cierre
+            //2-Cierre
             $table->date('fecha');
             $table->integer('importe'); //Para apertura representa el monto inicial y el monto proveniente del día anterior
                                         //Para un cierre representa la salida de efectivo

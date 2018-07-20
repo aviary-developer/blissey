@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Transacion;
+use App\Caja;
 
 class DetalleCajaController extends Controller
 {
@@ -21,9 +23,13 @@ class DetalleCajaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      $pagina--;
+      $pagina *= 10;
+      $cajas=Caja::where('estado',true)->where('localizacion',Transacion::tipoUsuario())->orderBy('nombre','ASC')->paginate(10);
+        return view('Cajas.detalles',compact('cajas','pagina'));
     }
 
     /**
@@ -80,5 +86,10 @@ class DetalleCajaController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function aperturar($id)
+    {
+      $caja=Caja::findOrFail($id);
+      return view('Cajas.aperturar',compact('caja'));
     }
 }
