@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Blissey</title>
   <!-- jQuery -->
   <!-- Bootstrap -->
@@ -196,6 +196,9 @@
                                     </li>
                                     <li>
                                       <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluados</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregados</a>
                                     </li>
                                   </ul>
                                 </li>

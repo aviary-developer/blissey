@@ -34,32 +34,32 @@ class SolicitudExamenController extends Controller
     if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
       $vista = $request->get("vista");
       if($vista == "paciente"){
-        $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->distinct()->get(['f_paciente']);
-        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->orderBy('estado')->get();
+        $pacientes = SolicitudExamen::where('estado','<>',2)->where('f_rayox','!=',null)->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','<>',2)->where('f_rayox','!=',null)->orderBy('estado')->get();
       }else{
-        $examenes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->distinct()->get(['f_rayox']);
-        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_rayox','!=',null)->orderBy('estado')->get();
+        $examenes = SolicitudExamen::where('estado','<>',2)->where('f_rayox','!=',null)->distinct()->get(['f_rayox']);
+        $solicitudes = SolicitudExamen::where('estado','<>',2)->where('f_rayox','!=',null)->orderBy('estado')->get();
       }
       return view('SolicitudRayosx.index',compact('pacientes','solicitudes','examenes','vista'));
     }
     else if (Auth::user()->tipoUsuario == "Ultrasonografía" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
       $vista = $request->get("vista");
       if($vista == "paciente"){
-        $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_paciente']);
-        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
+        $pacientes = SolicitudExamen::where('estado','<>',2)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','<>',2)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
       }else{
-        $examenes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_ultrasonografia']);
-        $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
+        $examenes = SolicitudExamen::where('estado','<>',2)->where('f_ultrasonografia','!=',null)->distinct()->get(['f_ultrasonografia']);
+        $solicitudes = SolicitudExamen::where('estado','<>',2)->where('f_ultrasonografia','!=',null)->orderBy('estado')->get();
       }
       return view('SolicitudUltras.index',compact('pacientes','solicitudes','examenes','vista'));
     }else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
     $vista = $request->get("vista");
     if($vista == "paciente"){
-      $pacientes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+      $pacientes = SolicitudExamen::where('estado','<>',2)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','<>',2)->where('f_examen','!=',null)->orderBy('estado')->get();
     }else{
-      $examenes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+      $examenes = SolicitudExamen::where('estado','<>',2)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
+      $solicitudes = SolicitudExamen::where('estado','<>',2)->where('f_examen','!=',null)->orderBy('estado')->get();
     }
     return view('SolicitudExamenes.index',compact('pacientes','solicitudes','examenes','vista'));
   }
@@ -594,9 +594,18 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
+    $tieneDatoControlado=0;
+    foreach ($detallesResultado as $det) {
+      if($det->dato_controlado!=null){
+        $tieneDatoControlado=1;
+      }
+    }
+    $cambioEstadoSolicitud=SolicitudExamen::find($id);
+    $cambioEstadoSolicitud->estado=3;
+    $cambioEstadoSolicitud->save();
     $header = view('PDF.header.laboratorio');
     $footer = view('PDF.footer.numero_pagina');
-    $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
+    $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
     return $pdf->stream('Examen_con_solicitud_'.$solicitud->id.'.pdf');
   }
@@ -645,9 +654,9 @@ class SolicitudExamenController extends Controller
     $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$paciente)->orderBy('estado')->get();
     if($bandera){
         foreach ($solicitudes as $solicitud) {
-        /*$cambioEstadoSolicitud=SolicitudExamen::find($solicitud->id);
+        $cambioEstadoSolicitud=SolicitudExamen::find($solicitud->id);
         $cambioEstadoSolicitud->estado=3;
-        $cambioEstadoSolicitud->save();*/
+        $cambioEstadoSolicitud->save();
       }
     }
     foreach ($solicitudes as $key => $solicitud) {
@@ -691,5 +700,16 @@ class SolicitudExamenController extends Controller
     $detalleResultadoUltrasonografia=DetalleUltrasonografia::where('f_resultado','=',$resultado->id)->first();
     return view('SolicitudUltras.show',compact('solicitud','resultado','detalleResultadoUltrasonografia'));
   }
+  }
+  public function examenesEntregados(Request $request){
+    $vista = $request->get("vista");
+    if($vista == "paciente"){
+      $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+    }else{
+      $examenes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
+      $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+    }
+    return view('SolicitudExamenes.examenesEntregados',compact('pacientes','solicitudes','examenes','vista'));
   }
 }

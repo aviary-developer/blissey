@@ -24,7 +24,7 @@ $(document).on("ready", function () {
     });
   });
 
-  $("#accordion").on("click", "#eliminar", function (e) { 
+  $("#accordion").on("click", "#eliminar", function (e) {
     var id = $(this).parents('tr').find("input:eq(0)").val();
     var fila = $(this).parents('tr');
     var tooltip = $(".tooltip-inner").parent('div');

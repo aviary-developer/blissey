@@ -7,7 +7,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Exámenes evaluados
+          Exámenes entregados
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -15,9 +15,6 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 col-12">
             <div class="btn-group">
-              <a href={{asset('/solicitudex/create')}} class="btn btn-sm btn-dark">
-                <i class="fa fa-plus"></i> Nuevo
-              </a>
               <a href={{asset('#')}} class="btn btn-sm btn-dark">
                 <i class="fa fa-file"></i> Reporte
               </a>
@@ -30,9 +27,9 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href={{asset("/examenesEvaluados")}}>Por Examen</a>
+                  <li><a href={{asset("/examenesEntregados")}}>Por Examen</a>
                   </li>
-                  <li><a href={{asset("/examenesEvaluados?vista=paciente")}}>Por Paciente</a>
+                  <li><a href={{asset("/examenesEntregados?vista=paciente")}}>Por Paciente</a>
                   </li>
                 </ul>
               </div>
@@ -73,12 +70,10 @@
                                 <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>{{$solicitud->examen->nombreExamen}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
-																<td><a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
-															    <i class="fa fa-edit"></i>
-															  </a>
+																<td>
 																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
-															  </a></td>
+															  </a><td>
                               </tr>
                             @endif
                           @endforeach
@@ -115,9 +110,6 @@
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                                 </td>
 																<td>
-																	<a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
-																    <i class="fa fa-edit"></i>
-																  </a>
 																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
 															  </a><td>
