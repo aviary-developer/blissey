@@ -89,7 +89,11 @@ class Ingreso extends Model
         if($ingreso->transaccion->solicitud != null){
           foreach($ingreso->transaccion->solicitud as $solicitud){
             if($solicitud->estado != 0){
-              $total += $solicitud->examen->servicio->precio;
+              if($solicitud->examen != null){
+                $total += $solicitud->examen->servicio->precio;
+              }else if($solicitud->rayox != null){
+                $total += $solicitud->rayox->servicio->precio;
+              }
             }
           }
         }
@@ -114,7 +118,11 @@ class Ingreso extends Model
         if(count($ingreso->transaccion->solicitud)>0){
           foreach($ingreso->transaccion->solicitud as $solicitud){
             if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha, $fecha_mayor))){
-              $total += $solicitud->examen->servicio->precio;
+              if($solicitud->examen != null){
+                $total += $solicitud->examen->servicio->precio;
+              }else if($solicitud->rayox != null){
+                $total += $solicitud->rayox->servicio->precio;
+              }
             }
           }
         }

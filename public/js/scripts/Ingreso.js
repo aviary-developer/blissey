@@ -233,10 +233,10 @@ $(document).on('ready', function () {
           examen: concat,
           f_ingreso: id,
           transaccion: transaccion_id,
+          tipo: "examenes"
         },
         success: function (respuesta) {
           if (respuesta) {
-            swal("¡Hecho!", "Solicitud enviada satisfactoriamente", "success");
             swal({
               title: "¡Hecho!",
               text: "Solicitud enviada satisfactoriamente",

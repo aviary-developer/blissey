@@ -9,6 +9,7 @@ use App\Habitacion;
 use App\Examen;
 use App\Paciente;
 use App\Servicio;
+use App\Rayosx;
 use App\Abono;
 use App\Especialidad;
 use App\SolicitudExamen;
@@ -184,6 +185,8 @@ class IngresoController extends Controller
       /**Obtener las habitaciones para realizar el cambio de habitacion */
       $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
       $observaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+      /**Examenes de ultrasonografía y de rayos x */
+      $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
 
       if($ingreso->estado == 1){
         $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
@@ -241,9 +244,11 @@ class IngresoController extends Controller
         $detalle_p = [];
         $detalle_s = [];
         $detalle_l = [];
+        $detalle_r = [];
         $indice_detalle_p = 0;
         $indice_detalle_s = 0;
         $indice_detalle_l = 0;
+        $indice_detalle_r = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
         $count_m24 = 0;
         if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
@@ -273,10 +278,24 @@ class IngresoController extends Controller
         $count_l24 = 0;
         if($ingreso->transaccion->solicitud->count()>0){
           foreach($ingreso->transaccion->solicitud as $solicitud){
-            $detalle_l[$indice_detalle_l] = $solicitud;
-            $indice_detalle_l++;
-            if($solicitud->created_at->between($ultima24, $ultima48)){
-              $count_l24++;
+            if($solicitud->examen != null){
+              $detalle_l[$indice_detalle_l] = $solicitud;
+              $indice_detalle_l++;
+              if($solicitud->created_at->between($ultima24, $ultima48)){
+                $count_l24++;
+              }
+            }
+          }
+        }
+        $count_r24 = 0;
+        if($ingreso->transaccion->solicitud->count()>0){
+          foreach($ingreso->transaccion->solicitud as $solicitud){
+            if($solicitud->rayox != null){
+              $detalle_r[$indice_detalle_r] = $solicitud;
+              $indice_detalle_r++;
+              if($solicitud->created_at->between($ultima24, $ultima48)){
+                $count_r24++;
+              }
             }
           }
         }
@@ -325,11 +344,13 @@ class IngresoController extends Controller
         'detalle_p',
         'detalle_s',
         'detalle_l',
+        'detalle_r',
         'ultima24',
         'ultima48',
         'count_m24',
         'count_s24',
         'count_l24',
+        'count_r24',
         'hoy',
         'examenes',
         'habitaciones',
@@ -339,7 +360,8 @@ class IngresoController extends Controller
         'obs',
         'med',
         'ing',
-        'activo'
+        'activo',
+        'rayosx'
       ));
     }
 
@@ -863,9 +885,9 @@ class IngresoController extends Controller
       $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
     }
     if($request->pendiente == null){
-      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_examen','!=',null);
     }else{
-      $lista = $ingreso->transaccion->solicitud->where('estado',0);
+      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_examen','!=',null);
     }
     $laboratorio = [];
     $indice = 0;
@@ -885,6 +907,39 @@ class IngresoController extends Controller
     setlocale(LC_ALL,'es');
     $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
     return (compact('laboratorio','indice','fecha_f'));
+  }
+
+    public function lista_rayos(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha24 = $fecha24->addDays(1);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
+      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+    }
+    if($request->pendiente == null){
+      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_rayox','!=',null);
+    }else{
+      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_rayox','!=',null);
+    }
+    $rayox = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      $rayox[$indice]['id'] = $detalle->id;
+      $rayox[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      $rayox[$indice]['nombre'] = $detalle->rayox->nombre;
+      $rayox[$indice]['estado'] = $detalle->estado;
+      $indice++;
+    }
+    $rayox = array_reverse($rayox);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return (compact('rayox','indice','fecha_f'));
   }
 
   public function dash ($id){

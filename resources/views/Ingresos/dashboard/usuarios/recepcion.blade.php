@@ -64,7 +64,7 @@
     </div>
     <div class="col-xs-4">
       <div class="x_panel">
-
+        @include('Ingresos.dashboard.partes.rayos_x_r')
       </div>
     </div>
     <div class="col-xs-4">

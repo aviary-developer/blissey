@@ -262,11 +262,11 @@ class SolicitudExamenController extends Controller
     if($request->f_ingreso == null){
       if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
       return redirect('/solicitudex?tipo=examenes')->with('mensaje', '¡Guardado!');
-    }elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
-      return redirect('/solicitudex?tipo=rayosx')->with('mensaje', '¡Guardado!');
-    } elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
-      return redirect('/solicitudex?tipo=ultras')->with('mensaje', '¡Guardado!');
-    }
+      }elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
+        return redirect('/solicitudex?tipo=rayosx')->with('mensaje', '¡Guardado!');
+      } elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
+        return redirect('/solicitudex?tipo=ultras')->with('mensaje', '¡Guardado!');
+      }
     }else{
       return "Guardado";
     }

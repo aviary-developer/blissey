@@ -70,25 +70,32 @@ function confirmar_ingreso(id) {
 
 $("#btn_v_p").on('click', function (e) {
   e.preventDefault();
-  medicamento_fecha()
+  medicamento_fecha();
 });
 $("#fecha_producto").on('change', function () {
-  medicamento_fecha()
+  medicamento_fecha();
 });
 $("#fecha_servicio").on('change', function () {
-  servicio_fecha()
+  servicio_fecha();
 });
 $("#btn_v_s").on('click', function (e) {
   e.preventDefault();
-  servicio_fecha()
+  servicio_fecha();
 });
 $("#fecha_examen").on('change', function () {
-  laboratorio_fecha()
+  laboratorio_fecha();
 });
 $("#btn_v_l").on('click', function (e) {
   e.preventDefault();
   laboratorio_fecha();
   laboratorio_pendientes_ver();
+});
+$("#fecha_rayo").on("change", function () {
+  rayos_fecha();
+});
+$("#btn_v_r").on('click', function (e) {
+  e.preventDefault();
+  rayos_fecha();
 });
 
 function medicamento_fecha() {
@@ -193,10 +200,63 @@ function servicio_fecha() {
   });
 }
 
+function rayos_fecha() {
+  var fecha = $("#fecha_rayo").val();
+  var id = $("#id").val();
+  
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/ingreso/lista_rayos',
+    data: {
+      id: id,
+      fecha: fecha
+    },
+    success: function (r) {
+      var panel = $("#mensaje_v_r");
+      fecha_title = $("#date_r");
+      fecha_title.text(r.fecha_f);
+      if (r.indice > 0) {
+        panel.empty();
+        html = '<div class="col-xs-12">' +
+          '<table class="table" id="tabla_v_l">' +
+          '<thead>' +
+          '<th style="width: 150px">Hora</th>' +
+          '<th>Detalle</th>' +
+          '<th style="width: 40px">Acción</th>'
+        '</thead>' +
+          '</table>' +
+          '</div>';
+        panel.append(html);
+        tabla = $("#tabla_v_l");
+        $(r.rayox).each(function (key, value) {
+          html = '<tr id="r' + value.id + '">' +
+            '<td>' + value.hora + '</td>' +
+            '<td>' +
+            ' <b class="big-text">' + value.nombre + '</b>' +
+            '</td>';
+          if (value.estado == 0) {
+            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+          } else if(value.estado == 1) {
+            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+          } else {
+            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+          }
+          html += '</tr>';
+          tabla.append(html);
+        });
+      } else {
+        panel.empty();
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun examen de rayos X al paciente en esta fecha</span></center>';
+        panel.append(html);
+      }
+    }
+  });
+}
+
 function laboratorio_fecha() {
   var fecha = $("#fecha_examen").val();
   var id = $("#id").val();
-  
+
   $.ajax({
     type: 'get',
     url: '/blissey/public/ingreso/lista_laboratorio',
@@ -229,7 +289,7 @@ function laboratorio_fecha() {
             '</td>';
           if (value.estado == 0) {
             html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
-          } else if(value.estado == 1) {
+          } else if (value.estado == 1) {
             html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
             html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
@@ -367,3 +427,38 @@ $("#cambio_hospitalizacion_").on("click", function (e) {
     swal('¡Error!', 'Es necesario que haya al menos una habitación disponible', 'error');
   }
 });
+
+function ultra_rayos(tipo) {
+  var rayo = $("#f_rayo").val();
+  var token = $("#token").val();
+  var paciente = $("#id_p").val();
+  var transaccion_id = $("#id_t").val();
+  var id = $("#id").val();
+  if (tipo == 1) {
+    
+  } else {
+    $.ajax({
+      url: "/blissey/public/solicitudex",
+      headers: { 'X-CSRF-TOKEN': token },
+      type: "POST",
+      data: {
+        f_paciente: paciente,
+        rayox: rayo,
+        f_ingreso: id,
+        transaccion: transaccion_id,
+        tipo: "rayosx"
+      },
+      success: function (respuesta) {
+        if (respuesta) {
+          swal({
+            title: "¡Hecho!",
+            text: "Solicitud enviada satisfactoriamente",
+            type: "success",
+            showConfirmButton: false,
+          });
+          location.reload();
+        }
+      }
+    });
+  }
+}
