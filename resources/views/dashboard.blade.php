@@ -321,6 +321,12 @@
                                 <li>
                                   <a href={{asset( '/solicitudex')}}>Solicitudes</a>
                                 </li>
+                                <li>
+                                  <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluadas</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregadas</a>
+                                </li>
                               </ul>
                             </li>
                         @elseif (Auth::user()->tipoUsuario == "Rayos X")
@@ -335,6 +341,12 @@
                               </li>
                               <li>
                                 <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluadas</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregadas</a>
                               </li>
                             </ul>
                           </li>

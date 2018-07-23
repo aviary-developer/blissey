@@ -21,6 +21,14 @@ class SolicitudExamen extends Model
         $examen = Examen::find($id);
         return $examen->nombreExamen;
     }
+    public function nombreUltra($id){
+        $examen = ultrasonografia::find($id);
+        return $examen->nombre;
+    }
+    public function nombreRayox($id){
+        $examen = Rayosx::find($id);
+        return $examen->nombre;
+    }
     public function paciente(){
       return $this->belongsTo('App\Paciente','f_paciente');
     }

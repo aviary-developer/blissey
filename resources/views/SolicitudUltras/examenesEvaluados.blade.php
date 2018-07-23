@@ -7,7 +7,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Exámenes evaluados
+          Ultrasonografías evaluadas
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -15,9 +15,6 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 col-12">
             <div class="btn-group">
-              <a href={{asset('/solicitudex/create')}} class="btn btn-sm btn-dark">
-                <i class="fa fa-plus"></i> Nuevo
-              </a>
               <a href={{asset('#')}} class="btn btn-sm btn-dark">
                 <i class="fa fa-file"></i> Reporte
               </a>
@@ -52,7 +49,7 @@
                     <h4 class="panel-title">
                       {{$paciente->nombrePaciente($paciente->f_paciente)}} <small><i class="fa fa-chevron-down"></i></small>
 											<ul class="nav navbar-right">
-                      <li><spam onclick={!! "'imprimirExaEvaPacie(".$solicitudes.",".$paciente->f_paciente.");'" !!} class="fa fa-print"></spam>
+                      <li>
                       </li>
                     </ul>
                     </h4>
@@ -61,17 +58,22 @@
                     <div class="panel-body">
                       <table class="table">
                         <thead>
-                          <th class="col-md-2 col-sm-2">Código</th>
                           <th>Examen</th>
 													<th>Fecha de evaluación</th>
+													<th>Opciones</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
                             @if($solicitud->f_paciente == $paciente->f_paciente)
                               <tr>
-                                <td>{{$solicitud->codigo_muestra}}</td>
-                                <td>{{$solicitud->nombreExamen($solicitud->f_examen)}}</td>
+                                <td>{{$solicitud->ultrasonografia->nombre}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
+																<td><a id="editar" href= {!! asset('/solicitudex/'.$solicitud->id.'/edit')!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
+															    <i class="fa fa-edit"></i>
+															  </a>
+															  <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_ultrasonografia)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+															    <i class="fa fa-envelope"></i>
+															  </a></td>
                               </tr>
                             @endif
                           @endforeach
@@ -88,24 +90,31 @@
                 <div class="panel">
                   <a class="panel-heading collapsed" role="tab" id={{"H".$k}} data-toggle="collapse" data-parent="#accordion" href={{"#C".$k}}        aria-expanded="false" aria-controls={{"C".$k}}>
                     <h4 class="panel-title">
-                      {{$examen->nombreExamen($examen->f_examen)}} <small><i class="fa fa-chevron-down"></i></small>
+                      {{$examen->nombreUltra($examen->f_ultrasonografia)}} <small><i class="fa fa-chevron-down"></i></small>
                     </h4>
                   </a>
                   <div id={{"C".$k}} class="panel-collapse collapse" role="tabpanel" aria-labelledby={{"H".$k}}>
                     <div class="panel-body">
                       <table class="table">
                         <thead>
-                          <th class="col-md-2 col-sm-2">Código</th>
                           <th>Paciente</th>
+													<th>Fecha de evaluación</th>
+													<th>Opciones</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
                             @if($solicitud->f_examen == $examen->f_examen)
                               <tr>
-                                <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                                 </td>
+																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
+																<td><a id="editar" href= {!! asset('/solicitudex/'.$solicitud->id.'/edit')!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
+															    <i class="fa fa-edit"></i>
+															  </a>
+															  <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_ultrasonografia)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+															    <i class="fa fa-envelope"></i>
+															  </a></td>
                               </tr>
                             @endif
                           @endforeach

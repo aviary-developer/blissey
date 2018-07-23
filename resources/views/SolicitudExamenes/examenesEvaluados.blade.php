@@ -15,9 +15,6 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 col-12">
             <div class="btn-group">
-              <a href={{asset('/solicitudex/create')}} class="btn btn-sm btn-dark">
-                <i class="fa fa-plus"></i> Nuevo
-              </a>
               <a href={{asset('#')}} class="btn btn-sm btn-dark">
                 <i class="fa fa-file"></i> Reporte
               </a>

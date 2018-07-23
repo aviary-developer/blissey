@@ -7,7 +7,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Radiografías evaluadas
+          Radiografías entregadas
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -27,9 +27,9 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href={{asset("/examenesEvaluados")}}>Por Examen</a>
+                  <li><a href={{asset("/examenesEntregados")}}>Por Examen</a>
                   </li>
-                  <li><a href={{asset("/examenesEvaluados?vista=paciente")}}>Por Paciente</a>
+                  <li><a href={{asset("/examenesEntregados?vista=paciente")}}>Por Paciente</a>
                   </li>
                 </ul>
               </div>
@@ -68,12 +68,10 @@
                               <tr>
                                 <td>{{$solicitud->rayox->nombre}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
-																<td><a id="editar" href= {!! asset('/solicitudex/'.$solicitud->id.'/edit')!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
-															    <i class="fa fa-edit"></i>
-															  </a>
-															  <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+																<td>
+																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
-															  </a></td>
+															  </a><td>
                               </tr>
                             @endif
                           @endforeach
@@ -98,7 +96,6 @@
                       <table class="table">
                         <thead>
                           <th>Paciente</th>
-													<th>Fecha de evaluación</th>
 													<th>Opciones</th>
                         </thead>
                         <tbody>
@@ -108,13 +105,10 @@
                                 <td>
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                                 </td>
-																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
-																<td><a id="editar" href= {!! asset('/solicitudex/'.$solicitud->id.'/edit')!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
-															    <i class="fa fa-edit"></i>
-															  </a>
-															  <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+																<td>
+																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
-															  </a></td>
+															  </a><td>
                               </tr>
                             @endif
                           @endforeach
