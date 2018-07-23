@@ -1,7 +1,15 @@
 <div class="row">
-  <center>
+  <div class="col-xs-8">
     <h5 class="big-text">Estado Financiero</h5>
-  </center>
+  </div>
+  <div class="col-xs-4">
+    <div class="btn-group alignright">
+      @if ($ingreso->estado == 1)  
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#laboratorio_m" ><i class="fa fa-plus"></i></button>
+      @endif
+      <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_finanzas" id="btn_v_f"><i class="fa fa-eye"></i></button>
+    </div>
+  </div>
 </div>
 <div class="row">
   <div class="col-xs-9">
@@ -42,3 +50,4 @@
     </div>
   </div>
 </div>
+@include('Ingresos.dashboard.modales.ver_finanzas')

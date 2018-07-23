@@ -97,6 +97,24 @@ $("#btn_v_r").on('click', function (e) {
   e.preventDefault();
   rayos_fecha();
 });
+$("#fecha_ultra").on("change", function () {
+  ultra_fecha();
+});
+$("#btn_v_u").on('click', function (e) {
+  e.preventDefault();
+  ultra_fecha();
+});
+$("#fecha_finanza").on("change", function () {
+  var id = $("#id").val();
+  var fecha = $("#fecha_finanza").val();
+  resumen(id,fecha);
+});
+$("#btn_v_f").on('click', function (e) {
+  e.preventDefault();
+  var id = $("#id").val();
+  var fecha = $("#fecha_finanza").val();
+  resumen(id,fecha);
+});
 
 function medicamento_fecha() {
   var fecha = $("#fecha_producto").val();
@@ -218,7 +236,7 @@ function rayos_fecha() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-xs-12">' +
-          '<table class="table" id="tabla_v_l">' +
+          '<table class="table" id="tabla_v_r">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
@@ -227,7 +245,7 @@ function rayos_fecha() {
           '</table>' +
           '</div>';
         panel.append(html);
-        tabla = $("#tabla_v_l");
+        tabla = $("#tabla_v_r");
         $(r.rayox).each(function (key, value) {
           html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
@@ -300,6 +318,59 @@ function laboratorio_fecha() {
       } else {
         panel.empty();
         html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun examen al paciente en esta fecha</span></center>';
+        panel.append(html);
+      }
+    }
+  });
+}
+
+function ultra_fecha() {
+  var fecha = $("#fecha_ultra").val();
+  var id = $("#id").val();
+
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/ingreso/lista_ultra',
+    data: {
+      id: id,
+      fecha: fecha
+    },
+    success: function (r) {
+      var panel = $("#mensaje_v_u");
+      fecha_title = $("#date_u");
+      fecha_title.text(r.fecha_f);
+      if (r.indice > 0) {
+        panel.empty();
+        html = '<div class="col-xs-12">' +
+          '<table class="table" id="tabla_v_u">' +
+          '<thead>' +
+          '<th style="width: 150px">Hora</th>' +
+          '<th>Detalle</th>' +
+          '<th style="width: 40px">Acción</th>'
+        '</thead>' +
+          '</table>' +
+          '</div>';
+        panel.append(html);
+        tabla = $("#tabla_v_u");
+        $(r.ultra).each(function (key, value) {
+          html = '<tr id="r' + value.id + '">' +
+            '<td>' + value.hora + '</td>' +
+            '<td>' +
+            ' <b class="big-text">' + value.nombre + '</b>' +
+            '</td>';
+          if (value.estado == 0) {
+            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+          } else if (value.estado == 1) {
+            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+          } else {
+            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+          }
+          html += '</tr>';
+          tabla.append(html);
+        });
+      } else {
+        panel.empty();
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ninguna ultrasonografía al paciente en esta fecha</span></center>';
         panel.append(html);
       }
     }
@@ -430,12 +501,35 @@ $("#cambio_hospitalizacion_").on("click", function (e) {
 
 function ultra_rayos(tipo) {
   var rayo = $("#f_rayo").val();
+  var ultra = $("#f_ultra").val();
   var token = $("#token").val();
   var paciente = $("#id_p").val();
   var transaccion_id = $("#id_t").val();
   var id = $("#id").val();
   if (tipo == 1) {
-    
+    $.ajax({
+      url: "/blissey/public/solicitudex",
+      headers: { 'X-CSRF-TOKEN': token },
+      type: "POST",
+      data: {
+        f_paciente: paciente,
+        ultrasonografia: ultra,
+        f_ingreso: id,
+        transaccion: transaccion_id,
+        tipo: "ultras"
+      },
+      success: function (respuesta) {
+        if (respuesta) {
+          swal({
+            title: "¡Hecho!",
+            text: "Solicitud enviada satisfactoriamente",
+            type: "success",
+            showConfirmButton: false,
+          });
+          location.reload();
+        }
+      }
+    });
   } else {
     $.ajax({
       url: "/blissey/public/solicitudex",

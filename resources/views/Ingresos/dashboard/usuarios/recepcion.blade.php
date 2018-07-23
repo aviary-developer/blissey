@@ -69,7 +69,7 @@
     </div>
     <div class="col-xs-4">
       <div class="x_panel">
-
+        @include('Ingresos.dashboard.partes.ultra_r')
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="ver_rayosx" data-backdrop="static">
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="ver_ultra" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="row">
       <div class="col-xs-5">
@@ -14,29 +14,29 @@
                   @php
                     $ahora = Carbon\Carbon::now();
                   @endphp
-                  {!! Form::date('fechaNacimiento',$hoy->format('Y-m-d'),['id'=>'fecha_rayo','max'=>$ingreso->fecha_ingreso->addDays(($dias+1))->format('Y-m-d'),'min'=>$ingreso->fecha_ingreso->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+                  {!! Form::date('fechaNacimiento',$hoy->format('Y-m-d'),['id'=>'fecha_ultra','max'=>$ingreso->fecha_ingreso->addDays(($dias+1))->format('Y-m-d'),'min'=>$ingreso->fecha_ingreso->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-
+          
         </div>
       </div>
       <div class="col-xs-7">
         <div class="x_panel m_panel" style="height: 553px">
           <div class="row">
-            <h4>Rayos X</h4>
+            <h4>Ultrasonografías</h4>
           </div>
           <div class="row">
             <center>
-              <h5 class="big-text" id="date_r">Fecha</h5>
+              <h5 class="big-text" id="date_u">Fecha</h5>
             </center>
           </div>
           <div class="row " >
             <div style="overflow-x: hidden; overflow-y: scroll; height: 432px">
-              <div id="mensaje_v_r"></div>
+              <div id="mensaje_v_u"></div>
             </div>
           </div>
         </div>

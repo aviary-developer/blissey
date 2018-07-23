@@ -10,6 +10,7 @@ use App\Examen;
 use App\Paciente;
 use App\Servicio;
 use App\Rayosx;
+use App\ultrasonografia;
 use App\Abono;
 use App\Especialidad;
 use App\SolicitudExamen;
@@ -187,6 +188,7 @@ class IngresoController extends Controller
       $observaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
       /**Examenes de ultrasonografía y de rayos x */
       $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
+      $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
 
       if($ingreso->estado == 1){
         $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
@@ -236,19 +238,21 @@ class IngresoController extends Controller
         $ultima24 = $ingreso->fecha_ingreso->subDays(1);
         $ultima48 = $ingreso->fecha_alta->addDays(1);
         /**Determinar las horas que paso ingresado el paciente antes del alta medica */
-        $horas = $ingreso->fecha_ingreso->diffInHours($fecha_alta);
+        $horas = $ingreso->fecha_ingreso->diffInHours($ingreso->fecha_alta);
         $horas_f = $ingreso->fecha_alta->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
       }
       /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
       if($ingreso->estado > 0){
-        $detalle_p = [];
-        $detalle_s = [];
-        $detalle_l = [];
-        $detalle_r = [];
+        $detalle_p = []; //Detalle producto
+        $detalle_s = []; //Detalle servicio
+        $detalle_l = []; //Detalle laboratorio clínico
+        $detalle_r = []; //Detalle rayos X
+        $detalle_u = []; //Detalle ultrasonografía
         $indice_detalle_p = 0;
         $indice_detalle_s = 0;
         $indice_detalle_l = 0;
         $indice_detalle_r = 0;
+        $indice_detalle_u = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
         $count_m24 = 0;
         if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
@@ -265,7 +269,7 @@ class IngresoController extends Controller
         $count_s24 = 0;
         if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->count() > 0){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Habitación"){
+            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
               $detalle_s[$indice_detalle_s] = $detalle;
               $indice_detalle_s++;
               if($detalle->created_at->between($ultima24, $ultima48)){
@@ -295,6 +299,18 @@ class IngresoController extends Controller
               $indice_detalle_r++;
               if($solicitud->created_at->between($ultima24, $ultima48)){
                 $count_r24++;
+              }
+            }
+          }
+        }
+        $count_u24 = 0;
+        if($ingreso->transaccion->solicitud->count()>0){
+          foreach($ingreso->transaccion->solicitud as $solicitud){
+            if($solicitud->ultrasonografia != null){
+              $detalle_u[$indice_detalle_u] = $solicitud;
+              $indice_detalle_u++;
+              if($solicitud->created_at->between($ultima24, $ultima48)){
+                $count_u24++;
               }
             }
           }
@@ -345,12 +361,14 @@ class IngresoController extends Controller
         'detalle_s',
         'detalle_l',
         'detalle_r',
+        'detalle_u',
         'ultima24',
         'ultima48',
         'count_m24',
         'count_s24',
         'count_l24',
         'count_r24',
+        'count_u24',
         'hoy',
         'examenes',
         'habitaciones',
@@ -361,7 +379,8 @@ class IngresoController extends Controller
         'med',
         'ing',
         'activo',
-        'rayosx'
+        'rayosx',
+        'ultras'
       ));
     }
 
@@ -566,11 +585,21 @@ class IngresoController extends Controller
 
     public function resumen(Request $request){
       $id = $request->id;
-      $dia = $request->dia;
+      $fecha_x = $request->fecha;
+
+      $fecha_xf = Carbon::parse($fecha_x);      
       $ingreso = Ingreso::find($id);
+      $dia = $ingreso->fecha_ingreso->diffInDays($fecha_xf,false);
+      $dia++;
+      if(!$ingreso->fecha_ingreso->lte($fecha_xf)){
+        $dia = 0;
+      }
+      $fecha = $ingreso->fecha_ingreso->addDays($dia);
+
       setlocale(LC_ALL,'es');
-      $fecha_carbon = $fecha = $ingreso->fecha_ingreso->addDays($dia);
-      $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
+      $ultima24 = $fecha_xf;
+      $ultima48 = Carbon::parse($fecha_x);
+      $ultima48 = $ultima48->addDays(1);
       $fecha = $fecha->formatLocalized('%d de %B de %Y');
       $medico = (($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido;
 
@@ -584,7 +613,7 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null))>0){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-          if($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
+          if($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($ultima24, $ultima48))){
             $medicos[$k]["nombre"] = $detalle->servicio->nombre;
             $medicos[$k]["precio"] = $detalle->precio;
             $k++;
@@ -596,7 +625,7 @@ class IngresoController extends Controller
       $abono = Ingreso::abonos($id,$dia);
 
       //Valor de la habitación
-      $habitacion_count = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_carbon)->count();
+      $habitacion_count = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$ultima24)->count();
       if($habitacion_count == 0){
         $habitacion = $ingreso->habitacion->precio;
         $habitacion_nombre = 'Habitación '.$ingreso->habitacion->numero;
@@ -611,13 +640,13 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true))>0){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($ultima24, $ultima48))){
             $servicios[$k]["nombre"] = $detalle->servicio->nombre;
             $servicios[$k]["precio"] = $detalle->precio;
             $k++;
             $total_servicios++;
           }
-          if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha_carbon)){
+          if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $ultima24)){
             $habitacion = $detalle->precio;
             $habitacion_nombre = $detalle->servicio->nombre;
           }
@@ -630,10 +659,12 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->solicitud)>0){
         $k = 0;
         foreach($ingreso->transaccion->solicitud as$solicitud){
-          if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_carbon, $fecha_mayor))){
-            $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
-            $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
-            $k++;
+          if($solicitud->estado != 0 && ($solicitud->created_at->between($ultima24, $ultima48))){
+            if($solicitud->f_examen != null){
+              $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
+              $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
+              $k++;
+            }
           }
         }
       }
@@ -644,7 +675,7 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
-          if($detalle->f_servicio == null && ($detalle->created_at->between($fecha_carbon, $fecha_mayor))){
+          if($detalle->f_servicio == null && ($detalle->created_at->between($ultima24, $ultima48))){
             $tratamiento += $medicina[$k]["precio"] = $detalle->precio * $detalle->cantidad;
             if($detalle->divisionProducto->unidad == null){
               $medicina[$k]["presentacion"] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre;
@@ -674,7 +705,9 @@ class IngresoController extends Controller
         'medicina',
         'servicios',
         'total_servicios',
-        'habitacion_nombre'
+        'habitacion_nombre',
+        's',
+        'fecha_xf'
       ));
     }
   
@@ -779,7 +812,11 @@ class IngresoController extends Controller
 
     $ingreso = Ingreso::find($id);
     $hoy = Carbon::now();
-    $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+    if($ingreso->estado < 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+    }else{
+      $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+    }
 
     /**Recorrer en un for todos los días desde el inicio hasta hoy, para ver todos los gastos hechos por día */
     $monto = [];
@@ -909,7 +946,7 @@ class IngresoController extends Controller
     return (compact('laboratorio','indice','fecha_f'));
   }
 
-    public function lista_rayos(Request $request){
+  public function lista_rayos(Request $request){
     $id = $request->id;
     $fecha_sf = $request->fecha;
     $ingreso = Ingreso::find($id);
@@ -940,6 +977,39 @@ class IngresoController extends Controller
     setlocale(LC_ALL,'es');
     $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
     return (compact('rayox','indice','fecha_f'));
+  }
+
+  public function lista_ultra(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha24 = $fecha24->addDays(1);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
+      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+    }
+    if($request->pendiente == null){
+      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_ultrasonografia','!=',null);
+    }else{
+      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_ultrasonografia','!=',null);
+    }
+    $ultra = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      $ultra[$indice]['id'] = $detalle->id;
+      $ultra[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      $ultra[$indice]['nombre'] = $detalle->ultrasonografia->nombre;
+      $ultra[$indice]['estado'] = $detalle->estado;
+      $indice++;
+    }
+    $ultra = array_reverse($ultra);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return (compact('ultra','indice','fecha_f'));
   }
 
   public function dash ($id){
