@@ -88,7 +88,7 @@
                 @else
                   <tr><td colspan="2">
                     <center>
-                      No hay productos asociados a este componenete
+                      No hay productos asociados a este componente
                     </center>
                   </td></tr>
                 @endif

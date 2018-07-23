@@ -20,7 +20,6 @@ class ComponenteProducto extends Model
     return $this->belongsTo('App\Producto','f_producto')->select(['id','nombre','f_presentacion','estado']);
   }
   public static function productos($id){
-    //return ComponenteProducto::where('f_componente',$id)->where('estado',true)->orderBy('nombre','ASC')->get(['nombre']);
     return DB::table('componente_productos')
     ->select('componente_productos.*','productos.*')
     ->join('productos','componente_productos.f_producto','=','productos.id','left outer')

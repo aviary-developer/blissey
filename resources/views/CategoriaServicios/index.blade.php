@@ -96,7 +96,7 @@
               <tr>
                 <td colspan="3">
                   <center>
-                    No hay registros que coincidan con los terminos de busqueda indicados
+                    No hay registros que coincidan con los términos de búsqueda indicados
                   </center>
                 </td>
               </tr>

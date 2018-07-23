@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Caja;
 use App\Http\Requests\CajaRequest;
 use Redirect;
+use App\Bitacora;
 
 class CajaController extends Controller
 {

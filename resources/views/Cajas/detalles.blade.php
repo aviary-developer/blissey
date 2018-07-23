@@ -1,26 +1,20 @@
 @extends('dashboard')
 @section('layout')
-  @if ($estado == 1 || $estado == null)
-    @php
-    $estadoOpuesto = 0;
-    @endphp
-  @else
-    @php
-    $estadoOpuesto = 1;
-    @endphp
-  @endif
   @php
-  $index = true;
+    $apertura=App\DetalleCaja::cajaApertura();
   @endphp
   <div class="col-md-8 col-sm-8 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Cajas
-          @if ($estadoOpuesto)
-            <small>Papelera</small>
-          @else
-            <small>Activas</small>
-          @endif
+        <h2>Apertura de Caja
+            <small>
+
+              @if ($apertura)
+                Aperturada
+              @else
+                No aperturada
+              @endif
+            </small>
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -30,14 +24,7 @@
             <div class="btn-group">
               <a href={!! asset('/cajas/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
               <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/cajas?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
-                @if ($estadoOpuesto)
-                  <i class="fa fa-check"></i> Activos
-                  <span class="label label-success">{{ $activos }}</span>
-                @else
-                  <i class="fa fa-trash"></i> Papelera
-                  <span class="label label-warning">{{ $inactivos }}</span>
-                @endif
+              {{-- <a href={!! asset('/cajas?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm"> --}}
               </a>
               <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
@@ -47,9 +34,6 @@
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
               {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
-              @if ($estadoOpuesto)
-                <input type="hidden" name="estado" value="0">
-              @endif
             </div>
             {!! Form::close() !!}
           </div>
@@ -60,7 +44,7 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Localización</th>
+              <th>Estado</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -85,10 +69,16 @@
                     @endif
                   </td>
                   <td>
-                    @if ($estadoOpuesto)
-                      @include('cajas.Formularios.activate')
+                    @if (App\DetalleCaja::verificacionCaja($caja->id))
+                      <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta utilizada por otro usuario">
+                        <i class="fa fa-warning"></i>
+                      </button>
                     @else
-                      @include('cajas.Formularios.desactivate')
+                      {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
+                      <a href={!! asset('/detalleCajas/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
+                        <i class="fa fa-check"></i>
+                      </a>
+                      {!!Form::close()!!}
                     @endif
                   </td>
                 </tr>
