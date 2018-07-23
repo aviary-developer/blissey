@@ -16,7 +16,7 @@ class FUsuario extends Migration
 
     public function down()
     {
-      Schema::table('parametros', function (Blueprint $table) {
+      Schema::table('detalle_cajas', function (Blueprint $table) {
           $table->dropColumn('f_usuario');
       });
     }

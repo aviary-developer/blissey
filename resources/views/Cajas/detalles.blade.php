@@ -75,7 +75,7 @@
                       </button>
                     @else
                       {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
-                      <a href={!! asset('/aperturar/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
+                      <a href={!! asset('/detalleCajas/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
                         <i class="fa fa-check"></i>
                       </a>
                       {!!Form::close()!!}

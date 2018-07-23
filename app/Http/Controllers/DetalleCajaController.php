@@ -40,7 +40,7 @@ class DetalleCajaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo $request;
     }
 
     /**
@@ -51,7 +51,8 @@ class DetalleCajaController extends Controller
      */
     public function show($id)
     {
-        //
+      $caja=Caja::findOrFail($id);
+      return view('Cajas.aperturar',compact('caja'));
     }
 
     /**
@@ -89,7 +90,5 @@ class DetalleCajaController extends Controller
     }
     public function aperturar($id)
     {
-      $caja=Caja::findOrFail($id);
-      return view('Cajas.aperturar',compact('caja'));
     }
 }
