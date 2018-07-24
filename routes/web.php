@@ -197,7 +197,8 @@ Route::group(['middleware'=>'general'], function(){
     Route::match(['get','post'],'/activateCaja/{id}','CajaController@activate');
     Route::match(['get','post'],'/destroyCaja/{id}','CajaController@destroy');
     Route::resource('detalleCajas','DetalleCajaController');
-    Route::match(['get'],'/aperturar/{id}','DetalleCajaController@aperturar');
+    Route::match(['post'],'/aperturar/{id}','DetalleCajaController@aperturar');
+    Route::match(['get'],'/arqueo','DetalleCajaController@arqueo');
   //Rutas de estantes
   Route::resource('estantes','EstanteController');
   Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');

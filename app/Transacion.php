@@ -264,4 +264,7 @@ class Transacion extends Model
           $d->stock=$stock;
           $d->save();
         }
+        public static function movimentosCaja($f_usuario){
+          return Transacion::where('f_usuario',$f_usuario)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->get();
+        }
       }

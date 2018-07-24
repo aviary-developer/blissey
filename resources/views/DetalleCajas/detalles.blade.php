@@ -10,9 +10,9 @@
             <small>
 
               @if ($apertura)
-                Aperturada
+                Abierta
               @else
-                No aperturada
+                Cerrada
               @endif
             </small>
         </h2>
@@ -70,15 +70,27 @@
                   </td>
                   <td>
                     @if (App\DetalleCaja::verificacionCaja($caja->id))
-                      <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta utilizada por otro usuario">
-                        <i class="fa fa-warning"></i>
-                      </button>
+                      @if (App\DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id)
+                        <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Efectuar cierre">
+                          <i class="fa fa-check-circle"></i>
+                        </button>
+                      @else
+                        <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="En uso por otro usuario">
+                          <i class="fa fa-warning"></i>
+                        </button>
+                      @endif
                     @else
-                      {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
-                      <a href={!! asset('/detalleCajas/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
-                        <i class="fa fa-check"></i>
-                      </a>
-                      {!!Form::close()!!}
+                      @if ($apertura)
+                        <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No disponible">
+                          <i class="fa fa-warning"></i>
+                        </button>
+                      @else
+                        {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
+                        <a href={!! asset('/aperturar/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
+                          <i class="fa fa-check"></i>
+                        </a>
+                        {!!Form::close()!!}
+                      @endif
                     @endif
                   </td>
                 </tr>

@@ -27,7 +27,7 @@
         <div class="ln_solid"></div>
         <div class="form-group">
           <center>
-            {!! Form::button('Guardar',['class'=>'btn btn-primary','onclick'=>'aperturar()']) !!}
+            {!! Form::button('Aperturar',['class'=>'btn btn-primary','onclick'=>'aperturar()']) !!}
             <button type="reset" name="button" class="btn btn-default">Limpiar</button>
             <a href={!! asset('/cajas') !!} class="btn btn-default">Cancelar</a>
           </center>
