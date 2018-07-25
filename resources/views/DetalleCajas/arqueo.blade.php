@@ -30,7 +30,7 @@
               <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
             <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Productos</a>
+              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Movimientos</a>
             </li>
           </ul>
         </div>
@@ -75,12 +75,18 @@
                 @if (count($movimientos)>0)
                 <tr>
                   <th>#</th>
-                  <th></th>
+                  <th>Número de factura</th>
+                  <th>Tipo</th>
+                  <th>Hora</th>
+                  <th>Entrada</th>
+                  <th>Salida</th>
                 </tr>
                   @foreach ($movimientos as $movimiento)
                     <tr>
                       <td>{{$contador}}</td>
-                      <td></td>
+                      <td>{{$movimiento->factura}}</td>
+                      <td>{{App\Transacion::tipo($movimiento->tipo)}}</td>
+                      <td>{{date_format($movimiento->created_at,'g:i A')}}</td>
                   </tr>
                   @php
                   $contador++;

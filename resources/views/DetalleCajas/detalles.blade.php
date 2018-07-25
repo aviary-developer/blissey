@@ -85,11 +85,11 @@
                           <i class="fa fa-warning"></i>
                         </button>
                       @else
-                        {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
+                        {{-- {!!Form::open(['method'=>'POST','id'=>'formulario'])!!} --}}
                         <a href={!! asset('/aperturar/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
                           <i class="fa fa-check"></i>
                         </a>
-                        {!!Form::close()!!}
+                        {{-- {!!Form::close()!!} --}}
                       @endif
                     @endif
                   </td>

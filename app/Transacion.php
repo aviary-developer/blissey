@@ -267,4 +267,8 @@ class Transacion extends Model
         public static function movimentosCaja($f_usuario){
           return Transacion::where('f_usuario',$f_usuario)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->get();
         }
+        public static function tipo($t){
+          $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido');
+          return $tipos[$t];
+        }
       }
