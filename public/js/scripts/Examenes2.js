@@ -347,66 +347,6 @@ $("#guardar_examen").on("click", function (e) {
   }
 });
 
-$("#guardarReactivoModal").on('click', async function (e) {
-  e.preventDefault();
-  var v_nombre = $("#nombreReactivoModal").val();
-  var v_descripcion = $("#descripcionReactivoModal").val();
-  var contenido = $("#contenidoReactivoModal").val();
-  var token = $("#tokenReactivoModal").val();
-
-  await $.ajax({
-    url: "/blissey/public/ingresoReactivo",
-    headers: { 'X-CSRF-TOKEN': token },
-    type: 'POST',
-    data: {
-      nombre: v_nombre,
-      descripcion: v_descripcion,
-      contenidoPorEnvase: contenido
-    },
-    success: function () {
-      $(".modal").modal('hide');
-      swal({
-        title: '¡Reactivo registrado!',
-        text: 'Cargando información',
-        timer: 3000,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      );
-    },
-    error: function(data){
-      if (data.status === 422 ) {
-        var errors = $.parseJSON(data.responseText);
-        $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
-        });
-      }
-    }
-  });
-
-
-  rellenarReactivo();
-  $("#nombreReactivoModal").val("");
-  $("#descripcionReactivoModal").val("");
-  $("#contenidoReactivoModal").val("");
-
-});
-
-
-
-
-
   function reset_modal() {
     parametros = 0;
     bloqueo_listo();

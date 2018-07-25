@@ -20,12 +20,15 @@
           </div>
 
           <div class="form-group col-sm-12 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Descripción *</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('descripcion',null,['id'=>'descripcionReactivoModal','class'=>'form-control has-feedback-left','placeholder'=>'Descripción del nuevo reactivo']) !!}
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de vencimiento</label>
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                @php
+                  $ahora = Carbon\Carbon::now();
+                @endphp
+                {!! Form::date('fechaVencimiento',$fecha,['min'=>$ahora->addDay(1)->format('Y-m-d'),'id'=>'fechaVencimientoReactivoModal','class'=>'form-control has-feedback-left']) !!}
+              </div>
             </div>
-          </div>
 
           <div class="form-group col-sm-12 col-xs-12">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido por envase*</label>
@@ -44,10 +47,75 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" id="guardarReactivoModal" class="btn btn-primary">Guardar</button>
+        <button type="button" onclick="agregarReactivoDesdeModal();" class="btn btn-primary">Guardar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
       </div>
 
     </div>
   </div>
 </div>
+<script>
+async function agregarReactivoDesdeModal(){
+  var v_nombre = $("#nombreReactivoModal").val();
+  var fechaVencimiento = $("#fechaVencimientoReactivoModal").val();
+  var contenido = $("#contenidoReactivoModal").val();
+  var token = $("#tokenReactivoModal").val();
+
+  await $.ajax({
+    url: "/blissey/public/ingresoReactivo",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+      fechaVencimiento: fechaVencimiento,
+      contenidoPorEnvase: contenido
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Reactivo registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+
+
+  rellenarReactivo();
+  $("#nombreReactivoModal").val("");
+  $("#descripcionReactivoModal").val("");
+  $("#contenidoReactivoModal").val("");
+}
+function rellenarReactivo(){
+  var reactivos = $("#reactivo_select");
+  var ruta="/blissey/public/llenarReactivosExamenes";
+  $.get(ruta,function(res){
+    reactivos.empty();
+    $(res).each(function(key,value){
+      reactivos.append("<option value='"+value.id+"'>"+value.nombre+"</option>");
+    });
+  });
+}
+</script>

@@ -4,7 +4,7 @@ $(function () {
       $button = $widget.find('button'),
       $checkbox = $widget.find('input:checkbox'),
       color = $button.data('color');
-    
+
     $button.on('click', function () {
       $checkbox.prop('checked', !$checkbox.is(':checked'));
       $checkbox.triggerHandler('change');
@@ -41,7 +41,7 @@ $(function () {
     var option = $(this);
     var $checkbox = option.find('input:checkbox');
     var image = option.find('img');
-    
+
     $(image).on("click", function () {
 
       $checkbox.prop('checked', !$checkbox.is(':checked'));
@@ -74,7 +74,19 @@ $('#radioBtn a').on('click', function () {
   var sel = $(this).data('title');
   var tog = $(this).data('toggle');
   $('#' + tog).prop('value', sel);
-  
+
   $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
   $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+});
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+function recarga(){
+  location.reload();
+}
+$("#entregar").click(function() {
+  setTimeout(recarga, 7000);
 });

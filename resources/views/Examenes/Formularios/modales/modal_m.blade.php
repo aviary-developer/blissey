@@ -85,7 +85,7 @@ async function guardarMuestraModal() {
   rellenarMuestra();
   $("#nombreMuestraModal").val("");
 
-});
+}
 
   function rellenarMuestra() {
     var muestras = $("#tipo_muestra_select");

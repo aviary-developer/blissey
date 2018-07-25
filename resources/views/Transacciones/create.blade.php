@@ -1,4 +1,4 @@
-@include('Cajas.comprobar')
+@include('DetalleCajas.comprobar')
 @php
   $tipoUsuario=Auth::user()->tipoUsuario;
 @endphp

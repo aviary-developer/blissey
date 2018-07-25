@@ -45,6 +45,9 @@
                               @else
                                 <th>-</th><th>-</th>
                               @endif
+                              @if ($detallesResultado[$key][$esp]->dato_controlado!=null)
+                                <td><center>D.C.={{$detallesResultado[$key][$esp]->dato_controlado}}</center></td>
+                                @endif
                             </tr>
                           @endif
                         @endforeach

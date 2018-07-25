@@ -15,9 +15,6 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 col-12">
             <div class="btn-group">
-              <a href={{asset('/solicitudex/create')}} class="btn btn-sm btn-dark">
-                <i class="fa fa-plus"></i> Nuevo
-              </a>
               <a href={{asset('#')}} class="btn btn-sm btn-dark">
                 <i class="fa fa-file"></i> Reporte
               </a>
@@ -64,6 +61,7 @@
                           <th class="col-md-2 col-sm-2">Código</th>
                           <th>Examen</th>
 													<th>Fecha de evaluación</th>
+													<th>Opciones</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
@@ -72,6 +70,12 @@
                                 <td>{{$solicitud->codigo_muestra}}</td>
                                 <td>{{$solicitud->examen->nombreExamen}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
+																<td><a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
+															    <i class="fa fa-edit"></i>
+															  </a>
+																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+															    <i class="fa fa-envelope"></i>
+															  </a></td>
                               </tr>
                             @endif
                           @endforeach
@@ -97,6 +101,7 @@
                         <thead>
                           <th class="col-md-2 col-sm-2">Código</th>
                           <th>Paciente</th>
+													<th>Opciones</th>
                         </thead>
                         <tbody>
                           @foreach($solicitudes as $solicitud)
@@ -106,6 +111,13 @@
                                 <td>
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                                 </td>
+																<td>
+																	<a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
+																    <i class="fa fa-edit"></i>
+																  </a>
+																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+															    <i class="fa fa-envelope"></i>
+															  </a><td>
                               </tr>
                             @endif
                           @endforeach

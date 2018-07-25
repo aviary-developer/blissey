@@ -197,7 +197,8 @@ Route::group(['middleware'=>'general'], function(){
     Route::match(['get','post'],'/activateCaja/{id}','CajaController@activate');
     Route::match(['get','post'],'/destroyCaja/{id}','CajaController@destroy');
     Route::resource('detalleCajas','DetalleCajaController');
-    Route::match(['get'],'/aperturar/{id}','DetalleCajaController@aperturar');
+    Route::match(['post'],'/aperturar/{id}','DetalleCajaController@aperturar');
+    Route::match(['get'],'/arqueo','DetalleCajaController@arqueo');
   //Rutas de estantes
   Route::resource('estantes','EstanteController');
   Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');
@@ -222,6 +223,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/editarExamen/{id}/{idExamen}','SolicitudExamenController@editarResultadosExamen');
   Route::match(['get','post'],'/examenesEvaluados','SolicitudExamenController@examenesEvaluados');
   Route::match(['get','post'],'/impresionExamenesPorPaciente/{paciente}/{bandera}','SolicitudExamenController@impresionExamenesPorPaciente');
+  Route::match(['get','post'],'/examenesEntregados','SolicitudExamenController@examenesEntregados');
   //Pacientes
   Route::resource('pacientes','PacienteController');
   Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');

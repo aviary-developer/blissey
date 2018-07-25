@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Blissey</title>
   <!-- jQuery -->
   <!-- Bootstrap -->
@@ -197,6 +197,9 @@
                                     <li>
                                       <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluados</a>
                                     </li>
+                                    <li>
+                                      <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregados</a>
+                                    </li>
                                   </ul>
                                 </li>
                                 <li>
@@ -261,6 +264,24 @@
                                   <a href={{asset( '/transacciones?tipo=2')}}>Ventas</a>
                                 </li>
                                 <li>
+                                  <a>Movimiento de caja
+                                    <span class="fa fa-chevron-down"></span>
+                                  </a>
+                                  <ul class="nav child_menu">
+                                    <li>
+                                      <a href={{asset( '/detalleCajas/create')}}>Apertura</a>
+                                    </li>
+                                    <li>
+                                      <a href={{asset( '/cierre')}}>Cierre</a>
+                                    </li>
+                                    @if (App\DetalleCaja::cajaApertura())
+                                      <li>
+                                        <a href={{asset( '/arqueo')}}>Arqueo</a>
+                                      </li>
+                                    @endif
+                                  </ul>
+                                </li>
+                                <li>
                                   <a>Mantenimiento
                                     <span class="fa fa-chevron-down"></span>
                                   </a>
@@ -318,6 +339,12 @@
                                 <li>
                                   <a href={{asset( '/solicitudex')}}>Solicitudes</a>
                                 </li>
+                                <li>
+                                  <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluadas</a>
+                                </li>
+                                <li>
+                                  <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregadas</a>
+                                </li>
                               </ul>
                             </li>
                         @elseif (Auth::user()->tipoUsuario == "Rayos X")
@@ -332,6 +359,12 @@
                               </li>
                               <li>
                                 <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluadas</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregadas</a>
                               </li>
                             </ul>
                           </li>

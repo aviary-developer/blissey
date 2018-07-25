@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Transacion;
 use App\Caja;
+use App\Bitacora;
+use DB;
+use App\Http\Requests\DetalleCajaRequest;
+use App\DetalleCaja;
+use Illuminate\Support\Facades\Auth;
 
 class DetalleCajaController extends Controller
 {
@@ -29,7 +34,7 @@ class DetalleCajaController extends Controller
       $pagina--;
       $pagina *= 10;
       $cajas=Caja::where('estado',true)->where('localizacion',Transacion::tipoUsuario())->orderBy('nombre','ASC')->paginate(10);
-        return view('Cajas.detalles',compact('cajas','pagina'));
+        return view('DetalleCajas.detalles',compact('cajas','pagina'));
     }
 
     /**
@@ -38,9 +43,24 @@ class DetalleCajaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DetalleCajaRequest $request)
     {
-        echo $request;
+      DB::beginTransaction();
+      try{
+        $detalle=DetalleCaja::create([
+          'f_caja'=>$request['f_caja'],
+          'tipo'=>1,
+          'fecha'=>date('Y').'-'.date('m').'-'.date('d'),
+          'f_usuario'=>Auth::user()->id,
+          'importe'=>$request['importe'],
+        ]);
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/detalleCajas/create')->with('mensaje', 'Algo salio mal');
+      }
+      Bitacora::bitacora('store','detalleCajas','detalle_cajas',$detalle->id);
+      DB::commit();
+      return redirect('/detalleCajas/create')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -51,8 +71,7 @@ class DetalleCajaController extends Controller
      */
     public function show($id)
     {
-      $caja=Caja::findOrFail($id);
-      return view('Cajas.aperturar',compact('caja'));
+
     }
 
     /**
@@ -90,5 +109,12 @@ class DetalleCajaController extends Controller
     }
     public function aperturar($id)
     {
+      $caja=Caja::findOrFail($id);
+      return view('DetalleCajas.aperturar',compact('caja'));
+    }
+    public function arqueo(){
+      $detalle=DetalleCaja::caja();
+      $movimientos=Transacion::movimentosCaja($detalle->f_usuario);
+      return view('DetalleCajas.arqueo',compact('detalle','movimientos'));
     }
 }
