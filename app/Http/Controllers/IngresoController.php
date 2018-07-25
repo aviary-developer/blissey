@@ -85,7 +85,7 @@ class IngresoController extends Controller
         try {
           $correlativo = 0;
           if($request->tipo != 3){
-            $ultimo_registro = Ingreso::where('fecha_ingreso','>=','1-1-'.date('Y'))->where('fecha_ingreso','<=','31-12-'.date('Y'))->where('tipo','<>',3)->where('tipo','<>',4)->get()->last();
+            $ultimo_registro = Ingreso::where('fecha_ingreso','>=',date('Y').'-1-1')->where('fecha_ingreso','<=',date('Y').'-12-31')->where('tipo','<>',3)->where('tipo','<>',4)->get()->last();
             if($ultimo_registro == null){
               $correlativo = 0;
             }else if($ultimo_registro->expediente == null){
@@ -248,11 +248,13 @@ class IngresoController extends Controller
         $detalle_l = []; //Detalle laboratorio clínico
         $detalle_r = []; //Detalle rayos X
         $detalle_u = []; //Detalle ultrasonografía
+        $detalle_sv = []; //Detalle signos vitales
         $indice_detalle_p = 0;
         $indice_detalle_s = 0;
         $indice_detalle_l = 0;
         $indice_detalle_r = 0;
         $indice_detalle_u = 0;
+        $indice_detalle_sv = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
         $count_m24 = 0;
         if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
@@ -315,6 +317,17 @@ class IngresoController extends Controller
             }
           }
         }
+        $count_sv24 = 0;
+        if($ingreso->signos->count()>0){
+          foreach($ingreso->signos as $solicitud){
+            $detalle_sv[$indice_detalle_sv] = $solicitud;
+            $indice_detalle_sv++;
+            if($solicitud->created_at->between($ultima24, $ultima48)){
+              $count_sv24++;
+            }
+          }
+        }
+        array_reverse($detalle_sv);
       }
       if($ingreso->tipo > 0 || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
@@ -362,6 +375,7 @@ class IngresoController extends Controller
         'detalle_l',
         'detalle_r',
         'detalle_u',
+        'detalle_sv',
         'ultima24',
         'ultima48',
         'count_m24',
@@ -369,6 +383,7 @@ class IngresoController extends Controller
         'count_l24',
         'count_r24',
         'count_u24',
+        'count_sv24',
         'hoy',
         'examenes',
         'habitaciones',
@@ -640,7 +655,7 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true))>0){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($ultima24, $ultima48))){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Ultrasonografía" &&($detalle->created_at->between($ultima24, $ultima48))){
             $servicios[$k]["nombre"] = $detalle->servicio->nombre;
             $servicios[$k]["precio"] = $detalle->precio;
             $k++;
@@ -656,14 +671,28 @@ class IngresoController extends Controller
       //Valor de laboratorio
       $laboratorio = 0;
       $examenes = [];
+      $ultrasonografia = 0;
+      $ultras = [];
+      $rayosx = 0;
+      $rayos = [];
       if(count($ingreso->transaccion->solicitud)>0){
         $k = 0;
+        $ku = 0;
+        $kr = 0;
         foreach($ingreso->transaccion->solicitud as$solicitud){
           if($solicitud->estado != 0 && ($solicitud->created_at->between($ultima24, $ultima48))){
             if($solicitud->f_examen != null){
               $laboratorio += $examenes[$k]["precio"] = $solicitud->examen->servicio->precio;
               $examenes[$k]['nombre'] = $solicitud->examen->nombreExamen;
               $k++;
+            }else if($solicitud->f_ultrasonografia != null){
+              $ultrasonografia += $ultras[$ku]["precio"] = $solicitud->ultrasonografia->servicio->precio;
+              $ultras[$ku]["nombre"] = $solicitud->ultrasonografia->nombre;
+              $ku++;
+            }else{
+              $rayosx += $rayos[$kr]["precio"] = $solicitud->rayox->servicio->precio;
+              $rayos[$kr]["nombre"] = $solicitud->rayox->nombre;
+              $kr++;
             }
           }
         }
@@ -689,6 +718,9 @@ class IngresoController extends Controller
         }
       }
 
+      $iva = $total * 0.13;
+      $total += $iva;
+
       return(compact(
         "dia",
         "id",
@@ -706,8 +738,11 @@ class IngresoController extends Controller
         'servicios',
         'total_servicios',
         'habitacion_nombre',
-        's',
-        'fecha_xf'
+        'ultrasonografia',
+        'ultras',
+        'rayosx',
+        'rayos',
+        'iva'
       ));
     }
   
@@ -850,7 +885,7 @@ class IngresoController extends Controller
     $servicios = [];
     $indice = 0;
     foreach($lista as $detalle){
-      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico"){
+      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
         $servicios[$indice]['id'] = $detalle->id;
         $servicios[$indice]['hora'] = $detalle->created_at->format('H:i.s');
         $servicios[$indice]['cantidad'] = $detalle->cantidad;

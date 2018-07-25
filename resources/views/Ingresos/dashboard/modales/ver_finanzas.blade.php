@@ -12,9 +12,13 @@
                 <div class="col-xs-12">
                   <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
                   @php
-                    $ahora = Carbon\Carbon::now();
+                    if($ingreso->estado != 2){
+                      $fecha = Carbon\Carbon::now();
+                    }else{
+                      $fecha = $ingreso->fecha_alta;
+                    }
                   @endphp
-                  {!! Form::date('fecha',$hoy->format('Y-m-d'),['id'=>'fecha_finanza','max'=>$ingreso->fecha_ingreso->addDays(($dias))->format('Y-m-d'),'min'=>$ingreso->fecha_ingreso->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+                  {!! Form::date('fecha',$fecha->format('Y-m-d'),['id'=>'fecha_finanza','max'=>$ingreso->fecha_ingreso->addDays(($dias))->format('Y-m-d'),'min'=>$ingreso->fecha_ingreso->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
                 </div>
               </div>
             </div>

@@ -363,14 +363,14 @@ $(document).on('ready', function () {
     }
   });
 
-  $("#dar_alta").on("click", function (e) {
+  $("#dar_alta").on("click", async function (e) {
     e.preventDefault();
     $("#acciones").modal('toggle');
     var token = $("#token").val();
     var transaccion_id = $("#id_t").val();
     var deuda = $("#deuda_para_alta").val();
     var id = $("#id").val();
-    swal({
+    await swal({
       title: "¡Advertencia!",
       text: "Al dar de alta el paciente debe haber cancelado $" + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(deuda),
       showCancelButton: true,
@@ -379,36 +379,46 @@ $(document).on('ready', function () {
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
       type: "warning"
-    }).then(function(){
-      $.ajax({
-        url: "/blissey/public/abonar",
-        type: "POST",
-        headers: { 'X-CSRF-TOKEN': token },
-        data: {
-          transaccion: transaccion_id,
-          abono: deuda,
-          ingreso: id,
-        },
-        success: function (r) {
-          console.log(r);
-          if (r == 1) {
-            swal("¡Hecho!", "Acción realizada exitosamente", 'success');
-            location.reload();
-          } else {
-            swal("¡Algo salio mal!", 'No se guardo', 'error');
+    }).then((result) => {
+      console.log(result);
+      if (result) {
+        $.ajax({
+          url: "/blissey/public/abonar",
+          type: "POST",
+          headers: { 'X-CSRF-TOKEN': token },
+          data: {
+            transaccion: transaccion_id,
+            abono: deuda,
+            ingreso: id,
+          },
+          success: function (r) {
+            if (r == 1) {
+              swal({
+                type: 'success',
+                title: '¡Hecho!',
+                text: 'Cambio exitoso',
+                showConfirmButton: false
+              });
+              location.reload();
+            } else {
+              swal("¡Algo salio mal!", 'No se guardo', 'error');
+            }
           }
-        }
-      });
+        });
+      } else if(result.dismiss === swal.DismissReason.cancel ) {
+        location.reload();
+      }
     }).catch(swal.noop);
+    location.reload();
   });
   
-  $("#fin_consulta").on("click", function (e) {
+  $("#fin_consulta").on("click", async function (e) {
     e.preventDefault();
     var token = $("#token").val();
     var transaccion_id = $("#id_t").val();
     var deuda = $("#precio_consulta").val();
     var id = $("#id").val();
-    swal({
+    await swal({
       title: "¡Advertencia!",
       text: "Al dar de alta el paciente debe haber cancelado $" + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(deuda),
       showCancelButton: true,
@@ -417,27 +427,36 @@ $(document).on('ready', function () {
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
       type: "warning"
-    }).then(function () {
-      $.ajax({
-        url: "/blissey/public/abonar",
-        type: "POST",
-        headers: { 'X-CSRF-TOKEN': token },
-        data: {
-          transaccion: transaccion_id,
-          abono: deuda,
-          ingreso: id,
-        },
-        success: function (r) {
-          console.log(r);
-          if (r == 1) {
-            swal("¡Hecho!", "Acción realizada exitosamente", 'success');
-            location.reload();
-          } else {
-            swal("¡Algo salio mal!", 'No se guardo', 'error');
+    }).then((result) => {
+      console.log(result.value);
+      if (result) {
+        $.ajax({
+          url: "/blissey/public/abonar",
+          type: "POST",
+          headers: { 'X-CSRF-TOKEN': token },
+          data: {
+            transaccion: transaccion_id,
+            abono: deuda,
+            ingreso: id,
+          },
+          success: function (r) {
+            if (r == 1) {
+              swal({
+                type: 'success',
+                title: '¡Hecho!',
+                text: 'Cambio exitoso',
+                showConfirmButton: false
+              });
+              location.reload();
+            } else {
+              swal("¡Algo salio mal!", 'No se guardo', 'error');
+            }
           }
-        }
-      });
-    }).catch(swal.noop);
+        });
+      }
+      }).catch(swal.noop);
+    console.log("W");
+    location.reload();
   });
 
   //Ver si existen los honorarios
@@ -450,7 +469,7 @@ $("#nuevo_abono").on('click', function (e) {
   e.preventDefault();
   var token = $("#token").val();
   var transaccion_id = $("#id_t").val();
-  var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar">';
+  var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar" autofocus>';
 
   swal({
     title: 'Nuevo abono',
@@ -472,7 +491,12 @@ $("#nuevo_abono").on('click', function (e) {
       },
       success: function (r) {
         if (r == 1) {
-          swal("¡Hecho!", "Acción realizada exitosamente", 'success');
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
           location.reload();
         } else {
           swal("¡Algo salio mal!", 'No se guardo', 'error');

@@ -11,7 +11,6 @@ function resumen(id, dia) {
     success: function (respuesta) {
       super_body.empty();
       mini_resumen.empty();
-      console.log(respuesta.fecha_xf.date);
 
       html = '<div class = "row">' +
         '<h3>' +
@@ -20,8 +19,7 @@ function resumen(id, dia) {
         respuesta.fecha +
         '</center>' +
         '</h3>' +
-        '</div>' +
-        '<div class="ln_solid"></div>';
+        '</div>';
 
       super_body.append(html);
 
@@ -131,6 +129,72 @@ function resumen(id, dia) {
         body.append(html);
       }
 
+      if (respuesta.ultrasonografia != 0) {
+        html = '<div class = "row">' +
+          '<div class="col-xs-9">' +
+          '<span><b>' +
+          'Ultrasonografía' +
+          '</b></span>' +
+          '</div>' +
+          '<div class="col-xs-3 text-right">' +
+          '<span>' +
+          '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(respuesta.ultrasonografia) +
+          '</span>' +
+          '</div>' +
+          '</div>';
+
+        $(respuesta.ultras).each(function (key, value) {
+          html += '<div class = "row">' +
+            '<div class="col-xs-1"></div>' +
+            '<div class="col-xs-7">' +
+            '<span><i>' +
+            value.nombre +
+            '</i></span>' +
+            '</div>' +
+            '<div class="col-xs-2 text-right">' +
+            '<span><i>' +
+            '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) +
+            '</i></span>' +
+            '</div>' +
+            '</div>';
+        });
+
+        body.append(html);
+      }
+
+      if (respuesta.rayosx != 0) {
+        html = '<div class = "row">' +
+          '<div class="col-xs-9">' +
+          '<span><b>' +
+          'Rayos X' +
+          '</b></span>' +
+          '</div>' +
+          '<div class="col-xs-3 text-right">' +
+          '<span>' +
+          '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(respuesta.rayosx) +
+          '</span>' +
+          '</div>' +
+          '</div>';
+
+        $(respuesta.rayos).each(function (key, value) {
+          html += '<div class = "row">' +
+            '<div class="col-xs-1"></div>' +
+            '<div class="col-xs-7">' +
+            '<span><i>' +
+            value.nombre +
+            '</i></span>' +
+            '</div>' +
+            '<div class="col-xs-2 text-right">' +
+            '<span><i>' +
+            '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) +
+            '</i></span>' +
+            '</div>' +
+            '</div>';
+        });
+
+        body.append(html);
+      }
+
       if (respuesta.total_servicios != 0) {
         $(respuesta.servicios).each(function (key, value) {
           html = '<div class = "row">' +
@@ -214,6 +278,32 @@ function resumen(id, dia) {
 
         body.append(html);
       }
+
+      html = '<br><div class = "row bg-gray" style="padding: 5px 0px 5px 0px">' +
+        '<div class="col-xs-12">' +
+        '<span class="black"><b>' +
+        '<center><i class="fa fa-money"></i>' +
+        ' Impuestos' +
+        '</center>' +
+        '</b></span>' +
+        '</div>' +
+        '</div>';
+
+      body.append(html);
+
+      html = '<div class = "row">' +
+        '<div class="col-xs-9">' +
+        '<span><b>' +
+        "IVA" +
+        '</b></span>' +
+        '</div>' +
+        '<div class="col-xs-3 text-right">' +
+        '<span>' +
+        '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(respuesta.iva) +
+        '</span>' +
+        '</div>' +
+        '</div>';
+      body.append(html);
 
       html = '<div class="col-xs-12"><div class="x_panel" id="ingreso_body"></div></div>';
 

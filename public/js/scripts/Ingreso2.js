@@ -3,7 +3,7 @@ $(document).on('ready', function () {
     $.ajax({
       type : 'post',
       url  : '/blissey/public/signos',
-      headers: { 'X-CSRF-TOKEN': $("#tokenTransaccion").val() },
+      headers: { 'X-CSRF-TOKEN': $("#token").val()},
       data: {
         temperatura: $("#temperatura").val(),
         pulso: $("#pulso").val(),
@@ -19,7 +19,12 @@ $(document).on('ready', function () {
       },
       success: function (r) {
         if (r == 3) {
-          swal("¡Hecho!", "Registro almacenado satisfactoriamente", "success");
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
           location.reload();
         } else {
           swal("¡Error!", "Algo ha salido mal", "error");

@@ -93,12 +93,14 @@ class Ingreso extends Model
                 $total += $solicitud->examen->servicio->precio;
               }else if($solicitud->rayox != null){
                 $total += $solicitud->rayox->servicio->precio;
+              }else{
+                $total += $solicitud->ultrasonografia->servicio->precio;
               }
             }
           }
         }
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico"){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X"){
             $total += $detalle->precio;
           }
           if($detalle->servicio->categoria->nombre == "Habitación"){
@@ -122,12 +124,20 @@ class Ingreso extends Model
                 $total += $solicitud->examen->servicio->precio;
               }else if($solicitud->rayox != null){
                 $total += $solicitud->rayox->servicio->precio;
+              }else{
+                $total += $solicitud->ultrasonografia->servicio->precio;
               }
             }
           }
         }
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($fecha, $fecha_mayor))){
+          if(
+            $detalle->servicio->categoria->nombre != "Honorarios" && 
+            $detalle->servicio->categoria->nombre != "Habitación" && 
+            $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && 
+            $detalle->servicio->categoria->nombre != "Ultrasonografía" && 
+            $detalle->servicio->categoria->nombre != "Rayos X" && 
+            ($detalle->created_at->between($fecha, $fecha_mayor))){
             $total += $detalle->precio;
           }
           if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha)){

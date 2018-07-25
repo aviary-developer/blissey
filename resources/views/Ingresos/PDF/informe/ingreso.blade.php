@@ -110,7 +110,7 @@
           @endphp
           @if (count($ingreso->transaccion->solicitud) > 0)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
-              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after)))
+              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after) && $solicitud->f_examen != null))
                 <tr>
                   <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
                   <td>{{$solicitud->examen->nombreExamen}}</td>
@@ -133,6 +133,74 @@
     <table class="table-simple">
       <thead>
         <th style="width: 100px">Fecha</th>
+        <th>Rayos X</th>
+        <th style="width: 80px">Total</th>
+      </thead>
+      <tbody>
+        @for ($i = $total_rayos_x = 0; $i <= $dias; $i++)
+          @php
+            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
+            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+          @endphp
+          @if (count($ingreso->transaccion->solicitud) > 0)
+            @foreach ($ingreso->transaccion->solicitud as $solicitud)
+              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after) && $solicitud->f_rayox != null))
+                <tr>
+                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td>{{$solicitud->rayox->nombre}}</td>
+                  <td class="text-right">{{'$ '.number_format(($solicitud->rayox->servicio->precio),2,'.',',')}}</td>
+                  @php
+                    $total_rayos_x += number_format(($solicitud->rayox->servicio->precio),2,'.',',');
+                  @endphp
+                </tr>
+              @endif
+            @endforeach
+          @endif
+        @endfor
+        <tr>
+          <td class="text-center" colspan="2"><b>Total de Rayos X</b></td>
+          <td class="text-right blue"><b>{{'$ '.number_format(($total_rayos_x),2,'.',',')}}</b></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table class="table-simple">
+      <thead>
+        <th style="width: 100px">Fecha</th>
+        <th>Ultrasonografía</th>
+        <th style="width: 80px">Total</th>
+      </thead>
+      <tbody>
+        @for ($i = $total_ultras = 0; $i <= $dias; $i++)
+          @php
+            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
+            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+          @endphp
+          @if (count($ingreso->transaccion->solicitud) > 0)
+            @foreach ($ingreso->transaccion->solicitud as $solicitud)
+              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after) && $solicitud->f_ultrasonografia != null))
+                <tr>
+                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td>{{$solicitud->ultrasonografia->nombre}}</td>
+                  <td class="text-right">{{'$ '.number_format(($solicitud->ultrasonografia->servicio->precio),2,'.',',')}}</td>
+                  @php
+                    $total_ultras += number_format(($solicitud->ultrasonografia->servicio->precio),2,'.',',');
+                  @endphp
+                </tr>
+              @endif
+            @endforeach
+          @endif
+        @endfor
+        <tr>
+          <td class="text-center" colspan="2"><b>Total de ultrasonografías</b></td>
+          <td class="text-right blue"><b>{{'$ '.number_format(($total_ultras),2,'.',',')}}</b></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table class="table-simple">
+      <thead>
+        <th style="width: 100px">Fecha</th>
         <th>Servicio</th>
         <th style="width: 80px">Total</th>
       </thead>
@@ -143,7 +211,7 @@
             $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
           @endphp
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle)
-              @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && ($detalle->created_at->between($date_after_origen,$date_next_after)))
+              @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && ($detalle->created_at->between($date_after_origen,$date_next_after)))
                 <tr>
                   <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
@@ -238,7 +306,7 @@
         $var_servicio = number_format($total_servicio,2,'.','');
         $total_servicio_hospitalario = 0;
         $total_servicio_hospitalario += floatval($total_habitacion);
-        $total_servicio_hospitalario += floatval($total_laboratorio) + floatval($total_servicio);
+        $total_servicio_hospitalario += floatval($total_laboratorio) + floatval($total_servicio) + floatval($total_rayos_x) + floatval($total_ultras);
       @endphp
       <tr>
         <td>Habitación</td>

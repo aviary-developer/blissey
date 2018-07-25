@@ -39,8 +39,8 @@ class SignoVitalController extends Controller
     {
         DB::beginTransaction();
         try{
-            $signos = SignoVital::create($request->All());
             $ultimo = SignoVital::where('f_ingreso',$request->f_ingreso)->first();
+            $signos = SignoVital::create($request->All());
             if(count($ultimo) > 0 && $signos->altura == null){
                 $signos->altura = $ultimo->altura;
                 $signos->save();

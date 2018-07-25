@@ -345,7 +345,7 @@ class TransaccionController extends Controller
       $i = 0;
       if($servicios != null){
         foreach($servicios as $servicio){
-          if($servicio->categoria->nombre != "Honorarios" && $servicio->categoria->nombre != "Habitación" && $servicio->categoria->nombre != "Laboratorio Clínico" &&$servicio->categoria->nombre != "Rayos X"){
+          if($servicio->categoria->nombre != "Honorarios" && $servicio->categoria->nombre != "Habitación" && $servicio->categoria->nombre != "Laboratorio Clínico" &&$servicio->categoria->nombre != "Rayos X" && $servicio->categoria->nombre != "Ultrasonografía"){
             $service[$i] = $servicio;
             $i++;
           }
