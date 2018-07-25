@@ -11,6 +11,9 @@
     </div>
   </div>
 </div>
+@if ($detalle_sv != null )
+  <input type="hidden" id="sid" value={{$detalle_sv[0]->id}}>
+@endif
 @if ($count_sv24 > 0)    
   <div class="row" style="height: 100px;">
     @foreach($detalle_sv as $k => $signo)
@@ -19,7 +22,6 @@
           break;
         }
       @endphp
-      <input type="hidden" id="sid" value={{$signo->id}}>
       <div class="col-sm-7 col-xs-7">
         Temperatura:
       </div>

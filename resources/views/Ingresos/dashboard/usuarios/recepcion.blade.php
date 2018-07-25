@@ -36,7 +36,9 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="x_panel"></div>
+          <div class="x_panel">
+            @include('Ingresos.dashboard.partes.medico_r')
+          </div>
         </div>
       </div>
     </div>

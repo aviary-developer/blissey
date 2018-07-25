@@ -189,7 +189,17 @@ class IngresoController extends Controller
       /**Examenes de ultrasonografía y de rayos x */
       $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
       $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
-
+        /**Medicos para seleccionar */
+      $especialidades = Especialidad::orderBy('nombre')->get();
+      $medicos_general = DB::table('users')
+      ->whereNotExists(
+        function ($query){
+          $query->select(DB::raw(1))
+          ->from('especialidad_usuarios')
+          ->whereRaw('especialidad_usuarios.f_usuario = users.id');
+        }
+      )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
+      $total_especialidad = $especialidades->count();
       if($ingreso->estado == 1){
         $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
         /**Determinar cuales son las ultimas 24 horas */
@@ -248,21 +258,23 @@ class IngresoController extends Controller
         $detalle_l = []; //Detalle laboratorio clínico
         $detalle_r = []; //Detalle rayos X
         $detalle_u = []; //Detalle ultrasonografía
+        $detalle_m = []; //Detalle medico
         $detalle_sv = []; //Detalle signos vitales
         $indice_detalle_p = 0;
         $indice_detalle_s = 0;
         $indice_detalle_l = 0;
         $indice_detalle_r = 0;
         $indice_detalle_u = 0;
+        $indice_detalle_m = 0;
         $indice_detalle_sv = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
-        $count_m24 = 0;
+        $count_p24 = 0;
         if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_servicio',null) as $detalle){
             $detalle_p[$indice_detalle_p] = $detalle;
             $indice_detalle_p++;
             if($detalle->created_at->between($ultima24,$ultima48)){
-              $count_m24++;
+              $count_p24++;
             }
           }
           $detalle_p = array_reverse($detalle_p);
@@ -328,6 +340,16 @@ class IngresoController extends Controller
           }
         }
         array_reverse($detalle_sv);
+        $count_m24 = 0;
+        if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->count() > 0){
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
+            if($detalle->servicio->categoria->nombre == "Honorarios"){
+              $detalle_m[$indice_detalle_m] = $detalle;
+              $indice_detalle_m++;
+              $count_m24++;
+            }
+          }
+        }
       }
       if($ingreso->tipo > 0 || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
@@ -376,14 +398,16 @@ class IngresoController extends Controller
         'detalle_r',
         'detalle_u',
         'detalle_sv',
+        'detalle_m',
         'ultima24',
         'ultima48',
-        'count_m24',
+        'count_p24',
         'count_s24',
         'count_l24',
         'count_r24',
         'count_u24',
         'count_sv24',
+        'count_m24',
         'hoy',
         'examenes',
         'habitaciones',
@@ -395,7 +419,10 @@ class IngresoController extends Controller
         'ing',
         'activo',
         'rayosx',
-        'ultras'
+        'ultras',
+        'especialidades',
+        'medicos_general',
+        'total_especialidad'
       ));
     }
 

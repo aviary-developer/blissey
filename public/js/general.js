@@ -61,7 +61,7 @@ $(function () {
       var isChecked = $checkbox.is(':checked');
 
       if (isChecked) {
-        option.append('<i class="fa fa-check-circle green checkbox-check"></i>');
+        option.append('<i class="fa fa-check-circle green checkbox-check" style="background: white; border-radius: 20px;"></i>');
       } else {
         option.find('i').remove();
       }

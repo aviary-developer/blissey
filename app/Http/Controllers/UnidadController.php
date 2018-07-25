@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UnidadRequest;
 use App\Http\Controllers\Controller;
 use App\Unidad;
+use App\Bitacora;
 use Redirect;
 use Response;
 use Carbon\Carbon;

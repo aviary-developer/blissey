@@ -35,4 +35,8 @@ class Servicio extends Model
     public function categoria(){
       return $this->belongsTo('App\CategoriaServicio','f_categoria');
     } 
+
+    public function medico(){
+      return $this->belongsTo('App\User','f_medico');
+    } 
 }

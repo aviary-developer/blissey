@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-@if ($count_m24 > 0)    
+@if ($count_p24 > 0)    
   <div class="row" style="overflow-x:hidden; overflow-y:scroll; height: 184px;">
     <table class="table-basic">
       <thead>
