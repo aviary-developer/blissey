@@ -7,7 +7,7 @@
       @if ($ingreso->estado == 1)  
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#signo_m" ><i class="fa fa-plus"></i></button>
       @endif
-      <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_ultra" id="btn_v_u"><i class="fa fa-eye"></i></button>
+      <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_signo" id="evaluar_signo"><i class="fa fa-eye"></i></button>
     </div>
   </div>
 </div>
@@ -19,6 +19,7 @@
           break;
         }
       @endphp
+      <input type="hidden" id="sid" value={{$signo->id}}>
       <div class="col-sm-7 col-xs-7">
         Temperatura:
       </div>
@@ -148,4 +149,4 @@
   </div>
 @endif
 @include('Ingresos.dashboard.modales.signos')
-@include('Ingresos.dashboard.modales.ver_ultras')
+@include('Ingresos.dashboard.modales.ver_signos')

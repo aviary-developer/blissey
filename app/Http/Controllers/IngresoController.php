@@ -922,7 +922,7 @@ class IngresoController extends Controller
     $indice = 0;
     foreach($lista as $detalle){
       $productos[$indice]['id']=$detalle->id;
-      $productos[$indice]['hora']=$detalle->created_at->format('H:i.s');
+      $productos[$indice]['hora']=$detalle->created_at->format('h:i.s a');
       $productos[$indice]['cantidad'] = $detalle->cantidad;
       if($detalle->divisionProducto->unidad == null){
         $productos[$indice]['division'] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre;
@@ -966,7 +966,7 @@ class IngresoController extends Controller
     foreach($lista as $detalle){
       $laboratorio[$indice]['id'] = $detalle->id;
       if($request->pendiente == null){
-        $laboratorio[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+        $laboratorio[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       }else{
         $laboratorio[$indice]['hora'] = $detalle->created_at->format('d / m / Y');
       }
@@ -1003,7 +1003,7 @@ class IngresoController extends Controller
     $indice = 0;
     foreach($lista as $detalle){
       $rayox[$indice]['id'] = $detalle->id;
-      $rayox[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      $rayox[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       $rayox[$indice]['nombre'] = $detalle->rayox->nombre;
       $rayox[$indice]['estado'] = $detalle->estado;
       $indice++;
@@ -1036,7 +1036,7 @@ class IngresoController extends Controller
     $indice = 0;
     foreach($lista as $detalle){
       $ultra[$indice]['id'] = $detalle->id;
-      $ultra[$indice]['hora'] = $detalle->created_at->format('H:i.s');
+      $ultra[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       $ultra[$indice]['nombre'] = $detalle->ultrasonografia->nombre;
       $ultra[$indice]['estado'] = $detalle->estado;
       $indice++;
@@ -1045,6 +1045,35 @@ class IngresoController extends Controller
     setlocale(LC_ALL,'es');
     $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
     return (compact('ultra','indice','fecha_f'));
+  }
+
+  public function lista_signos(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha24 = $fecha24->addDays(1);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
+      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
+      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+    }
+
+    $lista = $ingreso->signos->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+
+    $signos = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      $signos[$indice]['id'] = $detalle->id;
+      $signos[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
+      $indice++;
+    }
+    $signos = array_reverse($signos);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return (compact('signos','indice','fecha_f'));
   }
 
   public function dash ($id){

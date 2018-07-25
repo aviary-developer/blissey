@@ -50,6 +50,8 @@ $(document).on('ready', function () {
 
   $("#evaluar_signo").on("click", function (e) {
     e.preventDefault();
+    signos_fecha();
+    carga_signos($("#sid").val());
     id = $("#id").val();
 
     $.ajax({
@@ -350,8 +352,8 @@ $(document).on('ready', function () {
                 data: monto,
                 label: 'Monto',
                 lineTension: 0.1,
-                backgroundColor: 'rgba(236,112,99,0.5)',
-                borderColor: 'rgba(236,112,99)'
+                
+                borderColor: 'rgba(88,214,141)',
               }]
             },
             options: {
