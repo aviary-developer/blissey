@@ -786,3 +786,44 @@ function carga_signos(id) {
     }
   });
 }
+/**Evento para mostrar los datos del médico */
+function ver_medico(servicio) {
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/ingreso/lista_medico',
+    data: {
+      i_id: $("#id").val(),
+      id: servicio
+    },
+    success: function (r) {
+      $("#img-foto").attr('src', r.foto);
+      $("#nombre").text(r.nombre);
+      $("#especial").text((r.especialidad == "Ninguna") ? r.especialidad : r.especialidad.nombre);
+      
+      var panel = $("#mensaje_v_m");
+      
+      panel.empty();
+      html = '<div class="col-xs-12">' +
+        '<table class="table" id="tabla_v_m">' +
+        '<thead>' +
+        '<th>Hora</th>' +
+        '<th style="width: 40px">Acción</th>'
+      '</thead>' +
+        '</table>' +
+        '</div>';
+      panel.append(html);
+      tabla = $("#tabla_v_m");
+      $(r.consultas).each(function (key, value) {
+        html = '<tr id="r' + value.id + '">' +
+          '<td>' + value.fecha + '</td>';
+        if (value.estado == 1) {
+          html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-xs" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-remove"></i></button></td>';
+        } else {
+          html += '<td><button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button></td>';
+        }
+        html += '</tr>';
+        tabla.append(html);
+      });
+    }
+  });
+}

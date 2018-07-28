@@ -171,7 +171,7 @@
             </tbody>
           </table>
           <div class="ln_solid"></div>
-          {{ str_replace('/?', '?', $ingresos->appends(Request::only(['estado','tipo']))->render())}}
+          {!!str_replace('/?', '?', $ingresos->appends(Request::only(['estado','tipo']))->render())!!}
         </div>
       </div>
     </div>

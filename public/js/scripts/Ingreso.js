@@ -719,7 +719,7 @@ function accion24(tipo, id, objeto = null) {
             $("#r" + objeto.id).remove();
             new PNotify({
               title: '¡Hecho!',
-              text: "Medicamento eliminado",
+              text: "Detalle eliminado",
               type: 'warning',
               styling: 'bootstrap3'
             });

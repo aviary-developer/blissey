@@ -254,6 +254,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/ingreso/lista_rayos','IngresoController@lista_rayos')->name('ingresos.lista_rayos');
   Route::get('/ingreso/lista_ultra','IngresoController@lista_ultra')->name('ingresos.lista_ultra');
   Route::get('/ingreso/lista_signos','IngresoController@lista_signos')->name('ingresos.lista_signos');
+  Route::get('/ingreso/lista_medico','IngresoController@lista_medico')->name('ingresos.lista_medico');
   //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

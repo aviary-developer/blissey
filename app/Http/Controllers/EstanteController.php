@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Estante;
 use App\Nivel;
 use Redirect;
+use App\Bitacora;
 use App\Http\Requests\EstanteRequest;
 
 class EstanteController extends Controller

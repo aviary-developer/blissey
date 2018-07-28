@@ -7,25 +7,31 @@
       @if ($ingreso->estado == 1)  
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#medico_m" ><i class="fa fa-plus"></i></button>
       @endif
-      <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_laboratorio" id="btn_v_l"><i class="fa fa-eye"></i></button>
     </div>
   </div>
 </div>
-@if ($count_m24 > 0)    
-  <div style="overflow-x:scroll; overflow-y:hidden; height: 184px;">
-    <table>
-      <tr>
-        @foreach($detalle_m as $detalle)
-          <td style="width: 125px; margin-right:5px;">
-            <div>
-              <img src={{asset(Storage::url($detalle->servicio->medico->foto))}} class="img-circle perfil-2 borde" style="margin-top: 0px;">
-            </div>
-            <center>
-              <span>{{(($detalle->servicio->medico->sexo)?"Dr. ":"Dra. ").$detalle->servicio->medico->nombre.' '.$detalle->servicio->medico->apellido}}</span>
-            </center>
-          </td>
+@if ($count_m > 0)    
+  <div style="overflow-x:hidden; overflow-y:scroll; height: 184px;">
+    <table class="table-basic">
+      <thead>
+        <th colspan="2">Detalle</th>
+        <th style="width: 50px">Frec.</th>
+      </thead>
+      <tbody>
+        @foreach ($medico_u as $medico)
+          <tr>
+            <td>
+              <a href="#" data-toggle="modal" data-target="#ver_medico" onclick={{'ver_medico('.$medico['id'].')'}}>
+                <img src={{asset(Storage::url($medico['foto']))}} class="img-square-mini borde gray" style="margin-top: 0px;"></td>
+              </a>
+            <td>{{$medico['nombre']}}</td>
+            <td>
+              <span class="badge bg-green"><i>
+                {{'x'.$medico['frec']}}</td>
+              </i></span>
+          </tr>
         @endforeach
-        </tr>
+      </tbody>
     </table>
   </div>
 @else
@@ -39,4 +45,4 @@
   </div>
 @endif
 @include('Ingresos.dashboard.modales.medico')
-@include('Ingresos.dashboard.modales.ver_laboratorio')
+@include('Ingresos.dashboard.modales.ver_medico')

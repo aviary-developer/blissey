@@ -178,7 +178,11 @@ class IngresoController extends Controller
       /**Extracción de los datos del paciente */
       $paciente = $ingreso->paciente;
       /**Calculo de días que ha estado ingresado el paciente */
-      $hoy = Carbon::now();
+      $hoy = Carbon::today()->hour(7);
+      $ahora = Carbon::now();
+      if($ahora->lt($hoy)){
+        $hoy = $hoy->subDays(1);
+      }
       /**Inicialización de las variables a utilizar */
       $total_gastos = $total_abono = $total_deuda = $dias = $horas = 0;
       $examenes  = $horas_f = null;
@@ -200,11 +204,16 @@ class IngresoController extends Controller
         }
       )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
       $total_especialidad = $especialidades->count();
+      /**Calculo de dia efectivo en que fue ingresado el paciente */
+      $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+      if($ingreso->fecha_ingreso->lt($dia_ingreso)){
+        $dia_ingreso = $dia_ingreso->subDays(1);
+      }
       if($ingreso->estado == 1){
-        $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+        $dias = $dia_ingreso->diffInDays($hoy);
         /**Determinar cuales son las ultimas 24 horas */
-        $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-        $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+        $ultima24 = Carbon::today()->hour(7);
+        $ultima48 = Carbon::tomorrow()->hour(7);
         /**Determinar horas de ingreso */
         $horas = $ingreso->fecha_ingreso->diffInHours($hoy);
         $horas_f = $hoy->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
@@ -221,7 +230,7 @@ class IngresoController extends Controller
         /**Si la diferencia no es 0 recorrer en un for desde el dia de ingreso hasta la fecha de hoy para revisar  el día que no se ha registrado y crearlo*/
         if($habitacion_dia_no_guardado_count > 0){
           for($i=0; $i<$dias; $i++){
-            $fecha_aux = $ingreso->fecha_ingreso->addDays($i);
+            $fecha_aux = $dia_ingreso->addDays($i);
             /**Comprobar si existe el detalle este día */
             $exist_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
             /**Si no existe se crea la transaccion */
@@ -243,7 +252,11 @@ class IngresoController extends Controller
           }
         }
       }else if($ingreso->estado == 2){
-        $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+        $dia_alta = $ingreso->fecha_alta->hour(7)->minute(0);
+        if($ingreso->fecha_alta->lt($dia_alta)){
+          $dia_alta = $dia_alta->subDays(1);
+        }
+        $dias = $dia_ingreso->diffInDays($dia_alta);
         /**Determinar cuales son las ultimas 24 horas */
         $ultima24 = $ingreso->fecha_ingreso->subDays(1);
         $ultima48 = $ingreso->fecha_alta->addDays(1);
@@ -258,14 +271,12 @@ class IngresoController extends Controller
         $detalle_l = []; //Detalle laboratorio clínico
         $detalle_r = []; //Detalle rayos X
         $detalle_u = []; //Detalle ultrasonografía
-        $detalle_m = []; //Detalle medico
         $detalle_sv = []; //Detalle signos vitales
         $indice_detalle_p = 0;
         $indice_detalle_s = 0;
         $indice_detalle_l = 0;
         $indice_detalle_r = 0;
         $indice_detalle_u = 0;
-        $indice_detalle_m = 0;
         $indice_detalle_sv = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
         $count_p24 = 0;
@@ -340,17 +351,23 @@ class IngresoController extends Controller
           }
         }
         array_reverse($detalle_sv);
-        $count_m24 = 0;
-        if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->count() > 0){
-          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->categoria->nombre == "Honorarios"){
-              $detalle_m[$indice_detalle_m] = $detalle;
-              $indice_detalle_m++;
-              $count_m24++;
-            }
+        /**Medicos que han atendido al paciente */
+        $unicos = DetalleTransacion::distinct()->where('f_transaccion',$ingreso->transaccion->id)->where('f_producto',null)->get(['f_servicio']);
+        $indice_u = 0;
+        $medico_u = [];
+        foreach($unicos as $unico){
+          $service = Servicio::find($unico->f_servicio);
+          if($service->categoria->nombre == "Honorarios"){
+            $medico_u[$indice_u]['id'] = $service->id;
+            $medico_u[$indice_u]['foto'] = $service->medico->foto;
+            $medico_u[$indice_u]['nombre'] = (($service->medico->sexo)?'Dr. ':'Dra. ').$service->medico->nombre.' '.$service->medico->apellido;
+            $medico_u[$indice_u]['frec'] = $ingreso->transaccion->detalleTransaccion->where('f_servicio',$service->id)->count();
+            $indice_u++;
           }
         }
+        $count_m = $indice_u;
       }
+
       if($ingreso->tipo > 0 || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
         $total_gastos = $this->total_gastos($id);
@@ -398,7 +415,7 @@ class IngresoController extends Controller
         'detalle_r',
         'detalle_u',
         'detalle_sv',
-        'detalle_m',
+        'medico_u',
         'ultima24',
         'ultima48',
         'count_p24',
@@ -407,7 +424,7 @@ class IngresoController extends Controller
         'count_r24',
         'count_u24',
         'count_sv24',
-        'count_m24',
+        'count_m',
         'hoy',
         'examenes',
         'habitaciones',
@@ -522,11 +539,23 @@ class IngresoController extends Controller
 
     public function informe_pdf($id){
       $ingreso = Ingreso::find($id);
-      $hoy = Carbon::now();
+      $hoy = Carbon::today()->hour(7);
+      $ahora = Carbon::now();
+      if($ahora->lt($hoy)){
+        $hoy = $hoy->subDays(1);
+      }
+      $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+      if($ingreso->fecha_ingreso->lt($dia_ingreso)){
+        $dia_ingreso = $dia_ingreso->subDays(1);
+      }
       if($ingreso->estado != 0){
-        $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+        $dias = $dia_ingreso->diffInDays($hoy);
       }else{
-        $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+        $dia_alta = $ingreso->fecha_alta->hour(7)->minute(0);
+        if($ingreso->fecha_alta->lt($dia_alta)){
+          $dia_alta = $dia_alta->subDays(1);
+        }
+        $dias = $dia_ingreso->diffInDays($dia_alta);
       }
       $header = view('PDF.header.hospital');
       $footer = view('PDF.footer.numero_pagina');
@@ -628,20 +657,25 @@ class IngresoController extends Controller
     public function resumen(Request $request){
       $id = $request->id;
       $fecha_x = $request->fecha;
-
-      $fecha_xf = Carbon::parse($fecha_x);      
-      $ingreso = Ingreso::find($id);
-      $dia = $ingreso->fecha_ingreso->diffInDays($fecha_xf,false);
-      $dia++;
-      if(!$ingreso->fecha_ingreso->lte($fecha_xf)){
-        $dia = 0;
+      
+      $fecha_xf = Carbon::parse($fecha_x)->hour(7);
+      $ahora = Carbon::now();
+      if($ahora->lt($fecha_xf)){
+        $fecha_xf->subDay();
       }
-      $fecha = $ingreso->fecha_ingreso->addDays($dia);
+      $ingreso = Ingreso::find($id);
+      $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+      if($ingreso->fecha_ingreso->lt($dia_ingreso)){
+        $dia_ingreso->subDay();
+      }
+      $dia = $dia_ingreso->diffInDays($fecha_xf);
 
+      $fecha = $dia_ingreso->addDays($dia);
+      
       setlocale(LC_ALL,'es');
       $ultima24 = $fecha_xf;
-      $ultima48 = Carbon::parse($fecha_x);
-      $ultima48 = $ultima48->addDays(1);
+      $ultima48 = Carbon::parse($fecha_x)->hour(7)->addDay();
+      
       $fecha = $fecha->formatLocalized('%d de %B de %Y');
       $medico = (($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido;
 
@@ -873,11 +907,23 @@ class IngresoController extends Controller
     $id = $request->id;
 
     $ingreso = Ingreso::find($id);
-    $hoy = Carbon::now();
+    $hoy = Carbon::today()->hour(7);
+    $ahora = Carbon::now();
+    if($ahora->lt($hoy)){
+      $hoy->subDay();
+    }
+    $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+    if($ingreso->fecha_ingreso->lt($dia_ingreso)){
+      $dia_ingreso->subDay();
+    }
     if($ingreso->estado < 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays($hoy);
+      $dias = $dia_ingreso->diffInDays($hoy);
     }else{
-      $dias = $ingreso->fecha_ingreso->diffInDays($ingreso->fecha_alta);
+      $dia_alta = $ingreso->fecha_alta->hour(7)->minute(0);
+      if($ingreso->fecha_alta->lt($dia_alta)){
+        $dia_alta->subDay();
+      }
+      $dias = $dia_ingreso->diffInDays($dia_alta);
     }
 
     /**Recorrer en un for todos los días desde el inicio hasta hoy, para ver todos los gastos hechos por día */
@@ -1101,6 +1147,48 @@ class IngresoController extends Controller
     setlocale(LC_ALL,'es');
     $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
     return (compact('signos','indice','fecha_f'));
+  }
+
+  public function lista_medico(Request $request){
+    $id = $request->id;
+    $i_id = $request->i_id;
+    $servicio = Servicio::find($id);
+    $ingreso = Ingreso::find($i_id);
+    $nombre = (($servicio->medico->sexo)?'Dr. ':'Dra. ').$servicio->medico->nombre.' '.$servicio->medico->apellido;
+    //Mostrar la foto
+    if($servicio->medico->foto == "noImgen.jpg"){
+      $foto = '../../public/storage/noImgen.jpg';
+    }else{
+      $fotito = $servicio->medico->foto;
+      $aux = explode('/',$fotito);
+      $foto = '../../'.$aux[0].'/storage/'.$aux[1].'/'.$aux[2];
+    }
+    $especialidad = User::especialidad_principal($servicio->medico->id);
+    $especialidad = ($especialidad == 0)?"Ninguna":DB::table('especialidads')->where('id',$especialidad)->first(['nombre']);
+    $detalles = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('f_servicio',$id)->get();
+    $consultas = [];
+    foreach($detalles as $k => $detalle){
+      $consultas[$k]['fecha'] = $detalle->created_at->format('d / m / Y h:i.s a');
+      $consultas[$k]['id'] = $detalle->id;
+      if($ingreso->estado == "1"){
+        $hoy = Carbon::today()->addHours(7);
+        $tmw = Carbon::tomorrow()->addHour(7);
+        if($detalle->created_at->between($hoy,$tmw)){
+          $consultas[$k]['estado'] = true;
+        }else{
+          $consultas[$k]['estado'] = false;
+        }
+      }else{
+        $consultas[$k]['estado'] = false;
+      }
+    }
+    $consultas = array_reverse($consultas);
+    return (compact(
+      'nombre',
+      'foto',
+      'especialidad',
+      'consultas'
+    ));
   }
 
   public function dash ($id){

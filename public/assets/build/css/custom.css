@@ -140,6 +140,12 @@ thead{
     height: 70px;
     object-fit: scale-down;
 }
+.img-square-mini{
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 5px;
+}
 .enc_img{
     width: 100px;
     height: 100px;
