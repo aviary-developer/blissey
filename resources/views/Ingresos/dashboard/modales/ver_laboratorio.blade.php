@@ -13,12 +13,12 @@
                   <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
                   @php
                     if($ingreso->estado != 2){
-                      $fecha = Carbon\Carbon::now();
+                      $fecha = $hoy;
                     }else{
-                      $fecha = $ingreso->fecha_alta;
+                      $fecha = $dias_a;
                     }
                   @endphp
-                  {!! Form::date('fechaNacimiento',$fecha->format('Y-m-d'),['id'=>'fecha_examen','max'=>$ingreso->fecha_ingreso->addDays(($dias))->format('Y-m-d'),'min'=>$ingreso->fecha_ingreso->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+                  {!! Form::date('fechaNacimiento',$fecha->format('Y-m-d'),['id'=>'fecha_examen','max'=>$dias_x->format('Y-m-d'),'min'=>$dias_i->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
                 </div>
               </div>
             </div>

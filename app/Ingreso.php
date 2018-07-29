@@ -80,9 +80,7 @@ class Ingreso extends Model
     public static function servicio_gastos($id, $dia = -1){
       $ingreso = Ingreso::find($id);
       //Gastos por uso de habitaciones
-      $dias = $ingreso->fecha_ingreso->diffInDays(Carbon::now());
       if($dia == -1){
-        $dias++;
         $precio_habitacion = $ingreso->habitacion->precio;
         $total = $precio_habitacion;
         //Gastos por examenes de laboratorio
@@ -108,8 +106,14 @@ class Ingreso extends Model
           }
         }
       }else{
-        $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
-        $fecha = $ingreso->fecha_ingreso->addDays($dia);
+        $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
+        $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+        $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+        if($fecha_ingreso->lt($fecha)){
+          $fecha->subDay();
+          $fecha_mayor->subDay();
+        }
+        $fecha_mayor->addDay();
         $habitacion = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha)->count();
         if($habitacion == 0 && $ingreso->habitacion != null){
           $total = $ingreso->habitacion->precio;
@@ -161,8 +165,14 @@ class Ingreso extends Model
           }
         }
       }else{
-        $fecha = $ingreso->fecha_ingreso->addDays($dia);
-        $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
+        $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
+        $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+        $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+        if($fecha_ingreso->lt($fecha)){
+          $fecha->subDay();
+          $fecha_mayor->subDay();
+        }
+        $fecha_mayor->addDay();
         if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
           foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
             if($detalle->f_servicio == null && ($detalle->created_at->between($fecha, $fecha_mayor))){
@@ -177,8 +187,14 @@ class Ingreso extends Model
 
     public static function honorario_gastos($id,$dia = -1){
       $ingreso = Ingreso::find($id);
-      $fecha = $ingreso->fecha_ingreso->addDays($dia);
-      $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia+1));
+      $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
+      $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+      $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+      if($fecha_ingreso->lt($fecha)){
+        $fecha->subDay();
+        $fecha_mayor->subDay();
+      }
+      $fecha_mayor->addDay();
       $total = 0;
 
       if($dia == -1){
@@ -212,8 +228,14 @@ class Ingreso extends Model
             $total += $abono->monto;
           }
         }else{
-          $fecha = $ingreso->fecha_ingreso->addDays($dia);
-          $fecha_mayor = $ingreso->fecha_ingreso->addDays(($dia +1));
+          $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
+          $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+          $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+          if($fecha_ingreso->lt($fecha)){
+            $fecha->subDay();
+            $fecha_mayor->subDay();
+          }
+          $fecha_mayor->addDay();
           foreach($ingreso->transaccion->abono as $abono){
             if($abono->created_at->between($fecha, $fecha_mayor)){
               $total += $abono->monto;

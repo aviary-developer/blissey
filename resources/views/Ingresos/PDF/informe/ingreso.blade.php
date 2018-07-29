@@ -13,18 +13,26 @@
         @endphp
         @for ($i = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
-            $date_before_after = $ingreso->fecha_ingreso->addDays(($i-1));
-          @endphp
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $fecha_anterior = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              $fecha_anterior->subDay();
+            }
+            $fecha_anterior->subDay();
+            $ultima_24->addDay();
+          @endphp 
           @if ($i != 0)
             <tr>
-              <td class="text-center" colspan="2"><b>{{$date_before_after->formatLocalized('Total del %d de %B de %Y')}}</b></td>
+              <td class="text-center" colspan="2"><b>{{$fecha_anterior->formatLocalized('Total del %d de %B de %Y')}}</b></td>
               <td class="text-right blue"><b>{{'$ '.number_format(($total_med),2,'.',',')}}</b></td>
             </tr>
           @endif
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->where('estado',true) as $medicamento)
-            @if ($medicamento->created_at->between($date_after_origen,$date_next_after))
+            @if ($medicamento->created_at->between($fecha_origen,$ultima_24))
               <tr>
                 <td class="text-center">
                   {{$medicamento->cantidad.' '.$medicamento->divisionProducto->division->nombre}}
@@ -42,7 +50,7 @@
           @endforeach
         @endfor
         <tr>
-          <td class="text-center" colspan="2"><b>{{$date_after_origen->formatLocalized('Total del %d de %B de %Y')}}</b></td>
+          <td class="text-center" colspan="2"><b>{{$fecha_origen->formatLocalized('Total del %d de %B de %Y')}}</b></td>
           <td class="text-right blue"><b>{{'$ '.number_format(($total_med),2,'.',',')}}</b></td>
         </tr>
       </tbody>
@@ -59,15 +67,23 @@
       <tbody>
         @for ($i = $total_habitacion= 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
-          @endphp
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
+          @endphp 
           @php
-            $habitacion_count = app\DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$date_after_origen)->count();
+            $habitacion_count = app\DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_origen)->count();
           @endphp
           @if ($habitacion_count == 0)
             <tr>
-              <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+              <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
               <td>{{'Habitación '.$ingreso->habitacion->numero}}</td>
               <td class="text-right">{{'$ '.number_format(($ingreso->habitacion->servicio->precio),2,'.',',')}}</td>
               @php
@@ -76,9 +92,9 @@
             </tr>
           @else
             @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
-              @if ($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $date_after_origen))
+              @if ($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha_origen))
                 <tr>
-                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($detalle->precio),2,'.',',')}}</td>
                   @php
@@ -105,14 +121,22 @@
       <tbody>
         @for ($i = $total_laboratorio = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
           @endphp
           @if (count($ingreso->transaccion->solicitud) > 0)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
-              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after) && $solicitud->f_examen != null))
+              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_examen != null))
                 <tr>
-                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
                   <td>{{$solicitud->examen->nombreExamen}}</td>
                   <td class="text-right">{{'$ '.number_format(($solicitud->examen->servicio->precio),2,'.',',')}}</td>
                   @php
@@ -139,14 +163,22 @@
       <tbody>
         @for ($i = $total_rayos_x = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
           @endphp
           @if (count($ingreso->transaccion->solicitud) > 0)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
-              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after) && $solicitud->f_rayox != null))
+              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_rayox != null))
                 <tr>
-                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
                   <td>{{$solicitud->rayox->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($solicitud->rayox->servicio->precio),2,'.',',')}}</td>
                   @php
@@ -173,14 +205,22 @@
       <tbody>
         @for ($i = $total_ultras = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
           @endphp
           @if (count($ingreso->transaccion->solicitud) > 0)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
-              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($date_after_origen,$date_next_after) && $solicitud->f_ultrasonografia != null))
+              @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_ultrasonografia != null))
                 <tr>
-                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
                   <td>{{$solicitud->ultrasonografia->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($solicitud->ultrasonografia->servicio->precio),2,'.',',')}}</td>
                   @php
@@ -207,13 +247,21 @@
       <tbody>
         @for ($i = $total_servicio = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
           @endphp
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle)
-              @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && ($detalle->created_at->between($date_after_origen,$date_next_after)))
+              @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && ($detalle->created_at->between($fecha_origen,$ultima_24)))
                 <tr>
-                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($detalle->precio * $detalle->cantidad),2,'.',',')}}</td>
                   @php
@@ -240,13 +288,21 @@
       <tbody>
         @for ($i = $total_honorario = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
           @endphp
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
-              @if ($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($date_after_origen,$date_next_after)))
+              @if ($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($fecha_origen,$ultima_24)))
                 <tr>
-                  <td class="text-center">{{$date_after_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($detalle->precio * $detalle->cantidad),2,'.',',')}}</td>
                   @php
@@ -272,13 +328,21 @@
       <tbody>
         @for ($i = $total_abonado = 0; $i <= $dias; $i++)
           @php
-            $date_after_origen = $ingreso->fecha_ingreso->addDays($i);
-            $date_next_after = $ingreso->fecha_ingreso->addDays(($i + 1));
+            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+            
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
+            if($fecha_ingreso->lt($fecha_origen)){
+              $fecha_origen->subDay();
+              $ultima_24->subDay();
+              
+            }
+            $ultima_24->addDay();
           @endphp
           @foreach ($ingreso->transaccion->Abono as $abono)
-            @if ($abono->created_at->between($date_after_origen, $date_next_after))
+            @if ($abono->created_at->between($fecha_origen, $ultima_24))
               <tr>
-                <td>{{$date_after_origen->formatLocalized('%d de %B de %Y')}}</td>
+                <td>{{$fecha_origen->formatLocalized('%d de %B de %Y')}}</td>
                 <td class="text-right">{{'$ '.number_format(($abono->monto),2,'.',',')}}</td>
                 @php
                   $total_abonado += floatval($abono->monto);

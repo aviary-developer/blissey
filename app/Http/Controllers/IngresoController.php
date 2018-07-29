@@ -186,6 +186,9 @@ class IngresoController extends Controller
       /**Inicialización de las variables a utilizar */
       $total_gastos = $total_abono = $total_deuda = $dias = $horas = 0;
       $examenes  = $horas_f = null;
+      $dia_ingreso = null;
+      $dia_alta = null;
+      $cambio = false;
 
       /**Obtener las habitaciones para realizar el cambio de habitacion */
       $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
@@ -206,8 +209,11 @@ class IngresoController extends Controller
       $total_especialidad = $especialidades->count();
       /**Calculo de dia efectivo en que fue ingresado el paciente */
       $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+      $dias_i = $ingreso->fecha_ingreso->hour(7)->minute(0);
       if($ingreso->fecha_ingreso->lt($dia_ingreso)){
-        $dia_ingreso = $dia_ingreso->subDays(1);
+        $dia_ingreso->subDay();
+        $dias_i->subDay();
+        $cambio = true;
       }
       if($ingreso->estado == 1){
         $dias = $dia_ingreso->diffInDays($hoy);
@@ -253,8 +259,10 @@ class IngresoController extends Controller
         }
       }else if($ingreso->estado == 2){
         $dia_alta = $ingreso->fecha_alta->hour(7)->minute(0);
+        $dias_a = $ingreso->fecha_alta->hour(7)->minute(0);
         if($ingreso->fecha_alta->lt($dia_alta)){
-          $dia_alta = $dia_alta->subDays(1);
+          $dia_alta->subDay();
+          $dias_a->subDay();
         }
         $dias = $dia_ingreso->diffInDays($dia_alta);
         /**Determinar cuales son las ultimas 24 horas */
@@ -401,6 +409,10 @@ class IngresoController extends Controller
           $ing = true;
         }
       }
+      $dias_x = $ingreso->fecha_ingreso->hour(7)->minute(0)->addDays($dias);
+      if($cambio){
+        $dias_x->subDay();
+      }
       
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
@@ -439,7 +451,10 @@ class IngresoController extends Controller
         'ultras',
         'especialidades',
         'medicos_general',
-        'total_especialidad'
+        'total_especialidad',
+        'dias_i',
+        'dias_a',
+        'dias_x'
       ));
     }
 
@@ -947,12 +962,19 @@ class IngresoController extends Controller
     $ingreso = Ingreso::find($id);
     $fecha = new Carbon($fecha_sf);
     $fecha24 = new Carbon($fecha_sf);
+    $fecha->hour(7);
     $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
     $dias = -1;
     if($ingreso->estado != 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
-      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
     }
     $lista = $ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
     $servicios = [];
@@ -983,12 +1005,19 @@ class IngresoController extends Controller
     $ingreso = Ingreso::find($id);
     $fecha = new Carbon($fecha_sf);
     $fecha24 = new Carbon($fecha_sf);
+    $fecha->hour(7);
     $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
     $dias = -1;
     if($ingreso->estado != 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
-      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
     }
     $lista = $ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
     $productos = [];
@@ -1022,12 +1051,19 @@ class IngresoController extends Controller
     $ingreso = Ingreso::find($id);
     $fecha = new Carbon($fecha_sf);
     $fecha24 = new Carbon($fecha_sf);
+    $fecha->hour(7);
     $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
     $dias = -1;
     if($ingreso->estado != 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
-      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
     }
     if($request->pendiente == null){
       $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_examen','!=',null);
@@ -1060,12 +1096,19 @@ class IngresoController extends Controller
     $ingreso = Ingreso::find($id);
     $fecha = new Carbon($fecha_sf);
     $fecha24 = new Carbon($fecha_sf);
+    $fecha->hour(7);
     $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
     $dias = -1;
     if($ingreso->estado != 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
-      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
     }
     if($request->pendiente == null){
       $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_rayox','!=',null);
@@ -1093,12 +1136,19 @@ class IngresoController extends Controller
     $ingreso = Ingreso::find($id);
     $fecha = new Carbon($fecha_sf);
     $fecha24 = new Carbon($fecha_sf);
+    $fecha->hour(7);
     $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
     $dias = -1;
     if($ingreso->estado != 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
-      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
     }
     if($request->pendiente == null){
       $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_ultrasonografia','!=',null);
@@ -1127,11 +1177,19 @@ class IngresoController extends Controller
     $fecha = new Carbon($fecha_sf);
     $fecha24 = new Carbon($fecha_sf);
     $fecha24 = $fecha24->addDays(1);
+    $fecha->hour(7);
+    $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
     $dias = -1;
     if($ingreso->estado != 2){
-      $dias = $ingreso->fecha_ingreso->diffInDays(new Carbon);
-      $ultima24 = $ingreso->fecha_ingreso->addDays($dias);
-      $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
     }
 
     $lista = $ingreso->signos->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
@@ -1171,8 +1229,13 @@ class IngresoController extends Controller
       $consultas[$k]['fecha'] = $detalle->created_at->format('d / m / Y h:i.s a');
       $consultas[$k]['id'] = $detalle->id;
       if($ingreso->estado == "1"){
+        $ahora = Carbon::now();
         $hoy = Carbon::today()->addHours(7);
         $tmw = Carbon::tomorrow()->addHour(7);
+        if($ahora->lt($hoy)){
+          $hoy->subDay();
+          $tmw->subDay();
+        }
         if($detalle->created_at->between($hoy,$tmw)){
           $consultas[$k]['estado'] = true;
         }else{
