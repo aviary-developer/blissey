@@ -806,6 +806,7 @@ function ver_medico(servicio) {
       html = '<div class="col-xs-12">' +
         '<table class="table" id="tabla_v_m">' +
         '<thead>' +
+        '<th>Fecha</th>' +
         '<th>Hora</th>' +
         '<th style="width: 40px">Acción</th>'
       '</thead>' +
@@ -815,7 +816,8 @@ function ver_medico(servicio) {
       tabla = $("#tabla_v_m");
       $(r.consultas).each(function (key, value) {
         html = '<tr id="r' + value.id + '">' +
-          '<td>' + value.fecha + '</td>';
+          '<td>' + value.fecha + '</td>' +
+          '<td>' + value.hora + '</td>';
         if (value.estado == 1) {
           html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-xs" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-remove"></i></button></td>';
         } else {

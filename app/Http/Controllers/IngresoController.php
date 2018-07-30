@@ -220,6 +220,10 @@ class IngresoController extends Controller
         /**Determinar cuales son las ultimas 24 horas */
         $ultima24 = Carbon::today()->hour(7);
         $ultima48 = Carbon::tomorrow()->hour(7);
+        if($ahora->lt($ultima24)){
+          $ultima24->subDay();
+          $ultima48->subDay();
+        }
         /**Determinar horas de ingreso */
         $horas = $ingreso->fecha_ingreso->diffInHours($hoy);
         $horas_f = $hoy->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
@@ -594,7 +598,12 @@ class IngresoController extends Controller
             ->where('ingresos.estado','<>',2)
             ->whereRaw('ingresos.f_paciente = pacientes.id');
           }
-        )->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
+        )->where(
+          function ($query) use ($nombre){
+            $query->where('nombre','like','%'.$nombre.'%')
+            ->orWhere('apellido','like','%'.$nombre.'%');
+          }
+        )->where('estado',true)->orderBy('apellido')->take(7)->get();
       }else if($tipo == "solicitud"){
         $pacientes = Paciente::where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }else{
@@ -944,16 +953,18 @@ class IngresoController extends Controller
     /**Recorrer en un for todos los días desde el inicio hasta hoy, para ver todos los gastos hechos por día */
     $monto = [];
     $fecha = [];
+    $abonos = [];
     for($i=0; $i<$dias+1; $i++){
       $monto[$i]=Ingreso::servicio_gastos($id,$i);
       $monto[$i]+=Ingreso::honorario_gastos($id,$i);
       $monto[$i]+=Ingreso::tratamiento_gastos($id,$i);
+      $abonos[$i]=Ingreso::abonos($id,$i);
       $iva = $monto[$i]*0.13;
       $monto[$i]+=$iva;
       $fecha[$i]=$ingreso->fecha_ingreso->addDays($i)->format('m-d-Y');
     }
 
-    return (compact('monto','fecha','dias'));
+    return (compact('monto','fecha','dias','abonos'));
   }
 
   public function lista_servicio(Request $request){
@@ -1226,7 +1237,8 @@ class IngresoController extends Controller
     $detalles = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('f_servicio',$id)->get();
     $consultas = [];
     foreach($detalles as $k => $detalle){
-      $consultas[$k]['fecha'] = $detalle->created_at->format('d / m / Y h:i.s a');
+      $consultas[$k]['fecha'] = $detalle->created_at->format('d / m / Y');
+      $consultas[$k]['hora'] = $detalle->created_at->format('h:i:s a');
       $consultas[$k]['id'] = $detalle->id;
       if($ingreso->estado == "1"){
         $ahora = Carbon::now();

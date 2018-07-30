@@ -336,9 +336,11 @@ $(document).on('ready', function () {
         },
         success: function (r) {
           var monto = [];
+          var abono = [];
           var fecha_format = [];
           $(r.monto).each(function (key, value) {
             monto.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value));
+            abono.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(r.abonos[key]));
             fecha = new Date(r.fecha[key]);
             fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
           });
@@ -348,13 +350,20 @@ $(document).on('ready', function () {
             type: 'line',
             data: {
               labels: fecha_format,
-              datasets: [{
-                data: monto,
-                label: 'Monto',
-                lineTension: 0.1,
-                
-                borderColor: 'rgba(88,214,141)',
-              }]
+              datasets: [
+                {
+                  data: monto,
+                  label: 'Gastos',
+                  lineTension: 0.1,
+                  borderColor: 'rgba(236,112,99)',
+                },
+                {
+                  data: abono,
+                  label: 'Abono',
+                  lineTension: 0.1,
+                  borderColor: 'rgba(88,214,141)',
+                }
+              ]
             },
             options: {
               scales: {

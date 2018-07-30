@@ -50,7 +50,7 @@
   </div>
   <div class="col-xs-3">    
     <div class="row">
-      <center><i class="fa fa-arrow-down red"></i> Total de gastos</center>
+      <center><i class="fa fa-arrow-down red"></i> Total a pagar</center>
     </div>
     <div class="row bg-danger">
       <center><span class="big-text">
