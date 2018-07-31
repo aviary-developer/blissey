@@ -10,8 +10,8 @@ class Producto extends Model
     'nombre','f_proveedor','f_presentacion','f_categoria'
   ];
 
-  public static function buscar($nombre, $estado){
-    return Producto::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+  public static function buscar($nombre,$f_proveedor,$f_categoria, $estado){
+    return Producto::nombre($nombre)->proveedor($f_proveedor)->categoria($f_categoria)->estado($estado)->orderBy('nombre')->paginate(10);
   }
 
   public function scopeNombre($query, $nombre){
@@ -26,7 +26,16 @@ class Producto extends Model
     }
     $query->where('estado',$estado);
   }
-
+  public function scopeProveedor($query, $prov){
+    if(!is_null($prov)){
+      $query->where('f_proveedor',$prov);
+    }
+  }
+  public function scopeCategoria($query, $cate){
+    if(!is_null($cate)){
+      $query->where('f_categoria',$cate);
+    }
+  }
   public function nombrePresentacion($id){
     $nombre = Presentacion::find($id);
     return $nombre->nombre;

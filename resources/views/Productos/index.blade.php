@@ -29,6 +29,10 @@
           <div class="col-md-7 col-xs-12">
             <div class="btn-group">
               <a href={!! asset('/productos/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+              <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_busqueda">
+                <i class="fa fa-search"></i>
+                Búsqueda
+              </button>
               <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
               <a href={!! asset('/productos?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
                 @if ($estadoOpuesto)
@@ -41,17 +45,6 @@
               </a>
               <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
             </div>
-          </div>
-          <div class="col-md-5 col-xs-12">
-            {!!Form::open(['route'=>'productos.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
-              @if ($estadoOpuesto)
-                <input type="hidden" name="estado" value="0">
-              @endif
-            </div>
-            {!! Form::close() !!}
           </div>
         </div>
         <br>
@@ -108,10 +101,67 @@
         </table>
         <div class="ln_solid"></div>
         <center>
-          {!! str_replace ('/?', '?', $productos->appends(Request::only(['nombre','estado']))->render ()) !!}
+          {!! str_replace ('/?', '?', $productos->appends(Request::only(['nombre','f_proveedor','f_categoria','estado']))->render ()) !!}
         </center>
       </div>
     </div>
   </div>
   <!-- /page content -->
+  {{-- <div class="col-md-5 col-xs-12">
+
+    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+      <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
+      {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
+    </div>
+
+  </div> --}}
+  {{--Inicio modal  --}}
+  <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_busqueda">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Búsqueda</h4>
+        </div>
+
+        {!!Form::open(['route'=>'productos.index','method'=>'GET','role'=>'search'])!!}
+        <div class="modal-body">
+          <div class="x_panel">
+            <div class="form-group col-sm-12 col-xs-12">
+              <label class="control-label col-sm-2 col-xs-12">Nombre </label>
+              <div class="col-sm-9 col-xs-12">
+                <span class="fa fa-cube form-control-feedback left" aria-hidden="true"></span>
+                {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del producto']) !!}
+              </div>
+            </div>
+          <div class="form-group col-sm-12 col-xs-12">
+            <label class="control-label col-sm-2 col-xs-12">Proveedor </label>
+            <div class="col-sm-9 col-xs-12">
+              <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+              {!!Form::select('f_proveedor',App\Proveedor::arrayProveedores(),null, ['class'=>'form-control has-feedback-left','id'=>'f_proveedor','placeholder'=>'Todos los proveedores'])!!}
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12">
+            <label class="control-label col-sm-2 col-xs-12">Categoría </label>
+            <div class="col-sm-9 col-xs-12">
+              <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
+              {!!Form::select('f_categoria',App\CategoriaProducto::arrayCategorias(),null, ['class'=>'form-control has-feedback-left','id'=>'f_categoria','placeholder'=>'Todos las categorías'])!!}
+            </div>
+          </div>
+          @if ($estadoOpuesto)
+            <input type="hidden" name="estado" value="0">
+          @endif
+        </div>
+        </div>
+        <div class="modal-footer">
+            {!! Form::submit('Buscar',['class'=>'btn btn-primary']) !!}
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
+        </div>
+        {!! Form::close() !!}
+      </div>
+    </div>
+  </div>
+  {{--Final modal--}}
 @endsection

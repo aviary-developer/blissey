@@ -8,6 +8,7 @@ use App\Bitacora;
 use Redirect;
 use Response;
 use App\Http\Requests\PresentacionRequest;
+use DB;
 
 class PresentacionController extends Controller
 {
@@ -131,7 +132,7 @@ class PresentacionController extends Controller
       $presentaciones->estado = false;
       $presentaciones->save();
       Bitacora::bitacora('desactivate','presentacions','presentaciones',$id);
-      return Redirect::to('/presentaciones');
+      return Redirect::to('/presentaciones')->with('mensaje','¡Desactivado!');
     }
 
     public function activate($id){
@@ -139,7 +140,7 @@ class PresentacionController extends Controller
       $presentaciones->estado = true;
       $presentaciones->save();
       Bitacora::bitacora('activate','presentacions','presentaciones',$id);
-      return Redirect::to('/presentaciones?estado=0');
+      return Redirect::to('/presentaciones?estado=0')->with('mensaje','¡Restaurado!');
     }
     public function guardar($nombre)
     {

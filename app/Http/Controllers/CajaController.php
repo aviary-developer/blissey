@@ -140,13 +140,13 @@ class CajaController extends Controller
        $cajas->estado = false;
        $cajas->save();
        Bitacora::bitacora('desactivate','cajas','cajas',$id);
-       return Redirect::to('/cajas');
+       return Redirect::to('/cajas')->with('mensaje','¡Desactivado!');
      }
      public function activate($id){
        $cajas = Caja::find($id);
        $cajas->estado = true;
        $cajas->save();
        Bitacora::bitacora('activate','cajas','cajas',$id);
-       return Redirect::to('/cajas?estado=0');
+       return Redirect::to('/cajas?estado=0')->with('mensaje','¡Restaurado!');
      }
 }

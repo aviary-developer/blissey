@@ -30,13 +30,17 @@ class ProductoController extends Controller
       $pagina *= 10;
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
-      $productos = Producto::buscar($nombre,$estado);
+      $f_proveedor=$request['f_proveedor'];
+      $f_categoria=$request['f_categoria'];
+      $productos = Producto::buscar($nombre,$f_proveedor,$f_categoria,$estado);
       $activos = Producto::where('estado',true)->count();
       $inactivos = Producto::where('estado',false)->count();
       return view('Productos.index',compact(
         'productos',
         'estado',
         'nombre',
+        'f_proveedor',
+        'f_categoria',
         'activos',
         'inactivos',
         'pagina'
@@ -234,7 +238,7 @@ class ProductoController extends Controller
       $productos->estado = false;
       $productos->save();
       Bitacora::bitacora('desactivate','productos','productos',$id);
-      return Redirect::to('/productos');
+      return Redirect::to('/productos')->with('mensaje','¡Desactivado!');
     }
 
     public function activate($id){
@@ -242,7 +246,7 @@ class ProductoController extends Controller
       $productos->estado = true;
       $productos->save();
       Bitacora::bitacora('activate','productos','productos',$id);
-      return Redirect::to('/productos?estado=0');
+      return Redirect::to('/productos?estado=0')->with('mensaje','¡Restaurado!');
     }
 
     public function buscarComponentes($texto){

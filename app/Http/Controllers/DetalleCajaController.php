@@ -58,7 +58,7 @@ class DetalleCajaController extends Controller
         DB::rollback();
         return redirect('/detalleCajas/create')->with('mensaje', 'Algo salio mal');
       }
-      Bitacora::bitacora('store','detalleCajas','detalle_cajas',$detalle->id);
+      Bitacora::bitacora('store','detalle_cajas','detalleCajas',$detalle->id);
       DB::commit();
       return redirect('/detalleCajas/create')->with('mensaje', '¡Guardado!');
     }

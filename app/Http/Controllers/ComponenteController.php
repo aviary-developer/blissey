@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ComponenteRequest;
 use Redirect;
 use Response;
+use App\Bitacora;
 
 class ComponenteController extends Controller
 {
@@ -122,14 +123,14 @@ class ComponenteController extends Controller
       $componentes->estado = false;
       $componentes->save();
       Bitacora::bitacora('desactivate','componentes','componentes',$id);
-      return Redirect::to('/componentes');
+      return Redirect::to('/componentes')->with('mensaje','¡Desactivado!');
     }
     public function activate($id){
       $componentes = Componente::find($id);
       $componentes->estado = true;
       $componentes->save();
       Bitacora::bitacora('activate','componentes','componentes',$id);
-      return Redirect::to('/componentes?estado=0');
+      return Redirect::to('/componentes?estado=0')->with('mensaje','¡Restaurado!');
     }
     public static function ingresoComponente(ComponenteRequest $request){
       $c=Componente::create($request->All());

@@ -18,11 +18,6 @@
     buttonsStyling: false
   }).then(function () {
     submit();
-    swal(
-      '¡Desactivado!',
-      'Acción realizada satisfactorimente',
-      'success'
-    )
   }, function (dismiss) {
     // dismiss can be 'cancel', 'overlay',
     // 'close', and 'timer'

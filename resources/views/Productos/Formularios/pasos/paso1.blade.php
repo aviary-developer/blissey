@@ -13,7 +13,7 @@
       <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
       {!!Form::select('f_presentacion',
         App\Producto::arrayPresentaciones()
-        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_presentacion','placeholder'=>'Seleccione una presentación'])!!}
+        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_presentacion'])!!}
     </div>
   </div>
   <div class="form-group">
@@ -22,7 +22,7 @@
       <span class="fa fa-cog form-control-feedback left" aria-hidden="true"></span>
       {!!Form::select('f_categoria',
         App\CategoriaProducto::arrayCategorias()
-        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_categoria','placeholder'=>'Seleccione una categoría'])!!}
+        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_categoria'])!!}
     </div>
   </div>
   <div class="form-group">
@@ -31,7 +31,7 @@
       <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
       {!!Form::select('f_proveedor',
         App\Proveedor::arrayProveedores()
-        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_proveedor','placeholder'=>'Seleccione un proveedor'])!!}
+        ,null, ['class'=>'form-control has-feedback-left','id'=>'f_proveedor'])!!}
     </div>
   </div>
   <h4 class="StepTitle">División del producto</h4>
