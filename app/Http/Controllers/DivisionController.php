@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DivisionRequest;
 use Redirect;
 use Response;
+use App\Bitacora;
 
 class DivisionController extends Controller
 {
@@ -125,14 +126,14 @@ class DivisionController extends Controller
       $divisiones->estado = false;
       $divisiones->save();
       Bitacora::bitacora('desactivate','divisions','divisiones',$id);
-      return Redirect::to('/divisiones');
+      return Redirect::to('/divisiones')->with('mensaje','¡Desactivado!');
     }
     public function activate($id){
       $divisiones = Division::find($id);
       $divisiones->estado = true;
       $divisiones->save();
       Bitacora::bitacora('activate','divisions','divisiones',$id);
-      return Redirect::to('/divisiones?estado=0');
+      return Redirect::to('/divisiones?estado=0')->with('mensaje','¡Restuarado!');
     }
     public static function ingresoDivision(DivisionRequest $request){
       $d=Division::create($request->All());

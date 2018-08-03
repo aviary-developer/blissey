@@ -2,7 +2,7 @@
 <div class="x_content">
   <h4>Datos del Proveedor</h4>
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Drogería *</label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Proveedor *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-industry form-control-feedback left" aria-hidden="true"></span>
       {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo proveedor','id'=>'nombre']) !!}

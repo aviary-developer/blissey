@@ -299,7 +299,7 @@ class TransaccionController extends Controller
       return $clientes;
     }
     public static function buscarVenta($texto){
-      $productos=Producto::where('nombre','like','%'.$texto.'%')->where('estado',1)->get(['id','nombre','f_presentacion']);
+      $productos=Producto::where('nombre','like','%'.$texto.'%')->orderBy('nombre','ASC')->where('estado',1)->get(['id','nombre','f_presentacion']);
       foreach ($productos as $p) {
         $p->presentacion;
         $p->divisionProducto;
@@ -309,12 +309,13 @@ class TransaccionController extends Controller
             $dp->unidad;
           }
           $dp->inventario=DivisionProducto::inventario($dp->id,1);
+          $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
         }
       }
       return $productos;
     }
     public static function buscarComponente($texto){
-      $componentes=Componente::where('nombre','like','%'.$texto.'%')->take(4)->get(['id','nombre']);
+      $componentes=Componente::where('nombre','like','%'.$texto.'%')->get(['id','nombre']);
       foreach ($componentes as $c) {
         foreach ($c->componenteProducto as $cp) {
           $cp->producto;
@@ -325,6 +326,7 @@ class TransaccionController extends Controller
               $dp->unidad;
             }
             $dp->inventario=DivisionProducto::inventario($dp->id,1);
+            $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
           }
         }
       }

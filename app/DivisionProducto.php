@@ -157,4 +157,26 @@ class DivisionProducto extends Model
     ->orderBy('productos.nombre','ASC')
     ->get();
   }
+  public static function ubicacion($id,$inventario){
+    $compras=DivisionProducto::compras($id,1);
+    $cuenta=0;
+    $i=0;
+    $ultimos=[];
+    foreach ($compras as $compra) {
+      $cuenta=$cuenta+$compra->cantidad;
+      $ultimos[$i]=$compra;
+      if($cuenta>=$inventario){
+        $estante=Estante::find($compra->f_estante);
+        return $estante->codigo."|".$compra->nivel;
+      }
+      $i++;
+    }
+  }
+  public static function num_meses($numero){
+    if($numero==1){
+      return "1 mes";
+    }else {
+      return $numero." meses";
+    }
+  }
 }

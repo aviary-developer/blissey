@@ -120,7 +120,7 @@ class UnidadController extends Controller
     $unidades->estado = false;
     $unidades->save();
     Bitacora::bitacora('desactivate','unidades','unidads',$id);
-    return Redirect::to('/unidades');
+    return Redirect::to('/unidades')->with('mensaje','¡Desactivado!');
   }
 
   public function activate($id){
@@ -128,7 +128,7 @@ class UnidadController extends Controller
     $unidades->estado = true;
     $unidades->save();
     Bitacora::bitacora('activate','unidades','unidads',$id);
-    return Redirect::to('/unidades?estado=0');
+    return Redirect::to('/unidades?estado=0')->with('mensaje','¡Restaurado!');
   }
   public static function ingresoUnidad(UnidadRequest $request){
     $u=Unidad::create($request->All());

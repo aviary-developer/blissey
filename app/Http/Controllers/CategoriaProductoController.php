@@ -9,6 +9,7 @@ use App\Bitacora;
 use Redirect;
 use Response;
 use App\Http\Requests\CategoriaProductoRequest;
+use DB;
 
 class CategoriaProductoController extends Controller
 {
@@ -141,7 +142,7 @@ class CategoriaProductoController extends Controller
     $categoria_productos->estado = false;
     $categoria_productos->save();
     Bitacora::bitacora('desactivate','categoria_productos','categoria_productos',$id);
-    return Redirect::to('/categoria_productos');
+    return Redirect::to('/categoria_productos')->with('mensaje','¡Desactivado!');
   }
 
   public function activate($id){
@@ -149,7 +150,7 @@ class CategoriaProductoController extends Controller
     $categoria_productos->estado = true;
     $categoria_productos->save();
     Bitacora::bitacora('activate','categoria_productos','categoria_productos',$id);
-    return Redirect::to('/categoria_productos?estado=0');
+    return Redirect::to('/categoria_productos?estado=0')->with('mensaje','¡Restaurado!');
   }
   public static function ingresoCategoria(CategoriaProductoRequest $request){
     $categoria=CategoriaProducto::create($request->All());

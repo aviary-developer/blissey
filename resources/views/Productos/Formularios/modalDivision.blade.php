@@ -28,6 +28,17 @@
         {!! Form::text('stock',null,['class'=>'form-control has-feedback-left','placeholder'=>'Stock','id'=>'stock']) !!}
       </div>
     </div>
+    <br><br>
+    <div class="form-group">
+      <label class="col-md-3 col-sm-12 col-xs-12">Notificar </label>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <span class="fa fa-warning form-control-feedback left" aria-hidden="true"></span>
+        {!!Form::select('mes',
+          [1=>'1 mes',2=>'2 meses',3=>'3 meses',4=>'4 meses',5=>'5 meses']
+          ,3, ['class'=>'form-control has-feedback-left','id'=>'mes'])!!}
+      </div>
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">antes de vencer</label>
+    </div>
   </div>
     </div>
       <div class="modal-footer">

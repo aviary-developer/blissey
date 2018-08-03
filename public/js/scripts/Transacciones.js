@@ -79,6 +79,7 @@ $(document).on('ready',function(){
         var tabla = $("#tablaBuscar");
         tabla.empty();
       }
+      var conteo=0;
       if(radio=='1' && valor.length>0){
         var ruta = "/blissey/public/buscarProductoVenta/"+valor;
         var tabla = $("#tablaBuscar");
@@ -86,6 +87,7 @@ $(document).on('ready',function(){
           tabla.empty();
           cab="<thead>"+
           "<th colspan='2'>Resultado</th>"+
+          "<th>Estante|Nivel</th>"+
           "<th>Existencias</th>"+
           "<th>Precio</th>"+
           "<th style='width : 80px'>Acción</th>"+
@@ -102,6 +104,7 @@ $(document).on('ready',function(){
               html="<tr>"+
               "<td id='cu"+value2.id+"'>"+value.nombre+"</td>"+
               "<td id='cd"+value2.id+"'>"+" "+value2.division.nombre+" "+value2.cantidad+" "+aux+"</td>"+
+              "<td>"+value2.ubicacion+"</td>"+
               "<td id='ct"+value2.id+"'>"+value2.inventario+"</td>"+
               "<td>$ <label id='cc"+value2.id+"'>"+parseFloat(value2.precio).toFixed(2)+"</label></td>"+
               "<td>"+
@@ -110,7 +113,10 @@ $(document).on('ready',function(){
               "</button>"+
               "</td>"+
               "</tr>";
-              tabla.append(html);
+              if (conteo<4) {
+                tabla.append(html);
+              }
+              conteo++;
               }
             });
           });
@@ -123,6 +129,7 @@ $(document).on('ready',function(){
           tabla.empty();
           cab="<thead>"+
           "<th colspan='2'>Resultado</th>"+
+          "<th>Estante|Nivel</th>"+
           "<th>Existencias</th>"+
           "<th>Precio</th>"+
           "<th>Componente</th>"+
@@ -141,6 +148,7 @@ $(document).on('ready',function(){
                 html="<tr>"+
                 "<td id='cu"+value3.id+"'>"+value2.producto.nombre+"</td>"+
                 "<td id='cd"+value3.id+"'>"+" "+value3.division.nombre+" "+value3.cantidad+" "+aux+"</td>"+
+                "<td>"+value3.ubicacion+"</td>"+
                 "<td id='ct"+value3.id+"'>"+value3.inventario+"</td>"+
                 "<td>$ <label id='cc"+value3.id+"'>"+parseFloat(value3.precio).toFixed(2)+"</label></td>"+
                 "<td>"+value.nombre+"</td>"+
@@ -150,7 +158,10 @@ $(document).on('ready',function(){
                 "</button>"+
                 "</td>"+
                 "</tr>";
-                tabla.append(html);
+                if (conteo<4) {
+                  tabla.append(html);
+                }
+                conteo++;
                 }
             });
           });
@@ -177,7 +188,10 @@ $(document).on('ready',function(){
                 "</button>"+
                 "</td>"+
                 "</tr>";
-                tabla.append(html);
+                if (conteo<4) {
+                  tabla.append(html);
+                }
+                conteo++;
         });
       });
       }
@@ -571,6 +585,7 @@ function registrarventa(id){
     "</tr>";
     tabla.append(html);
     componentes_agregados.push(""+id+"");
+    notaInfo('Ha sido agregado en detalles');
   }
 } else {
   c2=parseFloat(c2).toFixed(2);
@@ -592,6 +607,7 @@ function registrarventa(id){
   "</td>"+
   "</tr>";
   tabla.append(html);
+  notaInfo('Ha sido agregado en detalles');
 }
 }
 function validarFechaMenorActual(date){
