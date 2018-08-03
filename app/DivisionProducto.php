@@ -172,4 +172,11 @@ class DivisionProducto extends Model
       $i++;
     }
   }
+  public static function num_meses($numero){
+    if($numero==1){
+      return "1 mes";
+    }else {
+      return $numero." meses";
+    }
+  }
 }

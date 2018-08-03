@@ -87,6 +87,7 @@ class ProductoController extends Controller
             $divisiones_productos->precio = $request->precios[$key];
             $divisiones_productos->codigo = $request->codigos[$key];
             $divisiones_productos->stock = $request->stocks[$key];
+            $divisiones_productos->n_meses= $request->meses[$key];
             if($request->idus[$key]!=0){
               $divisiones_productos->contenido = $request->idus[$key];
             }
@@ -264,6 +265,7 @@ class ProductoController extends Controller
       $division=DivisionProducto::find($request->idDiv);
       $division->precio=$request->pre;
       $division->stock=$request->stock;
+      $division->n_meses=$request->mes;
       $division->save();
       return redirect('/productos/'.$division->f_producto.'/edit')->with('mensaje', '¡Editado!');
     }

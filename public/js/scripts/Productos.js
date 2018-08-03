@@ -1,4 +1,4 @@
-$(document).on('ready',function(){
+$(document).on('ready', async function(){
   var division_agregada = [];
   var componentes_agregados = [];
   var codigos_agregados= [];
@@ -12,7 +12,7 @@ $(document).on('ready',function(){
     var componente_tmp = $("#componente"+i).val();
     componentes_agregados.push(componente_tmp);
   }
-  $('#agregar_division').click(function(){
+  $('#agregar_division').click( async function(){
     var codigo = $('#codigo').val();
     var division = $('#division').find('option:selected').text();
     var valor = $('#division').find('option:selected').val();
@@ -20,6 +20,8 @@ $(document).on('ready',function(){
     var precio = $('#precio').val();
     var stock = $('#minimo').val();
     var com=$('#hchange').val(); //Cantidad o contenido
+    var n_mesesv=$('#n_meses').find('option:selected').val();
+    var n_mesesp=$('#n_meses').find('option:selected').text();
     var idu=0;
     var unidad="";
     if(com=="o"){
@@ -29,8 +31,16 @@ $(document).on('ready',function(){
       unidad=$('#valor').val();
     }
     var vmc=valor+cantidad; //Valor más cantidad
-    if(!codigos_agregados.includes(codigo) && !division_agregada.includes(vmc)){
-      if(!validarPresentacionE() && !validarCodigo() && !validarPrecio() && !validarStock()){
+    if(codigos_agregados.includes(codigo)){
+      notaError("Código ya fue agregado en otra división");
+    }else if (division_agregada.includes(vmc)){
+      notaError("Ya existe una división con la misma cantidad");
+    }else{
+      vc= await validarCodigo();
+      vp= await validarPresentacionE();
+      vr= await validarPrecio();
+      vs= await validarStock();
+      if(!vp && !vc && !vr && !vs){
     var html_texto =
     "<tr class='divis'>"+
     "<td>"+
@@ -49,12 +59,16 @@ $(document).on('ready',function(){
       stock+
       "</td>"+
       "<td>"+
+      n_mesesp+
+      "</td>"+
+      "<td>"+
         "<input type='hidden' name='divisiones[]' value='"+valor+"'/>"+
         "<input type='hidden' name='codigos[]' value='"+codigo+"'/>"+
         "<input type='hidden' name='cantidades[]' value='"+cantidad+"'/>"+
         "<input type='hidden' name='precios[]' value='"+precio+"'/>"+
         "<input type='hidden' name='idus[]' value='"+idu+"'/>"+
         "<input type='hidden' name='stocks[]' value='"+stock+"'/>"+
+        "<input type='hidden' name='meses[]' value='"+n_mesesv+"'/>"+
         "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
           "<i class='fa fa-remove'></i>"+
         "</button>"+
@@ -67,7 +81,9 @@ $(document).on('ready',function(){
       $("#cantidad").val("1");
       $("#precio").val("0.00");
       $("#codigo").val("");
-      $("#minimo").val("");
+      $("#minimo").val("40");
+      $("#n_meses").val("3");
+      notaInfo('Ha sido agregado en divisiones');
     }
     }
   });
@@ -227,20 +243,20 @@ function validarCodigo(){
     var ruta="/blissey/public/existeCodigoProducto/"+codigo;
     $.get(ruta,function(existe){
       if(existe==1){
-        mensajeError('¡Ya existe una división con el código '+codigo+'!');
+        notaError('¡Ya existe una división con el código '+codigo+'!');
         $("#codigo").val("");
       }
       return existe;
     });
   }else{
-    mensajeError('¡Necesita proporcionar un código!');
+    notaError('¡Necesita proporcionar un código!');
     $("#codigo").val("");
     return 1;
   }
 }
 function validarPresentacionE(){
   if($('#f_presentacion').find('option:selected').val().trim()==""){
-    mensajeError('¡Seleccione una presentación!');
+    notaError('¡Seleccione una presentación!');
     return 1;
   }else{
     return 0;
@@ -248,7 +264,7 @@ function validarPresentacionE(){
 }
 function validarPrecio(){
   if(parseFloat($('#precio').val())<=0){
-    mensajeError('¡Precio debe ser mayor que $0.00!');
+    notaError('¡Precio debe ser mayor que $0.00!');
     return 1;
   }else{
     return 0;
@@ -256,7 +272,7 @@ function validarPrecio(){
 }
 function validarStock(){
   if(parseFloat($('#minimo').val())<=0){
-    mensajeError('¡Stock debe ser mayor que cero!');
+    notaError('¡Stock debe ser mayor que cero!');
     return 1;
   }else{
     return 0;

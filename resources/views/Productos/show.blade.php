@@ -91,6 +91,7 @@
                     <th>Cantidad/Contenido</th>
                     <th>Precio</th>
                     <th>Stock mínimo</th>
+                    <th>Notificar</th>
                   </thead>
                   @php
                     $contador_division = 1;
@@ -111,6 +112,7 @@
                           </td>
                           <td>{{'$ '.number_format($division->precio,2,'.','.')}}</td>
                           <td>{{$division->stock}}</td>
+                          <td>{{$division->num_meses($division->n_meses)}}</td>
                         </tr>
                         @php
                           $contador_division++;
