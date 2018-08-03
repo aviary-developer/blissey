@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Habitacion;
 use App\Bitacora;
 use App\Ingreso;
+use App\Cama;
 use App\CategoriaServicio;
 use App\Servicio;
 use Illuminate\Http\Request;
@@ -47,7 +48,31 @@ class HabitacionController extends Controller
      */
     public function create()
     {
-        return view('habitaciones.create');
+      $count_hi = $count_ho = $count_hm = 1;
+      $count_hi += Habitacion::where('tipo',1)->count();
+      $count_ho += Habitacion::where('tipo',0)->count();
+      $count_hm += Habitacion::where('tipo',2)->count();
+      
+      $count_ci = $count_co = $count_cm = 1;
+      $camas = Cama::get();
+      foreach($camas as $cama){
+        if($cama->habitacion->tipo == 1){
+          $count_ci++;
+        }else if($cama->habitacion->tipo == 0){
+          $count_co++;
+        }else{
+          $count_cm++;
+        }
+      }
+
+      return view('habitaciones.create',compact(
+        'count_hi',
+        'count_ho',
+        'count_hm',
+        'count_ci',
+        'count_co',
+        'count_cm'
+      ));
     }
 
     /**
@@ -56,33 +81,55 @@ class HabitacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HabitacionRequest $request)
+    public function store(Request $request)
     {
       DB::beginTransaction();
 
       try {
-        $categoria_existe = CategoriaServicio::where('nombre','Habitación')->first();
+        $categoria_existe = CategoriaServicio::where('nombre','Cama')->first();
 
-        if(count($categoria_existe)<1){
+        if($categoria_existe == null){
           $categoria_existe = new CategoriaServicio;
-          $categoria_existe->nombre = "Habitación";
+          $categoria_existe->nombre = "Cama";
           $categoria_existe->save();
         }
 
-        $habitaciones = Habitacion::create($request->All());
+        $habitaciones = new Habitacion;
+        $habitaciones->numero = $request->numero;
+        $habitaciones->precio = 0;
+        $habitaciones->tipo = $request->tipo;
+        $habitaciones->save();
 
-        $servicio = new Servicio;
-        $servicio->nombre = 'Habitación '.$request->numero;
-        $servicio->precio = $request->precio;
-        $servicio->f_categoria = $categoria_existe->id;
-        $servicio->f_habitacion = $habitaciones->id;
-        $servicio->save();
+        if(isset($request->cama)){
+          foreach($request->cama as $k => $cama){
+            $cama_ = new Cama;
+            $cama_->numero = $cama;
+            $cama_->precio = $request->c_precio[$k];
+            $cama_->f_habitacion = $habitaciones->id;
+            $cama_->save();
+
+            $servicio = new Servicio;
+            if($request->tipo == 0){
+              $servicio->nombre = 'Cama O'.$cama_->numero;
+            }else if($request->tipo == 1){
+              $servicio->nombre = 'Cama I'.$cama_->numero;
+            }else{
+              $servicio->nombre = 'Cama M'.$cama_->numero;
+            }
+            $servicio->precio = $cama_->precio;
+            $servicio->f_categoria = $categoria_existe->id;
+            $servicio->f_habitacion = $cama_->id;
+            $servicio->save();
+          }
+        }
+
       } catch (Exception $e) {
         DB::rollback();
         return redirect('/habitaciones')->with('mensaje', 'Algo salio mal');
       }
       DB::commit();
       Bitacora::bitacora('store','habitacions','habitaciones',$habitaciones->id);
+      Bitacora::bitacora('store','camas','habitaciones',$habitaciones->id);
       Bitacora::bitacora('store','servicios','servicios',$servicio->id);
       return redirect('/habitaciones')->with('mensaje', '¡Guardado!');
     }

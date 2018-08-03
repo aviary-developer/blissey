@@ -7,6 +7,9 @@
     font-size: 120%;
     font-weight: bold;
 }
+.mrow{
+    margin: 0 10px 0 10px !important;
+}
 .m_panel{
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -23,6 +26,12 @@ canvas{
 }
 thead{
     background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
+}
+thead tr :first-child {
+    border-radius: 5px 0 0 0;
+}
+thead tr :last-child{
+    border-radius: 0 5px 0 0;
 }
 .table-basic{
     width: 100%;
@@ -187,6 +196,50 @@ thead{
 }
 .btn-outline-warning:hover{
   color: #b6833b;
+}
+.circulo-div{
+  width: 116px; 
+  height:120px; 
+  font-size: 460%; 
+  border-radius: 50%; 
+  text-align:center; 
+  font-style:italic;
+  padding-top: 16px;
+  color: white;
+  position:relative;
+  z-index: 3;
+}
+.circulo-div span{
+  margin-left: -20px; 
+  font-family:'Impact'
+}
+.circulo-div-mini{
+  width: 70px; 
+  height:73px; 
+  font-size: 260%; 
+  border-radius: 50%; 
+  text-align:center; 
+  font-style:italic;
+  padding-top: 13px;
+  color: white;
+  position:relative;
+  z-index: 3;
+}
+.circulo-div-mini span{
+  margin-left: -9px; 
+  font-family:'Impact'
+}
+.bg-c1{
+    background-image: url("/blissey/public/img/circulos.svg");
+}
+.bg-c2{
+    background-image: url("/blissey/public/img/circulos2.svg");
+}
+.bg-c3{
+    background-image: url("/blissey/public/img/circulos3.svg");
+}
+.bg-c4{
+    background-image: url("/blissey/public/img/circulos4.svg");
 }
 html , body{
 

@@ -30,4 +30,8 @@ class Habitacion extends Model
     public function servicio(){
       return $this->hasOne('App\Servicio', 'f_habitacion');
     }
+
+    public function camas(){
+      return $this->hasMany('App\Cama', 'f_habitacion');
+    }
 }

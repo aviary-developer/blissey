@@ -818,6 +818,7 @@
       {!!Html::script('js/scripts/Ingreso2.js')!!}
       {!!Html::script('js/scripts/IngresoX.js')!!}
       {!!Html::script('js/scripts/Ingreso_finanza.js')!!}
+      {!!Html::script('js/scripts/Habitacion.js')!!}
       {!!Html::script('js/scripts/Consulta.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}

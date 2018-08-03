@@ -71,6 +71,9 @@
           <div class="row">
             <button type="button" class="btn btn-dark btn-xs col-xs-12" data-target="#datos_paciente" data-toggle="modal"><i class="fa fa-user"></i> Paciente</button>
           </div>
+          <div class="row">
+            <a href={!!asset('/acta/'.$ingreso->id)!!} class="btn btn-xs btn-dark col-xs-12" target="_blank"><i class="fa fa-print"></i> Acta</a>
+          </div>
         </div>
       </div>
 
