@@ -241,6 +241,33 @@ thead tr :last-child{
 .bg-c4{
     background-image: url("/blissey/public/img/circulos4.svg");
 }
+.fa2{
+    font: normal normal normal 14px/0 FontAwesome;
+}
+.navbar{
+    border-radius: 0 0 4px 4px;
+    min-height: 20px;
+}
+.dropdown-menu > li > a:hover{
+    background-color: #666;
+    color: #eee;
+}
+.li-title{
+    padding-left: 15px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: bold;
+    font-size: 11px;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-shadow: 1px 1px #000
+}
+.label-t{
+    text-transform: uppercase;
+    font-size: 70%;
+}
+/*Inicia Gentalela Alela*/
 html , body{
 
  height:100%;
@@ -1053,7 +1080,7 @@ a:focus {
     font-weight: 500;
     color: #ECF0F1 !important;
     margin-left: 0 !important;
-    line-height: 32px
+    line-height: 0px;
 }
 .site_title {
     text-overflow: ellipsis;
@@ -1074,7 +1101,7 @@ a:focus {
     text-decoration: none
 }
 .nav.navbar-nav>li>a {
-    color: #515356 !important
+    /*color: #515356 !important*/
 }
 .nav.top_menu>li>a {
     position: relative;
@@ -1527,11 +1554,11 @@ table.countries_list td {
     line-height: 30px;
     border-top: 1px solid #eeeeee
 }
-.dataTables_paginate a {
+/* .dataTables_paginate a {
     padding: 6px 9px !important;
     background: #ddd !important;
     border-color: #ddd !important
-}
+} */
 .paging_full_numbers a.paginate_active {
     background-color: rgba(38, 185, 154, 0.59) !important;
     border-color: rgba(38, 185, 154, 0.59) !important
@@ -1562,7 +1589,7 @@ table.jambo_table tbody tr.selected td {
     border-top: 1px solid rgba(38, 185, 154, 0.4);
     border-bottom: 1px solid rgba(38, 185, 154, 0.4)
 }
-.dataTables_paginate a {
+/* .dataTables_paginate a {
     background: #ff0000
 }
 .dataTables_wrapper {
@@ -1606,7 +1633,7 @@ table.dataTable th.focus,
 table.dataTable td.focus {
     outline: 2px solid #1ABB9C !important;
     outline-offset: -1px
-}
+} */
 table.display {
     margin: 0 auto;
     clear: both;
@@ -1636,7 +1663,7 @@ table.display thead th:active,
 table.display thead td:active {
     outline: none
 }
-.dataTables_scroll {
+/* .dataTables_scroll {
     clear: both
 }
 .dataTables_scrollBody {
@@ -1651,7 +1678,7 @@ table.display thead td:active {
 }
 .dataTables_empty {
     text-align: center
-}
+} */
 tfoot input {
     margin: 0.5em 0;
     width: 100%;
@@ -1669,9 +1696,9 @@ td.details {
     background-color: #d1cfd0;
     border: 2px solid #A19B9E
 }
-.example_alt_pagination div.dataTables_info {
+/* .example_alt_pagination div.dataTables_info {
     width: 40%
-}
+} */
 .paging_full_numbers {
     width: 400px;
     height: 22px;
@@ -1753,7 +1780,6 @@ ul.msg_list li a .message {
 }
 .dropdown-menu {
     border: medium none;
-    box-shadow: none;
     display: none;
     float: left;
     font-size: 12px;
@@ -1769,17 +1795,16 @@ ul.msg_list li a .message {
     border-top-right-radius: 0
 }
 .dropdown-menu>li>a {
-    color: #5A738E
+    color: #ccc
 }
 .navbar-nav .open .dropdown-menu {
     position: absolute;
-    background: #fff;
+    background: #444;
     margin-top: 0;
-    border: 1px solid #D9DEE4;
-    -webkit-box-shadow: none;
+    border: 1px solid #080808;
     right: 0;
-    left: auto;
-    width: 220px
+    left: 0;
+    width: 180px
 }
 .navbar-nav .open .dropdown-menu.msg_list {
     width: 300px
@@ -3146,7 +3171,7 @@ ul.count2 li span {
     font-weight: 300
 }
 .divider {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #555;
     margin: 10px
 }
 .divider-dashed {
@@ -4421,7 +4446,7 @@ ul.notifications {
     line-height: 11px;
     margin-top: 4px;
 }
-@media (max-width: 460px) {
+/* @media (max-width: 460px) {
     .dataTables_wrapper .col-sm-6 {
         width: 100%;
         margin-bottom: 5px;
@@ -4434,7 +4459,7 @@ ul.notifications {
 
 @media (max-width: 767px) {
    .dataTables_length { float:none; }
-}
+} */
 
 
 
@@ -4490,9 +4515,9 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 
 .daterangepicker.xdisplay { width:228px; }
 
-.dataTables_wrapper > .row{
-  overflow:auto !important; /*prevent datatables overflowing its container*/
-}
+/* .dataTables_wrapper > .row{
+  overflow:auto !important;
+} */
 
 /** bootstrap-datetimepicker **/
 .input-group.date .input-group-addon{

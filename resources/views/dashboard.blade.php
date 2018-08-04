@@ -28,7 +28,14 @@
   <!-- JQVMap -->
   {!!Html::style('assets/jqvmap/dist/jqvmap.min.css')!!}
   <!-- bootstrap-daterangepicker -->
-  {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!} {!!Html::style('assets/datatables.net-bs/css/dataTables.bootstrap.min.css')!!}
+  {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!} 
+  <!-- DataTable -->
+  {!!Html::style('assets/data-table/datatables.css')!!}
+  {{--  {!!Html::style('assets/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')!!}
+  {!!Html::style('assets/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')!!}
+  {!!Html::style('assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')!!}
+  {!!Html::style('assets/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')!!}  --}}
+
   {!!Html::script('assets/sweetalert2/dist/sweetalert2.js')!!} {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
 
   <!-- Css de nitify-->
@@ -797,10 +804,14 @@
     <!-- bootstrap-daterangepicker -->
     {!!Html::script('assets/moment/min/moment.min.js')!!} {!!Html::script('assets/bootstrap-daterangepicker/daterangepicker.js')!!}
     {!!Html::script('assets/ion.rangeSlider/js/ion.rangeSlider.min.js')!!} {!!Html::script('assets/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
-    {!!Html::script('assets/datatables.net/js/jquery.dataTables.js')!!} {!!Html::script('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}
-    {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!} {!!Html::script('assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')!!}
-    {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!} {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
-    {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}
+    <!-- DataTable --> 
+    {!!Html::script('assets/data-table/datatables.js')!!} 
+    {{--  {!!Html::script('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}
+    {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!} 
+    {!!Html::script('assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')!!}
+    {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!} 
+    {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
+    {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}  --}}
 
       <!--para mensajes de error en validaciones-->
       {!!Html::script('assets/pnotify/dist/pnotify.js')!!}

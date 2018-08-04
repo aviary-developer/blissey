@@ -10,14 +10,24 @@ class Habitacion extends Model
       'numero', 'precio', 'tipo'
     ];
 
-    public static function buscar($numero, $estado){
-      return Habitacion::numero($numero)->estado($estado)->orderBy('numero','asc')->paginate(10);
+    public static function buscar($tipo, $estado){
+      return Habitacion::tipo($tipo)->estado($estado)->orderBy('numero','asc')->get();
     }
 
     public function scopeNumero($query, $numero){
       if(trim($numero)!=""){
         $query->where('numero',$numero);
       }
+    }
+
+    public function scopeTipo($query, $tipo){
+      if($tipo == null || $tipo == -1){
+        $signo = ">";
+        $tipo = -1;
+      }else{
+        $signo = "=";
+      }
+      $query->where('tipo',$signo,$tipo);
     }
 
     public function scopeEstado($query, $estado){

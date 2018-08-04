@@ -26,14 +26,14 @@ class HabitacionController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $numero = $request->get('numero');
-      $habitaciones = Habitacion::buscar($numero,$estado);
+      $tipo = $request->get('tipo');
+      $habitaciones = Habitacion::buscar($tipo,$estado);
       $activos = Habitacion::where('estado',true)->count();
       $inactivos = Habitacion::where('estado',false)->count();
       return view('Habitaciones.index',compact(
         'habitaciones',
         'estado',
-        'numero',
+        'tipo',
         'activos',
         'inactivos',
         'pagina'

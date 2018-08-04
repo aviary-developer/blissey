@@ -9,7 +9,7 @@
     <div class="x_panel">
       <div class="row bg-blue">
         <center>
-          <h3>Habitación <small class="label-white blue label">Nuevo</small></h3>
+          <h3>Habitación <small class="label-white blue badge">Nuevo</small></h3>
         </center>
       </div>
     </div>
