@@ -14,41 +14,60 @@
   @endphp
   <div class="col-md-9 col-sm-9 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Productos
-          @if ($estadoOpuesto)
-            <small>Papelera</small>
-          @else
-            <small>Activos</small>
-          @endif
-        </h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>Productos
+            @if ($estadoOpuesto)
+              <small class="label-white badge red ">Papelera</small>
+            @else
+              <small class="label-white badge green ">Activos</small>
+            @endif
+          </h3>
+        </center>
       </div>
+      <div class="row">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li>
+                <a href={!! asset('/productos/create') !!}><i class="fa fa2 fa-plus"></i> Nuevo</a>
+              </li>
+              <li>
+                <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa2 fa-eye"></i> Ver
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a data-toggle="modal" data-target="#modal_busqueda">Buscar por</a></li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href={!! asset('/productos?estado='.$estadoOpuesto) !!}>
+                      @if ($estadoOpuesto)
+                        Activos
+                        <span class="label label-success">{{ $activos }}</span>
+                      @else
+                        Papelera
+                        <span class="label label-warning">{{ $inactivos }}</span>
+                      @endif
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+      <div class="x_panel">
       <div class="x_content">
         <div class="row">
-          <div class="col-md-7 col-xs-12">
-            <div class="btn-group">
-              <a href={!! asset('/productos/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
-              <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_busqueda">
-                <i class="fa fa-search"></i>
-                Búsqueda
-              </button>
-              <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
-              <a href={!! asset('/productos?nombre='.$nombre.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
-                @if ($estadoOpuesto)
-                  <i class="fa fa-check"></i> Activos
-                  <span class="label label-success">{{ $activos }}</span>
-                @else
-                  <i class="fa fa-trash"></i> Papelera
-                  <span class="label label-warning">{{ $inactivos }}</span>
-                @endif
-              </a>
-              <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
-            </div>
-          </div>
-        </div>
-        <br>
-        <table class="table table-striped">
+        <table class="table table-striped" id="index-table">
           <thead>
             <tr>
               <th>#</th>
@@ -59,7 +78,6 @@
             </tr>
           </thead>
           <tbody>
-            @if (count($productos)>0)
               @php
               $correlativo = 1;
               @endphp
@@ -88,33 +106,13 @@
                 $correlativo++;
                 @endphp
               @endforeach
-            @else
-              <tr>
-                <td colspan="4">
-                  <center>
-                    No hay registros que coincidan con los términos de búsqueda indicados
-                  </center>
-                </td>
-              </tr>
-            @endif
           </tbody>
         </table>
+      </div>
         <div class="ln_solid"></div>
-        <center>
-          {!! str_replace ('/?', '?', $productos->appends(Request::only(['nombre','f_proveedor','f_categoria','estado']))->render ()) !!}
-        </center>
       </div>
     </div>
   </div>
-  <!-- /page content -->
-  {{-- <div class="col-md-5 col-xs-12">
-
-    <div class="form-group col-md-12 col-sm-12 col-xs-12">
-      <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('nombre',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
-    </div>
-
-  </div> --}}
   {{--Inicio modal  --}}
   <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_busqueda">
     <div class="modal-dialog">
@@ -129,13 +127,6 @@
         {!!Form::open(['route'=>'productos.index','method'=>'GET','role'=>'search'])!!}
         <div class="modal-body">
           <div class="x_panel">
-            <div class="form-group col-sm-12 col-xs-12">
-              <label class="control-label col-sm-2 col-xs-12">Nombre </label>
-              <div class="col-sm-9 col-xs-12">
-                <span class="fa fa-cube form-control-feedback left" aria-hidden="true"></span>
-                {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del producto']) !!}
-              </div>
-            </div>
           <div class="form-group col-sm-12 col-xs-12">
             <label class="control-label col-sm-2 col-xs-12">Proveedor </label>
             <div class="col-sm-9 col-xs-12">

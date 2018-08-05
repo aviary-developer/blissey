@@ -29,10 +29,9 @@ class ProductoController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
       $f_proveedor=$request['f_proveedor'];
       $f_categoria=$request['f_categoria'];
-      $productos = Producto::buscar($nombre,$f_proveedor,$f_categoria,$estado);
+      $productos = Producto::buscar($f_proveedor,$f_categoria,$estado);
       $activos = Producto::where('estado',true)->count();
       $inactivos = Producto::where('estado',false)->count();
       return view('Productos.index',compact(
