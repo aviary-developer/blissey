@@ -10,16 +10,9 @@ class Producto extends Model
     'nombre','f_proveedor','f_presentacion','f_categoria'
   ];
 
-  public static function buscar($nombre,$f_proveedor,$f_categoria, $estado){
-    return Producto::nombre($nombre)->proveedor($f_proveedor)->categoria($f_categoria)->estado($estado)->orderBy('nombre')->paginate(10);
+  public static function buscar($f_proveedor,$f_categoria, $estado){
+    return Producto::proveedor($f_proveedor)->categoria($f_categoria)->estado($estado)->orderBy('nombre')->get();
   }
-
-  public function scopeNombre($query, $nombre){
-    if(trim($nombre)!=""){
-      $query->where('nombre', 'like','%'.$nombre.'%');
-    }
-  }
-
   public function scopeEstado($query, $estado){
     if($estado == null){
       $estado = 1;

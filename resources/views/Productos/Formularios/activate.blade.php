@@ -13,7 +13,6 @@
     <i class="fa fa-remove"></i>
   </button>
 @else
-  <div class="btn-group">
     @if (!$producto->estado)
       @php
         $regreso = "?estado=0";
@@ -23,7 +22,22 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/productos'.$regreso)!!} class="btn btn-dark btn-sm">
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href={!! asset('/productos'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+            </li>
+            <li>
+              <a href={!! asset('/productos/'.$producto->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    {{--  //////////////////////77--}}
+    {{-- <a href={!! asset('/productos'.$regreso)!!} class="btn btn-dark btn-sm">
       <i class="fa fa-arrow-left"></i> Atras
     </a>
     <a href={!! asset('/productos/'.$producto->id.'/edit')!!} class="btn btn-dark btn-sm">
@@ -43,8 +57,7 @@
     @endif
     <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
       <i class="fa fa-question"></i> Ayuda
-    </a>
-  </div>
+    </a> --}}
 @endif
 {!!Form::close()!!}
 <script type="text/javascript">

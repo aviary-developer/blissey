@@ -52,7 +52,7 @@ class HabitacionController extends Controller
       $count_hi += Habitacion::where('tipo',1)->count();
       $count_ho += Habitacion::where('tipo',0)->count();
       $count_hm += Habitacion::where('tipo',2)->count();
-      
+
       $count_ci = $count_co = $count_cm = 1;
       $camas = Cama::get();
       foreach($camas as $cama){
@@ -118,7 +118,7 @@ class HabitacionController extends Controller
             }
             $servicio->precio = $cama_->precio;
             $servicio->f_categoria = $categoria_existe->id;
-            $servicio->f_habitacion = $cama_->id;
+            $servicio->f_cama = $cama_->id;
             $servicio->save();
           }
         }
