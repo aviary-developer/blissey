@@ -252,6 +252,10 @@ thead tr :last-child{
     background-color: #666;
     color: #eee;
 }
+.new-drop > li > a:hover{
+    background-color: #ddd;
+    color: #444;
+}
 .li-title{
     padding-left: 15px;
     color: #fff;
@@ -266,6 +270,18 @@ thead tr :last-child{
 .label-t{
     text-transform: uppercase;
     font-size: 70%;
+}
+.new-nav > li > a{
+    color: #515556 !important;
+}
+.new-drop > li > a{
+    color: #5A738E !important;
+}
+.new-drop {
+    left: auto !important;
+    width: 240px !important;
+    background: #FFF !important;
+    border: none !important;
 }
 /*Inicia Gentalela Alela*/
 html , body{
@@ -1100,8 +1116,8 @@ a:focus {
 .site_title:focus {
     text-decoration: none
 }
-.nav.navbar-nav>li>a {
-    /*color: #515356 !important*/
+.new-nav > li > a {
+    color: #515356 !important;
 }
 .nav.top_menu>li>a {
     position: relative;

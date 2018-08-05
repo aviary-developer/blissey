@@ -464,13 +464,13 @@
                     <i class="fa fa-bars"></i>
                   </a>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right new-nav">
                   <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                       <img src={!! asset(Storage::url((Auth::check())?Auth::user()->foto:"NoImgen.jpg")) !!} alt=""> {{(Auth::check())?Auth::user()->nombre:"Invitado"}}
                       <span class=" fa fa-angle-down"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <ul class="dropdown-menu dropdown-usermenu pull-right new-drop">
                       <li>
                         <a href={{(Auth::check())?asset( '/usuarios/'.Auth::user()->id):"#"}}>Mi Perfil</a>
                       </li>

@@ -121,7 +121,7 @@
                   <td>{{ $habitacion->camas->count().' camas'}}</td>
                   <td>
                     @if ($habitacion->tipo == 1)
-                      <span class="label label-lg label-white borde green col-xs-10">Hospital</span>
+                      <span class="label label-lg label-white borde green col-xs-10">Ingreso</span>
                     @elseif($habitacion->tipo == 2)
                       <span class="label label-lg label-white borde purple col-xs-10">Medi ingreso</span>
                     @else
@@ -147,11 +147,9 @@
                 $correlativo++;
                 @endphp
               @endforeach
-
             </tbody>
           </table>
         </div>
-        <div class="ln_solid"></div>
       </div>
     </div>
   </div>
