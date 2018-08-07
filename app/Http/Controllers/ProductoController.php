@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Redirect;
 use Response;
 use DB;
+use App\Http\Requests\DivisionProductoRequest;
 
 class ProductoController extends Controller
 {
@@ -228,9 +229,11 @@ class ProductoController extends Controller
     public function destroy($id)
     {
       $productos = Producto::findOrFail($id);
+      DivisionProducto::where('f_producto',$id)->delete();
+      ComponenteProducto::where('f_producto',$id)->delete();
       $productos->delete();
       Bitacora::bitacora('destroy','productos','productos',$id);
-      return redirect('/productos?estado=0');
+      return redirect('/productos?estado=0')->with('mensaje','¡Eliminado!');;
     }
 
     public function desactivate($id){
@@ -260,7 +263,7 @@ class ProductoController extends Controller
     public function existeCodigo($codigo){
       return DivisionProducto::where('codigo',$codigo)->count();
     }
-    function editarDivision(Request $request){
+    function editarDivision(DivisionProductoRequest $request){
       $division=DivisionProducto::find($request->idDiv);
       $division->precio=$request->pre;
       $division->stock=$request->stock;

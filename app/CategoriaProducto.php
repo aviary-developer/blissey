@@ -7,13 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CategoriaProducto extends Model
 {
   protected $fillable=['nombre','estado'];
-  public static function buscar($nombre,$estado){
-    return CategoriaProducto::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
-  }
-  public function scopeNombre($query, $nombre){
-    if(trim($nombre)!=""){
-      $query->where('nombre', 'like','%'.$nombre.'%');
-    }
+  public static function buscar($estado){
+    return CategoriaProducto::estado($estado)->orderBy('nombre')->get();
   }
   public function scopeEstado($query, $estado){
     if($estado == null){

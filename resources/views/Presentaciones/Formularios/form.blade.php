@@ -1,3 +1,4 @@
+<div class="x_panel">
 <div class="x_content">
   <br />
   <div class="form-group">
@@ -18,4 +19,5 @@
       <a href={!! asset('/presentaciones') !!} class="btn btn-default">Cancelar</a>
     </center>
   </div>
+</div>
 </div>

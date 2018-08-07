@@ -23,14 +23,12 @@ class PresentacionController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
-      $presentaciones = Presentacion::buscar($nombre,$estado);
+      $presentaciones = Presentacion::buscar($estado);
       $activos = Presentacion::where('estado',true)->count();
       $inactivos = Presentacion::where('estado',false)->count();
       return view('Presentaciones.index',compact(
         'presentaciones',
         'estado',
-        'nombre',
         'activos',
         'inactivos',
         'pagina'

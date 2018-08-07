@@ -24,14 +24,12 @@ class CategoriaProductoController extends Controller
     $pagina--;
     $pagina *= 10;
     $estado = $request->get('estado');
-    $nombre = $request->get('nombre');
-    $categorias = CategoriaProducto::buscar($nombre,$estado);
+    $categorias = CategoriaProducto::buscar($estado);
     $activos = CategoriaProducto::where('estado',true)->count();
     $inactivos = CategoriaProducto::where('estado',false)->count();
     return view('CategoriaProductos.index',compact(
       'categorias',
       'estado',
-      'nombre',
       'activos',
       'inactivos',
       'pagina'
