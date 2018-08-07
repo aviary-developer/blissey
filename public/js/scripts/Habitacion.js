@@ -81,50 +81,89 @@ $(document).on('ready', function () {
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default'
     }).then(function () {
-      
-      var panel = $("#msg");
-      if (add_rows == 0) {
-        panel.empty();
-      }
 
-      var html = '<div class="col-xs-3 btn-default" style="border-radius: 4px">' + 
-        '<div class="row">' +
-        '<center>' +
-        '<span class="big-text">Cama</span>' +
-        '</center>' +
-        '</div>' +
-        '<div class="row">' +
-        '<center>' +
-      '<div class ="circulo-div-mini bg-c4">';
+      var id = $("#id").val();
 
-      if (tipo == 0) {
-        html += '<span>' + count_co + '</span><input type="hidden" name = "cama[]" value = "'+ count_co+'">';
-        count_co++;
-      } else if(tipo == 1) {
-        html += '<span>' + count_ci + '</span><input type="hidden" name = "cama[]" value = "' + count_ci + '">';
-        count_ci++;
+      if (id > 0) {
+        
+        var numero;
+
+        if (tipo == 0) {
+          numero = $("#count_co").val();
+        } else if(tipo == 1){
+          numero = $("#count_ci").val();
+        } else {
+          numero = $("#count_cm").val();
+        }
+
+        $.ajax({
+          type: 'post',
+          url: '/blissey/public/cama/nueva',
+          data: {
+            id: id,
+            precio: $("#precio").val(),
+            numero: numero,
+            tipo: tipo
+          },
+          success: function (r) {
+            if (r == 1) {
+              swal({
+                type: 'success',
+                title: '¡Hecho!',
+                text: 'Cambio exitoso',
+                showConfirmButton: false
+              });
+              location.reload();
+            } else {
+              swal('¡Error!', 'Algo salio mal', 'error');
+            }
+          }
+        });
+
       } else {
-        html += '<span>' + count_cm + '</span><input type="hidden" name = "cama[]" value = "' + count_cm + '">';
-        count_cm++;
+        var panel = $("#msg");
+        if (add_rows == 0) {
+          panel.empty();
+        }
+  
+        var html = '<div class="col-xs-3 btn-default" style="border-radius: 4px">' + 
+          '<div class="row">' +
+          '<center>' +
+          '<span class="big-text">Cama</span>' +
+          '</center>' +
+          '</div>' +
+          '<div class="row">' +
+          '<center>' +
+        '<div class ="circulo-div-mini bg-c4">';
+  
+        if (tipo == 0) {
+          html += '<span>' + count_co + '</span><input type="hidden" name = "cama[]" value = "'+ count_co+'">';
+          count_co++;
+        } else if(tipo == 1) {
+          html += '<span>' + count_ci + '</span><input type="hidden" name = "cama[]" value = "' + count_ci + '">';
+          count_ci++;
+        } else {
+          html += '<span>' + count_cm + '</span><input type="hidden" name = "cama[]" value = "' + count_cm + '">';
+          count_cm++;
+        }
+        html += '</div>' +
+          '</center>' +
+          '</div>' +
+          '<div class="row" style="margin: 3px 0 7px 0;">' +
+          '<center>' +
+          '<span class = "label label-lg label-default">$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format($("#precio").val()) + '</span><input type="hidden" name="c_precio[]" value ="' + $("#precio").val() + '">' +
+          '</center>' +
+          '</div>' +
+          '<div class="row bg-blue-sky" style="border-radius: 0 0 4px 4px;">' +
+          '<center>' +
+          '<button type="button" class="btn btn-xs btn-default blue" id="delete_card" style="margin: 2px 0 2px 0;"><i class="fa fa-remove"></i> Eliminar</button>' +
+          '</center>' +
+          '</div>' +
+          '</div>';
+  
+        panel.append(html);
+        add_rows++;
       }
-      html += '</div>' +
-        '</center>' +
-        '</div>' +
-        '<div class="row" style="margin: 3px 0 7px 0;">' +
-        '<center>' +
-        '<span class = "label label-lg label-default">$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format($("#precio").val()) + '</span><input type="hidden" name="c_precio[]" value ="' + $("#precio").val() + '">' +
-        '</center>' +
-        '</div>' +
-        '<div class="row bg-blue-sky" style="border-radius: 0 0 4px 4px;">' +
-        '<center>' +
-        '<button type="button" class="btn btn-xs btn-default blue" id="delete_card" style="margin: 2px 0 2px 0;"><i class="fa fa-remove"></i> Eliminar</button>' +
-        '</center>' +
-        '</div>' +
-        '</div>';
-
-      panel.append(html);
-      add_rows++;
-
     }).catch(swal.noop);
   });
 
@@ -181,4 +220,143 @@ $(document).on('ready', function () {
     }
 
   });
+
+  $("#show_activo").on("click", function (e) { 
+    e.preventDefault();
+    $("#cama_activa").show();
+    $("#cama_papelera").hide();
+    $("#etiqueta_cama").removeClass('label-danger').addClass('label-success').text('Activas');
+  });
+
+  $("#show_papelera").on("click", function (e) {
+    e.preventDefault();
+    $("#cama_activa").hide();
+    $("#cama_papelera").show();
+    $("#etiqueta_cama").removeClass('label-success').addClass('label-danger').text('Papelera');
+  });
 });
+
+function cama_desactivar(id) {
+  swal({
+    title: 'Enviar registro a papelera',
+    text: '¿Está seguro? ¡Ya no estara disponible!',
+    type: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Si, ¡Enviar!',
+    cancelButtonText: 'No, ¡Cancelar!',
+    confirmButtonClass: 'btn btn-danger',
+    cancelButtonClass: 'btn btn-default',
+    buttonsStyling: false
+  }).then(function () {
+    $.ajax({
+      type: 'post',
+      url: '/blissey/public/cama/desactivar',
+      data: {
+        id: id
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
+      }
+    }); 
+  }, function (dismiss) {
+    if (dismiss === 'cancel') {
+      swal(
+        'Cancelado',
+        'El registro se mantiene',
+        'info'
+      )
+    }
+  });
+}
+
+function cama_activate(id) {
+  swal({
+    title: 'Restaurar registro',
+    text: '¿Está seguro? ¡El registro estará activo nuevamente!',
+    type: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Si, ¡Restaurar!',
+    cancelButtonText: 'No, ¡Cancelar!',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-default',
+    buttonsStyling: false
+  }).then(function () {
+    $.ajax({
+      type: 'post',
+      url: '/blissey/public/cama/activar',
+      data: {
+        id: id
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
+      }
+    });
+  }, function (dismiss) {
+    if (dismiss === 'cancel') {
+      swal(
+        'Cancelado',
+        'El registro se mantiene',
+        'info'
+      )
+    }
+  });
+}
+
+function editar_cama(id, precio_actual) {
+
+  var html_ = '<p>Ingrese el nuevo precio diario en dólares por utilizar esta cama</p><input type="number" class="swal2-input" step="0.01" id="precio" min="0.00" placeholder="Precio" autofocus value="' + precio_actual + '">';
+
+  swal({
+    title: 'Editar cama',
+    type: 'info',
+    html: html_,
+    showCancelButton: true,
+    confirmButtonText: '¡Guardar!',
+    cancelButtonText: 'Cancelar',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-default'
+  }).then(async function () {
+    console.log("Entra aca");
+    await $.ajax({
+      type: 'post',
+      url: '/blissey/public/cama/editar',
+      data: {
+        id: id,
+        precio: $("#precio").val(),
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
+      },
+    });
+  }).catch(swal.noop);
+}

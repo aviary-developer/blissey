@@ -2,7 +2,7 @@
 @section('layout')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'habitaciones.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
-    $fecha = Carbon\Carbon::now();
+    $create = true;
     $ruta = '/habitaciones';
   @endphp
   <div class="col-md-10 col-xs-12">

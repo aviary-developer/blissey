@@ -162,7 +162,40 @@ class HabitacionController extends Controller
     public function edit($id)
     {
       $habitaciones = Habitacion::find($id);
-      return view('Habitaciones.edit',compact('habitaciones'));
+      $count_hi = $count_ho = $count_hm = 1;
+      $count_hi += Habitacion::where('tipo',1)->count();
+      $count_ho += Habitacion::where('tipo',0)->count();
+      $count_hm += Habitacion::where('tipo',2)->count();
+
+      $count_ci = $count_co = $count_cm = 1;
+      $camas = Cama::get();
+      foreach($camas as $cama){
+        if($cama->habitacion->tipo == 1){
+          $count_ci++;
+        }else if($cama->habitacion->tipo == 0){
+          $count_co++;
+        }else{
+          $count_cm++;
+        }
+      }
+
+      $camas_a = $habitaciones->camas->where('estado',false);
+      $camas_i = $habitaciones->camas->where('estado',true);
+      $count_cama_a = $camas_a->count();
+      $count_cama_i = $camas_i->count();
+      return view('Habitaciones.edit',compact(
+        'habitaciones',
+        'count_hi',
+        'count_ho',
+        'count_hm',
+        'count_ci',
+        'count_co',
+        'count_cm',
+        'camas_a',
+        'camas_i',
+        'count_cama_a',
+        'count_cama_i'
+      ));
     }
 
     /**

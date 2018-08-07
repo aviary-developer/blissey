@@ -70,6 +70,10 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/desactivateHabitacion/{id}','HabitacionController@desactivate');
   Route::match(['get','post'],'/activateHabitacion/{id}','HabitacionController@activate');
   Route::match(['get','post'],'/destroyHabitacion/{id}','HabitacionController@destroy');
+  Route::post('/cama/desactivar','CamaController@desactivate')->name('camas.desactivar');
+  Route::post('/cama/activar','CamaController@activate')->name('camas.activar');
+  Route::post('/cama/editar','CamaController@editar_precio')->name('camas.editar');
+  Route::post('/cama/nueva','CamaController@nueva_cama')->name('camas.nueva');
   //Rutas de Ingresos
   Route::match(['get','post'],'/desactivateIngreso/{id}','IngresoController@destroy');
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
