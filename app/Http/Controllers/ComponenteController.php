@@ -22,14 +22,12 @@ class ComponenteController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
-      $componentes = Componente::buscar($nombre,$estado);
+      $componentes = Componente::buscar($estado);
       $activos = Componente::where('estado',true)->count();
       $inactivos = Componente::where('estado',false)->count();
       return view('Componentes.index',compact(
         'componentes',
         'estado',
-        'nombre',
         'activos',
         'inactivos',
         'pagina'

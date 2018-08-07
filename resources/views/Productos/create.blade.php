@@ -7,13 +7,16 @@
   @endphp
   <div class="col-md-12 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Producto<small>Nuevo</small></h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>Producto
+              <small class="label-white badge blue ">Nuevo</small>
+          </h3>
+        </center>
       </div>
       @include('Productos.Formularios.opciones')
-      @include('Productos.Formularios.form')
     </div>
+    @include('Productos.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

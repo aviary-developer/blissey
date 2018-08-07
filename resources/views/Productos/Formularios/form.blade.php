@@ -1,3 +1,4 @@
+<div class="x_panel">
 <div class="x_content">
   <div class="form_wizard wizard_horizontal" id="wizard">
     <ul class="wizard_steps">
@@ -37,4 +38,5 @@
       </center>
     </div>
   </div>
+</div>
 </div>

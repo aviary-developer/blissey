@@ -16,7 +16,7 @@
       <label class="col-md-3 col-sm-12 col-xs-12">Precio de venta </label>
       <div class="col-md-8 col-sm-12 col-xs-12">
         <span class="fa fa-dollar form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('pre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Precio','id'=>'pre']) !!}
+        {!! Form::number('pre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Precio','id'=>'pre','min'=>'0.01','step'=>'0.01']) !!}
       </div>
     </div>
     {{-- <p>&nbsp;</p> --}}
@@ -25,7 +25,7 @@
       <label class="col-md-3 col-sm-12 col-xs-12">Stock mínimo</label>
       <div class="col-md-8 col-sm-12 col-xs-12">
         <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('stock',null,['class'=>'form-control has-feedback-left','placeholder'=>'Stock','id'=>'stock']) !!}
+        {!! Form::number('stock',null,['class'=>'form-control has-feedback-left','placeholder'=>'Stock','id'=>'stock','min'=>'1.00','step'=>'0']) !!}
       </div>
     </div>
     <br><br>

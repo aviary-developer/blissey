@@ -7,12 +7,15 @@
   @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Presentación<small>Nuevo</small></h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>presentación
+              <small class="label-white badge blue ">Nueva</small>
+          </h3>
+        </center>
       </div>
-      @include('Especialidades.Formularios.form')
     </div>
+    @include('Presentaciones.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

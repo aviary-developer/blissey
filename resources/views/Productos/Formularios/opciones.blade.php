@@ -1,31 +1,25 @@
-<div>
-  <div class="">
-    Opciones:
-    &nbsp; &nbsp;
-    <div class="btn-group">
-      <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_presentacion">
-        <i class="fa fa-plus"></i>
-        Presentación
-      </button>
-      <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_categoria">
-        <i class="fa fa-plus"></i>
-        Categoría
-      </button>
-      <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_division">
-        <i class="fa fa-plus"></i>
-        División
-      </button>
-      <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_unidad">
-        <i class="fa fa-plus"></i>
-        Unidad
-      </button>
-      <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modal_componente">
-        <i class="fa fa-plus"></i>
-        Componente
-      </button>
+<div class="row">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#" data-toggle="modal" data-target="#modal_presentacion"><i class="fa fa2 fa-plus"></i> Presentación</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa2 fa-plus"></i> Categoría</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#modal_division"><i class="fa fa2 fa-plus"></i> División</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#modal_unidad"><i class="fa fa2 fa-plus"></i> Unidad</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#modal_componente"><i class="fa fa2 fa-plus"></i> Componente</a>
+        </li>
+      </ul>
     </div>
-  </div>
-  <div class="ln_solid"></div>
+  </nav>
 </div>
 
 {{--Modales  --}}

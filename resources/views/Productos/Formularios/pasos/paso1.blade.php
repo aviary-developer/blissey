@@ -111,20 +111,16 @@
                       </div>
                       <label class="control-label col-md-2 col-sm-2 col-xs-12">antes de vencer *</label>
                     </div>
-                    <center>
-                      <button type="button" class="btn btn-primary" id="agregar_division">
-                        <i class="fa fa-plus"></i>
-                        Agregar división
-                      </button>
-                    </center>
                     {{--////////////////////////////////////////////////////////// --}}
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Buscar</button>
+                  <button type="button" class="btn btn-primary" id="agregar_division">
+                    <i class="fa fa-plus"></i>
+                    Agregar división
+                  </button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
-
               </div>
             </div>
           </div>

@@ -22,7 +22,6 @@
   </button>
   @endif
 @else
-  <div class="btn-group">
     @if (!$presentacion->estado)
       @php
         $regreso = "?estado=0";
@@ -32,28 +31,31 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/presentaciones'.$regreso)!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-arrow-left"></i> Atras
-    </a>
-    <a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-edit"></i> Editar
-    </a>
-    @if ($presentacion->estado)
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$presentacion->id.");'" !!}>
-        <i class="fa fa-trash"></i> Papelera
-      </button>
-    @else
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$presentacion->id.");'" !!}/>
-        <i class="fa fa-check"></i> Restaurar
-      </button>
-      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$presentacion->id.");'" !!}/>
-        <i class="fa fa-remove"></i> Eliminar
-      </button>
-    @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
-      <i class="fa fa-question"></i> Ayuda
-    </a>
-  </div>
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href={!! asset('/presentaciones'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+            </li>
+            <li>
+              <a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
+            </li>
+            <li>
+              @if ($presentacion->estado)
+                <a href="#" onclick={!! "'baja(".$presentacion->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+              @else
+                <a href="#" onclick={!! "'alta(".$presentacion->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                <a href="#" onclick={!! "'eliminar(".$presentacion->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+              @endif
+            </li>
+            <li>
+              <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 @endif
 {!!Form::close()!!}
 <script type="text/javascript">
