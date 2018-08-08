@@ -113,7 +113,7 @@ class ComponenteController extends Controller
       $componente = Componente::findOrFail($id);
       $componente->delete();
       Bitacora::bitacora('destroy','componentes','componentes',$id);
-      return redirect('/componentes?estado=0');
+      return redirect('/componentes?estado=0')->with('mensaje','¡Eliminado!');
     }
 
     public function desactivate($id){

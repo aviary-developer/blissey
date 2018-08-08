@@ -3,6 +3,7 @@
 @else{{--Si se esta creando--}}
   @php $opcion=null;@endphp
 @endif
+<div class="x_panel">
 <div class="x_content">
   <br />
   <div class="form-group">
@@ -37,4 +38,5 @@
       <a href={!! asset('/estantes') !!} class="btn btn-default">Cancelar</a>
     </center>
   </div>
+</div>
 </div>

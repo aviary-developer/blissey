@@ -133,7 +133,7 @@ class CategoriaProductoController extends Controller
     $categoria_productos = CategoriaProducto::findOrFail($id);
     $categoria_productos->delete();
     Bitacora::bitacora('destroy','categoria_productos','categoria_productos',$id);
-    return redirect('/categoria_productos?estado=0');
+    return redirect('/categoria_productos?estado=0')->with('mensaje','¡Eliminado!');
   }
   public function desactivate($id){
     $categoria_productos = CategoriaProducto::find($id);

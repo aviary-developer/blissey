@@ -22,7 +22,6 @@
   </button>
   @endif
 @else
-  <div class="btn-group">
     @if (!$componente->estado)
       @php
         $regreso = "?estado=0";
@@ -32,28 +31,31 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/componentes'.$regreso)!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-arrow-left"></i> Atras
-    </a>
-    <a href={!! asset('/componentes/'.$componente->id.'/edit')!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-edit"></i> Editar
-    </a>
-    @if ($componente->estado)
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$componente->id.");'" !!}>
-        <i class="fa fa-trash"></i> Papelera
-      </button>
-    @else
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$componente->id.");'" !!}/>
-        <i class="fa fa-check"></i> Restaurar
-      </button>
-      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$componente->id.");'" !!}/>
-        <i class="fa fa-remove"></i> Eliminar
-      </button>
-    @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
-      <i class="fa fa-question"></i> Ayuda
-    </a>
-  </div>
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href={!! asset('/componentes'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+            </li>
+            <li>
+              <a href={!! asset('/componentes/'.$componente->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
+            </li>
+            <li>
+              @if ($componente->estado)
+                <a href="#" onclick={!! "'baja(".$componente->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+              @else
+                <a href="#" onclick={!! "'alta(".$componente->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                <a href="#" onclick={!! "'eliminar(".$componente->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+              @endif
+            </li>
+            <li>
+              <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 @endif
 {!!Form::close()!!}
 <script type="text/javascript">
@@ -73,11 +75,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateComponente/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Restaurado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -135,11 +132,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateComponente/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'

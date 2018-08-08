@@ -22,14 +22,12 @@ class EstanteController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $codigo = $request->get('codigo');
-      $estantes = Estante::buscar($codigo,$estado);
+      $estantes = Estante::buscar($estado);
       $activos = Estante::where('estado',true)->count();
       $inactivos = Estante::where('estado',false)->count();
       return view('Estantes.index',compact(
         'estantes',
         'estado',
-        'codigo',
         'activos',
         'inactivos',
         'pagina'
@@ -138,7 +136,7 @@ class EstanteController extends Controller
       $estantes = Estante::findOrFail($id);
       $estantes->delete();
       Bitacora::bitacora('destroy','estantes','estantes',$id);
-      return redirect('/estantes?estado=0');
+      return redirect('/estantes?estado=0')->with('mensaje','¡Eliminado!');
     }
 
     public function desactivate($id){

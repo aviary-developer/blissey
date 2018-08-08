@@ -24,14 +24,12 @@ class UnidadController extends Controller
     $pagina--;
     $pagina *= 10;
     $estado = $request->get('estado');
-    $nombre = $request->get('nombre');
-    $unidades = Unidad::buscar($nombre,$estado);
+    $unidades = Unidad::buscar($estado);
     $activos = Unidad::where('estado',true)->count();
     $inactivos = Unidad::where('estado',false)->count();
     return view('Unidades.index',compact(
       'unidades',
       'estado',
-      'nombre',
       'activos',
       'inactivos',
       'pagina'
@@ -112,7 +110,7 @@ class UnidadController extends Controller
     $unidades = Unidad::findOrFail($id);
     $unidades->delete();
     Bitacora::bitacora('destroy','unidades','unidads',$id);
-    return redirect('/unidades?estado=0');
+    return redirect('/unidades?estado=0')->with('mensaje','¡Eliminado!');
   }
 
   public function desactivate($id){

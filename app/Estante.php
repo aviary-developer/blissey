@@ -8,15 +8,9 @@ class Estante extends Model
 {
   protected $fillable = ['codigo', 'cantidad','estado','localizacion'];
 
-  public static function buscar($codigo,$estado){
-    return Estante::codigo($codigo)->estado($estado)->orderBy('codigo')->paginate(10);
+  public static function buscar($estado){
+    return Estante::estado($estado)->orderBy('codigo')->get();
   }
-  public function scopeCodigo($query, $codigo){
-    if(trim($codigo)!=""){
-      $query->where('codigo', 'like','%'.$codigo.'%');
-    }
-  }
-
   public function scopeEstado($query, $estado){
     if($estado == null){
       $estado = 1;

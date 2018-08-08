@@ -122,7 +122,7 @@ class PresentacionController extends Controller
       $presentaciones = Presentacion::findOrFail($id);
       $presentaciones->delete();
       Bitacora::bitacora('destroy','presentacions','presentaciones',$id);
-      return redirect('/presentaciones?estado=0');
+      return redirect('/presentaciones?estado=0')->with('mensaje','¡Eliminado!');
     }
 
     public function desactivate($id){

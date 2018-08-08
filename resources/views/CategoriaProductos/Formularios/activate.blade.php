@@ -104,11 +104,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyCategoriaProducto/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Eliminado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -137,11 +132,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateCategoriaProducto/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'

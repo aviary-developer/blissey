@@ -21,14 +21,12 @@ class CajaController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
-      $cajas = Caja::buscar($nombre,$estado);
+      $cajas = Caja::buscar($estado);
       $activos = Caja::where('estado',true)->count();
       $inactivos = Caja::where('estado',false)->count();
       return view('Cajas.index',compact(
         'cajas',
         'estado',
-        'nombre',
         'activos',
         'inactivos',
         'pagina'
@@ -132,7 +130,7 @@ class CajaController extends Controller
        $cajas = Caja::findOrFail($id);
        $cajas->delete();
        Bitacora::bitacora('destroy','cajas','cajas',$id);
-       return redirect('/cajas?estado=0');
+       return redirect('/cajas?estado=0')->with('mensaje','¡Eliminado!');
      }
 
      public function desactivate($id){
@@ -140,13 +138,13 @@ class CajaController extends Controller
        $cajas->estado = false;
        $cajas->save();
        Bitacora::bitacora('desactivate','cajas','cajas',$id);
-       return Redirect::to('/cajas');
+       return Redirect::to('/cajas')->with('mensaje','¡Desactivado!');
      }
      public function activate($id){
        $cajas = Caja::find($id);
        $cajas->estado = true;
        $cajas->save();
        Bitacora::bitacora('activate','cajas','cajas',$id);
-       return Redirect::to('/cajas?estado=0');
+       return Redirect::to('/cajas?estado=0')->with('mensaje','¡Restaurado!');
      }
 }

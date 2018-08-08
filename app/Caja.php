@@ -9,13 +9,8 @@ class Caja extends Model
 {
     protected $fillable = ['nombre','localizacion','estado'];
 
-  public static function buscar($nombre,$estado){
-    return Caja::nombre($nombre)->estado($estado)->usuario()->orderBy('nombre')->paginate(10);
-  }
-  public function scopeNombre($query, $nombre){
-    if(trim($nombre)!=""){
-      $query->where('nombre', 'like','%'.$nombre.'%');
-    }
+  public static function buscar($estado){
+    return Caja::estado($estado)->usuario()->orderBy('nombre')->get();
   }
   public function scopeEstado($query, $estado){
     if($estado == null){

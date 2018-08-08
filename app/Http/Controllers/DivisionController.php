@@ -22,14 +22,12 @@ class DivisionController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
-      $divisiones = Division::buscar($nombre,$estado);
+      $divisiones = Division::buscar($estado);
       $activos = Division::where('estado',true)->count();
       $inactivos = Division::where('estado',false)->count();
       return view('Divisiones.index',compact(
         'divisiones',
         'estado',
-        'nombre',
         'activos',
         'inactivos',
         'pagina'
@@ -118,7 +116,7 @@ class DivisionController extends Controller
       $division = Division::findOrFail($id);
       $division->delete();
       Bitacora::bitacora('destroy','divisions','divisiones',$id);
-      return redirect('/divisiones?estado=0');
+      return redirect('/divisiones?estado=0')->with('mensaje','¡Eliminado!');
     }
 
     public function desactivate($id){
