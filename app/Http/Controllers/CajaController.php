@@ -7,6 +7,7 @@ use App\Caja;
 use App\Http\Requests\CajaRequest;
 use Redirect;
 use App\Bitacora;
+use DB;
 
 class CajaController extends Controller
 {
@@ -127,10 +128,19 @@ class CajaController extends Controller
      */
      public function destroy($id)
      {
-       $cajas = Caja::findOrFail($id);
-       $cajas->delete();
-       Bitacora::bitacora('destroy','cajas','cajas',$id);
-       return redirect('/cajas?estado=0')->with('mensaje','¡Eliminado!');
+       DB::beginTransaction();
+       try {
+         $cajas = Caja::findOrFail($id);
+         $cajas->delete();
+         Bitacora::bitacora('destroy','cajas','cajas',$id);
+         DB::commit();
+         return redirect('/cajas?estado=0')->with('mensaje','¡Eliminado!');
+       } catch (\Exception $e) {
+         DB::rollback();
+         return redirect('/cajas?estado=0')->with('error','¡No se puede eliminar!');
+
+       }
+
      }
 
      public function desactivate($id){

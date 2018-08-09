@@ -8,6 +8,8 @@ use App\Dependiente;
 use Redirect;
 use App\Http\Requests\ProveedoresRequest;
 use Validator;
+use App\Bitacora;
+use Response;
 
 class ProveedorController extends Controller
 {
@@ -60,10 +62,10 @@ class ProveedorController extends Controller
           'telefono'=>'required| size:9 |unique:proveedors',
           'nombrev'=>'required',
         ],[
-          'nombre.required'=>'El campo drogería es obligatorio',
-          'nombre.min'=>'El campo drogería necesita 3 caracteres mínimos',
-          'nombre.max'=>'El campo drogería necesita 50 caracteres máximo',
-          'nombre.unique'=>'El campo drogería ya ha sido registrado',
+          'nombre.required'=>'El campo proveedor es obligatorio',
+          'nombre.min'=>'El campo proveedor necesita 3 caracteres mínimos',
+          'nombre.max'=>'El campo proveedor necesita 50 caracteres máximo',
+          'nombre.unique'=>'El campo proveedor ya ha sido registrado',
 
           'correo.required'=>'El campo correo es obligatorio',
           'correo.email'=>'Ingrese un correo válido',
@@ -145,11 +147,11 @@ class ProveedorController extends Controller
         if($request->nombre==$proveedor->nombre){
           $v1=1;
         }else{
-          $validar['nombre']="required| min:5 |max:40 |unique:proveedors";
-          $men['nombre.required']="El campo drogería es requerido";
-          $men['nombre.min']="El campo drogería requiere mínimo 5 caracteres";
-          $men['nombre.max']="El campo drogería requiere máximo 40 caracteres";
-          $men['nombre.unique']="Drogería registrada, ingrese otra";
+          $validar['nombre']="required| min:5 |max:50 |unique:proveedors";
+          $men['nombre.required']="El campo proveedor es requerido";
+          $men['nombre.min']="El campo proveedor requiere mínimo 5 caracteres";
+          $men['nombre.max']="El campo proveedor requiere máximo 50 caracteres";
+          $men['nombre.unique']="Proveedor registrado, ingrese otro";
         }
         if($request->correo==$proveedor->correo){
           $v2=1;
@@ -229,5 +231,14 @@ class ProveedorController extends Controller
       }else{
         echo "true";
       }
+    }
+    public static function ingresoProveedor(ProveedoresRequest $request){
+      $p=Proveedor::create($request->All());
+      Bitacora::bitacora('store','proveedors','proveedores',$p->id);
+      return Response::json('success');
+    }
+    public static function llenarProveedor(){
+      $proveedores=Proveedor::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
+      return Response::json($proveedores);
     }
 }

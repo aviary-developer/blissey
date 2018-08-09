@@ -91,6 +91,8 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/desactivateProveedor/{id}','ProveedorController@desactivate');
   Route::match(['get','post'],'/activateProveedor/{id}','ProveedorController@activate');
   Route::match(['get','post'],'/destroyProveedor/{id}','ProveedorController@destroy');
+  Route::match(['get','post'],'/llenarProveedor','ProveedorProductoController@llenarProveedor');
+  Route::match(['get','post'],'/ingresoProveedor','ProveedorController@ingresoProveedor');
   //Rutas de presentaciones
   Route::resource('presentaciones','PresentacionController');
   Route::match(['get','post'],'/desactivatePresentacion/{id}','PresentacionController@desactivate');

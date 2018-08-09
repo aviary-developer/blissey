@@ -8,6 +8,7 @@ use App\Nivel;
 use Redirect;
 use App\Bitacora;
 use App\Http\Requests\EstanteRequest;
+use DB;
 
 class EstanteController extends Controller
 {
@@ -133,10 +134,17 @@ class EstanteController extends Controller
      */
     public function destroy($id)
     {
-      $estantes = Estante::findOrFail($id);
-      $estantes->delete();
-      Bitacora::bitacora('destroy','estantes','estantes',$id);
-      return redirect('/estantes?estado=0')->with('mensaje','¡Eliminado!');
+      DB::beginTransaction();
+      try {
+        $estantes = Estante::findOrFail($id);
+        $estantes->delete();
+        Bitacora::bitacora('destroy','estantes','estantes',$id);
+        DB::commit();
+        return redirect('/estantes?estado=0')->with('mensaje','¡Eliminado!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('/estantes?estado=0')->with('error','¡No se puede eliminar!');
+      }
     }
 
     public function desactivate($id){

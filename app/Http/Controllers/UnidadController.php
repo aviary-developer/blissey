@@ -10,6 +10,7 @@ use App\Bitacora;
 use Redirect;
 use Response;
 use Carbon\Carbon;
+use DB;
 
 class UnidadController extends Controller
 {
@@ -107,10 +108,17 @@ class UnidadController extends Controller
    */
   public function destroy($id)
   {
-    $unidades = Unidad::findOrFail($id);
-    $unidades->delete();
-    Bitacora::bitacora('destroy','unidades','unidads',$id);
-    return redirect('/unidades?estado=0')->with('mensaje','¡Eliminado!');
+    DB::beginTransaction();
+    try {
+      $unidades = Unidad::findOrFail($id);
+      $unidades->delete();
+      Bitacora::bitacora('destroy','unidades','unidads',$id);
+      DB::commit();
+      return redirect('/unidades?estado=0')->with('mensaje','¡Eliminado!');
+    } catch (\Exception $e) {
+      DB::rollback();
+      return redirect('/unidades?estado=0')->with('error','¡No se puede eliminar!');
+    }
   }
 
   public function desactivate($id){

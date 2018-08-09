@@ -8,6 +8,7 @@ use App\Http\Requests\ComponenteRequest;
 use Redirect;
 use Response;
 use App\Bitacora;
+use DB;
 
 class ComponenteController extends Controller
 {
@@ -110,10 +111,17 @@ class ComponenteController extends Controller
      */
     public function destroy($id)
     {
-      $componente = Componente::findOrFail($id);
-      $componente->delete();
-      Bitacora::bitacora('destroy','componentes','componentes',$id);
-      return redirect('/componentes?estado=0')->with('mensaje','¡Eliminado!');
+      DB::beginTransaction();
+      try {
+        $componente = Componente::findOrFail($id);
+        $componente->delete();
+        Bitacora::bitacora('destroy','componentes','componentes',$id);
+        DB::commit();
+        return redirect('/componentes?estado=0')->with('mensaje','¡Eliminado!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('/componentes?estado=0')->with('error','¡No se puede eliminar!');
+      }
     }
 
     public function desactivate($id){

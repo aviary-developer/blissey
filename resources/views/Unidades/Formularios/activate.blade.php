@@ -41,14 +41,18 @@
             <li>
               <a href={!! asset('/unidades/'.$unidad->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
             </li>
-            <li>
               @if ($unidad->estado)
+                <li>
                 <a href="#" onclick={!! "'baja(".$unidad->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+              </li>
               @else
-                <a href="#" onclick={!! "'alta(".$unidad->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
-                <a href="#" onclick={!! "'eliminar(".$unidad->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+                <li>
+                  <a href="#" onclick={!! "'alta(".$unidad->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                </li>
+                <li>
+                  <a href="#" onclick={!! "'eliminar(".$unidad->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>  
+                </li>
               @endif
-            </li>
             <li>
               <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
             </li>
