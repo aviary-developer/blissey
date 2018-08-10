@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cama;
 use App\Servicio;
 use App\CategoriaServicio;
+use App\Habitacion;
 use Illuminate\Http\Request;
 use DB;
 
@@ -92,7 +93,7 @@ class CamaController extends Controller
         $servicio = Servicio::find($cama->servicio->id);
         DB::beginTransaction();
         try{
-            $cama->estado = true;
+            $cama->activo = false;
             $cama->save();
             
             $servicio->estado = false;
@@ -113,7 +114,7 @@ class CamaController extends Controller
         $servicio = Servicio::find($cama->servicio->id);
         DB::beginTransaction();
         try{
-            $cama->estado = false;
+            $cama->activo = true;
             $cama->save();
             
             $servicio->estado = true;
@@ -153,6 +154,7 @@ class CamaController extends Controller
     
     public function nueva_cama(Request $request){
         DB::beginTransaction();
+        $habitacion = Habitacion::find($request->id);
 
         try {
             $categoria_existe = CategoriaServicio::where('nombre','Cama')->first();
@@ -166,16 +168,16 @@ class CamaController extends Controller
             $cama_ = new Cama;
             $cama_->numero = $request->numero;
             $cama_->precio = $request->precio;
-            $cama_->f_habitacion = $request->id;
+            $cama_->f_habitacion = $habitacion->id;
             $cama_->save();
 
             $servicio = new Servicio;
             if($request->tipo == 0){
-            $servicio->nombre = 'Cama O'.$cama_->numero;
+            $servicio->nombre = 'Cama H'.$habitacion->numero.'O'.$cama_->numero;
             }else if($request->tipo == 1){
-            $servicio->nombre = 'Cama I'.$cama_->numero;
+            $servicio->nombre = 'Cama H'.$habitacion->numero.'I'.$cama_->numero;
             }else{
-            $servicio->nombre = 'Cama M'.$cama_->numero;
+            $servicio->nombre = 'Cama H'.$habitacion->numero.'M'.$cama_->numero;
             }
             $servicio->precio = $cama_->precio;
             $servicio->f_categoria = $categoria_existe->id;

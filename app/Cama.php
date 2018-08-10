@@ -19,4 +19,8 @@ class Cama extends Model
     public function servicio(){
       return $this->hasOne('App\Servicio', 'f_cama');
     }
+
+    public function ingreso(){
+      return $this->hasMany('App\Ingreso', 'f_cama');
+    }
 }

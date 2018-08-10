@@ -819,6 +819,7 @@
       {!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
       {!!Html::script('assets/switchery/dist/switchery.min.js')!!}
       <!--js agregados -->
+      {!!Html::script('js/general.js')!!}
       {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
       {!!Html::script('js/scripts/Usuarios.js')!!}
       {!!Html::script('js/scripts/Examenes.js')!!}
@@ -835,7 +836,6 @@
       {!!Html::script('js/scripts/Empresa.js')!!}
       {!!Html::script('js/scripts/Solicitud.js')!!}
       {!!Html::script('js/scripts/Presentaciones.js')!!}
-      {!!Html::script('js/general.js')!!}
       {!!Html::script('js/scripts/Requisiciones.js')!!}
       {!!Html::script('js/scripts/StockProveedor.js')!!}
       @section('scripts')

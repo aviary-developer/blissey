@@ -29,24 +29,7 @@
           </h3>
         </center>
       </div>
-      {{--  <div class="row bg-red">
-        <div class="col-md-7 col-sm-7 col-xs-12">
-          <div class="btn-group">
-            <a href={!! asset('/habitaciones/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
-            <a href={!! asset('#') !!} class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
-            <a href={!! asset('/habitaciones?numero='.$numero.'&estado='.$estadoOpuesto) !!} class="btn btn-dark btn-sm">
-              @if ($estadoOpuesto)
-                <i class="fa fa-check"></i> Activas
-                <span class="label label-success">{{ $activos }}</span>
-              @else
-                <i class="fa fa-trash"></i> Papelera
-                <span class="label label-warning">{{ $inactivos }}</span>
-              @endif
-            </a>
-            <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
-          </div>
-        </div>
-      </div>  --}}
+      
       <div class="row">
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">

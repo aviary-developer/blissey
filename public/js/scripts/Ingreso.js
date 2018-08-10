@@ -58,7 +58,7 @@ $(document).on('ready', function () {
               "<td>" +
               "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
               "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
-              "<button type='button' class='btn btn-xs btn-primary' id='agregar_paciente' data-dismiss='modal'>" +
+              "<button type='button' class='btn btn-xs btn-primary' id='agregar_paciente'>" +
               "<i class='fa fa-check'></i>" +
               "</button>" +
               "</td>" +
@@ -95,7 +95,15 @@ $(document).on('ready', function () {
       "</thead>";
     tabla.append(head);
 
-    $("#modal").modal('hide');
+    if (ubicacion.indexOf("/blissey/public/ingresos") > -1){
+      $("#centro").removeClass('modal-lg');
+      $("#izquierda").removeClass('col-xs-6').addClass('col-xs-12');
+      $("#derecha").hide();
+      $("#izq_interno").attr('style', 'height:auto');
+    } else {
+      $("#modal").modal('hide');
+    }
+
   });
 
   $("#guardarPaciente").on('click', function (e) {
@@ -463,6 +471,38 @@ $(document).on('ready', function () {
   $("#guardar_ingreso").on("click", function (e) {
     $("#ingreso_form").submit();
   });
+
+  //Guardar el ingreso
+  $("#guardar_i").on('click', function (e) {
+    e.preventDefault();
+    value = ($("#c_responsable").is(':checked') == true) ? 1 : 0;
+    $.ajax({
+      type: 'post',
+      url: '/blissey/public/ingresos',
+      data: {
+        f_paciente: $("#f_paciente").val(),
+        c_responsable: value,
+        f_responsable: $("#f_responsable").val(),
+        f_medico: $("#f_medico").val(),
+        fecha_ingreso: $("#fecha_ingreso").val(),
+        tipo: $("#tipo").val(),
+        f_cama: $("#cama").val()
+      }, success: function (r) {
+        console.log(r);
+        if (r == 1) {
+          swal({
+            type: 'success',
+            title: '¡Hecho!',
+            text: 'Cambio exitoso',
+            showConfirmButton: false
+          });
+          location.reload();
+        } else {
+          swal('¡Error!', 'Algo salio mal', 'error');
+        }
+      }
+    });
+  });
 });
 
 $("#nuevo_abono").on('click', function (e) {
@@ -773,3 +813,24 @@ function accion24(tipo, id, objeto = null) {
 $(".modal").on('shown.bs.modal', function () {
   $(this).find("input:visible:first").focus();
 });
+
+function input_seleccion(e = null) {
+  document.getElementById('seleccion').value = e;
+
+  var principal = $("#centro");
+  var derecha = $("#derecha");
+  var izquierda = $("#izquierda");
+  var interno = $("#izq_interno");
+
+  principal.addClass('modal-lg');
+  izquierda.removeClass('col-xs-12').addClass('col-xs-6');
+  derecha.show();
+  interno.attr('style','height:auto');
+
+  $("#busqueda").focus();
+}
+
+function i_activo(cama, tipo) {
+  $("#cama").val(cama);
+  $("#tipo").val(tipo);
+}

@@ -53,8 +53,9 @@ class Ingreso extends Model
       return $this->belongsTo('App\Paciente', 'f_responsable');
     }
 
+    /**La relación propiamente no es con habitaciones es con camas pero se deja así por facilidad de uso */
     public function habitacion(){
-      return $this->belongsTo('App\Habitacion', 'f_habitacion');
+      return $this->belongsTo('App\Cama', 'f_cama');
     }
 
     public function medico(){

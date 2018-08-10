@@ -54,16 +54,6 @@ class HabitacionController extends Controller
       $count_hm += Habitacion::where('tipo',2)->count();
 
       $count_ci = $count_co = $count_cm = 1;
-      $camas = Cama::get();
-      foreach($camas as $cama){
-        if($cama->habitacion->tipo == 1){
-          $count_ci++;
-        }else if($cama->habitacion->tipo == 0){
-          $count_co++;
-        }else{
-          $count_cm++;
-        }
-      }
 
       return view('habitaciones.create',compact(
         'count_hi',
@@ -110,11 +100,11 @@ class HabitacionController extends Controller
 
             $servicio = new Servicio;
             if($request->tipo == 0){
-              $servicio->nombre = 'Cama O'.$cama_->numero;
+              $servicio->nombre = 'Cama H'.$habitaciones->numero.'O'.$cama_->numero;
             }else if($request->tipo == 1){
-              $servicio->nombre = 'Cama I'.$cama_->numero;
+              $servicio->nombre = 'Cama H'.$habitaciones->numero.'I'.$cama_->numero;
             }else{
-              $servicio->nombre = 'Cama M'.$cama_->numero;
+              $servicio->nombre = 'Cama H'.$habitaciones->numero.'M'.$cama_->numero;
             }
             $servicio->precio = $cama_->precio;
             $servicio->f_categoria = $categoria_existe->id;
@@ -167,20 +157,10 @@ class HabitacionController extends Controller
       $count_ho += Habitacion::where('tipo',0)->count();
       $count_hm += Habitacion::where('tipo',2)->count();
 
-      $count_ci = $count_co = $count_cm = 1;
-      $camas = Cama::get();
-      foreach($camas as $cama){
-        if($cama->habitacion->tipo == 1){
-          $count_ci++;
-        }else if($cama->habitacion->tipo == 0){
-          $count_co++;
-        }else{
-          $count_cm++;
-        }
-      }
+      $count_ci = $count_co = $count_cm = ($habitaciones->camas->count() + 1);
 
-      $camas_a = $habitaciones->camas->where('estado',false);
-      $camas_i = $habitaciones->camas->where('estado',true);
+      $camas_a = $habitaciones->camas->where('activo',true);
+      $camas_i = $habitaciones->camas->where('activo',false);
       $count_cama_a = $camas_a->count();
       $count_cama_i = $camas_i->count();
       return view('Habitaciones.edit',compact(

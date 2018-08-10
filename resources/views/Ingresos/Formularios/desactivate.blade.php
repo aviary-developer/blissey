@@ -8,14 +8,6 @@
   <a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  @if (($ingreso->estado == 0 && $ingreso->tipo < 3) && Auth::user()->tipoUsuario == "Recepción")
-    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Confirmar ingreso" onclick={!!"'alta(".$ingreso->id.");'"!!}/>
-      <i class="fa fa-check"></i>
-    </button>
-    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!!"'eliminar(".$ingreso->id.");'"!!}/>
-      <i class="fa fa-remove"></i>
-    </button>
-  @endif
 @else
   <div class="btn-group col-xs-6">
     @if ($ingreso->estado > 1)

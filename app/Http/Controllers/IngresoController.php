@@ -10,6 +10,7 @@ use App\Examen;
 use App\Paciente;
 use App\Servicio;
 use App\Rayosx;
+use App\Cama;
 use App\ultrasonografia;
 use App\Abono;
 use App\Especialidad;
@@ -47,12 +48,26 @@ class IngresoController extends Controller
       }
       $ingresos = Ingreso::buscar($estado, $tipo,$usuario);
       $activos = Ingreso::where('estado','<>',2)->where('tipo', $tipo)->count();
-      return view('Ingresos.index',compact(
+
+      $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
+
+      $habitaciones_ingreso = Habitacion::where('tipo',1)->where('estado',true)->orderBy('numero','asc')->get();
+
+      //Variables utiles en la vista
+      $estadoOpuesto = ($estado != 2 || $estado == null)?2:0;
+      $index = true;
+      $fecha = Carbon::now();
+      return view('Ingresos.index.base',compact(
         'ingresos',
         'estado',
         'activos',
         'pagina',
-        'tipo'
+        'tipo',
+        'index',
+        'estadoOpuesto',
+        'habitaciones_ingreso',
+        'medicos',
+        'fecha'
       ));
     }
 
@@ -79,7 +94,7 @@ class IngresoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngresoRequest $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -96,13 +111,13 @@ class IngresoController extends Controller
           }
           $ingresos = new Ingreso;
           $ingresos->f_paciente = $request->f_paciente;
-          if($request->c_responsable == 'on'){
-          $ingresos->f_responsable = $request->f_responsable;
+          if($request->c_responsable == 1){
+            $ingresos->f_responsable = $request->f_responsable;
           }else{
             $ingresos->f_responsable = $request->f_paciente;
           }
           if($request->tipo == 2 || $request->tipo == 0 || $request->tipo == 1){
-            $ingresos->f_habitacion = $request->f_habitacion;
+            $ingresos->f_cama = $request->f_cama;
           }
           $ingresos->f_medico = $request->f_medico;
           $aux = explode('T',$request->fecha_ingreso);
@@ -113,10 +128,10 @@ class IngresoController extends Controller
           $ingresos->tipo = $request->tipo;
           $ingresos->save();
 
-          if($request->tipo != 3){
-            $habitacion = Habitacion::find($request->f_habitacion);
-            $habitacion->ocupado = true;
-            $habitacion->save();
+          if($request->tipo < 3){
+            $cama = Cama::find($request->f_cama);
+            $cama->estado = true;
+            $cama->save();
           }else{
             $ultima_factura = Transacion::where('tipo',2)->latest()->first();
 
@@ -140,11 +155,11 @@ class IngresoController extends Controller
 
         } catch (Exception $e) {
           DB::rollback();
-          return redirect('/ingresos')->with('mensaje', 'Algo salio mal');
+          return 0;
         }
         DB::commit();
         Bitacora::bitacora('store','ingresos','ingresos',$ingresos->id);
-        return redirect('/ingresos')->with('mensaje', '¡Guardado!');
+        return 1;
     }
 
     /**
@@ -231,7 +246,7 @@ class IngresoController extends Controller
         $habitacion_dia_guardado_count = 0;
         /**Contar cuantos dias se ha guardado el gasto por habitación del paciente */
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-          if($detalle->servicio->categoria->nombre == "Habitación"){
+          if($detalle->servicio->categoria->nombre == "Cama"){
             $habitacion_dia_guardado_count++;
           }
         }
@@ -306,7 +321,7 @@ class IngresoController extends Controller
         $count_s24 = 0;
         if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->count() > 0){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
+            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
               $detalle_s[$indice_detalle_s] = $detalle;
               $indice_detalle_s++;
               if($detalle->created_at->between($ultima24, $ultima48)){
@@ -494,8 +509,8 @@ class IngresoController extends Controller
     public function destroy($id)
     {
         $ingreso = Ingreso::findOrFail($id);
-        $habitacion = Habitacion::find($ingreso->f_habitacion);
-        $habitacion->ocupado = false;
+        $habitacion = Cama::find($ingreso->f_habitacion);
+        $habitacion->estado = false;
         $habitacion->save();
         $ingreso->delete();
         Bitacora::bitacora('destroy','ingresos','ingresos',$id);
@@ -664,9 +679,9 @@ class IngresoController extends Controller
           $ingreso->estado = 2;
           $ingreso->save();
 
-          if($ingreso->f_habitacion != null){
-            $habitacion = Habitacion::find($ingreso->f_habitacion);
-            $habitacion->ocupado = false;
+          if($ingreso->f_cama != null){
+            $habitacion = Cama::find($ingreso->f_cama);
+            $habitacion->estado = false;
             $habitacion->save();
           }
         }
@@ -740,13 +755,13 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true))>0){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Ultrasonografía" &&($detalle->created_at->between($ultima24, $ultima48))){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Ultrasonografía" &&($detalle->created_at->between($ultima24, $ultima48))){
             $servicios[$k]["nombre"] = $detalle->servicio->nombre;
             $servicios[$k]["precio"] = $detalle->precio;
             $k++;
             $total_servicios++;
           }
-          if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $ultima24)){
+          if($detalle->servicio->categoria->nombre == "Cama" && ($detalle->created_at == $ultima24)){
             $habitacion = $detalle->precio;
             $habitacion_nombre = $detalle->servicio->nombre;
           }
@@ -867,12 +882,12 @@ class IngresoController extends Controller
       }
       $ingreso->save();
 
-      $habitacion_ = Habitacion::find($habitacion_actual);
-      $habitacion_->ocupado = false;
+      $habitacion_ = Cama::find($habitacion_actual);
+      $habitacion_->estado = false;
       $habitacion_->save();
 
-      $habitacion = Habitacion::find($request->f_habitacion);
-      $habitacion->ocupado = true;
+      $habitacion = Cama::find($request->f_habitacion);
+      $habitacion->estado = true;
       $habitacion->save();
       DB::commit();
       return 1;
@@ -991,7 +1006,7 @@ class IngresoController extends Controller
     $servicios = [];
     $indice = 0;
     foreach($lista as $detalle){
-      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
+      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
         $servicios[$indice]['id'] = $detalle->id;
         $servicios[$indice]['hora'] = $detalle->created_at->format('H:i.s');
         $servicios[$indice]['cantidad'] = $detalle->cantidad;
@@ -1286,7 +1301,7 @@ class IngresoController extends Controller
           $ultima48 = $ingreso->fecha_ingreso->addDays(($dias + 1));
           $habitacion_detalle_count = 0;
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->categoria->nombre == "Habitación"){
+            if($detalle->servicio->categoria->nombre == "Cama"){
               $habitacion_detalle_count++;
             }
           }

@@ -119,13 +119,13 @@ thead tr :last-child{
     color: white;
 }
 .black{
-    color: #404a54;
+    color: #404a54 !important;
 }
 .white{
-    color: white;
+    color: white !important;
 }
 .gray{
-    color: gray;
+    color: gray !important;
 }
 .label-lg{
     font-size: 90%;
