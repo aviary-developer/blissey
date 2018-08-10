@@ -9,6 +9,9 @@
           <a href="#" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa2 fa-plus"></i> Categoría</a>
         </li>
         <li>
+          <a href="#" data-toggle="modal" data-target="#modal_proveedor"><i class="fa fa2 fa-plus"></i> Proveedor</a>
+        </li>
+        <li>
           <a href="#" data-toggle="modal" data-target="#modal_division"><i class="fa fa2 fa-plus"></i> División</a>
         </li>
         <li>
@@ -28,3 +31,4 @@
 @include('Productos.Formularios.modales.modal_d')
 @include('Productos.Formularios.modales.modal_u')
 @include('Productos.Formularios.modales.modal_co')
+@include('Productos.Formularios.modales.modal_pr')

@@ -10,6 +10,7 @@ use App\Bitacora;
 use Redirect;
 use Response;
 use Carbon\Carbon;
+use DB;
 
 class UnidadController extends Controller
 {
@@ -24,14 +25,12 @@ class UnidadController extends Controller
     $pagina--;
     $pagina *= 10;
     $estado = $request->get('estado');
-    $nombre = $request->get('nombre');
-    $unidades = Unidad::buscar($nombre,$estado);
+    $unidades = Unidad::buscar($estado);
     $activos = Unidad::where('estado',true)->count();
     $inactivos = Unidad::where('estado',false)->count();
     return view('Unidades.index',compact(
       'unidades',
       'estado',
-      'nombre',
       'activos',
       'inactivos',
       'pagina'
@@ -109,10 +108,17 @@ class UnidadController extends Controller
    */
   public function destroy($id)
   {
-    $unidades = Unidad::findOrFail($id);
-    $unidades->delete();
-    Bitacora::bitacora('destroy','unidades','unidads',$id);
-    return redirect('/unidades?estado=0');
+    DB::beginTransaction();
+    try {
+      $unidades = Unidad::findOrFail($id);
+      $unidades->delete();
+      Bitacora::bitacora('destroy','unidades','unidads',$id);
+      DB::commit();
+      return redirect('/unidades?estado=0')->with('mensaje','¡Eliminado!');
+    } catch (\Exception $e) {
+      DB::rollback();
+      return redirect('/unidades?estado=0')->with('error','¡No se puede eliminar!');
+    }
   }
 
   public function desactivate($id){

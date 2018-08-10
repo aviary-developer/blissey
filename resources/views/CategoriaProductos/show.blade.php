@@ -8,7 +8,7 @@
   <div class="x_panel">
     <div class="row bg-blue">
       <center>
-        <h3>Categoría producto
+        <h3>Categoría de Producto
             <small class="label-white badge blue ">{{ $categoria->nombre}}</small>
         </h3>
       </center>

@@ -16,7 +16,7 @@
     <div class="x_panel">
       <div class="row bg-blue">
         <center>
-          <h3>Categorías de Productos
+          <h3>Categorías de Producto
             @if ($estadoOpuesto)
               <small class="label-white badge red ">Papelera</small>
             @else

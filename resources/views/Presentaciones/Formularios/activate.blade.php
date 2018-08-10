@@ -41,14 +41,18 @@
             <li>
               <a href={!! asset('/presentaciones/'.$presentacion->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
             </li>
-            <li>
               @if ($presentacion->estado)
+                <li>
                 <a href="#" onclick={!! "'baja(".$presentacion->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+              </li>
               @else
-                <a href="#" onclick={!! "'alta(".$presentacion->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
-                <a href="#" onclick={!! "'eliminar(".$presentacion->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+                <li>
+                  <a href="#" onclick={!! "'alta(".$presentacion->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                </li>
+                <li>
+                  <a href="#" onclick={!! "'eliminar(".$presentacion->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+                </li>
               @endif
-            </li>
             <li>
               <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
             </li>
@@ -104,11 +108,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPresentacion/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Eliminado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -137,11 +136,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePresentacion/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'

@@ -228,12 +228,19 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-      $productos = Producto::findOrFail($id);
-      DivisionProducto::where('f_producto',$id)->delete();
-      ComponenteProducto::where('f_producto',$id)->delete();
-      $productos->delete();
-      Bitacora::bitacora('destroy','productos','productos',$id);
-      return redirect('/productos?estado=0')->with('mensaje','¡Eliminado!');;
+      DB::beginTransaction();
+      try {
+        $productos = Producto::findOrFail($id);
+        DivisionProducto::where('f_producto',$id)->delete();
+        ComponenteProducto::where('f_producto',$id)->delete();
+        $productos->delete();
+        Bitacora::bitacora('destroy','productos','productos',$id);
+        DB::commit();
+        return redirect('/productos?estado=0')->with('mensaje','¡Eliminado!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('/productos?estado=0')->with('error','¡No se puede eliminar!');
+      }
     }
 
     public function desactivate($id){

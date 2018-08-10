@@ -15,9 +15,6 @@
   <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
     <i class="fa fa-envelope"></i>
   </a>
-  <a id="mostrar" href="{!! asset('/verExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!}" class="btn btn-info btn-sm" data-toggle="tooltip"  data-placement="top" title="Ver Radiografía" />
-    <i class="fa fa-eye"></i>
-  </a>
 @endif
 <script>
 function eliminarSolicitud(id){

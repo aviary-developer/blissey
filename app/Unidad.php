@@ -9,14 +9,8 @@ class Unidad extends Model
   protected $fillable = [
       'nombre'
   ];
-  public static function buscar($nombre, $estado){
-    return Unidad::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
-  }
-
-  public function scopeNombre($query, $nombre){
-    if(trim($nombre)!=""){
-      $query->where('nombre', 'like','%'.$nombre.'%');
-    }
+  public static function buscar($estado){
+    return Unidad::estado($estado)->orderBy('nombre')->get();
   }
 
   public function scopeEstado($query, $estado){

@@ -22,7 +22,7 @@
           App\CategoriaProducto::arrayCategorias()
           ,null, ['class'=>'form-control has-feedback-left','id'=>'f_categoria'])!!}
         </div>
-        <label class="control-label col-md-2 col-sm-2 col-xs-12">Droguería *</label>
+        <label class="control-label col-md-2 col-sm-2 col-xs-12">Proveedor *</label>
         <div class="col-md-4 col-sm-4 col-xs-12">
           <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
           {!!Form::select('f_proveedor',

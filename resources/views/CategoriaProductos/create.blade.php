@@ -8,7 +8,7 @@
     <div class="x_panel">
       <div class="row bg-blue">
         <center>
-          <h3>Categorías de productos
+          <h3>Categoría de Producto
               <small class="label-white badge blue ">Nuevo</small>
           </h3>
         </center>

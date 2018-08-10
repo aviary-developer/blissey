@@ -17,7 +17,7 @@
         <input type="hidden" name="evaluar" value=true>
         <input type="hidden" name="idRadiografia" value={{$solicitud->f_rayox}}>
         <div class="x_content">
-          <div class="col-md-7 col-xs-12">
+          <div class="col-md-12 col-xs-12">
         <!--<div class="form-group">
           <label class="control-label col-md-4 col-sm-4 col-xs-12">Ultrasonografía:</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
@@ -86,11 +86,6 @@
                 </div>
 
                 <div class="btn-group">
-                  <span class="btn" title=""><i class="fa fa-picture-o"></i></span>
-                  <input type="file" name="rayox" id="idRadiografia" accept="image/*"/>
-                </div>
-
-                <div class="btn-group">
                   <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
                   <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
                 </div>
@@ -108,19 +103,6 @@
                 {!! Form::textarea('observacion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Escriba la observación','rows'=>'10', 'required']) !!}
               </div>
             </div>-->
-        </div>
-        <div class="col-md-5 col-xs-12">
-          <div class="">
-            <center>
-              <output id="listRadiografia" style="height:400px">
-                @if ($create)
-                  <img src={{asset(Storage::url('noImgen.jpg'))}} style="height: 300px; width: 300px; object-fit: scale-down">
-                @else
-                  <img src={{asset(Storage::url($solicitud->rayox))}} style="height: 300px; width: 300px; object-fit: scale-down">
-                @endif
-              </output>
-            </center>
-          </div>
         </div>
         </div>
   </div>

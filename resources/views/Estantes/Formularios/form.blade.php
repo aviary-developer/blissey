@@ -3,6 +3,7 @@
 @else{{--Si se esta creando--}}
   @php $opcion=null;@endphp
 @endif
+<div class="x_panel">
 <div class="x_content">
   <br />
   <div class="form-group">
@@ -16,14 +17,14 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Número de niveles *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-      {!!Form::selectRange('cantidad', 1, 9,null,['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
+      {!!Form::selectRange('cantidad', 1, 9,null,['class'=>'form-control has-feedback-left'])!!}
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Localizacón *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-        {!!Form::select('localizacion', ['1'=> 'Recepción','0'=> 'Farmacia'],$opcion, ['placeholder' => 'Seleccione una opción','class'=>'form-control has-feedback-left'])!!}
+        {!!Form::select('localizacion', ['1'=> 'Recepción','0'=> 'Farmacia'],$opcion, ['class'=>'form-control has-feedback-left'])!!}
     </div>
   </div>
   <center>
@@ -37,4 +38,5 @@
       <a href={!! asset('/estantes') !!} class="btn btn-default">Cancelar</a>
     </center>
   </div>
+</div>
 </div>

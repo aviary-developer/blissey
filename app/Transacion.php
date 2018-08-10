@@ -271,4 +271,14 @@ class Transacion extends Model
           $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido');
           return $tipos[$t];
         }
+        public static function foreanos($id){
+          $divisiones=DivisionProducto::where('f_producto',$id)->get();
+          foreach ($divisiones as $div) {
+            if(DetalleTransacion::where('f_producto',$div->id)->count()>0){
+              return true;
+            }else{
+              return false;
+            }
+          }
+        }
       }

@@ -6,12 +6,15 @@
   @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Caja<small>Nueva</small></h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>Caja
+              <small class="label-white badge blue ">Nueva</small>
+          </h3>
+        </center>
       </div>
-      @include('Cajas.Formularios.form')
     </div>
+    @include('Cajas.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

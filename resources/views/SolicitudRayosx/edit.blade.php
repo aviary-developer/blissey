@@ -17,7 +17,7 @@
         <input type="hidden" name="evaluar" value=false>
         <input type="hidden" name="idRadiografia" value={{$solicitud->f_rayox}}>
         <div class="x_content">
-          <div class="col-md-7 col-xs-12">
+          <div class="col-md-12 col-xs-12">
             <div class="x_content">
               <div id="alerts"></div>
               <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
@@ -79,11 +79,6 @@
                 </div>
 
                 <div class="btn-group">
-                  <span class="btn" title=""><i class="fa fa-picture-o"></i></span>
-                  <input type="file" name="rayox" id="idRadiografia" accept="image/*"/>
-                </div>
-
-                <div class="btn-group">
                   <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
                   <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
                 </div>
@@ -96,19 +91,6 @@
               <div class="ln_solid"></div>
             </div>
         </div>
-        <div class="col-md-5 col-xs-12">
-          <div class="">
-            <center>
-              <output id="listRadiografia" style="height:400px">
-                @if ($create)
-                  <img src={{asset(Storage::url('noImgen.jpg'))}} style="height: 300px; width: 300px; object-fit: scale-down">
-                @else
-                  <img src={{asset(Storage::url($detallesResultado->rayox))}} style="height: 300px; width: 300px; object-fit: scale-down">
-                @endif
-              </output>
-            </center>
-          </div>
-        </div>
         </div>
   </div>
   <div class="clearfix"></div>
@@ -119,6 +101,8 @@
   </center>
 </div>
   {!!Form::close()!!}
+</div>
+</div>
   <script>
   function radiografia(evt){
     var files = evt.target.files;

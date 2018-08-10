@@ -561,7 +561,6 @@ $("#guardarUnidadModal").on('click', async function (e) {
   rellenarUnidad();
   $("#nombreUnidadModal").val("");
 });
-
 function rellenarUnidad() {
   var unidad= $("#v_valor");
   var ruta = "/blissey/public/llenarUnidad";
@@ -618,3 +617,66 @@ $("#guardarComponenteModal").on('click', async function (e) {
   });
   $("#nombreComponenteModal").val("");
 });
+$("#guardarProveedorModal").on('click', async function (e) {
+  e.preventDefault();
+  var v_nombre = $("#nombreProveedorModal").val();
+  var v_correo = $("#correoProveedorModal").val();
+  var v_telefono = $("#telefonoProveedorModal").val();
+
+  var token = $("#tokenProveedorModal").val();
+
+  await $.ajax({
+    url: "/blissey/public/ingresoProveedor",
+    headers: { 'X-CSRF-TOKEN': token },
+    type: 'POST',
+    data: {
+      nombre: v_nombre,
+      correo: v_correo,
+      telefono: v_telefono,
+    },
+    success: function () {
+      $(".modal").modal('hide');
+      swal({
+        title: '¡Proveedor registrado!',
+        text: 'Cargando información',
+        timer: 3000,
+        onOpen: function () {
+          swal.showLoading()
+        }
+      }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+          }
+        }
+      );
+    },
+    error: function(data){
+      if (data.status === 422 ) {
+        var errors = $.parseJSON(data.responseText);
+        $.each(errors, function (index, value) {
+          new PNotify({
+            title: 'Error!',
+            text: value,
+            type: 'error',
+            styling: 'bootstrap3'
+          });
+        });
+      }
+    }
+  });
+  rellenarProveedor();
+  $("#nombreProveedorModal").val("");
+  $("#correoProveedorModal").val("");
+  $("#telefonoProveedorModal").val("");
+});
+function rellenarProveedor() {
+  var proveedor= $("#f_proveedor");
+  var ruta = "/blissey/public/llenarProveedor";
+  $.get(ruta, function (res) {
+    proveedor.empty();
+    $(res).each(function (key, value) {
+      proveedor.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+    });
+  });
+}

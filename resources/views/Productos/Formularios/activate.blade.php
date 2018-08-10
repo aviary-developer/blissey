@@ -9,9 +9,18 @@
   <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$producto->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
+  @php
+    $cuenta=App\Transacion::foreanos($producto->id);
+  @endphp
+  @if ($cuenta>0)
+    <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No se puede eliminar">
+      <i class="fa fa-warning"></i>
+    </button>
+  @else
   <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$producto->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
+@endif
 @else
     @if (!$producto->estado)
       @php
@@ -32,14 +41,18 @@
             <li>
               <a href={!! asset('/productos/'.$producto->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
             </li>
-            <li>
               @if ($producto->estado)
-                <a href="#" onclick={!! "'baja(".$producto->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+                <li>
+                  <a href="#" onclick={!! "'baja(".$producto->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+                </li>
               @else
-                <a href="#" onclick={!! "'alta(".$producto->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
-                <a href="#" onclick={!! "'eliminar(".$producto->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+                <li>
+                  <a href="#" onclick={!! "'alta(".$producto->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                </li>
+                <li>
+                  <a href="#" onclick={!! "'eliminar(".$producto->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>  
+                </li>
               @endif
-            </li>
             <li>
               <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
             </li>

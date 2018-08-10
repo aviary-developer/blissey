@@ -22,7 +22,6 @@
   </button>
   @endif
 @else
-  <div class="btn-group">
     @if (!$unidad->estado)
       @php
         $regreso = "?estado=0";
@@ -32,28 +31,35 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/unidades'.$regreso)!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-arrow-left"></i> Atras
-    </a>
-    <a href={!! asset('/unidades/'.$unidad->id.'/edit')!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-edit"></i> Editar
-    </a>
-    @if ($unidad->estado)
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$unidad->id.");'" !!}>
-        <i class="fa fa-trash"></i> Papelera
-      </button>
-    @else
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$unidad->id.");'" !!}/>
-        <i class="fa fa-check"></i> Restaurar
-      </button>
-      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$unidad->id.");'" !!}/>
-        <i class="fa fa-remove"></i> Eliminar
-      </button>
-    @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
-      <i class="fa fa-question"></i> Ayuda
-    </a>
-  </div>
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href={!! asset('/unidades'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+            </li>
+            <li>
+              <a href={!! asset('/unidades/'.$unidad->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
+            </li>
+              @if ($unidad->estado)
+                <li>
+                <a href="#" onclick={!! "'baja(".$unidad->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+              </li>
+              @else
+                <li>
+                  <a href="#" onclick={!! "'alta(".$unidad->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                </li>
+                <li>
+                  <a href="#" onclick={!! "'eliminar(".$unidad->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>  
+                </li>
+              @endif
+            <li>
+              <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 @endif
 {!!Form::close()!!}
 <script type="text/javascript">
@@ -102,11 +108,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyUnidad/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Eliminado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -135,11 +136,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateUnidad/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'

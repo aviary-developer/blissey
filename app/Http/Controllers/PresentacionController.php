@@ -119,10 +119,18 @@ class PresentacionController extends Controller
      */
     public function destroy($id)
     {
-      $presentaciones = Presentacion::findOrFail($id);
-      $presentaciones->delete();
-      Bitacora::bitacora('destroy','presentacions','presentaciones',$id);
-      return redirect('/presentaciones?estado=0');
+      DB::beginTransaction();
+      try {
+        $presentaciones = Presentacion::findOrFail($id);
+        $presentaciones->delete();
+        Bitacora::bitacora('destroy','presentacions','presentaciones',$id);
+        DB::commit();
+        return redirect('/presentaciones?estado=0')->with('mensaje','¡Eliminado!');
+      } catch (\Exception $e) {
+        dB::rollback();
+        return redirect('/presentaciones?estado=0')->with('error','¡No se puede eliminar!');
+      }
+
     }
 
     public function desactivate($id){
