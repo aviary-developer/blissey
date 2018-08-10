@@ -580,7 +580,7 @@ class SolicitudExamenController extends Controller
       else{
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
-    $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',2)->where('f_examen','=',$idExamen)->first();
+    $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
     $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->distinct()->get(['f_seccion']);;
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
     $contador=0;
@@ -678,7 +678,12 @@ class SolicitudExamenController extends Controller
 
   public function impresionExamenesPorPaciente($paciente,$bandera)
   {
+
+    if($bandera==0){//EXAMENES ENTREGADOS
+        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_paciente','=',$paciente)->orderBy('estado')->get();
+    }else{
     $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$paciente)->orderBy('estado')->get();
+  }
     if($bandera){
         foreach ($solicitudes as $solicitud) {
         $cambioEstadoSolicitud=SolicitudExamen::find($solicitud->id);

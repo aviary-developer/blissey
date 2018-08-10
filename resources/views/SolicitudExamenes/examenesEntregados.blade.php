@@ -131,7 +131,7 @@
 	<input type="hidden" id="tokenExaPac" name="token" value="<?php echo csrf_token(); ?>">
 	<script type="text/javascript">
 	function imprimirExaEvaPacie(solicitudes,paciente){
-		var bandera=true;
+		var bandera=0;
 		var url="{{URL::to('/impresionExamenesPorPaciente')}}"+"/"+paciente+"/"+bandera;
 		window.open(url,'_blank');
 		token=$("#tokenExaPac").val();

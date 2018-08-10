@@ -13,9 +13,15 @@
     		<div><span style="float:right"> Edad: <strong><u>{{$solicitud->paciente->fechaNacimiento->age}} años</u></strong></span><span>Paciente: <strong><u>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</u></strong></span></div>
       	<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
     		<div class="clearfix"></div>
-    	<center><p><big><i>RESULTADO:</i></big><p></center>
         <div class="row">
+          @php
+						$cantidadSecciones=count($secciones[$key]);
+					@endphp
             @foreach ($secciones[$key] as $keySec => $seccion)
+              @if($cantidadSecciones==1)
+                <div class="col-xs-3">
+                </div>
+              @endif
               @if($keySec%2==0)
     						<div class="row">
     						@endif
@@ -69,14 +75,21 @@
                 @endif
                 @endforeach
                 @if($resultados[$key]->observacion!=null)
-              <div id="divObservacion" style="display:block;">
-                <div class="form-group">
-                  <center><label class="control-label col-md-2 col-sm-2 col-xs-12">Observaciones:</label></center>
-                  <div class="col-md-9 col-sm-9 col-xs-9">
-                  <p>{{$resultados[$key]->observacion}}</p>
-                  </div>
-      					</div>
-      				</div>
+                  <br>
+                  <div class="col-xs-12">
+                  <ul class="list-unstyled timeline widget">
+                        <li>
+                          <div class="block">
+                            <div class="block_content">
+                              <h2 class="title">
+                                                <a>OBSERVACIONES:</a>
+                                            </h2>
+                              <p class="excerpt">{{$resultados[$key]->observacion}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
       			@endif
       			<div class="col-md-12 col-sm-12 col-12">
       				<center>
