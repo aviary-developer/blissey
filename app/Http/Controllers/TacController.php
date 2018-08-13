@@ -9,11 +9,11 @@ use Response;
 use Carbon\Carbon;
 use App\CategoriaServicio;
 use App\Servicio;
-use App\Rayosx;
+use App\Tac;
 use Illuminate\Http\Request;
-use App\Http\Requests\RayoxRequest;
+use App\Http\Requests\TacRequest;
 
-class RayosxController extends Controller
+class TacController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,11 +27,11 @@ class RayosxController extends Controller
       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
       $pagina--;
       $pagina *= 10;
-      $rayosx = Rayosx::buscar($nombre,$estado);
-      $activos = Rayosx::where('estado',true)->count();
-      $inactivos = Rayosx::where('estado',false)->count();
-      return view('RayosX.index',compact(
-        'rayosx',
+      $tacs = Tac::buscar($nombre,$estado);
+      $activos = Tac::where('estado',true)->count();
+      $inactivos = Tac::where('estado',false)->count();
+      return view('Tac.index',compact(
+        'tacs',
         'estado',
         'nombre',
         'activos',
@@ -47,7 +47,7 @@ class RayosxController extends Controller
      */
     public function create()
     {
-        return view('RayosX.create');
+        return view('Tac.create');
     }
 
     /**
@@ -56,19 +56,19 @@ class RayosxController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RayoxRequest $request)
+    public function store(Request $request)
     {
       DB::beginTransaction();
       try{
-        $rayoxNuevo = new Rayosx;
-        $rayoxNuevo->nombre=$request->nombre;
-        $rayoxNuevo->save();
+        $tacNuevo = new Tac;
+        $tacNuevo->nombre=$request->nombre;
+        $tacNuevo->save();
         //Crear una categoria de servicio asociada a los examen
-        $categoria_existe = CategoriaServicio::where('nombre','Rayos X')->first();
+        $categoria_existe = CategoriaServicio::where('nombre','TAC')->first();
 
         if($categoria_existe==null){
           $categoria_existe = new CategoriaServicio;
-          $categoria_existe->nombre = "Rayos X";
+          $categoria_existe->nombre = "TAC";
           $categoria_existe->save();
         }
 
@@ -76,91 +76,91 @@ class RayosxController extends Controller
         $servicio->nombre = $request->nombre;
         $servicio->f_categoria = $categoria_existe->id;
         $servicio->precio = $request->precio;
-        $servicio->f_rayox = $rayoxNuevo->id;
+        $servicio->f_tac = $tacNuevo->id;
         $servicio->save();
       }catch(\Exception $e){
         DB::rollback();
         return $e;
-        return redirect('/rayosx')->with('mensaje', $e);
+        return redirect('/tacs')->with('mensaje', $e);
       }
       DB::commit();
-      Bitacora::bitacora('store','rayosxes','rayosx',$rayoxNuevo->id);
-      return redirect('/rayosx')->with('mensaje', '¡Guardado!');
+      Bitacora::bitacora('store','tacs','tacs',$tacNuevo->id);
+      return redirect('/tacs')->with('mensaje', '¡Guardado!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Rayosx  $rayosx
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-      $rayox = Rayosx::find($id);
-      return view('RayosX.show',compact('rayox'));
+      $tac = Tac::find($id);
+      return view('Tac.show',compact('tac'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Rayosx  $rayosx
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-      $servicio =Servicio::where('f_rayox',$id)->first();
+      $servicio =Servicio::where('f_tac',$id)->first();
       $precio=$servicio->precio;
-      $rayox = Rayosx::find($id);
-      return view('RayosX.edit',compact('rayox','precio'));
+      $tac = Tac::find($id);
+      return view('Tac.edit',compact('tac','precio'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Rayosx  $rayosx
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RayoxRequest $request, $id)
+    public function update(Request $request, $id)
     {
-      $servicio =Servicio::where('f_rayox',$id)->first();
+      $servicio =Servicio::where('f_tac',$id)->first();
       $servicio->precio=$request->precio;
       $servicio->save();
-      $rayosx = Rayosx::find($id);
-      $rayosx->fill($request->all());
-      $rayosx->save();
-      if($rayosx->estado)
+      $tac = Tac::find($id);
+      $tac->fill($request->all());
+      $tac->save();
+      if($tac->estado)
       {
-        return redirect('/rayosx')->with('mensaje', '¡Editado!');
+        return redirect('/tacs')->with('mensaje', '¡Editado!');
       }
       else{
-        return redirect('/rayosx?estado=0')->with('mensaje', '¡Editado!');
+        return redirect('/tacs?estado=0')->with('mensaje', '¡Editado!');
       }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Rayosx  $rayosx
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-      $rayosx = Rayosx::findOrFail($id);
-      $rayosx->delete();
-      return redirect('/rayosx?estado=0');
+      $tac = Tac::findOrFail($id);
+      $tac->delete();
+      return redirect('/tacs?estado=0');
     }
     public function desactivate($id){
-      $rayosx = Rayosx::find($id);
-      $rayosx->estado = false;
-      $rayosx->save();
-      return Redirect::to('/rayosx');
+      $tac = Tac::find($id);
+      $tac->estado = false;
+      $tac->save();
+      return Redirect::to('/tacs');
     }
 
     public function activate($id){
-      $rayosx = Rayosx::find($id);
-      $rayosx->estado = true;
-      $rayosx->save();
-      return Redirect::to('/rayosx?estado=0');
+      $tac = Tac::find($id);
+      $tac->estado = true;
+      $tac->save();
+      return Redirect::to('/tacs?estado=0');
     }
 }

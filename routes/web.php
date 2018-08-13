@@ -305,6 +305,11 @@ Route::match(['get','post'],'/desactivateRayosx/{id}','RayosxController@desactiv
 Route::match(['get','post'],'/activateRayosx/{id}','RayosxController@activate');
 Route::match(['get','post'],'/destroyRayosx/{id}','RayosxController@destroy');
 
+Route::resource('/tacs','TacController');
+Route::match(['get','post'],'/desactivateTac/{id}','TacController@desactivate');
+Route::match(['get','post'],'/activateTac/{id}','TacController@activate');
+Route::match(['get','post'],'/destroyTac/{id}','TacController@destroy');
+
 Route::get('/password/email','Auth\ForgotPasswordController@form');
 
 Route::resource('respaldos', 'RespaldoController');

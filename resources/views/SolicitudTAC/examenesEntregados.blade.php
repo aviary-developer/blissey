@@ -7,7 +7,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Radiografías entregadas
+          TAC entregadas
         </h2>
         <div class="clearfix"></div>
       </div>
@@ -27,7 +27,7 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href={{asset("/examenesEntregados")}}>Por Examen</a>
+                  <li><a href={{asset("/examenesEntregados")}}>Por TAC</a>
                   </li>
                   <li><a href={{asset("/examenesEntregados?vista=paciente")}}>Por Paciente</a>
                   </li>
@@ -58,7 +58,7 @@
                     <div class="panel-body">
                       <table class="table">
                         <thead>
-                          <th>Examen</th>
+                          <th>TAC</th>
 													<th>Fecha de evaluación</th>
 													<th>Opciones</th>
                         </thead>
@@ -66,10 +66,10 @@
                           @foreach($solicitudes as $solicitud)
                             @if($solicitud->f_paciente == $paciente->f_paciente)
                               <tr>
-                                <td>{{$solicitud->rayox->nombre}}</td>
+                                <td>{{$solicitud->tac->nombre}}</td>
 																<td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
 																<td>
-																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_tac)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
 															  </a><td>
                               </tr>
@@ -88,7 +88,7 @@
                 <div class="panel">
                   <a class="panel-heading collapsed" role="tab" id={{"H".$k}} data-toggle="collapse" data-parent="#accordion" href={{"#C".$k}}        aria-expanded="false" aria-controls={{"C".$k}}>
                     <h4 class="panel-title">
-                      {{$examen->nombreRayox($examen->f_rayox)}} <small><i class="fa fa-chevron-down"></i></small>
+                      {{$examen->nombreTac($examen->f_tac)}} <small><i class="fa fa-chevron-down"></i></small>
                     </h4>
                   </a>
                   <div id={{"C".$k}} class="panel-collapse collapse" role="tabpanel" aria-labelledby={{"H".$k}}>
@@ -106,7 +106,7 @@
                                   {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                                 </td>
 																<td>
-																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
+																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_tac)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
 															  </a><td>
                               </tr>
