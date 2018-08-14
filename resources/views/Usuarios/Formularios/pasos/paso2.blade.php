@@ -62,9 +62,14 @@
               @else
                 <option value="Enfermería">Enfermería</option>
               @endif
+              @if($tipoUsuario == "TAC")
+                <option value="TAC" selected>TAC</option>
+              @else
+                <option value="TAC">TAC</option>
+              @endif
             @else
-                
-              @if($create)  
+
+              @if($create)
                 <option value="Gerencia">Gerencia</option>
                 <option value="Médico">Médico</option>
                 <option value="Recepción">Recepción</option>
@@ -73,6 +78,7 @@
                 <option value="Rayos X">Rayos X</option>
                 <option value="Farmacia">Farmacia</option>
                 <option value="Enfermería">Enfermería</option>
+                <option value="TAC">TAC</option>
               @else
                 @if($usuarios->tipoUsuario == "Gerencia")
                   <option value="Gerencia" selected>Gerencia</option>
@@ -114,6 +120,11 @@
                 @else
                   <option value="Enfermería">Enfermería</option>
                 @endif
+                @if($usuarios->tipoUsuario == "TAC")
+                  <option value="TAC" selected>TAC</option>
+                @else
+                  <option value="TAC">TAC</option>
+                @endif
               @endif
             @endif
           </select>
@@ -136,7 +147,7 @@
             </div>
             <input type="hidden" name="administrador" id="administrador" value="0">
           @endif
-        @else    
+        @else
           <div id="radioBtn" class="btn-group">
             <a class="btn btn-primary btn-sm notActive" data-toggle="administrador" data-title="1">Administrador</a>
             <a class="btn btn-primary btn-sm active" data-toggle="administrador" data-title="0">Ninguno</a>

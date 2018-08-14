@@ -8,14 +8,8 @@ class Proveedor extends Model
 {
     protected $fillable=['nombre','correo','telefono','estado'];
 
-    public static function buscar($nombre, $estado){
-      return Proveedor::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
-    }
-
-    public function scopeNombre($query, $nombre){
-      if(trim($nombre)!=""){
-        $query->where('nombre', 'like','%'.$nombre.'%');
-      }
+    public static function buscar($estado){
+      return Proveedor::estado($estado)->orderBy('nombre')->get();
     }
 
     public function scopeEstado($query, $estado){

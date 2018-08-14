@@ -6,22 +6,18 @@
   @endphp
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
-    <div class="x_title">
-      <h2>
-        Proveedor
-        <small>
-          {{ $proveedor->nombre.' '.$proveedor->apellido }}
-        </small>
-      </h2>
-      <div class="clearfix"></div>
+    <div class="row bg-blue">
+      <center>
+        <h3>Proveedor
+            <small class="label-white badge blue ">{{ $proveedor->nombre}}</small>
+        </h3>
+      </center>
     </div>
+    @include('Proveedores.Formularios.activate')
+</div>
+<div class="x_panel">
     <div class="x_content">
       <div class="row">
-        <div class="col-md-6 col-xs-12">
-          @include('Proveedores.Formularios.activate')
-        </div>
-      </div>
-      <br>
       {{-- Incio de tab --}}
       <div class="" role="tabpanel" data-example-id="togglable-tabs">
         <div class="col-xs-2">
@@ -157,5 +153,6 @@
         </div>
     </div>
   </div>
+</div>
 </div>
 @endsection

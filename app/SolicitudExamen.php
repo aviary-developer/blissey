@@ -29,6 +29,10 @@ class SolicitudExamen extends Model
         $examen = Rayosx::find($id);
         return $examen->nombre;
     }
+    public function nombreTac($id){
+        $examen = Tac::find($id);
+        return $examen->nombre;
+    }
     public function paciente(){
       return $this->belongsTo('App\Paciente','f_paciente');
     }
@@ -43,6 +47,9 @@ class SolicitudExamen extends Model
     }
     public function rayox(){
       return $this->belongsTo('App\Rayosx','f_rayox');
+    }
+    public function tac(){
+      return $this->belongsTo('App\Tac','f_tac');
     }
     public function muestra(){
       return $this->belongsTo('App\Examen','tipoMuestra');

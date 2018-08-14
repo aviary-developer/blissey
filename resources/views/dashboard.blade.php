@@ -28,7 +28,7 @@
   <!-- JQVMap -->
   {!!Html::style('assets/jqvmap/dist/jqvmap.min.css')!!}
   <!-- bootstrap-daterangepicker -->
-  {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!} 
+  {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!}
   <!-- DataTable -->
   {!!Html::style('assets/data-table/datatables.css')!!}
   {{--  {!!Html::style('assets/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')!!}
@@ -155,6 +155,17 @@
                               <ul class="nav child_menu">
                                 <li>
                                   <a href={{asset( '/solicitudex?tipo=rayosx')}}>Solicitudes</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <a>
+                                <i class="fa fa-desktop"></i>Departamento de TAC
+                                <span class="fa fa-chevron-down"></span>
+                              </a>
+                              <ul class="nav child_menu">
+                                <li>
+                                  <a href={{asset( '/solicitudex?tipo=tac')}}>Solicitudes</a>
                                 </li>
                               </ul>
                             </li>
@@ -363,6 +374,27 @@
                             <ul class="nav child_menu">
                               <li>
                                 <a href={{asset( '/rayosx')}}>Rayos X</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/solicitudex')}}>Solicitudes</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluadas</a>
+                              </li>
+                              <li>
+                                <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregadas</a>
+                              </li>
+                            </ul>
+                          </li>
+                        @elseif (Auth::user()->tipoUsuario == "TAC")
+                          <li>
+                            <a>
+                              <i class="fa fa-desktop"></i>Departamento de TAC
+                              <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                              <li>
+                                <a href={{asset( '/tacs')}}>TAC</a>
                               </li>
                               <li>
                                 <a href={{asset( '/solicitudex')}}>Solicitudes</a>
@@ -804,12 +836,12 @@
     <!-- bootstrap-daterangepicker -->
     {!!Html::script('assets/moment/min/moment.min.js')!!} {!!Html::script('assets/bootstrap-daterangepicker/daterangepicker.js')!!}
     {!!Html::script('assets/ion.rangeSlider/js/ion.rangeSlider.min.js')!!} {!!Html::script('assets/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
-    <!-- DataTable --> 
-    {!!Html::script('assets/data-table/datatables.js')!!} 
+    <!-- DataTable -->
+    {!!Html::script('assets/data-table/datatables.js')!!}
     {{--  {!!Html::script('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}
-    {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!} 
+    {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!}
     {!!Html::script('assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')!!}
-    {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!} 
+    {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!}
     {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
     {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}  --}}
 

@@ -30,8 +30,8 @@ class TransaccionController extends Controller
       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
       $pagina--;
       $pagina *= 10;
-    $tipo= $request->tipo;
-    $buscar=$request->buscar;
+      $tipo= $request->tipo;
+      $buscar=$request->buscar;
       $transacciones=Transacion::buscar($buscar,$tipo);
       return view('transacciones.index',compact('transacciones','tipo','buscar','pagina'));
     }

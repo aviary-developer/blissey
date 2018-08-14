@@ -1,31 +1,20 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/proveedores/'.$proveedor->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+  <a href={!! asset('/tacs/'.$tac->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+  <a href={!! asset('/tacs/'.$tac->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
   </a>
-  <a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Visitadores">
-    <i class="fa fa-users"></i>
-  </a>
-  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$proveedor->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$tac->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
-  @php
-    $cuenta=App\Proveedor::foreanos($proveedor->id);
-  @endphp
-  @if ($cuenta>0)
-    <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No se puede eliminar">
-      <i class="fa fa-warning"></i>
-    </button>
-  @else
-  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$proveedor->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={!! "'eliminar(".$tac->id.");'" !!}/>
     <i class="fa fa-remove"></i>
   </button>
-  @endif
 @else
-    @if (!$proveedor->estado)
+  <div class="btn-group">
+    @if (!$tac->estado)
       @php
         $regreso = "?estado=0";
       @endphp
@@ -34,35 +23,28 @@
         $regreso = '';
       @endphp
     @endif
-    <div class="row">
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href={!! asset('/proveedores'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
-            </li>
-            <li>
-              <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
-            </li>
-              @if ($proveedor->estado)
-                <li>
-                <a href="#" onclick={!! "'baja(".$proveedor->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
-              </li>
-              @else
-                <li>
-                  <a href="#" onclick={!! "'alta(".$proveedor->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
-                </li>
-                <li>
-                  <a href="#" onclick={!! "'eliminar(".$proveedor->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
-                </li>
-              @endif
-            <li>
-              <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    <a href={!! asset('/tacs'.$regreso)!!} class="btn btn-dark btn-sm">
+      <i class="fa fa-arrow-left"></i> Atras
+    </a>
+    <a href={!! asset('/tacs/'.$tac->id.'/edit')!!} class="btn btn-dark btn-sm">
+      <i class="fa fa-edit"></i> Editar
+    </a>
+    @if ($tac->estado)
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$tac->id.");'" !!}>
+        <i class="fa fa-trash"></i> Papelera
+      </button>
+    @else
+      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$tac->id.");'" !!}/>
+        <i class="fa fa-check"></i> Restaurar
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$tac->id.");'" !!}/>
+        <i class="fa fa-remove"></i> Eliminar
+      </button>
+    @endif
+    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
+      <i class="fa fa-question"></i> Ayuda
+    </a>
+  </div>
 @endif
 {!!Form::close()!!}
 <script type="text/javascript">
@@ -80,8 +62,13 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateProveedor/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateTac/'+id);
       $('#formulario').submit();
+      swal(
+        '¡Restaurado!',
+        'Acción realizada satisfactorimente',
+        'success'
+      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -109,8 +96,13 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProveedor/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyTac/'+id);
       $('#formulario').submit();
+      swal(
+        '¡Eliminado!',
+        'Acción realizada satisfactorimente',
+        'success'
+      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -137,8 +129,13 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateProveedor/'+id);
+      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateTac/'+id);
       $('#formulario').submit();
+      swal(
+        '¡Desactivado!',
+        'Acción realizada satisfactorimente',
+        'success'
+      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
