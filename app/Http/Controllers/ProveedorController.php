@@ -10,6 +10,7 @@ use App\Http\Requests\ProveedoresRequest;
 use Validator;
 use App\Bitacora;
 use Response;
+use DB;
 
 class ProveedorController extends Controller
 {
@@ -24,14 +25,12 @@ class ProveedorController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
-      $proveedores = Proveedor::buscar($nombre,$estado);
+      $proveedores = Proveedor::buscar($estado);
       $activos = Proveedor::where('estado',true)->count();
       $inactivos = Proveedor::where('estado',false)->count();
       return view('Proveedores.index',compact(
         'proveedores',
         'estado',
-        'nombre',
         'activos',
         'inactivos',
         'pagina'
@@ -187,23 +186,33 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-      $proveedores = Proveedor::findOrFail($id);
-      $proveedores->delete();
-      return redirect('/proveedores?estado=0');
+      try {
+        $proveedores = Proveedor::findOrFail($id);
+        $proveedores->delete();
+        return redirect('/proveedores?estado=0');
+        Bitacora::bitacora('destroy','proveedors','proveedores',$id);
+        DB::commit();
+        return redirect('/proveedores?estado=0')->with('mensaje','¡Eliminado!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('/proveedores?estado=0')->with('error','¡No se puede eliminar!');
+      }
     }
 
     public function desactivate($id){
       $proveedores= Proveedor::find($id);
       $proveedores->estado = false;
       $proveedores->save();
-      return Redirect::to('/proveedores');
+      Bitacora::bitacora('desactivate','proveedors','proveedores',$id);
+      return Redirect::to('/proveedores')->with('mensaje','¡Desactivado!');
     }
 
     public function activate($id){
       $proveedores = Proveedor::find($id);
       $proveedores->estado = true;
       $proveedores->save();
-      return Redirect::to('/proveedores?estado=0');
+      Bitacora::bitacora('activate','proveedors','proveedores',$id);
+      return Redirect::to('/proveedores?estado=0')->with('mensaje','¡Restaurado!');
     }
 
     public function existeNombre($nombre){

@@ -6,72 +6,131 @@
   @endphp
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>
-          @if($tipo==0)Pedidos
-            <small>Por confirmar</small>
-          @endif
-          @if($tipo==1)Pedidos
-            <small>Confirmados</small>
-          @endif
-          @if($tipo==2)Ventas
-            <small>Realizadas</small>
-          @endif
-          @if($tipo==3)Ventas
-            <small>Anuladas</small>
-          @endif
-        </h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>
+            @if($tipo==0)Pedidos
+              <small class="label-white badge blue ">Por confirmar</small>
+            @endif
+            @if($tipo==1)Pedidos
+              <small class="label-white badge green ">Confirmados</small>
+            @endif
+            @if($tipo==2)Ventas
+              <small class="label-white badge green ">Realizadas</small>
+            @endif
+            @if($tipo==3)Ventas
+              <small class="label-white badge red ">Anuladas</small>
+            @endif
+          </h3>
+        </center>
       </div>
+      <div class="row">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              @if($tipo==0)
+              <li>
+                <a href={!! asset('/transacciones/create?tipo='.$tipo) !!}><i class="fa fa2 fa-plus"></i> Nuevo</a>
+              </li>
+              <li>
+                <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa2 fa-eye"></i> Ver
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href={!! asset('/transacciones?tipo=1') !!}>
+                        Confirmados
+                        <span class="label label-success">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+              </li>
+              @endif
+              @if ($tipo==1)
+                <li>
+                  <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
+                </li>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa2 fa-eye"></i> Ver
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href={!! asset('/transacciones?tipo=0') !!}>
+                          Por confirmar
+                          <span class="label label-info">{{ App\Transacion::where('tipo',0)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+                </li>
+              @endif
+              @if ($tipo==2)
+                <li>
+                  <a href={!! asset('/transacciones/create?tipo=2') !!}><i class="fa fa2 fa-plus"></i> Nuevo</a>
+                </li>
+                <li>
+                  <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
+                </li>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa2 fa-eye"></i> Ver
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href={!! asset('/transacciones?tipo=3') !!}>
+                          Anuladas
+                          <span class="label label-danger">{{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+                </li>
+              @endif
+              @if ($tipo==3)
+                <li>
+                  <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
+                </li>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa2 fa-eye"></i> Ver
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href={!! asset('/transacciones?tipo=2') !!}>
+                          Realizadas
+                          <span class="label label-success">{{ App\Transacion::where('tipo',2)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+                </li>
+              @endif
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="x_panel">
       <div class="x_content">
         <div class="row">
-          <div class="col-md-5 col-xs-12">
-            <div class="btn-group">
-              @if($tipo==0)
-                <a href={!! asset('/transacciones/create?tipo='.$tipo) !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/transacciones?tipo=1') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Comfirmados
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                </a>
-              @endif
-              @if($tipo==1)
-                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/transacciones?tipo=0') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Por confirmar
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',0)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                </a>
-              @endif
-              @if($tipo==2)
-                <a href={!! asset('/transacciones/create?tipo=2') !!} class="btn btn-dark btn-ms"><i class="fa fa-plus"></i> Nuevo</a>
-                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/transacciones?tipo=3') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Anuladas
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                </a>
-              @endif
-              @if($tipo==3)
-                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/transacciones?tipo=2') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Realizadas
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',2)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
-                </a>
-              @endif
-            </div>
-          </div>
-          <div class="col-md-3 col-xs-12"></div>
-          <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'transacciones.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('buscar',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
-              <input type="hidden" value={{$tipo}} name="tipo">
-            </div>
-            {!! Form::close() !!}
-          </div>
-        </div>
-        <br>
-        <table class="table table-striped">
+        <table class="table table-striped" id="index-table">
           <thead>
             <tr>
               <th>#</th>
@@ -86,7 +145,6 @@
             </tr>
           </thead>
           <tbody>
-            @if (count($transacciones)>0)
               @php
               $correlativo = 1;
               @endphp
@@ -125,21 +183,10 @@
               $correlativo++;
               @endphp
             @endforeach
-          @else
-            <tr>
-              <td colspan="7">
-                <center>
-                  No hay registros que coincidan con los términos de búsqueda indicados
-                </center>
-              </td>
-            </tr>
-          @endif
         </tbody>
       </table>
+    </div>
       <div class="ln_solid"></div>
-      <center>
-        {!! str_replace ('/?', '?', $transacciones->appends(Request::only(['buscar','tipo']))->render ()) !!}
-      </center>
     </div>
   </div>
 </div>

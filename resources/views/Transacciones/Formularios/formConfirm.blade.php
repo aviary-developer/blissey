@@ -52,6 +52,17 @@
         <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
         {!! Form::number('cantidadp',1,['id'=>'cantidadp','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
       </div>
+
+      <label class="col-md-2 col-sm-12 col-xs-12 form-group">IVA incluido</label>
+      <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <span class="button-checkbox col-md-3 col-sm-3 col-xs-12">
+          <button type = "button" class="btn col-md-12 col-sm-12 col-xs-12 btn-sm" data-color="success" onclick="cambio()">
+            <label id="iva">No</label>
+          </button>
+          <input type="checkbox" class="hidden" name="desactivate" value="1">
+          <input type="hidden" name="ivaincluido" value="0" id="ivaincluido">
+        </span>
+      </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
         <a href="#" class="btn btn-default" id="agregar">Agregar</a>
@@ -154,6 +165,16 @@ function cambioEstante(idp){
         $('#nivel'+idp).append("<option value="+i+">"+i+"</option>");
       }
     });
+  }
+}
+function cambio(){
+  texto=$('#iva').text();
+  if(texto=="No"){
+    $('#iva').text("Si");
+    $('#ivaincluido').value("1");
+  }else{
+    $('#iva').text("No");
+    $('#ivaincluido').value("0");
   }
 }
     </script>

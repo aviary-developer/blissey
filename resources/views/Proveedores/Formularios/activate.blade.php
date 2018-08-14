@@ -25,7 +25,6 @@
   </button>
   @endif
 @else
-  <div class="btn-group">
     @if (!$proveedor->estado)
       @php
         $regreso = "?estado=0";
@@ -35,28 +34,35 @@
         $regreso = '';
       @endphp
     @endif
-    <a href={!! asset('/proveedores'.$regreso)!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-arrow-left"></i> Atras
-    </a>
-    <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-edit"></i> Editar
-    </a>
-    @if ($proveedor->estado)
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$proveedor->id.");'" !!}>
-        <i class="fa fa-trash"></i> Papelera
-      </button>
-    @else
-      <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$proveedor->id.");'" !!}/>
-        <i class="fa fa-check"></i> Restaurar
-      </button>
-      <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$proveedor->id.");'" !!}/>
-        <i class="fa fa-remove"></i> Eliminar
-      </button>
-    @endif
-    <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
-      <i class="fa fa-question"></i> Ayuda
-    </a>
-  </div>
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href={!! asset('/proveedores'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+            </li>
+            <li>
+              <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
+            </li>
+              @if ($proveedor->estado)
+                <li>
+                <a href="#" onclick={!! "'baja(".$proveedor->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>
+              </li>
+              @else
+                <li>
+                  <a href="#" onclick={!! "'alta(".$proveedor->id.");'" !!}><i class="fa fa2 fa-check"></i> Restaura</a>
+                </li>
+                <li>
+                  <a href="#" onclick={!! "'eliminar(".$proveedor->id.");'" !!}><i class="fa fa2 fa-remove"></i> Eliminar</a>
+                </li>
+              @endif
+            <li>
+              <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 @endif
 {!!Form::close()!!}
 <script type="text/javascript">
@@ -76,11 +82,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateProveedor/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Restaurado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -110,11 +111,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProveedor/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Eliminado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'
@@ -143,11 +139,6 @@
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateProveedor/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
     }, function (dismiss) {
       // dismiss can be 'cancel', 'overlay',
       // 'close', and 'timer'

@@ -13,15 +13,22 @@
   @endphp
   <div class="col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        @if ($tipo==2)
-          <h2>Venta<small>Nueva</small></h2>
-        @endif
-        @if($tipo==0)
-          <h2>Compra<small>Nuevo pedido</small></h2>
-        @endif
-        <div class="clearfix"></div>
+      <div class="x_panel">
+        <div class="row bg-blue">
+          <center>
+            <h3>
+              @if ($tipo==2)Venta
+                <small class="label-white badge blue ">Nueva</small>
+              @endif
+              @if($tipo==0)Compra
+                <small class="label-white badge blue ">Nuevo pedido</small>
+              @endif
+            </h3>
+          </center>
+        </div>
       </div>
+    </div>
+    <div class="x_panel">
       @include('Transacciones.Formularios.form')
       <input type="hidden"  id="tipoUsuario" value="{{$tipoUsuario}}">
     </div>
