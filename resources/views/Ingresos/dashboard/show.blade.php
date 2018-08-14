@@ -33,9 +33,11 @@
               <b>
                 {{$paciente->apellido}}
               </b>
-              <small>
-                {{ $ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y') }}
-              </small>
+              @if ($ingreso->tipo < 3)
+                <small>
+                  {{ $ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y') }}
+                </small>
+              @endif
             </h4>
           </div>
           <div class="row">
@@ -51,8 +53,8 @@
                 <span class="label label-lg label-success col-xs-2">Con alta</span>
               @endif
             @else
-              @if ($ingreso->estado == 0)
-                <span class="label label-lg label-primary col-xs-2">{{($ingreso->paciente->sexo)?"Activo":"Activa"}}</span>
+              @if ($ingreso->estado == 0 && $ingreso->tipo == 3)
+                <span class="label label-lg label-primary col-xs-2">En consulta</span>
               @else
                 <span class="label label-lg label-success col-xs-2">Con alta</span>
               @endif
@@ -72,7 +74,9 @@
             <button type="button" class="btn btn-dark btn-xs col-xs-12" data-target="#datos_paciente" data-toggle="modal"><i class="fa fa-user"></i> Paciente</button>
           </div>
           <div class="row">
-            <a href={!!asset('/acta/'.$ingreso->id)!!} class="btn btn-xs btn-dark col-xs-12" target="_blank"><i class="fa fa-print"></i> Acta</a>
+            @if ($ingreso->tipo == 0)
+              <a href={!!asset('/acta/'.$ingreso->id)!!} class="btn btn-xs btn-dark col-xs-12" target="_blank"><i class="fa fa-print"></i> Acta</a>
+            @endif
           </div>
         </div>
       </div>
@@ -109,11 +113,13 @@
           </center>
         </div>
         <div class="col-xs-4">
-          <center>
-            <span>
-              {{'Habitación '.$ingreso->habitacion->numero}}
-            </span>
-          </center>
+          @if ($ingreso->habitacion != null)
+            <center>
+              <span>
+                {{'Habitación '.$ingreso->habitacion->numero}}
+              </span>
+            </center>
+          @endif
         </div>
         <div class="col-xs-3">
           <center>
@@ -133,12 +139,16 @@
 
       @include('Ingresos.dashboard.modales.datos_paciente')
       
+    </div>
       
-      @if (Auth::user()->tipoUsuario == "Recepción")
+      @if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)
         @include('Ingresos.dashboard.usuarios.recepcion')
+      @elseif(Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo == 3)
+        @include('Ingresos.dashboard.usuarios.recepcion_consulta')
+      @elseif(Auth::user()->tipoUsuario == "Médico")
+        @include('Ingresos.dashboard.usuarios.medico')
       @endif
 
-    </div>
   </div>
 
   {{-- Token a utilizar por cualquier elemento en esta pantalla --}}

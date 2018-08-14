@@ -43,7 +43,6 @@
                           <span class="label label-success">{{ $activos }}</span>
                         @else
                           Alta médica
-                          <span class="label label-warning">{{ $inactivos }}</span>
                         @endif
                       </a>
                     </li> 
@@ -68,7 +67,7 @@
       <div class="col-xs-4">
         <div class="row">
           <div class="x_panel">
-            Mundo
+            @include('Ingresos.index.panel.consulta')
           </div>
         </div>
       </div>

@@ -327,7 +327,8 @@ $(document).on('ready', function () {
   function chart_fin() {
     var tipo_u = $("#tipo_usuario").val();
     var id = $("#id").val();
-    if (tipo_u == "Recepción") {
+    var consulta = $("#precio_consulta").val();
+    if (tipo_u == "Recepción" && consulta == null) {
       $.ajax({
         type: 'get',
         url: '/blissey/public/chart_financiero',

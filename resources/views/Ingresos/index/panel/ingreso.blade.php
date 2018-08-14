@@ -26,13 +26,16 @@
           @if ($habitacion->camas->count() > 0)
             @foreach ($habitacion->camas as $cama)
               @if ($cama->estado)
+              @php
+                $ingreso = $cama->ingreso->where('estado','<',2)->first();
+              @endphp
                 <tr>
                   <td>
-                    {{$cama->ingreso->expediente.'-PTEHDN-'.$cama->ingreso->fecha_ingreso->format('Y')}}
+                    {{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}
                   </td>
                   <td>
-                    <a href={{asset('/pacientes/'.$cama->ingreso->f_paciente)}}>
-                        {{$cama->ingreso->paciente->apellido.', '.$cama->ingreso->paciente->nombre}}
+                    <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
+                        {{$ingreso->paciente->apellido.', '.$ingreso->paciente->nombre}}
                       </a>
                   </td>
                   <td>
@@ -42,8 +45,8 @@
                       if($ahora->lt($hoy)){
                         $hoy = $hoy->subDays(1);
                       }
-                      $dia_ingreso = $cama->ingreso->fecha_ingreso->hour(7)->minute(0);
-                      if($cama->ingreso->fecha_ingreso->lt($dia_ingreso)){
+                      $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+                      if($ingreso->fecha_ingreso->lt($dia_ingreso)){
                         $dia_ingreso->subDay();
                       }
                       $dias = $dia_ingreso->diffInDays($hoy);
@@ -54,9 +57,6 @@
                     </span>
                   </td>
                   <td>
-                    @php
-                      $ingreso = $cama->ingreso;
-                    @endphp
                     @include('Ingresos.Formularios.desactivate')
                   </td>
                 </tr>

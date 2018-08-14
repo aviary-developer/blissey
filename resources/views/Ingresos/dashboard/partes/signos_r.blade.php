@@ -4,7 +4,7 @@
   </div>
   <div class="col-xs-4">
     <div class="btn-group alignright">
-      @if ($ingreso->estado == 1)  
+      @if ($ingreso->estado == 1 || ($ingreso->tipo == 3 && $ingreso->estado == 0))  
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#signo_m" ><i class="fa fa-plus"></i></button>
       @endif
       <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_signo" id="evaluar_signo"><i class="fa fa-eye"></i></button>

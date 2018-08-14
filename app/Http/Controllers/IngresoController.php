@@ -53,6 +53,9 @@ class IngresoController extends Controller
 
       $habitaciones_ingreso = Habitacion::where('tipo',1)->where('estado',true)->orderBy('numero','asc')->get();
 
+      /**Listado de cola en consulta médica */
+      $cola_consulta = Ingreso::where('estado','<>',2)->where('tipo',3)->orderBy('created_at','asc')->get();
+
       //Variables utiles en la vista
       $estadoOpuesto = ($estado != 2 || $estado == null)?2:0;
       $index = true;
@@ -67,7 +70,8 @@ class IngresoController extends Controller
         'estadoOpuesto',
         'habitaciones_ingreso',
         'medicos',
-        'fecha'
+        'fecha',
+        'cola_consulta'
       ));
     }
 
@@ -172,10 +176,7 @@ class IngresoController extends Controller
     {
       setlocale(LC_ALL,'es');
       $ingreso = Ingreso::find($id);
-      /**Este segmento de codigo es unicamente para que siga funcionando pero a su vez mostrar el neuvo dashboard */
-      if($ingreso->tipo > 2){
-        return $this->dash($id);
-      }
+      
       /**Notas a tener en cuenta para la elaboración de esta pantalla
        * 
        * Tipos de ingreso:
@@ -291,8 +292,13 @@ class IngresoController extends Controller
         $horas = $ingreso->fecha_ingreso->diffInHours($ingreso->fecha_alta);
         $horas_f = $ingreso->fecha_alta->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
       }
+      /**Ultima 24 para consultas */
+      if($ingreso->tipo == 3){
+        $ultima24 = $ingreso->fecha_ingreso->subDays(1);
+        $ultima48 = $hoy->addDays(1);
+      }
       /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
-      if($ingreso->estado > 0){
+      if(($ingreso->estado > 0 && $ingreso->tipo < 3) || $ingreso->tipo == 3){
         $detalle_p = []; //Detalle producto
         $detalle_s = []; //Detalle servicio
         $detalle_l = []; //Detalle laboratorio clínico
@@ -395,7 +401,7 @@ class IngresoController extends Controller
         $count_m = $indice_u;
       }
 
-      if($ingreso->tipo > 0 || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
+      if(($ingreso->tipo > 0 && $ingreso->tipo < 3) || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
         $total_gastos = $this->total_gastos($id);
         $iva = $total_gastos * 0.13;
@@ -509,9 +515,9 @@ class IngresoController extends Controller
     public function destroy($id)
     {
         $ingreso = Ingreso::findOrFail($id);
-        $habitacion = Cama::find($ingreso->f_habitacion);
-        $habitacion->estado = false;
-        $habitacion->save();
+        $cama = Cama::find($ingreso->f_cama);
+        $cama->estado = false;
+        $cama->save();
         $ingreso->delete();
         Bitacora::bitacora('destroy','ingresos','ingresos',$id);
         return redirect('/ingresos');
@@ -680,9 +686,9 @@ class IngresoController extends Controller
           $ingreso->save();
 
           if($ingreso->f_cama != null){
-            $habitacion = Cama::find($ingreso->f_cama);
-            $habitacion->estado = false;
-            $habitacion->save();
+            $cama = Cama::find($ingreso->f_cama);
+            $cama->estado = false;
+            $cama->save();
           }
         }
       }catch(Exception $e){
