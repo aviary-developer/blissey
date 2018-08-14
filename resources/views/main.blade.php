@@ -20,58 +20,6 @@
       </center>
     </div>
   </div>
-  <div class="x_panel">
-    <div class="row">
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count bg-blue-sky">
-        <span class="count_top">
-          <i class="fa fa-money"></i> Ventas diarias
-        </span>
-        <center>
-          <h2 class="count">$ 500</h2>
-        </center>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count bg-blue-sky-2">
-        <span class="count_top">
-          <i class="fa fa-money"></i> Ventas diarias
-        </span>
-        <center>
-          <h2 class="count">$ 500</h2>
-        </center>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count bg-blue">
-        <span class="count_top">
-          <i class="fa fa-money"></i> Ventas diarias
-        </span>
-        <center>
-          <h2 class="count">$ 500</h2>
-        </center>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count bg-blue-2">
-        <span class="count_top">
-          <i class="fa fa-money"></i> Ventas diarias
-        </span>
-        <center>
-          <h2 class="count">$ 500</h2>
-        </center>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count bg-green">
-        <span class="count_top">
-          <i class="fa fa-money"></i> Ventas diarias
-        </span>
-        <center>
-          <h2 class="count">$ 500</h2>
-        </center>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count bg-green-2">
-        <span class="count_top">
-          <i class="fa fa-money"></i> Ventas diarias
-        </span>
-        <center>
-          <h2 class="count">$ 500</h2>
-        </center>
-      </div>
-    </div>
-  </div>
   <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-1">
       <div class="x_panel">

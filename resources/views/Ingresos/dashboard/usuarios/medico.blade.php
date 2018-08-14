@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-xs-6">
       <div class="x_panel">
-        Nueva consulta
+        @include('Ingresos.dashboard.partes.consulta_m')
       </div>
     </div>
     <div class="col-xs-6">

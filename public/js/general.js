@@ -93,3 +93,5 @@ $("#entregar").click(function() {
 });
 
 $("#index-table").DataTable();
+
+$("[data-tooltip='tooltip']").tooltip();

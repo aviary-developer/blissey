@@ -4,7 +4,6 @@ $(document).on("ready", function () {
     $.ajax({
       type: "post",
       url: "/blissey/public/consulta",
-      headers: { 'X-CSRF-TOKEN': $("#tokenTransaccion").val() },
       data: {
         motivo: $("#motivo").val(),
         historia: $("#historia").val(),

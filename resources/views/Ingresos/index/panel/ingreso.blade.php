@@ -68,7 +68,7 @@
                     </b>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-sm btn-success alignright" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}}><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-success alignright" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}} data-tooltip="tooltip" title="Agregar"><i class="fa fa-plus"></i></button>
                   </td>
                 </tr>
               @endif
