@@ -1,13 +1,15 @@
 {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
 @if ($index)
-  @if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)    
-    <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
-      <i class="fa fa-print"></i>
+  <div class="btn-group alignright">
+    @if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)    
+      <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
+        <i class="fa fa-print"></i>
+      </a>
+    @endif
+    <a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-sm btn-info " data-toggle="tooltip" data-placement="top" title="Ver">
+      <i class="fa fa-info-circle"></i>
     </a>
-  @endif
-  <a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
-    <i class="fa fa-info-circle"></i>
-  </a>
+  </div>
 @else
   <div class="btn-group col-xs-6">
     @if ($ingreso->estado > 1)

@@ -31,7 +31,9 @@
               @endphp
                 <tr>
                   <td>
-                    {{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}
+                    <small>
+                      {{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}
+                    </small>
                   </td>
                   <td>
                     <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
@@ -68,7 +70,9 @@
                     </b>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-sm btn-success alignright" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}} data-tooltip="tooltip" title="Agregar"><i class="fa fa-plus"></i></button>
+                    <div class="btn-group alignright">
+                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}} data-tooltip="tooltip" title="Agregar"><i class="fa fa-plus"></i></button>
+                    </div>
                   </td>
                 </tr>
               @endif

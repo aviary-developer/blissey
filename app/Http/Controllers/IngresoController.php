@@ -438,7 +438,11 @@ class IngresoController extends Controller
       if($cambio){
         $dias_x->subDay();
       }
-      
+      /**Proceso para obtener el historial médico de un paciente, estos es exclusivo del usuario médico, pero para evitar problemas en cualquier otro tipo de usuario returnara null */
+      $historial = null;
+      if(Auth::user()->tipoUsuario == "Médico"){
+        $historial = $ingreso->paciente->ingreso;
+      }
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
         'paciente',
@@ -479,7 +483,8 @@ class IngresoController extends Controller
         'total_especialidad',
         'dias_i',
         'dias_a',
-        'dias_x'
+        'dias_x',
+        'historial'
       ));
     }
 

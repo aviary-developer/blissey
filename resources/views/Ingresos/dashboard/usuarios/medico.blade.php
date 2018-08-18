@@ -13,31 +13,37 @@
     </div>
     <div class="col-xs-6">
       <div class="x_panel">
-        Consulta
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6">
-      <div class="x_panel">
-        Signos vitales
-      </div>
-    </div>
-    <div class="col-xs-6">
-      <div class="x_panel">
-        Laboratorio clínico
+        @include('Ingresos.dashboard.partes.historial_m')
+        @include('Ingresos.dashboard.partes.ver_consulta')
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-4">
       <div class="x_panel">
-        Rayos X
+        @include('Ingresos.dashboard.partes.signos_r')
       </div>
     </div>
     <div class="col-xs-4">
       <div class="x_panel">
-        Ultra
+        @include('Ingresos.dashboard.partes.producto_r')
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="x_panel">
+        @include('Ingresos.dashboard.partes.laboratorio_r')
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 30px">
+    <div class="col-xs-4">
+      <div class="x_panel">
+        @include('Ingresos.dashboard.partes.rayos_x_r')
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="x_panel">
+        @include('Ingresos.dashboard.partes.ultra_r')
       </div>
     </div>
     <div class="col-xs-4">

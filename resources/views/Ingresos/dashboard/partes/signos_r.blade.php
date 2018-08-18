@@ -15,7 +15,11 @@
   <input type="hidden" id="sid" value={{$detalle_sv[0]->id}}>
 @endif
 @if ($count_sv24 > 0)    
-  <div class="row" style="height: 100px;">
+  @if (Auth::user()->tipoUsuario == "Médico")
+    <div class="row" style="height: 184px;">
+  @else
+    <div class="row" style="height: 100px;">
+  @endif
     @foreach($detalle_sv as $k => $signo)
       @php
         if($k != 0){
@@ -138,6 +142,98 @@
           </span>
         @endif
       </div>
+      @if (Auth::user()->tipoUsuario == "Médico")
+        <div class="col-sm-7 col-xs-7">
+          Glucosa:
+        </div>
+        <div class="col-sm-5 col-xs-5">
+          @if($signo->glucosa == null)
+            <span class="label label-lg label-gray col-xs-12">
+              Vacio
+            </span>
+          @elseif ($signo->glucosa >= 70 && $signo->glucosa <= 110)
+            <span class="label label-lg label-success col-xs-12">
+              {{$signo->glucosa.' mg / dl'}}
+            </span>
+          @else
+            <span class="label label-lg label-danger col-xs-12">
+              {{$signo->glucosa.' mg / dl'}}
+            </span>
+          @endif
+        </div>
+        <div class="col-sm-7 col-xs-7">
+          Peso:
+        </div>
+        <div class="col-sm-5 col-xs-5">
+          @if ($signo->peso == null)
+            <span class="label label-lg label-gray col-xs-12">
+              Vacio
+            </span>
+          @else
+            <span class="label label-lg label-white col-xs-12">
+              {{$signo->peso.(($signo->medida)?' Kg':' lb')}}
+            </span>
+          @endif
+        </div>
+        <div class="col-sm-7 col-xs-7">
+          Altura:
+        </div>
+        <div class="col-sm-5 col-xs-5">
+          @if ($signo->altura == null)
+            <span class="label label-lg label-gray col-xs-12">
+              Vacio
+            </span>
+          @else
+            <span class="label label-lg label-white col-xs-12">
+              {{$signo->altura.' cm'}}
+            </span>
+          @endif
+        </div>
+        <div class="col-sm-7 col-xs-7">
+          Índice de Masa Corporal:
+        </div>
+        @php
+          $peso = number_format($signo->peso * (($signo->medida) ? 1 : 0.453592),2,'.',',');
+          $altura = number_format(($signo->altura / 100),2,'.',',');
+          $imc = number_format(($peso/($altura*$altura)) ,2,'.',',');
+          $nulo = ($signo->altura == null || $signo->peso == null)
+        @endphp
+        <div class="col-sm-5 col-xs-5">
+          @if($nulo)
+            <span class="label label-lg label-gray col-xs-12">
+              Vacio
+            </span>
+          @elseif ($imc < 18.5)
+            <span class="label label-lg label-warning col-xs-12">
+              Bajo peso
+            </span>
+          @elseif($imc >= 18.5 && $imc < 25)
+            <span class="label label-lg label-success col-xs-12">
+              Peso normal
+            </span>
+          @elseif($imc >= 25 && $imc < 30)
+            <span class="label label-lg label-warning col-xs-12">
+              Sobrepeso
+            </span>
+          @elseif($imc >= 30 && $imc < 35)
+            <span class="label label-lg label-danger col-xs-12">
+              Obesidad I
+            </span>
+          @elseif($imc >= 35 && $imc < 40)
+            <span class="label label-lg label-danger col-xs-12">
+              Obesidad II
+            </span>
+          @elseif($imc >= 40 && $imc < 50)
+            <span class="label label-lg label-danger col-xs-12">
+              Obesidad III
+            </span>
+          @else
+            <span class="label label-lg label-danger col-xs-12">
+              Obesidad IV
+            </span>
+          @endif
+        </div> 
+      @endif
     @endforeach
   </div>
 @else
