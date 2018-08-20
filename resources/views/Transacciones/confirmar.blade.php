@@ -4,6 +4,7 @@
     $tipo=0;
     $pantalla=2;//Confirmar
   @endphp
+  @include('DetalleCajas.comprobar2')
   {!! Form::model($transaccion,['route'=>['transacciones.update',$transaccion->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','id'=>'formVender','autocomplete'=>'off']) !!}
   <div class="col-xs-12">
       <div class="x_panel">

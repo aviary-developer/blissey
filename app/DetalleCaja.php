@@ -38,7 +38,7 @@ class DetalleCaja extends Model
       return $detalle;
     }
     public static function caja(){
-      $caja=DetalleCaja::where('fecha',date('Y').'-'.date('m').'-'.date('d'))->where('f_usuario',Auth::user()->id)->get()->first();
+      $caja=DetalleCaja::where('fecha',date('Y').'-'.date('m').'-'.date('d'))->where('tipo',1)->where('f_usuario',Auth::user()->id)->get()->last();
       return $caja;
     }
 }

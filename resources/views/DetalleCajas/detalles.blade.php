@@ -71,9 +71,9 @@
                   <td>
                     @if (App\DetalleCaja::verificacionCaja($caja->id))
                       @if (App\DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id)
-                        <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Efectuar cierre">
+                        <a href={!! asset('/cerrar/'.$caja->id)!!} class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Efectuar cierre">
                           <i class="fa fa-check-circle"></i>
-                        </button>
+                        </a>
                       @else
                         <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="En uso por otro usuario">
                           <i class="fa fa-warning"></i>

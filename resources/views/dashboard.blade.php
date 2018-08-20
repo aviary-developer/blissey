@@ -287,10 +287,7 @@
                                   </a>
                                   <ul class="nav child_menu">
                                     <li>
-                                      <a href={{asset( '/detalleCajas/create')}}>Apertura</a>
-                                    </li>
-                                    <li>
-                                      <a href={{asset( '/cierre')}}>Cierre</a>
+                                      <a href={{asset( '/detalleCajas/create')}}>Apertura/Cierre</a>
                                     </li>
                                     @if (App\DetalleCaja::cajaApertura())
                                       <li>

@@ -264,8 +264,14 @@ class Transacion extends Model
           $d->stock=$stock;
           $d->save();
         }
-        public static function movimentosCaja($f_usuario){
-          return Transacion::where('f_usuario',$f_usuario)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->get();
+        public static function movimentosCaja($f_usuario,$apertura){
+          return Transacion::where('f_usuario',$f_usuario)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+        }
+        public function scopefiltroTipo($query){
+            $query->where('tipo',1)->orWhere('tipo',2);
+        }
+        public function scopefiltroHora($query,$apertura){
+          $query->where('updated_at','>',$apertura);
         }
         public static function tipo($t){
           $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido');
@@ -280,5 +286,19 @@ class Transacion extends Model
               return false;
             }
           }
+        }
+        public static function valorTotal($id){
+          $detalles=DetalleTransacion::where('f_transaccion',$id)->get();
+          $total=0;
+          foreach ($detalles as $d) {
+            $descontado=$d->precio-($d->precio*($d->descuento/100));
+            $subtotal=$d->cantidad*$descontado;
+            $total=$total+$subtotal;
+          }
+          $des=DetalleTransacion::descuento($d->f_transaccion);
+          if($des>0){
+            $total=$total-($total*($des/100));
+          }
+          return $total;
         }
       }

@@ -60,7 +60,7 @@
                     $dv=$retirado->transaccion->divisionProducto;//división producto
                   @endphp
                   <td>
-                  {{$retirado->fecha->formatLocalized('%d de %B de %Y')}}
+                  {{$retirado->transaccion->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}
                   </td>
                   <td>
                     @if ($retirado->estado==0)
