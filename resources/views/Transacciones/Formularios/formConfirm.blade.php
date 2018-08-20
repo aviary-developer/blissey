@@ -16,7 +16,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Fecha *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::date('fecha',$transaccion->fecha,['class'=>'form-control has-feedback-left']) !!}
+        {!! Form::date('fecha',date('Y').'-'.date('m').'-'.date('d'),['class'=>'form-control has-feedback-left']) !!}
       </div>
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Proveedor *</label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">

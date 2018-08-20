@@ -29,5 +29,8 @@ public static function cuenta($id){
     return true;
   }
 }
+public static function descuento($id){
+  return Transacion::find($id)->descuento;
+}
 
 }

@@ -49,7 +49,7 @@ class DetalleCajaController extends Controller
       try{
         $detalle=DetalleCaja::create([
           'f_caja'=>$request['f_caja'],
-          'tipo'=>1,
+          'tipo'=>$request->tipo,
           'fecha'=>date('Y').'-'.date('m').'-'.date('d'),
           'f_usuario'=>Auth::user()->id,
           'importe'=>$request['importe'],
@@ -114,7 +114,11 @@ class DetalleCajaController extends Controller
     }
     public function arqueo(){
       $detalle=DetalleCaja::caja();
-      $movimientos=Transacion::movimentosCaja($detalle->f_usuario);
+      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at);
       return view('DetalleCajas.arqueo',compact('detalle','movimientos'));
+    }
+    public function cerrar($id){
+      $caja=Caja::findOrFail($id);
+      return view('DetalleCajas.cerrar',compact('caja'));
     }
 }

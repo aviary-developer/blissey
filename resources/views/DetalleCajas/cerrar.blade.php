@@ -8,7 +8,7 @@
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Apertura de Caja <small>{{$caja->nombre}}</small></h2>
+        <h2>Cierre de Caja <small>{{$caja->nombre}}</small></h2>
         <div class="clearfix"></div>
       </div>
       {{--  --}}
@@ -20,7 +20,7 @@
             <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
             {!! Form::number('importe',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cantidad']) !!}
           </div>
-          <input type="hidden" name="tipo" value="1">
+          <input type="hidden" name="tipo" value="2">
         </div>
         <center>
           <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
@@ -28,7 +28,7 @@
         <div class="ln_solid"></div>
         <div class="form-group">
           <center>
-            {!! Form::button('Aperturar',['class'=>'btn btn-primary','onclick'=>'aperturar()']) !!}
+            {!! Form::button('Cerrar',['class'=>'btn btn-primary','onclick'=>'aperturar()']) !!}
             <button type="reset" name="button" class="btn btn-default">Limpiar</button>
             <a href={!! asset('/cajas') !!} class="btn btn-default">Cancelar</a>
           </center>
@@ -41,12 +41,12 @@
   <script type="text/javascript">
   function aperturar(id){
     return swal({
-      title: 'Aperturar caja',
-      text: '¿Está seguro? ¡Sobre esta se realizarán las transacciones!',
+      title: 'Efectuar cierre de caja',
+      text: '¿Está seguro? ¡No podrán realizarse más transacciones!',
       type: 'question',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, ¡Aperturar!',
+      confirmButtonText: 'Si, ¡Cerrar!',
       cancelButtonText: 'No, ¡Cancelar!',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
