@@ -15,6 +15,8 @@
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.historial_m')
         @include('Ingresos.dashboard.partes.ver_consulta')
+        @include('Ingresos.dashboard.partes.ver_ingresos')
+        @include('Ingresos.dashboard.partes.acciones_ver_consulta')
       </div>
     </div>
   </div>

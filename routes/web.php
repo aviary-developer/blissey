@@ -283,6 +283,7 @@ Route::group(['middleware'=>'general'], function(){
 
   //Rutas medicas
   Route::get('/consultar','ConsultaController@consulta');
+  Route::get('/consultar_ingresos','ConsultaController@ingresos');
   Route::get('/ver_signos', 'SignoVitalController@ver_signo');
   Route::resource('/consulta','ConsultaController');
 });

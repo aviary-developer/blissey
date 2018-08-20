@@ -107,4 +107,16 @@ class ConsultaController extends Controller
         $medico = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
         return (compact('consulta','medico','fecha'));
     }
+
+    public function ingresos(Request $request){
+        $consultas = Consulta::where('f_ingreso',$request->id)->orderBy('created_at','desc')->get();
+        setlocale(LC_ALL,'es');
+        $fechas = [];
+        $medicos = [];
+        foreach($consultas as $k => $consulta){
+            $fechas[$k] = $consulta->created_at->formatLocalized('%d de %B de %Y a las %H:%M');
+            $medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
+        }
+        return (compact('consultas','medicos','fechas'));
+    }
 }
