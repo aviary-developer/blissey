@@ -754,7 +754,7 @@ class IngresoController extends Controller
       $habitacion_count = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$ultima24)->count();
       if($habitacion_count == 0){
         $habitacion = $ingreso->habitacion->precio;
-        $habitacion_nombre = 'Habitación '.$ingreso->habitacion->numero;
+        $habitacion_nombre = $ingreso->habitacion->servicio->nombre;
       }else{
         $habitacion = 0;
         $habitacion_nombre = "Habitación 0";

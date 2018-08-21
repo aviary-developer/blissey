@@ -1791,7 +1791,7 @@ ul.msg_list li a .time {
     font-style: italic;
     font-weight: bold;
     position: absolute;
-    right: 35px
+    right: 11px
 }
 ul.msg_list li a .message {
     display: block !important;
@@ -1829,7 +1829,7 @@ ul.msg_list li a .message {
     width: 180px
 }
 .navbar-nav .open .dropdown-menu.msg_list {
-    width: 300px
+    width: 300px !important;
 }
 .info-number .badge {
     font-size: 10px;

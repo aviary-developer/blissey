@@ -1,17 +1,19 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
-  <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
-    <i class="fa fa-info-circle"></i>
-  </a>
-  <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
-    <i class="fa fa-edit"></i>
-  </a>
-  <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
-    <i class="fa fa-check"></i>
-  </button>
-  <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
-    <i class="fa fa-remove"></i>
-  </button>
+  <div class="btn-group">
+    <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
+      <i class="fa fa-info-circle"></i>
+    </a>
+    <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+      <i class="fa fa-edit"></i>
+    </a>
+    <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
+      <i class="fa fa-check"></i>
+    </button>
+    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
+      <i class="fa fa-remove"></i>
+    </button>
+  </div>
 @else
   <div class="btn-group">
     @if (!$usuario->estado)

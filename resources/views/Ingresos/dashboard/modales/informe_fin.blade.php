@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row alignright">
-      <a href={{asset('/informe_financiero/'.$ingreso->id)}} class="btn btn-sm btn-primary" target="_blank">Ir a registro</a>
+      <a href={{asset('/informe_financiero/'.$ingreso->id)}} class="btn btn-sm btn-primary" target="_blank">Ver PDF</a>
       <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" onclick="location.reload()">Cerrar</button>
     </div>
   </div>

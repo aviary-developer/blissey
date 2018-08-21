@@ -99,10 +99,10 @@ class Ingreso extends Model
           }
         }
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X"){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X"){
             $total += $detalle->precio;
           }
-          if($detalle->servicio->categoria->nombre == "Habitación"){
+          if($detalle->servicio->categoria->nombre == "Cama"){
             $total += $detalle->precio;
           }
         }
@@ -138,14 +138,14 @@ class Ingreso extends Model
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
           if(
             $detalle->servicio->categoria->nombre != "Honorarios" && 
-            $detalle->servicio->categoria->nombre != "Habitación" && 
+            $detalle->servicio->categoria->nombre != "Cama" && 
             $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && 
             $detalle->servicio->categoria->nombre != "Ultrasonografía" && 
             $detalle->servicio->categoria->nombre != "Rayos X" && 
             ($detalle->created_at->between($fecha, $fecha_mayor))){
             $total += $detalle->precio;
           }
-          if($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha)){
+          if($detalle->servicio->categoria->nombre == "Cama" && ($detalle->created_at == $fecha)){
             $total += $detalle->precio;
           }
         }

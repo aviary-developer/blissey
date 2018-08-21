@@ -70,7 +70,6 @@
               <th>Sexo</th>
               <th>Teléfono</th>
               <th>Tipo</th>
-              <th>Especialidad</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -134,20 +133,8 @@
                       <span class="label label-purple label-lg col-xs-12">Enfermería</span>
                     @elseif ($usuario->tipoUsuario == "Farmacia")
                       <span class="label label-dark-blue label-lg col-xs-12">Farmacia</span>
-                    @endif
-                  </td>
-                  <td>
-                    @if (count($usuario->union)>0)
-                      @php
-                        $union = $usuario->union->where('principal',true)->first();
-                      @endphp
-                      <a href={{asset('/especialidades/'.$union->f_especialidad)}}>
-                        <center>
-                          {{$union->especialidad->nombre}}
-                        </center>
-                      </a>
-                    @else
-                      <span class="label label-lg label-gray col-xs-12">Ninguna</span>
+                    @elseif ($usuario->tipoUsuario == "TAC")
+                      <span class="label label-pink label-lg col-xs-12">TAC</span>
                     @endif
                   </td>
                   <td>

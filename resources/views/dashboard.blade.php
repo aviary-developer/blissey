@@ -527,18 +527,18 @@
                       $solicitudes= App\SolicitudExamen::where('estado','=',0)->orderBy('id','desc')->get();
                     @endphp
                     <li role="presentation" class="dropdown">
-                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false" style="height: 54px">
                         <i class="fa fa-bell-o"></i>
                         <span class="badge bg-red">{{count($solicitudes)}}</span>
                       </a>
-                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                      <ul id="menu1" class="dropdown-menu list-unstyled new-drop msg_list" role="menu" style="width:300px !important">
                         @foreach ($solicitudes as $key => $notificacion)
                         <li>
                           <a href="{{asset('/solicitudex?vista=paciente')}}">
                             <span>
                               @php
-                              $apellido = explode(" ", $notificacion->paciente->apellido);
-                            @endphp
+                                $apellido = explode(" ", $notificacion->paciente->apellido);
+                              @endphp
                               <span><strong> {{$apellido[0]}}, {{$notificacion->paciente->nombre}}</strong></span>
                               <span class="time">{{$notificacion->created_at->diffForHumans()}}</span>
                             </span>
@@ -570,11 +570,11 @@
                       $solicitudes= App\SolicitudExamen::where('estado','=',1)->where('f_ultrasonografia','!=',null)->orderBy('id','desc')->get();
                     @endphp
                     <li role="presentation" class="dropdown">
-                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false" style="height: 54px">
                         <i class="fa fa-bell-o"></i>
                         <span class="badge bg-red">{{count($solicitudes)}}</span>
                       </a>
-                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                      <ul id="menu1" class="dropdown-menu list-unstyled new-drop msg_list" role="menu">
                         @foreach ($solicitudes as $key => $notificacion)
                         <li>
                           <a href="{{asset('/solicitudex?vista=paciente')}}">
@@ -613,11 +613,11 @@
                       $solicitudes= App\SolicitudExamen::where('estado','=',1)->where('f_rayox','!=',null)->orderBy('id','desc')->get();
                     @endphp
                     <li role="presentation" class="dropdown">
-                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false" style="height: 54px">
                         <i class="fa fa-bell-o"></i>
                         <span class="badge bg-red">{{count($solicitudes)}}</span>
                       </a>
-                      <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                      <ul id="menu1" class="dropdown-menu list-unstyled new-drop msg_list" role="menu">
                         @foreach ($solicitudes as $key => $notificacion)
                         <li>
                           <a href="{{asset('/solicitudex?vista=paciente')}}">
@@ -667,12 +667,12 @@
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
                     @endphp
                     <li role="presentation" class="dropdown">
-                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false" style="height: 54px">
                         <i class="fa fa-bell-o"></i>
                         <span class="badge bg-red">{{$total}}</span>
                       </a>
                       @if ($total>0)
-                        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        <ul id="menu1" class="dropdown-menu list-unstyled new-drop msg_list" role="menu">
                             @if ($requisiciones>0)
                               <li>
                               <a href="{{asset('/verrequisiciones?tipo=4')}}">
@@ -732,12 +732,12 @@
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
                     @endphp
                     <li role="presentation" class="dropdown">
-                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                      <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false" style="height: 54px">
                         <i class="fa fa-bell-o"></i>
                         <span class="badge bg-red">{{$total}}</span>
                       </a>
                       @if ($total>0)
-                        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        <ul id="menu1" class="dropdown-menu list-unstyled new-drop msg_list" role="menu">
                             @if ($requisiciones>0)
                               <li>
                               <a href="{{asset('/requisiciones?tipo=5')}}">

@@ -83,8 +83,8 @@
           @endphp
           @if ($habitacion_count == 0)
             <tr>
-              <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
-              <td>{{'Habitación '.$ingreso->habitacion->numero}}</td>
+              <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
+              <td>{{$ingreso->habitacion->servicio->nombre}}</td>
               <td class="text-right">{{'$ '.number_format(($ingreso->habitacion->servicio->precio),2,'.',',')}}</td>
               @php
                 $total_habitacion += number_format(($ingreso->habitacion->servicio->precio),2,'.',',');
@@ -92,9 +92,9 @@
             </tr>
           @else
             @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
-              @if ($detalle->servicio->categoria->nombre == "Habitación" && ($detalle->created_at == $fecha_origen))
+              @if ($detalle->servicio->categoria->nombre == "Cama" && ($detalle->created_at == $fecha_origen))
                 <tr>
-                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($detalle->precio),2,'.',',')}}</td>
                   @php
@@ -136,7 +136,7 @@
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_examen != null))
                 <tr>
-                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$solicitud->examen->nombreExamen}}</td>
                   <td class="text-right">{{'$ '.number_format(($solicitud->examen->servicio->precio),2,'.',',')}}</td>
                   @php
@@ -178,7 +178,7 @@
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_rayox != null))
                 <tr>
-                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$solicitud->rayox->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($solicitud->rayox->servicio->precio),2,'.',',')}}</td>
                   @php
@@ -220,7 +220,7 @@
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_ultrasonografia != null))
                 <tr>
-                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$solicitud->ultrasonografia->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($solicitud->ultrasonografia->servicio->precio),2,'.',',')}}</td>
                   @php
@@ -259,9 +259,9 @@
             $ultima_24->addDay();
           @endphp
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle)
-              @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Habitación" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && ($detalle->created_at->between($fecha_origen,$ultima_24)))
+              @if ($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && ($detalle->created_at->between($fecha_origen,$ultima_24)))
                 <tr>
-                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($detalle->precio * $detalle->cantidad),2,'.',',')}}</td>
                   @php
@@ -302,7 +302,7 @@
           @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
               @if ($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($fecha_origen,$ultima_24)))
                 <tr>
-                  <td class="text-center">{{$fecha_origen->format('d / m / Y')}}</td>
+                  <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
                   <td class="text-right">{{'$ '.number_format(($detalle->precio * $detalle->cantidad),2,'.',',')}}</td>
                   @php
