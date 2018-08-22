@@ -44,7 +44,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Producto </label>
       <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <span class="fa fa-shopping-cart form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::text('producto',null,['id'=>'producto','class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
+        {!! Form::text('producto',null,['readonly' => 'readonly','id'=>'producto','class'=>'form-control has-feedback-left','placeholder'=>'Producto']) !!}
       </div>
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Cantidad </label>

@@ -33,7 +33,7 @@ class DetalleCajaController extends Controller
       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
       $pagina--;
       $pagina *= 10;
-      $cajas=Caja::where('estado',true)->where('localizacion',Transacion::tipoUsuario())->orderBy('nombre','ASC')->paginate(10);
+      $cajas=Caja::where('estado',true)->where('localizacion',Transacion::tipoUsuario())->orderBy('nombre','ASC')->get();
         return view('DetalleCajas.detalles',compact('cajas','pagina'));
     }
 

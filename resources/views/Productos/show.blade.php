@@ -4,7 +4,7 @@
   $index = false;
   setlocale(LC_ALL,'es');
   @endphp
-  <div class="col-md-10 col-sm-10 col-xs-12">
+  <div class="col-md-11 col-sm-11 col-xs-12">
     <div class="x_panel">
       <div class="row bg-blue">
         <center>
