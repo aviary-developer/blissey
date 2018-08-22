@@ -9,6 +9,7 @@ use App\Habitacion;
 use App\Examen;
 use App\Paciente;
 use App\Servicio;
+use App\Producto;
 use App\Rayosx;
 use App\Cama;
 use App\ultrasonografia;
@@ -440,8 +441,10 @@ class IngresoController extends Controller
       }
       /**Proceso para obtener el historial médico de un paciente, estos es exclusivo del usuario médico, pero para evitar problemas en cualquier otro tipo de usuario returnara null */
       $historial = null;
+      $lista_medicamentos = null;
       if(Auth::user()->tipoUsuario == "Médico"){
         $historial = $ingreso->paciente->ingreso;
+        $lista_medicamentos = Producto::orderBy('nombre','asc')->get();
       }
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
@@ -484,7 +487,8 @@ class IngresoController extends Controller
         'dias_i',
         'dias_a',
         'dias_x',
-        'historial'
+        'historial',
+        'lista_medicamentos'
       ));
     }
 

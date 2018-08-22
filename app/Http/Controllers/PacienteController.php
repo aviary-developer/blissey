@@ -654,8 +654,8 @@ class PacienteController extends Controller
       DB::commit();
     }catch(Exception $e){
       DB::rollback();
-      return 0;
+      return 2;
     }
-    return 1;
+    return $paciente->alergia;
   }
 }

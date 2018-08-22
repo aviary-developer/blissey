@@ -809,11 +809,6 @@ function accion24(tipo, id, objeto = null) {
   }
 }
 
-
-$(".modal").on('shown.bs.modal', function () {
-  $(this).find("input:visible:first").focus();
-});
-
 function input_seleccion(e = null) {
   document.getElementById('seleccion').value = e;
 

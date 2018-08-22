@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Consulta;
 use App\Ingreso;
 use App\Paciente;
+use App\Producto;
 use App\Bitacora;
 use Illuminate\Http\Request;
 use DB;
@@ -118,5 +119,19 @@ class ConsultaController extends Controller
             $medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
         }
         return (compact('consultas','medicos','fechas'));
+    }
+
+    public function datos_producto (Request $request){
+        $nombre = $request->valor;
+        $producto = Producto::where('nombre','like','%'.$nombre.'%')->orderBy('nombre','asc')->first();
+        if($producto != null){
+            $presentacion = $producto->presentacion->nombre;
+        }else{
+            $presentacion = "¡No está disponible!";
+        }
+        return (compact(
+            'presentacion',
+            'divisiones'
+        ));
     }
 }

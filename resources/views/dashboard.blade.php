@@ -862,6 +862,7 @@
       {!!Html::script('js/scripts/Habitacion.js')!!}
       {!!Html::script('js/scripts/Consulta.js')!!}
       {!!Html::script('js/scripts/Consulta2.js')!!}
+      {!!Html::script('js/scripts/Receta.js')!!}
       {!!Html::script('js/scripts/Paciente.js')!!}
       {!!Html::script('js/scripts/Empresa.js')!!}
       {!!Html::script('js/scripts/Solicitud.js')!!}

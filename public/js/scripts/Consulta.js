@@ -22,41 +22,6 @@ $(document).on("ready", function () {
     });
   });
 
-  $("#alergia_btn").on("click", function (e) {
-    var paciente = $("#f__paciente").val();
-    var alergia = $("#alergia_").val();
-    var token = $("#tokenTransaccion").val();
-    var html_ = '<input type="text" class="swal2-input" id="a_lergia" placeholder="Alergias del paciente" value="' + alergia + '" autofocus>';
-  
-    swal({
-      title: 'Alergias',
-      html: html_,
-      showCancelButton: true,
-      confirmButtonText: '¡Guardar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default'
-    }).then(function () {
-      $.ajax({
-        url: "/blissey/public/editar_alergia",
-        type: "POST",
-        headers: { 'X-CSRF-TOKEN': token },
-        data: {
-          id: paciente,
-          alergia: $("#a_lergia").val()
-        },
-        success: function (r) {
-          if (r == 1) {
-            swal("¡Hecho!", "Acción realizada exitosamente", 'success');
-            location.reload();
-          } else {
-            swal("¡Algo salio mal!", 'No se guardo', 'error');
-          }
-        }
-      });
-    }).catch(swal.noop);
-  });
-
   $("#btn_lista").on("click", function (e) { 
     lista();
   });

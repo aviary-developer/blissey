@@ -320,3 +320,6 @@ Route::get('/restaurarRespaldo/{file_name}', 'RespaldoController@restaurar');
 Route::get('/descargarRespaldo/{file_name}', 'RespaldoController@descargar');
 Route::get('/eliminarRespaldo/{file_name}', 'RespaldoController@eliminar');
 Route::match(['get','post'],'/subirRespaldo', 'RespaldoController@subir');
+
+//Rutas de la consulta médica
+Route::get('/consultas/datos_producto','ConsultaController@datos_producto')->name('consulta.datos_producto');
