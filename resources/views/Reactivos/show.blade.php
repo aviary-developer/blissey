@@ -30,7 +30,7 @@
               <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
             <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
+              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Movimiento de existencias</a>
             </li>
           </ul>
         </div>
@@ -74,7 +74,26 @@
             </div>
             {{-- Otra pestaña --}}
             <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-              Otra cosa
+              <h3>Movimientos de existencias</h3>
+              <table class="table table-striped" id="index-table">
+                <thead>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Anterior</th>
+                <th>Movimiento</th>
+                <th>Posterior</th>
+              </thead>
+              <tbody>
+              @foreach ($movimientos as $key => $movimiento)
+              <tr>
+                <td>{{$movimiento->created_at->formatLocalized('%d/%m/%Y  %H:%M:%S')}}</td>
+                <td>{{$movimiento->descripcionExistencias}}</td>
+                <td align="right">{{$movimiento->anterior}}</td>
+                <td align="right">{{$movimiento->movimiento}}</td>
+                <td align="right">{{$movimiento->posterior}}</td>
+              </tr>
+              @endforeach
+            </tbody>
             </div>
           </div>
         </div>

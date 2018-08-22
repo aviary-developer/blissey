@@ -7,10 +7,15 @@
   <input type="hidden" name="f_caja" value="{{$caja->id}}">
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Apertura de Caja <small>{{$caja->nombre}}</small></h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>Apertura de Caja
+              <small class="label-white badge green ">{{$caja->nombre}}</small>
+          </h3>
+        </center>
       </div>
+    </div>
+    <div class="x_panel">
       {{--  --}}
       <div class="x_content">
         <br />

@@ -14,23 +14,28 @@
       <div class="modal-body">
         <div class="x_panel">
 
-          <div class="form-group">
-            <div class="alert alert-success alert-dismissible fade in" role="alert">
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
                     Actualmente tiene: <strong><span id="spanExistenciasActuales"></span> <span id="spanNomReac"></span> en existencias</strong>
                   </div>
+            <div class="form-group">
             <label class="control-label col-sm-3 col-xs-12">Cantidad</label>
-            <div class="col-sm-9 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
               <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
               {!! Form::number('cantidadExistencias',null,['id'=>'cantidadExistencias','class'=>'form-control has-feedback-left','placeholder'=>'0']) !!}
+            </div>
+            <br><br>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-3 col-xs-12">Descripción</label>
+            <div class="col-sm-9 col-xs-12">
+              <span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
+              {!! Form::textarea('descripcionExistencias',null,['id'=>'descripcionExistencias','class'=>'form-control has-feedback-left','placeholder'=>'Describa el movimiento en la cantidad de reactivos','rows'=>'3']) !!}
             </div>
           </div>
 
           <input type="hidden" id="tokenExistenciaModal" name="tokenExistenciaModal" value="<?php echo csrf_token(); ?>">
 <input type="hidden" id="idReactivo" name="idReactivo" value="">
         </div>
-        <center>
-          <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
-        </center>
       </div>
 
       <div class="modal-footer">
@@ -53,6 +58,7 @@ $("#cerrar_modalExistencias").on('click', function () {
 
 function comprobacionTemporal(){
   var total;
+  var descripcion=$('#descripcionExistencias').val();
   var actual= parseInt($("#spanExistenciasActuales").text());
   var cantidad= parseInt($("#cantidadExistencias").val());
   total=actual+cantidad;
@@ -95,21 +101,31 @@ function comprobacionTemporal(){
       }
     });
   }
-  else if(total>0){
-  guardarExistencias(total);
+  else if(!descripcion){
+    new PNotify({
+      title: 'Error!',
+      text: 'Ingrese descripción del movimiento',
+      type: 'error',
+      styling: 'bootstrap3'
+    });
+  }else if(total>0){
+  guardarExistencias(total,cantidad);
 }
 }
-function guardarExistencias(total){
+function guardarExistencias(total,cantidad){
   var ruta="/blissey/public/actualizarExistenciaReactivos";
   var token = $('#tokenExistenciaModal').val();
   var id = $('#idReactivo').val();
+  var descripcion = $('#descripcionExistencias').val();
   $.ajax({
     url:ruta,
     headers:{'X-CSRF-TOKEN':token},
     type:'POST',
     data: {
       id:id,
-      contenidoPorEnvase:total
+      contenidoPorEnvase:total,
+      movimiento:cantidad,
+      descripcionExistencias:descripcion
     },
     success: function(){
       $(".modal").modal('hide');
