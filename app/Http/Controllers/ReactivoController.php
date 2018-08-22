@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ReactivoRequest;
 use App\Http\Controllers\Controller;
 use App\Reactivo;
+use App\DescripcionReactivo;
 use Redirect;
 use Response;
 use Carbon\Carbon;
@@ -58,7 +59,8 @@ class ReactivoController extends Controller
   public function show($id)
   {
     $reactivo = Reactivo::find($id);
-    return view('Reactivos.show',compact('reactivo'));
+    $movimientos=DescripcionReactivo::where('f_reactivo',$id)->orderBy('created_at','desc')->get();
+    return view('Reactivos.show',compact('reactivo','movimientos'));
   }
 
   /**
@@ -129,8 +131,15 @@ class ReactivoController extends Controller
   }
   public function actualizarExistenciaReactivos(Request $request){
     $reactivos = Reactivo::find($request->id);
+    $descripcion=new DescripcionReactivo;
+    $descripcion->descripcionExistencias=$request->descripcionExistencias;
+    $descripcion->anterior = $reactivos->contenidoPorEnvase;
+    $descripcion->posterior = $request->contenidoPorEnvase;
+    $descripcion->movimiento = $request->movimiento;
+    $descripcion->f_reactivo=$request->id;
     $reactivos->contenidoPorEnvase = $request->contenidoPorEnvase;
     $reactivos->save();
+    $descripcion->save();
     return Response::json('sucess');
   }
 }
