@@ -188,6 +188,7 @@ class TransaccionController extends Controller
         $transaccion->factura=$request->factura;
         $transaccion->descuento=$request->descuentog;
         $transaccion->tipo=1;
+        $transaccion->iva=$request->ivaincluido;
         $transaccion->save();
 
         $contador = count($request->estado);

@@ -1,27 +1,42 @@
-@php
-  setlocale(LC_ALL,'es');
-@endphp
 @extends('dashboard')
 @section('layout')
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  @php
+  $index = false;
+  setlocale(LC_ALL,'es');
+  @endphp
+  <div class="col-md-11 col-sm-11 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
+      <div class="row bg-blue">
+        <center>
           @if($transaccion->tipo==1)
-            <h2>Pedido<small>Confirmado</small></h2>
+            <h3>Pedido
+                <small class="label-white badge green ">Confirmado</small>
+            </h3>
           @endif
           @if($transaccion->tipo==2)
-        <h2>Venta<small>Realizada</small></h2>
+        <h3>Venta
+            <small class="label-white badge green ">Realizada</small>
+        </h3>
       @endif
     @if($transaccion->tipo==3)
-        <h2>Venta<small>Anulada</small></h2>
+        <h3>Venta
+          <small class="label-white badge red ">Anulada</small>
+        </h3>
     @endif
-        <div class="clearfix"></div>
-        <div class="x_content">
-          <div class="row">
-            Opciones
+        </center>
+              {{-- @include('Productos.Formularios.activate') --}}
+    </div>
+  </div>
+    <div class="x_panel">
+      <div class="x_content">
+        <div class="row">
+          <div class="col-md-6 col-xs-12">
           </div>
-          <div class="" role="tabpanel" data-example-id="togglable-tabs">
-            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+        </div>
+        {{-- Incio de tab --}}
+        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+          <div class="col-xs-3">
+            <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
               <li role="presentation" class="active">
                 <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos del pedido</a>
               </li>
@@ -29,9 +44,12 @@
                 <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Detalle</a>
               </li>
             </ul>
+          </div>
+          {{-- Contenido del tab --}}
+          <div class="col-xs-9">
             <div id="myTabContent" class="tab-content">
-              {{-- Datos --}}
               <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
+                <h3>Datos del pedido</h3>
                 <table class="table">
                   <tr>
                       <th>Fecha</th>
@@ -74,9 +92,10 @@
                   </tr>
                 </table>
               </div>
-              {{-- Detalles --}}
+              {{-- Otra pestaña --}}
               <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-                <table class="table table-striped">
+                <h3>Detalle</h3>
+                <table class="table">
                   <thead>
                     <th>Cantidad</th>
                     <th colspan='2'>Detalle</th>
@@ -145,12 +164,23 @@
                           $ {{number_format($total,2,'.','.')}}</div></td>
                   </tr>
                   @if ($transaccion->descuento>0)
+                    @php
+                      $total=$total-($total*($transaccion->descuento/100));
+                    @endphp
                     <tr>
-                      <td colspan='{{$aux}}'><div style="text-align:right;">Total:  $ {{number_format($total-($total*($transaccion->descuento/100)),2,'.','.')}}</div></td>
+                      <td colspan='{{$aux}}'><div style="text-align:right;">Total:  $ {{number_format($total,2,'.','.')}}</div></td>
+                    </tr>
+                  @endif
+                  @if($transaccion->tipo==1)
+                    <tr>
+                    @if($transaccion->iva)
+                      <td colspan='{{$aux}}'><div style="text-align:right;">IVA incluido:  $ {{number_format(($total*0.13)/1.13,2,'.','.')}}</div></td>
+                    @else
+                      <td colspan='{{$aux}}'><div style="text-align:right;">IVA no incluido:  $ {{number_format(($total*0.13),2,'.','.')}}</div></td>
+                    @endif
                     </tr>
                   @endif
                   </tbody>
-
                 </table>
               </div>
             </div>
@@ -158,6 +188,6 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
-{!!Form::close()!!}
 @endsection

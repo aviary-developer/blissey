@@ -188,6 +188,21 @@
                                   <a href={{asset( '/requisiciones?tipo=4')}}>Requisiciones</a>
                                 </li>
                                 <li>
+                                  <a>Movimiento de caja
+                                    <span class="fa fa-chevron-down"></span>
+                                  </a>
+                                  <ul class="nav child_menu">
+                                    <li>
+                                      <a href={{asset( '/detalleCajas/create')}}>Apertura/Cierre</a>
+                                    </li>
+                                    @if (App\DetalleCaja::cajaApertura())
+                                      <li>
+                                        <a href={{asset( '/arqueo')}}>Arqueo</a>
+                                      </li>
+                                    @endif
+                                  </ul>
+                                </li>
+                                <li>
                                   <a>Mantenimiento
                                     <span class="fa fa-chevron-down"></span>
                                   </a>
