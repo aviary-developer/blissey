@@ -32,6 +32,7 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');
   Route::match(['get','post'],'/activateExamen/{id}','ExamenController@activate');
   Route::match(['get','post'],'/destroyExamen/{id}','ExamenController@destroy');
+  Route::match(['get','post'],'/actualizarPrecioExamen','ExamenController@actualizarPrecioExamen');
   //Rutas de banco de sangre
   Route::resource('bancosangre','BancoSangreController');
   Route::match(['get','post'],'/desactivateBancoSangre/{id}','BancoSangreController@desactivate');

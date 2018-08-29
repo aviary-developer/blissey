@@ -15,6 +15,7 @@ use App\Parametro;
 use App\Seccion;
 use App\ExamenSeccionParametro;
 use Redirect;
+use Response;
 use DB;
 use App;
 use Carbon\Carbon;
@@ -130,6 +131,7 @@ class ExamenController extends Controller
   public function show($id)
   {
     $examen = Examen::find($id);
+    $servicio = Servicio::where('f_examen',$id)->first();
     $e_s_p = ExamenSeccionParametro::where('f_examen',$id)->where('estado',TRUE)->get();
     //echo $e_s_p;
     $contador=0;
@@ -149,7 +151,7 @@ class ExamenController extends Controller
         $contador++;
       }
     }
-    return view('Examenes.show',compact('examen','e_s_p','secciones'));
+    return view('Examenes.show',compact('examen','e_s_p','secciones','servicio'));
   }
 
   /**
@@ -269,5 +271,11 @@ class ExamenController extends Controller
     $examenes->estado = true;
     $examenes->save();
     return Redirect::to('/examenes?estado=0');
+  }
+  public function actualizarPrecioExamen(Request $request){
+    $servicio = Servicio::find($request->idServicio);
+    $servicio->precio=$request->precio;
+    $servicio->save();
+    return Response::json('sucess');
   }
 }
