@@ -32,6 +32,7 @@ Route::group(['middleware'=>'laboratorio'], function(){
   Route::match(['get','post'],'/desactivateExamen/{id}','ExamenController@desactivate');
   Route::match(['get','post'],'/activateExamen/{id}','ExamenController@activate');
   Route::match(['get','post'],'/destroyExamen/{id}','ExamenController@destroy');
+  Route::match(['get','post'],'/actualizarPrecioExamen','ExamenController@actualizarPrecioExamen');
   //Rutas de banco de sangre
   Route::resource('bancosangre','BancoSangreController');
   Route::match(['get','post'],'/desactivateBancoSangre/{id}','BancoSangreController@desactivate');
@@ -79,9 +80,6 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/activateIngreso/{id}','IngresoController@activate');
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
   Route::get('/informe_financiero/{id}','IngresoController@informe_pdf');
-  //Rutas de Requisiciones
-  Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
-      Route::match(['get','post'],'/asignarRequisicion/{id}','RequisicionController@asignar');
   Route::get('/chart_financiero','IngresoController@chart_financiero');
 });
 //Grupo Farmacia
@@ -128,10 +126,6 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/destroyDivision/{id}','DivisionController@destroy');
   Route::match(['get','post'],'/llenarDivision','DivisionController@llenarDivision');
   Route::match(['get','post'],'/ingresoDivision','DivisionController@ingresoDivision');
-  //Rutas requisiciones acceso Farmacia
-  Route::match(['get','post'],'/verrequisiciones','RequisicionController@verrequisiciones');
-    Route::match(['get','post'],'/confirmarRequisicion/{id}','RequisicionController@confirmar');
-    Route::match(['get','post'],'/atenderPeticion/{id}','RequisicionController@atenderPeticion');
 });
 //Grupo Administrador
 Route::group(['middleware'=>'admin'], function()
@@ -288,6 +282,13 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/consultar_ingresos','ConsultaController@ingresos');
   Route::get('/ver_signos', 'SignoVitalController@ver_signo');
   Route::resource('/consulta','ConsultaController');
+  //Rutas de Requisiciones
+  Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
+  Route::match(['get','post'],'/asignarRequisicion/{id}','RequisicionController@asignar');
+  //Rutas requisiciones
+  Route::match(['get','post'],'/verrequisiciones','RequisicionController@verrequisiciones');
+    Route::match(['get','post'],'/confirmarRequisicion/{id}','RequisicionController@confirmar');
+    Route::match(['get','post'],'/atenderPeticion/{id}','RequisicionController@atenderPeticion');
 });
 Auth::routes();
 //Rutas de login

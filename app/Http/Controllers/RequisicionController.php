@@ -49,7 +49,7 @@ class RequisicionController extends Controller
       $transaccion= Transacion::create([
         'fecha'=>$request->fecha,
         'f_usuario'=>Auth::user()->id,
-        'localizacion'=>1,
+        'localizacion'=>Transacion::tipoUsuario(),
         'tipo'=>4,
       ]);
       for ($i=0; $i <count($f_producto) ; $i++) {
@@ -135,7 +135,12 @@ class RequisicionController extends Controller
           if($dp->contenido!=null){
             $dp->unidad;
           }
-          $dp->inventario=DivisionProducto::inventario($dp->id,2);
+          if(Auth::user()->tipoUsuario=='Farmacia'){
+            $contrario=3;
+          }elseif(Auth::user()->tipoUsuario=='Recepción'){
+            $contrario=2;
+          }
+          $dp->inventario=DivisionProducto::inventario($dp->id,$contrario);
         }
       }
       return $productos;

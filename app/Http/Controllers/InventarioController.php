@@ -18,9 +18,8 @@ class InventarioController extends Controller
       $pagina = ($request->get('page')!=null)?$request->get('page'):1;
       $pagina--;
       $pagina *= 10;
-      $nombre=$request->nombre;
-      $dp = DivisionProducto::buscar($nombre,true);
-      return view('Inventarios.index',compact('dp','nombre','pagina'));
+      $dp = DivisionProducto::buscar(true);
+      return view('Inventarios.index',compact('dp','pagina'));
     }
 
     /**

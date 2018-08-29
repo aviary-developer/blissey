@@ -24,7 +24,7 @@ class DetalleCajaRequest extends FormRequest
     public function rules()
     {
         return [
-            'importe'=>'required | min:3 | max:25',
+            'importe'=>'numeric|required',
         ];
     }
 }

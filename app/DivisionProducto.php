@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Auth;
 
 class DivisionProducto extends Model
 {
@@ -45,8 +46,13 @@ class DivisionProducto extends Model
         }
       }
     }
+    if(Auth::user()->tipoUsuario=='Farmacia'){
+      $contrario=1;
+    }elseif(Auth::user()->tipoUsuario=='Recepción'){
+      $contrario=0;
+    }
     $ce=0;
-    $envios=transacion::where('tipo',5)->get();//envios a recepción no comfirmados
+    $envios=transacion::where('tipo',5)->where('localizacion',$contrario)->get();//envios a recepción no comfirmados
     foreach ($envios as $envio) {
       $dee=$envio->detalleTransaccion;
       foreach($dee as $de){
@@ -56,12 +62,22 @@ class DivisionProducto extends Model
       }
     }
     $cr=0;
-    $requisiciones=transacion::where('tipo',6)->get(); //envios a recepción confirmados
+    $requisiciones=transacion::where('tipo',6)->where('localizacion',$ts)->get(); //envios a recepción confirmados
     foreach ($requisiciones as $requisicion) {
       $der=$requisicion->detalleTransaccion;
       foreach($der as $dr){
         if($dr->f_producto==$id){
           $cr=$cr+$dr->cantidad;
+        }
+      }
+    }
+    $crc=0;
+    $requisiciones=transacion::where('tipo',6)->where('localizacion',$contrario)->get(); //envios a recepción confirmados
+    foreach ($requisiciones as $requisicion) {
+      $derc=$requisicion->detalleTransaccion;
+      foreach($derc as $drc){
+        if($drc->f_producto==$id){
+          $crc=$crc+$drc->cantidad;
         }
       }
     }
@@ -75,21 +91,15 @@ class DivisionProducto extends Model
         }
       }
     }
-    if($ts==0){
-      return $cc-$cv-$ce-$cr-$cm;
-    }elseif($ts==1){
-      return $cc-$cv+$cr-$cm;
-    }
+    return $cc-$cv+$cr-$ce-$crc-$cm;
   }
-  public static function buscar($nombre,$estado){
+  public static function buscar($estado){
     $bitacora = DB::table('division_productos')
       ->select('division_productos.*','productos.nombre','productos.f_presentacion','productos.f_proveedor')
       ->join('productos','division_productos.f_producto','=','productos.id','left outer')
-      ->where('productos.nombre','like','%'.$nombre.'%')
       ->where('productos.estado',$estado)
       ->orderBy('productos.nombre','ASC')
-      ->paginate(10);
-      // ->get();
+      ->get();
       return $bitacora;
   }
   public static function compras($id,$nor){

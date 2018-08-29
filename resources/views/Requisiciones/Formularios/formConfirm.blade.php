@@ -29,8 +29,9 @@ $detalles=$transaccion->detalleTransaccion;
         </tr>
         <tbody>
             @php
-            $inventario=App\DivisionProducto::inventario($detalle->f_producto,2);
-              $compras=App\DivisionProducto::compras($detalle->f_producto,2);
+
+            $inventario=App\DivisionProducto::inventario($detalle->f_producto,1);
+              $compras=App\DivisionProducto::compras($detalle->f_producto,1);
               $cuenta=0;
               $i=0;
               $ultimos=[];
@@ -72,7 +73,7 @@ $detalles=$transaccion->detalleTransaccion;
                   </td>
                   <td>{{$inv->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>
                   <td>{{$fila->lote}}</td>
-                  <td>{{$fila->f_estante}}</td>
+                  <td>{{App\Estante::find($fila->f_estante)->codigo}}</td>
                   <td>{{$fila->nivel}}</td>
                 </tr>
                 </tr>
