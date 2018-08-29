@@ -104,6 +104,13 @@ $("#btn_v_u").on('click', function (e) {
   e.preventDefault();
   ultra_fecha();
 });
+$("#fecha_tac").on("change", function () {
+  tac_fecha();
+});
+$("#btn_v_t").on('click', function (e) {
+  e.preventDefault();
+  tac_fecha();
+});
 $("#fecha_finanza").on("change", function () {
   var id = $("#id").val();
   var fecha = $("#fecha_finanza").val();
@@ -380,6 +387,59 @@ function ultra_fecha() {
   });
 }
 
+function tac_fecha() {
+  var fecha = $("#fecha_tac").val();
+  var id = $("#id").val();
+
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/ingreso/lista_tac',
+    data: {
+      id: id,
+      fecha: fecha
+    },
+    success: function (r) {
+      var panel = $("#mensaje_v_t");
+      fecha_title = $("#date_t");
+      fecha_title.text(r.fecha_f);
+      if (r.indice > 0) {
+        panel.empty();
+        html = '<div class="col-xs-12">' +
+          '<table class="table" id="tabla_v_t">' +
+          '<thead>' +
+          '<th style="width: 150px">Hora</th>' +
+          '<th>Detalle</th>' +
+          '<th style="width: 40px">Acción</th>'
+        '</thead>' +
+          '</table>' +
+          '</div>';
+        panel.append(html);
+        tabla = $("#tabla_v_t");
+        $(r.tac).each(function (key, value) {
+          html = '<tr id="r' + value.id + '">' +
+            '<td>' + value.hora + '</td>' +
+            '<td>' +
+            ' <b class="big-text">' + value.nombre + '</b>' +
+            '</td>';
+          if (value.estado == 0) {
+            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+          } else if (value.estado == 1) {
+            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+          } else {
+            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+          }
+          html += '</tr>';
+          tabla.append(html);
+        });
+      } else {
+        panel.empty();
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun tac al paciente en esta fecha</span></center>';
+        panel.append(html);
+      }
+    }
+  });
+}
+
 function signos_fecha() {
   var fecha = $("#fecha_signo").val();
   var id = $("#id").val();
@@ -550,6 +610,7 @@ $("#cambio_hospitalizacion_").on("click", function (e) {
 function ultra_rayos(tipo) {
   var rayo = $("#f_rayo").val();
   var ultra = $("#f_ultra").val();
+  var tac = $("#f_tac").val();
   var token = $("#token").val();
   var paciente = $("#id_p").val();
   var transaccion_id = $("#id_t").val();
@@ -578,7 +639,7 @@ function ultra_rayos(tipo) {
         }
       }
     });
-  } else {
+  } else if(tipo == 2) {
     $.ajax({
       url: "/blissey/public/solicitudex",
       headers: { 'X-CSRF-TOKEN': token },
@@ -589,6 +650,29 @@ function ultra_rayos(tipo) {
         f_ingreso: id,
         transaccion: transaccion_id,
         tipo: "rayosx"
+      },
+      success: function (respuesta) {
+        if (respuesta) {
+          swal({
+            title: "¡Hecho!",
+            text: "Solicitud enviada satisfactoriamente",
+            type: "success",
+            showConfirmButton: false,
+          });
+          location.reload();
+        }
+      }
+    });
+  } else {
+    $.ajax({
+      url: "/blissey/public/solicitudex",
+      type: "POST",
+      data: {
+        f_paciente: paciente,
+        tac: tac,
+        f_ingreso: id,
+        transaccion: transaccion_id,
+        tipo: "tac"
       },
       success: function (respuesta) {
         if (respuesta) {

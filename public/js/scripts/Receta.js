@@ -192,7 +192,6 @@ $(document).on('ready', function () {
 
   $("#texto-medicamento").on('click','#remove_medicamento' ,function (e) {
     e.preventDefault();
-    console.log("Hola");
 
     $(this).parent('p').parent('div').parent('div').remove();
   });

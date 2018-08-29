@@ -92,14 +92,16 @@ class Ingreso extends Model
                 $total += $solicitud->examen->servicio->precio;
               }else if($solicitud->rayox != null){
                 $total += $solicitud->rayox->servicio->precio;
-              }else{
+              }else if($solicitud->ultrasonografia != null){
                 $total += $solicitud->ultrasonografia->servicio->precio;
+              }else{
+                $total += $solicitud->tac->servicio->precio;
               }
             }
           }
         }
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X"){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "TAC"){
             $total += $detalle->precio;
           }
           if($detalle->servicio->categoria->nombre == "Cama"){
@@ -129,8 +131,10 @@ class Ingreso extends Model
                 $total += $solicitud->examen->servicio->precio;
               }else if($solicitud->rayox != null){
                 $total += $solicitud->rayox->servicio->precio;
-              }else{
+              }else if($solicitud->ultrasonografia != null){
                 $total += $solicitud->ultrasonografia->servicio->precio;
+              }else{
+                $total += $solicitud->tac->servicio->precio;
               }
             }
           }
@@ -141,7 +145,7 @@ class Ingreso extends Model
             $detalle->servicio->categoria->nombre != "Cama" && 
             $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && 
             $detalle->servicio->categoria->nombre != "Ultrasonografía" && 
-            $detalle->servicio->categoria->nombre != "Rayos X" && 
+            $detalle->servicio->categoria->nombre != "Rayos X" &&$detalle->servicio->categoria->nombre != "TAC" && 
             ($detalle->created_at->between($fecha, $fecha_mayor))){
             $total += $detalle->precio;
           }

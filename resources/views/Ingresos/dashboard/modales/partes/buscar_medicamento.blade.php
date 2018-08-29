@@ -1,5 +1,7 @@
 <div class="row">
-  <h5 class="big-text">Buscar medicamento</h5>
+  <center>
+    <h5 class="big-text">Buscar medicamento</h5>
+  </center>
 </div>
 <form action="" class="form-horizontal input_mask">
   <div class="form-group col-xs-12">

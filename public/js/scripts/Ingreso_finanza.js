@@ -194,6 +194,39 @@ function resumen(id, dia) {
 
         body.append(html);
       }
+      
+      if (respuesta.tacs != 0) {
+        html = '<div class = "row">' +
+          '<div class="col-xs-9">' +
+          '<span><b>' +
+          'TAC' +
+          '</b></span>' +
+          '</div>' +
+          '<div class="col-xs-3 text-right">' +
+          '<span>' +
+          '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(respuesta.tacs) +
+          '</span>' +
+          '</div>' +
+          '</div>';
+
+        $(respuesta.tac).each(function (key, value) {
+          html += '<div class = "row">' +
+            '<div class="col-xs-1"></div>' +
+            '<div class="col-xs-7">' +
+            '<span><i>' +
+            value.nombre +
+            '</i></span>' +
+            '</div>' +
+            '<div class="col-xs-2 text-right">' +
+            '<span><i>' +
+            '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) +
+            '</i></span>' +
+            '</div>' +
+            '</div>';
+        });
+
+        body.append(html);
+      }
 
       if (respuesta.total_servicios != 0) {
         $(respuesta.servicios).each(function (key, value) {

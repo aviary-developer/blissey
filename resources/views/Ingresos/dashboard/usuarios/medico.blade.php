@@ -50,7 +50,7 @@
     </div>
     <div class="col-xs-4">
       <div class="x_panel">
-        TAC
+        @include('Ingresos.dashboard.partes.tac_r')
       </div>
     </div>
   </div>

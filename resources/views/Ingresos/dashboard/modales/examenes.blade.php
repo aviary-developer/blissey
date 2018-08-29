@@ -26,31 +26,77 @@ var solicitudes=0;
     document.getElementById('seleccion').value = e;
   }
   async function agregarExamenEnSolicitud(boton){
-        if (boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-defualt") {
-          solicitudes=solicitudes+1;
-          $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
-          new PNotify({
-            title: 'Solicitud de:',
-            type: 'success',
-            text: '<strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
-            nonblock: {
-              nonblock: true
-            },
-            styling: 'bootstrap3',
-            addclass: 'info'
-          });
-        } else if(boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-success") {
-          solicitudes=solicitudes-1;
-          new PNotify({
-            title: 'Solicitud de:',
-            type: 'warning',
-            text:  '<strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
-            nonblock: {
-              nonblock: true
-            },
-            styling: 'bootstrap3',
-            addclass: 'info'
-          });
-        }
-            }
+    if (boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-defualt") {
+      solicitudes=solicitudes+1;
+      $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
+      new PNotify({
+        title: 'Solicitud de:',
+        type: 'success',
+        text: '<strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
+        nonblock: {
+          nonblock: true
+        },
+        styling: 'bootstrap3',
+        addclass: 'info'
+      });
+    } else if(boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-success") {
+      solicitudes=solicitudes-1;
+      new PNotify({
+        title: 'Solicitud de:',
+        type: 'warning',
+        text:  '<strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
+        nonblock: {
+          nonblock: true
+        },
+        styling: 'bootstrap3',
+        addclass: 'info'
+      });
+    }
+  }
+
+  async function agregarExamenEnSolicitud2(boton){
+    if (boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-defualt") {
+      solicitudes=solicitudes+1;
+      $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
+      new PNotify({
+        title: 'Solicitud de:',
+        type: 'success',
+        text: '<strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
+        nonblock: {
+          nonblock: true
+        },
+        styling: 'bootstrap3',
+        addclass: 'info'
+      });
+
+      var panel = $("#texto_receta_laboratorio");
+      var texto_boton = $(boton).find('span').text();
+      var selector = texto_boton.replace(/ /g,'-');
+
+      var html = '<div class="row" id="' + selector + '" style="margin: 0px 10px 0px 15px">'+
+        '<p style="font-size: medium">'+
+          '<i class="fa fa-check blue"></i> '+
+          'Realizarse un examén de <b class="blue">' + texto_boton + '</b>' +
+        '</p>'+
+        '</div>';
+      
+      panel.append(html);
+    } else if(boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-success") {
+      solicitudes=solicitudes-1;
+      new PNotify({
+        title: 'Solicitud de:',
+        type: 'warning',
+        text:  '<strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
+        nonblock: {
+          nonblock: true
+        },
+        styling: 'bootstrap3',
+        addclass: 'info'
+      });
+
+      var texto_boton = $(boton).find('span').text();
+      var selector = texto_boton.replace(/ /g,'-');
+      $("#"+selector).remove();
+    }
+  }
 </script>

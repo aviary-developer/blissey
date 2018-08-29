@@ -108,7 +108,7 @@ class SolicitudExamenController extends Controller
   */
   public function store(Request $request)
   {
-    if (Auth::user()->tipoUsuario == "TAC"|| (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="tac")) {
+    if (Auth::user()->tipoUsuario == "TAC"|| ((Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería" ) && $request->tipo=="tac")) {
       DB::beginTransaction();
       try{
         $año = date('Y');
@@ -160,7 +160,7 @@ class SolicitudExamenController extends Controller
         DB::rollback();
         return redirect('/solicitudex?tipo=tac')->with('mensaje','Algo salio mal');
       }
-    }else if (Auth::user()->tipoUsuario == "Rayos X"|| (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
+    }else if (Auth::user()->tipoUsuario == "Rayos X"|| ((Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería" ) && $request->tipo=="rayosx")) {
       DB::beginTransaction();
       try{
         $año = date('Y');
@@ -212,7 +212,7 @@ class SolicitudExamenController extends Controller
         DB::rollback();
         return redirect('/solicitudex?tipo=rayosx')->with('mensaje','Algo salio mal');
       }
-    }else if (Auth::user()->tipoUsuario == "Ultrasonografía"|| (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
+    }else if (Auth::user()->tipoUsuario == "Ultrasonografía"|| ((Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería" ) && $request->tipo=="ultras")) {
       DB::beginTransaction();
       try{
         $año = date('Y');
@@ -264,7 +264,7 @@ class SolicitudExamenController extends Controller
         DB::rollback();
         return redirect('/solicitudex?tipo=ultras')->with('mensaje','Algo salio mal');
       }
-    }else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
+    }else if(Auth::user()->tipoUsuario == "Laboaratorio" || ((Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería" ) && $request->tipo=="examenes")){
     DB::beginTransaction();
     try{
       $año = date('Y');

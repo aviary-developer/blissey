@@ -12,6 +12,7 @@ use App\Servicio;
 use App\Producto;
 use App\Rayosx;
 use App\Cama;
+use App\Tac;
 use App\ultrasonografia;
 use App\Abono;
 use App\Especialidad;
@@ -213,6 +214,7 @@ class IngresoController extends Controller
       /**Examenes de ultrasonografía y de rayos x */
       $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
       $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
+      $tacs = Tac::where('estado',true)->orderBy('nombre')->get();
         /**Medicos para seleccionar */
       $especialidades = Especialidad::orderBy('nombre')->get();
       $medicos_general = DB::table('users')
@@ -306,12 +308,14 @@ class IngresoController extends Controller
         $detalle_r = []; //Detalle rayos X
         $detalle_u = []; //Detalle ultrasonografía
         $detalle_sv = []; //Detalle signos vitales
+        $detalle_tac = [];
         $indice_detalle_p = 0;
         $indice_detalle_s = 0;
         $indice_detalle_l = 0;
         $indice_detalle_r = 0;
         $indice_detalle_u = 0;
         $indice_detalle_sv = 0;
+        $indice_detalle_tac = 0;
         /**Contador de cuantos medicamentos han sido asignados en las ultimas 24 horas */
         $count_p24 = 0;
         if ($ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->count() > 0){
@@ -328,7 +332,7 @@ class IngresoController extends Controller
         $count_s24 = 0;
         if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->count() > 0){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
+            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "TAC"){
               $detalle_s[$indice_detalle_s] = $detalle;
               $indice_detalle_s++;
               if($detalle->created_at->between($ultima24, $ultima48)){
@@ -358,6 +362,18 @@ class IngresoController extends Controller
               $indice_detalle_r++;
               if($solicitud->created_at->between($ultima24, $ultima48)){
                 $count_r24++;
+              }
+            }
+          }
+        }
+        $count_tac24 = 0;
+        if($ingreso->transaccion->solicitud->count()>0){
+          foreach($ingreso->transaccion->solicitud as $solicitud){
+            if($solicitud->f_tac != null){
+              $detalle_tac[$indice_detalle_tac] = $solicitud;
+              $indice_detalle_tac++;
+              if($solicitud->created_at->between($ultima24, $ultima48)){
+                $count_tac24++;
               }
             }
           }
@@ -459,6 +475,7 @@ class IngresoController extends Controller
         'detalle_r',
         'detalle_u',
         'detalle_sv',
+        'detalle_tac',
         'medico_u',
         'ultima24',
         'ultima48',
@@ -468,6 +485,7 @@ class IngresoController extends Controller
         'count_r24',
         'count_u24',
         'count_sv24',
+        'count_tac24',
         'count_m',
         'hoy',
         'examenes',
@@ -481,6 +499,7 @@ class IngresoController extends Controller
         'activo',
         'rayosx',
         'ultras',
+        'tacs',
         'especialidades',
         'medicos_general',
         'total_especialidad',
@@ -770,7 +789,7 @@ class IngresoController extends Controller
       if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true))>0){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Ultrasonografía" &&($detalle->created_at->between($ultima24, $ultima48))){
+          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Ultrasonografía" &&$detalle->servicio->categoria->nombre != "TAC" &&($detalle->created_at->between($ultima24, $ultima48))){
             $servicios[$k]["nombre"] = $detalle->servicio->nombre;
             $servicios[$k]["precio"] = $detalle->precio;
             $k++;
@@ -790,10 +809,13 @@ class IngresoController extends Controller
       $ultras = [];
       $rayosx = 0;
       $rayos = [];
+      $tacs = 0;
+      $tac = [];
       if(count($ingreso->transaccion->solicitud)>0){
         $k = 0;
         $ku = 0;
         $kr = 0;
+        $kt = 0;
         foreach($ingreso->transaccion->solicitud as$solicitud){
           if($solicitud->estado != 0 && ($solicitud->created_at->between($ultima24, $ultima48))){
             if($solicitud->f_examen != null){
@@ -804,10 +826,14 @@ class IngresoController extends Controller
               $ultrasonografia += $ultras[$ku]["precio"] = $solicitud->ultrasonografia->servicio->precio;
               $ultras[$ku]["nombre"] = $solicitud->ultrasonografia->nombre;
               $ku++;
-            }else{
+            }else if($solicitud->f_rayox != null){
               $rayosx += $rayos[$kr]["precio"] = $solicitud->rayox->servicio->precio;
               $rayos[$kr]["nombre"] = $solicitud->rayox->nombre;
               $kr++;
+            }else{
+              $tacs += $tac[$kt]["precio"] = $solicitud->tac->servicio->precio;
+              $tac[$kt]["nombre"] = $solicitud->tac->nombre;
+              $kt++;
             }
           }
         }
@@ -857,6 +883,8 @@ class IngresoController extends Controller
         'ultras',
         'rayosx',
         'rayos',
+        'tacs',
+        'tac',
         'iva'
       ));
     }
@@ -1021,7 +1049,7 @@ class IngresoController extends Controller
     $servicios = [];
     $indice = 0;
     foreach($lista as $detalle){
-      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía"){
+      if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "TAC"){
         $servicios[$indice]['id'] = $detalle->id;
         $servicios[$indice]['hora'] = $detalle->created_at->format('H:i.s');
         $servicios[$indice]['cantidad'] = $detalle->cantidad;
@@ -1209,6 +1237,46 @@ class IngresoController extends Controller
     setlocale(LC_ALL,'es');
     $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
     return (compact('ultra','indice','fecha_f'));
+  }
+
+  public function lista_tac(Request $request){
+    $id = $request->id;
+    $fecha_sf = $request->fecha;
+    $ingreso = Ingreso::find($id);
+    $fecha = new Carbon($fecha_sf);
+    $fecha24 = new Carbon($fecha_sf);
+    $fecha->hour(7);
+    $fecha24 = $fecha24->addDays(1);
+    $fecha24->hour(7);
+    $dias = -1;
+    if($ingreso->estado != 2){
+      $dias = 1;
+      $ahora = Carbon::now();
+      $ultima24 = Carbon::today()->hour(7);
+      $ultima48 = Carbon::tomorrow()->hour(7);
+      if($ahora->lt($ultima24)){
+        $ultima24->subDay();
+        $ultima48->subDay();
+      }
+    }
+    if($request->pendiente == null){
+      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_tac','!=',null);
+    }else{
+      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_tac','!=',null);
+    }
+    $tac = [];
+    $indice = 0;
+    foreach($lista as $detalle){
+      $tac[$indice]['id'] = $detalle->id;
+      $tac[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
+      $tac[$indice]['nombre'] = $detalle->tac->nombre;
+      $tac[$indice]['estado'] = $detalle->estado;
+      $indice++;
+    }
+    $tac = array_reverse($tac);
+    setlocale(LC_ALL,'es');
+    $fecha_f = $fecha->formatLocalized('%d de %B de %Y');
+    return (compact('tac','indice','fecha_f'));
   }
 
   public function lista_signos(Request $request){
