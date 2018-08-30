@@ -73,6 +73,9 @@
 																<td><a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
 															    <i class="fa fa-edit"></i>
 															  </a>
+																<a id="" href= {!! asset('/verExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="top" title="Ver"/>
+															    <i class="fa fa-eye"></i>
+															  </a>
 																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>
 															  </a></td>
@@ -114,6 +117,9 @@
 																<td>
 																	<a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar"/>
 																    <i class="fa fa-edit"></i>
+																  </a>
+																	<a id="" href= {!! asset('/verExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="top" title="Ver"/>
+																    <i class="fa fa-eye"></i>
 																  </a>
 																<a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Entregar" target="_blank"/>
 															    <i class="fa fa-envelope"></i>

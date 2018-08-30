@@ -7,7 +7,7 @@
   <div class="col-md-10 col-xs-12" style="margin: 0px 0px 40px 0px;">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Edición de resultados de examen</h2>
+        <h2>Vista de examen</h2>
         <div class="clearfix"></div>
         <h4>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}} <span class="label label-lg label-default">{{$solicitud->examen->nombreExamen}}</span></h4>
       </div>
@@ -18,18 +18,11 @@
           <input type="hidden" name="espr[]" value={{$esp->id}}>
         @endforeach
         @if ($solicitud->examen->imagen)
-        <div class="form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12">Imagen de {{$solicitud->examen->nombreExamen}}:</label>
-          <div class="col-md-8 col-sm-8 col-xs-12">
-            <span class="fa fa-camera form-control-feedback left" aria-hidden="true"></span>
-            <input type="file" name="imagenExamen" id="imagenExamen" accept="image/*" class="form-control has-feedback-left"></input>
-          </div>
-        </div>
         <div class="col-md-12 col-xs-12">
           <div class="">
             <center>
-              <output id="listExamen" style="height:400px">
-                  <img src={{asset(Storage::url($resultado->imagen))}} style="height: 400px; width: 400px; object-fit: scale-down">
+              <output id="listExamen" style="height:400px; width: 400px; object-fit: scale-down">
+                  <img onmouseover="zoom()" id="imgZoom" src={{asset(Storage::url($resultado->imagen))}} style="height: 400px; width: 400px; object-fit: scale-down">
               </output>
             </center>
           </div>
@@ -69,7 +62,7 @@
                     <tr>
                       <td>{{$contadorParametros}}</td>
                       <td>{{$valor->nombreParametro($valor->f_parametro)}}</th>
-                      <td><input type="text" class="form-control" name="resultados[]" value="{{$detallesResultado[$esp]->resultado}}"></input></td>
+                      <td>{{$detallesResultado[$esp]->resultado}}</td>
                       @if($valor->parametro->valorMinimo)
                         <td>
                           <span class="label label-lg label-cian col-xs-12">
@@ -95,7 +88,7 @@
                         @endif
                       </td>
                       @if ($valor->f_reactivo)
-                        <td>{!!Form::selectRange('datoControlado[]',0, 4, $detallesResultado[$esp]->dato_controlado,['class'=>'form-control'])!!}</td>
+                        <td>{{$detallesResultado[$esp]->dato_controlado}}</td>
                       @else
                         <td>
                           <span class="label label-lg label-gray col-xs-12">Ninguno</span>
@@ -121,53 +114,30 @@
         @endforeach
       </div>
       <div>
-      <div class="form-group col-xs-12">
-        <center>
-          <div class="">
-            <label>
-              <input type="checkbox" name="checkObservacion" id="checkObservacion" class="js-switch" {{($resultado->observacion)?"checked":"unchecked"}} /> Añadir Observación
-            </label>
-          </div>
-        </center>
+      @if ($resultado->observacion!=null)
+    <div class="form-group col-xs-12">
         <div id="divObservacion" style={{($resultado->observacion)?"display:block;":"display:none;"}}>
           <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12">Observaciones</label>
             <div class="col-md-10 col-sm-10 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::textarea('observacion',$resultado->observacion,['class'=>'form-control has-feedback-left','placeholder'=>'Escriba la observación','rows'=>'3']) !!}
+              <span class="form-control" aria-hidden="true">{{$resultado->observacion}}</span>
             </div>
           </div>
         </div>
       </div>
+      @endif
     </div>
   </div>
   <div class="clearfix"></div>
   <center>
-    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
+    <button type="button" class="btn btn-primary" name="button">Imprimir</button>
     <a href={!! asset('/solicitudex') !!} class="btn btn-default">Cancelar</a>
   </center>
 </div>
   {!!Form::close()!!}
-  <script>
-  function imagenExamenFuncion(evt){
-    var files = evt.target.files;
-
-    for(var i = 0, f; f = files[i]; i++){
-      if(!f.type.match('image.*')){
-        continue;
-      }
-
-      var reader = new FileReader();
-
-      reader.onload = (function(theFile){
-        return function(e){
-          document.getElementById('listExamen').innerHTML = ['<img style="height: 400px; width: 400px; object-fit: scale-down" src = "', e.target.result,'"/>'].join('');
-        };
-      })(f);
-      reader.readAsDataURL(f);
-    }
-  }
-  document.getElementById('imagenExamen').addEventListener('change', imagenExamenFuncion, false);
-</script>
+  <script type="text/javascript">
+  function zoom(){
+  		$("#imgZoom").imgViewer();
+  };
+  </script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off'])!!}
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
   @endphp
@@ -18,6 +18,24 @@
         @foreach ($espr as $esp)
           <input type="hidden" name="espr[]" value={{$esp->id}}>
         @endforeach
+        @if ($solicitud->examen->imagen)
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Imagen de {{$solicitud->examen->nombreExamen}}:</label>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            <span class="fa fa-camera form-control-feedback left" aria-hidden="true"></span>
+            <input type="file" name="imagenExamen" id="imagenExamen" accept="image/*" class="form-control has-feedback-left">
+          </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+          <div class="">
+            <center>
+              <output id="listExamen" style="height:400px">
+                  <img src={{asset(Storage::url('noImgen.jpg'))}} style="height: 400px; width: 400px; object-fit: scale-down">
+              </output>
+            </center>
+          </div>
+        </div>
+      @endif
         @foreach ($secciones as $variable)
           @php
           $contadorParametros = 1;
@@ -146,4 +164,25 @@
   </center>
 </div>
   {!!Form::close()!!}
+  <script>
+  function imagenExamenFuncion(evt){
+    var files = evt.target.files;
+
+    for(var i = 0, f; f = files[i]; i++){
+      if(!f.type.match('image.*')){
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = (function(theFile){
+        return function(e){
+          document.getElementById('listExamen').innerHTML = ['<img style="height: 400px; width: 400px; object-fit: scale-down" src = "', e.target.result,'"/>'].join('');
+        };
+      })(f);
+      reader.readAsDataURL(f);
+    }
+  }
+  document.getElementById('imagenExamen').addEventListener('change', imagenExamenFuncion, false);
+</script>
 @endsection

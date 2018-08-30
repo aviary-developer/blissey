@@ -884,6 +884,12 @@
       {!!Html::script('js/scripts/Presentaciones.js')!!}
       {!!Html::script('js/scripts/Requisiciones.js')!!}
       {!!Html::script('js/scripts/StockProveedor.js')!!}
+      <!--js imageViewer -->
+      {!!Html::script('js/imageViewer/jquery-ui.js')!!}
+      {!!Html::script('js/imageViewer/jquery.fs.zoetrope.min.js')!!}
+      {!!Html::script('js/imageViewer/toe.min.js')!!}
+      {!!Html::script('js/imageViewer/jquery.mousewheel.min.js')!!}
+      {!!Html::script('js/imageViewer/imgViewer.js')!!}
       @section('scripts')
       @show
 

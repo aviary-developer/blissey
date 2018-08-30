@@ -104,6 +104,7 @@
             <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
               <h3>Secciones</h3>
               <div class='col-md-9 col-sm-9 col-xs-6'>
+                @if($secciones!=null)
                 @for ($i=0; $i < count($secciones); $i++)
                   @php
                   $contadorParametros = 1;
@@ -158,6 +159,7 @@
                     </tbody>
                   </table>
                 @endfor
+              @endif
               </div>
             </div>
           </div>

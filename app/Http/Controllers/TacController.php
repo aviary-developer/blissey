@@ -97,7 +97,8 @@ class TacController extends Controller
     public function show($id)
     {
       $tac = Tac::find($id);
-      return view('Tac.show',compact('tac'));
+      $servicio = Servicio::where('f_tac',$id)->first();
+      return view('Tac.show',compact('tac','servicio'));
     }
 
     /**
@@ -162,5 +163,11 @@ class TacController extends Controller
       $tac->estado = true;
       $tac->save();
       return Redirect::to('/tacs?estado=0');
+    }
+    public function actualizarPrecioTac(Request $request){
+      $servicio = Servicio::find($request->idServicio);
+      $servicio->precio=$request->precio;
+      $servicio->save();
+      return Response::json('sucess');
     }
 }

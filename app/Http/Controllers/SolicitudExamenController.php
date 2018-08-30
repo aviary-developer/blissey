@@ -594,10 +594,14 @@ class SolicitudExamenController extends Controller
         $resultado= new Resultado();
         $resultado->f_solicitud=$idSolicitud;
         $resultado->observacion=$observacion;
+        if($request->hasfile('imagenExamen')){
+        $resultado->imagen = $request->file('imagenExamen')->store('public/examenes');
+        }
         $resultado->save();
         $resultados=Resultado::all();
         $idResultado=$resultados->last()->id;
         $contadorControlados=0;
+        if($request->espr){
         foreach ($request->espr as $key =>$valor) {
           $detallesResultado= new DetalleResultado();
           $detallesResultado->f_resultado=$idResultado;
@@ -615,6 +619,7 @@ class SolicitudExamenController extends Controller
           }
           $detallesResultado->save();
         }
+      }
         $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
         $cambioEstadoSolicitud->estado=2;
         $cambioEstadoSolicitud->save();
@@ -634,10 +639,14 @@ class SolicitudExamenController extends Controller
       try{
         $resultado=Resultado::where('f_solicitud','=',$idSolicitud)->first();
         $resultado->observacion=$observacion;
+        if($request->hasfile('imagenExamen')){
+        $resultado->imagen = $request->file('imagenExamen')->store('public/examenes');
+        }
         $resultado->save();
         $idResultado=$resultado->id;
         $contadorControlados=0;
         $detallesResultado=DetalleResultado::where('f_resultado','=',$idResultado)->get();
+        if($request->espr){
         foreach ($request->espr as $key =>$valor) {
           $detallesResultado[$key]->resultado=$resultadosGuardar[$key];
           $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
@@ -659,6 +668,7 @@ class SolicitudExamenController extends Controller
           }
           $detallesResultado[$key]->save();
         }
+      }
       }catch(Exception $e){
         DB::rollback();
         return redirect('/solicitudex')->with('mensaje','Algo salio mal');
@@ -860,7 +870,31 @@ class SolicitudExamenController extends Controller
     return $pdf->stream('Examen.pdf');
   }
   public function verExamen($id,$idExamen)
-  { return $request->tipo;
+  {
+    $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+    $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
+    $contador=0;
+    $contadorSecciones=0;
+    if($espr!=null){
+      foreach ($espr as $esp) {
+        if($contador==0){
+          $secciones[$contadorSecciones]=$esp->f_seccion;
+        }else{
+          if($secciones[$contadorSecciones]==$esp->f_seccion)
+          {
+          }else {
+            $contadorSecciones++;
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }
+        }
+        $contador++;
+      }
+    }
+    return view('SolicitudExamenes.verExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
+    /* return $request->tipo;
     if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo="rayosx")) {
     $solicitud=SolicitudExamen::where('id',$id)->first();
     $resultado=Resultado::where('f_solicitud',$id)->first();
@@ -871,7 +905,7 @@ class SolicitudExamenController extends Controller
     $resultado=Resultado::where('f_solicitud',$id)->first();
     $detalleResultadoUltrasonografia=DetalleUltrasonografia::where('f_resultado','=',$resultado->id)->first();
     return view('SolicitudUltras.show',compact('solicitud','resultado','detalleResultadoUltrasonografia'));
-  }
+  }*/
   }
   public function examenesEntregados(Request $request){
     $vista = $request->get("vista");
