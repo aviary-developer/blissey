@@ -3,53 +3,64 @@
   @php
   $index = true;
   setlocale(LC_ALL,'es');
+  if ($tipo==4) {
+    $estadoOpuesto=5;
+  } else {
+    $estadoOpuesto=4;
+  }
   @endphp
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>
-          @if($tipo==4)Requisiciones
-            <small>Pendientes</small>
-          @endif
-          @if($tipo==5)Requisiciones
-            <small>Atendidas</small>
-          @endif
-        </h2>
-        <div class="clearfix"></div>
+      <div class="row bg-blue">
+        <center>
+          <h3>Requisiciones Recibidas
+            @if ($tipo==4)
+              <small class="label-white badge blue ">Pendientes</small>
+            @endif
+            @if($tipo==5)
+              <small class="label-white badge green ">Atendidas</small>
+            @endif
+          </h3>
+        </center>
       </div>
+      <div class="row">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li>
+                <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa2 fa-eye"></i> Ver
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href={!! asset('/requisiciones?tipo='.$estadoOpuesto) !!}>
+                      @if ($estadoOpuesto==5)
+                        Atendidas
+                        <span class="label label-success">{{ App\Transacion::whereIn('tipo',[5,6])->where('localizacion',App\Transacion::contrario())->count() }}</span>
+                      @else
+                        Pendientes
+                        <span class="label label-warning">{{ App\Transacion::where('tipo',4)->where('localizacion',App\Transacion::contrario())->count() }}</span>
+                      @endif
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="x_panel">
       <div class="x_content">
         <div class="row">
-          <div class="col-md-5 col-xs-12">
-            <div class="btn-group">
-              @if($tipo==4)
-                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/verrequisiciones?tipo=5') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Atendidas
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',5)->count() }}</span>
-                </a>
-              @endif
-              @if($tipo==5)
-                <a href={!! asset('#') !!} class="btn btn-dark btn-ms"><i class="fa fa-file"></i> Reporte</a>
-                <a href={!! asset('/verrequisiciones?tipo=4') !!} class="btn btn-dark btn-ms">
-                  <i class="fa fa-file"></i> Pendientes
-                  <span class="label label-warning">{{ App\Transacion::where('tipo',4)->count() }}</span>
-                </a>
-              @endif
-            </div>
-          </div>
-          <div class="col-md-3 col-xs-12"></div>
-          <div class="col-md-4 col-xs-12">
-            {!!Form::open(['route'=>'transacciones.index','method'=>'GET','role'=>'search','class'=>'form-inline'])!!}
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('buscar',null,['placeholder'=>'Buscar','class'=>'form-control has-feedback-left']) !!}
-              <input type="hidden" value={{$tipo}} name="tipo">
-            </div>
-            {!! Form::close() !!}
-          </div>
-        </div>
-        <br>
-        <table class="table table-striped">
+        <table class="table table-striped" id="index-table">
           <thead>
             <tr>
               <th>#</th>
@@ -96,10 +107,8 @@
           @endif
         </tbody>
       </table>
+    </div>
       <div class="ln_solid"></div>
-      <center>
-        {!! str_replace ('/?', '?', $transacciones->appends(Request::only(['buscar','tipo']))->render ()) !!}
-      </center>
     </div>
   </div>
 </div>

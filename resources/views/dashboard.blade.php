@@ -735,8 +735,8 @@
                   {{--inicio notificaciones de Recepción --}}
                   @if(Auth::user()->tipoUsuario == "Recepción")
                     @php
-                      $requisiciones= App\Transacion::where('tipo',5)->count();
-                      $ultima= App\Transacion::where('tipo',5)->orderBy('id','asc')->get()->last();
+                      $requisiciones= App\Transacion::where('tipo',5)->where('localizacion',App\Transacion::tipoUsuario())->count();
+                      $ultima= App\Transacion::where('tipo',5)->where('localizacion',App\Transacion::tipoUsuario())->orderBy('id','asc')->get()->last();
                       $conteostock=App\DivisionProducto::conteo();
                       $stock=0;
                       // if($conteostock>0){
