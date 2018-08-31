@@ -66,6 +66,13 @@
       {!! Form::number('precio',null,['id'=>'precio_campo','class'=>'form-control has-feedback-left','placeholder'=>'Precio del examen','step'=>'0.01']) !!}
     </div>
   </div>
+  <center>
+    <div class="">
+      <label>
+        <input type="checkbox" name="checkImagenExamen" id="checkImagenExamen" class="js-switch" unchecked /> ¿Almacenará imagen?
+      </label>
+    </div>
+  </center>
   <div class="x_panel" id="panel_seccion">
     <div class="btn-success col-xs-3 btn" style="height: 130px; margin: 0px;" id="agregar_seccion_x" data-toggle="modal" data-target="#modal1" >
       <center>

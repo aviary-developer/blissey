@@ -43,6 +43,10 @@
                     </td>
                   </tr>
                   <tr>
+                    <th>Precio</th>
+                    <td>{{ '$ '.number_format($servicio->precio,2,'.',',') }}   &nbsp @include('RayosX.Formularios.actualizarPrecio')</td>
+                  </tr>
+                  <tr>
                     <th>Fecha de creación</th>
                     <td>{{ $rayox->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                   </tr>

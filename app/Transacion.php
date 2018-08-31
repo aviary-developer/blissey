@@ -16,11 +16,7 @@ class Transacion extends Model
     return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('fecha','DESC')->paginate(10);
   }
   public static function pendientes($buscar,$tipo){
-    if(Auth::user()->tipoUsuario=='Farmacia'){
-      $contrario=1;
-    }elseif(Auth::user()->tipoUsuario=='Recepción'){
-      $contrario=0;
-    }
+    $contrario=Transacion::contrario();
     return Transacion::factura($buscar)->tipo($tipo)->where('localizacion',$contrario)->orderBy('fecha','DESC')->paginate(10);
   }
   public function scopeFactura($query, $buscar){
@@ -305,5 +301,13 @@ class Transacion extends Model
             $total=$total-($total*($des/100));
           }
           return $total;
+        }
+        public static function contrario(){
+          $contrario;
+          if(Auth::user()->tipoUsuario=='Farmacia'){
+            return 1;
+          }elseif(Auth::user()->tipoUsuario=='Recepción'){
+            return 0;
+          }
         }
       }

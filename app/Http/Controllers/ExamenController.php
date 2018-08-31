@@ -84,8 +84,10 @@ class ExamenController extends Controller
       $examenNuevo->nombreExamen=$request->nombreExamen;
       $examenNuevo->tipoMuestra=$request->tipoMuestra;
       $examenNuevo->area=$request->area;
+      if($request->checkImagenExamen){
+        $examenNuevo->imagen=true;
+      }
       $examenNuevo->save();
-
       //Crear una categoria de servicio asociada a los examen
       $categoria_existe = CategoriaServicio::where('nombre','Laboratorio Clínico')->first();
 
@@ -150,6 +152,8 @@ class ExamenController extends Controller
         }
         $contador++;
       }
+    }else {
+      $secciones=null;
     }
     return view('Examenes.show',compact('examen','e_s_p','secciones','servicio'));
   }

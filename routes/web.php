@@ -276,6 +276,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::resource('cambio_productos','CambioProductoController');
   Route::get('/descartarVencidos','CambioProductoController@descartar');
   Route::get('/confirmarRetiroVencidos','CambioProductoController@confirmarRetiro');
+  Route::get('/confirmarRetiroIndividual/{id}','CambioProductoController@confirmarIndividual');
 
   //Rutas medicas
   Route::get('/consultar','ConsultaController@consulta');
@@ -303,16 +304,19 @@ Route::resource('/ultrasonografias','UltrasonografiaController');
 Route::match(['get','post'],'/desactivateUltrasonografia/{id}','UltrasonografiaController@desactivate');
 Route::match(['get','post'],'/activateUltrasonografia/{id}','UltrasonografiaController@activate');
 Route::match(['get','post'],'/destroyUltrasonografia/{id}','UltrasonografiaController@destroy');
+Route::match(['get','post'],'/actualizarPrecioUltra','UltrasonografiaController@actualizarPrecioUltra');
 
 Route::resource('/rayosx','RayosxController');
 Route::match(['get','post'],'/desactivateRayosx/{id}','RayosxController@desactivate');
 Route::match(['get','post'],'/activateRayosx/{id}','RayosxController@activate');
 Route::match(['get','post'],'/destroyRayosx/{id}','RayosxController@destroy');
+Route::match(['get','post'],'/actualizarPrecioRayox','RayosxController@actualizarPrecioRayox');
 
 Route::resource('/tacs','TacController');
 Route::match(['get','post'],'/desactivateTac/{id}','TacController@desactivate');
 Route::match(['get','post'],'/activateTac/{id}','TacController@activate');
 Route::match(['get','post'],'/destroyTac/{id}','TacController@destroy');
+Route::match(['get','post'],'/actualizarPrecioTac','TacController@actualizarPrecioTac');
 
 Route::get('/password/email','Auth\ForgotPasswordController@form');
 

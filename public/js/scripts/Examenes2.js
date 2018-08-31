@@ -260,10 +260,16 @@ function bloqueo_listo() {
 
 $("#guardar_examen").on("click", function (e) {
   e.preventDefault();
+    var imagens;
+    if(imagen=$("#checkImagenExamen:checked").val()!=null){
+    imagen=imagen;
+  }else{
+      imagen=imagen;
+    }
   var nombre = $("#nombre_examen").val();
   var precio = $("#precio_campo").val();
   var bandera = true;
-  if (total_seccion < 1) {
+  if ((total_seccion < 1) && (imagen==false)) {
     new PNotify({
       title: '¡Error!',
       text: 'Se necesita 1 sección como mínimo',
@@ -300,7 +306,11 @@ $("#guardar_examen").on("click", function (e) {
     bandera = false;
   }
   if (bandera) {
-
+    if (imagen) {
+      imagen="Si";
+    }else{
+      imagen="No";
+    }
     var seccion_agregadas = $("#panel_seccion").find('input[name="seccion_a_ver"]');
     var titulo = $('#nombre_examen').val();
     var tipo_muestra = $("#tipo_muestra_select option:selected").text();
@@ -312,6 +322,8 @@ $("#guardar_examen").on("click", function (e) {
     "<b class='blue'>" + tipo_muestra + "</b></span>" +
     "<br><span class='left'>Área del examen: " +
     "<b class='blue'>" + area + "</b></span>" +
+    "<br><span class='left'>Se agregará imagen: " +
+    "<b class='blue'>" + imagen + "</b></span>" +
     "<br><div class='ln_solid'></div>";
     var html_2="";
     $(seccion_agregadas).each(function (key, value) {

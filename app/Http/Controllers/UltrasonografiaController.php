@@ -97,7 +97,8 @@ class UltrasonografiaController extends Controller
     public function show($id)
     {
       $ultrasonografia = ultrasonografia::find($id);
-      return view('Ultrasonografias.show',compact('ultrasonografia'));
+      $servicio = Servicio::where('f_ultrasonografia',$id)->first();
+      return view('Ultrasonografias.show',compact('ultrasonografia','servicio'));
     }
 
     /**
@@ -172,5 +173,11 @@ class UltrasonografiaController extends Controller
    public function ingresoMuestra(MuestraRequest $request){
      ultrasonografia::create($request->All());
      return Response::json('success');
+   }
+   public function actualizarPrecioUltra(Request $request){
+     $servicio = Servicio::find($request->idServicio);
+     $servicio->precio=$request->precio;
+     $servicio->save();
+     return Response::json('sucess');
    }
 }

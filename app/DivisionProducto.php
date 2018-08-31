@@ -46,11 +46,7 @@ class DivisionProducto extends Model
         }
       }
     }
-    if(Auth::user()->tipoUsuario=='Farmacia'){
-      $contrario=1;
-    }elseif(Auth::user()->tipoUsuario=='Recepción'){
-      $contrario=0;
-    }
+    $contrario=Transacion::contrario();
     $ce=0;
     $envios=transacion::where('tipo',5)->where('localizacion',$contrario)->get();//envios a recepción no comfirmados
     foreach ($envios as $envio) {

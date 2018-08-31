@@ -97,7 +97,8 @@ class RayosxController extends Controller
     public function show($id)
     {
       $rayox = Rayosx::find($id);
-      return view('RayosX.show',compact('rayox'));
+      $servicio = Servicio::where('f_rayox',$id)->first();
+      return view('RayosX.show',compact('rayox','servicio'));
     }
 
     /**
@@ -162,5 +163,11 @@ class RayosxController extends Controller
       $rayosx->estado = true;
       $rayosx->save();
       return Redirect::to('/rayosx?estado=0');
+    }
+    public function actualizarPrecioRayox(Request $request){
+      $servicio = Servicio::find($request->idServicio);
+      $servicio->precio=$request->precio;
+      $servicio->save();
+      return Response::json('sucess');
     }
 }
