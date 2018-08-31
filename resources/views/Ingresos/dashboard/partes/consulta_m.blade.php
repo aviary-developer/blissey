@@ -38,7 +38,7 @@
         </div>
       </div>
       <center style="margin-top: 10px">
-        <button type="button" class="btn-sm btn-primary btn" data-toggle="modal" data-target="#receta">Tratamiento</button>
+        <button type="button" class="btn-sm btn-primary btn" id="ver_crear_receta">Tratamiento</button>
         <button type="button" class="btn-sm btn-default btn" id="cancelar_consulta">Cancelar</button>
       </center>
     </form>

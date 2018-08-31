@@ -17,4 +17,8 @@ class Consulta extends Model
     public function medico(){
         return $this->belongsTo('App\User','f_medico');
     }
+
+    public function recetas(){
+        return $this->hasMany('App\Receta','f_consulta');
+    }
 }

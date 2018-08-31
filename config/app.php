@@ -183,6 +183,8 @@ return [
         Barryvdh\Snappy\ServiceProvider::class,
         //Para respaldos y Restore
         BackupManager\Laravel\Laravel5ServiceProvider::class,
+        //Para generar el codigo de barras
+        Milon\Barcode\BarcodeServiceProvider::class,
     ],
 
     /*
@@ -239,6 +241,9 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
+        //Barcode
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
     ],
 
 ];

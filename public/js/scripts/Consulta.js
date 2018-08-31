@@ -83,6 +83,7 @@ $(document).on("ready", function () {
         texto: contenedor.val()
       },
       success: function (r) {
+        console.log(r);
         if (r) {
           swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
           location.reload();
@@ -148,6 +149,15 @@ $(document).on("ready", function () {
     $("#ver_signo__").hide();
     $("#examenes__").show();
   }
+
+  $("#ver_crear_receta").click(function (e) {
+    e.preventDefault();
+    if ($("#motivo").val() != "" && $("#historia").val() != "" && $("#ex_fisico").val() != "" && $("#diagnostico").val() != "") {
+      $("#receta").modal('show');
+    } else {
+      swal("Error", "Llene todos los campos para continuar", "error");
+    }
+  });
 
 });
 

@@ -329,3 +329,6 @@ Route::match(['get','post'],'/subirRespaldo', 'RespaldoController@subir');
 
 //Rutas de la consulta médica
 Route::get('/consultas/datos_producto','ConsultaController@datos_producto')->name('consulta.datos_producto');
+
+//Rutas de receta
+Route::resource('recetas', 'RecetaController');

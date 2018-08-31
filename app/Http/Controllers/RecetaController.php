@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Receta;
+use App\Consulta;
+use \Milon\Barcode\DNS1D;
 use Illuminate\Http\Request;
 
 class RecetaController extends Controller
@@ -44,9 +46,14 @@ class RecetaController extends Controller
      * @param  \App\Receta  $receta
      * @return \Illuminate\Http\Response
      */
-    public function show(Receta $receta)
+    public function show($id)
     {
-        //
+        $consulta = Consulta::find($id);
+        $header = view('PDF.header.hospital');
+        $footer = view('PDF.footer.numero_pagina');
+        $main = view('Recetas.contenido',compact('consulta'));
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream('nombre.pdf');
     }
 
     /**
