@@ -76,7 +76,7 @@ var solicitudes=0;
       var html = '<div class="row" id="' + selector + '" style="margin: 0px 10px 0px 15px">'+
         '<p style="font-size: medium">'+
           '<i class="fa fa-check blue"></i> '+
-          'Realizarse un examén de <b class="blue">' + texto_boton + '</b>' +
+          'Realizarse un examen de <b class="blue">' + texto_boton + '</b>' +
         '</p>'+
         '</div>';
       

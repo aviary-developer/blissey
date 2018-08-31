@@ -78,14 +78,21 @@
         </div>
         <div class="col-xs-6">
           <div class="x_panel m_panel" style="height: 440px">
-            Receta
+            @include('Ingresos.dashboard.modales.partes.texto_evaluacion')
           </div>
         </div>
       </div>
       <div id="otro-div" hidden="hidden">
         <div class="col-xs-12">
           <div class="x_panel m_panel" style="height: 440px">
-            Editor de texto
+            <div class="row">
+              <center>
+                <h5 class="big-text">Editor de texto</h5>
+              </center>
+            </div>
+            <div class="row">
+              @include('Ingresos.dashboard.modales.partes.editor_texto')
+            </div>
           </div>
         </div>
       </div>

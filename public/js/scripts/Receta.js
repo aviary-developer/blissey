@@ -195,8 +195,82 @@ $(document).on('ready', function () {
 
     $(this).parent('p').parent('div').parent('div').remove();
   });
+
+  $("#texto-evaluacion").on('click', '#remove_eva', function (e) {
+    e.preventDefault();
+
+    $(this).parent('p').parent('div').parent('div').remove();
+  });
+
+  $("#agregar_ultra_receta").click(function (e) {
+    e.preventDefault();
+    agregar_text_receta_evaluacion('ultra');
+  });
+
+  $("#agregar_rayo_receta").click(function (e) {
+    e.preventDefault();
+    agregar_text_receta_evaluacion('rayo');
+  });
+
+  $("#agregar_tac_receta").click(function (e) {
+    e.preventDefault();
+    agregar_text_receta_evaluacion('tac');
+  });
 });
 
 $("#receta").on('shown.bs.modal', function () {
   $(document).off('focusin.modal');
 });
+
+function agregar_text_receta_evaluacion(tipo) {
+  if (tipo == 'ultra') {
+    var texto = $("#f_ultra_receta option:selected").text();
+    var id = $("#f_ultra_receta").val();
+    var tipo_l = 'una ultrasonografía';
+  } else if (tipo == 'rayo') {
+    var texto = $("#f_rayo_receta option:selected").text();
+    var id = $("#f_rayo_receta").val();
+    var tipo_l = 'una evaluación de rayos X';
+  } else {
+    var texto = $("#f_tac_receta option:selected").text();
+    var id = $("#f_tac_receta").val();
+    var tipo_l = 'una tomografía';
+  }
+
+  var ultima = texto.substr(-1, 1);
+  var penultima = texto.substr(-2, 1);
+  var art = 'del';
+  if (ultima == 'a') {
+    art = 'de la';
+  } else if (ultima == 'o' || ultima == 'e' || ultima == 'i' || ultima == 'u') {
+    art = 'del';
+  } else if (ultima == 's') {
+    if (penultima == 'a') {
+      art = 'de las';
+    } else if (penultima == 'o' || penultima == 'e' || penultima == 'i' || penultima == 'u') {
+      art = 'de los';
+    }
+  } else {
+    if (penultima == 'a') {
+      art = 'de la';
+    } else if (penultima == 'o' || penultima == 'e' || penultima == 'i' || penultima == 'u') {
+      art = 'del';
+    }
+  }
+
+  var html = '<div class="row">' +
+    '<div class="row" style="margin: 0 10px 0 15px">' +
+    '<p style="font-size: medium">' +
+    '<button type="button" class="btn btn-xs btn-danger" id="remove_eva">' +
+    '<i class="fa fa-remove"></i>' +
+    '</button>' +
+    'Realizarse ' + tipo_l + ' ' + art + ' <b class="blue">' +
+    texto +
+    '</b>' +
+    '</p>' +
+    '<input type="hidden" name="' + tipo + '_v[]" id="i_' + tipo + '" value="' + id + '">' +
+    '</div>' +
+    '</div>';
+
+  $("#texto-evaluacion").append(html);
+}

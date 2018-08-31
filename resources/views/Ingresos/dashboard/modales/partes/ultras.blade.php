@@ -7,7 +7,7 @@
   <div class="form-group">
     <label class="control-label col-xs-3">Examen *</label>
     <div class="col-xs-9">
-      <select class="form-control" id="f_ultra">
+      <select class="form-control" id="f_ultra_receta">
         @if (count($ultras)==0)
             <option value="0" disabled>No hay examenes de Ultrasonografía registrados</option>
         @else
