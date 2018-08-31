@@ -85,6 +85,11 @@
                   <td><a href={!! asset('/cambio_productos/'.$retirado->id)!!} class="btn btn-sm btn-info"  data-toggle="tooltip" data-placement="top" title="Ver">
                     <i class="fa fa-info-circle"></i>
                     </a>
+                    @if (!$retirado->estado)
+                      <a href={!! asset('/confirmarRetiroIndividual/'.$retirado->id)!!} class="btn btn-sm btn-primary"  data-toggle="tooltip" data-placement="top" title="Ver">
+                        <i class="fa fa-check"></i>
+                        </a>
+                    @endif
                   </td>
                 </tr>
                 @php

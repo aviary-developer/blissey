@@ -276,6 +276,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::resource('cambio_productos','CambioProductoController');
   Route::get('/descartarVencidos','CambioProductoController@descartar');
   Route::get('/confirmarRetiroVencidos','CambioProductoController@confirmarRetiro');
+  Route::get('/confirmarRetiroIndividual/{id}','CambioProductoController@confirmarIndividual');
 
   //Rutas medicas
   Route::get('/consultar','ConsultaController@consulta');

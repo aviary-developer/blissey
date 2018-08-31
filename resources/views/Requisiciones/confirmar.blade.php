@@ -2,15 +2,18 @@
 @section('layout')
 {{-- {!! Form::model($transaccion,['route'=>['requisiciones.update',$transaccion->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','id'=>'formVender','autocomplete'=>'off']) !!} --}}
   <div class="col-xs-12">
-      <div class="x_panel">
-        <div class="x_title">
-            <h2>Requisición<small>Confirmar</small></h2>
-          <div class="clearfix"></div>
-        </div>
-        @include('Requisiciones.Formularios.formConfirm')
+    <div class="x_panel">
+      <div class="row bg-blue">
+        <center>
+          <h3>Requisición
+              <small class="label-white badge green ">Confirmar</small>
+          </h3>
+        </center>
       </div>
-  <center>
-</center>
+    </div>
+    <div class="x_panel">
+      @include('Requisiciones.Formularios.formConfirm')
+    </div>
 </div>
 {{-- {!!Form::close()!!} --}}
 @endsection
