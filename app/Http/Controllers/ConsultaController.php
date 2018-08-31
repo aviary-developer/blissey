@@ -7,6 +7,7 @@ use App\Ingreso;
 use App\Paciente;
 use App\Producto;
 use App\Bitacora;
+use App\Receta;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,35 @@ class ConsultaController extends Controller
             $consulta = Consulta::create($request->All());
             $consulta->f_medico = Auth::user()->id;
             $consulta->save();
+
+            $codigo = str_pad($consulta->id, 10, "0", STR_PAD_LEFT);
+
+            foreach($request->nombre_producto as $k => $nombre_producto){
+                $producto = Producto::where('nombre',$nombre_producto)->first();
+                if($producto == null){
+                    $id_p = null;
+                }else{
+                    $id_p = $producto->id;
+                }
+
+                $receta = new Receta;
+                $receta->f_ingreso = $request->f_ingreso;
+                $receta->barcode = $codigo;
+                $receta->f_medico = Auth::user()->id;
+
+                $receta->nombre_producto = $nombre_producto;
+                $receta->f_producto = $id_p;
+                $receta->cantidad_dosis = $request->cant_dosis[$k];
+                $receta->forma_dosis = $request->forma_dosis[$k];
+                $receta->cantidad_frecuencia = $request->cant_frec[$k];
+                $receta->forma_frecuencia = $request->forma_frec[$k];
+                $receta->cantidad_duracion = $request->cant_duracion[$k];
+                $receta->forma_duracion = $request->forma_duracion[$k];
+                $receta->observacion = $request->observacion[$k];
+
+                $receta->save();
+            }
+
             DB::commit();
             Bitacora::bitacora('store', 'consultas', 'consultas', $consulta->id);
         }catch(Exception $e){

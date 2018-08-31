@@ -16,7 +16,7 @@ class CreateRecetasTable extends Migration
         Schema::create('recetas', function (Blueprint $table) {
             $table->increments('id');
             /**Datos generales */
-            $table->integer('f_ingreso')->unsigned();
+            $table->integer('f_consulta')->unsigned();
             $table->string('barcode');
             $table->integer('f_medico')->unsigned();
             /**Seccion: Medicamento */
@@ -38,7 +38,7 @@ class CreateRecetasTable extends Migration
             /**Seccion: Editor de texto */
             $table->text('Texto')->nullable();
             /**Llaves foraneas */
-            $table->foreign('f_ingreso')->references('id')->on('ingresos');
+            $table->foreign('f_consulta')->references('id')->on('consultas');
             $table->foreign('f_medico')->references('id')->on('users');
             $table->foreign('f_producto')->references('id')->on('productos');
             $table->foreign('f_examen')->references('id')->on('examens');

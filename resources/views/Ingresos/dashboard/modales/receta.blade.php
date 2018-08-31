@@ -98,6 +98,7 @@
       </div>
     </div>
     <div class="row alignright">
+      <button type="button" class="btn-sm btn-primary btn" id="guardar_consulta">Guardar</button>
       <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" onclick="location.reload()">Cerrar</button>
     </div>
   </div>

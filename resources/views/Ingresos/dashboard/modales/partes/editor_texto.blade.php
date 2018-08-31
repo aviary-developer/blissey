@@ -57,6 +57,5 @@
 
   <div id="editor-one" name="contenedor" class="editor-wrapper"></div>
 
-  <textarea name="observacion" id="descr" style="display:none;"></textarea>
-  <div class="ln_solid"></div>
+  <textarea name="observacion" id="texto-receta" style="display:none;"></textarea>
 </div>

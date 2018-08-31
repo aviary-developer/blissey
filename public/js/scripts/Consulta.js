@@ -1,6 +1,64 @@
 $(document).on("ready", function () {
   $("#guardar_consulta").on("click", function (e) { 
     e.preventDefault();
+    /**Guardar el texto del editor en un text area */
+    var contenedor = $('#texto-receta');
+    var textoHTML = $('#editor-one').html();
+    contenedor.val(textoHTML);
+    /**Variables del tratamiento o receta */
+    var nombre_producto_prov = $("input[name = 'medicamento[]']").serializeArray();
+    var cant_dosis_prov = $("input[name='cant_dosis[]']").serializeArray();
+    var forma_dosis_prov = $("input[name='forma_dosis[]']").serializeArray();
+    var cant_frec_prov = $("input[name='cant_frec[]']").serializeArray();
+    var forma_frec_prov = $("input[name='forma_frec[]']").serializeArray();
+    var cant_duracion_prov = $("input[name='cant_duracion[]']").serializeArray();
+    var forma_duracion_prov = $("input[name='forma_duracion[]']").serializeArray();
+    var observacion_prov = $("input[name='observacion[]']").serializeArray();
+    var examen_prov = $("input[name = 'examen[]']").serializeArray();
+    var tac_prov = $("input[name = 'tac_v[]']").serializeArray();
+    var ultra_prov = $("input[name = 'ultra_v[]']").serializeArray();
+    var rayo_prov = $("input[name = 'rayo_v[]']").serializeArray();
+
+    var nombre_producto = [];
+    var cant_dosis = [];
+    var forma_dosis = [];
+    var cant_frec = [];
+    var forma_frec = [];
+    var cant_duracion = [];
+    var forma_duracion = [];
+    var observacion = [];
+    var examen = [];
+    var tac = [];
+    var ultra = [];
+    var rayo = [];
+
+    $(nombre_producto_prov).each(function (key, value) {
+      nombre_producto.push(value.value);
+      cant_dosis.push(cant_dosis_prov[key].value);
+      forma_dosis.push(forma_dosis_prov[key].value);
+      cant_frec.push(cant_frec_prov[key].value);
+      forma_frec.push(forma_frec_prov[key].value);
+      cant_duracion.push(cant_duracion_prov[key].value);
+      forma_duracion.push(forma_duracion_prov[key].value);
+      observacion.push(observacion_prov[key].value);
+    });
+
+    $(examen_prov).each(function (key, value) { 
+      examen.push(value.value);
+    });
+
+    $(tac_prov).each(function (key, value) {
+      tac.push(value.value);
+    });
+
+    $(ultra_prov).each(function (key, value) {
+      ultra.push(value.value);
+    });
+
+    $(rayo_prov).each(function (key, value) {
+      rayo.push(value.value);
+    });
+
     $.ajax({
       type: "post",
       url: "/blissey/public/consulta",
@@ -9,7 +67,20 @@ $(document).on("ready", function () {
         historia: $("#historia").val(),
         examen_fisico: $("#ex_fisico").val(),
         diagnostico: $("#diagnostico").val(),
-        f_ingreso: $("#id").val()
+        f_ingreso: $("#id").val(),
+        nombre_producto: nombre_producto,
+        cant_dosis: cant_dosis,
+        forma_dosis: forma_dosis,
+        cant_frec: cant_frec,
+        forma_frec: forma_frec,
+        cant_duracion: cant_duracion,
+        forma_duracion: forma_duracion,
+        observacion: observacion,
+        f_examen: examen,
+        f_tac: tac,
+        f_ultrasonografia: ultra,
+        f_rayox: rayo,
+        texto: contenedor.val()
       },
       success: function (r) {
         if (r) {
