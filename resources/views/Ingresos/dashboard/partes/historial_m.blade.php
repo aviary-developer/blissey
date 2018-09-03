@@ -24,7 +24,7 @@
         </div>
         <div class="row" style="margin-bottom: 8px;">
           <div class="col-xs-10">
-            @if ($ingreso->tipo == 3)
+            @if ($ingreso->tipo == 3 && $ingreso->consulta->count() > 0)
               <div class="row">
                 <center>
                   <span class="big-text">
@@ -59,7 +59,7 @@
             </div> 
           </div>
           <div class="col-xs-2">
-            <button type="button" class="btn btn-xs btn-dark" style="margin: auto" onclick={{'v_consulta('.(($ingreso->tipo == 3)?$ingreso->consulta[0]->id:$ingreso->id).','.$ingreso->tipo.')'}}>
+            <button type="button" class="btn btn-xs btn-dark" style="margin: auto" onclick={{'v_consulta('.(($ingreso->tipo == 3 && $ingreso->consulta->count() > 0)?$ingreso->consulta[0]->id:$ingreso->id).','.$ingreso->tipo.')'}}>
               <i class="fa fa-eye"></i> Ver
             </button>
           </div>

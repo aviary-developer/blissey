@@ -2,7 +2,9 @@
   <div class="tab-pane fade active in" id="tab_c_ex_1" role="tabpanel" aria-labelledby="tab_ex_1">
     <div>
       <div class="row">
-        <h3>Área de Bacteriología</h3>
+        <center>
+          <h3>Área de Bacteriología</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -23,7 +25,9 @@
   <div class="tab-pane fade" id="tab_content2" role="tabpanel" aria-labelledby="tab2">
     <div>
       <div class="row">
-        <h3>Área de Exámenes de heces</h3>
+        <center>
+          <h3>Área de Exámenes de heces</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -44,7 +48,9 @@
   <div class="tab-pane fade" id="tab_content3" role="tabpanel" aria-labelledby="tab3">
     <div>
       <div class="row">
-        <h3>Área de Exámenes de orina</h3>
+        <center>
+          <h3>Área de Exámenes de orina</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -65,7 +71,9 @@
   <div class="tab-pane fade" id="tab_content4" role="tabpanel" aria-labelledby="tab4">
     <div>
       <div class="row">
-        <h3>Área de Hematología</h3>
+        <center>
+          <h3>Área de Hematología</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -86,7 +94,9 @@
   <div class="tab-pane fade" id="tab_content5" role="tabpanel" aria-labelledby="tab5">
     <div>
       <div class="row">
-        <h3>Área de Inmunología</h3>
+        <center>
+          <h3>Área de Inmunología</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -107,7 +117,9 @@
   <div class="tab-pane fade" id="tab_content6" role="tabpanel" aria-labelledby="tab6">
     <div>
       <div class="row">
-        <h3>Área de Química sanguinea</h3>
+        <center>
+          <h3>Área de Química sanguinea</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -128,7 +140,9 @@
   <div class="tab-pane fade" id="tab_content7" role="tabpanel" aria-labelledby="tab7">
     <div>
       <div class="row">
-        <h3>Área de Enzimas</h3>
+        <center>
+          <h3>Área de Enzimas</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -149,7 +163,9 @@
   <div class="tab-pane fade" id="tab_content8" role="tabpanel" aria-labelledby="tab8">
     <div>
       <div class="row">
-        <h3>Área de Pruebas especiales</h3>
+        <center>
+          <h3>Área de Pruebas especiales</h3>
+        </center>
       </div>
       <br>
       <div class="row">
@@ -170,7 +186,9 @@
   <div class="tab-pane fade" id="tab_content9" role="tabpanel" aria-labelledby="tab9">
     <div>
       <div class="row">
-        <h3>Área de Otros exámenes</h3>
+        <center>
+          <h3>Área de Otros exámenes</h3>
+        </center>
       </div>
       <br>
       <div class="row">

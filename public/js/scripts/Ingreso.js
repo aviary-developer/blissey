@@ -101,7 +101,7 @@ $(document).on('ready', function () {
       $("#derecha").hide();
       $("#izq_interno").attr('style', 'height:auto');
     } else {
-      $("#modal").modal('hide');
+      $("#modal_").modal('hide');
     }
 
   });
@@ -234,7 +234,6 @@ $(document).on('ready', function () {
     if (concat.length > 0) {
       $.ajax({
         url: "/blissey/public/solicitudex",
-        headers: { 'X-CSRF-TOKEN': token },
         type: "POST",
         data: {
           f_paciente: paciente,

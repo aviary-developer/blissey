@@ -1,5 +1,5 @@
 $(document).on("ready", function () {
-  $("#guardar_consulta").on("click", function (e) { 
+  $("#guardar_consulta").on("click", async function (e) { 
     e.preventDefault();
     /**Guardar el texto del editor en un text area */
     var contenedor = $('#texto-receta');
@@ -59,7 +59,7 @@ $(document).on("ready", function () {
       rayo.push(value.value);
     });
 
-    $.ajax({
+    await $.ajax({
       type: "post",
       url: "/blissey/public/consulta",
       data: {
@@ -82,10 +82,10 @@ $(document).on("ready", function () {
         f_rayox: rayo,
         texto: contenedor.val()
       },
-      success: function (r) {
-        console.log(r);
-        if (r) {
+      success: async function (r) {
+        if (r != 0) {
           swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
+          window.open("/blissey/public/recetas/"+codigo,'_blank');
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");

@@ -1,8 +1,12 @@
 <div role="tabpanel" data-example-id="togglable-tabs">
-  <div class="col-xs-2">
-    @include('SolicitudExamenes.Formularios.opciones')
+  <div class="col-xs-3">
+    <div class="x_panel">
+      @include('SolicitudExamenes.Formularios.opciones')
+    </div>
   </div>
-  <div class="col-xs-10">
-    @include('SolicitudExamenes.Formularios.contenido')
+  <div class="col-xs-9">
+    <div class="x_panel" style="height:447px;">
+      @include('SolicitudExamenes.Formularios.contenido')
+    </div>
   </div>
 </div>

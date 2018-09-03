@@ -99,3 +99,9 @@ $("[data-tooltip='tooltip']").tooltip();
 $(".modal").on('shown.bs.modal', function () {
   $(this).find("input:visible:first").focus();
 });
+
+$(document).on('ready', function () {
+  setTimeout(function () {
+    $("#mout").fadeOut(1500);
+  }, 3000);
+});

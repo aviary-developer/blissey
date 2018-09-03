@@ -148,7 +148,8 @@ class ConsultaController extends Controller
             DB::rollback();
             return 0;
         }
-        return 1;
+
+        return $codigo;
     }
 
     /**

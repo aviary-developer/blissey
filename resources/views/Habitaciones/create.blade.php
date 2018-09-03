@@ -12,6 +12,20 @@
           <h3>Habitación <small class="label-white blue badge">Nuevo</small></h3>
         </center>
       </div>
+      <div class="row">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li>
+                <a href={!! asset('/habitaciones') !!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+              </li> 
+            </ul>
+          </div>
+        </nav>
+      </div>
     </div>
     <div class="row">
       <div class="col-xs-5">
