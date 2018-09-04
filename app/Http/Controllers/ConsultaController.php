@@ -149,7 +149,7 @@ class ConsultaController extends Controller
             return 0;
         }
 
-        return $codigo;
+        return $consulta->id;
     }
 
     /**

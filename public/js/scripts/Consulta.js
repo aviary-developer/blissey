@@ -82,10 +82,10 @@ $(document).on("ready", function () {
         f_rayox: rayo,
         texto: contenedor.val()
       },
-      success: async function (r) {
+      success: function (r) {
         if (r != 0) {
           swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
-          window.open("/blissey/public/recetas/"+codigo,'_blank');
+          window.open("/blissey/public/recetas/"+r,'_blank');
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");
