@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Receta;
 use App\Consulta;
+use App\DivisionProducto;
 use \Milon\Barcode\DNS1D;
 use Illuminate\Http\Request;
 
@@ -168,6 +169,75 @@ class RecetaController extends Controller
         }else{
             $cero = true;
 
+            return (compact('cero','recetas'));
+        }
+    }
+
+    public function buscar_medicamento(Request $request){
+        $recetas = Receta::where('barcode',$request->codigo)->get();
+        if($recetas->count() > 0){
+            $medicamentos = $recetas->where('f_producto','!=',null);
+            $total_medicamento = $medicamentos->count();
+
+            $productos = [];
+            $divisiones = [];
+            if($total_medicamento == 0){
+                $cero = true;
+            }else{
+                $cero = false;
+
+                $i = 0;
+
+                foreach($medicamentos as $medicamento){
+                    $productos[$i]['id'] = $medicamento->producto->id;
+                    $productos[$i]['nombre'] = $medicamento->producto->nombre;
+                    $productos[$i]['presentacion'] = $medicamento->producto->presentacion->nombre;
+                    
+                    $j = 0;
+                    foreach($medicamento->producto->divisionProducto as $div){
+                        $divisiones[$i][$j]['id'] = $div->id;
+                        $divisiones[$i][$j]['nombre'] = $div->division->nombre;
+                        $divisiones[$i][$j]['cantidad'] = $div->cantidad;
+                        if($div->contenido != null){
+                            $divisiones[$i][$j]['contenido'] = $div->unidad->nombre;
+                        }else{
+                            $divisiones[$i][$j]['contenido'] = 0;
+                        }
+                        $divisiones[$i][$j]['precio'] = $div->precio;
+                        $divisiones[$i][$j]['inventario'] = DivisionProducto::inventario($div->id, 1);
+                        $inv = $divisiones[$i][$j]['inventario'];
+                        $ubi = DivisionProducto::ubicacion($div->id, $inv);
+                        $aux = explode('|',$ubi);
+                        if($inv > 0){
+                            $divisiones[$i][$j]['estante'] = $aux[0];
+                            $divisiones[$i][$j]['nivel'] = $aux[1];
+                        }else{
+                            $divisiones[$i][$j]['estante'] = 0;
+                            $divisiones[$i][$j]['nivel'] = 0;
+                        }
+                        $j++;
+                    }
+
+                    $i++;
+                }
+
+            }
+
+            $consulta = $recetas[0]->consulta;
+            $paciente = $consulta->ingreso->paciente->nombre.' '.$consulta->ingreso->paciente->apellido;
+            $id_p = $consulta->ingreso->f_paciente;
+            $fecha = $consulta->created_at->format('d/m/Y');
+            return (compact(
+                'cero',
+                'productos',
+                'divisiones',
+                'total_medicamento',
+                'paciente',
+                'id_p',
+                'fecha'
+            ));
+        }else{
+            $cero = true;
             return (compact('cero','recetas'));
         }
     }

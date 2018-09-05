@@ -125,10 +125,12 @@
           <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-default btn-sm" data-tooltip="tooltip" title="Buscar">
             <i class="fa fa-search"></i>
           </button>
-  
-          <button type="button" data-tooltip="tooltip" title="Buscar Receta" class="btn btn-sm btn-default">
+        
+        @if ($tipo == 2) 
+          <button type="button" data-tooltip="tooltip" title="Buscar Receta" class="btn btn-sm btn-default" data-toggle="modal" data-target="#medicamento_m">
             <i class="fa fa-medkit"></i>
           </button>
+        @endif
         </div>
       </center>
     </div>
@@ -208,6 +210,7 @@
 
 @if ($tipo==2)
   @include('Transacciones.Formularios.modalBuscarVenta')
+  @include('Recetas.modal.medicamento')
 @endif
 @if($tipo==0)
   @include('Transacciones.Formularios.modalBuscarProducto')

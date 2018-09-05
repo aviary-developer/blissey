@@ -333,3 +333,4 @@ Route::get('/consultas/datos_producto','ConsultaController@datos_producto')->nam
 //Rutas de receta
 Route::resource('recetas', 'RecetaController');
 Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
+Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
