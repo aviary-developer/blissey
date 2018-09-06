@@ -129,7 +129,7 @@ class CambioProductoController extends Controller
     }
     public static function confirmarRetiro(){
       CambioProducto::where('estado',0)->update(['estado'=>1]);
-      return redirect('cambio_productos')->with('mensaje','¡Todos los productos fueron confirmado!');
+      return redirect('cambio_productos')->with('mensaje','¡Todos los lotes fueron confirmado!');
     }
     public static function confirmarIndividual($id){
       $lote=CambioProducto::find($id);

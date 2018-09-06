@@ -23,7 +23,7 @@ class CambioProducto extends Model
       $i++;
     }
     $diferencia=$cuenta-$inventario;
-    if($diferencia>0){
+    if($diferencia>0 && $i>0){
       $fila=$ultimos[$i];
       $fila->cantidad=$fila->cantidad-$diferencia;
       $ultimos[$i]=$fila;
