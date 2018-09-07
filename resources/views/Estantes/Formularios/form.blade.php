@@ -7,10 +7,32 @@
 <div class="x_content">
   <br />
   <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Localizacón *</label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
+      @php
+      // if(Auth::user()->administrador){
+      //   $opciones=['0'=> 'Farmacia','1'=> 'Recepción'];
+      // }else
+      if(Auth::user()->tipoUsuario=='Farmacia'){
+        $opciones=['0'=> 'Farmacia'];
+      }elseif(Auth::user()->tipoUsuario=='Recepción'){
+        $opciones=['1'=> 'Recepción'];
+      }
+      if(isset($estante)){
+        $num=$estante->codigo;
+      }else{
+        $num=App\Estante::correlativo();
+      }
+      @endphp
+        {!!Form::select('localizacion',$opciones,null, ['class'=>'form-control has-feedback-left'])!!}
+    </div>
+  </div>
+  <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Código identificador *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('codigo',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número identificador del estante']) !!}
+      {!! Form::number('codigo',$num,['class'=>'form-control has-feedback-left','readonly'=>'readonly']) !!}
     </div>
   </div>
   <div class="form-group">
@@ -18,13 +40,6 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
       {!!Form::selectRange('cantidad', 1, 9,null,['class'=>'form-control has-feedback-left'])!!}
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Localizacón *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-        {!!Form::select('localizacion', ['1'=> 'Recepción','0'=> 'Farmacia'],$opcion, ['class'=>'form-control has-feedback-left'])!!}
     </div>
   </div>
   <center>

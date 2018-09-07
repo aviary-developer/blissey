@@ -23,7 +23,7 @@ class CambioProducto extends Model
       $i++;
     }
     $diferencia=$cuenta-$inventario;
-    if($diferencia>0){
+    if($diferencia>0 && $i>0){
       $fila=$ultimos[$i];
       $fila->cantidad=$fila->cantidad-$diferencia;
       $ultimos[$i]=$fila;
@@ -34,17 +34,19 @@ class CambioProducto extends Model
       $producto=$fila->f_producto;
       $date = \Carbon\Carbon::now();
       $date = $date->format('Y-m-d');
-      if($fila->fecha_vencimiento<=$date){
-        if($fila->cantidad>0){
-          $cambio=new CambioProducto();
-          $cambio->fecha=$date;
-          $cambio->f_detalle_transaccion=$fila->id;
-          $cambio->cantidad=$fila->cantidad;
-          $cambio->estado=0;
-          $cambio->localizacion=DivisionProducto::busquedaTipo($tipo);;
-          $cambio->save();
+      if(CambioProducto::where('f_detalle_transaccion',$fila->id)->count()==0){
+        if($fila->fecha_vencimiento<=$date){
+          if($fila->cantidad>0){
+            $cambio=new CambioProducto();
+            $cambio->fecha=$date;
+            $cambio->f_detalle_transaccion=$fila->id;
+            $cambio->cantidad=$fila->cantidad;
+            $cambio->estado=0;
+            $cambio->localizacion=DivisionProducto::busquedaTipo($tipo);
+            $cambio->save();
+          }
+          $total_vencidos=$total_vencidos+$fila->cantidad;
         }
-        $total_vencidos=$total_vencidos+$fila->cantidad;
       }
     }
     return $total_vencidos;

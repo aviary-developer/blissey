@@ -69,7 +69,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Nombre</th>
+              <th>N°</th>
               <th>Localización</th>
               <th>Opciones</th>
             </tr>
@@ -83,7 +83,7 @@
                   <td>{{ $correlativo + $pagina }}</td>
                   <td>
                     <a href={{asset('/cajas/'.$caja->id)}}>
-                      {{ $caja->nombre}}
+                      Caja {{ $caja->nombre}}
                     </a>
                   </td>
                   <td>

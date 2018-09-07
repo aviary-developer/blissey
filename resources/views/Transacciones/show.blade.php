@@ -26,6 +26,20 @@
         </center>
               {{-- @include('Productos.Formularios.activate') --}}
     </div>
+    <div class="row">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href={!! asset('/transacciones?tipo='.$transaccion->tipo)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </div>
     <div class="x_panel">
       <div class="x_content">
