@@ -11,7 +11,7 @@
         </center>
       </div>
     </div>
-    @include('Cajar.Formularios.form')
+    @include('Cajas.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

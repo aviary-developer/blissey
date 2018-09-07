@@ -19,15 +19,22 @@ class Caja extends Model
     $query->where('estado',$estado);
   }
   public function scopeUsuario($query){
-    if(!Auth::user()->administrador){
+    // if(!Auth::user()->administrador){
       if(Auth::user()->tipoUsuario=='Farmacia'){
         $query->where('localizacion',0);
       }elseif(Auth::user()->tipoUsuario=='Recepción'){
         $query->where('localizacion',1);
       }
-    }
+    // }
   }
   public static function foreanos($id){
     return DetalleCaja::where('f_caja',$id)->count();
+  }
+  public static function correlativo(){
+    if(Caja::usuario()->count()>0){
+      return Caja::usuario()->orderBy('nombre')->get()->last()->nombre+1;
+    }else{
+      return 1;
+    }
   }
 }

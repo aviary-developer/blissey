@@ -3,9 +3,9 @@
   <a href={!! asset('/cajas/'.$caja->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
     <i class="fa fa-info-circle"></i>
   </a>
-  <a href={!! asset('/cajas/'.$caja->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+  {{-- <a href={!! asset('/cajas/'.$caja->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
     <i class="fa fa-edit"></i>
-  </a>
+  </a> --}}
   <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Restaurar" onclick={!! "'alta(".$caja->id.");'" !!}/>
     <i class="fa fa-check"></i>
   </button>
@@ -38,9 +38,9 @@
             <li>
               <a href={!! asset('/cajas'.$regreso)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
             </li>
-            <li>
+            {{-- <li>
               <a href={!! asset('/cajas/'.$caja->id.'/edit')!!}><i class="fa fa2 fa-edit"></i> Editar</a>
-            </li>
+            </li> --}}
               @if ($caja->estado)
                 <li>
                 <a href="#" onclick={!! "'baja(".$caja->id.");'" !!}><i class="fa fa2 fa-trash"></i> Papelera</a>

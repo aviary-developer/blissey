@@ -10,13 +10,15 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
       @php
-      if(Auth::user()->administrador){
-        $opciones=['0'=> 'Farmacia','1'=> 'Recepción'];
-      }elseif(Auth::user()->tipoUsuario=='Farmacia'){
+      // if(Auth::user()->administrador){
+      //   $opciones=['0'=> 'Farmacia','1'=> 'Recepción'];
+      // }else
+      if(Auth::user()->tipoUsuario=='Farmacia'){
         $opciones=['0'=> 'Farmacia'];
       }elseif(Auth::user()->tipoUsuario=='Recepción'){
         $opciones=['1'=> 'Recepción'];
       }
+      $num=App\Caja::correlativo();
       @endphp
         {!!Form::select('localizacion',$opciones,$opcion, ['class'=>'form-control has-feedback-left'])!!}
     </div>
@@ -25,7 +27,7 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Caja N° *</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('numero',null,['class'=>'form-control has-feedback-left','placeholder'=>'Número identidicador de la caja']) !!}
+      {!! Form::number('nombre',$num,['class'=>'form-control has-feedback-left','placeholder'=>'Número identidicador de la caja','readonly'=>'readonly']) !!}
     </div>
   </div>
   <center>

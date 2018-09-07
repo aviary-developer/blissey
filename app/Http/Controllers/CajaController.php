@@ -50,7 +50,7 @@ class CajaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CajaRequest $request)
+    public function store(Request $request)
     {
       $caja=new Caja;
       $caja->fill($request->all());
