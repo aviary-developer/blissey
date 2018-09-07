@@ -334,3 +334,7 @@ Route::get('/consultas/datos_producto','ConsultaController@datos_producto')->nam
 Route::resource('recetas', 'RecetaController');
 Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
 Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
+
+Route::get('calendario',function(){
+  return view('Calendario.index');
+});

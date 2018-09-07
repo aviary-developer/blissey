@@ -30,7 +30,7 @@ canvas{
     border-radius: 6px 6px 0px 0px;
     background: linear-gradient(var(--principal), var(--secundario)), var(--terciario);
 }
-thead{
+.table thead{
     background: linear-gradient(#2ab7ba, var(--secundario)), var(--terciario);
 }
 thead tr :first-child {

@@ -31,16 +31,15 @@
   {!!Html::style('assets/bootstrap-daterangepicker/daterangepicker.css')!!}
   <!-- DataTable -->
   {!!Html::style('assets/data-table/datatables.css')!!}
-  {{--  {!!Html::style('assets/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')!!}
-  {!!Html::style('assets/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')!!}
-  {!!Html::style('assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')!!}
-  {!!Html::style('assets/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')!!}  --}}
 
   {!!Html::script('assets/sweetalert2/dist/sweetalert2.js')!!} {!!Html::style('assets/sweetalert2/dist/sweetalert2.css')!!}
 
   <!-- Css de nitify-->
   {!!Html::style('assets/pnotify/dist/pnotify.css')!!} {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!} {!!Html::style('assets/normalize-css/normalize.css')!!}
-  {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.css')!!} {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')!!}
+  {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.css')!!}
+  {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')!!}
+  <!-- Css de FullCalendar-->
+  {!!Html::style('assets/fullcalendar-3.9.0/fullcalendar.css')!!} 
 
   <!-- Custom Theme Style -->
   {!!Html::style('assets/switchery/dist/switchery.min.css')!!}
@@ -850,52 +849,52 @@
     {!!Html::script('assets/ion.rangeSlider/js/ion.rangeSlider.min.js')!!} {!!Html::script('assets/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
     <!-- DataTable -->
     {!!Html::script('assets/data-table/datatables.js')!!}
-    {{--  {!!Html::script('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}
-    {!!Html::script('assets/datatables.net-buttons/js/dataTables.buttons.min.js')!!}
-    {!!Html::script('assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')!!}
-    {!!Html::script('assets/datatables.net-responsive/js/dataTables.responsive.min.js')!!}
-    {!!Html::script('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')!!}
-    {!!Html::script('assets/datatables.net-scroller/js/dataTables.scroller.min.js')!!}  --}}
 
-      <!--para mensajes de error en validaciones-->
-      {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
-      {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
-      {!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
-      {!!Html::script('assets/switchery/dist/switchery.min.js')!!}
-      <!--js agregados -->
-      {!!Html::script('js/general.js')!!}
-      {!!Html::script('js/scripts/proveedores.js')!!}<!--para el funcionamiento de ingresar en proveedores-->
-      {!!Html::script('js/scripts/Usuarios.js')!!}
-      {!!Html::script('js/scripts/Examenes.js')!!}
-      {!!Html::script('js/scripts/Examenes2.js')!!}
-      {!!Html::script('js/scripts/Productos.js')!!}
-      {!!Html::script('js/scripts/Transacciones.js')!!}
-      {!!Html::script('js/scripts/Ingreso.js')!!}
-      {!!Html::script('js/scripts/Ingreso2.js')!!}
-      {!!Html::script('js/scripts/IngresoX.js')!!}
-      {!!Html::script('js/scripts/Ingreso_finanza.js')!!}
-      {!!Html::script('js/scripts/Habitacion.js')!!}
-      {!!Html::script('js/scripts/Consulta.js')!!}
-      {!!Html::script('js/scripts/Consulta2.js')!!}
-      {!!Html::script('js/scripts/Receta.js')!!}
-      {!!Html::script('js/scripts/Paciente.js')!!}
-      {!!Html::script('js/scripts/Empresa.js')!!}
-      {!!Html::script('js/scripts/Solicitud.js')!!}
-      {!!Html::script('js/scripts/Presentaciones.js')!!}
-      {!!Html::script('js/scripts/Requisiciones.js')!!}
-      {!!Html::script('js/scripts/StockProveedor.js')!!}
-      <!--js imageViewer -->
-      {!!Html::script('js/imageViewer/jquery-ui.js')!!}
-      {!!Html::script('js/imageViewer/jquery.fs.zoetrope.min.js')!!}
-      {!!Html::script('js/imageViewer/toe.min.js')!!}
-      {!!Html::script('js/imageViewer/jquery.mousewheel.min.js')!!}
-      {!!Html::script('js/imageViewer/imgViewer.js')!!}
-      @section('scripts')
-      @show
+    <!--para mensajes de error en validaciones-->
+    {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+    {!!Html::script('assets/jQuery-Smart-Wizard/js/jquery.smartWizard.js')!!}
+    {!!Html::script('assets/switchery/dist/switchery.min.js')!!}
+    <!--js fullcalendar -->
+    {!!Html::script('assets/fullcalendar-3.9.0/lib/moment.min.js')!!}
+    {!!Html::script('assets/fullcalendar-3.9.0/locale/es.js')!!}
+    {!!Html::script('assets/fullcalendar-3.9.0/fullcalendar.js')!!}
+    <!--js agregados -->
+    {!!Html::script('js/general.js')!!}
+    {!!Html::script('js/scripts/proveedores.js')!!}
+    <!--para el funcionamiento de ingresar en proveedores-->
+    {!!Html::script('js/scripts/Usuarios.js')!!}
+    {!!Html::script('js/scripts/Examenes.js')!!}
+    {!!Html::script('js/scripts/Calendario.js')!!}
+    {!!Html::script('js/scripts/Examenes2.js')!!}
+    {!!Html::script('js/scripts/Productos.js')!!}
+    {!!Html::script('js/scripts/Transacciones.js')!!}
+    {!!Html::script('js/scripts/Ingreso.js')!!}
+    {!!Html::script('js/scripts/Ingreso2.js')!!}
+    {!!Html::script('js/scripts/IngresoX.js')!!}
+    {!!Html::script('js/scripts/Ingreso_finanza.js')!!}
+    {!!Html::script('js/scripts/Habitacion.js')!!}
+    {!!Html::script('js/scripts/Consulta.js')!!}
+    {!!Html::script('js/scripts/Consulta2.js')!!}
+    {!!Html::script('js/scripts/Receta.js')!!}
+    {!!Html::script('js/scripts/Paciente.js')!!}
+    {!!Html::script('js/scripts/Empresa.js')!!}
+    {!!Html::script('js/scripts/Solicitud.js')!!}
+    {!!Html::script('js/scripts/Presentaciones.js')!!}
+    {!!Html::script('js/scripts/Requisiciones.js')!!}
+    {!!Html::script('js/scripts/StockProveedor.js')!!}
+    <!--js imageViewer -->
+    {!!Html::script('js/imageViewer/jquery-ui.js')!!}
+    {!!Html::script('js/imageViewer/jquery.fs.zoetrope.min.js')!!}
+    {!!Html::script('js/imageViewer/toe.min.js')!!}
+    {!!Html::script('js/imageViewer/jquery.mousewheel.min.js')!!}
+    {!!Html::script('js/imageViewer/imgViewer.js')!!}
+    @section('scripts')
+    @show
 
       <!-- Custom Theme Scripts -->
 
-      {!!Html::script('assets/build/js/custom.js')!!}
+    {!!Html::script('assets/build/js/custom.js')!!}
   </body>
 </html>
     @foreach ($errors->all() as $error)
