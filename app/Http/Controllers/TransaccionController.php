@@ -376,4 +376,13 @@ class TransaccionController extends Controller
       $estante=Estante::find($id);
       return $estante->cantidad;
     }
+    public function devoluciones($id){
+      $transaccion=Transacion::find($id);
+      $detalles=$transaccion->detalleTransaccion;
+      return view('Transacciones.devoluciones',compact('transaccion','detalles'));
+    }
+    public function guardarDevoluciones($id,Request $request){
+      echo $request;
+      echo $id;
+    }
 }

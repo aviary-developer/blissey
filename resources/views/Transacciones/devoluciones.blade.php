@@ -1,0 +1,79 @@
+@extends('dashboard')
+@section('layout')
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url'=>['guardarDevoluciones',$transaccion->id],'method' =>'POST','autocomplete'=>'off'])!!}
+  @php
+  setlocale(LC_ALL,'es');
+  @endphp
+  <div class="col-md-8 col-sm-8 col-xs-12">
+    <div class="x_panel">
+      <div class="row bg-blue">
+        <center>
+          <h3>Devoluciones
+            @if ($transaccion->tipo==1)
+              <small class="label-white badge red ">Sobre compra</small>
+            @else
+              <small class="label-white badge red ">Sobre venta</small>
+            @endif
+          </h3>
+        </center>
+      </div>
+    </div>
+    <div class="x_panel">
+      <div class="x_content">
+        <div class="row">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Devolver</th>
+                <th>Cantidad</th>
+                <th colspan="2">Producto</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($detalles as $detalle)
+              @php
+                $restar=App\Devolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
+                $resta=$detalle->cantidad-$restar;
+              @endphp
+              <tr>
+                <td style="width:25%;">
+                      {!! Form::number('cantidad'.$detalle->id,0,['id'=>'cantidad'.$detalle->id,'class'=>'form-control','onKeyPress' => 'return cantidadDev( this, event,this.value,'.$detalle->id.');','placeholder'=>'Cantidad','min'=>'0']) !!}
+                </td>
+                <td>{{$resta}}
+                  <input type="hidden" id="existencia{{$detalle->id}}" value="{{$resta}}">
+                </td>
+                <td>
+                  @if($detalle->divisionProducto->unidad==null)
+                    {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
+                  @else
+                    {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                  @endif
+                </td>
+                <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+        {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!}
+      </div>
+    </div>
+  </div>
+  {!!Form::close()!!}
+  <script type="text/javascript">
+    function cantidadDev(obj,e,valor,id){
+      if(!entero(obj,e,valor)){
+        return false;
+      }else{
+        cantidad=parseInt($('#cantidad'+id).val()+e.key);
+        existe=parseInt($('#existencia'+id).val());
+        if(cantidad>existe){
+          notaError('La cantidad no debe superar las existencias');
+          return false;
+        }else{
+          return true;
+        }
+      }
+    }
+  </script>
+@endsection

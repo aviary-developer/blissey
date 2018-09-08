@@ -33,6 +33,11 @@
             <li>
               <a href={!! asset('/transacciones?tipo='.$transaccion->tipo)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
             </li>
+            @if($transaccion->tipo==1)
+              <li>
+                <a href={!! asset('/devoluciones/'.$transaccion->id)!!}><i class="fa fa2 fa-undo"></i> Devoluciones</a>
+              </li>
+            @endif
             <li>
               <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
             </li>
