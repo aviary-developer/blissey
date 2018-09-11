@@ -17,6 +17,8 @@ use App\Paciente;
 use App\Componente;
 use App\Servicio;
 use App\Estante;
+use App\Devolucion;
+use App\DetalleDevolucion;
 
 class TransaccionController extends Controller
 {
@@ -382,7 +384,38 @@ class TransaccionController extends Controller
       return view('Transacciones.devoluciones',compact('transaccion','detalles'));
     }
     public function guardarDevoluciones($id,Request $request){
-      echo $request;
-      echo $id;
+      DB::beginTransaction();
+      try {
+        echo $request;
+        echo $id;
+        $dev=new Devolucion();
+        $dev->fecha=\Carbon\Carbon::now();
+        $dev->justificacion=$request->justificacion;
+        $dev->save();
+        $detalles=DetalleTransacion::where('f_transaccion',$id)->get();
+        $contador=0;
+        foreach ($detalles as $detalle) {
+          if(isset($request['cantidad'.$detalle->id])){
+            if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
+              $detalle_dev=new DetalleDevolucion();
+              $detalle_dev->f_devolucion=$dev->id;
+              $detalle_dev->f_detalle_transaccion=$detalle->id;
+              $detalle_dev->cantidad=$request['cantidad'.$detalle->id];
+              $detalle_dev->save();
+              $contador++;
+            }
+          }
+        }
+        if($contador==0){
+          DB::rollback();
+          return redirect('transacciones/'.$id)->with('mensaje', '¡No hay cambios!');
+        }else{
+          DB::commit();
+          return redirect('transacciones/'.$id)->with('mensaje', '¡Devoluciones guardas!');
+        }
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('transacciones/'.$id)->with('error', '¡Algo salio mal!');
+      }
     }
 }

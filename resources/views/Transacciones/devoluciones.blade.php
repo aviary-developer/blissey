@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url'=>['guardarDevoluciones',$transaccion->id],'method' =>'POST','autocomplete'=>'off'])!!}
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url'=>['guardarDevoluciones',$transaccion->id],'method' =>'POST','autocomplete'=>'off','id'=>'dev'])!!}
   @php
   setlocale(LC_ALL,'es');
   @endphp
@@ -21,6 +21,13 @@
     <div class="x_panel">
       <div class="x_content">
         <div class="row">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Jusficar *</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <span class="fa fa-list form-control-feedback left" aria-hidden="true"></span>
+              {!! Form::text('justificacion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Justificar las devoluciones','id'=>'justificacion']) !!}
+            </div>
+          </div>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -32,7 +39,7 @@
             <tbody>
             @foreach ($detalles as $detalle)
               @php
-                $restar=App\Devolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
+                $restar=App\DetalleDevolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
                 $resta=$detalle->cantidad-$restar;
               @endphp
               <tr>
@@ -55,7 +62,7 @@
             </tbody>
           </table>
         </div>
-        {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!}
+        {!! Form::button('Confirmar',['class'=>'btn btn-primary','onclick'=>'justificar();']) !!}
       </div>
     </div>
   </div>
@@ -73,6 +80,16 @@
         }else{
           return true;
         }
+      }
+    }
+    function justificar(){
+      var cadena=$('#justificacion').val();
+      if(cadena.length<1){
+        notaError("Debe justificar la devolución");
+      }else if(cadena.length<5){
+        notaError("La justificación es muy corta");
+      }else{
+        $('#dev').submit();
       }
     }
   </script>

@@ -62,6 +62,11 @@
               <li role="presentation" class="">
                 <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Detalle</a>
               </li>
+              @if (App\Devolucion::devolucion($transaccion->id)>0)
+                <li role="presentation" class="">
+                  <a href="#tab_content3" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Devolucines</a>
+                </li>
+              @endif
             </ul>
           </div>
           {{-- Contenido del tab --}}
@@ -199,6 +204,35 @@
                     @endif
                     </tr>
                   @endif
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_content3" aria-labelledby="otros-tab2">
+                <h3>Devoluciones realizadas</h3>
+                <table class="table">
+                  <thead>
+                    <th>Cantidad</th>
+                    <th colspan="2">Detalle</th>
+                  </thead>
+                  <tbody>
+                    @foreach($detalles as $detalle)
+                      @php
+                        $conteo=App\DetalleDevolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
+                      @endphp
+                      @if ($conteo!=0)
+                      <tr>
+                        <td>{{$conteo}}</td>
+                        <td>
+                          @if($detalle->divisionProducto->unidad==null)
+                            {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
+                          @else
+                            {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                          @endif
+                        </td>
+                        <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                      </tr>
+                      @endif
+                    @endforeach
                   </tbody>
                 </table>
               </div>
