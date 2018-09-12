@@ -33,6 +33,11 @@
             <li>
               <a href={!! asset('/transacciones?tipo='.$transaccion->tipo)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
             </li>
+            @if($transaccion->tipo==1 || $transaccion->tipo==2)
+              <li>
+                <a href={!! asset('/devoluciones/'.$transaccion->id)!!}><i class="fa fa2 fa-undo"></i> Devoluciones</a>
+              </li>
+            @endif
             <li>
               <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
             </li>
@@ -57,6 +62,11 @@
               <li role="presentation" class="">
                 <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Detalle</a>
               </li>
+              @if (App\Devolucion::devolucion($transaccion->id)>0)
+                <li role="presentation" class="">
+                  <a href="#tab_content3" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Devoluciones</a>
+                </li>
+              @endif
             </ul>
           </div>
           {{-- Contenido del tab --}}
@@ -194,6 +204,35 @@
                     @endif
                     </tr>
                   @endif
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="tab_content3" aria-labelledby="otros-tab2">
+                <h3>Devoluciones realizadas</h3>
+                <table class="table">
+                  <thead>
+                    <th>Cantidad</th>
+                    <th colspan="2">Detalle</th>
+                  </thead>
+                  <tbody>
+                    @foreach($detalles as $detalle)
+                      @php
+                        $conteo=App\DetalleDevolucion::total($detalle->id);
+                      @endphp
+                      @if ($conteo!=0)
+                      <tr>
+                        <td>{{$conteo}}</td>
+                        <td>
+                          @if($detalle->divisionProducto->unidad==null)
+                            {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
+                          @else
+                            {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                          @endif
+                        </td>
+                        <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                      </tr>
+                      @endif
+                    @endforeach
                   </tbody>
                 </table>
               </div>

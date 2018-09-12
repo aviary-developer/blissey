@@ -39,7 +39,7 @@
   {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.css')!!}
   {!!Html::style('assets/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')!!}
   <!-- Css de FullCalendar-->
-  {!!Html::style('assets/fullcalendar-3.9.0/fullcalendar.css')!!} 
+  {!!Html::style('assets/fullcalendar-3.9.0/fullcalendar.css')!!}
 
   <!-- Custom Theme Style -->
   {!!Html::style('assets/switchery/dist/switchery.min.css')!!}

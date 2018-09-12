@@ -191,6 +191,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarServicios/{texto}','TransaccionController@buscarServicio');
   Route::match(['get','post'],'/anularVenta/{id}/{comentario}','TransaccionController@anularVenta');
   Route::match(['get','post'],'/niveles/{id}','TransaccionController@niveles');
+  Route::match(['get','post'],'/devoluciones/{id}','TransaccionController@devoluciones');
+  Route::post('/guardarDevoluciones/{id}','TransaccionController@guardarDevoluciones');
   //Rutas apertura y cierre de cajas
     Route::resource('cajas','CajaController');
     Route::match(['get','post'],'/desactivateCaja/{id}','CajaController@desactivate');
@@ -335,4 +337,10 @@ Route::resource('recetas', 'RecetaController');
 Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
 Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
 
+<<<<<<< HEAD
 Route::resource('calendarios', 'CalendarioController');
+=======
+Route::get('calendario',function(){
+  return view('Calendario.index');
+});
+>>>>>>> 992d7f8428387902bc5f7aecf7750971a427f99d

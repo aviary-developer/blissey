@@ -64,4 +64,7 @@ class CambioProducto extends Model
     CambioProductoController::lugar(2); //farmacia
     CambioProductoController::lugar(3); //Recepción hospital
   }
+  public static function total($id){
+    return CambioProducto::where('f_detalle_transaccion',$id)->sum('cantidad');
+  }
 }

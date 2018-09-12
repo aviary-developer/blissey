@@ -179,6 +179,19 @@ class RequisicionController extends Controller
               break;
               $i++;
             }
+            foreach ($compras as $compra) {
+              $devoluciones=App\DetalleDevolucion::total($compra->id);
+              $retirados=App\CambioProducto::total($compra->id);
+              $diferencia=$compra->cantidad-$devoluciones-$retirados;
+              if ($diferencia!=0) {
+                $cuenta=$cuenta+$diferencia;
+                $compra->cantidad=$diferencia;
+                $ultimos[$i]=$compra;
+                if($cuenta>=$inventario)
+                break;
+                $i++;
+              }
+            }
             $diferencia=$cuenta-$inventario;
             if($diferencia!=0){
               $fila=$ultimos[$i];

@@ -17,6 +17,8 @@ use App\Paciente;
 use App\Componente;
 use App\Servicio;
 use App\Estante;
+use App\Devolucion;
+use App\DetalleDevolucion;
 
 class TransaccionController extends Controller
 {
@@ -375,5 +377,68 @@ class TransaccionController extends Controller
     public static function niveles($id){
       $estante=Estante::find($id);
       return $estante->cantidad;
+    }
+    public function devoluciones($id){
+      $transaccion=Transacion::find($id);
+      $detalles=$transaccion->detalleTransaccion;
+      return view('Transacciones.devoluciones',compact('transaccion','detalles'));
+    }
+    public function guardarDevoluciones($id,Request $request){
+      DB::beginTransaction();
+      try {
+        echo $request;
+        echo $id;
+        $dev=new Devolucion();
+        $dev->fecha=\Carbon\Carbon::now();
+        $dev->justificacion=$request->justificacion;
+        $dev->save();
+        $detalles=DetalleTransacion::where('f_transaccion',$id)->get();
+        $contador=0;
+        $total=0;
+        $tran=Transacion::find($id);
+        foreach ($detalles as $detalle) {
+          if(isset($request['cantidad'.$detalle->id])){
+            if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
+              $detalle_dev=new DetalleDevolucion();
+              $detalle_dev->f_devolucion=$dev->id;
+              $detalle_dev->f_detalle_transaccion=$detalle->id;
+              $detalle_dev->cantidad=$request['cantidad'.$detalle->id];
+              $detalle_dev->save();
+              $contador++;
+              $descontado=$detalle->precio-($detalle->precio*($detalle->descuento/100));
+              $subtotal=$request['cantidad'.$detalle->id]*$descontado;
+              $total=$total+$subtotal;
+            }
+          }
+        }
+        $total=$total-($total*($tran->descuento/100));
+        if(!$tran->iva){
+          $total=$total*1.13;
+        }
+        $totdevr=new Transacion();//Guardar una transaccion con el total a devolver
+        $totdevr->fecha=\Carbon\Carbon::now();
+        $totdevr->f_proveedor=$tran->f_proveedor;
+        $totdevr->f_usuario=Auth::user()->id;
+        $totdevr->localizacion=Transacion::tipoUsuario();
+        $totdevr->factura=$tran->factura;
+        $totdevr->comentario=$request->justificacion;
+        if ($tran->tipo==1) {
+          $totdevr->tipo=8;
+        } else {
+          $totdevr->tipo=9;
+        }
+        $totdevr->devolucion=$total;
+        $totdevr->save();
+        if($contador==0){
+          DB::rollback();
+          return redirect('transacciones/'.$id)->with('mensaje', '¡No hay cambios!');
+        }else{
+          DB::commit();
+          return redirect('transacciones/'.$id)->with('mensaje', '¡Devoluciones guardas!');
+        }
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('transacciones/'.$id)->with('error', '¡Algo salio mal!');
+      }
     }
 }
