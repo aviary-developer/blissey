@@ -269,13 +269,13 @@ class Transacion extends Model
           return Transacion::where('f_usuario',$f_usuario)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
         }
         public function scopefiltroTipo($query){
-            $query->where('tipo',1)->orWhere('tipo',2);
+            $query->where('tipo',1)->orWhere('tipo',2)->orWhere('tipo',8)->orWhere('tipo',9);
         }
         public function scopefiltroHora($query,$apertura){
           $query->where('updated_at','>',$apertura);
         }
         public static function tipo($t){
-          $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido');
+          $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido',8=>'Devoluciones/Compras',9=>'Devoluciones/Ventas');
           return $tipos[$t];
         }
         public static function foreanos($id){

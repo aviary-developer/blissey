@@ -394,6 +394,8 @@ class TransaccionController extends Controller
         $dev->save();
         $detalles=DetalleTransacion::where('f_transaccion',$id)->get();
         $contador=0;
+        $total=0;
+        $tran=Transacion::find($id);
         foreach ($detalles as $detalle) {
           if(isset($request['cantidad'.$detalle->id])){
             if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
@@ -403,9 +405,30 @@ class TransaccionController extends Controller
               $detalle_dev->cantidad=$request['cantidad'.$detalle->id];
               $detalle_dev->save();
               $contador++;
+              $descontado=$detalle->precio-($detalle->precio*($detalle->descuento/100));
+              $subtotal=$request['cantidad'.$detalle->id]*$descontado;
+              $total=$total+$subtotal;
             }
           }
         }
+        $total=$total-($total*($tran->descuento/100));
+        if(!$tran->iva){
+          $total=$total*1.13;
+        }
+        $totdevr=new Transacion();//Guardar una transaccion con el total a devolver
+        $totdevr->fecha=\Carbon\Carbon::now();
+        $totdevr->f_proveedor=$tran->f_proveedor;
+        $totdevr->f_usuario=Auth::user()->id;
+        $totdevr->localizacion=Transacion::tipoUsuario();
+        $totdevr->factura=$tran->factura;
+        $totdevr->comentario=$request->justificacion;
+        if ($tran->tipo==1) {
+          $totdevr->tipo=8;
+        } else {
+          $totdevr->tipo=9;
+        }
+        $totdevr->devolucion=$total;
+        $totdevr->save();
         if($contador==0){
           DB::rollback();
           return redirect('transacciones/'.$id)->with('mensaje', '¡No hay cambios!');

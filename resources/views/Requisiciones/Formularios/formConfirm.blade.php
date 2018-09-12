@@ -36,11 +36,17 @@ $detalles=$transaccion->detalleTransaccion;
               $i=0;
               $ultimos=[];
               foreach ($compras as $compra) {
-                $cuenta=$cuenta+$compra->cantidad;
-                $ultimos[$i]=$compra;
-                if($cuenta>=$inventario)
-                break;
-                $i++;
+                $devoluciones=App\DetalleDevolucion::total($compra->id);
+                $retirados=App\CambioProducto::total($compra->id);
+                $diferencia=$compra->cantidad-$devoluciones-$retirados;
+                if ($diferencia>0) {
+                  $cuenta=$cuenta+$diferencia;
+                  $compra->cantidad=$diferencia;
+                  $ultimos[$i]=$compra;
+                  if($cuenta>=$inventario)
+                  break;
+                  $i++;
+                }
               }
               $diferencia=$cuenta-$inventario;
               if($diferencia!=0){

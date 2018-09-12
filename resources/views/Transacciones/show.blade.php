@@ -33,7 +33,7 @@
             <li>
               <a href={!! asset('/transacciones?tipo='.$transaccion->tipo)!!}><i class="fa fa2 fa-arrow-left"></i> Atras</a>
             </li>
-            @if($transaccion->tipo==1)
+            @if($transaccion->tipo==1 || $transaccion->tipo==2)
               <li>
                 <a href={!! asset('/devoluciones/'.$transaccion->id)!!}><i class="fa fa2 fa-undo"></i> Devoluciones</a>
               </li>
@@ -64,7 +64,7 @@
               </li>
               @if (App\Devolucion::devolucion($transaccion->id)>0)
                 <li role="presentation" class="">
-                  <a href="#tab_content3" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Devolucines</a>
+                  <a href="#tab_content3" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Devoluciones</a>
                 </li>
               @endif
             </ul>
@@ -217,7 +217,7 @@
                   <tbody>
                     @foreach($detalles as $detalle)
                       @php
-                        $conteo=App\DetalleDevolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
+                        $conteo=App\DetalleDevolucion::total($detalle->id);
                       @endphp
                       @if ($conteo!=0)
                       <tr>

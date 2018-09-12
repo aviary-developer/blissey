@@ -1,3 +1,6 @@
+@if (!App\DetalleCaja::cajaApertura())
+  <meta http-equiv="refresh" content="0;URL=/blissey/public/detalleCajas/create">
+@endif
 @extends('dashboard')
 @section('layout')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url'=>['guardarDevoluciones',$transaccion->id],'method' =>'POST','autocomplete'=>'off','id'=>'dev'])!!}
@@ -39,9 +42,10 @@
             <tbody>
             @foreach ($detalles as $detalle)
               @php
-                $restar=App\DetalleDevolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
+                $restar=App\DetalleDevolucion::total($detalle->id);
                 $resta=$detalle->cantidad-$restar;
               @endphp
+              @if ($resta!=0)
               <tr>
                 <td style="width:25%;">
                       {!! Form::number('cantidad'.$detalle->id,0,['id'=>'cantidad'.$detalle->id,'class'=>'form-control','onKeyPress' => 'return cantidadDev( this, event,this.value,'.$detalle->id.');','placeholder'=>'Cantidad','min'=>'0']) !!}
@@ -58,6 +62,7 @@
                 </td>
                 <td>{{$detalle->divisionProducto->producto->nombre}}</td>
               </tr>
+              @endif
             @endforeach
             </tbody>
           </table>

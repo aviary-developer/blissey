@@ -32,7 +32,7 @@ class DivisionProducto extends Model
       $dec=$compra->detalleTransaccion;
       foreach($dec as $dc){
         if($dc->f_producto==$id){
-          $restar=DetalleDevolucion::where('f_detalle_transaccion',$dc->id)->sum('cantidad');
+          $restar=DetalleDevolucion::total($dc->id);
           $aux=$dc->cantidad-$restar;
           $cc=$cc+$aux;
         }
@@ -44,7 +44,7 @@ class DivisionProducto extends Model
       $dev=$venta->detalleTransaccion;
       foreach($dev as $dv){
         if($dv->f_producto==$id){
-          $restar=DetalleDevolucion::where('f_detalle_transaccion',$dv->id)->sum('cantidad');
+          $restar=DetalleDevolucion::total($dv->id);
           $aux=$dv->cantidad-$restar;
           $cv=$cv+$aux;
         }

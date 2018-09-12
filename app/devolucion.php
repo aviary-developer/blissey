@@ -11,7 +11,7 @@ class Devolucion extends Model
       $detalles=$transaccion->detalleTransaccion;
       $contador=0;
       foreach ($detalles as $detalle) {
-        $cantidad=DetalleDevolucion::where('f_detalle_transaccion',$detalle->id)->sum('cantidad');
+        $cantidad=DetalleDevolucion::total($detalle->id);
         $contador=$contador+$cantidad;
       }
       return $contador;
