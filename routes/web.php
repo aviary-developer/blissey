@@ -89,7 +89,7 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/desactivateProveedor/{id}','ProveedorController@desactivate');
   Route::match(['get','post'],'/activateProveedor/{id}','ProveedorController@activate');
   Route::match(['get','post'],'/destroyProveedor/{id}','ProveedorController@destroy');
-  Route::match(['get','post'],'/llenarProveedor','ProveedorProductoController@llenarProveedor');
+  Route::match(['get','post'],'/llenarProveedor','ProveedorController@llenarProveedor');
   Route::match(['get','post'],'/ingresoProveedor','ProveedorController@ingresoProveedor');
   //Rutas de presentaciones
   Route::resource('presentaciones','PresentacionController');
@@ -335,6 +335,4 @@ Route::resource('recetas', 'RecetaController');
 Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
 Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
 
-Route::get('calendario',function(){
-  return view('Calendario.index');
-});
+Route::resource('calendarios', 'CalendarioController');

@@ -857,8 +857,8 @@
     {!!Html::script('assets/switchery/dist/switchery.min.js')!!}
     <!--js fullcalendar -->
     {!!Html::script('assets/fullcalendar-3.9.0/lib/moment.min.js')!!}
-    {!!Html::script('assets/fullcalendar-3.9.0/locale/es.js')!!}
     {!!Html::script('assets/fullcalendar-3.9.0/fullcalendar.js')!!}
+    {!!Html::script('assets/fullcalendar-3.9.0/locale/es.js')!!}
     <!--js agregados -->
     {!!Html::script('js/general.js')!!}
     {!!Html::script('js/scripts/proveedores.js')!!}
