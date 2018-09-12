@@ -337,10 +337,4 @@ Route::resource('recetas', 'RecetaController');
 Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
 Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
 
-<<<<<<< HEAD
 Route::resource('calendarios', 'CalendarioController');
-=======
-Route::get('calendario',function(){
-  return view('Calendario.index');
-});
->>>>>>> 992d7f8428387902bc5f7aecf7750971a427f99d
