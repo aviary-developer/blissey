@@ -34,6 +34,7 @@
               <th>Código</th>
               <th>Nombre</th>
               <th>Existencias</th>
+              <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
@@ -58,6 +59,11 @@
                     {{App\DivisionProducto::inventario($div->id,1)."--".$division->nombre." ".$div->cantidad." ".$unidad->nombre}}
                   @endif
                 </td>
+                <td>
+                  <a href={!! asset('#')!!} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal_inventario" onclick="llenarmodal({{$div->id}});">
+                    <i class="fa fa-info-circle"></i>
+                  </a>
+                </td>
               </tr>
               @php
                 $contador++;
@@ -70,5 +76,6 @@
       </div>
     </div>
   </div>
+  @include('Inventarios.Modales.modal_inventario')
   <!-- /page content -->
 @endsection

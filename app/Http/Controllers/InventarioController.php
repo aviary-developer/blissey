@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\DivisionProducto;
+use App\DetalleDevolucion;
+use App\CambioProducto;
 
 class InventarioController extends Controller
 {
@@ -51,7 +53,31 @@ class InventarioController extends Controller
      */
     public function show($id)
     {
-        //
+        $inventario=DivisionProducto::inventario($id,1);
+        $compras=DivisionProducto::compras($id,1);
+        $cuenta=0;
+        $i=0;
+        $ultimos=[];
+        foreach ($compras as $compra) {
+          $devoluciones=DetalleDevolucion::total($compra->id);
+          $retirados=CambioProducto::total($compra->id);
+          $diferencia=$compra->cantidad-$devoluciones-$retirados;
+          if ($diferencia>0) {
+            $cuenta=$cuenta+$diferencia;
+            $compra->cantidad=$diferencia;
+            $ultimos[$i]=$compra;
+            if($cuenta>=$inventario)
+            break;
+            $i++;
+          }
+        }
+          $diferencia=$cuenta-$inventario;
+          if($diferencia!=0){
+            $fila=$ultimos[$i];
+            $fila->cantidad=$fila->cantidad-$diferencia;
+            $ultimos[$i]=$fila;
+          }
+          return $ultimos;
     }
 
     /**
