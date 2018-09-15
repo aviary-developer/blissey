@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   @if ($estado == 1 || $estado == null)
     @php
