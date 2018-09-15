@@ -338,3 +338,4 @@ Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
 Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
 
 Route::resource('calendarios', 'CalendarioController');
+Route::get('calendario/eventos','CalendarioController@eventos');

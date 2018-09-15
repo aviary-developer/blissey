@@ -24,5 +24,6 @@
   </div>
   
   @include('Calendario.create')
+  @include('Calendario.update')
 </div>
 @endsection

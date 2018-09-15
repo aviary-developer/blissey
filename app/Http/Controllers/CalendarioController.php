@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Calendario;
 use App\User;
 use Auth;
+use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,6 @@ class CalendarioController extends Controller
             $evento = new Calendario;
             $evento->fecha_inicio = $request->fecha_inicio;
             $evento->fecha_final = $request->fecha_final;
-            return "Llega aca";
             if(Auth::user()->tipoUsuario == "Recepción"){
                 if($request->f_usuario != 0){
                     $evento->f_usuario = $request->f_usuario;
@@ -103,9 +103,22 @@ class CalendarioController extends Controller
      * @param  \App\Calendario  $calendario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Calendario $calendario)
+    public function update(Request $request, $id)
     {
-        //
+        $evento = Calendario::find($id);
+        DB::beginTransaction();
+        
+        try{
+            $evento->titulo = $request->titulo;
+            $evento->descripcion = $request->descripcion;
+            $evento->save();
+
+            DB::commit();
+            return 1;
+        }catch(Exception $e){
+            DB::rollback();
+            return 0;
+        }
     }
 
     /**
@@ -114,8 +127,86 @@ class CalendarioController extends Controller
      * @param  \App\Calendario  $calendario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Calendario $calendario)
+    public function destroy($id)
     {
-        //
+        $evento = Calendario::find($id);
+        DB::beginTransaction();
+        
+        try{
+            $evento->delete();
+
+            DB::commit();
+            return 1;
+        }catch(Exception $e){
+            DB::rollback();
+            return 0;
+        }
+    }
+
+    public function eventos(){
+        $todos = Calendario::where('tipo_usuario','=','0')->get();
+        $usuario = Calendario::where('f_usuario', Auth::user()->id)->get();
+        $tipo = Calendario::where('tipo_usuario',Auth::user()->tipoUsuario)->get();
+
+        $medicos = [];
+        if(Auth::user()->tipoUsuario == "Recepción"){
+            $ev = Calendario::where('f_usuario','!=',null)->get();
+            $i = 0;
+            foreach($ev as $e){
+                if($e->usuario->tipoUsuario == "Médico" || $e->usuario->tipoUsuario == "Gerencia"){
+                    $medicos[$i] = $e;
+                    $i++;
+                }
+            }
+        }
+
+        $evento = [];
+        $i = 0;
+        if($todos != null){
+            foreach($todos as $e){
+                $evento[$i]['id'] = $e->id;
+                $evento[$i]['start'] = $e->fecha_inicio;
+                $evento[$i]['end'] = $e->fecha_final;
+                $evento[$i]['title'] = $e->titulo;
+                $evento[$i]['desc'] = $e->descripcion;
+                $evento[$i]['color'] = 'lightseagreen';
+                $i++;
+            }
+        }
+        if($usuario != null){
+            foreach($usuario as $e){
+                $evento[$i]['id'] = $e->id;
+                $evento[$i]['start'] = $e->fecha_inicio;
+                $evento[$i]['end'] = $e->fecha_final;
+                $evento[$i]['title'] = $e->titulo;
+                $evento[$i]['desc'] = $e->descripcion;
+                $evento[$i]['color'] = 'crimson';
+                $i++;
+            }
+        }
+        if($tipo != null){
+            foreach($tipo as $e){
+                $evento[$i]['id'] = $e->id;
+                $evento[$i]['start'] = $e->fecha_inicio;
+                $evento[$i]['end'] = $e->fecha_final;
+                $evento[$i]['title'] = $e->titulo;
+                $evento[$i]['desc'] = $e->descripcion;
+                $evento[$i]['color'] = 'dodgerblue';
+                $i++;
+            }
+        }
+        if($medicos != null){
+            foreach($medicos as $e){
+                $evento[$i]['id'] = $e->id;
+                $evento[$i]['start'] = $e->fecha_inicio;
+                $evento[$i]['end'] = $e->fecha_final;
+                $evento[$i]['title'] = $e->titulo;
+                $evento[$i]['desc'] = $e->descripcion;
+                $evento[$i]['color'] = 'purple';
+                $i++;
+            }
+        }
+
+        return $evento;
     }
 }

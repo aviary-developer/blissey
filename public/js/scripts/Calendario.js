@@ -97,7 +97,27 @@ $(document).ready(function () {
     },
     eventLimit: true,
   });
+  var actividades = [];
 
+  $.ajax({
+    type: 'get',
+    url: '/blissey/public/calendario/eventos',
+    success: async function (r) {
+      await $(r).each(function (key, value) { 
+        actividades.push({
+          id: value.id,
+          start: value.start,
+          end: value.end,
+          title: value.title,
+          desc: value.desc,
+          color: value.color
+        });
+      });
+      console.log(actividades);
+
+    }
+  });
+  
   $('#calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -132,6 +152,27 @@ $(document).ready(function () {
     selectable: true,
     editable: true,
 
+    events: function (start, end, timezone, callback) {
+      $.ajax({
+        type: 'get',
+        url: '/blissey/public/calendario/eventos',
+        success: function (r) {
+          var events = [];
+          $(r).each(function (k, v) {
+            events.push({
+              id: v.id,
+              start: v.start,
+              end: v.end,
+              title: v.title,
+              desc: v.desc,
+              color: v.color
+            });
+          });
+          callback(events);
+        }
+      });
+    },
+
     //Acciones
     dayClick: function (date, jsEvent, view) {
       $("#cal-title").text(date.format('DD [de]  MMMM [del]  YYYY'));
@@ -140,14 +181,25 @@ $(document).ready(function () {
 
       $("#calendar-create").modal('show');
     },
+
+    eventClick: function (event) {
+      $('#event-id').val(event.id);
+      $("#cal-title-u").text(event.start.format('DD [de]  MMMM [del]  YYYY'));
+      $("#hora-i-u").text(event.start.format('hh:mm a'));
+      $("#hora-f-u").text(event.end.format('hh:mm a'));
+      $("#titulo-ev-u").val(event.title);
+      $("#desc-ev-u").val(event.desc);
+      $("#calendar-update").modal('show');
+    },
   });
+
 
   $("#sel-user").on('change', function () {
     var valor = $("#sel-user").val();
     if (valor == 0) {
-      $("#sel-t-user").show();
+      $("#tipo-u-div").show();
     } else {
-      $("#sel-t-user").hide();
+      $("#tipo-u-div").hide();
     }
   });
 
@@ -178,13 +230,77 @@ $(document).ready(function () {
         descripcion: descripcion
       },
       success: function (r) {
-        console.log(r);
         if (r == 1) {
           swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");   
         }
+      }
+    });
+  });
+
+  $("#editar_evento").click(function (e) { 
+    e.preventDefault();
+
+    var titulo = $("#titulo-ev-u").val();
+    var descripcion = $("#desc-ev-u").val();
+    var id = $("#event-id").val();
+
+    $.ajax({
+      type: 'put',
+      url: '/blissey/public/calendarios/'+id,
+      data: {
+        titulo: titulo,
+        descripcion: descripcion
+      },
+      success: function (r) {
+        if (r == 1) {
+          swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+          location.reload();
+        } else {
+          swal("¡Error!", "Algo salio mal", "error");
+        }
+      }
+    });
+  });
+
+  $("#eliminar_evento").click(function (e) {
+    e.preventDefault();
+
+    var id = $("#event-id").val();
+
+    return swal({
+      title: 'Eliminar registro',
+      text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Si, ¡Eliminar!',
+      cancelButtonText: 'No, ¡Cancelar!',
+      confirmButtonClass: 'btn btn-danger',
+      cancelButtonClass: 'btn btn-default',
+      buttonsStyling: false
+    }).then(function () {
+      $.ajax({
+        type: 'delete',
+        url: '/blissey/public/calendarios/' + id,
+        success: function (r) {
+          if (r == 1) {
+            swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+            location.reload();
+          } else {
+            swal("¡Error!", "Algo salio mal", "error");
+          }
+        }
+      });
+    }, function (dismiss) {
+      if (dismiss === 'cancel') {
+        swal(
+          'Cancelado',
+          'El registro se mantiene',
+          'info'
+        )
       }
     });
   });

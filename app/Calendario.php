@@ -15,4 +15,8 @@ class Calendario extends Model
         'descripcion',
         'color'
     ];
+
+    public function usuario(){
+        return $this->belongsTo('App\User', 'f_usuario');;
+    }
 }
