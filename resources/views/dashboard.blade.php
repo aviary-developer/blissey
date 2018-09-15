@@ -673,12 +673,10 @@
                       $ultima= App\Transacion::where('tipo',4)->orderBy('id','asc')->get()->last();
                       $conteostock=App\DivisionProducto::conteo();
                       $conteovencidos=App\CambioProducto::conteo();
-                      $stock=0;
-                      //($request->get('page')!=null)?$request->get('page'):1;
+                      // $conteoproximos=App\DivisionProducto::proximos();
                       $requisiciones=($conteore>0)?1:0;
                       $stock=($conteostock>0)?1:0;
                       $vencidos=($conteovencidos)?1:0;
-
                       $porvencer=0;
                       $total=$requisiciones+$stock+$porvencer+$vencidos;
                     @endphp
