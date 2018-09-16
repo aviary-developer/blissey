@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Auth;
+use App\Http\Controllers\DivisionProductoController;
 
 class DivisionProducto extends Model
 {
@@ -52,7 +53,7 @@ class DivisionProducto extends Model
     }
     $contrario=Transacion::contrario();
     $ce=0;
-    $envios=transacion::where('tipo',5)->where('localizacion',$contrario)->get();//envios a recepción no comfirmados
+    $envios=transacion::where('tipo',5)->where('localizacion',$contrario)->get();
     foreach ($envios as $envio) {
       $dee=$envio->detalleTransaccion;
       foreach($dee as $de){
@@ -62,7 +63,7 @@ class DivisionProducto extends Model
       }
     }
     $cr=0;
-    $requisiciones=transacion::where('tipo',6)->where('localizacion',$ts)->get(); //envios a recepción confirmados
+    $requisiciones=transacion::where('tipo',6)->where('localizacion',$ts)->get();
     foreach ($requisiciones as $requisicion) {
       $der=$requisicion->detalleTransaccion;
       foreach($der as $dr){
@@ -107,12 +108,15 @@ class DivisionProducto extends Model
     return DB::table('detalle_transacions')
     ->select('detalle_transacions.*')
     ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
-    ->where('transacions.tipo',1)
+    ->where(function ($query){
+      $query->where('tipo',1)->orWhere('tipo',6);
+    })
     ->where('detalle_transacions.f_producto',$id)
     ->where('transacions.localizacion',$ts)
     ->orderBy('transacions.fecha','DESC')
     ->get();
   }
+
   public static function conteo(){
     $divisiones=DivisionProducto::all();
     $conteo=0;
@@ -190,16 +194,12 @@ class DivisionProducto extends Model
     }
   }
   public static function proximos(){
-    $divisiones=DivisionProducto::all();
-    $conteo=0;
-    foreach ($divisiones as $division) {
-      $conteo=$conteo+DivisionProducto::totalProximos($division->id);
-    }
-    return $conteo;
+    DivisionProductoController::sacarProximos(2); //farmacia
+    DivisionProductoController::sacarProximos(3); //Recepción hospital
   }
-  public static function totalProximos($id){
-    $inventario=DivisionProducto::inventario($id,1);
-    $compras=DivisionProducto::compras($id,1);
+  public static function totalProximos($id,$tipo){
+    $inventario=DivisionProducto::inventario($id,$tipo);
+    $compras=DivisionProducto::compras($id,$tipo);
     $cuenta=0;
     $i=0;
     $ultimos=[];
@@ -217,13 +217,30 @@ class DivisionProducto extends Model
       }
     }
       $diferencia=$cuenta-$inventario;
-      if($diferencia!=0){
+      if($diferencia!=0 && count($ultimos)>0){
         $fila=$ultimos[$i];
         $fila->cantidad=$fila->cantidad-$diferencia;
         $ultimos[$i]=$fila;
       }
+
+      $date = \Carbon\Carbon::now();
+      $date = $date->format('Y-m-d');
       foreach ($ultimos as $ultimo) {
         $meses=DivisionProducto::find($ultimo->f_producto)->n_meses;
+        $fecha_a=\Carbon\Carbon::now();
+        $fecha_a=$fecha_a->addMonths($meses);
+        $fecha_a=$fecha_a->toDateString();
+        $fecha_v=$ultimo->fecha_vencimiento;
+        if(!($fecha_v>$fecha_a)){
+          $cambio=new CambioProducto();
+          $cambio->fecha=$date;
+          $cambio->f_detalle_transaccion=$ultimo->id;
+          $cambio->cantidad=$ultimo->cantidad;
+          $cambio->estado=0;
+          $cambio->localizacion=DivisionProducto::busquedaTipo($tipo);
+          $cambio->save();
+          print_r($ultimo);
+        }
       }
   }
 }

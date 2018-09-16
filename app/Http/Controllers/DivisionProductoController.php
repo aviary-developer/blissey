@@ -18,4 +18,10 @@ class DivisionProductoController extends Controller
       $divisiones=DivisionProducto::stock($f_proveedor);
       return view('Transacciones.pedidoProveedor',compact('divisiones','f_proveedor'));
     }
+    public static function sacarProximos($tipo){
+      $divisiones=DivisionProducto::all();
+      foreach ($divisiones as $division) {
+        DivisionProducto::totalProximos($division->id,$tipo);
+      }
+    }
 }

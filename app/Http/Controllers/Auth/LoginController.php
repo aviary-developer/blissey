@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Bitacora;
 use App\Comprobacion;
 use App\CambioProducto;
+use App\DivisionProducto;
 
 class LoginController extends Controller
 {
@@ -58,6 +59,7 @@ class LoginController extends Controller
             $fecha=date('Y').'-'.date('m').'-'.date('d');
             if(Comprobacion::where('fecha',$fecha)->count()<1){
               CambioProducto::descartar();
+              DivisionProducto::proximos();
               $comprobar= new Comprobacion();
               $comprobar->fecha=date('Y').'-'.date('m').'-'.date('d');
               $comprobar->save();

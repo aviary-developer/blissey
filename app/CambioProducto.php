@@ -58,7 +58,26 @@ class CambioProducto extends Model
     return $this->belongsTo('App\DetalleTransacion','f_detalle_transaccion');
   }
   public static function conteo(){
-    return CambioProducto::where('estado',0)->get()->count();
+    $date = \Carbon\Carbon::now()->format('Y-m-d');
+    $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
+    $conteo=0;
+    foreach ($todos as $cambio){
+      if($cambio->transaccion->fecha_vencimiento>$date){
+        $conteo++;
+      }
+    }
+    return $conteo;
+  }
+  public static function proximos(){
+    $date = \Carbon\Carbon::now()->format('Y-m-d');
+    $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
+    $conteo=0;
+    foreach ($todos as $cambio){
+      if($cambio->transaccion->fecha_vencimiento<=$date){
+        $conteo++;
+      }
+    }
+    return $conteo;
   }
   public static function descartar(){
     CambioProductoController::lugar(2); //farmacia
