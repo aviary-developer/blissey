@@ -36,8 +36,15 @@
 </head>
 <body class="nav-md">
 
-  <div class="container-fluid">
-    @yield('layout')
+  <div class="container-fluid side_back">
+    <div class="row">
+      <div class="col-2 left_col side_back">
+        @include('Dashboard.panel_izquierdo')
+      </div>
+      <div class="col-10 side_back bg-light" role="main">
+        @yield('layout')
+      </div>
+    </div>
   </div>
   
   <!-- jQuery -->
