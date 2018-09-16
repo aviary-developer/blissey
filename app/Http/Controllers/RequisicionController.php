@@ -193,7 +193,7 @@ class RequisicionController extends Controller
               }
             }
             $diferencia=$cuenta-$inventario;
-            if($diferencia!=0){
+            if($diferencia!=0 && count($ultimos)>0){
               $fila=$ultimos[$i];
               $fila->cantidad=$fila->cantidad-$diferencia;
               $ultimos[$i]=$fila;

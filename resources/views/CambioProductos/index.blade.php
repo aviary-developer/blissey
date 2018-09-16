@@ -23,6 +23,7 @@
               <th>#</th>
               <th>Fecha</th>
               <th>Código</th>
+              <th>Estado</th>
               <th>Nombre</th>
               <th>Cantidad</th>
               <th>Lote</th>
@@ -44,9 +45,18 @@
                   <td>
                   {{$retirado->transaccion->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}
                   </td>
+                  <td>{{$dv->codigo}}</td>
                   <td>
+                    @php
+                    $date = \Carbon\Carbon::now();
+                    $date = $date->format('Y-m-d');
+                    @endphp
                     @if ($retirado->estado==0)
-                      <span class="label label-danger label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="Falta retirar de estante">{{$dv->codigo}}</span>
+                      @if ($retirado->transaccion->fecha_vencimiento>$date)
+                        <span class="label label-warning label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="No retirado">Próximo a vencer</span>
+                      @else
+                        <span class="label label-danger label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="No retirado">Vencido</span>
+                      @endif
                     @elseif($retirado->estado==1)
                       <span class="label label-dark-blue label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="Retirado sin cambio">{{$dv->codigo}}</span>
                     @else
