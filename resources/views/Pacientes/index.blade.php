@@ -13,11 +13,10 @@
   $index = true;
   @endphp
   @include('Pacientes.Barra.index')
-  <div class="col-md-10 col-sm-10 col-xs-12">
+  <div class="col-12">
     <div class="x_panel">
-      <table class="table" id="index-table">
+      <table class="table table-hover table-sm table-striped" id="index-table">
         <thead>
-          <th style="width: 15px"></th>
           <th>#</th>
           <th>Apellido</th>
           <th>Nombre</th>
@@ -32,14 +31,11 @@
             $correlativo = 1;
             @endphp
             @foreach ($pacientes as $paciente)
-              <tr>
-                <td>
-                  @if ($paciente->completed($paciente->id)!=false)
-                    <a href={{asset('pacientes/'.$paciente->id.'/edit')}} data-tooltip="tooltip" title="Registro incompleto" class="btn btn-outline-warning btn-sm">
-                      <i class="fas fa-exclamation-triangle"></i>
-                    </a>
-                  @endif
-                </td>
+              @if ($paciente->completed($paciente->id)!=false)
+                <tr class="table-warning">
+              @else  
+                <tr>
+              @endif
                 <td>{{ $correlativo }}</td>
                 <td>
                   <a href={{asset('pacientes/'.$paciente->id)}}>
@@ -53,9 +49,9 @@
                 </td>
                 <td>
                   @if ($paciente->sexo)
-                    <span class="label-lg label label-cian">Masculino</span>
+                    <span class="badge text-primary border border-primary">Masculino</span>
                   @else
-                    <span class="label-lg label label-pink">Femenino</span>
+                    <span class="badge text-pink border border-pink">Femenino</span>
                   @endif
                 </td>
                 <td>{{ $paciente->fechaNacimiento->age.' años' }}</td>
@@ -94,29 +90,5 @@
   <!-- /page content -->
 
   {{-- Modal --}}
-  <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    {!!Form::open(['route'=>'pacientes.index','method'=>'GET','role'=>'search','autocomplete'=>'off'])!!}
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-          </button>
-          <h4 class="modal-title" id="myModalLabel">Buscar</h4>
-        </div>
-        <div class="modal-body">
-          <div class="x_panel">
-            @include('Pacientes.Formularios.filtro')
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Buscar</button>
-          <button type="button" class="btn btn-default" id="limpiar_paciente_filtro">Limpiar</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        </div>
-
-      </div>
-    </div>
-    {!!Form::close()!!}
-  </div>
+  @include('Pacientes.Formularios.modal_filtro')
 @endsection

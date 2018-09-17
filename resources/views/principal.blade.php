@@ -28,6 +28,10 @@
   <!-- FullCalendar -->
   {!!Html::style('library/FullCalendar/fullcalendar.css')!!}
 
+  <!-- RangeSlider -->
+  {!!Html::style('library/RangeSlider/css/ion.rangeSlider.css')!!}
+  {!!Html::style('library/RangeSlider/css/ion.rangeSlider.skinFlat.css')!!}
+
   <!-- Switchery -->
   {!!Html::style('library/Switchery/dist/switchery.min.css')!!}
 
@@ -36,7 +40,7 @@
 </head>
 <body class="nav-md">
 
-  <div class="container-fluid side_back">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-2 left_col side_back">
         @include('Dashboard.panel_izquierdo')
@@ -48,14 +52,16 @@
   </div>
   
   <!-- jQuery -->
-  {!!Html::script('library/FullCalendar/lib/jquery.min.js')!!}
+  {{--  {!!Html::script('library/FullCalendar/lib/jquery.min.js')!!}  --}}
+  {!!Html::script('library/Gentelella/app.js')!!}
   {!!Html::script('library/FullCalendar/lib/jquery-migrate.js')!!}
 
   <!-- Chart.js -->
   {!!Html::script('library/Chart.js/chart.js/dist/Chart.min.js')!!}
 
   <!-- Bootstrap4 -->
-  {!!Html::script('library/Bootstrap4/js/bootstrap.bundle.js')!!}
+  {{--  {!!Html::script('library/Gentelella/tooltip.js')!!}
+  {!!Html::script('library/Bootstrap4/js/bootstrap.js')!!}  --}}
 
   <!-- DataTable -->
   {!!Html::script('library/DataTable/datatables.js')!!}
@@ -67,7 +73,7 @@
   {!!Html::script('library/Inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
 
   <!-- RangeSlider -->
-  {!!Html::script('library/RangeSlider/js/ion.rangeSlider.min.js')!!} 
+  {!!Html::script('library/RangeSlider/js/ion-rangeSlider/ion.rangeSlider.js')!!} 
 
   <!-- FullCalendar -->
   {!!Html::script('library/FullCalendar/lib/moment.min.js')!!}

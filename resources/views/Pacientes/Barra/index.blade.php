@@ -20,7 +20,7 @@
         <a class="nav-link" href={!! asset('/pacientes/create') !!}>Nuevo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="modal" data-target=".bs-modal-lg" id="abrir_filtro">Buscar</a>
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#filtro_pac" id="abrir_filtro">Buscar</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Reporte</a>

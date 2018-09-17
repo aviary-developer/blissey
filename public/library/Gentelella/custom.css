@@ -2,6 +2,28 @@
     --principal: #2ea2a4;
     --secundario: #3ec8ca;
     --terciario: #1f7b7d;
+
+    --blue:#007bff;
+    --indigo:#6610f2;
+    --purple:#6f42c1;
+    --pink:#e83e8c;
+    --red:#e95644;
+    --orange:#e98925;
+    --yellow:#f3ca0c;
+    --green:#16a085;
+    --teal:#20c997;
+    --cyan:#17a2b8;
+    --white:#fff;
+    --gray:#868e96;
+    --gray-dark:#343a40;
+    --primary:#2e8cc2;
+    --secondary:#868e96;
+    --success:#1abc9c;
+    --info:#3ca2e0;
+    --warning:#f3ca0c;
+    --danger:#e95644;
+    --light:#f8f9fa;
+    --dark:#343a40;
 }
 .image-porfile{
     width: 100%;
@@ -12,7 +34,23 @@
 .side_back{
     padding: 0px !important;
 }
-
+.text-pink{
+    color: var(--pink);
+}
+.border-pink{
+    border-color: var(--pink) !important;
+}
+.btn-info{
+    color: var(--white);
+    background-color: var(--info);
+    border-color: var(--info);
+}
+.text-info{
+    color: var(--info);
+}
+.border-info{
+    border-color: var(--info) !important;
+}
 /* Antigua gentelella */
 table{
     font-size: medium;
@@ -30,7 +68,7 @@ table{
 .m_panel{
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 canvas{
 		-moz-user-select: none;
@@ -2469,10 +2507,10 @@ span.section {
     border: 0;
     border-bottom: 1px solid #e5e5e5
 }
-.form-control {
+/* .form-control {
     border-radius: 0;
     width: 100%
-}
+} */
 .form-horizontal .control-label {
     padding-top: 8px
 }

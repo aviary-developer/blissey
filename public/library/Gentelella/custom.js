@@ -178,12 +178,14 @@ $(document).ready(function() {
 });
 // /Panel toolbox
 
-// Tooltip
-// $(document).ready(function() {
-//     $('[data-toggle="tooltip"]').tooltip({
-//         container: 'body'
-//     });
-// });
+// // Tooltip
+$(document).ready(function() {
+    $('[data-tooltip="tooltip"]').tooltip({
+			container: 'body',
+			trigger: 'hover',
+			placement: "left"
+    });
+});
 // /Tooltip
 
 // Progressbar

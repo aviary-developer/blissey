@@ -94,7 +94,7 @@ $("#entregar").click(function() {
 
 $("#index-table").DataTable();
 
-$("[data-tooltip='tooltip']").tooltip();
+
 
 $(".modal").on('shown.bs.modal', function () {
   $(this).find("input:visible:first").focus();
