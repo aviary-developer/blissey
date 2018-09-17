@@ -15,13 +15,35 @@ class DetalleCaja extends Model
 
     public static function cajaApertura(){
       $detalle=DetalleCaja::where('fecha',date('Y').'-'.date('m').'-'.date('d'))->where('f_usuario',Auth::user()->id)->get()->last();
-      if(count($detalle)==0){
-        return false;
-      }elseif($detalle->tipo==2){
-        return false;
-      }else{
-        return true;
-      }
+      if(Transacion::tipoUsuario()==0){
+        if(count($detalle)==0){
+          return false;
+        }elseif($detalle->tipo==2){
+          return false;
+        }else{
+          return true;
+        }
+      }elseif(Transacion::tipoUsuario()==1){
+        if(count($detalle)==0){
+          if(date('G')<7){
+            $fecha=\Carbon\Carbon::now()->subDay()->toDateString();
+            $detalle=DetalleCaja::where('fecha',$fecha)->where('f_usuario',Auth::user()->id)->get()->last();
+            if(count($detalle)==0){
+              return false;
+            }elseif($detalle->tipo==2){
+              return false;
+            }else{
+              return true;
+            }
+          }else{
+            return false;
+          }
+        }elseif($detalle->tipo==2){
+          return false;
+        }else{
+          return true;
+        }
+        }
     }
     public static function verificacionCaja($id){
       $detalle=DetalleCaja::where('f_caja',$id)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->get()->last();

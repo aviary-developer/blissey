@@ -119,8 +119,13 @@ class DetalleCajaController extends Controller
       return view('DetalleCajas.aperturar',compact('caja'));
     }
     public function arqueo(){
-      $detalle=DetalleCaja::caja(date('Y').'-'.date('m').'-'.date('d'));
-      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,date('Y').'-'.date('m').'-'.date('d'));
+      if(Transacion::tipoUsuario()==1 && date('G')<7){
+        $fecha=\Carbon\Carbon::now()->subDay()->toDateString();
+      }else{
+        $fecha=\Carbon\Carbon::now()->toDateString();
+      }
+      $detalle=DetalleCaja::caja($fecha);
+      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,$fecha);
       return view('DetalleCajas.arqueo',compact('detalle','movimientos'));
     }
     public function cerrar($id){

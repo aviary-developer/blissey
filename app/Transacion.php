@@ -266,7 +266,14 @@ class Transacion extends Model
           $d->save();
         }
         public static function movimentosCaja($f_usuario,$apertura,$fecha){
-          return Transacion::where('f_usuario',$f_usuario)->where('fecha',$fecha)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+          if(Transacion::tipoUsuario()==0){
+            return Transacion::where('f_usuario',$f_usuario)->where('fecha',$fecha)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+          }else{
+            return Transacion::where('f_usuario',$f_usuario)->filtroFecha($fecha)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+          }
+        }
+        public function scopeFiltroFecha($query,$fecha){
+          $query->where('fecha',$fecha)->orWhere('updated_at',"<",\Carbon\Carbon::now()->toDateString()." 07:00:00");
         }
         public function scopefiltroTipo($query){
             $query->where('tipo',1)->orWhere('tipo',2)->orWhere('tipo',8)->orWhere('tipo',9);
