@@ -45,6 +45,11 @@ class DetalleCajaController extends Controller
      */
     public function store(DetalleCajaRequest $request)
     {
+      if($request->tipo==2){
+        $total=DetalleCaja::arqueo(date('Y').'-'.date('m').'-'.date('d'));
+      }else{
+        $total=null;
+      }
       DB::beginTransaction();
       try{
         $detalle=DetalleCaja::create([
@@ -53,6 +58,7 @@ class DetalleCajaController extends Controller
           'fecha'=>date('Y').'-'.date('m').'-'.date('d'),
           'f_usuario'=>Auth::user()->id,
           'importe'=>$request['importe'],
+          'total'=>$total,
         ]);
       }catch(\Exception $e){
         DB::rollback();
@@ -113,8 +119,8 @@ class DetalleCajaController extends Controller
       return view('DetalleCajas.aperturar',compact('caja'));
     }
     public function arqueo(){
-      $detalle=DetalleCaja::caja();
-      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at);
+      $detalle=DetalleCaja::caja(date('Y').'-'.date('m').'-'.date('d'));
+      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,date('Y').'-'.date('m').'-'.date('d'));
       return view('DetalleCajas.arqueo',compact('detalle','movimientos'));
     }
     public function cerrar($id){

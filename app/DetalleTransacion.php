@@ -20,6 +20,9 @@ public function servicio(){
 public function estante(){
   return $this->belongsTo('App\Estante','f_estante');
 }
+public function transaccion(){
+  return $this->belongsTo('App\Transacion','f_transaccion');
+}
 public static function cuenta($id){
   $cuenta=DetalleTransacion::where('f_producto',$id)->count();
 

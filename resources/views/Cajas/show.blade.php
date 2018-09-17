@@ -35,7 +35,7 @@
               <table class="table">
                 <tr>
                   <th>nombre</th>
-                  <td>{{ $caja->nombre}}</td>
+                  <td>Caja {{ $caja->nombre}}</td>
                 </tr>
                 <tr>
                   <th>Localización</th>

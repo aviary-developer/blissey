@@ -4,7 +4,7 @@
     $index = false;
     setlocale(LC_ALL,'es');
   @endphp
-<div class="col-md-10 col-sm-10 col-xs-12">
+<div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
     <div class="x_title">
       <h2>
@@ -90,9 +90,9 @@
                     <td></td>
                     <td>Importe inicial</td>
                     <td>{{date_format($detalle->updated_at,'g:i A')}}</td>
-                    <td>$ {{number_format($detalle->importe,2,'.','.')}}</td>
+                    <td>$ {{number_format($detalle->importe,2,'.',',')}}</td>
                     <td></td>
-                    <td>$ {{number_format($total,2,'.','.')}}</td>
+                    <td>$ {{number_format($total,2,'.',',')}}</td>
                   </tr>
                   @php
                     $contador++;
@@ -108,14 +108,14 @@
                       <td>
                         @if($movimiento->tipo==2)
                           @php
-                          $suma=number_format($movimiento->valorTotal($movimiento->id),2,'.','.');
+                          $suma=number_format($movimiento->valorTotal($movimiento->id),2,'.',',');
                           $total=$total+$suma;
                           @endphp
                           $ {{$suma}}
                         @endif
                         @if($movimiento->tipo==8)
                           @php
-                          $suma=number_format($movimiento->devolucion,2,'.','.');
+                          $suma=number_format($movimiento->devolucion,2,'.',',');
                           $total=$total+$suma;
                           @endphp
                           $ {{$suma}}
@@ -124,20 +124,20 @@
                       <td>
                         @if($movimiento->tipo==1)
                           @php
-                          $resta=number_format($movimiento->valorTotal($movimiento->id),2,'.','.');
+                          $resta=$movimiento->valorTotal($movimiento->id);
                           $total=$total-$resta;
                           @endphp
-                          $ {{$resta}}
+                          $ {{number_format($resta,2,'.',',')}}
                         @endif
                         @if($movimiento->tipo==9)
                           @php
-                          $resta=number_format($movimiento->devolucion,2,'.','.');
+                          $resta=number_format($movimiento->devolucion,2,'.',',');
                           $total=$total-$resta;
                           @endphp
                           $ {{$resta}}
                         @endif
                       </td>
-                      <td>$ {{number_format($total,2,'.','.')}}</td>
+                      <td>$ {{number_format($total,2,'.',',')}}</td>
                   </tr>
                   @php
                   $contador++;

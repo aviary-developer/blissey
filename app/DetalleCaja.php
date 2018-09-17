@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DetalleCaja extends Model
 {
-    protected $fillable=['fecha','f_usuario','tipo','f_caja','importe'];
+    protected $fillable=['fecha','f_usuario','tipo','f_caja','importe','total'];
 
     public function datosCaja(){
       return $this->belongsTo('App\Caja','f_caja');
@@ -24,7 +24,7 @@ class DetalleCaja extends Model
       }
     }
     public static function verificacionCaja($id){
-      $detalle=DetalleCaja::where('f_caja',$id)->get()->last();
+      $detalle=DetalleCaja::where('f_caja',$id)->where('fecha',date('Y').'-'.date('m').'-'.date('d'))->get()->last();
       if(count($detalle)==0){
         return false;
       }elseif($detalle->tipo==2){
@@ -37,8 +37,31 @@ class DetalleCaja extends Model
       $detalle=DetalleCaja::where('f_caja',$id)->get()->last();
       return $detalle;
     }
-    public static function caja(){
-      $caja=DetalleCaja::where('fecha',date('Y').'-'.date('m').'-'.date('d'))->where('tipo',1)->where('f_usuario',Auth::user()->id)->get()->last();
+    public static function caja($fecha){
+      $caja=DetalleCaja::where('fecha',$fecha)->where('tipo',1)->where('f_usuario',Auth::user()->id)->get()->last();
       return $caja;
+    }
+    public static function arqueo($fecha){
+      $total=0;
+      $detalle=DetalleCaja::caja($fecha);
+      $total=$total+$detalle->importe;
+      echo "T".$total."<br>";
+      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,$fecha);
+      foreach ($movimientos as $movimiento) {
+        $valor=$movimiento->valorTotal($movimiento->id);
+        if($movimiento->tipo==2){
+          $total=$total+$valor;
+        }
+        if($movimiento->tipo==8){
+          $total=$total+$movimiento->devolucion;
+        }
+        if($movimiento->tipo==1){
+          $total=$total-$valor;
+        }
+        if($movimiento->tipo==9){
+          $total=$total-$movimiento->devolucion;
+        }
+      }
+      return $total;
     }
 }

@@ -14,7 +14,7 @@ class ValoresNormalesFemeninos extends Migration
     public function up()
     {
         Schema::table('parametros', function (Blueprint $table) {
-          $table->dropColumn('observacion');
+          // $table->dropColumn('observacion');
           $table->double('valorMinimoFemenino')->nullable();
           $table->double('valorMaximoFemenino')->nullable();
         });

@@ -3,6 +3,16 @@
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','id'=>'formulario','route' =>'detalleCajas.store','method' =>'POST','autocomplete'=>'off'])!!}
   @php
     $fecha = Carbon\Carbon::now();
+    $ultimo=App\DetalleCaja::where('f_caja',$caja->id)->get()->last();
+    if(count($ultimo)==1){
+      if($ultimo->tipo==2){
+      $valor=$ultimo->total-$ultimo->importe;
+      }elseif($ultimo->tipo==1){
+        $valor=App\DetalleCaja::arqueo($ultimo->fecha);
+      }
+    }else{
+      $valor="";
+    }
   @endphp
   <input type="hidden" name="f_caja" value="{{$caja->id}}">
   <div class="col-md-6 col-xs-12">
@@ -23,7 +33,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Importe *</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-            {!! Form::number('importe',null,['class'=>'form-control has-feedback-left','placeholder'=>'Cantidad']) !!}
+            {!! Form::number('importe',$valor,['class'=>'form-control has-feedback-left','placeholder'=>'Cantidad']) !!}
           </div>
           <input type="hidden" name="tipo" value="1">
         </div>
