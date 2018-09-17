@@ -51,7 +51,7 @@ class EstanteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EstanteRequest $request)
+    public function store(Request $request)
     {
       $estante=new Estante;
       $estante->fill($request->all());
@@ -97,12 +97,11 @@ class EstanteController extends Controller
         $nv=1; //No necesita validar = true
         if($estante->codigo!=$request->codigo){
           $nv=0;
-          $validar['codigo']='required | min:1 | max:5 |unique:estantes';
+          $validar['codigo']='required | min:1 | max:5';
 
           $mensaje['codigo.required']='El campo código identificador es obligatorio';
           $mensaje['codigo.min']='El campo código identificador necesita 1 caracteres mínimos';
           $mensaje['codigo.max']='El campo código identificador necesita 3 caracteres máximo';
-          $mensaje['codigo.unique']='El campo código identificador ya ha sido registrado';
         }
         if($estante->cantidad!=$request->cantidad){
           $nv=0;

@@ -55,7 +55,7 @@
                   <td>{{ $correlativo + $pagina }}</td>
                   <td>
                     <a href={{asset('/cajas/'.$caja->id)}}>
-                      {{ $caja->nombre}}
+                      Caja {{ $caja->nombre}}
                     </a>
                   </td>
                   <td>
