@@ -72,6 +72,8 @@ class CambioProducto extends Model
     $date = \Carbon\Carbon::now()->format('Y-m-d');
     $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
     $conteo=0;
+    echo Transacion::tipoUsuario();
+    echo $todos;
     foreach ($todos as $cambio){
       if($cambio->transaccion->fecha_vencimiento>=$date){
         $conteo++;
