@@ -18,24 +18,10 @@
       confirmButtonClass: 'btn btn-danger',
       cancelButtonClass: 'btn btn-default',
       buttonsStyling: false
-    }).then(function () {
-      submit();
-      swal({
-        title: '¡Desactivado!',
-        text: 'Acción realizada satisfactorimente',
-        type: 'success',
-        showCancelButton: false,
-        showConfirmButton: false
-      })
-    }, function (dismiss) {
-      // dismiss can be 'cancel', 'overlay',
-      // 'close', and 'timer'
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
+    }).then((result) => {
+      if (result.value) {
+        localStorage.setItem('msg','yes');
+        submit();
       }
     });"/>
       <i class="fa fa-trash"></i>

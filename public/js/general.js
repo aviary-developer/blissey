@@ -105,3 +105,18 @@ $(document).on('ready', function () {
     $("#mout").fadeOut(1500);
   }, 3000);
 });
+
+$(document).on('ready', function () {
+  if (localStorage.getItem('msg') == 'yes') {
+    swal({
+      type: 'success',
+      toast: true,
+      title: '¡Acción exitosa!',
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000
+    });
+
+    localStorage.removeItem('msg');
+  }
+});

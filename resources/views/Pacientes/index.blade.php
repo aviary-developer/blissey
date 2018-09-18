@@ -74,14 +74,6 @@
               $correlativo++;
               @endphp
             @endforeach
-          @else
-            <tr>
-              <td colspan="8">
-                <center>
-                  No hay registros que coincidan con los términos de búsqueda indicados
-                </center>
-              </td>
-            </tr>
           @endif
         </tbody>
       </table>

@@ -2,6 +2,7 @@
     --principal: #2ea2a4;
     --secundario: #3ec8ca;
     --terciario: #1f7b7d;
+    --cuarto: #3B8C8D;
 
     --blue:#007bff;
     --indigo:#6610f2;
@@ -66,9 +67,11 @@ table{
     margin: 0 10px 0 10px !important;
 }
 .m_panel{
-    border-radius: 6px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    pointer-events: auto;
+    background-clip: padding-box;
+    border-radius: 0.3rem;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
 }
 canvas{
 		-moz-user-select: none;
@@ -1139,7 +1142,7 @@ a:focus {
 }
 .nav.side-menu>li.active>a {
     text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-    background: linear-gradient(#2ea2a4, #1e7374), #1e7374;
+    background: var(--cuarto);
     box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0
 }
 /* .navbar-brand,

@@ -87,15 +87,15 @@ $(document).on('ready',function(){
     peticion();
   });
 
-  $("#lsexo1").on("click",function(){
+  $("#sexo1").on("click",function(){
     peticion();
   });
 
-  $("#lsexo2").on("click",function(){
+  $("#sexo2").on("click",function(){
     peticion();
   });
 
-  $("#lsexo3").on("click",function(){
+  $("#sexo3").on("click",function(){
     peticion();
   });
 
@@ -106,13 +106,7 @@ $(document).on('ready',function(){
   function peticion() {
     var v_nombre = $("#nombre").val();
     var v_apellido = $("#apellido").val();
-    if($("#sexo1").is(":checked")){
-      var v_sexo = 2;
-    }else if($("#sexo2").is(":checked")){
-      var v_sexo = 1;
-    }else{
-      var v_sexo = 0;
-    }
+    var v_sexo = $("#sexo").val();
     var v_telefono = $("#telefono").val();
     var v_dui = $("#dui").val();
     var v_direccion = $("#direccion").val();
@@ -188,12 +182,12 @@ $(document).on('ready',function(){
       }
 
       if (edad > 17) {
-        document.getElementById("dui_paciente").style = "display:block";
+        $("#dui_paciente").show();
       } else {
-        document.getElementById("dui_paciente").style = "display:none";
+        $("#dui_paciente").hide();
       }
     } else {
-      document.getElementById("dui_paciente").style = "display:none";
+      $("#dui_paciente").hide();
     }
   });
 

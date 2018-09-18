@@ -23,7 +23,11 @@
   {!!Html::style('library/DataTable/datatables.css')!!}
 
   <!-- SweetAlert2 -->
-  {!!Html::script('library/SweetAlert2/dist/sweetalert2.js')!!} {!!Html::style('library/SweetAlert2/dist/sweetalert2.css')!!}
+  {!!Html::script('library/SweetAlert2/dist/sweetalert2.all.js')
+  !!} 
+  {!!Html::script('library/SweetAlert2/dist/sweetalert2.min.js')
+  !!} 
+  {!!Html::style('library/SweetAlert2/dist/sweetalert2.css')!!}
 
   <!-- FullCalendar -->
   {!!Html::style('library/FullCalendar/fullcalendar.css')!!}
@@ -39,7 +43,34 @@
   {!!Html::style('library/Gentelella/custom.css')!!}
 </head>
 <body class="nav-md">
-
+  @if(Session::has('mensaje'))
+  @php
+    echo "<script>
+      swal({
+        type: 'success',
+        toast: true,
+        title: '¡Acción exitosa!',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000
+      });
+    </script>"; 
+  @endphp
+  @endif 
+  @if(Session::has('error'))
+  @php
+    echo "<script>
+      swal({
+        type: 'error',
+        toast: true,
+        title: '¡Error!',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000
+      });
+    </script>"; 
+  @endphp
+  @endif 
   <div class="container-fluid">
     <div class="row">
       <div class="col-2 left_col side_back">
@@ -50,7 +81,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- jQuery -->
   {{--  {!!Html::script('library/FullCalendar/lib/jquery.min.js')!!}  --}}
   {!!Html::script('library/Gentelella/app.js')!!}
@@ -63,9 +94,6 @@
   {{--  {!!Html::script('library/Gentelella/tooltip.js')!!}
   {!!Html::script('library/Bootstrap4/js/bootstrap.js')!!}  --}}
 
-  <!-- DataTable -->
-  {!!Html::script('library/DataTable/datatables.js')!!}
-
   <!-- SmartWizard -->
   {!!Html::script('library/SmartWizard/dist/js/jquery.smartWizard.js')!!}
 
@@ -74,7 +102,6 @@
 
   <!-- RangeSlider -->
   {!!Html::script('library/RangeSlider/js/ion-rangeSlider/ion.rangeSlider.js')!!} 
-
   <!-- FullCalendar -->
   {!!Html::script('library/FullCalendar/lib/moment.min.js')!!}
   {!!Html::script('library/FullCalendar/fullcalendar.js')!!}
@@ -87,8 +114,13 @@
   {!!Html::script('js/imageViewer/jquery.mousewheel.min.js')!!}
   {!!Html::script('js/imageViewer/imgViewer.js')!!}
 
-  <!-- Blissey -->
+  <!-- DataTable -->
+  {!!Html::script('library/DataTable/datatables.js')!!}
+
+  <!-- General -->
   {!!Html::script('js/general.js')!!}
+
+  <!-- Blissey -->
   {!!Html::script('js/scripts/proveedores.js')!!}
   {!!Html::script('js/scripts/Usuarios.js')!!}
   {!!Html::script('js/scripts/Examenes.js')!!}
@@ -115,3 +147,20 @@
   {!!Html::script('library/Gentelella/custom.js')!!}
 </body>
 </html>
+@foreach ($errors->all() as $error)
+  @php
+    echo '
+    <script language="javascript">
+      swal({
+        toast: true,
+        type: "error",
+        title: "¡Error!",
+        text: "'.$error.'",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 4000
+      });
+    </script>
+    '; 
+  @endphp
+@endforeach

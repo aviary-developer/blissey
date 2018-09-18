@@ -1,4 +1,4 @@
-<div class="x_panel m_panel bg-danger border border-danger">
+<div class="x_panel m_panel text-danger">
   <center>
     <h4 class="mb-1">
       <i class="fas fa-search"></i>
@@ -39,7 +39,7 @@
         <a class="btn btn-primary btn-sm notActive col-sm-4" data-toggle="sexo" data-title="1" id="sexo2">Masculino</a>
         <a class="btn btn-primary btn-sm notActive col-sm-4" data-toggle="sexo" data-title="0" id="sexo3">Femenino</a>
       </div>
-      <input type="hidden" name="sexo" id="sexo" value="1">
+      <input type="hidden" name="sexo" id="sexo" value="2">
     </div>
   </div>
   
@@ -91,4 +91,12 @@
   @else
     <input type="hidden" name="estado" value="1" id="estado">
   @endif
+</div>
+
+<div class="m_panel x_panel">
+  <center>
+    <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+    <button type="button" class="btn btn-light btn-sm" id="limpiar_paciente_filtro">Limpiar</button>
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cerrar</button>
+  </center>
 </div>

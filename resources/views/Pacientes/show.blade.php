@@ -1,10 +1,11 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   @php
     $index = false;
     setlocale(LC_ALL,'es');
   @endphp
-<div class="col-md-10 col-sm-10 col-xs-12">
+  @include('Pacientes.Barra.show')
+<div class="col-sm-8">
   <div class="x_panel">
     <div class="x_title">
       <h2>
@@ -70,5 +71,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="col-sm-4">
+  @include('Pacientes.Partes.datos_paciente')
 </div>
 @endsection
