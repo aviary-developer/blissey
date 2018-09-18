@@ -67,7 +67,6 @@ class DetalleCaja extends Model
       $total=0;
       $detalle=DetalleCaja::caja($fecha);
       $total=$total+$detalle->importe;
-      echo "T".$total."<br>";
       $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,$fecha);
       foreach ($movimientos as $movimiento) {
         $valor=$movimiento->valorTotal($movimiento->id);

@@ -51,7 +51,7 @@ class DivisionProducto extends Model
         }
       }
     }
-    $contrario=Transacion::contrario();
+    $contrario=Transacion::contrario($ts);
     $ce=0;
     $envios=transacion::where('tipo',5)->where('localizacion',$contrario)->get();
     foreach ($envios as $envio) {
@@ -217,7 +217,7 @@ class DivisionProducto extends Model
       }
     }
       $diferencia=$cuenta-$inventario;
-      if($diferencia!=0 && count($ultimos)>0){
+      if($diferencia!=0 && count($ultimos)>0 && isset($ultimos[$i])){
         $fila=$ultimos[$i];
         $fila->cantidad=$fila->cantidad-$diferencia;
         $ultimos[$i]=$fila;
@@ -232,14 +232,16 @@ class DivisionProducto extends Model
         $fecha_a=$fecha_a->toDateString();
         $fecha_v=$ultimo->fecha_vencimiento;
         if(!($fecha_v>$fecha_a)){
-          $cambio=new CambioProducto();
+          $cambio=CambioProducto::where('f_detalle_transaccion',$ultimo->id)->get()->last();
+          if(count($cambio)==0){
+            $cambio=new CambioProducto();
+          }
           $cambio->fecha=$date;
           $cambio->f_detalle_transaccion=$ultimo->id;
           $cambio->cantidad=$ultimo->cantidad;
           $cambio->estado=0;
           $cambio->localizacion=DivisionProducto::busquedaTipo($tipo);
           $cambio->save();
-          print_r($ultimo);
         }
       }
   }

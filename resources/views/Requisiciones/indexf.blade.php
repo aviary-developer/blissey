@@ -40,10 +40,10 @@
                     <a href={!! asset('/requisiciones?tipo='.$estadoOpuesto) !!}>
                       @if ($estadoOpuesto==5)
                         Atendidas
-                        <span class="label label-success">{{ App\Transacion::whereIn('tipo',[5,6])->where('localizacion',App\Transacion::contrario())->count() }}</span>
+                        <span class="label label-success">{{ App\Transacion::whereIn('tipo',[5,6])->where('localizacion',App\Transacion::contrario(App\Transacion::tipoUsuario()))->count() }}</span>
                       @else
                         Pendientes
-                        <span class="label label-warning">{{ App\Transacion::where('tipo',4)->where('localizacion',App\Transacion::contrario())->count() }}</span>
+                        <span class="label label-warning">{{ App\Transacion::where('tipo',4)->where('localizacion',App\Transacion::contrario(App\Transacion::tipoUsuario()))->count() }}</span>
                       @endif
                     </a>
                   </li>

@@ -611,8 +611,7 @@ function registrarventa(id){
 }
 }
 function validarFechaMenorActual(date){
-  var f = new Date();
-  actual= f.getFullYear() + "-" + (('0' + (f.getMonth()+1)).toString().slice(-2))+ "-" +'0' + (f.getDate()).toString().slice(-2) ;
+  actual= $('#fechaM').val();
       if (date > actual){
         return false;
         }

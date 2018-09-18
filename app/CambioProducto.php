@@ -62,7 +62,7 @@ class CambioProducto extends Model
     $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
     $conteo=0;
     foreach ($todos as $cambio){
-      if($cambio->transaccion->fecha_vencimiento>$date){
+      if($cambio->transaccion->fecha_vencimiento<$date){
         $conteo++;
       }
     }
@@ -72,8 +72,10 @@ class CambioProducto extends Model
     $date = \Carbon\Carbon::now()->format('Y-m-d');
     $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
     $conteo=0;
+    echo Transacion::tipoUsuario();
+    echo $todos;
     foreach ($todos as $cambio){
-      if($cambio->transaccion->fecha_vencimiento<=$date){
+      if($cambio->transaccion->fecha_vencimiento>=$date){
         $conteo++;
       }
     }
@@ -84,6 +86,6 @@ class CambioProducto extends Model
     CambioProductoController::lugar(3); //Recepción hospital
   }
   public static function total($id){
-    return CambioProducto::where('f_detalle_transaccion',$id)->sum('cantidad');
+    return CambioProducto::where('f_detalle_transaccion',$id)->where('estado','<>',0)->sum('cantidad');
   }
 }
