@@ -135,7 +135,8 @@ class PacienteController extends Controller
     public function show($id)
     {
         $paciente = Paciente::find($id);
-        return view('Pacientes.show',compact('paciente'));
+        $ingresos = $paciente->ingreso;
+        return view('Pacientes.show',compact('paciente','ingresos'));
     }
 
     /**
@@ -657,5 +658,14 @@ class PacienteController extends Controller
       return 2;
     }
     return $paciente->alergia;
+  }
+  
+  public function servicio_medico(Request $request){
+    $paciente = Paciente::find($request->id);
+    if($request->tipo != -1){
+      return $paciente->ingreso->where('tipo',$request->tipo);
+    }else{
+      return $paciente->ingreso;
+    }
   }
 }

@@ -37,6 +37,7 @@
     </ul>
   </div>
 </nav>
+<input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
   function alta(id){

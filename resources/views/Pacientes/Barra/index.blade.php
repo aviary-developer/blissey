@@ -48,3 +48,4 @@
     </ul>
   </div>
 </nav>
+<input type="hidden" name="u" id="ubi" value="index">

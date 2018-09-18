@@ -6,8 +6,10 @@ $(document).on('ready',function(){
   var ubicacion = window.location.pathname;
 
   if (ubicacion.indexOf("/blissey/public/pacientes/") > -1) {
-    cargar_municipio();
-    cambio_residencia();
+    if ($("#ubi").val() != "show") {
+      cargar_municipio();
+      cambio_residencia();
+    }
   }
 
   function cargar_municipio() {
@@ -207,5 +209,41 @@ $(document).on('ready',function(){
       document.getElementById("municipio_div").style = "display:block";
     }
   }
+
+  $("#filtro_h").on('change', function () {
+    var tipo = $("#filtro_h").val();
+    var id = $("#id-p").val();
+
+    $.ajax({
+      type: 'get',
+      url: '/blissey/public/paciente/servicio_medico',
+      data: {
+        id: id,
+        tipo : tipo
+      },
+      success: function (r) {
+        var tabla = $("#body-table");
+        tabla.empty();
+        var i = 0;
+        $(r).each(function (key, value) {
+          i++;
+          var html = '<tr>' +
+            '<td>' +
+            moment(value.created_at) +
+            '</td>' +
+            '<td>' +
+            moment(value.created_at) +
+            '</td>' +
+            '<td>' +
+            moment(value.created_at) +
+            '</td>' +
+            '<td>' +
+            moment(value.created_at) +
+            '</td>' +
+            '</tr>';
+        })
+      }
+    });
+  });
 
 });

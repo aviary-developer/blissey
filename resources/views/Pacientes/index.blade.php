@@ -63,11 +63,13 @@
                   @endif
                 </td>
                 <td>
-                  @if ($estadoOpuesto)
-                    @include('Pacientes.Formularios.activate')
-                  @else
-                    @include('Pacientes.Formularios.desactivate')
-                  @endif
+                  <center>
+                    @if ($estadoOpuesto)
+                      @include('Pacientes.Formularios.activate')
+                    @else
+                      @include('Pacientes.Formularios.desactivate')
+                    @endif
+                  </center>
                 </td>
               </tr>
               @php

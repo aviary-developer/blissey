@@ -7,72 +7,34 @@
   @include('Pacientes.Barra.show')
 <div class="col-sm-8">
   <div class="x_panel">
-    <div class="x_title">
-      <h2>
-        Paciente
-        <small>
-          {{ $paciente->nombre.' '.$paciente->apellido }}
-        </small>
-      </h2>
-      <div class="clearfix"></div>
-    </div>
-    <div class="x_content">
-      <div class="row">
-        <div class="col-md-6 col-xs-12">
-          @include('Pacientes.Formularios.activate')
-        </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+          Servicios Médicos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+          Evaluaciones
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+          Estadisticas
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        @include('Pacientes.Partes.datos_ingreso')
       </div>
-      <br>
-      {{-- Incio de tab --}}
-      <div class="" role="tabpanel" data-example-id="togglable-tabs">
-        <div class="col-xs-2">
-          <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Datos Personales</a>
-            </li>
-            <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
-            </li>
-          </ul>
-        </div>
-        {{-- Contenido del tab --}}
-        <div class="col-xs-10">
-          <div id="myTabContent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
-              <h3>Datos Personales</h3>
-              <table class="table">
-                @include('Pacientes.Formularios.datos')
-                <tr>
-                  <th>Estado</th>
-                  <td>
-                    @if ($paciente->estado)
-                      <span class="label label-lg label-success col-xs-4">Activo</span>
-                    @else
-                      <span class="label label-lg label-danger col-xs-4">En papelera</span>
-                    @endif
-                  </td>
-                </tr>
-                <tr>
-                  <th>Fecha de creación</th>
-                  <td>{{ $paciente->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
-                </tr>
-                <tr>
-                  <th>Fecha de modificación</th>
-                  <td>{{ $paciente->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
-                </tr>
-              </table>
-            </div>
-            {{-- Otra pestaña --}}
-            <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-              Otra cosa
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
   </div>
 </div>
 <div class="col-sm-4">
   @include('Pacientes.Partes.datos_paciente')
 </div>
+<input type="hidden" id="id-p" value={{$paciente->id}}>
 @endsection

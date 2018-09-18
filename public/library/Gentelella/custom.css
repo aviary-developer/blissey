@@ -52,6 +52,9 @@
 .border-info{
     border-color: var(--info) !important;
 }
+.text-purple{
+    color: var(--purple);
+}
 /* Antigua gentelella */
 table{
     font-size: medium;
@@ -761,7 +764,7 @@ body .container.body .right_col {
     border-color: #3498DB !important
 }
 .border-purple {
-    border-color: #9B59B6 !important
+    border-color: var(--purple) !important
 }
 .border-green {
     border-color: #1ABB9C !important
