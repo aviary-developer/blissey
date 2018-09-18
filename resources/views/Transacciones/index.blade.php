@@ -173,7 +173,10 @@
                     <a href={!! asset('/transacciones/'.$transaccion->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
                       <i class="fa fa-info-circle"></i>
                     </a>
-                    @if ($tipo==2)
+                    @php
+                    $fecha=\Carbon\Carbon::now()->subHours(2);
+                    @endphp
+                    @if ($tipo==2 && $fecha<$transaccion->updated_at)
                       @include('Transacciones.Formularios.anularVenta')
                     @endif
                   </td>

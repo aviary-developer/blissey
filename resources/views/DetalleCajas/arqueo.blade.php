@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                   <th>Valor actual</th>
-                  <td></td>
+                  <td>$ {{number_format(App\DetalleCaja::arqueo(\Carbon\Carbon::now()->toDateString()),2,'.',',')}}</td>
                 </tr>
               </table>
             </div>

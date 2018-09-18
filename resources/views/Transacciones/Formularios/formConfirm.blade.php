@@ -76,6 +76,7 @@
         <a href="#" class="btn btn-default">Cancelar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+        <input type="hidden" id="fechaM" value="{{\Carbon\Carbon::now()->addMonths(4)->toDateString()}}">
         {{-- {!! Form::submit('Confirmar',['class'=>'btn btn-primary']) !!} --}}
         {!!Form::button('Confirmar',['class'=>'btn btn-primary','id'=>'confirmarPedido'])!!}
       </div>
@@ -171,10 +172,10 @@ function cambio(){
   texto=$('#iva').text();
   if(texto=="No"){
     $('#iva').text("Si");
-    $('#ivaincluido').value("1");
+    $('#ivaincluido').val("1");
   }else{
     $('#iva').text("No");
-    $('#ivaincluido').value("0");
+    $('#ivaincluido').val("0");
   }
 }
     </script>
