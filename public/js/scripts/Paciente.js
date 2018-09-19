@@ -9,6 +9,9 @@ $(document).on('ready',function(){
     if ($("#ubi").val() != "show") {
       cargar_municipio();
       cambio_residencia();
+    } else {
+      var ingreso_tabla = $("#ingreso-table").DataTable();
+      var consulta_tabla = $("#consulta-table").DataTable();
     }
   }
 
@@ -224,24 +227,54 @@ $(document).on('ready',function(){
       success: function (r) {
         var tabla = $("#body-table");
         tabla.empty();
-        var i = 0;
-        $(r).each(function (key, value) {
-          i++;
-          var html = '<tr>' +
+        ingreso_tabla.clear();
+
+        for (var i = 0; i < r.count; i++) {
+          var fecha = moment(r.r[i].fecha_ingreso);
+          var tipo_txt;
+          html = '<tr>' +
             '<td>' +
-            moment(value.created_at) +
+            (i + 1) +
             '</td>' +
             '<td>' +
-            moment(value.created_at) +
+            fecha.format('DD [de] MMMM [de] YYYY') +
             '</td>' +
+            '<td>';
+          if (r.r[i].tipo == 0) {
+            html += '<span class="badge border border-success text-success col-8">Ingreso</span>';
+            tipo_txt = '<span class="badge border border-success text-success col-8">Ingreso</span>';
+          } else if (r.r[i].tipo == 1) {
+            html += '<span class="badge border border-purple text-purple col-8">Medi ingreso</span>';
+            tipo_txt = '<span class="badge border border-purple text-purple col-8">Medi ingreso</span>';
+          } else if (r.r[i].tipo == 2) {
+            html += '<span class="badge border border-primary text-primary col-8">Observación</span>';
+            tipo_txt = '<span class="badge border border-primary text-primary col-8">Observación</span>';
+          } else if (r.r[i].tipo == 3 ) {
+            html += '<span class="badge border border-pink text-pink col-8">Consulta</span>';
+            tipo_txt = '<span class="badge border border-pink text-pink col-8">Consulta</span>';
+          } else {
+            html += '<span class="badge border border-info text-info col-8">Curación</span>';
+            tipo_txt = '<span class="badge border border-info text-info col-8">Curación</span>';
+          }
+          html += '</td>' +
             '<td>' +
-            moment(value.created_at) +
-            '</td>' +
-            '<td>' +
-            moment(value.created_at) +
+            '<center>' +
+            '<button type="button" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></button>' +
+            '</center>'+
             '</td>' +
             '</tr>';
-        })
+          var bto = '<center>' +
+            '<button type="button" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></button>' +
+            '</center>';
+          tabla.append(html);
+          ingreso_tabla.row.add([
+            (i+1),
+            fecha.format('DD [de] MMMM [de] YYYY'),
+            tipo_txt,
+            bto
+          ]);
+        }
+        ingreso_tabla.draw();
       }
     });
   });

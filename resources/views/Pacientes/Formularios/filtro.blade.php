@@ -93,10 +93,10 @@
   @endif
 </div>
 
-<div class="m_panel x_panel">
+<div class="m_panel x_panel bg-transparent" style="border:0px !important">
   <center>
-    <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
-    <button type="button" class="btn btn-light btn-sm" id="limpiar_paciente_filtro">Limpiar</button>
-    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cerrar</button>
+    <button type="submit" class="btn btn-primary btn-sm col-2">Buscar</button>
+    <button type="button" class="btn btn-light btn-sm col-2" id="limpiar_paciente_filtro">Limpiar</button>
+    <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal">Cerrar</button>
   </center>
 </div>

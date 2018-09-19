@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Paciente;
 use App\Bitacora;
+use App\Ingreso;
 use Redirect;
 use Carbon\Carbon;
 use App\Http\Requests\PacienteRequest;
@@ -661,11 +662,52 @@ class PacienteController extends Controller
   }
   
   public function servicio_medico(Request $request){
-    $paciente = Paciente::find($request->id);
     if($request->tipo != -1){
-      return $paciente->ingreso->where('tipo',$request->tipo);
+      $r = Ingreso::where('tipo',$request->tipo)->where('f_paciente',$request->id)->orderBy('fecha_ingreso','desc')->get();
     }else{
-      return $paciente->ingreso;
+      $r = Ingreso::where('f_paciente',$request->id)->orderBy('fecha_ingreso','desc')->get();
     }
+    $count = $r->count();
+    return (compact('r','count'));
+  }
+
+  public function servicio_paciente (Resquest $request){
+    $ingreso = Ingreso::find($request->id);
+    $consultas = $ingreso->consultas;
+    $medicos = [];
+    foreach($consultas as $k => $consulta){
+      $medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
+    }
+    $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+    if($ingreso->fecha_ingreso->lt($dia_ingreso)){
+      $dia_ingreso->subDay();
+    }
+    $dias = 0;
+    if($ingreso->estado == 1){
+      $dias = $dia_ingreso->diffInDays($hoy);
+    }else if($ingreso->estado == 2){
+      $dia_alta = $ingreso->fecha_alta->hour(7)->minute(0);
+      $dias_a = $ingreso->fecha_alta->hour(7)->minute(0);
+      if($ingreso->fecha_alta->lt($dia_alta)){
+        $dia_alta->subDay();
+        $dias_a->subDay();
+      }
+      $dias = $dia_ingreso->diffInDays($dia_alta);
+    }
+
+    $total = Ingreso::servicio_gastos($request->id);
+    $total += Ingreso::honorario_gastos($request->id);
+    $total += Ingreso::tratamiento_gastos($request->id);
+
+    $iva = $total * 0.13;
+    $total += $iva;
+
+    return (compact(
+      'total',
+      'ingreso',
+      'dias',
+      'consultas',
+      'medicos'
+    ));
   }
 }

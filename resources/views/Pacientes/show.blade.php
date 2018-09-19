@@ -37,4 +37,5 @@
   @include('Pacientes.Partes.datos_paciente')
 </div>
 <input type="hidden" id="id-p" value={{$paciente->id}}>
+@include('Pacientes.Partes.modal_ingreso')
 @endsection

@@ -239,7 +239,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/buscarPacienteIngreso/{id}','IngresoController@buscarPaciente');
   Route::match(['get','post'],'/buscarPersonas','IngresoController@buscarPersonas');
   Route::post('/editar_alergia','PacienteController@editar_alergia');
-  Route::get('/paciente/servicio_medica','PacienteController@servicio_medico');
+  Route::get('/paciente/servicio_medico','PacienteController@servicio_medico');
+  Route::get('/paciente/servicio_paciente','PacienteController@servicio_paciente');
   //Inventarios
   Route::resource('inventarios','InventarioController');
   //Ingresos
