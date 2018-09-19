@@ -259,17 +259,17 @@ $(document).on('ready',function(){
           html += '</td>' +
             '<td>' +
             '<center>' +
-            '<button type="button" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></button>' +
+            '<button type="button" class="btn btn-info btn-sm datos_ingreso" data-value="' + r.r[i].id +'" data-toggle="modal" data-target="#ver_ingreso_pac" title="Ver"><i class="fas fa-info-circle"></i></button>' +
             '</center>'+
             '</td>' +
             '</tr>';
           var bto = '<center>' +
-            '<button type="button" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></button>' +
+            '<button type="button" class="btn btn-info btn-sm datos_ingreso" data-value="' + r.r[i].id +'" data-toggle="modal" data-target="#ver_ingreso_pac" title="Ver"><i class="fas fa-info-circle" ></i></button>' +
             '</center>';
           tabla.append(html);
           ingreso_tabla.row.add([
             (i+1),
-            fecha.format('DD [de] MMMM [de] YYYY'),
+            fecha.format('DD [de] MMMM [del] YYYY'),
             tipo_txt,
             bto
           ]);
@@ -279,4 +279,83 @@ $(document).on('ready',function(){
     });
   });
 
+  $("#ingreso-table").on('click','.datos_ingreso',function (e) {
+    e.preventDefault();
+    var id = $(this).data('value');
+    
+    $.ajax({
+      type: 'get',
+      url: '/blissey/public/paciente/servicio_paciente',
+      data: {
+        id: id
+      },
+      success: function (r) {
+        var fecha_ingreso = moment(r.ingreso.fecha_ingreso);
+        if (r.ingreso.fecha_alta != null) {
+          var fecha_alta = moment(r.ingreso.fecha_alta);
+        }
+
+        //Información
+        var html;
+        $("#fecha_ingreso_t").text(fecha_ingreso.format('DD [de] MMM [del] YYYY'));
+        if (r.ingreso.fecha_alta != null) {
+          $("#fecha_alta_t").empty();
+          $("#fecha_alta_t").text(fecha_alta.format('DD [de] MMM [del] YYYY'));
+        } else {
+          $("#fecha_alta_t").empty();
+          html = '<span class="badge border border-danger text-danger col-8">Hospitalizado</span>';
+          $("#fecha_alta_t").append(html);
+        }
+        $("#dias_t").text(r.dias);
+        $("#tipo_t").empty();
+        
+        if (r.ingreso.tipo == 0) {
+          html = '<span class="badge border border-success text-success col-8">Ingreso</span>';
+        } else if (r.ingreso.tipo == 1) {
+          html = '<span class="badge border border-purple text-purple col-8">Medi ingreso</span>';
+        } else if (r.ingreso.tipo == 2) {
+          html = '<span class="badge border border-primary text-primary col-8">Observación</span>';
+        } else if (r.ingreso.tipo == 3) {
+          html = '<span class="badge border border-pink text-pink col-8">Consulta</span>';
+        } else {
+          html = '<span class="badge border border-info text-info col-8">Curación</span>';
+        }
+        $("#tipo_t").append(html);
+        html = '$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(r.total);
+        $("#costo_t").text(html);
+
+        //Consultas
+        $("#c-body-table").empty();
+        consulta_tabla.clear();
+        $(r.consultas).each(function (i, val) {
+          var fecha_consulta = moment(val.created_at);
+
+          html = '<tr>' +
+            '<td>' +
+            (i + 1) +
+            '</td>' +
+            '<td>' +
+            fecha_consulta.format('DD [de] MMM [del] YYYY')+
+            '</td>' +
+            '<td>' +
+            r.medicos[i]+
+            '</td>' +
+            '<td>' +
+            val.diagnostico+
+            '</td>'+
+            '</tr>';
+          
+          $("#c-body-table").append(html);
+          consulta_tabla.row.add([
+            (i + 1),
+            fecha_consulta.format('DD [de] MMM [del] YYYY'),
+            r.medicos[i],
+            val.diagnostico
+          ]);
+        });
+
+        consulta_tabla.draw();
+      }
+    });
+  });
 });

@@ -32,7 +32,7 @@
         @foreach ($ingresos as $ingreso)
           <tr>
             <td>{{$correlativo}}</td>
-            <td>{{$ingreso->fecha_ingreso->formatLocalized('%d de %B de %Y')}}</td>
+            <td>{{$ingreso->fecha_ingreso->formatLocalized('%d de %B del %Y')}}</td>
             <td>
               @if ($ingreso->tipo == 0)
                 <span class="badge border border-success text-success col-8">Ingreso</span>
@@ -48,7 +48,7 @@
             </td>
             <td>
               <center>
-                <button type="button" class="btn btn-info btn-sm" title="Ver" data-toggle="modal" data-target="#ver_ingreso_pac"><i class="fas fa-info-circle"></i></button>
+                <button type="button" class="btn btn-info btn-sm datos_ingreso" title="Ver" data-toggle="modal" data-target="#ver_ingreso_pac" data-value={{$ingreso->id}}><i class="fas fa-info-circle"></i></button>
               </center>
             </td>
           </tr>

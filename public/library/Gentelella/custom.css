@@ -332,10 +332,9 @@ thead tr :last-child{
     color: #5A738E !important;
 }
 .new-drop {
-    left: auto !important;
+    float: left !important;
+    left: -180px !important;
     width: 240px !important;
-    background: #FFF !important;
-    border: none !important;
 }
 /*Inicia Gentalela Alela*/
 html , body{

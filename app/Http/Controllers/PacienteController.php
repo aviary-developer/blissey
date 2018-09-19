@@ -671,12 +671,19 @@ class PacienteController extends Controller
     return (compact('r','count'));
   }
 
-  public function servicio_paciente (Resquest $request){
+  public function servicio_paciente (Request $request){
     $ingreso = Ingreso::find($request->id);
-    $consultas = $ingreso->consultas;
+    $consultas = $ingreso->consulta;
     $medicos = [];
-    foreach($consultas as $k => $consulta){
-      $medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
+    if($consultas != null){
+      foreach($consultas as $k => $consulta){
+        $medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->apellido;
+      }
+    }
+    $hoy = Carbon::today()->hour(7);
+    $ahora = Carbon::now();
+    if($ahora->lt($hoy)){
+      $hoy->subDay();
     }
     $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
     if($ingreso->fecha_ingreso->lt($dia_ingreso)){

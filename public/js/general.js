@@ -120,3 +120,23 @@ $(document).on('ready', function () {
     localStorage.removeItem('msg');
   }
 });
+
+$("#blissey-out").click(function (e) {
+  e.preventDefault();
+
+  swal({
+    title: 'Salir del sistema',
+    text: '¿Está seguro que desea salir del sistema?',
+    type: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Si, ¡Salir!',
+    cancelButtonText: 'No, ¡Cancelar!',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-default',
+    buttonsStyling: false
+  }).then((result) => {
+    if (result.value) {
+      $('#logout-form').submit();
+    }
+  });
+});

@@ -18,7 +18,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/pacientes/'.$paciente->id.'/edit') !!}>Editar</a>
       </li>
@@ -35,6 +35,7 @@
         </li>
       @endif
     </ul>
+    @include('Dashboard.boton_salir')
   </div>
 </nav>
 <input type="hidden" name="u" id="ubi" value="show">
