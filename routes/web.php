@@ -273,6 +273,7 @@ Route::group(['middleware'=>'general'], function(){
   //rutas relacionadas con el stock mínimo
   Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
   Route::match(['get'],'/stockProveedor/{f_proveedor}','DivisionProductoController@stockProveedor');
+  // Route::match(['get'],'/proximos','DivisionProductoController@proximos');
   //Signos vitales
   Route::resource('signos','SignoVitalController');
   Route::get('/signo_lista','SignoVitalController@listar');

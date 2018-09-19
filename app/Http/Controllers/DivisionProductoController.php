@@ -24,4 +24,7 @@ class DivisionProductoController extends Controller
         DivisionProducto::totalProximos($division->id,$tipo);
       }
     }
+    // function proximos(){
+    //   DivisionProducto::proximos();
+    // }
 }
