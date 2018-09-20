@@ -30,7 +30,7 @@
     width: 100%;
     height: 120px;
     object-fit: cover;
-    margin: 4px;
+    margin-top: 4px;
 }
 .side_back{
     padding: 0px !important;
@@ -54,6 +54,26 @@
 }
 .text-purple{
     color: var(--purple);
+}
+/* Scrollbar personalizada */
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--principal); 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--secundario); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terciario); 
 }
 /* Antigua gentelella */
 table{

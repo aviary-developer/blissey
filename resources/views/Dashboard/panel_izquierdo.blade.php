@@ -33,14 +33,30 @@
   <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
     <div class="menu_section">
       @if (Auth::check())
-        @if (Auth::user()->tipoUsuario == "Recepción")
-          <ul class="nav side-menu d-block" style="">
+        <ul class="nav side-menu d-block" style="">
+          @if (Auth::user()->tipoUsuario == "Recepción")
             @include('Dashboard.menu_recepcion')
-          </ul>
-        @endif
+          @elseif(Auth::user()->tipoUsuario == "Laboaratorio")
+            @include('Dashboard.menu_laboratorio')
+          @elseif(Auth::user()->tipoUsuario == "Farmacia")
+            @include('Dashboard.menu_farmacia')
+          @elseif(Auth::user()->tipoUsuario == "Enfermería" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencía")
+            @include('Dashboard.menu_medico')
+          @elseif(Auth::user()->tipoUsuario == "Ultrasonografía")
+            @include('Dashboard.menu_ultra')
+          @elseif(Auth::user()->tipoUsuario == "Rayos X")
+            @include('Dashboard.menu_rayosx')
+          @elseif(Auth::user()->tipoUsuario == "TAC")
+            @include('Dashboard.menu_tac')
+          @endif
+          @if (Auth::user()->administrador)
+            @include('Dashboard.menu_admin')
+          @endif
+          @include('Dashboard.menu_general')
+        </ul>
       @else
         <center>
-          <span class="badge badge-danger font-sm">
+          <span class="badge badge-danger">
             Registro del primer usuario
           </span>
         </center>

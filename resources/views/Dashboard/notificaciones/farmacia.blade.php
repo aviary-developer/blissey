@@ -1,9 +1,9 @@
-@if(Auth::user()->tipoUsuario == "Recepción")
+@if(Auth::user()->tipoUsuario == "Farmacia")
   @php
-    $conteoas= App\Transacion::where('tipo',5)->where('localizacion',1)->count();
-    $ultima1= App\Transacion::where('tipo',5)->where('localizacion',1)->orderBy('id','asc')->get()->last();
-    $conteore= App\Transacion::where('tipo',4)->where('localizacion',0)->count();
-    $ultima2= App\Transacion::where('tipo',4)->where('localizacion',0)->orderBy('id','asc')->get()->last();
+    $conteoas= App\Transacion::where('tipo',5)->where('localizacion',0)->count();
+    $ultima1= App\Transacion::where('tipo',5)->where('localizacion',0)->orderBy('id','asc')->get()->last();
+    $conteore= App\Transacion::where('tipo',4)->where('localizacion',1)->count();
+    $ultima2= App\Transacion::where('tipo',4)->where('localizacion',1)->orderBy('id','asc')->get()->last();
     $conteostock=App\DivisionProducto::conteo();
     $conteovencidos=App\CambioProducto::conteo();
     $conteoproximos=App\CambioProducto::proximos();
