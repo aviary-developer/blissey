@@ -12,6 +12,7 @@ $(document).on('ready',function(){
     } else {
       var ingreso_tabla = $("#ingreso-table").DataTable();
       var consulta_tabla = $("#consulta-table").DataTable();
+      var solicitud_tabla = $("#solicitud-table").DataTable();
     }
   }
 

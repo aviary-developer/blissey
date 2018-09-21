@@ -73,10 +73,10 @@
   @endif 
   <div class="container-fluid h-100">
     <div class="row h-100">
-      <div class="col-2 left_col side_back h-100" style="overflow-x: hidden; overflow-y: scroll">
+      <div class="col-2 left_col side_back h-100 left-cont" style="overflow-x: hidden; overflow-y: scroll">
         @include('Dashboard.panel_izquierdo')
       </div>
-      <div class="col-10 side_back bg-light" role="main">
+      <div class="col-10 side_back bg-light right-cont" role="main" style="overflow-x: hidden; overflow-y: scroll">
         @yield('layout')
       </div>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

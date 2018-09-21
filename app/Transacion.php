@@ -80,6 +80,9 @@ class Transacion extends Model
   public function solicitud(){
     return $this->hasMany('App\SolicitudExamen', 'f_transaccion');
   }
+  public function ingreso(){
+    return $this->belongsTo('App\Ingreso', 'f_ingreso');
+  }
   public static function tipoUsuario(){
     if(Auth::user()->tipoUsuario=='Recepción' || Auth::user()->tipoUsuario == "Enfermería"){
       return 1;

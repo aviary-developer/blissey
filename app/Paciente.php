@@ -93,4 +93,8 @@ class Paciente extends Model
     public function ingreso(){
       return $this->hasMany('App\Ingreso', 'f_paciente')->orderBy('created_at','desc');
     }
+
+    public function solicitudes(){
+      return $this->hasMany('App\SolicitudExamen', 'f_paciente')->orderBy('created_at','desc');
+    }
 }

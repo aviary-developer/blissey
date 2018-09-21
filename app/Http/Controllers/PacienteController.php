@@ -137,7 +137,12 @@ class PacienteController extends Controller
     {
         $paciente = Paciente::find($id);
         $ingresos = $paciente->ingreso;
-        return view('Pacientes.show',compact('paciente','ingresos'));
+        $solicitudes = $paciente->solicitudes;
+        return view('Pacientes.show',compact(
+          'paciente',
+          'ingresos',
+          'solicitudes'
+        ));
     }
 
     /**
@@ -702,9 +707,14 @@ class PacienteController extends Controller
       $dias = $dia_ingreso->diffInDays($dia_alta);
     }
 
-    $total = Ingreso::servicio_gastos($request->id);
-    $total += Ingreso::honorario_gastos($request->id);
-    $total += Ingreso::tratamiento_gastos($request->id);
+    if($ingreso->tipo == 0){
+      $total = Ingreso::servicio_gastos($request->id);
+      $total += Ingreso::honorario_gastos($request->id);
+      $total += Ingreso::tratamiento_gastos($request->id);
+    }elseif($ingreso->tipo == 3){
+      $total = $ingreso->medico->servicio->precio;
+      $total = ($total / 1.13);
+    }
 
     $iva = $total * 0.13;
     $total += $iva;

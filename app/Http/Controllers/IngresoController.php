@@ -203,7 +203,7 @@ class IngresoController extends Controller
       }
       /**Inicialización de las variables a utilizar */
       $total_gastos = $total_abono = $total_deuda = $dias = $horas = 0;
-      $examenes  = $horas_f = null;
+      $examenes = $horas_f = null;
       $dia_ingreso = null;
       $dia_alta = null;
       $cambio = false;
@@ -428,6 +428,10 @@ class IngresoController extends Controller
         /**Total adeudado a la cuenta */
         $total_deuda = $total_gastos - $total_abono;
 
+        /**Examenes que se puede realizar el paciente */
+        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
+      }
+      if($ingreso->tipo == 3){
         /**Examenes que se puede realizar el paciente */
         $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
       }

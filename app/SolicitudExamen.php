@@ -57,6 +57,9 @@ class SolicitudExamen extends Model
     public function resultado(){
       return $this->belongsTo('App\Resultado','f_solicitud');
     }
+    public function transaccion(){
+      return $this->belongsTo('App\Transacion','f_transaccion');
+    }
 
     public function examenesPaciente($id){
         $examenes = SolicitudExamen::where('f_paciente',$id)->where('estado','<>',3)->orderBy('estado')->get();

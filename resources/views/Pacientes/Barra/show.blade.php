@@ -9,7 +9,11 @@
     @endphp
   @endif
   <a class="navbar-brand" href={!! asset('/pacientes'.$regreso) !!}>
-    Pacientes
+    @if (Auth::user()->tipoUsuario == "Farmacia")
+      Clientes
+    @else
+      Pacientes
+    @endif
     <span class="badge border-info border text-info">
       Información
     </span>  
