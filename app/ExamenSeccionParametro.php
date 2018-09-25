@@ -19,6 +19,11 @@ class ExamenSeccionParametro extends Model
     $nombre = Seccion::find($id);
     return $nombre->nombre;
   }
+
+  public static function nombre_seccion($id){
+    $nombre = Seccion::find($id);
+    return $nombre->nombre;
+  }
   public function nombreUnidad($id){
     if($id != null){
       $nombre = Unidad::find($id);

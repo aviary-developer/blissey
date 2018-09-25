@@ -57,11 +57,27 @@
               @elseif($solicitud->f_rayox != null)
                 <span class="badge border border-danger text-danger col-10">Rayos X</span>
               @elseif($solicitud->f_tac != null)
-                <span class="badge border border-warning col-10">TAC</span>
+                <span class="badge border border-warning  text-warning col-10">TAC</span>
               @endif
             </td>
             <td>
-              boton
+              @if ($solicitud->f_examen != null)
+                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_examen_pac" title="Ver" data-value={{'{"solicitud_id":"'.$solicitud->id.'","examen_id":"'.$solicitud->f_examen.'","estado":"'.$solicitud->estado.'"}'}} id="ver_examen_f">
+                  <i class="fas fa-info-circle"></i>
+                </button>
+              @elseif($solicitud->f_rayox != null)
+                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={{'{"solicitud_id":"'.$solicitud->id.'","tipo":"0","estado":"'.$solicitud->estado.'"}'}}id="ver_evaluacion_f">
+                  <i class="fas fa-info-circle"></i>
+                </button>
+              @elseif($solicitud->f_ultrasonografia != null)
+                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={{'{"solicitud_id":"'.$solicitud->id.'","tipo":"1","estado":"'.$solicitud->estado.'"}'}} id="ver_evaluacion_f">
+                  <i class="fas fa-info-circle"></i>
+                </button>
+              @elseif($solicitud->f_tac != null)
+                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={{'{"solicitud_id":"'.$solicitud->id.'","tipo":"2","estado":"'.$solicitud->estado.'"}'}} id="ver_evaluacion_f">
+                  <i class="fas fa-info-circle"></i>
+                </button>
+              @endif
             </td>
           </tr>
           @php
@@ -72,3 +88,5 @@
     </table>
   </div>
 </div>
+@include('Pacientes.Partes.modal_examenes')
+@include('Pacientes.Partes.modal_evaluacion')

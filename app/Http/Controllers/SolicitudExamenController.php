@@ -893,7 +893,14 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    return view('SolicitudExamenes.verExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
+    return view('SolicitudExamenes.verExamen',compact(
+      'solicitud',
+      'espr',
+      'secciones',
+      'contadorSecciones',
+      'resultado',
+      'detallesResultado'
+    ));
     /* return $request->tipo;
     if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo="rayosx")) {
     $solicitud=SolicitudExamen::where('id',$id)->first();

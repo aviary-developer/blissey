@@ -61,7 +61,7 @@
                   @if ($valor->f_seccion==$variable)
                     <tr>
                       <td>{{$contadorParametros}}</td>
-                      <td>{{$valor->nombreParametro($valor->f_parametro)}}</th>
+                      <td>{{$valor->nombreParametro($valor->f_parametro)}}</td>
                       <td>{{$detallesResultado[$esp]->resultado}}</td>
                       @if($valor->parametro->valorMinimo)
                         <td>

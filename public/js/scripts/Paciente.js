@@ -359,4 +359,120 @@ $(document).on('ready',function(){
       }
     });
   });
+
+  $("#solicitud-table").on("click", "#ver_examen_f", function (e) {
+    e.preventDefault();
+    var solicitud = $(this).data('value').solicitud_id;
+    var examen = $(this).data('value').examen_id;
+    var estado = $(this).data('value').estado;
+
+    $.ajax({
+      type: 'get',
+      url: '/blissey/public/paciente/datos_ev',
+      data: {
+        id: solicitud
+      },
+      success: function (r) {
+        var fecha = moment(r.solicitud.created_at);
+
+        $("#fecha_ev").text(fecha.format('DD [de] MMMM [del] YYYY'));
+        $("#ev_").text(r.examen);
+        $("#tipo_ev").empty().append(r.area);
+      }
+    });
+
+    if (estado < 2) {
+      $("#cargando_ex_m").show();
+      $("#contenido_evaluacion").hide();
+    } else {
+      $("#cargando_ex_m").hide();
+      $("#contenido_evaluacion").show();
+
+      var cuerpo = $("#contenido_evaluacion");
+
+      $.ajax({
+        type: 'get',
+        url: '/blissey/public/paciente/ver_examen',
+        data: {
+          solicitud: solicitud,
+          examen: examen
+        },
+        success: function (r) {
+          cuerpo.empty().append(r);
+        }
+      });
+    }
+  });
+
+  $("#solicitud-table").on("click", "#ver_evaluacion_f", function (e) {
+    e.preventDefault();
+
+    var solicitud = $(this).data('value').solicitud_id;
+    var tipo = $(this).data('value').tipo;
+    var estado = $(this).data('value').estado;
+
+    if (tipo == 0) {
+      $("#titulo-mo").text('Evaluación de Rayos X');
+    } else if (tipo == 1) {
+      $("#titulo-mo").text('Evaluación de Ultrasonografía');
+    } else if (tipo == 2) {
+      $("#titulo-mo").text('Evaluación de TAC');
+    }
+
+    
+    $.ajax({
+      type: 'get',
+      url: '/blissey/public/paciente/ver_evaluacion',
+      data: {
+        solicitud: solicitud
+      },
+      success: function (r) {
+        var fecha = moment(r.solicitud.created_at);
+        
+        $("#fecha_ev_2").text(fecha.format('DD [de] MMMM [del] YYYY'));
+        $("#ev_2").text(r.nombre);
+        
+        if (estado < 2) {
+          $("#cargando_ex_m_2").show();
+          $("#contenido_evaluacion_2").hide();
+        } else {
+          $("#cargando_ex_m_2").hide();
+          $("#contenido_evaluacion_2").show();
+
+          $("#contenido_evaluacion_2").empty().append(r.html);
+        }
+      }
+    });
+  });
+
+  $("#filtro_e").on('change', function () {
+    var tipo = $("#filtro_e").val();
+    var id = $("#id-p").val();
+
+    $.ajax({
+      type: 'get',
+      url: '/blissey/public/paciente/filtro_evaluacion',
+      data: {
+        id: id,
+        tipo: tipo
+      },
+      success: function (r) {
+        solicitud_tabla.clear();
+        cuerpo = $("#sol-body-table");
+        cuerpo.empty().append(r.html);
+
+        $(r.fila).each(function (k, v) {
+          solicitud_tabla.row.add([
+            v[0],
+            v[1],
+            v[2],
+            v[3],
+            v[4]
+          ]);
+        });
+
+        solicitud_tabla.draw();
+      }
+    });
+  });
 });

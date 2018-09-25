@@ -8,11 +8,16 @@ use App\Http\Controllers\Controller;
 use App\Paciente;
 use App\Bitacora;
 use App\Ingreso;
+use App\DetalleResultado;
+use App\Resultado;
+use App\ExamenSeccionParametro;
+use App\SolicitudExamen;
 use Redirect;
 use Carbon\Carbon;
 use App\Http\Requests\PacienteRequest;
 use DB;
 use Response;
+use Storage;
 
 class PacienteController extends Controller
 {
@@ -676,6 +681,88 @@ class PacienteController extends Controller
     return (compact('r','count'));
   }
 
+  public function tipo_evaluacion(Request $request){
+    $tipo = $request->tipo;
+    $id = $request->id;
+
+    if($tipo == -1){
+      $solicitudes = SolicitudExamen::where('f_paciente',$id)->orderBy('created_at','desc')->get();
+    }else if($tipo == 0){
+      $solicitudes = SolicitudExamen::where('f_paciente',$id)->where('f_examen','!=',null)->orderBy('created_at','desc')->get();
+    }else if($tipo == 1){
+      $solicitudes = SolicitudExamen::where('f_paciente',$id)->where('f_rayox','!=',null)->orderBy('created_at','desc')->get();
+    }else if($tipo == 2){
+      $solicitudes = SolicitudExamen::where('f_paciente',$id)->where('f_ultrasonografia','!=',null)->orderBy('created_at','desc')->get();
+    }else{
+      $solicitudes = SolicitudExamen::where('f_paciente',$id)->where('f_tac','!=',null)->orderBy('created_at','desc')->get();
+    }
+
+    $fila = [];
+    $html = '';
+    setlocale(LC_ALL,'es');
+
+    if($solicitudes != null){
+      $i = 0;
+      foreach($solicitudes as $solicitud){
+        $html = '<tr>';
+        $html .= '<td>';
+        $html = $fila[$i][0] = ($i + 1);
+        $html .= '</td>';
+        $html .= '<td>';
+        $html .= $fila[$i][1] = $solicitud->created_at->formatLocalized('%d %b %y');
+        if($solicitud->transaccion->ingreso != null){
+          $html .= '<i class="fas fa-check-circle text-success float-right"></i>';
+        }
+        $html .= '</td>';
+        $html .= '<td>';
+        if($solicitud->f_examen != null){
+          $html .= $fila[$i][2] = $solicitud->examen->nombreExamen;
+        }else if($solicitud->f_rayox != null){
+          $html .= $fila[$i][2] = $solicitud->rayox->nombre;
+        }else if($solicitud->f_ultrasonografia != null){
+          $html .= $fila[$i][2] = $solicitud->ultrasonografia->nombre;
+        }else if($solicitud->f_tac != null){
+          $html .= $fila[$i][2] = $solicitud->tac->nombre;
+        }
+        $html .= '</td>';
+        $html .= '<td>';
+        if($solicitud->f_examen != null){
+          $html .= $fila[$i][3] = '<span class="badge border border-primary text-primary col-10">Laboratorio</span>';
+        }else if($solicitud->f_rayox != null){
+          $html .= $fila[$i][3] = '<span class="badge border border-danger text-danger col-10">Rayos X</span>';
+        }else if($solicitud->f_ultrasonografia != null){
+          $html .= $fila[$i][3] = '<span class="badge border border-success text-success col-10">Ultrasonografía</span>';
+        }else if($solicitud->f_tac != null){
+          $html .= $fila[$i][3] = '<span class="badge border border-warning  text-warning col-10">TAC</span>';
+        }
+        $html .= '</td>';
+        $html .= '<td>';
+        if($solicitud->f_examen != null){
+          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_examen_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","examen_id":"'.$solicitud->f_examen.'","estado":"'.$solicitud->estado.'"} id="ver_examen_f">
+            <i class="fas fa-info-circle"></i>
+          </button>';
+        }else if($solicitud->f_rayox != null){
+          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"0","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
+            <i class="fas fa-info-circle"></i>
+          </button>';
+        }else if($solicitud->f_ultrasonografia != null){
+          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"1","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
+            <i class="fas fa-info-circle"></i>
+          </button>';
+        }else if($solicitud->f_tac != null){
+          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"2","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
+            <i class="fas fa-info-circle"></i>
+          </button>';
+        }
+        $html .= '</td>';
+        $html .= '</tr>';
+        $i++;
+      }
+    }
+
+    return compact('fila','html');
+  }
+
   public function servicio_paciente (Request $request){
     $ingreso = Ingreso::find($request->id);
     $consultas = $ingreso->consulta;
@@ -726,5 +813,199 @@ class PacienteController extends Controller
       'consultas',
       'medicos'
     ));
+  }
+
+  public function ver_evaluacion(Request $request){
+    $id = $request->solicitud;
+    $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $solicitud = SolicitudExamen::find($id);
+    if($solicitud->f_rayox != null){
+      $nombre = $solicitud->rayox->nombre;
+    }else if($solicitud->f_ultrasonografia != null){
+      $nombre = $solicitud->ultrasonografia->nombre;
+    }else if($solicitud->f_tac != null){
+      $nombre = $solicitud->tac->nombre;
+    }
+
+    $html = "";
+
+    if($resultado != null){
+      $html = '<div class="col-sm-12">
+        <div class="x_panel m_panel">
+          <div class="flex-row">
+            <center>
+              <h5>Resultado</h5>
+              <div class="ln_solid mb-2 mt-2"></div>
+            </center>
+          </div>
+          <div class="flex-row">
+            <center>
+              <h6>
+                '.$resultado->observacion.'
+              </h6>
+            </center>
+          </div>
+        </div>
+      </div>';
+    }
+
+    return compact('html','solicitud','nombre');
+  }
+
+  public function ver_examen(Request $request){
+    $id = $request->solicitud;
+    $idExamen = $request->examen;
+
+    $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+    $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
+    $contador=0;
+    $contadorSecciones=0;
+    if($espr!=null){
+      foreach ($espr as $esp) {
+        if($contador==0){
+          $secciones[$contadorSecciones]=$esp->f_seccion;
+        }else{
+          if($secciones[$contadorSecciones]==$esp->f_seccion)
+          {
+          }else {
+            $contadorSecciones++;
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }
+        }
+        $contador++;
+      }
+    }
+
+    $html ='<div class="col-sm-12">';
+    if($solicitud->examen->imagen){
+      $html .= '<div class="x_panel m_panel"><div class="flex-row">
+        <center>
+          <output id="listExamen" style="height:400px; width:400px; object-fit: scale-down;">
+          <img src="'.asset(Storage::url($resultado->imagen)).'" id="imgZoom"style="height: 400px; width: 400px; object-fit: scale-down">
+          </output>
+        </center>
+      </div></div>';
+    }else{
+      foreach($secciones as $variable){
+        $contadorParametros = 1;
+        $html .= '<div class="x_panel m_panel">
+          <div class="flex-row">
+            <center>
+              <h5>
+                <i class="fas fa-flask"></i> ';
+        $html .= ExamenSeccionParametro::nombre_seccion($variable);
+        $html .= '</h5>
+            </center>
+          </div>
+          <div class="row">
+            <table class="table table-sm table-hover table-stripped">
+              <thead>
+                <th style="width: 5%">#</th>
+                <th style="width: 25%">Parametro</th>
+                <th style="width: 20%">Resultado</th>
+                <th style="width: 10%" title="Valor Normal mínimo">VNm</th>
+                <th style="width: 10%" title="Valor Normal Máximo">VNM</th>
+                <th style="width: 15%">Unidades</th>
+                <th style="width: 10%">DC</th>
+              </thead>
+              <tbdoy>';
+        if(count($espr)>0){
+          foreach($espr as $esp => $valor){
+            if($valor->f_seccion == $variable){
+              $html .= '<tr>
+              <td>'.$contadorParametros.'</td>
+              <td>'.$valor->nombreParametro($valor->f_parametro).'</td>
+              <td>'.$detallesResultado[$esp]->resultado.'</td>';
+              if($valor->parametro->valorMinimo){
+                $html .= '<td>
+                  <span class="badge border border-primary text-primary col-12">'.number_format($valor->parametro->valorMinimo, 2, '.', ',').'</span>
+                </td>
+                <td>
+                  <span class="badge border border-danger text-danger col-12">'.number_format($valor->parametro->valorMaximo, 2, '.', ',').'</span>
+                </td>';
+              }else{
+                $html .= '<td><span class="badge border border-secondary text-secondary">Ninguno</span></td>
+                <td><span class="badge border border-secondary text-secondary">Ninguno</span></td>';
+              }
+              $html .= '<td>';
+              if($valor->nombreUnidad($valor->parametro->unidad) == "-"){
+                $html .= '<span class="badge border border-secondary text-secondary">Ninguna</span>';
+              }else{
+                $html .= $valor->nombreUnidad($valor->parametro->unidad);
+              }
+              $html .= '</td>';
+              if($valor->f_reactivo){
+                $html .= '<td>'.$detallesResultado[$esp]->dato_controlado.'</td>';
+              }else{
+                $html .= '<td><span class="badge border border-secondary text-secondary">Ninguno</span></td>';
+              }
+              $html .= '</tr>';
+            }
+            $contadorParametros++;
+          }
+        }else{
+          $html .= '<tr>
+            <td colspan="7">
+              <center>No hay registros</center>
+            </td>
+          </tr>';
+        }
+        $html .= '</tbdoy>
+            </table>
+          </div>
+        </div>';
+      }
+    }
+    if($resultado->observacion != null){
+      $html .='<div class="x_panel m_panel">
+        <div class="flex-row">
+          <center>
+            <h5>Observación</h5>
+          </center>
+        </div>
+        <div class="flex-row">
+          <center>
+            <span>'.$resultado->observacion.'</span>
+          </center>
+        </div>
+      </div>';
+    }
+    $html .= '</div>';
+    return $html;
+  }
+
+  public function datos_solicitud(Request $request){
+    $id = $request->id;
+
+    $solicitud = SolicitudExamen::find($id);
+
+    $examen = $solicitud->examen->nombreExamen;
+
+    $ex_area = $solicitud->examen->area;
+
+    if($ex_area == "HEMATOLOGIA"){
+      $area = '<span class="badge border border-pink text-pink col-8">Hematología</span>';
+    }else if($ex_area == "EXAMENES DE ORINA"){
+      $area = '<span class="badge border border-warning text-warning col-8">Exámenes de orina</span>';
+    }else if($ex_area == "EXAMENES DE HECES"){
+      $area = '<span class="badge border border-dark col-8">Exámenes de heces</span>';
+    }else if($ex_area == "BACTERIOLOGIA"){
+      $area = '<span class="badge border border-success text-success col-8">Bacteriología</span>';
+    }else if($ex_area == "QUIMICA SANGUINEA"){
+      $area = '<span class="badge border border-danger text-danger col-8">Química sanguínea</span>';
+    }else if($ex_area == "INMUNOLOGIA"){
+      $area = '<span class="badge border border-primary text-primary col-8">Inmunología</span>';
+    }else if($ex_area == "ENZIMAS"){
+      $area = '<span class="badge border border-purple text-purple col-8">Enzimas</span>';
+    }else if($ex_area == "PRUEBAS ESPECIALES"){
+      $area = '<span class="badge border border-info text-info col-8">Pruebas especiales</span>';
+    }else if($ex_area == "OTROS"){
+      $area = '<span class="badge border border-secondary text-secondary col-8">Otros</span>';
+    }
+
+    return (compact('solicitud','examen','area'));
   }
 }
