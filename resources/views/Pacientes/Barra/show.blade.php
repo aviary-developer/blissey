@@ -89,7 +89,7 @@
   }
 
   function baja(id){
-    return swal({
+     return swal({
       title: 'Enviar registro a papelera',
       text: '¿Está seguro? ¡Ya no estara disponible!',
       type: 'question',
@@ -99,28 +99,12 @@
       confirmButtonClass: 'btn btn-danger',
       cancelButtonClass: 'btn btn-default',
       buttonsStyling: false
-    }).then(function () {
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
-      swal(
-        swal({
-          title: '¡Desactivado!',
-          text: 'Acción realizada satisfactorimente',
-          type: 'success',
-          showCancelButton: false,
-          showConfirmButton: false
-        })
-      )
-      $('#formulario').submit();
-    }, function (dismiss) {
-      // dismiss can be 'cancel', 'overlay',
-      // 'close', and 'timer'
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
+    }).then((result) => {
+      if (result.value) {
+        localStorage.setItem('msg','yes');
+        var dominio = window.location.host;
+        $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePaciente/'+id);
+        submit();
       }
     });
   }

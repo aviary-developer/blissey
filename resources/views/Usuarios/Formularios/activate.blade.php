@@ -1,17 +1,20 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
   <div class="btn-group">
-    <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
-      <i class="fa fa-info-circle"></i>
+    <a href={!! asset('/usuarios/'.$usuario->id)!!} class="btn btn-sm btn-info" title="Ver">
+      <i class="fas fa-info-circle"></i>
     </a>
-    <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
-      <i class="fa fa-edit"></i>
+    <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-sm btn-primary" title="Editar">
+      <i class="fas fa-edit"></i>
     </a>
-    <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Restaurar"/>
-      <i class="fa fa-check"></i>
+  </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$usuario->id.");'" !!} title="Restaurar"/>
+      <i class="fas fa-check"></i>
     </button>
-    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
-      <i class="fa fa-remove"></i>
+    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!} title="Eliminar"/>
+      <i class="fas fa-times"></i>
     </button>
   </div>
 @else
@@ -63,30 +66,17 @@
       text: '¿Está seguro? ¡El registro estará activo nuevamente!',
       type: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
       confirmButtonText: 'Si, ¡Restaurar!',
       cancelButtonText: 'No, ¡Cancelar!',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default',
       buttonsStyling: false
-    }).then(function () {
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateUsuario/'+id);
-      $('#formulario').submit();
-      swal(
-        '¡Activado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
-    }, function (dismiss) {
-      // dismiss can be 'cancel', 'overlay',
-      // 'close', and 'timer'
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
+    }).then((result) => {
+      if (result.value) {
+        localStorage.setItem('msg','yes');
+        var dominio = window.location.host;
+        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateUsuario/'+id);
+        $('#formulario').submit();
       }
     });
   }
@@ -103,57 +93,12 @@
       confirmButtonClass: 'btn btn-danger',
       cancelButtonClass: 'btn btn-default',
       buttonsStyling: false
-    }).then(function () {
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyUsuario/'+id);
+    }).then((result) => {
+      if (result.value) {
+        localStorage.setItem('msg','yes');
+        var dominio = window.location.host;
+        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyUsuario/'+id);
       $('#formulario').submit();
-      swal(
-        '¡Eliminado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
-    }, function (dismiss) {
-      // dismiss can be 'cancel', 'overlay',
-      // 'close', and 'timer'
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
-      }
-    });
-  }
-
-  function baja(id){
-    return swal({
-      title: 'Enviar registro a papelera',
-      text: '¿Está seguro? ¡Ya no estara disponible!',
-      type: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Si, ¡Enviar!',
-      cancelButtonText: 'No, ¡Cancelar!',
-      confirmButtonClass: 'btn btn-danger',
-      cancelButtonClass: 'btn btn-default',
-      buttonsStyling: false
-    }).then(function () {
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateUsuario/'+id);
-      $('#formulario').submit();
-      swal(
-        '¡Desactivado!',
-        'Acción realizada satisfactorimente',
-        'success'
-      )
-    }, function (dismiss) {
-      // dismiss can be 'cancel', 'overlay',
-      // 'close', and 'timer'
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
       }
     });
   }

@@ -39,7 +39,7 @@ class Bitacora extends Model
     }
 
     public static function buscar($usuario, $inicial, $final,$store,$update,$destroy,$activate,$desactivate,$login,$logout){
-      return Bitacora::usuario($usuario)->Fecha($inicial, $final)->Estado($store,$update,$destroy,$activate,$desactivate,$login,$logout)->orderBy('created_at','desc')->paginate(10);
+      return Bitacora::usuario($usuario)->Fecha($inicial, $final)->Estado($store,$update,$destroy,$activate,$desactivate,$login,$logout)->orderBy('created_at','desc')->get();
     }
 
     public static function scopeUsuario($query, $usuario){

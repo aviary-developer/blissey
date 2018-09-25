@@ -15,7 +15,7 @@
   @include('Pacientes.Barra.index')
   <div class="col-12">
     <div class="x_panel">
-      <table class="table table-hover table-sm table-striped" id="index-table">
+      <table class="table table-hover table-sm table-striped index-table">
         <thead>
           <th>#</th>
           <th>Apellido</th>

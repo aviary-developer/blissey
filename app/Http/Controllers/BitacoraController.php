@@ -30,7 +30,7 @@ class BitacoraController extends Controller
         $fechaFinal = Bitacora::orderBy('created_at','desc')->first();
 
         if($fechaMaxRequest == null){
-            $fechaMaxRequest = $fechaFinal->created_at->format('d/m/Y H:i:s');
+            $fechaMaxRequest = $fechaFinal->created_at->format('Y-m-d H:i:s');
 
             $storeRequest = 1;
             $updateRequest = 1;
@@ -53,9 +53,9 @@ class BitacoraController extends Controller
             $logoutRequest = $request->get('logout');
         }
         if($fechaMinRequest == null){
-            $fechaMinRequest = $fechaInicial->created_at->format('d/m/Y H:i:s');
+            $fechaMinRequest = $fechaInicial->created_at->format('Y-m-d H:i:s');
         }
-
+        
         $bitacoras = Bitacora::buscar(
             $usuarioRequest,
             $fechaMinRequest,

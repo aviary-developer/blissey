@@ -43,7 +43,7 @@ class User extends Authenticatable
     protected $dates = ['fechaNacimiento'];
 
     public static function buscar($nombre, $estado){
-      return User::nombre($nombre)->estado($estado)->where('eliminar',true)->orderBy('apellido')->paginate(10);
+      return User::nombre($nombre)->estado($estado)->where('eliminar',true)->orderBy('apellido')->get();
     }
 
     public function scopeNombre($query, $nombre){

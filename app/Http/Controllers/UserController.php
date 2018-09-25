@@ -34,7 +34,7 @@ class UserController extends Controller
       $nombre = $request->get('nombre');
       $usuarios = User::buscar($nombre,$estado);
       $activos = User::where('estado',true)->count();
-      $inactivos = User::where('estado',false)->count();
+      $inactivos = User::where('estado',false)->where('eliminar',true)->count();
       return view('Usuarios.index',compact(
         'usuarios',
         'estado',
