@@ -82,7 +82,7 @@ class ReactivoController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function update(ReactivoRequest $request, $id)
+  public function update(Request $request, $id)
   {
     $reactivos = Reactivo::find($id);
     $reactivos->fill($request->all());

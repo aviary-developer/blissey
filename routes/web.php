@@ -145,11 +145,12 @@ Route::group(['middleware'=>'admin'], function()
 });
 Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {
-    $primero = $segundo = $tercero = "Nada";
+    $primero = $segundo = $tercero = $proximosReactivosVencer= "Nada";
     if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
-      $tercero = App\Reactivo::where('contenidoPorEnvase','<',10)->get();
+      $tercero = App\Reactivo::where('contenidoPorEnvase','<',20)->get();
+      $proximosReactivosVencer = App\Reactivo::where('estado',1)->get();
     }
     $empresa = App\Empresa::latest()->first();
     // App\Transacion::llenar();
@@ -157,7 +158,8 @@ Route::group(['middleware'=>'general'], function(){
       "empresa",
       "primero",
       "segundo",
-      "tercero"
+      "tercero",
+      "proximosReactivosVencer"
     ));
   });
 
