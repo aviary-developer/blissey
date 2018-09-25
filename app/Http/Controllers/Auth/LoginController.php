@@ -66,7 +66,7 @@ class LoginController extends Controller
             }
             return redirect('/');
         }
-        return redirect('login');
+        return redirect('login')->with('error', '¡El nombre de usuario o la contraseña son incorrectos!');
     }
 
     public function logout()

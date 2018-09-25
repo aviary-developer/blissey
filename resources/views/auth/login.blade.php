@@ -17,6 +17,9 @@
     {!!Html::style('assets/nprogress/nprogress.css')!!}
     <!-- Animate.css -->
     {!!Html::style('assets/build/css/custom.min.css')!!}
+    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
+
   </head>
 
   <body class="login">
@@ -58,5 +61,19 @@
         </div>
       </div>
     </div>
+    {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
+    {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
   </body>
 </html>
+@if(Session::has('error'))
+  <?php
+  $men=Session::pull('error');
+  echo("<script language='javascript' >
+  new PNotify({
+    title: '¡Error!',
+    text: '".$men."',
+    type: 'error',
+    styling: 'bootstrap3'
+  });
+  </script>");?> @endif

@@ -3,7 +3,7 @@
 @endphp
 @extends('dashboard')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'visitadores.store','method' =>'POST'])!!}
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'visitadores.store','method' =>'POST','autocomplete'=>'off'])!!}
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
       <div class="x_title">

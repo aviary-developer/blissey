@@ -92,7 +92,7 @@ $("#entregar").click(function() {
   setTimeout(recarga, 7000);
 });
 
-$("#index-table").DataTable();
+$(".index-table").DataTable();
 
 
 
