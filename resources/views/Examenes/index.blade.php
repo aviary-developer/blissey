@@ -59,7 +59,7 @@
           </div>
         </div>
         <br>
-        <table class="table table-striped">
+        <table id="index-table" class="table">
           <thead>
             <tr>
               <th>#</th>
