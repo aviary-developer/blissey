@@ -22,10 +22,18 @@
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición</label>
     <div class="col-md-9 col-sm-9 col-xs-12" id="unidadParametro">
       <span class="fa fa-tasks form-control-feedback left" aria-hidden="true"></span>
-        <select class="form-control has-feedback-left" id="selectUnidadParametro" name="unidad" required disabled>
+        <select class="form-control has-feedback-left" id="selectUnidadParametro" name="unidad">
           <option value=""></option>
           @foreach ($unidades as $unidad)
-            <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
+            @if (!$create)
+              @if ($unidad->id==$parametros->unidad)
+              <option value={{ $unidad->id }} selected>{{ $unidad->nombre }}</option>
+            @else
+              <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
+            @endif
+          @else
+          <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
+          @endif
           @endforeach
         </select>
     </div>

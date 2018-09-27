@@ -3,6 +3,7 @@
   {!!Form::model($parametros,['class' =>'form-horizontal form-label-left input_mask','route' =>['parametros.update',$parametros->id],'method' =>'PUT','autocomplete'=>'off'])!!}
   @php
     $fecha = $parametros->fechaNacimiento;
+    $create=false;
   @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">
