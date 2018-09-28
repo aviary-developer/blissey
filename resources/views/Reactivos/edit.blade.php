@@ -3,6 +3,7 @@
   {!!Form::model($reactivos,['class' =>'form-horizontal form-label-left input_mask','route' =>['reactivos.update',$reactivos->id],'method' =>'PUT','autocomplete'=>'off'])!!}
   @php
     $fecha = $reactivos->fechaNacimiento;
+    $create=false;
   @endphp
   <div class="col-md-6 col-xs-12">
     <div class="x_panel">

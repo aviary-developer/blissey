@@ -89,7 +89,7 @@ class SeccionController extends Controller
      * @param  \App\Seccion  $seccion
      * @return \Illuminate\Http\Response
      */
-    public function update(SeccionRequest $request,$id)
+    public function update(Request $request,$id)
     {
       $secciones = Seccion::find($id);
       $secciones->fill($request->all());

@@ -29,9 +29,6 @@
             <li role="presentation" class="active">
               <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
             </li>
-            <li role="presentation" class="">
-              <a href="#tab_content2" id="otros-tab2" role="tab" data-toggle="tab" aria-expanded="false">Otros</a>
-            </li>
           </ul>
         </div>
         {{-- Contenido del tab --}}
@@ -136,9 +133,6 @@
               </table>
             </div>
             {{-- Otra pestaña --}}
-            <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
-              Otra cosa
-            </div>
           </div>
         </div>
       </div>

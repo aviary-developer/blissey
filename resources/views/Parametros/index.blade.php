@@ -89,7 +89,7 @@
                       </td>
                     @endif
                   @else<td>
-                    <span class="label label-lg label-gray col-xs-6">Ninguno</span>
+                    <span class="label label-lg label-gray col-xs-12">Ninguno</span>
                   </td>
                   @endif
                   @if($parametro->unidad!=null)

@@ -17,13 +17,15 @@
         {!! Form::date('fechaVencimiento',$fecha,['min'=>$ahora->addDay(1)->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
       </div>
     </div>
+    @if($create)
   <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Contenido por envase</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('contenidoPorEnvase',null,['min'=>0,'class'=>'form-control has-feedback-left','placeholder'=>'Contenido en unidades','required']) !!}
+      {!! Form::number('contenidoPorEnvase',0,['min'=>0,'class'=>'form-control has-feedback-left','placeholder'=>'Contenido en unidades']) !!}
     </div>
   </div>
+@endif
     <center>
     <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
   </center>
