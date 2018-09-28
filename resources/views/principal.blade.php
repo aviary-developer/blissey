@@ -41,6 +41,10 @@
 
   <!-- Custom -->
   {!!Html::style('library/Gentelella/custom.css')!!}
+
+  <!-- jQuery -->
+  {!!Html::script('library/Gentelella/app.js')!!}
+  {!!Html::script('library/FullCalendar/lib/jquery-migrate.js')!!}
 </head>
 <body class="nav-md">
   @if(Session::has('mensaje'))
@@ -85,11 +89,6 @@
     </div>
   </div>
 
-  <!-- jQuery -->
-  {{--  {!!Html::script('library/FullCalendar/lib/jquery.min.js')!!}  --}}
-  {!!Html::script('library/Gentelella/app.js')!!}
-  {!!Html::script('library/FullCalendar/lib/jquery-migrate.js')!!}
-
   <!-- Chart.js -->
   {!!Html::script('library/Chart.js/chart.js/dist/Chart.min.js')!!}
 
@@ -125,7 +124,6 @@
 
   <!-- Blissey -->
   {!!Html::script('js/scripts/proveedores.js')!!}
-  {!!Html::script('js/scripts/Usuarios.js')!!}
   {!!Html::script('js/scripts/Examenes.js')!!}
   {!!Html::script('js/scripts/Calendario.js')!!}
   {!!Html::script('js/scripts/Examenes2.js')!!}
@@ -158,7 +156,7 @@
         toast: true,
         type: "error",
         title: "¡Error!",
-        text: "'.$error.'",
+        html: "'.$error.'",
         position: "top-end",
         showConfirmButton: false,
         timer: 4000

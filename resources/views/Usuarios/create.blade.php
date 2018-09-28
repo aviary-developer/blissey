@@ -1,5 +1,6 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
+  @include('Usuarios.Barra.create')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'form'])!!}
   @php
     $fecha = Carbon\Carbon::now();
@@ -8,14 +9,8 @@
       $validacion_activa = false;
     }
   @endphp
-  <div class="col-md-12 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Usuario<small>Nuevo</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('Usuarios.Formularios.form')
-    </div>
+  <div class="col-12">
+    @include('Usuarios.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

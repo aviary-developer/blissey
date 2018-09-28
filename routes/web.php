@@ -163,6 +163,16 @@ Route::group(['middleware'=>'general'], function(){
     ));
   });
 
+  Route::get('/validate',function(Illuminate\Http\Request $request){
+    $tabla = $request->tabla;
+    $campo = $request->campo;
+    $valor = $request->valor;
+
+    $cantidad = DB::table($tabla)->where($campo, $valor)->count();
+
+    return $cantidad;
+  });
+
   //Ver si existe el servicio de honorarios médicos
   Route::get('/servicio_honorario', function(){
     $servicio = App\Servicio::where('nombre','Honorarios médicos por ingreso')->count();

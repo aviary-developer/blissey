@@ -1,56 +1,47 @@
-<div class="x_content" onmouseover="precarga()">
-  <div class="form_wizard wizard_horizontal" id="wizard">
-    {{-- Encabezado del wizard --}}
-    <ul class="wizard_steps">
-      <li>
-        <a href="#step-1">
-          <span class="step_no">
-            <i class="fa fa-list-alt"></i>
-          </span>
-          <span class="step_descr">
-            Paso 1 <br>
-            <small>Datos personales</small>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#step-2">
-          <span class="step_no">
-            <i class="fa fa-user"></i>
-          </span>
-          <span class="step_descr">
-            Paso 2 <br>
-            <small>Datos de usuario</small>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#step-3">
-          <span class="step_no">
-            <i class="fa fa-user-md"></i>
-          </span>
-          <span class="step_descr">
-            Paso 3 <br>
-            <small>Datos de especialidad</small>
-          </span>
-        </a>
-      </li>
-    </ul>
-    {{-- Contenido del wizard --}}
-    <div id="step-1" onmouseover="verAlerta1()">
+<div class="alert alert-danger" id="mout">
+  <center>
+    <p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
+</div>
+<div id="smartwizard">
+  {{-- Encabezado del wizard --}}
+  <ul>
+    <li>
+      <a href="#step-1">
+        Paso 1 <br>
+        <small>Datos personales</small>
+      </a>
+    </li>
+    <li>
+      <a href="#step-2">
+        Paso 2 <br>
+        <small>Datos de usuario</small>
+      </a>
+    </li>
+    <li>
+      <a href="#step-3">
+        Paso 3 <br>
+        <small>Datos de especialidad</small>
+      </a>
+    </li>
+  </ul>
+  {{-- Contenido del wizard --}}
+  <div>
+    <div id="step-1">
       @include('Usuarios.Formularios.pasos.paso1')
     </div>
     <div id="step-2">
       @include('Usuarios.Formularios.pasos.paso2')
     </div>
-    <div id="step-3" onmouseover="verAlerta2()">
+    <div id="step-3">
       @include('Usuarios.Formularios.pasos.paso3')
     </div>
   </div>
-  <input type="hidden" name="precio" id="precio">
-  <input type="hidden" name="retencion" id="retencion">
-  <input type="hidden" id="token" name="token" value="<?php echo csrf_token(); ?>">
 </div>
+<input type="hidden" name="precio" id="precio">
+<input type="hidden" name="retencion" id="retencion">
+<input type="hidden" id="token" name="token" value="<?php echo csrf_token(); ?>">
+
 <script type="text/javascript">
   var cuenta1 = 0;
   var cuenta2 = 0;
@@ -76,9 +67,7 @@
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'none';
       //Divisor
-      $('#divisor').addClass('col-md-6');
-      $('#divisor').addClass('col-sm-6');
-      $('#divisor').addClass('col-xs-12');
+      $('#divisor').removeClass().addClass('col-sm-6');
       //Remover
       $("#div_solo").removeClass();
       $("#div_grupo").removeClass();
@@ -95,9 +84,7 @@
       document.getElementById('tablaEspecialidad').style.display = 'table';
       document.getElementById('texto').style.display = 'none';
       //Divisor
-      $('#divisor').addClass('col-md-6');
-      $('#divisor').addClass('col-sm-6');
-      $('#divisor').addClass('col-xs-12');
+      $('#divisor').removeClass().addClass('col-sm-6');
       //Remover
       $("#div_solo").removeClass();
       $("#div_grupo").removeClass();
@@ -114,27 +101,17 @@
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'none';
 
-      $('#divisor').removeClass();
+      $('#divisor').removeClass().addClass('col-sm-12');
       //Solo
-      $('#div_solo').addClass('col-md-12');
       $('#div_solo').addClass('col-sm-12');
-      $('#div_solo').addClass('col-xs-12');
       //Junta
-      $('#div_junta').addClass('col-md-6');
       $('#div_junta').addClass('col-sm-6');
-      $('#div_junta').addClass('col-xs-12');
       //Grupo
-      $('#div_junta').addClass('col-md-12');
-      $('#div_junta').addClass('col-sm-12');
-      $('#div_junta').addClass('col-xs-12');
+      $('#div_grupo').addClass('col-sm-12');
       //Sello
-      $('#div_sello').addClass('col-md-6');
       $('#div_sello').addClass('col-sm-6');
-      $('#div_sello').addClass('col-xs-12');
       //Firma
-      $('#div_firma').addClass('col-md-6');
       $('#div_firma').addClass('col-sm-6');
-      $('#div_firma').addClass('col-xs-12');
     }else{
       document.getElementById('juntaVigilancia').style.display = 'none';
       document.getElementById('firma').style.display = 'none';
@@ -145,9 +122,7 @@
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'block';
       //Divisor
-      $('#divisor').addClass('col-md-6');
-      $('#divisor').addClass('col-sm-6');
-      $('#divisor').addClass('col-xs-12');
+      $('#divisor').removeClass().addClass('col-sm-6');
       //Remover
       $("#div_solo").removeClass();
       $("#div_grupo").removeClass();
@@ -214,38 +189,9 @@
     }
   }
 
-  function verAlerta2() {
-    if(cuenta2 == 0){
-      new PNotify({
-        title: 'Nota',
-        text: 'Solamente las especialidades agregadas a la tabla serán almacenadas,'+
-        ' y la primera será tomada como especialidad y las demás como subespecialidades.',
-        type: 'info',
-        nonblock:{
-          nonblock : false
-        },
-        styling: 'bootstrap3'
-      });
-      cuenta2++;
-    }
-  }
-
-  function verAlerta1() {
-    if(cuenta1 == 0){
-      new PNotify({
-        title: 'Nota',
-        text: 'Solamente los números de telefono agregados a la tabla serán almacenados,',
-        type: 'info',
-        nonblock:{
-          nonblock : false
-        },
-        styling: 'bootstrap3'
-      });
-      cuenta1++;
-    }
-  }
-
   document.getElementById('foto').addEventListener('change', archivo, false);
   document.getElementById('firma_file').addEventListener('change', archivo2, false);
   document.getElementById('sello_file').addEventListener('change', archivo3, false);
 </script>
+
+{!!Html::script('js/scripts/Usuarios.js')!!}

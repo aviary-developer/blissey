@@ -1,19 +1,4 @@
 $(document).on('ready', function () {
-  var ubicacion = window.location.pathname;
-  if (ubicacion.indexOf("/blissey/public/usuarios")>-1) {
-    var boton_atras = "<a href='/blissey/public/usuarios' class='btn btn-default'>Cancelar</a>"
-    $(".actionBar").append(boton_atras);
-    if (!(ubicacion.indexOf('edit') > -1)) {
-      $(".buttonFinish").addClass("stop_ex");
-      $(".buttonFinish").addClass("usuario_ex");
-    }
-  }
-  if (ubicacion.indexOf("/blissey/public/productos") > -1) {
-    var boton_atras = "<a href='/blissey/public/productos' class='btn btn-default'>Cancelar</a>"
-    $(".actionBar").append(boton_atras);
-    $(".buttonFinish").addClass("stop_ex");
-    $(".buttonFinish").addClass("producto_ex");
-  }
   var limite = $("#contador").val();
   var especialidad_agregada = [];
   for(i=0;i<=limite;i++)
@@ -59,8 +44,8 @@ $(document).on('ready', function () {
     contenido+
     "</td>"+
     "<td>"+
-      "<button type = 'button' name='button' class='btn btn-danger btn-xs' id='eliminar_telefono' data-toggle='tooltip' data-placement='top' title='Eliminar'>"+
-        "<i class='fa fa-remove'></i>"+
+      "<button type = 'button' name='button' class='btn btn-danger btn-sm' id='eliminar_telefono' data-toggle='tooltip' data-placement='top' title='Eliminar'>"+
+        "<i class='fa fa-times'></i>"+
       "</button>"+
     "</td>"+
     "</tr>";
@@ -81,8 +66,8 @@ $(document).on('ready', function () {
     "</td>"+
     "<td>"+
       "<input type='hidden' name='especialidad[]' value = '"+valor+"'/>"+
-      "<button type = 'button' name='button' class='btn btn-danger btn-xs' id='eliminar_especialidad'>"+
-        "<i class='fa fa-remove'></i>"+
+      "<button type = 'button' name='button' class='btn btn-danger btn-sm' id='eliminar_especialidad'>"+
+        "<i class='fa fa-times'></i>"+
       "</button>"+
     "</td>"+
     "</tr>";
@@ -128,13 +113,12 @@ $(document).on('ready', function () {
   $("#guardar_especialidad").on('click', function (e) {
     e.preventDefault();
     var v_nombre = $("#nombre_especialidad");
-    var s_especialidad = $("#select_especialidad");
-    var modal = $("#modal");
-    var token = $("#token").val();
+    var s_especialidad = $("#especialidad");
+    var modal = $("#modal-esp");
+
     $.ajax({
       type: "POST",
       url: "/blissey/public/guardar_especialidad",
-      headers: { 'X-CSRF-TOKEN': token },
       data: {
         nombre: v_nombre.val()
       },
@@ -143,10 +127,24 @@ $(document).on('ready', function () {
           var html = "<option value = '" + respuesta + "'>" + v_nombre.val() + "</option>";
           s_especialidad.append(html);
           modal.modal('hide');
-          return swal('Hecho', 'Acción realizada satisfactoriamente', 'success');
+          swal({
+            type: 'success',
+            toast: true,
+            title: '¡Acción exitosa!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
           v_nombre.val("");
         } else {
-          return swal('Algo salio mal', 'Acción no realizada', 'error');
+          swal({
+            type: 'error',
+            toast: true,
+            title: '¡Algo salio mal!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
         }
       }
     });
@@ -189,4 +187,91 @@ $(document).on('ready', function () {
       return swal('Error', 'La contraseña debe contener al menos 6 caracteres', 'error');
     }
   });
+
+  $("#smartwizard").smartWizard({
+    lang: {
+      next: 'Siguiente',
+      previous: 'Anterior'
+    },
+    toolbarSettings: {
+      toolbarPosition: 'bottom', // none, top, bottom, both
+      toolbarButtonPosition: 'right', // left, right
+      showNextButton: true, // show/hide a Next button
+      showPreviousButton: true, // show/hide a Previous button
+      toolbarExtraButtons: [
+        $('<button type="button"></button>').text('Guardar')
+          .addClass('btn btn-primary btn-sm')
+          .on('click', save_usuario),
+        $('<a href="/blissey/public/usuarios"></a>').text('Cancelar')
+          .addClass('btn btn-light btn-sm')
+      ]
+    },
+    keyNavigation: false,
+  });
+
+  $(document).find('.btn-secondary').addClass('btn-sm');
+
+  function save_usuario() {
+    //Validación
+    var is_valid = true;
+
+    /**Funcion para validar
+     * 
+     * parametro 1: id del objeto a validar.
+     * 
+     * parametro 2: tipo de validacion:
+     * * min : minimo
+     * * max : maximo
+     * * uni : unico
+     * * [nulo] : requerido
+     * 
+     * parametro 3: 
+     * * si es min o max : cantidad a validar
+     * * si es uni : tabla 
+     * 
+     * parametro 4:
+     * * nombre del campo a validar
+     */
+
+    //Validar nombre
+    is_valid = validate('nombre_usuario_field','min',2) && is_valid;
+    is_valid = validate('nombre_usuario_field') && is_valid;
+    is_valid = validate('nombre_usuario_field','max',30) && is_valid;
+    is_valid = validate('nombre_usuario_field', 'uni', 'users', 'nombre') && is_valid;
+    
+    //Validar apellido
+    is_valid = validate('apellido_usuario_field', 'min', 2) && is_valid;
+    is_valid = validate('apellido_usuario_field') && is_valid;
+    is_valid = validate('apellido_usuario_field', 'max', 30) && is_valid;
+    is_valid = validate('apellido_usuario_field', 'uni', 'users', 'apellido') && is_valid;
+
+    console.log(is_valid);
+    if (is_valid) {
+      var tipo_usuario = $("#tipoUsuario").val();
+    
+      if (tipo_usuario == "Médico" || tipo_usuario == "Gerencia") {
+        var usuario = (tipo_usuario == "Médico") ? "Médico" : "Gerencia";
+        var html_ = "<p>Para almacenar un usuario de tipo <span class='blue'>" + usuario + "</span> necesitamos saber el precio de sus honorarios por consulta:</p> <input type='number' class='swal2-input' step='0.01' min='0.00' placeholder='Precio' id='precio_swal'><p>También necesitamos saber el valor que le retiene el hospital por consulta:</p><input class='swal2-input' id='retencion_swal' type='number' step='0.01' min='0.00' placeholder='Retención'>";
+    
+        return swal({
+          title: '¡Importante!',
+          html: html_,
+          showCancelButton: true,
+          confirmButtonText: '¡Guardar!',
+          cancelButtonText: 'Cancelar',
+          confirmButtonClass: 'btn btn-primary',
+          cancelButtonClass: 'btn btn-default',
+          buttonsStyling: false
+        }).then((result) => {
+          if (result.value) {
+            $("#precio").val($("#precio_swal").val());
+            $("#retencion").val($("#retencion_swal").val());
+            $("#form").submit();
+          }
+        });
+      } else {
+        $("#form").submit();
+      }
+    }
+  }
 });

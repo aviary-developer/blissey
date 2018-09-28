@@ -311,7 +311,7 @@
         null,
         ['class'=>'form-control form-control-sm',
           'placeholder'=>'Dirección del paciente',
-          'rows'=>'3']
+          'rows'=>'2']
       ) !!}
     </div>
   </div>

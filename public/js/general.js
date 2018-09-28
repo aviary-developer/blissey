@@ -140,3 +140,38 @@ $("#blissey-out").click(function (e) {
     }
   });
 });
+
+function validate(id, type = null, amount = 0, campo = null) {
+  var object = $('#' + id);
+  object.addClass('is-invalid');
+  var label = object.parents('.form-group').find('label').text();
+  label = label.substr(0, label.length-1);
+  var html;
+  if (type == 'uni') {
+    html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser único.';
+
+    var result = $.get('/blissey/public/validate', { tabla: amount, campo: campo, valor: object.val() });
+
+    return (result > 1) ? false: true;
+  } else if (type == 'min') {
+    html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser mayor a ' + amount + ' caracteres.';
+    if (object.val().length < amount) {
+      object.parent().find('.invalid-feedback').html(html);
+      return false;
+    }
+  } else if (type == 'max') {
+    html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser menor a ' + amount + ' caracteres.';
+    if (object.val().length > amount) {
+      object.parent().find('.invalid-feedback').html(html);
+      return false;
+    }
+  } else {
+    html = 'El campo <b class="text-uppercase">' + label + '</b> es obligatorio.';
+    if (object.val().length == 0) {
+      object.parent().find('.invalid-feedback').html(html);
+      return false;
+    }
+  }
+
+  return true;
+}
