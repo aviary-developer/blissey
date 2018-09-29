@@ -1,13 +1,13 @@
 {!!Form::open(['url'=>['desactivateProveedor',$proveedor->id],'method'=>'POST'])!!}
 <div class="btn-group">
 <a href={!! asset('/proveedores/'.$proveedor->id)!!} class="btn btn-sm btn-info" title="Ver">
-  <i class="fa fa-info-circle"></i>
+  <i class="fas fa-info-circle"></i>
 </a>
 <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-sm btn-primary" title="Editar">
-  <i class="fa fa-edit"></i>
+  <i class="fas fa-edit"></i>
 </a>
 <a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-sm btn-dark" title="Visitadores">
-  <i class="fa fa-users"></i>
+  <i class="fas fa-users"></i>
 </a>
 <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Enviar a papelera" onclick="
   return swal({
@@ -26,7 +26,7 @@
       submit();
     }
   });"/>
-    <i class="fa fa-trash"></i>
+    <i class="fas fa-trash"></i>
 </button>
 </div>
 {!!Form::close()!!}

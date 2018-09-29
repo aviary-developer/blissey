@@ -8,15 +8,9 @@ class Dependiente extends Model
 {
     protected $fillable=['nombre','apellido','telefono','f_proveedor','estado'];
 
-    public static function buscar($id_p,$estado,$nombre){
-        return Dependiente::nombre($nombre)->estado($estado)->f_proveedor($id_p)->orderBy('nombre')->paginate(10);
+    public static function buscar($id_p,$estado){
+        return Dependiente::estado($estado)->f_proveedor($id_p)->orderBy('nombre')->paginate(10);
     }
-    public function scopeNombre($query, $nombre){
-      if(trim($nombre)!=""){
-        $query->where('nombre', 'like','%'.$nombre.'%');
-      }
-    }
-
     public function scopeEstado($query, $estado){
       if($estado == null){
         $estado = 1;

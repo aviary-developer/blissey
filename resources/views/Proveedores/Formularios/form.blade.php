@@ -57,17 +57,17 @@
           'data-inputmask'=>"'mask' : '9999-9999'"]
       ) !!}
     </div>
-  </div>
-</div>
 
-@if ($bandera)
-        @include('Proveedores.Formularios.form2')
-@endif
+  </div>
+  @if ($bandera==1)
+    @include('Proveedores.Formularios.form2')
+  @endif
+</div>
 
 <div class="x_panel">
   <center>
     {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
     <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
-    <a href={!! asset('/pacientes') !!} class="btn btn-light btn-sm">Cancelar</a>
+    <a href={!! asset('/proveedores') !!} class="btn btn-light btn-sm">Cancelar</a>
   </center>
 </div>

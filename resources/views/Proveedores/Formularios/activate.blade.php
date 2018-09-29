@@ -8,7 +8,7 @@
     <i class="fas fa-edit"></i>
   </a>
   <a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-sm btn-dark" title="Visitadores">
-    <i class="fa fa-users"></i>
+    <i class="fas fa-users"></i>
   </a>
 </div>
 <div class="btn-group">
@@ -40,25 +40,25 @@
       @endphp
     @endif
     <a href={!! asset('/proveedores'.$regreso)!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-arrow-left"></i> Atras
+      <i class="fas fa-arrow-left"></i> Atras
     </a>
     <a href={!! asset('/proveedores/'.$proveedor->id.'/edit')!!} class="btn btn-dark btn-sm">
-      <i class="fa fa-edit"></i> Editar
+      <i class="fas fa-edit"></i> Editar
     </a>
     @if ($proveedor->estado)
       <button type="button" class="btn btn-dark btn-sm" onclick={!! "'baja(".$proveedor->id.");'" !!}>
-        <i class="fa fa-trash"></i> Papelera
+        <i class="fas fa-trash"></i> Papelera
       </button>
     @else
       <button type="button" class="btn btn-dark btn-sm" onclick={!! "'alta(".$proveedor->id.");'" !!}/>
-        <i class="fa fa-check"></i> Restaurar
+        <i class="fas fa-check"></i> Restaurar
       </button>
       <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$proveedor->id.");'" !!}/>
-        <i class="fa fa-remove"></i> Eliminar
+        <i class="fas fa-remove"></i> Eliminar
       </button>
     @endif
     <a href={!! asset('#')!!} class="btn btn-primary btn-sm">
-      <i class="fa fa-question"></i> Ayuda
+      <i class="fas fa-question"></i> Ayuda
     </a>
 </div>
 @endif
@@ -103,43 +103,6 @@ function eliminar(id){
       var dominio = window.location.host;
       $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProveedor/'+id);
       $('#formulario').submit();
-    }
-  });
-}
-
-function baja(id){
-  return swal({
-    title: 'Enviar registro a papelera',
-    text: '¿Está seguro? ¡Ya no estara disponible!',
-    type: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'Si, ¡Enviar!',
-    cancelButtonText: 'No, ¡Cancelar!',
-    confirmButtonClass: 'btn btn-danger',
-    cancelButtonClass: 'btn btn-default',
-    buttonsStyling: false
-  }).then(function () {
-    var dominio = window.location.host;
-    $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateProveedor/'+id);
-    swal(
-      swal({
-        title: '¡Desactivado!',
-        text: 'Acción realizada satisfactorimente',
-        type: 'success',
-        showCancelButton: false,
-        showConfirmButton: false
-      })
-    )
-    $('#formulario').submit();
-  }, function (dismiss) {
-    // dismiss can be 'cancel', 'overlay',
-    // 'close', and 'timer'
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
     }
   });
 }

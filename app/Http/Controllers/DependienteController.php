@@ -19,8 +19,7 @@ class DependienteController extends Controller
       $pagina *= 10;
       $id_proveedor=$request->id;
       $estado=$request->estado;
-      $nombre=$request->nombre;
-      $visitadores=Dependiente::buscar($id_proveedor,$estado,$nombre);
+      $visitadores=Dependiente::buscar($id_proveedor,$estado);
       $activos = Dependiente::where('f_proveedor','=',$id_proveedor)->where('estado',true)->count();
       $inactivos = Dependiente::where('f_proveedor','=',$id_proveedor)->where('estado',false)->count();
       return view('Visitadores.index',compact(
