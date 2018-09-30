@@ -2,7 +2,11 @@
   <a class="navbar-brand" href={!! asset('/proveedores') !!}>
     Proveedor
     <span class="badge border-success border text-success">
-      Nuevo
+      @if ($bandera==1)
+        Nuevo
+      @else
+        Editar
+      @endif
     </span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

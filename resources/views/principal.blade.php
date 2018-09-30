@@ -24,9 +24,9 @@
 
   <!-- SweetAlert2 -->
   {!!Html::script('library/SweetAlert2/dist/sweetalert2.all.js')
-  !!} 
+  !!}
   {!!Html::script('library/SweetAlert2/dist/sweetalert2.min.js')
-  !!} 
+  !!}
   {!!Html::style('library/SweetAlert2/dist/sweetalert2.css')!!}
 
   <!-- FullCalendar -->
@@ -58,9 +58,9 @@
         showConfirmButton: false,
         timer: 4000
       });
-    </script>"; 
+    </script>";
   @endphp
-  @endif 
+  @endif
   @if(Session::has('error'))
   @php
     echo "<script>
@@ -72,9 +72,9 @@
         showConfirmButton: false,
         timer: 4000
       });
-    </script>"; 
+    </script>";
   @endphp
-  @endif 
+  @endif
   <div class="container-fluid h-100">
     <div class="row h-100">
       <div class="col-2 left_col side_back h-100 left-cont" style="overflow-x: hidden; overflow-y: scroll">
@@ -102,7 +102,7 @@
   {!!Html::script('library/Inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
 
   <!-- RangeSlider -->
-  {!!Html::script('library/RangeSlider/js/ion-rangeSlider/ion.rangeSlider.js')!!} 
+  {!!Html::script('library/RangeSlider/js/ion-rangeSlider/ion.rangeSlider.js')!!}
   <!-- FullCalendar -->
   {!!Html::script('library/FullCalendar/lib/moment.min.js')!!}
   {!!Html::script('library/FullCalendar/fullcalendar.js')!!}
@@ -122,7 +122,8 @@
   {!!Html::script('js/general.js')!!}
 
   <!-- Blissey -->
-  {!!Html::script('js/scripts/proveedores.js')!!}
+  @yield('agregarjs')
+  {!!Html::script('js/scripts/Proveedores.js')!!}
   {!!Html::script('js/scripts/Examenes.js')!!}
   {!!Html::script('js/scripts/Calendario.js')!!}
   {!!Html::script('js/scripts/Examenes2.js')!!}
@@ -161,6 +162,6 @@
         timer: 4000
       });
     </script>
-    '; 
+    ';
   @endphp
 @endforeach

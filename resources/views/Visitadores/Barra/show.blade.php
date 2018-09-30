@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  @if (!$proveedor->estado)
+  @if (!$visitador->estado)
     @php
-      $regreso = "?estado=0";
+      $regreso = "?estado=0&id=".$visitador->f_proveedor;
     @endphp
   @else
     @php
-      $regreso = '';
+      $regreso = '?id='.$visitador->f_proveedor;
     @endphp
   @endif
-  <a class="navbar-brand" href={!! asset('/proveedores'.$regreso) !!}>
-    Proveedores
+  <a class="navbar-brand" href={!! asset('/visitadores'.$regreso) !!}>
+    Visitadores
     <span class="badge border-info border text-info">
       Información
     </span>
@@ -20,18 +20,18 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/proveedores/'.$proveedor->id.'/edit') !!}>Editar</a>
+        <a class="nav-link" href={!! asset('/visitadores/'.$visitador->id.'/edit') !!}>Editar</a>
       </li>
-      @if ($proveedor->estado)
+      @if ($visitador->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$proveedor->id.")"}}>Papelera</a>
+          <a class="nav-link" href="#" onclick={{"baja(".$visitador->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$proveedor->id.");'"!!}>Activar</a>
+          <a class="nav-link" href="#" onclick={!! "'alta(".$visitador->id.");'"!!}>Activar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$proveedor->id.");'" !!}>Eliminar</a>
+          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$visitador->id.");'" !!}>Eliminar</a>
         </li>
       @endif
     </ul>
@@ -56,7 +56,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateProveedor/'+id);
+        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateVisitador/'+id);
         $('#formulario').submit();
       }
     });
@@ -78,7 +78,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProveedor/'+id);
+        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyVisitador/'+id);
         $('#formulario').submit();
       }
     });
@@ -99,7 +99,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateProveedor/'+id);
+        $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateVisitador/'+id);
         submit();
       }
     });
