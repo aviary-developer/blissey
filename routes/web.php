@@ -170,7 +170,7 @@ Route::group(['middleware'=>'general'], function(){
 
     $cantidad = DB::table($tabla)->where($campo, $valor)->count();
 
-    return $cantidad;
+    return (json_encode($cantidad));
   });
 
   //Ver si existe el servicio de honorarios médicos

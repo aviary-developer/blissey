@@ -18,8 +18,6 @@
             'placeholder'=>'Nombre del usuario',
             'id'=>'nombre_usuario_field']
         ) !!}
-        {{-- Mensaje para validar --}}
-        <div class="invalid-feedback"></div>
       </div>
     </div>
     <div class="form-group">
@@ -122,7 +120,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="" for="direccion">Dirección</label>
+      <label class="" for="direccion">Dirección *</label>
       <div class="input-group mb-2 mr-sm-2">
         <div class="input-group-prepend">
           <div class="input-group-text"><i class="fas fa-map-marked"></i></div>
@@ -132,15 +130,18 @@
           null,
           ['class'=>'form-control form-control-sm',
             'placeholder'=>'Dirección del paciente',
-            'rows'=>'2']
+            'rows'=>'2',
+            'id'=>'direccion_usuario_field']
         ) !!}
+        {{-- Mensaje para validar --}}
+        <div class="invalid-feedback"></div>
       </div>
     </div>
   </div>
 
   <div class="col-sm-6">
     <div class="form-group">
-      <label class="" for="telefono">Teléfono *</label>
+      <label class="" for="telefono">Teléfono </label>
       <div class="input-group mb-2 mr-sm-2">
         <div class="input-group-prepend">
           <div class="input-group-text"><i class="fas fa-phone"></i></div>

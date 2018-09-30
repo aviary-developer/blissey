@@ -141,37 +141,74 @@ $("#blissey-out").click(function (e) {
   });
 });
 
-function validate(id, type = null, amount = 0, campo = null) {
+function validate(value ,id, type = null, amount = 0, campo = null) {
   var object = $('#' + id);
-  object.addClass('is-invalid');
   var label = object.parents('.form-group').find('label').text();
   label = label.substr(0, label.length-1);
   var html;
   if (type == 'uni') {
-    html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser único.';
-
-    var result = $.get('/blissey/public/validate', { tabla: amount, campo: campo, valor: object.val() });
-
-    return (result > 1) ? false: true;
+    if (object.val().length > 0) {
+      html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser único.';
+  
+      var result = $.get('/blissey/public/validate', { tabla: amount, campo: campo, valor: object.val() });
+  
+      if (result != 0) {
+        object.addClass('is-invalid');
+        object.parent().find('.invalid-feedback').html(html);
+        return false;
+      }
+    }
   } else if (type == 'min') {
     html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser mayor a ' + amount + ' caracteres.';
     if (object.val().length < amount) {
+      object.addClass('is-invalid');
       object.parent().find('.invalid-feedback').html(html);
       return false;
     }
   } else if (type == 'max') {
     html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser menor a ' + amount + ' caracteres.';
     if (object.val().length > amount) {
+      object.addClass('is-invalid');
       object.parent().find('.invalid-feedback').html(html);
       return false;
     }
   } else {
     html = 'El campo <b class="text-uppercase">' + label + '</b> es obligatorio.';
     if (object.val().length == 0) {
+      object.addClass('is-invalid');
       object.parent().find('.invalid-feedback').html(html);
       return false;
     }
   }
+  if (value) {
+    object.removeClass('is-invalid');
+    return true;
+  } else {
+    return false;
+  }
+}
 
-  return true;
+function valided(id) {
+  var object = $("#" + id);
+
+  object.on('keyup', function () {
+    string_length = $(this).val().length;
+    if (string_length > 5) {
+      $(this).addClass('is-valid');
+    }
+  });
+}
+
+class validation{
+  constructor(name) {
+    this.name = name;
+  }
+
+  get objecto() {
+    return $("#"+this.name);
+  }
+
+  objeto() {
+    return "Hola mundo";
+  }
 }

@@ -15,7 +15,8 @@
           'name',
           null,
           ['class'=>'form-control form-control-sm',
-            'placeholder'=>'Nombre de usuario']
+            'placeholder'=>'Nombre de usuario',
+            'id'=>'name_usuario_field']
         ) !!}
       </div>
     </div>
@@ -29,8 +30,11 @@
           'email',
           null,
           ['class'=>'form-control form-control-sm',
-            'placeholder'=>'Dirección de correo electrónico del usuario']
+            'placeholder'=>'Dirección de correo electrónico del usuario',
+            'id'=>'email_usuario_field']
         ) !!}
+        {{-- Mensaje para validar --}}
+        <div class="invalid-feedback"></div>
       </div>
     </div>
     <input type="hidden" name="password">

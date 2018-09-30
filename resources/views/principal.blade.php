@@ -93,8 +93,7 @@
   {!!Html::script('library/Chart.js/chart.js/dist/Chart.min.js')!!}
 
   <!-- Bootstrap4 -->
-  {{--  {!!Html::script('library/Gentelella/tooltip.js')!!}
-  {!!Html::script('library/Bootstrap4/js/bootstrap.js')!!}  --}}
+  {!!Html::script('js/Validated.js')!!}
 
   <!-- SmartWizard -->
   {!!Html::script('library/SmartWizard/dist/js/jquery.smartWizard.js')!!}

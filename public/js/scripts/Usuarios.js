@@ -211,41 +211,60 @@ $(document).on('ready', function () {
 
   $(document).find('.btn-secondary').addClass('btn-sm');
 
-  function save_usuario() {
+  async function save_usuario() {
+    
     //Validación
     var is_valid = true;
 
     /**Funcion para validar
+     * Se debe declarar la clase validated
+     * existen 5 funciones para definir que validación deseamos
      * 
-     * parametro 1: id del objeto a validar.
+     * required: Validación de obligatoriedad
      * 
-     * parametro 2: tipo de validacion:
-     * * min : minimo
-     * * max : maximo
-     * * uni : unico
-     * * [nulo] : requerido
+     * min: Longitud minima de la cadena ingresada, neceista el valor
      * 
-     * parametro 3: 
-     * * si es min o max : cantidad a validar
-     * * si es uni : tabla 
+     * max: Longitud maxima de la cadena ingresada, necesita el valor
      * 
-     * parametro 4:
-     * * nombre del campo a validar
+     * unique: El valor ingresado debe ser unico en la base de datos, requiere dos parametros: la tabla en la que buscará el valor y la columna que será unica... Nota: de preferencia deben ser await para que no de conflicto la función ajax que busca los valores en la base de datos.
+     * 
+     * value: retorna el valor de la validación, false si alguna regla no se cumple, true si la evaluación fue exitosa, necesita el valor booleano que contiene la variable en la que se almacenará su resultado.
      */
 
     //Validar nombre
-    is_valid = validate('nombre_usuario_field','min',2) && is_valid;
-    is_valid = validate('nombre_usuario_field') && is_valid;
-    is_valid = validate('nombre_usuario_field','max',30) && is_valid;
-    is_valid = validate('nombre_usuario_field', 'uni', 'users', 'nombre') && is_valid;
+    var valido = new Validated('nombre_usuario_field');
+    valido.required();
+    valido.min(2);
+    valido.max(30);
+    is_valid = valido.value(is_valid);
     
     //Validar apellido
-    is_valid = validate('apellido_usuario_field', 'min', 2) && is_valid;
-    is_valid = validate('apellido_usuario_field') && is_valid;
-    is_valid = validate('apellido_usuario_field', 'max', 30) && is_valid;
-    is_valid = validate('apellido_usuario_field', 'uni', 'users', 'apellido') && is_valid;
+    var valido = new Validated('apellido_usuario_field');
+    valido.required();
+    valido.min(2);
+    valido.max(30);
+    is_valid = valido.value(is_valid);
 
-    console.log(is_valid);
+    //Validar direccion
+    var valido = new Validated('direccion_usuario_field');
+    valido.required();
+    valido.min(2);
+    is_valid = valido.value(is_valid);
+
+    //Validar name
+    var valido = new Validated('name_usuario_field');
+    valido.required();
+    valido.min(4);
+    valido.max(30);
+    await valido.unique('users', 'name');
+    is_valid = valido.value(is_valid);
+
+    //Validar email
+    var valido = new Validated('email_usuario_field');
+    valido.required();
+    await valido.unique('users', 'email');
+    is_valid = valido.value(is_valid);
+
     if (is_valid) {
       var tipo_usuario = $("#tipoUsuario").val();
     
