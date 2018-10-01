@@ -73,7 +73,7 @@
   </div>
   <div class="col-sm-6">
     <div class="form-group" id="grupoEspecialidad">
-      <label class="" for="nombre">Tipo de usuario *</label>
+      <label class="" for="nombre">Especialidad médica *</label>
       <div class="input-group mb-2 mr-sm-2 ">
         <div class="input-group-prepend">
           <div class="input-group-text"><i class="fas fa-stethoscope"></i></div>
@@ -101,7 +101,7 @@
         <th style="width : 80px">Acción</th>
       </thead>
       <tbody>
-        @if (!$create && !$validacion_activa)
+        @if (!$create)
           @php
             $auxiliar = 0;
           @endphp
@@ -115,56 +115,6 @@
                 <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad->f_especialidad }} name="esp_f[]">
                 <input type="hidden" value={{ $especialidad->id }} name="esp_id[]">
                 <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_especialidad_antiguo">
-                  <i class="fa fa-remove"></i>
-                </button>
-              </td>
-            </tr>
-            @php
-              $auxiliar = $key;
-            @endphp
-          @endforeach
-          <input type="hidden" id="contador" value={{$auxiliar}}>
-        @elseif($validacion_activa)
-          @php
-            $auxiliar = 0;
-          @endphp
-          @foreach($delesp as $especialidades_borradas)
-            <input type="hidden" name="delesp[]" value={{$especialidades_borradas}}  id="delesp">
-          @endforeach
-          @if(isset($especialidad_id))    
-            @foreach ($especialidad_id as $key => $especialidad)
-              <tr>
-                <td>
-                  {{App\Especialidad::nombreEspecialidad($especialidad_f[$key])}}
-                </td>
-                <td>
-                  <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad_f[$key] }} name="esp_f[]">
-                  <input type="hidden" value={{ $especialidad }} name="esp_id[]">
-                  <button type="button" name="button" class="btn btn-danger btn-sm" id="eliminar_especialidad_antiguo">
-                    <i class="fa fa-times"></i>
-                  </button>
-                </td>
-              </tr>
-              @php
-                $auxiliar = $key;
-              @endphp
-            @endforeach
-          @endif
-          <input type="hidden" id="contador" value={{$auxiliar}}>
-        @endif
-        @if(isset($especialidades_tabla))
-          @php
-            $auxiliar = 0;
-          @endphp
-          @foreach ($especialidades_tabla as $key => $especialidad)
-            <tr>
-              <td>
-                {{$especialidades[$key]->nombreEspecialidad($especialidad)}}
-              </td>
-              <td>
-                <input type="hidden" id="{{"especialidad".$key}}" value={{$especialidad}}>
-                <input type="hidden" name="especialidad[]" value={{ $especialidad}}>
-                <button type="button" name="button" class="btn btn-danger btn-sm" id="eliminar_especialidad">
                   <i class="fa fa-remove"></i>
                 </button>
               </td>

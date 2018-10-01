@@ -291,6 +291,16 @@ $(document).on('ready', function () {
       } else {
         $("#form").submit();
       }
+    } else {
+      swal({
+        toast: true,
+        title: '¡Error!',
+        text: 'La información no es correcta',
+        type: 'error',
+        position: 'top-end',
+        timer: 4000,
+        showConfirmButton: false
+      });
     }
   }
 });

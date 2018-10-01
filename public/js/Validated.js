@@ -41,21 +41,26 @@ class Validated{
     this.val_column = column;
     var object = $("#" + this.name);
 
+    var method = $("#method").val();
+
     var data = { tabla: table, campo: column, valor: object.val() };
-    var helper;
+
+    var helper = true;
     
-    await $.ajax({
-      type: 'get',
-      url: '/blissey/public/validate',
-      data: data,
-      success: function (e) {
-        if (e != 0) {
-          helper = false;
-        } else {
-          helper = true;
+    if (method == "create") {
+      await $.ajax({
+        type: 'get',
+        url: '/blissey/public/validate',
+        data: data,
+        success: function (e) {
+          if (e != 0) {
+            helper = false;
+          } else {
+            helper = true;
+          }
         }
-      }
-    });
+      });
+    }
 
     this.un = helper;
   }

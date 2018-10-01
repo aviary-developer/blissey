@@ -64,141 +64,71 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      $rules = [
-        'nombre' => 'required | min:2 | max:30',
-        'apellido' => 'required | min:2 | max:30',
-        'fechaNacimiento' => 'required',
-        'direccion' => 'required | min:2',
-        'name' => 'required | min:4 | max:30 | unique:users',
-        'email' => 'required | email | unique:users'
-      ];
-      $messages = [
-        'nombre.required' => 'El campo nombre es obligatorio',
-        'nombre.min' => 'El campo nombre necesita 2 caracteres como mínimo',
-        'nombre.max' => 'El campo nombre soporta 30 caracteres como máximo',
-
-        'apellido.required' => 'El campo apellido es obligatorio',
-        'apellido.min' => 'El campo apellido necesita 2 caracteres como mínimo',
-        'apellido.max' => 'El campo apellido soporta 30 caracteres como máximo',
-
-        'fechaNaciento.required' => 'El campo fecha de nacimiento es obligatorio',
-
-        'name.required' => 'El campo usuario es obligatorio',
-        'name.min' => 'El campo usuario necesita 4 caracteres como mínimo',
-        'name.max' => 'El campo usuario soporta 30 caracteres como máximo',
-        'name.unique' => 'El usuario ya ha sido registrado',
-
-        'email.required' => 'El campo correo es obligatorio',
-        'email.email' => 'Ingrese un correo válido',
-        'email.unique' => 'El correo ya ha sido registrado',
-
-        'direccion.required' => 'El campo direccion es obligatorio',
-        'direccion.min' => 'El campo direccion necesita 2 caracteres como mínimo',
-      ];
-
-      $valida = Validator::make($request->all(), $rules , $messages);
-      
-      if($valida->fails()){
-        $nombre = $request->nombre;
-        $apellido = $request->apellido;
-        $sexo = $request->sexo;
-        $fechaNacimiento = $request->fechaNacimiento;
-        $dui = $request->dui;
-        $direccion = $request->direccion;
-        $name = $request->name;
-        $email = $request->email;
-        $tipoUsuario = $request->tipoUsuario;
-        $administrador = $request->administrador;
-        $juntaVigilancia = $request->juntaVigilancia;
-
-        $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
-
-        $telefonos = $request->telefono;
-        $especialidades_tabla = $request->especialidad;
-
-        return view('Usuarios.create', compact(
-          'nombre',
-          'apellido',
-          'sexo',
-          'fechaNacimiento',
-          'dui',
-          'direccion',
-          'name',
-          'email',
-          'tipoUsuario',
-          'administrador',
-          'juntaVigilancia',
-          'especialidades',
-          'telefonos',
-          'especialidades_tabla'
-        ))->withErrors($valida->errors());
-      }else{
-        DB::beginTransaction();
-        try{
-          $request['password']=bcrypt($request['email']);
-          $user = User::create($request->All());
-          if($request->hasfile('firma')){
-            $user->firma = $request->file('firma')->store('public/firma');
-          }
-          if($request->hasfile('sello')){
-            $user->sello = $request->file('sello')->store('public/sello');
-          }
-          if($request->hasfile('foto')){
-            $user->foto = $request->file('foto')->store('public/foto');
-          }
-          $user->save();
-          if (isset($request->telefono)) {
-            foreach ($request->telefono as $k => $val) {
-              $telefono_usuario = new TelefonoUsuario;
-              $telefono_usuario->f_usuario = $user->id;
-              $telefono_usuario->telefono = $request->telefono[$k];
-              $telefono_usuario->save();
-            }
-          }
-          if (isset($request->especialidad)) {
-            foreach ($request->especialidad as $k => $val) {
-              $especialidad_usuario = new EspecialidadUsuario;
-              if($k == 0){
-                $especialidad_usuario->principal = true;
-              }else{
-                $especialidad_usuario->principal = false;
-              }
-              $especialidad_usuario->f_usuario = $user->id;
-              $especialidad_usuario->f_especialidad = $request->especialidad[$k];
-              $especialidad_usuario->save();
-            }
-          }
-
-          if($request->tipoUsuario == "Médico" || $request->tipoUsuario == "Gerencia"){
-            $categoria_existe = CategoriaServicio::where('nombre','Honorarios')->first();
-            if(count($categoria_existe) < 1){
-              $categoria = new CategoriaServicio;
-              $categoria->nombre = "Honorarios";
-              $categoria->save();
-            }else{
-              $categoria = $categoria_existe;
-            }
-  
-            $servicio = new Servicio;
-            $servicio->nombre = (($user->sexo)?"Dr. ":"Dra. ").$user->nombre.' '.$user->apellido;
-            $servicio->precio = $request->precio;
-            $servicio->retencion = $request->retencion;
-            $servicio->f_categoria = $categoria->id;
-            $servicio->f_medico = $user->id;
-            $servicio->save();
-
-            Bitacora::bitacora('store','servicios','servicios',$servicio->id);
-          }
-
-
-          DB::commit();
-        }catch(Exception $e){
-          DB::rollback();
-          return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');  
+      DB::beginTransaction();
+      try{
+        $request['password']=bcrypt($request['email']);
+        $user = User::create($request->All());
+        if($request->hasfile('firma')){
+          $user->firma = $request->file('firma')->store('public/firma');
         }
-        Bitacora::bitacora('store','users','usuarios',$user->id);
-        return redirect('/usuarios')->with('mensaje', '¡Guardado!');
+        if($request->hasfile('sello')){
+          $user->sello = $request->file('sello')->store('public/sello');
+        }
+        if($request->hasfile('foto')){
+          $user->foto = $request->file('foto')->store('public/foto');
+        }
+        $user->save();
+        if (isset($request->telefono)) {
+          foreach ($request->telefono as $k => $val) {
+            $telefono_usuario = new TelefonoUsuario;
+            $telefono_usuario->f_usuario = $user->id;
+            $telefono_usuario->telefono = $request->telefono[$k];
+            $telefono_usuario->save();
+          }
+        }
+        if (isset($request->especialidad)) {
+          foreach ($request->especialidad as $k => $val) {
+            $especialidad_usuario = new EspecialidadUsuario;
+            if($k == 0){
+              $especialidad_usuario->principal = true;
+            }else{
+              $especialidad_usuario->principal = false;
+            }
+            $especialidad_usuario->f_usuario = $user->id;
+            $especialidad_usuario->f_especialidad = $request->especialidad[$k];
+            $especialidad_usuario->save();
+          }
+        }
+
+        if($request->tipoUsuario == "Médico" || $request->tipoUsuario == "Gerencia"){
+          $categoria_existe = CategoriaServicio::where('nombre','Honorarios')->first();
+          if(count($categoria_existe) < 1){
+            $categoria = new CategoriaServicio;
+            $categoria->nombre = "Honorarios";
+            $categoria->save();
+          }else{
+            $categoria = $categoria_existe;
+          }
+
+          $servicio = new Servicio;
+          $servicio->nombre = (($user->sexo)?"Dr. ":"Dra. ").$user->nombre.' '.$user->apellido;
+          $servicio->precio = $request->precio;
+          $servicio->retencion = $request->retencion;
+          $servicio->f_categoria = $categoria->id;
+          $servicio->f_medico = $user->id;
+          $servicio->save();
+
+          Bitacora::bitacora('store','servicios','servicios',$servicio->id);
+        }
+
+
+        DB::commit();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');  
       }
+      Bitacora::bitacora('store','users','usuarios',$user->id);
+      return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -251,180 +181,78 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
       $user = User::find($id);
-      if($user->name == $request->name){
-        $name_request = 'required | min:4 | max:30 ';
-      }else{
-        $name_request = 'required | min:4 | max:30 | unique:users';
+      DB::beginTransaction();
+      try{
+        $firma = $user->firma;
+        $foto = $user->foto;
+        $sello = $user->sello;
+        $contra = $user->password;
+        $user->fill($request->all());
+        $user->password = $contra;
+        if($request->hasfile('firma')){
+          $user->firma = $request->file('firma')->store('public/firma');
+          if($firma != "noImgen.jpg"){
+            Storage::delete($firma);
+          }
+        }
+        if($request->hasfile('sello')){
+          $user->sello = $request->file('sello')->store('public/sello');
+          if($sello != "noImgen.jpg"){
+            Storage::delete($sello);
+          }
+        }
+        if($request->hasfile('foto')){
+          $user->foto = $request->file('foto')->store('public/foto');
+          if($foto != "noImgen.jpg"){
+            Storage::delete($foto);
+          }
+        }
+        $user->save();
+        if (isset($request->telefono)) {
+          foreach ($request->telefono as $k => $val) {
+            $telefono_usuario = new TelefonoUsuario;
+            $telefono_usuario->f_usuario = $user->id;
+            $telefono_usuario->telefono = $request->telefono[$k];
+            $telefono_usuario->save();
+          }
+        }
+        if (isset($request->especialidad)) {
+          foreach ($request->especialidad as $k => $val) {
+            $especialidad_usuario = new EspecialidadUsuario;
+            if($k == 0){
+              $especialidad_usuario->principal = true;
+            }else{
+              $especialidad_usuario->principal = false;
+            }
+            $especialidad_usuario->f_usuario = $user->id;
+            $especialidad_usuario->f_especialidad = $request->especialidad[$k];
+            $especialidad_usuario->save();
+          }
+        }
+        foreach ($request->deletes as $k => $val) {
+          if ($val != "ninguno") {
+            $eliminar = TelefonoUsuario::findOrFail($val);
+            $eliminar->delete();
+          }
+        }
+        foreach ($request->delesp as $k => $val) {
+          if ($val != "ninguno") {
+            $eliminar = EspecialidadUsuario::findOrFail($val);
+            $eliminar->delete();
+          }
+        }
+        DB::commit();
+      }catch(Exception $e){
+        DB::rollback();
+        return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');
       }
-
-      if($user->email == $request->email){
-        $email_request = 'required | email';
-      }else{
-        $email_request = 'required | email | unique:users';
+      Bitacora::bitacora('update','users','usuarios',$id);
+      if($user->estado)
+      {
+        return redirect('/usuarios')->with('mensaje', '¡Editado!');
       }
-
-      $rules = [
-        'nombre' => 'required | min:2 | max:30',
-        'apellido' => 'required | min:2 | max:30',
-        'fechaNacimiento' => 'required',
-        'direccion' => 'required | min:2',
-        'name' => $name_request,
-        'email' => $email_request
-      ];
-
-      $messages = [
-        'nombre.required' => 'El campo nombre es obligatorio',
-        'nombre.min' => 'El campo nombre necesita 2 caracteres como mínimo',
-        'nombre.max' => 'El campo nombre soporta 30 caracteres como máximo',
-
-        'apellido.required' => 'El campo apellido es obligatorio',
-        'apellido.min' => 'El campo apellido necesita 2 caracteres como mínimo',
-        'apellido.max' => 'El campo apellido soporta 30 caracteres como máximo',
-
-        'fechaNaciento.required' => 'El campo fecha de nacimiento es obligatorio',
-
-        'name.required' => 'El campo usuario es obligatorio',
-        'name.min' => 'El campo usuario necesita 4 caracteres como mínimo',
-        'name.max' => 'El campo usuario soporta 30 caracteres como máximo',
-        'name.unique' => 'El usuario ya ha sido registrado',
-
-        'email.required' => 'El campo correo es obligatorio',
-        'email.email' => 'Ingrese un correo válido',
-        'email.unique' => 'El correo ya ha sido registrado',
-
-        'direccion.required' => 'El campo direccion es obligatorio',
-        'direccion.min' => 'El campo direccion necesita 2 caracteres como mínimo',
-      ];
-
-      $valida = Validator::make($request->all(), $rules , $messages);
-
-      if($valida->fails()){
-        $usuarios = new User;
-        $usuarios->id = $id;
-        $usuarios->nombre = $request->nombre;
-        $usuarios->apellido = $request->apellido;
-        $usuarios->sexo = $request->sexo;
-        $usuarios->fechaNacimiento = $request->fechaNacimiento;
-        $usuarios->dui = $request->dui;
-        $usuarios->direccion = $request->direccion;
-        $usuarios->name = $request->name;
-        $usuarios->email = $request->email;
-        $usuarios->tipoUsuario = $request->tipoUsuario;
-        $usuarios->administrador = $request->administrador;
-        $usuarios->juntaVigilancia = $request->juntaVigilancia;
-        if($request->hasFile('foto')){
-          $usuarios->foto = "noImgen.jpg";
-        }else{
-          $usuarios->foto = $user->foto;
-        }
-        if($request->hasFile('firma')){
-          $usuarios->firma = "noImgen.jpg";
-        }else{
-          $usuarios->firma = $user->firma;
-        }
-        if($request->hasFile('sello')){
-          $usuarios->sello = "noImgen.jpg";
-        }else{
-          $usuarios->sello = $user->sello;
-        }
-
-        $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
-
-        $telefono_telefono = $request->tel_tel;
-        $telefono_id = $request->tel_id;
-
-        $delesp = $request->delesp;
-        $deletes = $request->deletes;
-
-        $especialidad_id = $request->esp_id;
-        $especialidad_f = $request->esp_f;
-
-        $validacion_activa = true;
-        return view('Usuarios.edit', compact(
-          'usuarios',
-          'especialidades',
-          'telefono_telefono',
-          'telefono_id',
-          'especialidad_id',
-          'especialidad_f',
-          'delesp',
-          'deletes',
-          'validacion_activa'
-          ))->withErrors($valida->errors());
-        }else{
-        DB::beginTransaction();
-        try{
-          $firma = $user->firma;
-          $foto = $user->foto;
-          $sello = $user->sello;
-          $contra = $user->password;
-          $user->fill($request->all());
-          $user->password = $contra;
-          if($request->hasfile('firma')){
-            $user->firma = $request->file('firma')->store('public/firma');
-            if($firma != "noImgen.jpg"){
-              Storage::delete($firma);
-            }
-          }
-          if($request->hasfile('sello')){
-            $user->sello = $request->file('sello')->store('public/sello');
-            if($sello != "noImgen.jpg"){
-              Storage::delete($sello);
-            }
-          }
-          if($request->hasfile('foto')){
-            $user->foto = $request->file('foto')->store('public/foto');
-            if($foto != "noImgen.jpg"){
-              Storage::delete($foto);
-            }
-          }
-          $user->save();
-          if (isset($request->telefono)) {
-            foreach ($request->telefono as $k => $val) {
-              $telefono_usuario = new TelefonoUsuario;
-              $telefono_usuario->f_usuario = $user->id;
-              $telefono_usuario->telefono = $request->telefono[$k];
-              $telefono_usuario->save();
-            }
-          }
-          if (isset($request->especialidad)) {
-            foreach ($request->especialidad as $k => $val) {
-              $especialidad_usuario = new EspecialidadUsuario;
-              if($k == 0){
-                $especialidad_usuario->principal = true;
-              }else{
-                $especialidad_usuario->principal = false;
-              }
-              $especialidad_usuario->f_usuario = $user->id;
-              $especialidad_usuario->f_especialidad = $request->especialidad[$k];
-              $especialidad_usuario->save();
-            }
-          }
-          foreach ($request->deletes as $k => $val) {
-            if ($val != "ninguno") {
-              $eliminar = TelefonoUsuario::findOrFail($val);
-              $eliminar->delete();
-            }
-          }
-          foreach ($request->delesp as $k => $val) {
-            if ($val != "ninguno") {
-              $eliminar = EspecialidadUsuario::findOrFail($val);
-              $eliminar->delete();
-            }
-          }
-          DB::commit();
-        }catch(Exception $e){
-          DB::rollback();
-          return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');
-        }
-        Bitacora::bitacora('update','users','usuarios',$id);
-        if($user->estado)
-        {
-          return redirect('/usuarios')->with('mensaje', '¡Editado!');
-        }
-        else{
-          return redirect('/usuarios?estado=0')->with('mensaje', '¡Editado!');
-        }
+      else{
+        return redirect('/usuarios?estado=0')->with('mensaje', '¡Editado!');
       }
 
     }

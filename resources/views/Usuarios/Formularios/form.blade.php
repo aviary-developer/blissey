@@ -40,7 +40,6 @@
 </div>
 <input type="hidden" name="precio" id="precio">
 <input type="hidden" name="retencion" id="retencion">
-<input type="hidden" id="token" name="token" value="<?php echo csrf_token(); ?>">
 
 <script type="text/javascript">
   var cuenta1 = 0;
@@ -74,7 +73,7 @@
       $("#div_junta").removeClass();
       $("#div_sello").removeClass();
       $("#div_firma").removeClass();
-    }else if(!(valorUsuario == 'Recepción' || valorUsuario == 'Enfermería' || valorUsuario == 'Laboaratorio' || valorUsuario == 'Ultrasonografía' || valorUsuario == 'Rayos X')){
+    }else if(!(valorUsuario == 'Recepción' || valorUsuario == 'Enfermería' || valorUsuario == 'Laboaratorio' || valorUsuario == 'Ultrasonografía' || valorUsuario == 'Rayos X' || valorUsuario == 'TAC')){
       document.getElementById('juntaVigilancia').style.display = 'block';
       document.getElementById('firma').style.display = 'block';
       document.getElementById('sello').style.display = 'block';
@@ -131,6 +130,10 @@
       $("#div_firma").removeClass();
     }
   }
+
+  $(document).ready(function(){
+    tipo_usuario();
+  });
 
   function archivo(evt){
     var files = evt.target.files;
