@@ -1,11 +1,12 @@
 {!!Form::open(['url'=>['desactivateProducto',$producto->id],'method'=>'POST'])!!}
-<a href={!! asset('/productos/'.$producto->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
-  <i class="fa fa-info-circle"></i>
+<div class="btn-group">
+<a href={!! asset('/productos/'.$producto->id)!!} class="btn btn-sm btn-info" title="Ver">
+  <i class="fas fa-info-circle"></i>
 </a>
-<a href={!! asset('/productos/'.$producto->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
-  <i class="fa fa-edit"></i>
+<a href={!! asset('/productos/'.$producto->id.'/edit')!!} class="btn btn-sm btn-primary" title="Editar">
+  <i class="fas fa-edit"></i>
 </a>
-<button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Enviar a papelera" onclick="
+<button type="button" class="btn btn-danger btn-sm" title="Enviar a papelera" onclick="
   return swal({
     title: 'Enviar registro a papelera',
     text: '¿Está seguro? ¡Ya no estara disponible!',
@@ -16,19 +17,13 @@
     confirmButtonClass: 'btn btn-danger',
     cancelButtonClass: 'btn btn-default',
     buttonsStyling: false
-  }).then(function () {
-    submit();
-  }, function (dismiss) {
-    // dismiss can be 'cancel', 'overlay',
-    // 'close', and 'timer'
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
+  }).then((result) => {
+    if (result.value) {
+      localStorage.setItem('msg','yes');
+      submit();
     }
   });"/>
-    <i class="fa fa-trash"></i>
+    <i class="fas fa-trash"></i>
 </button>
+</div>
 {!!Form::close()!!}

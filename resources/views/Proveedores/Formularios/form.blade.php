@@ -52,7 +52,7 @@
         'telefono',
         null,
         ['class'=>'form-control form-control-sm',
-          'placeholder'=>'Correo electrónico del proveedor',
+          'placeholder'=>'Teléfono del proveedor',
           'id'=>'telefono',
           'data-inputmask'=>"'mask' : '9999-9999'"]
       ) !!}
@@ -66,7 +66,7 @@
 
 <div class="x_panel">
   <center>
-    {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
+    {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onclick'=>'save_proveedor()']) !!}
     <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
     <a href={!! asset('/proveedores') !!} class="btn btn-light btn-sm">Cancelar</a>
   </center>
