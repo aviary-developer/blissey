@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/proveedores') !!}>
-    Visitadores
+  <a class="navbar-brand" href={!! asset('/productos') !!}>
+    Productos
     @if ($estadoOpuesto)
       <span class="badge border-danger border text-danger">
         Papelera
@@ -17,7 +17,10 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/visitadores/create?id='.$id_proveedor) !!}>Nuevo</a>
+        <a class="nav-link" href={!! asset('/productos/create') !!}>Nuevo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#modal_busqueda">Buscar</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Reporte</a>
@@ -27,7 +30,7 @@
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={!! asset('/visitadores?estado='.$estadoOpuesto.'&id='.$id_proveedor) !!}>
+          <a class="dropdown-item" href={!! asset('/productos?estado='.$estadoOpuesto) !!}>
             @if ($estadoOpuesto)
               Activos
               <span class="badge badge-primary float-right">

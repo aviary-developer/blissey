@@ -9,7 +9,7 @@
 <a href={!! asset('/visitadores?id='.$proveedor->id)!!} class="btn btn-sm btn-dark" title="Visitadores">
   <i class="fas fa-users"></i>
 </a>
-<button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Enviar a papelera" onclick="
+<button type="button" class="btn btn-danger btn-sm" title="Enviar a papelera" onclick="
   return swal({
     title: 'Enviar registro a papelera',
     text: '¿Está seguro? ¡Ya no estara disponible!',

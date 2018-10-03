@@ -76,7 +76,9 @@
                    ]
                  ) !!}
                </div>
+             </div>
 
+             <div class="form-group col-sm-12">
                  <label class="" for="nombre">Apellido *</label>
                  <div class="input-group mb-2 mr-sm-2">
                    <div class="input-group-prepend">
@@ -91,7 +93,8 @@
                      ]
                    ) !!}
                  </div>
-
+               </div>
+               <div class="form-group col-sm-12">
                    <label class="" for="nombre">Teléfono *</label>
                    <div class="input-group mb-2 mr-sm-2">
                      <div class="input-group-prepend">
@@ -106,7 +109,6 @@
                        ]
                      ) !!}
                    </div>
-
              </div>
 
            </div>
