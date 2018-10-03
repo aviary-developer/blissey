@@ -29,7 +29,7 @@
     </button>
   @else
     <a href="#" class="btn btn-sm btn-danger disabled" title="No puedes desactivarte a ti mismo">
-      <i class="fas fa-exclamation-triangle"></i>
+      <i class="fas fa-ban"></i>
     </a>
   @endif
 </div>

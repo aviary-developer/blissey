@@ -139,6 +139,11 @@
         </small>
       </div>
     </div>
+
+    <div id="especialidad_hidden" hidden="hidden">
+      <input type="hidden" name="delesp[]" value="ninguno" id="delesp">
+    </div>
+
     <table class="table table-hover table-striped table-sm" id="tablaEspecialidad">
       <thead>
         <th>Especialidad</th>
@@ -149,7 +154,6 @@
           @php
             $auxiliar = 0;
           @endphp
-          <input type="hidden" name="delesp[]" value="ninguno" id="delesp">
           @foreach ($especialidad_usuarios as $key => $especialidad)
             <tr>
               <td>

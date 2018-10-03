@@ -11,7 +11,7 @@ class Especialidad extends Model
     ];
 
     public static function buscar($nombre, $estado){
-      return Especialidad::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+      return Especialidad::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
     }
 
     public function scopeNombre($query, $nombre){
@@ -34,5 +34,15 @@ class Especialidad extends Model
     
     public function usuario_especialidad(){
       return $this->hasMany('App\EspecialidadUsuario','f_especialidad');
+    }
+
+    public static function contar_medicos($id){
+      $cantidad = EspecialidadUsuario::where('f_especialidad',$id)->count();
+
+      if($cantidad != 0){
+        return true;
+      }else{
+        return false;
+      }
     }
 }

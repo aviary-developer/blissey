@@ -166,6 +166,11 @@
         Solamente los números de teléfono agregados a la tabla serán almacenados.
       </small>
     </div>
+
+    <div id="telefono_hidden" hidden="hidden">
+      <input type="hidden" name="deletes[]" value="ninguno" id="deletes">
+    </div>
+
     <table class="table table-hover table-sm table-striped" id='tablaTelefono'>
       <thead>
         <th>Teléfono</th>
@@ -173,7 +178,6 @@
       </thead>
       <tbody>
         @if (!$create)
-          <input type="hidden" name="deletes[]" value="ninguno" id="deletes">
           @foreach ($telefono_usuarios as $key => $telefono)
             <tr>
               <td>{{$telefono->telefono}}</td>

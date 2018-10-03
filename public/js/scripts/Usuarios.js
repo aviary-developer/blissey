@@ -87,7 +87,7 @@ $(document).on('ready', function () {
   $(wrapper).on('click','#eliminar_telefono_antiguo',function(e){
     e.preventDefault();
     var valores = $(this).parents('tr').find('input').val();
-    $("#deletes").val(valores);
+    $("#telefono_hidden").append('<input type="hidden" name="deletes[]" value="' + valores + '">');
     $(this).parent('td').parent('tr').remove();
   });
 
@@ -106,7 +106,7 @@ $(document).on('ready', function () {
     especialidad_agregada.splice(indice);
 
     var valores = $(this).parents('tr').find('input:eq(1)').val();
-    $("#delesp").val(valores);
+    $("#especialidad_hidden").append('<input type="hidden" name="delesp[]" value="' + valores + '">');
     $(this).parent('td').parent('tr').remove();
   });
 

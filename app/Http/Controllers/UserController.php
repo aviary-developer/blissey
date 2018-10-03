@@ -139,21 +139,21 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $pagina = 0;
-        $usuario = User::find($id);
-        $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
-        $especialidad_principal = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
-        $especialidades = EspecialidadUsuario::where('f_usuario',$id)->where('principal',false)->get();
-        $bitacoras = Bitacora::where('f_usuario',$id)->orderBy('created_at','desc')->get();
-        return view('Usuarios.show',compact(
-          'usuario',
-          'telefonos',
-          'especialidad_principal',
-          'especialidades',
-          'id',
-          'bitacoras',
-          'pagina'
-        ));
+      $pagina = 0;
+      $usuario = User::find($id);
+      $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
+      $especialidad_principal = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
+      $especialidades = EspecialidadUsuario::where('f_usuario',$id)->where('principal',false)->get();
+      $bitacoras = Bitacora::where('f_usuario',$id)->orderBy('created_at','desc')->get();
+      return view('Usuarios.show',compact(
+        'usuario',
+        'telefonos',
+        'especialidad_principal',
+        'especialidades',
+        'id',
+        'bitacoras',
+        'pagina'
+      ));
     }
 
     /**
