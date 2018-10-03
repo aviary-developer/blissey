@@ -18,12 +18,56 @@
               'juntaVigilancia',
               null,
               ['class'=>'form-control form-control-sm',
-                'placeholder'=>'Número de Junta de Vigilancia']
+                'placeholder'=>'Número de Junta de Vigilancia',
+                'id'=>'junta_usuario_field']
             ) !!}
           </div>
         </div>
       </div>
     </div>
+
+    <div id="precio-div">
+      <div class="form-group">
+        <label class="" for="precio">Honorarios por consulta *</label>
+        <div class="input-group mb-2 mr-sm-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-money-bill"></i></div>
+          </div>
+          {!! Form::number(
+            'precio',
+            (($create)?null:((isset($servicio))?$servicio->precio:null)),
+            ['class'=>'form-control form-control-sm',
+              'placeholder'=>'Precio de consulta en dólares',
+              'min' => '0.00',
+              'step' => '1.00',
+              'id' => 'precio']
+          ) !!}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="" for="retencion">Comisión al hospital por consulta *</label>
+        <div class="input-group mb-2 mr-sm-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-money-bill"></i></div>
+          </div>
+          {!! Form::number(
+            'retencion',
+            (($create)?null:((isset($servicio))?$servicio->retencion:null)),
+            ['class'=>'form-control form-control-sm',
+              'placeholder'=>'Retención por consulta en dólares',
+              'min' => '0.00',
+              'step' => '1.00',
+              'id' => 'retencion']
+          ) !!}
+        </div>
+      </div>
+    </div>
+
+    @if (!$create && isset($servicio))
+      <input type="hidden" name="id_servicio" value={{$servicio->id}}>
+    @endif
+
     <div id="div_grupo">
       <div id="div_firma">
         <div class="form-group" id="firma">
@@ -114,8 +158,8 @@
               <td>
                 <input type="hidden" id={{"especialidad".$key}} value={{ $especialidad->f_especialidad }} name="esp_f[]">
                 <input type="hidden" value={{ $especialidad->id }} name="esp_id[]">
-                <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_especialidad_antiguo">
-                  <i class="fa fa-remove"></i>
+                <button type="button" name="button" class="btn btn-danger btn-sm" id="eliminar_especialidad_antiguo">
+                  <i class="fa fa-times"></i>
                 </button>
               </td>
             </tr>

@@ -144,7 +144,7 @@ class UserController extends Controller
         $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
         $especialidad_principal = EspecialidadUsuario::where('f_usuario',$id)->where('principal',true)->first();
         $especialidades = EspecialidadUsuario::where('f_usuario',$id)->where('principal',false)->get();
-        $bitacoras = Bitacora::where('f_usuario',$id)->orderBy('created_at','desc')->paginate(10);
+        $bitacoras = Bitacora::where('f_usuario',$id)->orderBy('created_at','desc')->get();
         return view('Usuarios.show',compact(
           'usuario',
           'telefonos',
@@ -168,7 +168,14 @@ class UserController extends Controller
         $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
         $especialidad_usuarios = EspecialidadUsuario::where('f_usuario',$id)->get();
         $telefono_usuarios = TelefonoUsuario::where('f_usuario',$id)->get();
-        return view('Usuarios.edit',compact('usuarios','especialidades','telefono_usuarios','especialidad_usuarios'));
+        $servicio = Servicio::where('f_medico',$id)->first();
+        return view('Usuarios.edit',compact(
+          'usuarios',
+          'especialidades',
+          'telefono_usuarios',
+          'especialidad_usuarios',
+          'servicio'
+        ));
     }
 
     /**
@@ -216,10 +223,28 @@ class UserController extends Controller
             $telefono_usuario->save();
           }
         }
+        $especialidad_flag = false;
+        foreach ($request->delesp as $k => $val) {
+          if ($val != "ninguno") {
+            $eliminar = EspecialidadUsuario::findOrFail($val);
+            if($eliminar->principal){
+              $especialidad_flag = true;
+            }
+            $eliminar->delete();
+          }
+        }
+        if($especialidad_flag){
+          $primer_especialidad = EspecialidadUsuario::where('f_usuario',$id)->orderBy('created_at')->first();
+          if($primer_especialidad != null){
+            $primer_especialidad->principal = true;
+            $primer_especialidad->save();
+          }
+        }
         if (isset($request->especialidad)) {
+          $existe_esp_principal = EspecialidadUsuario::where('principal',true)->where('f_usuario',$id)->count();
           foreach ($request->especialidad as $k => $val) {
             $especialidad_usuario = new EspecialidadUsuario;
-            if($k == 0){
+            if($k == 0 && $existe_esp_principal == 0){
               $especialidad_usuario->principal = true;
             }else{
               $especialidad_usuario->principal = false;
@@ -235,12 +260,17 @@ class UserController extends Controller
             $eliminar->delete();
           }
         }
-        foreach ($request->delesp as $k => $val) {
-          if ($val != "ninguno") {
-            $eliminar = EspecialidadUsuario::findOrFail($val);
-            $eliminar->delete();
-          }
+
+        if(isset($request->id_servicio)){
+          $servicio = Servicio::find($request->id_servicio);
+          $servicio->precio = $request->precio;
+          $servicio->retencion = $request->retencion;
+          $servicio->save();
+
+          Bitacora::bitacora('update','servicios','servicios',$servicio->id);
         }
+
+
         DB::commit();
       }catch(Exception $e){
         DB::rollback();

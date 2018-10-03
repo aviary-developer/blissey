@@ -4,6 +4,7 @@
   @endphp
   <li class="dropdown nav-item">
     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+      <i class="fas fa-bell"></i>
       @if ($solicitudes->count() > 0)
         <span class="badge badge-danger">{{$solicitudes->count()}}</span>
       @else

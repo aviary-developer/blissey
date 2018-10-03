@@ -161,23 +161,17 @@ $(document).on('ready', function () {
           type: "POST",
           url: "/blissey/public/psw",
           data: {
-            _token: $("#token").val(),
             actual: v_actual,
             nueva: v_nueva,
           },
           success: function (respuesta) {
-            $("#modal").modal('hide');
+            $("#modal-c").modal('hide');
             if (respuesta != "error") {
-              return swal('¡Hecho!', 'Se ha cambiado la contraseña', 'success');
+              localStorage.setItem('msg', 'yes');
+              location.reload();
             } else {
               return swal('Error', 'La contraseña actual no coincide', 'error');
             }
-          },
-          error: function (respuesta) {
-            if (respuesta == "error") {
-              return swal('Error', 'La contraseña actual no coincide', 'error');
-            }
-            return swal('Error', 'Algo ha salido mal', 'error');
           }
         });
       } else {
@@ -265,32 +259,28 @@ $(document).on('ready', function () {
     await valido.unique('users', 'email');
     is_valid = valido.value(is_valid);
 
-    if (is_valid) {
-      var tipo_usuario = $("#tipoUsuario").val();
-    
+    var tipo_usuario = $("#tipoUsuario").val();
+    console.log(tipo_usuario);
+
+    if (tipo_usuario != "Recepción" && tipo_usuario != "Enfermería") {
+      var valido = new Validated('junta_usuario_field');
+      valido.required();
+      is_valid = valido.value(is_valid);
+
       if (tipo_usuario == "Médico" || tipo_usuario == "Gerencia") {
-        var usuario = (tipo_usuario == "Médico") ? "Médico" : "Gerencia";
-        var html_ = "<p>Para almacenar un usuario de tipo <span class='blue'>" + usuario + "</span> necesitamos saber el precio de sus honorarios por consulta:</p> <input type='number' class='swal2-input' step='0.01' min='0.00' placeholder='Precio' id='precio_swal'><p>También necesitamos saber el valor que le retiene el hospital por consulta:</p><input class='swal2-input' id='retencion_swal' type='number' step='0.01' min='0.00' placeholder='Retención'>";
-    
-        return swal({
-          title: '¡Importante!',
-          html: html_,
-          showCancelButton: true,
-          confirmButtonText: '¡Guardar!',
-          cancelButtonText: 'Cancelar',
-          confirmButtonClass: 'btn btn-primary',
-          cancelButtonClass: 'btn btn-default',
-          buttonsStyling: false
-        }).then((result) => {
-          if (result.value) {
-            $("#precio").val($("#precio_swal").val());
-            $("#retencion").val($("#retencion_swal").val());
-            $("#form").submit();
-          }
-        });
-      } else {
-        $("#form").submit();
+        var valido = new Validated('precio');
+        valido.required();
+        is_valid = valido.value(is_valid);
+
+        var valido = new Validated('retencion');
+        valido.required();
+        is_valid = valido.value(is_valid);
       }
+    }
+    
+
+    if (is_valid) {
+      $("#form").submit();
     } else {
       swal({
         toast: true,

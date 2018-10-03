@@ -97,7 +97,8 @@ class User extends Authenticatable
 
     public static function password_correo(){
       $email = Auth::user()->email;
-      $validacion = Auth::attempt(['password' => $email]);
+      $usuario = Auth::user()->name;
+      $validacion = Auth::attempt(['password' => $email, 'name' => $usuario]);
       return $validacion;
     }
 

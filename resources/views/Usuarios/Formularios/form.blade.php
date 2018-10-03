@@ -38,8 +38,6 @@
     </div>
   </div>
 </div>
-<input type="hidden" name="precio" id="precio">
-<input type="hidden" name="retencion" id="retencion">
 
 <script type="text/javascript">
   var cuenta1 = 0;
@@ -65,6 +63,7 @@
       document.getElementById('grupoEspecialidad').style.display = 'none';
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'none';
+      $("#precio-div").hide();
       //Divisor
       $('#divisor').removeClass().addClass('col-sm-6');
       //Remover
@@ -82,6 +81,7 @@
       document.getElementById('grupoEspecialidad').style.display = 'block';
       document.getElementById('tablaEspecialidad').style.display = 'table';
       document.getElementById('texto').style.display = 'none';
+      $("#precio-div").show();
       //Divisor
       $('#divisor').removeClass().addClass('col-sm-6');
       //Remover
@@ -99,6 +99,7 @@
       document.getElementById('grupoEspecialidad').style.display = 'none';
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'none';
+      $("#precio-div").hide();
 
       $('#divisor').removeClass().addClass('col-sm-12');
       //Solo
@@ -120,6 +121,7 @@
       document.getElementById('grupoEspecialidad').style.display = 'none';
       document.getElementById('tablaEspecialidad').style.display = 'none';
       document.getElementById('texto').style.display = 'block';
+      $("#precio-div").hide();
       //Divisor
       $('#divisor').removeClass().addClass('col-sm-6');
       //Remover

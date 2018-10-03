@@ -1,7 +1,7 @@
 <div class="x_panel">
   <div class="flex-row">
     <center>
-      <h5 class="mb-1">Datos personales</h5>
+      <h5 class="mb-1">Datos Personales</h5>
     </center>
   </div>
 
