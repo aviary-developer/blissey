@@ -944,14 +944,40 @@ class SolicitudExamenController extends Controller
       }
       return view('SolicitudUltras.examenesEntregados',compact('pacientes','solicitudes','examenes','vista'));
     }else{
-    if($vista == "paciente"){
-      $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
-    }else{
-      $examenes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+      if($vista == "paciente"){
+        $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+      }else{
+        $examenes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
+        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+      }
+      return view('SolicitudExamenes.examenesEntregados',compact('pacientes','solicitudes','examenes','vista'));
     }
-    return view('SolicitudExamenes.examenesEntregados',compact('pacientes','solicitudes','examenes','vista'));
   }
-}
+
+  public function graficar_examenes(){
+    $solicitudes = SolicitudExamen::where('estado','>',1)->where('f_examen','!=',null)->get();
+
+    $datos = [];
+    $etiquetas = [];
+    $colores = [];
+
+    for($i=0; $i < 9; $i++){
+      $datos[$i] = 0;
+    }
+
+    foreach($solicitudes as $k => $solicitud){
+      for($i=0;$i < 9; $i++){
+        if($k==0){
+          $etiquetas[$i] = SolicitudExamen::areas($i);
+          $colores[$i] = SolicitudExamen::colores($i);
+        }
+        if($solicitud->examen->area == SolicitudExamen::areas($i)){
+          $datos[$i] = (++$datos[$i]);
+        }
+      }
+    }
+
+    return compact('datos','etiquetas','colores');
+  }
 }

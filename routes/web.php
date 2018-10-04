@@ -159,7 +159,8 @@ Route::group(['middleware'=>'general'], function(){
       "primero",
       "segundo",
       "tercero",
-      "proximosReactivosVencer"
+      "proximosReactivosVencer",
+      'examen'
     ));
   });
 
@@ -358,3 +359,5 @@ Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
 
 Route::resource('calendarios', 'CalendarioController');
 Route::get('calendario/eventos','CalendarioController@eventos');
+
+Route::get('/graficar_examenes','SolicitudExamenController@graficar_examenes');

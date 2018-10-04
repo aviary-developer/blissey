@@ -1,14 +1,31 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-<!-- page content -->
-<!--Panel-->
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <div class="x_panel">
-    <div class="row">
+@include('Main.barra')
+<div class="col-sm-8" >
+  @if (Auth::user()->tipoUsuario == "Laboaratorio")
+    <div class="x_panel border border-danger rounded">
+      @include('widget.reactivos')
+    </div>
+    <div class="x_panel border border-success rounded">
+      @include('widget.solicitudes')
+    </div>
+  @elseif(Auth::user()->tipoUsuario == "Recepción")
+    <div class="x_panel">
+      @include('widget.ingreso')
+    </div>
+    <div class="x_panel border border-success rounded">
+      @include('widget.solicitudes')
+    </div>
+  @endif
+</div>
+
+<div class="col-sm-4">
+  <div class="x_panel rounded">
+    <div class="flex-row">
       <center>
         @if (isset($empresa))
           <img src={{asset(Storage::url($empresa->logo_hospital))}} class="img-responsive avatar-view smallperfil">
-          <h3>Grupo Promesa
+          <h3 class="text-uppercase text-info">Grupo Promesa
             <br><small>Divino Niño</small>
           </h3>
         @else
@@ -20,24 +37,64 @@
       </center>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-1">
-      <div class="x_panel">
-        @if (Auth::user()->tipoUsuario == "Recepción")
-          @include('widget.ingreso')
-        @elseif (Auth::user()->tipoUsuario == "Laboaratorio")
-          @include('widget.reactivos')
-        @endif
-      </div>
+  <div class="x_panel rounded">
+    <div class="flex-row">
+      <center>
+        <h5>
+          Exámenes realizados
+        </h5>
+      </center>
     </div>
-    <div class="col-md-6 col-sm-6 col-xs-1">
-      <div class="x_panel">
-        @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio")
-          @include('widget.solicitudes')
-        @endif
-      </div>
-    </div>
+    <canvas id = "chart_home" style="width: 100%; height: 350px;"></canvas>
   </div>
 </div>
-<!-- /page content -->
+
+@if (Auth::user()->tipoUsuario == "Laboaratorio")
+  <script>
+    $(document).ready(function(){
+      function chart_home(){
+        $.ajax({
+          type: 'get',
+          url: '/blissey/public/graficar_examenes',
+          success: function(r){
+            var datos = [];
+            var tags = [];
+            var colors = [];
+
+            $(r.etiquetas).each(function(k, v){
+              datos.push(r.datos[k]);
+              tags.push(v);
+              colors.push(r.colores[k]);
+            });
+
+            var canva = $("#chart_home");
+
+            var chart = new Chart(canva,{
+              type: 'doughnut',
+              data: {
+              labels: tags,
+              datasets: [
+                {
+                  data: datos,
+                  backgroundColor: colors,
+                }]
+              },
+              options: {
+                legend: {
+                  display: true,
+                  position: 'bottom',
+                  labels: {
+                    fontSize: 10
+                  }
+                }
+              }
+            });
+          }
+        });
+      }
+
+      chart_home();
+    });
+  </script>
+@endif
 @stop

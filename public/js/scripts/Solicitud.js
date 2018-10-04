@@ -9,12 +9,12 @@ $(document).on("ready", function () {
     e.preventDefault();
     var id = $(this).parents('tr').find("input:eq(0)").val();
     var examen = $(this).parents('tr').find("input:eq(1)").val();
-    var celda = $(this).parents('tr').find("td:eq(2)");
+    var celda = $(this).parents('tr').find("td:eq(3)");
     var tooltip = $(".tooltip-inner").parent('div');
     var html =
-      '<a id="evaluar" href="evaluarExamen/'+id+'/'+ examen +'" class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Evaluar" >' +
+      '<center><a id="evaluar" href="evaluarExamen/'+id+'/'+ examen +'" class="btn btn-dark btn-sm" title="Evaluar" >' +
         '<i class="fa fa-paste"></i>' +
-      '</a >';
+      '</a ></center>';
     $.ajax({
       type: "GET",
       url: "/blissey/public/aceptarSolicitudExamen/" + id,
@@ -47,33 +47,22 @@ $(document).on("ready", function () {
       confirmButtonClass: 'btn btn-danger',
       cancelButtonClass: 'btn btn-default',
       buttonsStyling: false
-    }).then(function () {
-      $.ajax({
-        type: "GET",
-        url: "/blissey/public/destroySolicitudExamen/" + id,
-        dataType: 'json',
-        success: function (respuesta) {
-          fila.remove();
-          tooltip.remove();
-          if (respuesta == 0) {
-            panel.remove();
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          type: "GET",
+          url: "/blissey/public/destroySolicitudExamen/" + id,
+          dataType: 'json',
+          success: function (respuesta) {
+            fila.remove();
+            tooltip.remove();
+            if (respuesta == 0) {
+              panel.remove();
+            }
+            localStorage.setItem('msg', 'yes');
+            location.reload();
           }
-          swal({
-            title: '¡Eliminado!',
-            text: 'Acción realizada satisfactorimente',
-            type: 'success',
-            showCancelButton: false,
-            showConfirmButton: false
-          })
-        }
-      });
-    }, function (dismiss) {
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
+        });
       }
     });
   });

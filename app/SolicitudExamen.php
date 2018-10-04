@@ -73,4 +73,39 @@ class SolicitudExamen extends Model
             }
         }
     }
+
+    public static function areas($i){
+        switch($i){
+            case 0: return "HEMATOLOGIA"; break;
+            case 1: return "EXAMENES DE ORINA"; break;
+            case 2: return "EXAMENES DE HECES"; break;
+            case 3: return "BACTERIOLOGIA"; break;
+            case 4: return "QUIMICA SANGUINEA"; break;
+            case 5: return "INMUNOLOGIA"; break;
+            case 6: return "ENZIMAS"; break;
+            case 7: return "PRUEBAS ESPECIALES"; break;
+            case 8: return "OTROS"; break;
+            default: return ""; break;
+        }
+    }
+
+    public static function colores($i){
+        switch($i){
+            case 0: return "#E74C3C"; break;
+            case 1: return "#8E44AD"; break;
+            case 2: return "#3498DB"; break;
+            case 3: return "#16A085"; break;
+            case 4: return "#2ECC71"; break;
+            case 5: return "#F39C12"; break;
+            case 6: return "#D35400"; break;
+            case 7: return "#C0392B"; break;
+            case 8: return "#9B59B6"; break;
+            case 9: return "#2980B9"; break;
+            case 10: return "#1ABC9C"; break;
+            case 11: return "#27AE60"; break;
+            case 12: return "#F1C40F"; break;
+            case 13: return "#E67E22"; break;
+            default: return ""; break;
+        }
+    }
 }
