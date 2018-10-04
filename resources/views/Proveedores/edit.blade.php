@@ -2,7 +2,7 @@
 @extends('principal')
 @section('layout')
   @include('Proveedores.Barra.create')
-  {!! Form::model($proveedor,['route'=>['proveedores.update',$proveedor->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','autocomplete'=>'off']) !!}
+  {!! Form::model($proveedor,['route'=>['proveedores.update',$proveedor->id],'method'=>'PUT','class'=>'form-horizontal form-label-left input_mask','autocomplete'=>'off','id'=>'form']) !!}
     <div class="col-sm-12">
         @include('Proveedores.Formularios.form')
     </div>

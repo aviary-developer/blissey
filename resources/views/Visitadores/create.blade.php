@@ -9,6 +9,7 @@ $estado=1;
   <div class="col-sm-6">
       @include('Visitadores.Formularios.form')
   </div>
+  <input type="hidden" id="method" value="create">
   {!!Form::close()!!}
 @endsection
 @section('agregarjs')
