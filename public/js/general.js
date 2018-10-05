@@ -187,28 +187,3 @@ function validate(value ,id, type = null, amount = 0, campo = null) {
     return false;
   }
 }
-
-function valided(id) {
-  var object = $("#" + id);
-
-  object.on('keyup', function () {
-    string_length = $(this).val().length;
-    if (string_length > 5) {
-      $(this).addClass('is-valid');
-    }
-  });
-}
-
-class validation{
-  constructor(name) {
-    this.name = name;
-  }
-
-  get objecto() {
-    return $("#"+this.name);
-  }
-
-  objeto() {
-    return "Hola mundo";
-  }
-}

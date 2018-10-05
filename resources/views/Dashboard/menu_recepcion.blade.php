@@ -30,45 +30,21 @@
 </li>
 <li>
   <a>
-    <i class="fas fa-microscope"></i> Laboratorio Clínico
+    <i class="fas fa-microscope"></i> Solicitud de Examen
     <span class="fas fa-chevron-down float-right"></span>
   </a>
   <ul class="nav child_menu">
     <li>
-    <a href={{asset( '/solicitudex?tipo=examenes')}}>Solicitud de examen</a>
+    <a href={{asset( '/solicitudex?tipo=examenes')}}>Laboratorio Clínico</a>
     </li>
-  </ul>
-</li>
-<li>
-  <a>
-    <i class="fas fa-file-medical-alt"></i> Ultrasonografía
-    <span class="fas fa-chevron-down float-right"></span>
-  </a>
-  <ul class="nav child_menu">
     <li>
-      <a href={{asset( '/solicitudex?tipo=ultras')}}>Solicitudes</a>
+      <a href={{asset( '/solicitudex?tipo=ultras')}}>Ultrasonografía</a>
     </li>
-  </ul>
-</li>
-<li>
-  <a>
-    <i class="fas fa-x-ray"></i> Departamento Rayos X
-    <span class="fas fa-chevron-down float-right"></span>
-  </a>
-  <ul class="nav child_menu">
     <li>
-      <a href={{asset( '/solicitudex?tipo=rayosx')}}>Solicitudes</a>
+      <a href={{asset( '/solicitudex?tipo=rayosx')}}>Rayos X</a>
     </li>
-  </ul>
-</li>
-<li>
-  <a>
-    <i class="fas fa-desktop"></i> Departamento de TAC
-    <span class="fas fa-chevron-down float-right"></span>
-  </a>
-  <ul class="nav child_menu">
     <li>
-      <a href={{asset( '/solicitudex?tipo=tac')}}>Solicitudes</a>
+      <a href={{asset( '/solicitudex?tipo=tac')}}>TAC</a>
     </li>
   </ul>
 </li>
