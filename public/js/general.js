@@ -149,9 +149,9 @@ function validate(value ,id, type = null, amount = 0, campo = null) {
   if (type == 'uni') {
     if (object.val().length > 0) {
       html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser único.';
-  
+
       var result = $.get('/blissey/public/validate', { tabla: amount, campo: campo, valor: object.val() });
-  
+
       if (result != 0) {
         object.addClass('is-invalid');
         object.parent().find('.invalid-feedback').html(html);
@@ -211,4 +211,38 @@ class validation{
   objeto() {
     return "Hola mundo";
   }
+}
+
+function notaError(sms){
+  swal({
+    type: 'error',
+    toast: true,
+    title: '¡Error!',
+    text: sms,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000
+  });
+}
+function notaNotice(sms){
+  swal({
+    type: 'success',
+    toast: true,
+    title: '¡Hecho!',
+    text: sms,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000
+  });
+}
+function notaInfo(sms){
+  swal({
+    type: 'info',
+    toast: true,
+    title: '¡Hecho!',
+    text: sms,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000
+  });
 }

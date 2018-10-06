@@ -127,7 +127,6 @@
   {!!Html::script('js/scripts/Examenes.js')!!}
   {!!Html::script('js/scripts/Calendario.js')!!}
   {!!Html::script('js/scripts/Examenes2.js')!!}
-  {!!Html::script('js/scripts/Productos.js')!!}
   {!!Html::script('js/scripts/Transacciones.js')!!}
   {!!Html::script('js/scripts/Ingreso.js')!!}
   {!!Html::script('js/scripts/Ingreso2.js')!!}

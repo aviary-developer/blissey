@@ -623,28 +623,3 @@ function limpiarCliente(){
   $('#f_cliente').val("");
   $('#f_clientea').val("");
 }
-
-function notaError(sms){
-  new PNotify({
-    title: 'Error!',
-    text: sms,
-    type: 'error',
-    styling: 'bootstrap3'
-  });
-}
-function notaInfo(sms){
-  new PNotify({
-    title: 'Hecho!',
-    text: sms,
-    type: 'info',
-    styling: 'bootstrap3'
-  });
-}
-function notaNotice(sms){
-  new PNotify({
-    title: 'Hecho!',
-    text: sms,
-    type: 'notice',
-    styling: 'bootstrap3'
-  });
-}
