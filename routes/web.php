@@ -258,6 +258,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/paciente/datos_ev','PacienteController@datos_solicitud');
   Route::get('/paciente/ver_evaluacion','PacienteController@ver_evaluacion');
   Route::get('/paciente/filtro_evaluacion','PacienteController@tipo_evaluacion');
+  Route::post('/paciente/guardar','PacienteController@save_mini');
   //Inventarios
   Route::resource('inventarios','InventarioController');
   //Ingresos

@@ -67,6 +67,65 @@ $(document).on("ready", function () {
     });
   });
 
+  $("#save_paciente_mini").click(function (e) {
+    e.preventDefault();
+
+    var nombre = $("#pac_nombre");
+    var apellido = $("#pac_apellido");
+    var sexo = $("#pac_sexo");
+    var fecha = $("#pac_fecha");
+    var telefono = $("#pac_telefono");
+
+    var is_valid = true;
+
+    var valido = new Validated('pac_nombre');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    var valido = new Validated('pac_apellido');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    if (is_valid) {
+      $.ajax({
+        type: 'post',
+        url: '/blissey/public/paciente/guardar',
+        data: {
+          nombre: nombre.val(),
+          apellido: apellido.val(),
+          sexo: sexo.val(),
+          fechaNacimiento: fecha.val(),
+          telefono: telefono.val()
+        },
+        success: function (r) {
+          if (r != 0) {
+            $("#f_paciente").val(r.id);
+            $("#n_paciente").val(r.nombre);
+
+            nombre.val("");
+            apellido.val("");
+            fecha.val(moment().format("yyyy-MM-dd"));
+            sexo.val("1");
+            $("#radioBtn").find('a:eq(0)').removeClass('notActive').addClass('active');
+            $("#radioBtn").find('a:eq(1)').removeClass('active').addClass('notActive');
+            telefono.val("");
+
+            $("#modal_paciente_mini").modal('hide');
+
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
+            });
+          }
+        }
+      });
+    }
+  });
+
   //Receta
   $("#buscar_receta_s").click(async function (e) { 
     e.preventDefault();
@@ -92,6 +151,7 @@ $(document).on("ready", function () {
             $("#f_rec").text(r.fecha);
     
             c_lab = r.total_lab;
+            console.log(c_lab);
             c_ult = r.total_ultra;
             c_ryx = r.total_rayo;
             c_tac = r.total_tac;
@@ -130,30 +190,30 @@ $(document).on("ready", function () {
   function build_display(vector, panel, tipo) {
     if (tipo == 0) {
       var name = 'lab';
-      var html = '<div class="col-xs-6"><div class="x_panel" id="p_' + name + '" >' +
-        '<div class="row"><center>' +
-        '<h4 class="gray"> Laboratorio Clínico </h4>' +
+      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+        '<div class="flex-row"><center>' +
+        '<h5 class="text-secondary"> Laboratorio Clínico </h5>' +
         '</center></div>' +
         '</div></div>';
     } else if (tipo == 1) {
       var name = "ryx";
-      var html = '<div class="col-xs-6"><div class="x_panel" id="p_' + name + '" >' +
-        '<div class="row"><center>' +
-        '<h4 class="gray"> Rayos X </h4>'+
+      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+        '<div class="flex-row"><center>' +
+        '<h5 class="text-secondary"> Rayos X </h5>'+
         '</center></div>' +
         '</div></div>';
     } else if (tipo == 2) {
       var name = "ult";
-      var html = '<div class="col-xs-6"><div class="x_panel" id="p_' + name + '" >' +
-        '<div class="row"><center>' +
-        '<h4 class="gray"> Ultrasonografía </h4>' +
+      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+        '<div class="flex-row"><center>' +
+        '<h5 class="text-secondary"> Ultrasonografía </h5>' +
         '</center></div>' +
         '</div></div>';
     } else {
       var name = "tac";
-      var html = '<div class="col-xs-6"><div class="x_panel" id="p_' + name + '" >' +
-        '<div class="row"><center>' +
-        '<h4 class="gray"> TAC </h4>' +
+      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+        '<div class="flex-row"><center>' +
+        '<h5 class="text-secondary"> TAC </h5>' +
         '</center></div>' +
         '</div></div>';
     }
@@ -163,13 +223,13 @@ $(document).on("ready", function () {
     var subpanel = $("#p_"+name);
     $(vector).each(function (key, value) {
       html = '<div class="row">' +
-        '<div class="col-xs-10">' +
+        '<div class="col-sm-10">' +
         '<b class="blue">' + value.nombre + '</b>' +
         '<input type="hidden" name="' + name + '[]" value="' + value.id + '">'+
         '</div>' +
-        '<div class="col-xs-2">' +
-        '<button type="button" class="btn btn-xs btn-danger" onclick="remove_vector(this,' + tipo + ')">' +
-        '<i class="fa fa-remove"></i>'+
+        '<div class="col-sm-2">' +
+        '<button type="button" class="btn btn-sm btn-danger" onclick="remove_vector(this,' + tipo + ')">' +
+        '<i class="fa fa-times"></i>'+
         '</button>'
         '</div>'+
         '</div>';
@@ -177,9 +237,9 @@ $(document).on("ready", function () {
       subpanel.append(html);
     });
 
-    html = '<div class="row">' +
+    html = '<div class="flex-row">' +
       '<center>'+
-      '<button type="button" class="btn btn-xs btn-success" onclick="solicitar(this,' + tipo + ')">' +
+      '<button type="button" class="btn btn-sm btn-success" onclick="solicitar(this,' + tipo + ')">' +
       '¡Listo!'+
       '</button>'+
       '</center>'+
@@ -196,7 +256,7 @@ function remove_vector(obj, tipo) {
     if (c_lab <= 0) {
       $(obj).parent('div').parent('div').parent('div').parent('div').remove();
     } else {
-      $(obj).parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').remove();
     }
   } else if (tipo == 1) {
     c_ryx--;
@@ -204,7 +264,7 @@ function remove_vector(obj, tipo) {
     if (c_ryx <= 0) {
       $(obj).parent('div').parent('div').parent('div').parent('div').remove();
     } else {
-      $(obj).parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').remove();
     }
   } else if (tipo == 2) {
     c_ult--;
@@ -212,7 +272,7 @@ function remove_vector(obj, tipo) {
     if (c_ult <= 0) {
       $(obj).parent('div').parent('div').parent('div').parent('div').remove();
     } else {
-      $(obj).parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').remove();
     }
   } else {
     c_tac--;
@@ -220,7 +280,7 @@ function remove_vector(obj, tipo) {
     if (c_tac <= 0) {
       $(obj).parent('div').parent('div').parent('div').parent('div').remove();
     } else {
-      $(obj).parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').remove();
     }
   }
 }
@@ -244,11 +304,13 @@ async function solicitar(obj, tipo) {
       },
       success: function (respuesta) {
         if (respuesta) {
-          new PNotify({
-            title: '¡Hecho!',
-            text: "Solicitud realizada exitosamente",
-            type: 'info',
-            styling: 'bootstrap3'
+          swal({
+            type: 'success',
+            toast: true,
+            title: '¡Acción exitosa!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
           });
         }
       }
@@ -273,11 +335,13 @@ async function solicitar(obj, tipo) {
         },
         success: function (respuesta) {
           if (respuesta) {
-            new PNotify({
-              title: '¡Hecho!',
-              text: "Solicitud realizada exitosamente",
-              type: 'info',
-              styling: 'bootstrap3'
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
             });
           }
         }
@@ -302,11 +366,13 @@ async function solicitar(obj, tipo) {
         },
         success: function (respuesta) {
           if (respuesta) {
-            new PNotify({
-              title: '¡Hecho!',
-              text: "Solicitud realizada exitosamente",
-              type: 'info',
-              styling: 'bootstrap3'
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
             });
           }
         }
@@ -330,11 +396,13 @@ async function solicitar(obj, tipo) {
         },
         success: function (respuesta) {
           if (respuesta) {
-            new PNotify({
-              title: '¡Hecho!',
-              text: "Solicitud realizada exitosamente",
-              type: 'info',
-              styling: 'bootstrap3'
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
             });
           }
         }

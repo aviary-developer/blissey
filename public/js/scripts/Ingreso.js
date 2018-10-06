@@ -46,7 +46,7 @@ $(document).on('ready', function () {
           head =
             "<thead>" +
             "<th>Nombre</th>" +
-            "<th style='width : 80px'>Acción</th>" +
+            "<th style='width : 80px'>Opción</th>" +
             "</thead>";
           tabla.append(head);
           $(res).each(function (key, value) {
@@ -55,13 +55,13 @@ $(document).on('ready', function () {
               "<td>" +
               value.apellido + ', ' + value.nombre +
               "</td>" +
-              "<td>" +
+              "<td><center>" +
               "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
               "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
-              "<button type='button' class='btn btn-xs btn-primary' id='agregar_paciente'>" +
+              "<button type='button' class='btn btn-sm btn-primary' id='agregar_paciente'>" +
               "<i class='fa fa-check'></i>" +
               "</button>" +
-              "</td>" +
+              "</center></td>" +
               "</tr>";
             tabla.append(html);
           });
@@ -287,7 +287,7 @@ $(document).on('ready', function () {
                 "<td id='ct" + value2.id + "'>" + value2.inventario + "</td>" +
                 "<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
                 "<td>" +
-                "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa_(" + value2.id + ");'>" +
+                "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value2.id + ");'>" +
                 "<i class='fa fa-check'></i>" +
                 "</button>" +
                 "</td>" +
@@ -327,7 +327,7 @@ $(document).on('ready', function () {
                   "<td>$ <label id='cc" + value3.id + "'>" + parseFloat(value3.precio).toFixed(2) + "</label></td>" +
                   "<td>" + value.nombre + "</td>" +
                   "<td>" +
-                  "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa_(" + value3.id + ");'>" +
+                  "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value3.id + ");'>" +
                   "<i class='fa fa-check'></i>" +
                   "</button>" +
                   "</td>" +
@@ -359,7 +359,7 @@ $(document).on('ready', function () {
             "<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
             "<td>$ <label id='cd" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
             "<td>" +
-            "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa_(" + value.id + ");'>" +
+            "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value.id + ");'>" +
             "<i class='fa fa-check'></i>" +
             "</button>" +
             "</td>" +
@@ -605,7 +605,7 @@ function registrarventa_(id) {
             if (tipo_usuario == "Enfermería") {
               html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
             } else {
-              html += "<td><center><button type='button' id='"+ res +"' class='btn btn-xs btn-danger' onclick='accion24(3,"+ res +",this)'><i class='fa fa-remove'></i></button></center></td>";
+              html += "<td><center><button type='button' id='"+ res +"' class='btn btn-sm btn-danger' onclick='accion24(3,"+ res +",this)'><i class='fa fa-remove'></i></button></center></td>";
             }
               html += "</tr>";
 
@@ -668,7 +668,7 @@ function registrarventa_(id) {
           if (tipo_usuario == "Enfermería") {
             html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
           } else {
-            html += "<td><center><button type='button' id='" + res + "' class='btn btn-xs btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-remove'></i></button></center></td>";
+            html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-remove'></i></button></center></td>";
           }
             
           tabla.append(html);

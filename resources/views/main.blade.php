@@ -10,7 +10,7 @@
       @include('widget.solicitudes')
     </div>
   @elseif(Auth::user()->tipoUsuario == "Recepción")
-    <div class="x_panel">
+    <div class="x_panel border border-purple rounded">
       @include('widget.ingreso')
     </div>
     <div class="x_panel border border-success rounded">
@@ -41,7 +41,9 @@
     <div class="flex-row">
       <center>
         <h5>
-          Exámenes realizados
+          @if (Auth::user()->tipoUsuario == "Laboaratorio")
+            Exámenes realizados
+          @endif
         </h5>
       </center>
     </div>

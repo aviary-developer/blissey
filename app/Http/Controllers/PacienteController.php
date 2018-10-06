@@ -1008,4 +1008,24 @@ class PacienteController extends Controller
 
     return (compact('solicitud','examen','area'));
   }
+
+  public function save_mini(Request $request){
+    DB::beginTransaction();
+      try {
+        $pacientes = Paciente::create($request->All());
+        $pacientes->departamento = "San Vicente";
+        $pacientes->municipio = "San Vicente";
+        $pacientes->save();
+      } catch (Exception $e) {
+        DB::rollback();
+        return 0;
+      }
+      DB::commit();
+      Bitacora::bitacora('store','pacientes','pacientes',$pacientes->id);
+
+      $id = $pacientes->id;
+      $nombre = $pacientes->nombre.' '.$pacientes->apellido;
+
+      return compact('nombre','id');
+  }
 }

@@ -1,15 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/solicitudex?tipo=examenes') !!}>
-    Laboratorio Clínico
-    @if ($est =="evaluados")
-      <span class="badge badge-success">
-        Evaluados
-      </span>
-    @else
-      <span class="badge badge-primary">
-        Solcitudes
-      </span>
-    @endif
+  <a class="navbar-brand" href={!! asset('/solicitudex?tipo=rayosx') !!}>
+    Rayos X
+    <span class="badge badge-primary">
+      Solcitudes
+    </span>
     @if ($vista == "paciente")
       <span class="badge border-info border text-info">
         Paciente
@@ -26,28 +20,14 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/solicitudex/create?tipo=examenes') !!}>Nuevo</a>
+        <a class="nav-link" href={!! asset('/solicitudex/create?tipo=rayosx') !!}>Nuevo</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          @if ($est == "solicitudes")
-            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
-              Evaluados
-            </a>
-          @else
-            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
-              Solicitudes
-            </a>
-          @endif  
-          <div class="dropdown-divider"></div>
-          @if ($est == "evaluados")
-            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
-          @else
-            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
-          @endif
+          <a class="dropdown-item" href={!! asset('/solicitudex?tipo=rayosx&vista='.(($vista!="paciente")?"paciente":"")) !!}>
             @if ($vista != "paciente")
               Por Paciente
             @else

@@ -11,9 +11,6 @@
           <a href={{asset( '/solicitudex')}}>Solicitudes</a>
         </li>
         <li>
-          <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluados</a>
-        </li>
-        <li>
           <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregados</a>
         </li>
       </ul>
