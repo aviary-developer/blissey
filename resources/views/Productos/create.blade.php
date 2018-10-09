@@ -25,7 +25,5 @@
   </div>
   <input type="hidden" id="method" value="create">
   {!!Form::close()!!}
-@endsection
-@section('agregarjs')
-{!!Html::script('js/scripts/Proveedores.js')!!}
+  {!!Html::script('js/scripts/Productos.js')!!}
 @endsection

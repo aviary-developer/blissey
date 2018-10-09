@@ -13,6 +13,7 @@ $(document).on('ready', async function(){
     componentes_agregados.push(componente_tmp);
   }
   $('#agregar_division').click( async function(){
+    alert("Hola");
     var codigo = $('#codigo').val();
     var division = $('#division').find('option:selected').text();
     var valor = $('#division').find('option:selected').val();
@@ -69,8 +70,8 @@ $(document).on('ready', async function(){
         "<input type='hidden' name='idus[]' value='"+idu+"'/>"+
         "<input type='hidden' name='stocks[]' value='"+stock+"'/>"+
         "<input type='hidden' name='meses[]' value='"+n_mesesv+"'/>"+
-        "<button type='button' name='button' class='btn btn-xs btn-danger' id='eliminar_division'>"+
-          "<i class='fa fa-remove'></i>"+
+        "<button type='button' name='button' class='btn btn-sm btn-danger' id='eliminar_division'>"+
+          "<i class='fas fa-times'></i>"+
         "</button>"+
       "</td>"+
     "</tr>";
@@ -122,7 +123,7 @@ $(document).on('ready', async function(){
           "<td>"+
           "<input type='hidden' name='nombre_componente[]' value ='"+value.nombre+"'>"+
           "<input type='hidden' name='id_componente[]' value ='"+value.id+"'>"+
-          "<button type='button' class='btn btn-xs btn-primary' id='agregar_componente'>"+
+          "<button type='button' class='btn btn-sm btn-primary' id='agregar_componente'>"+
           "<i class='fa fa-arrow-right'></i>"+
           "</button>"+
           "</td>"+
@@ -154,8 +155,8 @@ $(document).on('ready', async function(){
         "<input type='hidden' name='componentes[]' value ='"+id+"'>"+
         "<input type='hidden' name='cantidades_componentes[]' value ='"+cantidad+"'>"+
         "<input type='hidden' name='unidades[]' value ='"+unidad_id+"'>"+
-        "<button type='button' class='btn btn-xs btn-danger' id='eliminar_componente'>"+
-          "<i class='fa fa-remove'></i>"+
+        "<button type='button' class='btn btn-sm btn-danger' id='eliminar_componente'>"+
+          "<i class='fas fa-times'></i>"+
         "</button>"+
       "</td>"+
     "</tr>";
@@ -236,6 +237,30 @@ $(document).on('ready', async function(){
         $('#form').submit();
       }
     });
+
+    $("#smartwizard").smartWizard({
+      lang: {
+        next: 'Siguiente',
+        previous: 'Anterior'
+      },
+      toolbarSettings: {
+        toolbarPosition: 'bottom', // none, top, bottom, both
+        toolbarButtonPosition: 'right', // left, right
+        showNextButton: true, // show/hide a Next button
+        showPreviousButton: true, // show/hide a Previous button
+        toolbarExtraButtons: [
+          $('<button type="button"></button>').text('Guardar')
+            .addClass('btn btn-primary btn-sm')
+            .on('click', save_producto),
+          $('<a href="/blissey/public/productos"></a>').text('Cancelar')
+            .addClass('btn btn-light btn-sm')
+        ]
+      },
+      keyNavigation: false,
+    });
+    function save_producto(){
+
+    }
 });
 function validarCodigo(){
     var codigo = $("#codigo").val();
