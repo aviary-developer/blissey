@@ -1,30 +1,39 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
     $create = true;
   @endphp
-  <div class="col-md-12 col-xs-12">
+  @include('SolicitudTAC.Barra.evaluated')
+  <div class="col-sm-10">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Evaluación de TAC</h2>
-        <div class="clearfix"></div>
-        <h4>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}} <span class="label label-lg label-default">{{$solicitud->tac->nombre}}</span></h4>
+      <div class="flex-row">
+        <span class="font-weight-light text-monospace">
+          Paciente
+        </span>
       </div>
-      <div class="col-xs-12">
+      <div class="flex-row">
+        <h6 class="font-weight-bold">
+          {{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}
+          @if ($solicitud->paciente->sexo)
+            <span class="badge badge-pill badge-primary">
+          @else  
+            <span class="badge badge-pill badge-pink">
+          @endif
+            {{$solicitud->paciente->fechaNacimiento->age.' años' }}
+          </span>
+        </h6>
+      </div>
+    </div>
+
+    <div class="x_panel">
+      <div class="col-sm-12">
         <input type="hidden" name="solicitud" value={{$solicitud->id}}>
         <input type="hidden" name="evaluar" value=true>
         <input type="hidden" name="idTac" value={{$solicitud->f_tac}}>
         <div class="x_content">
-          <div class="col-md-12 col-xs-12">
-        <!--<div class="form-group">
-          <label class="control-label col-md-4 col-sm-4 col-xs-12">Ultrasonografía:</label>
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <span class="fa fa-camera form-control-feedback left" aria-hidden="true"></span>
-            <input type="file" name="rayox" id="idRadiografia" accept="image/*" class="form-control has-feedback-left">
-          </div>
-        </div>-->
+          <div class="col-sm-12">
             <div class="x_content">
               <div id="alerts"></div>
               <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
@@ -94,27 +103,22 @@
               <div id="editor-one" name="contenedor" class="editor-wrapper"></div>
 
               <textarea name="observacion" id="descr" style="display:none;"></textarea>
-              <div class="ln_solid"></div>
             </div>
-            <!--<div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-12">Observaciones:</label>
-              <div class="col-md-12 col-sm-9 col-xs-12">
-                <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-                {!! Form::textarea('observacion',null,['class'=>'form-control has-feedback-left','placeholder'=>'Escriba la observación','rows'=>'10', 'required']) !!}
-              </div>
-            </div>-->
+          </div>
         </div>
-        </div>
+      </div>
+
+      <div class="x_panel">
+      <center>
+        <button name="botonGuardar" class="btn btn-primary btn-sm" onclick="guardarHtml();">Guardar</button>
+        <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+        <a href={!! asset('/solicitudex') !!} class="btn btn-light btn-sm">Cancelar</a>
+      </center>
+    </div>
   </div>
-  <div class="clearfix"></div>
-  <center>
-  <button name="botonGuardar" class="btn btn-primary" onclick="guardarHtml();">Guardar</button>
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/solicitudex') !!} class="btn btn-default">Cancelar</a>
-  </center>
-</div>
-  {!!Form::close()!!}
-  <script>
+{!!Form::close()!!}
+
+<script>
   function radiografia(evt){
     var files = evt.target.files;
 

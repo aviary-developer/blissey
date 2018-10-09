@@ -1,9 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   <a class="navbar-brand" href={!! asset('/solicitudex?tipo=rayosx') !!}>
     Rayos X
-    <span class="badge badge-primary">
-      Solcitudes
-    </span>
+    @if ($est =="evaluados")
+      <span class="badge badge-success">
+        Evaluados
+      </span>
+    @elseif($est == "entregados")
+      <span class="badge badge-info">
+        Entregados
+      </span>
+    @else
+      <span class="badge badge-primary">
+        Solcitudes
+      </span>
+    @endif
     @if ($vista == "paciente")
       <span class="badge border-info border text-info">
         Paciente
@@ -27,13 +37,42 @@
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={!! asset('/solicitudex?tipo=rayosx&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          @if ($est == "solicitudes")
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
+              Evaluados
+            </a>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista=paciente') !!}>
+              Entregados
+            </a>
+          @elseif($est == "entregados")
+            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
+              Solicitudes
+            </a>
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
+              Evaluados
+            </a>
+          @else
+            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
+              Solicitudes
+            </a>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista=paciente') !!}>
+              Entregados
+            </a>
+          @endif  
+          <div class="dropdown-divider"></div>
+          @if ($est == "evaluados")
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          @elseif($est == "entregados")
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          @else
+            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=rayosx&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          @endif
             @if ($vista != "paciente")
               Por Paciente
             @else
               Por Exámenes
             @endif
-          </a>  
+          </a> 
         </div>
       </li>
     </ul>

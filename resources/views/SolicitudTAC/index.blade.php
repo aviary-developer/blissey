@@ -1,5 +1,8 @@
 @extends('principal')
 @section('layout')
+@php
+  $est = "solicitudes"
+@endphp
   @include('SolicitudTAC.Barra.index')
   <div class="col-sm-8">
     <div class="x_content">
