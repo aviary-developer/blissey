@@ -5,16 +5,10 @@
   </a>
   <ul class="nav child_menu">
     <li>
+      <a href={{asset( '/solicitudex')}}>Evaluación de exámenes</a>
+    </li>
+    <li>
       <a href={{asset( '/ultrasonografias')}}>Ultrasonografías</a>
-    </li>
-    <li>
-      <a href={{asset( '/solicitudex')}}>Solicitudes</a>
-    </li>
-    <li>
-      <a href={{asset( '/examenesEvaluados?vista=paciente')}}>Evaluadas</a>
-    </li>
-    <li>
-      <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregadas</a>
     </li>
   </ul>
 </li>

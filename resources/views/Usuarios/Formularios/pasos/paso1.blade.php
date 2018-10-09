@@ -133,8 +133,6 @@
             'rows'=>'2',
             'id'=>'direccion_usuario_field']
         ) !!}
-        {{-- Mensaje para validar --}}
-        <div class="invalid-feedback"></div>
       </div>
     </div>
   </div>

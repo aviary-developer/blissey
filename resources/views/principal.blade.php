@@ -36,6 +36,9 @@
   {!!Html::style('library/RangeSlider/css/ion.rangeSlider.css')!!}
   {!!Html::style('library/RangeSlider/css/ion.rangeSlider.skinFlat.css')!!}
 
+  <!-- Wysiwig -->
+  {!!Html::style('library/google-code-prettify/bin/prettify.min.css')!!}
+
   <!-- Switchery -->
   {!!Html::style('library/Switchery/dist/switchery.min.css')!!}
 
@@ -98,6 +101,9 @@
   <!-- SmartWizard -->
   {!!Html::script('library/SmartWizard/dist/js/jquery.smartWizard.js')!!}
 
+  <!-- Switchery -->
+  {!!Html::script('library/Switchery/dist/switchery.min.js')!!}
+
   <!-- InputMask -->
   {!!Html::script('library/Inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
 
@@ -117,6 +123,11 @@
 
   <!-- DataTable -->
   {!!Html::script('library/DataTable/datatables.js')!!}
+
+  <!-- Wysiwig -->
+  {!!Html::script('library/Wysiwyg/js/bootstrap-wysiwyg.min.js')!!}
+  {!!Html::script('library/jquery.hotkeys/jquery.hotkeys.js')!!}
+  {!!Html::script('library/google-code-prettify/src/prettify.js')!!}
 
   <!-- General -->
   {!!Html::script('js/general.js')!!}

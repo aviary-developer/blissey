@@ -671,11 +671,11 @@ class SolicitudExamenController extends Controller
       }
       }catch(Exception $e){
         DB::rollback();
-        return redirect('/solicitudex')->with('mensaje','Algo salio mal');
+        return redirect('/examenesEvaluados')->with('mensaje','Algo salio mal');
       }
       DB::commit();
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
-      return redirect('/solicitudex')->with('mensaje', '¡Editado!');
+      return redirect('/examenesEvaluados')->with('mensaje', '¡Editado!');
     }
   }
   }

@@ -5,15 +5,7 @@
   </a>
   <ul class="nav child_menu">
     <li>
-      <a>Evaluación de examen<span class="fas float-right fa-chevron-down"></span></a>
-      <ul class="nav child_menu">
-        <li>
-          <a href={{asset( '/solicitudex')}}>Solicitudes</a>
-        </li>
-        <li>
-          <a href={{asset( '/examenesEntregados?vista=paciente')}}>Entregados</a>
-        </li>
-      </ul>
+      <a href={{asset( '/solicitudex')}}>Evaluación de exámenes</a>
     </li>
     <li>
       <a href={{asset( '/bancosangre')}}>Banco de sangre</a>

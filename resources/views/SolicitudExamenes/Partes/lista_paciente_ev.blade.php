@@ -22,8 +22,8 @@
           <table class="table table-hover table-sm table-striped">
             <thead>
               <th>Código</th>
+              <th>Fecha</th>
               <th>Examen</th>
-              <th>Fecha de evaluación</th>
               <th>Opciones</th>
             </thead>
             <tbody>
@@ -31,8 +31,8 @@
                 @if($solicitud->f_paciente == $paciente->f_paciente)
                   <tr>
                     <td>{{$solicitud->codigo_muestra}}</td>
+                    <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>{{$solicitud->examen->nombreExamen}}</td>
-                    <td>{{$solicitud->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S')}}</td>
                     <td>
                       <center>
                         <div class="btn-group">

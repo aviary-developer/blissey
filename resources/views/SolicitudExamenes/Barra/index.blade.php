@@ -5,6 +5,10 @@
       <span class="badge badge-success">
         Evaluados
       </span>
+    @elseif($est == "entregados")
+      <span class="badge badge-info">
+        Entregados
+      </span>
     @else
       <span class="badge badge-primary">
         Solcitudes
@@ -37,14 +41,29 @@
             <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
               Evaluados
             </a>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista=paciente') !!}>
+              Entregados
+            </a>
+          @elseif($est == "entregados")
+            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
+              Solicitudes
+            </a>
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
+              Evaluados
+            </a>
           @else
             <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
               Solicitudes
+            </a>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista=paciente') !!}>
+              Entregados
             </a>
           @endif  
           <div class="dropdown-divider"></div>
           @if ($est == "evaluados")
             <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          @elseif($est == "entregados")
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @else
             <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @endif

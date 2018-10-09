@@ -1,23 +1,39 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
     {!!Form::model($solicitud,['class' =>'form-horizontal form-label-left input_mask','route' =>['solicitudex.update',$solicitud->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
     $create = false;
   @endphp
-  <div class="col-md-12 col-xs-12">
+  @include('SolicitudUltras.Barra.edited')
+  <div class="col-md-10">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>Edición de evaluación</h2>
-        <div class="clearfix"></div>
-        <h4>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}} <span class="label label-lg label-default">{{$solicitud->ultrasonografia->nombre}}</span></h4>
+      <div class="flex-row">
+        <span class="font-weight-light text-monospace">
+          Paciente
+        </span>
       </div>
-      <div class="col-xs-12">
+      <div class="flex-row">
+        <h6 class="font-weight-bold">
+          {{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}
+          @if ($solicitud->paciente->sexo)
+            <span class="badge badge-pill badge-primary">
+          @else  
+            <span class="badge badge-pill badge-pink">
+          @endif
+            {{$solicitud->paciente->fechaNacimiento->age.' años' }}
+          </span>
+        </h6>
+      </div>
+    </div>
+
+    <div class="x_panel">
+      <div class="col-sm-12">
         <input type="hidden" name="solicitud" value={{$solicitud->id}}>
         <input type="hidden" name="evaluar" value=false>
         <input type="hidden" name="idUltra" value={{$solicitud->f_ultrasonografia}}>
         <div class="x_content">
-          <div class="col-md-12 col-xs-12">
+          <div class="col-sm-12">
             <div class="x_content">
               <div id="alerts"></div>
               <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
@@ -87,22 +103,23 @@
               @php echo $resultado->observacion;@endphp</div>
 
               <textarea name="observacion" id="descr" style="display:none;"></textarea>
-              <div class="ln_solid"></div>
             </div>
+          </div>
         </div>
-        </div>
+      </div>
+    </div>
+
+    <div class="x_panel">
+      <center>
+        <button name="botonGuardar" class="btn btn-primary btn-sm" onclick="guardarHtml();">Guardar</button>
+        <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+        <a href={!! asset('/examenesEvaluados?vista=paciente') !!} class="btn btn-light btn-sm">Cancelar</a>
+      </center>
+    </div>
   </div>
-  <div class="clearfix"></div>
-  <center>
-    <button name="botonGuardar" class="btn btn-primary" onclick="guardarHtml();">Guardar</button>
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/solicitudex') !!} class="btn btn-default">Cancelar</a>
-  </center>
-</div>
-  {!!Form::close()!!}
-  </div>
-  </div>
-  <script>
+{!!Form::close()!!}
+
+<script>
   function ultrasonografia(evt){
     var files = evt.target.files;
 
