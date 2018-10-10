@@ -20,7 +20,7 @@
           'nombre',
           null,
           ['class'=>'form-control form-control-sm',
-            'placeholder'=>'Nombre del proveedor',
+            'placeholder'=>'Nombre del producto',
             'id'=>'nombre'
           ]
         ) !!}
@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group col-sm-6">
-      <label class="" for="nombre">Presentación *</label>
+      <label class="" for="f_presentacion">Presentación *</label>
       <div class="input-group mb-2 mr-sm-2">
         <div class="input-group-prepend">
           <div class="input-group-text"><i class="fas fa-cube"></i></div>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="form-group col-sm-6">
-        <label class="" for="nombre">Categoría *</label>
+        <label class="" for="f_categoria">Categoría *</label>
         <div class="input-group mb-2 mr-sm-2">
           <div class="input-group-prepend">
             <div class="input-group-text"><i class="fas fa-cube"></i></div>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="form-group col-sm-6">
-          <label class="" for="nombre">Proveedor *</label>
+          <label class="" for="f_proveedor">Proveedor *</label>
           <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="fas fa-cube"></i></div>
@@ -99,21 +99,21 @@
                     <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
                     <td>{{$division->stock}}</td>
                     <td>{{$division->num_meses($division->n_meses)}}
-                    <td>
+                    <td style="width:15%">
                       <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
                       <input type="hidden" value={{$division->id}}>
                       @if(App\DetalleTransacion::cuenta($division->id))
-                        <button type="button" name="button" class="btn btn-xs btn-danger" id="eliminar_division_antigua">
-                          <i class="fa fa-remove"></i>
+                        <button type="button" name="button" class="btn btn-sm btn-danger" id="eliminar_division_antigua">
+                          <i class="fas fa-times"></i>
                         </button>
                       @else
-                        <button type="button" class="btn btn-xs btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
-                          <i class="fa fa-warning"></i>
+                        <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
+                          <i class="fas fa-exclamation-triangle"></i>
                         </button>
                       @endif
                       <a data-toggle="tooltip" data-placement="top" title="Editar">
-                        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}})">
-                          <i class="fa fa-edit"></i>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}})">
+                          <i class="fas fa-edit"></i>
                         </button>
                       </a>
                     </td>
@@ -128,7 +128,14 @@
         </table>
   </div>
 </div>
+{{--Modales  --}}
 @include('Productos.Formularios.modales.modal_division')
+@include('Productos.Formularios.modales.modal_p')
+@include('Productos.Formularios.modales.modal_c')
+@include('Productos.Formularios.modales.modal_d')
+@include('Productos.Formularios.modales.modal_u')
+@include('Productos.Formularios.modales.modal_co')
+@include('Productos.Formularios.modales.modal_pr')
     <script type="text/javascript">
     function llenarDivision(id,codigo,precio,stock,meses){
       $('#idDiv').val(id);

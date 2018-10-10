@@ -16,7 +16,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
-
+      @include('Productos.Formularios.opciones')
     </ul>
     @include('Dashboard.boton_salir')
   </div>

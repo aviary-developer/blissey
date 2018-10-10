@@ -13,7 +13,6 @@ $(document).on('ready', async function(){
     componentes_agregados.push(componente_tmp);
   }
   $('#agregar_division').click( async function(){
-    alert("Hola");
     var codigo = $('#codigo').val();
     var division = $('#division').find('option:selected').text();
     var valor = $('#division').find('option:selected').val();
@@ -226,17 +225,6 @@ $(document).on('ready', async function(){
         $('#hchange').val("a");
       }
     });
-    $(".producto_ex").on("click", function (e) {
-      e.preventDefault();
-      n=vnombre();
-      p=vpresentacion();
-      c=vcategoria();
-      v=vproveedor();
-      d=vdivision();
-      if(n && p && c && v && d){
-        $('#form').submit();
-      }
-    });
 
     $("#smartwizard").smartWizard({
       lang: {
@@ -259,7 +247,14 @@ $(document).on('ready', async function(){
       keyNavigation: false,
     });
     function save_producto(){
-
+      n=vnombre();
+      p=vpresentacion();
+      c=vcategoria();
+      v=vproveedor();
+      d=vdivision();
+      if(n && p && c && v && d){
+        $('#form').submit();
+      }
     }
 });
 function validarCodigo(){
@@ -396,12 +391,7 @@ $("#guardarPresentacionModal").on('click', async function (e) {
       if (data.status === 422 ) {
         var errors = $.parseJSON(data.responseText);
         $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError(value);
         });
       }
     }
@@ -455,12 +445,7 @@ $("#guardarCategoriaModal").on('click', async function (e) {
       if (data.status === 422 ) {
         var errors = $.parseJSON(data.responseText);
         $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError(value);
         });
       }
     }
@@ -514,12 +499,7 @@ $("#guardarDivisionModal").on('click', async function (e) {
       if (data.status === 422 ) {
         var errors = $.parseJSON(data.responseText);
         $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError(value);
         });
       }
     }
@@ -573,12 +553,7 @@ $("#guardarUnidadModal").on('click', async function (e) {
       if (data.status === 422 ) {
         var errors = $.parseJSON(data.responseText);
         $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError(value);
         });
       }
     }
@@ -630,12 +605,7 @@ $("#guardarComponenteModal").on('click', async function (e) {
       if (data.status === 422 ) {
         var errors = $.parseJSON(data.responseText);
         $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError(value);
         });
       }
     }
@@ -680,12 +650,7 @@ $("#guardarProveedorModal").on('click', async function (e) {
       if (data.status === 422 ) {
         var errors = $.parseJSON(data.responseText);
         $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
+          notaError(value);
         });
       }
     }
