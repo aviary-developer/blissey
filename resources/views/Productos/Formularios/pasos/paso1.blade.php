@@ -1,5 +1,5 @@
 @php
-  $presentaciones=App\Producto::arrayPresentaciones();
+$presentaciones=App\Producto::arrayPresentaciones();
 @endphp
 <div class="flex-row">
   <center>
@@ -20,9 +20,9 @@
           'nombre',
           null,
           ['class'=>'form-control form-control-sm',
-            'placeholder'=>'Nombre del producto',
-            'id'=>'nombre'
-          ]
+          'placeholder'=>'Nombre del producto',
+          'id'=>'nombre'
+        ]
         ) !!}
       </div>
     </div>
@@ -69,22 +69,22 @@
               Agregar División
             </button>
           </div>
-            <h5>Divisiones agregadas</h5>
+          <h5>Divisiones agregadas</h5>
 
-            <table class="table table-sm table-striped" id="tablaDivision">
-              <thead>
-                <th>Código</th>
-                <th>División</th>
-                <th>Cant/Cont</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Notificar</th>
-                <th style="width : 80px">Acción</th>
-              </thead>
-              <tbody>
-                @if (!$create)
-                  @php
-                  $auxiliar_division = 0;
+          <table class="table table-sm table-striped" id="tablaDivision">
+            <thead>
+              <th>Código</th>
+              <th>División</th>
+              <th>Cant/Cont</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Notificar</th>
+              <th style="width : 80px">Acción</th>
+            </thead>
+            <tbody>
+              @if (!$create)
+                @php
+                $auxiliar_division = 0;
                 @endphp
                 <input type="hidden" name="divisiones_eliminadas[]" value="ninguno" id="division_eliminada">
                 @foreach ($divisiones_productos  as $key => $division)
@@ -99,49 +99,51 @@
                     <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
                     <td>{{$division->stock}}</td>
                     <td>{{$division->num_meses($division->n_meses)}}
-                    <td style="width:15%">
-                      <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
-                      <input type="hidden" value={{$division->id}}>
-                      @if(App\DetalleTransacion::cuenta($division->id))
-                        <button type="button" name="button" class="btn btn-sm btn-danger" id="eliminar_division_antigua">
-                          <i class="fas fa-times"></i>
-                        </button>
-                      @else
-                        <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
-                          <i class="fas fa-exclamation-triangle"></i>
-                        </button>
-                      @endif
-                      <a data-toggle="tooltip" data-placement="top" title="Editar">
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}})">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                      </a>
-                    </td>
-                  </tr>
-                  @php
-                  $auxiliar_division = $key;
-                @endphp
-              @endforeach
-              <input type="hidden" id="contador_division" value={{$auxiliar_division}}>
-            @endif
-          </tbody>
-        </table>
-  </div>
-</div>
-{{--Modales  --}}
-@include('Productos.Formularios.modales.modal_division')
-@include('Productos.Formularios.modales.modal_p')
-@include('Productos.Formularios.modales.modal_c')
-@include('Productos.Formularios.modales.modal_d')
-@include('Productos.Formularios.modales.modal_u')
-@include('Productos.Formularios.modales.modal_co')
-@include('Productos.Formularios.modales.modal_pr')
-    <script type="text/javascript">
-    function llenarDivision(id,codigo,precio,stock,meses){
-      $('#idDiv').val(id);
-      $('#pre').val(precio);
-      $('#stock').val(stock);
-      $('#cod').val(codigo);
-      $('#mes').val(meses);
-    }
-  </script>
+                      <td style="width:15%">
+                        <div class="btn-group">
+                          <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
+                          <input type="hidden" value={{$division->id}}>
+                          @if(App\DetalleTransacion::cuenta($division->id))
+                            <button type="button" name="button" class="btn btn-sm btn-danger" id="eliminar_division_antigua">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          @else
+                            <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
+                              <i class="fas fa-exclamation-triangle"></i>
+                            </button>
+                          @endif
+                          <a data-toggle="tooltip" data-placement="top" title="Editar">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}})">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    @php
+                    $auxiliar_division = $key;
+                    @endphp
+                  @endforeach
+                  <input type="hidden" id="contador_division" value={{$auxiliar_division}}>
+                @endif
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {{--Modales  --}}
+        @include('Productos.Formularios.modales.modal_division')
+        @include('Productos.Formularios.modales.modal_p')
+        @include('Productos.Formularios.modales.modal_c')
+        @include('Productos.Formularios.modales.modal_d')
+        @include('Productos.Formularios.modales.modal_u')
+        @include('Productos.Formularios.modales.modal_co')
+        @include('Productos.Formularios.modales.modal_pr')
+        <script type="text/javascript">
+        function llenarDivision(id,codigo,precio,stock,meses){
+          $('#idDiv').val(id);
+          $('#pre').val(precio);
+          $('#stock').val(stock);
+          $('#cod').text(codigo);
+          $('#mes').val(meses);
+        }
+        </script>

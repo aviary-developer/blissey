@@ -1,4 +1,4 @@
-@extends('dashboard')
+{{-- @extends('dashboard')
 @section('layout')
   @php
     $index = false;
@@ -22,7 +22,7 @@
         </div>
       </div>
       <br>
-      {{-- Incio de tab --}}
+
       <div class="" role="tabpanel" data-example-id="togglable-tabs">
         <div class="col-xs-2">
           <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
@@ -36,7 +36,6 @@
         </div>
         <div class="col-xs-10">
 
-          {{-- Contenido del tab --}}
           <div id="myTabContent" class="tab-content">
             <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
               <h3>Información General</h3>
@@ -65,7 +64,7 @@
                 </tr>
               </table>
             </div>
-            {{-- Otra pestaña --}}
+
             <div class="tab-pane fade" role="tabpanel" id="tab_content2" aria-labelledby="otros-tab2">
               <h3>Productos de la categoría: <small>{{$categoria->nombre}}</small></h3>
               <table class="table">
@@ -102,4 +101,34 @@
     </div>
   </div>
 </div>
+@endsection --}}
+
+
+@extends('principal')
+@section('layout')
+  @php
+    $index = false;
+    setlocale(LC_ALL,'es');
+  @endphp
+  @include('CategoriaProductos.Barra.show')
+<div class="col-sm-8">
+  <div class="x_panel">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+          Productos
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        @include('CategoriaProductos.Partes.datos_productos')
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4">
+  @include('CategoriaProductos.Partes.datos_categoria')
+</div>
+<input type="hidden" id="id-p" value={{$categoria->id}}>
 @endsection

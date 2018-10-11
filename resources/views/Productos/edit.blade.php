@@ -11,4 +11,5 @@
 </div>
 {!!Form::close()!!}
 {!!Html::script('js/scripts/Productos.js')!!}
+@include('Productos.Formularios.modalDivision')
 @endsection

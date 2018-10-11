@@ -33,5 +33,4 @@
   @include('Productos.Partes.datos_producto')
 </div>
 <input type="hidden" id="id-p" value={{$producto->id}}>
-{{-- @include('Productos.Partes.modal_ingreso') --}}
 @endsection
