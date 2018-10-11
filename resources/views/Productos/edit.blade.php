@@ -1,22 +1,15 @@
-@extends('dashboard')
+<?php $bandera=2;?>{{--Indica que es ingresar --}}
+@extends('principal')
 @section('layout')
+  @include('Productos.Barra.create')
   {!!Form::model($productos,['class' =>'form-horizontal form-label-left input_mask','route' =>['productos.update',$productos->id],'method' =>'PUT','autocomplete'=>'off','id'=>'form'])!!}
   @php
-    $create = false;
+  $create = false;
   @endphp
-  <div class="col-md-12 col-xs-12">
-    <div class="x_panel">
-      <div class="row bg-blue">
-        <center>
-          <h3>Producto
-              <small class="label-white badge blue ">Editar</small>
-          </h3>
-        </center>
-      </div>
-      @include('Productos.Formularios.opciones')
-    </div>
-    @include('Productos.Formularios.form')
-  </div>
-  {!!Form::close()!!}
-    @include('Productos.Formularios.modalDivision')
+<div class="col-sm-12">
+  @include('Productos.Formularios.form')
+</div>
+{!!Form::close()!!}
+{!!Html::script('js/scripts/Productos.js')!!}
+@include('Productos.Formularios.modalDivision')
 @endsection

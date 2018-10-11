@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="form-group col-sm-4">
-      <label class="" for="nombre">Buscar componente</label>
+      <label class="" for="componente">Buscar componente</label>
     </div>
     <div class="form-group col-sm-8">
       <div class="input-group mb-2 mr-sm-2">
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="form-group col-sm-4">
-      <label class="" for="nombre">Contenido *</label>
+      <label class="" for="cantidad_componente">Contenido *</label>
     </div>
     <div class="form-group col-sm-8">
       <div class="input-group mb-2 mr-sm-2">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="form-group col-sm-4">
-      <label class="" for="nombre">Unidad *</label>
+      <label class="" for="unidad">Unidad *</label>
     </div>
     <div class="form-group col-sm-8">
       <div class="input-group mb-2 mr-sm-2">

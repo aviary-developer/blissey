@@ -1,37 +1,47 @@
-<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modal_unidad">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">Unidad <span class="label label-lg label-primary">Nueva</span></h4>
-      </div>
-
-      <div class="modal-body">
-        <div class="x_panel">
-
-          <div class="form-group">
-            <label class="control-label col-sm-3 col-xs-12">Nombre *</label>
-            <div class="col-sm-9 col-xs-12">
-              <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('nombre',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre de la nueva unidad','id'=>'nombreUnidadModal']) !!}
-            </div>
-          </div>
-
-          <input type="hidden" id="tokenUnidadModal" name="tokenUnidadModal" value="<?php echo csrf_token(); ?>">
-
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_unidad" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="x_panel m_panel text-danger">
+          <center>
+            <h4 class="mb-1">
+              <i class="fas fa-plus"></i>
+              Unidad nueva
+            </h4>
+          </center>
         </div>
-        <center>
-          <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
-        </center>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="x_panel m_panel">
+          <div class="ln_solid mb-1 mt-1"></div>
+          <div class="row">
 
-      <div class="modal-footer">
-        <button type="button" id="guardarUnidadModal" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
+            <div class="form-group col-sm-12">
+              <label class="" for="nombre">Nombre *</label>
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+                </div>
+                {!! Form::text('nombre',null,['id'=>'nombreUnidadModal','class'=>'form-control form-control-sm','placeholder'=>'Nombre de la categoría']) !!}
+              </div>
+            </div>
+            <input type="hidden" id="tokenUnidadModal" name="tokenUnidadModal" value="<?php echo csrf_token(); ?>">
+
+          </div>
+        </div>
       </div>
-
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="m_panel x_panel bg-transparent" style="border:0px !important">
+          <center>
+            <button type="button" class="btn btn-sm  col-2 btn-primary" id="guardarUnidadModal">Agregar</button>
+            <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal">Cerrar</button>
+          </center>
+        </div>
+      </div>
     </div>
   </div>
 </div>
