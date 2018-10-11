@@ -1295,7 +1295,7 @@ a:focus {
     display: block;
     padding: 4px 6px
 }
-footer {
+/* footer {
     background: #fff;
     padding: 15px 20px;
     display: block
@@ -1318,7 +1318,7 @@ footer {
     .footer_fixed .nav-sm footer {
         margin-left: 0
     }
-}
+} */
 .tile-stats.sparkline {
     padding: 10px;
     text-align: center
@@ -2085,11 +2085,11 @@ span.right {
     white-space: nowrap;
     position: relative
 }
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
     footer {
         margin-left: 230px
     }
-}
+} */
 @media (min-width: 992px) {
     .tile_count .tile_stats_count {
         margin-bottom: 10px;

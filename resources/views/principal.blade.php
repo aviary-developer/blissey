@@ -84,14 +84,25 @@
         @include('Dashboard.panel_izquierdo')
       </div>
       <div class="col-10 side_back bg-light right-cont" role="main" style="overflow-x: hidden; overflow-y: scroll">
-        @yield('layout')
+        <div style="min-height:calc(100% - 51px)">
+          @yield('layout')
+        </div>
+        <div class="clearfix"></div>
+        <section>
+          <footer style="background-color: #DADADA">
+        
+            <div class="footer-copyright text-center py-3">
+              UES - FMP 2018
+            </div>
+        
+          </footer>
+        </section>
       </div>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
       </form>
     </div>
   </div>
-
   <!-- Chart.js -->
   {!!Html::script('library/Chart.js/chart.js/dist/Chart.min.js')!!}
 

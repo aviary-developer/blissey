@@ -2,6 +2,9 @@
 @section('layout')
 @include('Main.barra')
 <div class="col-sm-8" >
+  <div class="x_panel border border-primary rounded">
+    @include('widget.calendario')
+  </div>
   @if (Auth::user()->tipoUsuario == "Laboaratorio")
     <div class="x_panel border border-danger rounded">
       @include('widget.reactivos')
@@ -99,4 +102,6 @@
     });
   </script>
 @endif
+
+{!!Html::script('js/scripts/Calendario_main.js')!!}
 @stop
