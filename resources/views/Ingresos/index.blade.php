@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   @if ($estado != 2 || $estado == null)
     @php
@@ -14,80 +14,11 @@
     $index = true;
   @endphp
 
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  @include('Ingresos.Barra.index')
+
+  <div class="col-sm-12">
     <div class="x_panel">
-      <div class="x_title">
-        <h2>
-          @if ($tipo == 0)
-            Ingresos
-          @elseif($tipo == 1)
-            Observaciones
-          @elseif($tipo == 2)
-            Medi Ingresos
-          @elseif($tipo == 3)
-            Consultas Médicas
-          @else
-            Curaciones
-          @endif
-          @if ($estadoOpuesto != 2)
-            <small>Alta médica</small>
-          @else
-            <small>Actuales</small>
-          @endif
-        </h2>
-        <div class="clearfix"></div>
-      </div>
       <div class="x_content">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-12">
-            <div class="btn-group">
-              @if (Auth::user()->tipoUsuario == "Recepción")    
-                <a href={{asset('/ingresos/create')}} class="btn btn-sm btn-dark">
-                  <i class="fa fa-plus"></i> Nuevo
-                </a>
-                <a href={{asset('#')}} class="btn btn-sm btn-dark">
-                  <i class="fa fa-file"></i> Reporte
-                </a>
-              @endif
-              @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencía")
-                  
-                <a href={{asset('/ingresos?estado='.$estadoOpuesto.'&tipo='.$tipo)}} class="btn btn-sm btn-dark">
-                  @if ($estadoOpuesto != 2)
-                    <i class="fa fa-medkit"></i> Actuales
-                    <span class="label label-success">{{$activos}}</span>
-                  @else
-                    <i class="fa fa-check"></i> En alta
-                  @endif
-                </a>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-dark btn-sm">
-                  <i class="fa fa-eye"></i> Ver
-                  </button>
-                  <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href={{asset("/ingresos")}}>Ingresos</a>
-                    </li>
-                    <li><a href={{asset("/ingresos?tipo=3")}}>Consultas Médicas</a>
-                    </li>
-                    <li><a href={{asset("/ingresos?tipo=1")}}>Observaciones</a>
-                    </li>
-                    <li><a href={{asset("/ingresos?tipo=2")}}>Medi ingresos</a>
-                    </li>
-                    <li><a href={{asset("/ingresos?tipo=4")}}>Curaciones</a>
-                    </li>
-                  </ul>
-                </div>
-              @endif
-              <a href={{'#'}} class="btn btn-primary btn-sm">
-                <i class="fa fa-question"></i> Ayuda
-              </a>
-            </div>
-          </div>
-        </div>
-        <br>
         <div class="row">
           <table class="table table-striped">
             <thead>

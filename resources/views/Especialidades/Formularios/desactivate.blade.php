@@ -8,7 +8,7 @@
   </a>
 
   @if (App\Especialidad::contar_medicos($especialidad->id))
-    <a href="#" class="btn btn-sm btn-danger disabled" title="No puedes desactivarte a ti mismo">
+    <a href="#" class="btn btn-sm btn-danger disabled" title="Especialidad en uso">
       <i class="fas fa-ban"></i>
     </a>
   @else

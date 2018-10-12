@@ -10,7 +10,7 @@ class ultrasonografia extends Model
     'nombre'
   ];
   public static function buscar($nombre, $estado){
-    return ultrasonografia::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return ultrasonografia::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
   }
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){

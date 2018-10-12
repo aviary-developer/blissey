@@ -24,9 +24,6 @@ class UltrasonografiaController extends Controller
     {
       $estado = $request->get('estado');
       $nombre = $request->get('nombre');
-      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
-      $pagina--;
-      $pagina *= 10;
       $ultrasonografias = ultrasonografia::buscar($nombre,$estado);
       $activos = ultrasonografia::where('estado',true)->count();
       $inactivos = ultrasonografia::where('estado',false)->count();
@@ -35,8 +32,7 @@ class UltrasonografiaController extends Controller
         'estado',
         'nombre',
         'activos',
-        'inactivos',
-        'pagina'
+        'inactivos'
       ));
     }
 
@@ -112,7 +108,7 @@ class UltrasonografiaController extends Controller
       $servicio =Servicio::where('f_ultrasonografia',$id)->first();
       $precio=$servicio->precio;
       $ultrasonografia = ultrasonografia::find($id);
-      return view('Ultrasonografias.edit',compact('ultrasonografia'));
+      return view('Ultrasonografias.edit',compact('ultrasonografia','precio'));
     }
 
     /**

@@ -1,21 +1,21 @@
-<div class="row">
+<div class="flex-row">
   <center>
-    <h4>Ingresos</h4>
+    <h5>Ingresos</h5>
   </center>
 </div>
-<div class="row">
+<div class="flex-row">
   @if ($habitaciones_ingreso != null)
-    <table class="table">
+    <table class="table table-hover table-sm">
       <thead>
         <th style="width: 125px">Expediente</th>
         <th>Paciente</th>
         <th>Tiempo</th>
-        <th style="width: 100px">Acciones</th>
+        <th style="width: 100px">Opciones</th>
       </thead>
       <tbody>
         @foreach ($habitaciones_ingreso as $habitacion)
           <tr>
-            <td colspan="4" class="bg-gray black">
+            <td colspan="4" class="bg-gray text-dark">
               <center>
                 <b>
                   {{'Habitación '.$habitacion->numero}}
@@ -54,7 +54,7 @@
                       $dias = $dia_ingreso->diffInDays($hoy);
                       $dias++;
                     @endphp
-                    <span class="label label-lg label-primary col-xs-12">
+                    <span class="badge border border-primary text-primary col-12">
                       {{($dias).(($dias > 1)?' días':' día')}}
                     </span>
                   </td>
@@ -71,7 +71,7 @@
                   </td>
                   <td>
                     <div class="btn-group alignright">
-                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}} data-tooltip="tooltip" title="Agregar"><i class="fa fa-plus"></i></button>
+                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}} title="Agregar"><i class="fas fa-plus"></i></button>
                     </div>
                   </td>
                 </tr>
@@ -91,7 +91,7 @@
     </table>
   @else
     <center style="margin-top: 60px">
-      <i class="fa fa-info-circle gray" style="font-size: 800%"></i>
+      <i class="fas fa-info-circle gray" style="font-size: 800%"></i>
     </center>
     <center class="big-text gray">
       <h4>Información</h4>
