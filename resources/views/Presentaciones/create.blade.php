@@ -1,21 +1,12 @@
-@extends('dashboard')
+<?php $bandera=1;?>{{--Indica que es ingresar --}}
+@extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'presentaciones.store','method' =>'POST','autocomplete'=>'off'])!!}
-  @php
-    $fecha = Carbon\Carbon::now();
-    $ruta = '/presentaciones';
-  @endphp
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="row bg-blue">
-        <center>
-          <h3>presentación
-              <small class="label-white badge blue ">Nueva</small>
-          </h3>
-        </center>
-      </div>
-    </div>
+    @include('Presentaciones.Barra.create')
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'presentaciones.store','method' =>'POST','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
     @include('Presentaciones.Formularios.form')
   </div>
+  <input type="hidden" id="method" value="create">
+  {!!Html::script('js/scripts/Presentaciones.js')!!}
   {!!Form::close()!!}
 @endsection

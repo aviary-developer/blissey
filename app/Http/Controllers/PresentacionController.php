@@ -85,8 +85,8 @@ class PresentacionController extends Controller
      */
     public function edit($id)
     {
-      $presentaciones = Presentacion::find($id);
-      return view('Presentaciones.edit',compact('presentaciones'));
+      $presentacion = Presentacion::find($id);
+      return view('Presentaciones.edit',compact('presentacion'));
     }
 
     /**
