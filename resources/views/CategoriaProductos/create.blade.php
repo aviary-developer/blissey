@@ -3,9 +3,6 @@
 @section('layout')
     @include('CategoriaProductos.Barra.create')
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'categoria_productos.store','method' =>'POST','autocomplete'=>'off','id'=>'form'])!!}
-  @php
-    $fecha = Carbon\Carbon::now();
-  @endphp
   <div class="col-sm-6">
     @include('CategoriaProductos.Formularios.form')
   </div>

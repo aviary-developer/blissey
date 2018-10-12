@@ -1,17 +1,11 @@
-@extends('dashboard')
+<?php $bandera=2;?>{{--Indica que es ingresar --}}
+@extends('principal')
 @section('layout')
-  {!!Form::model($presentaciones,['class' =>'form-horizontal form-label-left input_mask','route' =>['presentaciones.update',$presentaciones->id],'method' =>'PUT','autocomplete'=>'off'])!!}
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="row bg-blue">
-        <center>
-          <h3>Presentación
-              <small class="label-white badge blue ">Editar</small>
-          </h3>
-        </center>
-      </div>
-    </div>
+  @include('Presentaciones.Barra.create')
+  {!!Form::model($presentacion,['class' =>'form-horizontal form-label-left input_mask','route' =>['presentaciones.update',$presentacion->id],'method' =>'PUT','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
     @include('Presentaciones.Formularios.form')
   </div>
+  {!!Html::script('js/scripts/Presentaciones.js')!!}
   {!!Form::close()!!}
 @endsection

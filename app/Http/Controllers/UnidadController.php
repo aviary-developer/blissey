@@ -80,8 +80,8 @@ class UnidadController extends Controller
    */
   public function edit($id)
   {
-    $unidades = Unidad::find($id);
-    return view('Unidades.edit',compact('unidades'));
+    $unidad = Unidad::find($id);
+    return view('Unidades.edit',compact('unidad'));
   }
 
   /**

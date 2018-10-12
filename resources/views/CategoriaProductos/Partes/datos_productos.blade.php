@@ -1,8 +1,7 @@
 <div class="row mt-2">
   <div class="col">
     <center>
-      <h5 class="mt-1">Divisiones</h5>
-    </center>
+      <h5 class="mt-1">Productos
   </div>
 </div>
 <div class="ln_solid mt-3"></div>

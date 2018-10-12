@@ -90,11 +90,11 @@
         <div class="clearfix"></div>
         <section>
           <footer style="background-color: #DADADA">
-        
+
             <div class="footer-copyright text-center py-3">
               UES - FMP 2018
             </div>
-        
+
           </footer>
         </section>
       </div>
@@ -145,7 +145,6 @@
 
   <!-- Blissey -->
   @yield('agregarjs')
-  {!!Html::script('js/scripts/Proveedores.js')!!}
   {!!Html::script('js/scripts/Examenes.js')!!}
   {!!Html::script('js/scripts/Calendario.js')!!}
   {!!Html::script('js/scripts/Examenes2.js')!!}
@@ -161,7 +160,6 @@
   {!!Html::script('js/scripts/Paciente.js')!!}
   {!!Html::script('js/scripts/Empresa.js')!!}
   {!!Html::script('js/scripts/Solicitud.js')!!}
-  {!!Html::script('js/scripts/Presentaciones.js')!!}
   {!!Html::script('js/scripts/Requisiciones.js')!!}
   {!!Html::script('js/scripts/StockProveedor.js')!!}
 

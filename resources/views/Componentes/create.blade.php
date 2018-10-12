@@ -1,20 +1,12 @@
-@extends('dashboard')
+<?php $bandera=1;?>{{--Indica que es ingresar --}}
+@extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'componentes.store','method' =>'POST','autocomplete'=>'off'])!!}
-  @php
-    $fecha = Carbon\Carbon::now();
-  @endphp
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="row bg-blue">
-        <center>
-          <h3>Componente
-              <small class="label-white badge blue ">Nuevo</small>
-          </h3>
-        </center>
-      </div>
-    </div>
+    @include('Componentes.Barra.create')
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'componentes.store','method' =>'POST','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
     @include('Componentes.Formularios.form')
   </div>
+  <input type="hidden" id="method" value="create">
+  {!!Html::script('js/scripts/Componentes.js')!!}
   {!!Form::close()!!}
 @endsection

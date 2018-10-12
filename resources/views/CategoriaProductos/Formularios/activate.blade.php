@@ -52,7 +52,7 @@ function eliminar(id){
   return swal({
     title: 'Eliminar registro',
     text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
-    type: 'exclamation-triangle',
+    type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#DD6B55',
     confirmButtonText: 'Si, ¡Eliminar!',
