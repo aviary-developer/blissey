@@ -1,5 +1,5 @@
 @if ($ingreso->estado == 0)
-  <div class="row">
+  <div class="flex-row">
     <center>
       {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
         <h4>¡Bienvenido!</h4>
@@ -23,19 +23,15 @@
     </center>
   </div>
 @else
-  <div class="row" style="margin-top: 10px">
+  <div class="row">
     {{-- Paneles izquierdos --}}
-    <div class="col-xs-8">
+    <div class="col-sm-8">
       {{-- Panel principal --}}
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="x_panel">
-            @include('Ingresos.dashboard.partes.financiero_r')
-          </div>
-        </div>
+      <div class="x_panel border border-success rounded">
+        @include('Ingresos.dashboard.partes.financiero_r')
       </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.signos_r')
       </div>
@@ -44,35 +40,35 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-4">
+  <div class="flex-row">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.medico_r')
       </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.tac_r')
       </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.servicio_r')
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-4">
+  <div class="flex-row">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.laboratorio_r')
       </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.rayos_x_r')
       </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <div class="x_panel">
         @include('Ingresos.dashboard.partes.ultra_r')
       </div>

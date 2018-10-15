@@ -5,7 +5,7 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    {{$paciente->nombre.' '.$paciente->apellido}}
+    {{$responsable->nombre.' '.$responsable->apellido}}
   </h6>
 </div>
 
@@ -17,9 +17,9 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    {{ $paciente->fechaNacimiento->formatLocalized('%d de %B de %Y')}}
+    {{ $responsable->fechaNacimiento->formatLocalized('%d de %B de %Y')}}
     <span class="badge badge-pill badge-primary">
-      {{$paciente->fechaNacimiento->age.' años' }}
+      {{$responsable->fechaNacimiento->age.' años' }}
     </span>
   </h6>
 </div>
@@ -32,7 +32,7 @@
 </div>
 <div class="flex-row">
   <h6>
-    @if ($paciente->sexo)
+    @if ($responsable->sexo)
       <span class="badge border-primary text-primary border col-4">Masculino</span>
     @else
       <span class="badge border-pink text-pink border col-4">
@@ -42,7 +42,7 @@
   </h6>
 </div>
 
-@if ($paciente->fechaNacimiento->age >= 18)
+@if ($responsable->fechaNacimiento->age >= 18)
   <div class="ln_solid mb-1 mt-1"></div>
   <div class="flex-row">
     <span class="font-weight-light text-monospace">
@@ -51,10 +51,10 @@
   </div>
   <div class="flex-row">
     <h6 class="font-weight-bold">
-      @if (strlen($paciente->dui) != 10)
+      @if (strlen($responsable->dui) != 10)
         <span class="badge text-danger border border-danger col-4">Sin DUI</span>
       @else
-        {{ $paciente->dui }}
+        {{ $responsable->dui }}
       @endif
     </h6>
   </div>
@@ -68,10 +68,10 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    @if (strlen($paciente->telefono) != 9)
+    @if (strlen($responsable->telefono) != 9)
       <span class="badge text-danger border border-danger col-4">Sin teléfono</span>
     @else
-      {{ $paciente->telefono }}
+      {{ $responsable->telefono }}
     @endif
   </h6>
 </div>
@@ -84,10 +84,10 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    @if ($paciente->pais == null)
-      <td>{{$paciente->municipio.', '.$paciente->departamento}}</td>
+    @if ($responsable->pais == null)
+      <td>{{$responsable->municipio.', '.$responsable->departamento}}</td>
     @else
-      <td>{{$paciente->pais}}</td>
+      <td>{{$responsable->pais}}</td>
     @endif
   </h6>
 </div>
@@ -100,10 +100,10 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    @if ($paciente->direccion == null)
+    @if ($responsable->direccion == null)
       <span class="badge text-danger border border-danger col-4">Sin dirección</span>
     @else
-      {{ $paciente->direccion }}
+      {{ $responsable->direccion }}
     @endif
   </h6>
 </div>
@@ -116,10 +116,10 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    @if ($paciente->alergia == null)
+    @if ($responsable->alergia == null)
       <span class="badge text-secondary border border-secondary col-4">Ninguna</span>
     @else
-      {{ $paciente->alergia }}
+      {{ $responsable->alergia }}
     @endif
   </h6>
 </div>
@@ -132,7 +132,7 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    @if ($paciente->estado)
+    @if ($responsable->estado)
       <span class="badge text-success border border-success col-4">Activo</span>
     @else
       <span class="badge text-danger border border-danger col-4">En papelera</span>

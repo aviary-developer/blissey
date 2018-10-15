@@ -98,6 +98,20 @@
 ::-webkit-scrollbar-thumb:hover {
     background: var(--terciario); 
 }
+
+/*Tamaño de fuentes*/
+.font-sm{
+    font-size: small
+}
+
+.font-md{
+    font-size: medium
+}
+
+.font-lg{
+    font-size: large
+}
+
 /* Antigua gentelella */
 table{
     font-size: medium;
@@ -2724,7 +2738,7 @@ select.parsley-error {
 .btn {
     border-radius: 3px
 }
-a.btn-success,
+/* a.btn-success,
 a.btn-primary,
 a.btn-warning,
 a.btn-danger {
@@ -2754,7 +2768,7 @@ a.btn-danger {
     color: #FFFFFF;
     background-color: #394D5F;
     border-color: #394D5F
-}
+} */
 .btn-round {
     border-radius: 30px
 }

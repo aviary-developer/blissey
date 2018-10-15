@@ -1,28 +1,41 @@
-<div class="row">
+<div class="flex-row">
   <div class="x_panel m_panel">
-    <div class="row">
-      <h4>Busqueda</h4>
+    <div class="flex-row">
+      <center>
+        <h5>Busqueda</h5>
+      </center>
     </div>
-    <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Paciente</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('busqueda',null,['id'=>'busqueda','class'=>'form-control has-feedback-left','placeholder'=>'Nombre o apellido del usuario']) !!}
+    <div class="form-group col-sm-12">
+      <label class="" for="busqueda">Nombre o Apellido</label>
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-user"></i></div>
+        </div>
+        {!! Form::text(
+          'busqueda',
+          null,
+          ['id'=>'busqueda',
+          'class'=>'form-control form-control-sm',
+          'placeholder'=>'Nombre o apellido del usuario']) !!}
+      </div>
     </div>
-  </div>
   </div>
 </div>
-<div class="row">
-  <div class="x_panel m_panel" style="height: 448px">
-    <div class="row">
-      <h4>Resultado de la busqueda</h4>
+<div class="flex-row">
+  <div class="x_panel m_panel" style="height: 300px">
+    <div class="flex-row">
+      <center>
+        <h5>
+          Resultado de la busqueda
+        </h5>
+      </center>
     </div>
-    <div class="row">
-      <div style="overflow-x:hidden; overflow-y:scroll; height: 378px">
-        <table class="table" id="tablaPaciente">
+    <div class="flex-row">
+      <div style="overflow-x:hidden; overflow-y:scroll; height: 230px">
+        <table class="table table-striped table-hover table-sm" id="tablaPaciente">
           <thead>
             <th>Nombre</th>
-            <th style="width: 80px">Acción</th>
+            <th style="width: 80px">Opcíon</th>
           </thead>
       </table>
       </div>

@@ -30,7 +30,16 @@
   </div>
 </div>
 <div class="col-sm-4">
+  <div class="x_panel">
+  <div class="flex-row">
+    <center>
+      <h5 class="mb-1">Datos Personales</h5>
+    </center>
+  </div>
+
+  <div class="ln_solid mb-1 mt-1"></div>
   @include('Pacientes.Partes.datos_paciente')
+</div>
 </div>
 <input type="hidden" id="id-p" value={{$paciente->id}}>
 @include('Pacientes.Partes.modal_ingreso')

@@ -1,19 +1,21 @@
-<div class="row">
-  <div class="col-xs-8">
-    <h4>Consulta Médica</h4>
+<div class="flex-row">
+  <div class="col-sm-8">
+    <h5 class="text-pink">Consulta Médica</h5>
   </div>
-  <div class="col-xs-4">
+  <div class="col-sm-4">
     <div class="btn-group alignright">
       <button type="button" class="btn btn-sm btn-success alignright" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo(0,3)'}}><i class="fa fa-plus"></i></button>
     </div>
   </div>
 </div>
+<div class="clearfix"></div>
+<div class="flex-row border border-pink mb-1 mt-1"></div>
 @if ($cola_consulta->count() > 0)
-  <div class="row">
-    <table class="table">
+  <div class="flex-row">
+    <table class="table table-hover table-striped table-sm">
       <thead>
         <th>Paciente</th>
-        <th>Acción</th>
+        <th>Opción</th>
       </thead>
       <tbody>
         @foreach ($cola_consulta as $consulta)
@@ -22,9 +24,11 @@
               {{$consulta->paciente->nombre.' '.$consulta->paciente->apellido}}
             </td>
             <td>
-              <a href={!! asset('/ingresos/'.$consulta->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
-                <i class="fa fa-info-circle"></i>
-              </a>
+              <center>
+                <a href={!! asset('/ingresos/'.$consulta->id)!!} class="btn btn-sm btn-info" title="Ver">
+                  <i class="fas fa-info-circle"></i>
+                </a>
+              </center>
             </td>
           </tr>
         @endforeach
@@ -32,7 +36,7 @@
     </table>
   </div>
 @else
-  <div class="row" style="height: 184px; padding: 20px">
+  <div class="flex-row" style="height: 184px;">
     <center>
       <h4 class="gray">Información</h4>
     </center>

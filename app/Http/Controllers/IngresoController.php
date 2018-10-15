@@ -54,6 +54,8 @@ class IngresoController extends Controller
       $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
 
       $habitaciones_ingreso = Habitacion::where('tipo',1)->where('estado',true)->orderBy('numero','asc')->get();
+      $habitaciones_observacion = Habitacion::where('tipo',0)->where('estado',true)->orderBy('numero','asc')->get();
+      $habitaciones_mediingreso = Habitacion::where('tipo',2)->where('estado',true)->orderBy('numero','asc')->get();
 
       /**Listado de cola en consulta médica */
       $cola_consulta = Ingreso::where('estado','<>',2)->where('tipo',3)->orderBy('created_at','asc')->get();
@@ -71,6 +73,8 @@ class IngresoController extends Controller
         'index',
         'estadoOpuesto',
         'habitaciones_ingreso',
+        'habitaciones_observacion',
+        'habitaciones_mediingreso',
         'medicos',
         'fecha',
         'cola_consulta'
@@ -195,6 +199,10 @@ class IngresoController extends Controller
        */
       /**Extracción de los datos del paciente */
       $paciente = $ingreso->paciente;
+      $responsable = null;
+      if($ingreso->f_responsable != $ingreso->f_paciente){
+        $responsable = $ingreso->responsable;
+      }
       /**Calculo de días que ha estado ingresado el paciente */
       $hoy = Carbon::today()->hour(7);
       $ahora = Carbon::now();
@@ -469,6 +477,7 @@ class IngresoController extends Controller
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
         'paciente',
+        'responsable',
         'dias',
         'total_gastos',
         'total_abono',

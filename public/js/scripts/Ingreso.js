@@ -97,7 +97,7 @@ $(document).on('ready', function () {
 
     if (ubicacion.indexOf("/blissey/public/ingresos") > -1){
       $("#centro").removeClass('modal-lg');
-      $("#izquierda").removeClass('col-xs-6').addClass('col-xs-12');
+      $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
       $("#derecha").hide();
       $("#izq_interno").attr('style', 'height:auto');
     } else {
@@ -487,14 +487,8 @@ $(document).on('ready', function () {
         tipo: $("#tipo").val(),
         f_cama: $("#cama").val()
       }, success: function (r) {
-        console.log(r);
         if (r == 1) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
           swal('¡Error!', 'Algo salio mal', 'error');
@@ -506,7 +500,6 @@ $(document).on('ready', function () {
 
 $("#nuevo_abono").on('click', function (e) {
   e.preventDefault();
-  var token = $("#token").val();
   var transaccion_id = $("#id_t").val();
   var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar" autofocus>';
   var deuda = $("#deuda_para_alta").val();
@@ -519,35 +512,30 @@ $("#nuevo_abono").on('click', function (e) {
     cancelButtonText: 'Cancelar',
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-default'
-  }).then(function () {
-    console.log(deuda);
-    if ($("#monto").val() <= deuda) {
-      $.ajax({
-        url: "/blissey/public/abonar",
-        type: "POST",
-        headers: { 'X-CSRF-TOKEN': token },
-        data: {
-          transaccion: transaccion_id,
-          abono: $("#monto").val(),
-        },
-        success: function (r) {
-          if (r == 1) {
-            swal({
-              type: 'success',
-              title: '¡Hecho!',
-              text: 'Cambio exitoso',
-              showConfirmButton: false
-            });
-            location.reload();
-          } else {
-            swal("¡Algo salio mal!", 'No se guardo', 'error');
+  }).then((result) => {
+    if (result.value) {
+      if ($("#monto").val() <= deuda) {
+        $.ajax({
+          url: "/blissey/public/abonar",
+          type: "POST",
+          data: {
+            transaccion: transaccion_id,
+            abono: $("#monto").val(),
+          },
+          success: function (r) {
+            if (r == 1) {
+              localStorage.setItem('msg', 'yes');
+              location.reload();
+            } else {
+              swal("¡Algo salio mal!", 'No se guardo', 'error');
+            }
           }
-        }
-      });
-    } else {
-      swal("Error","La cantidad ingresada debe ser igual o menor a la deuda total",'error');
+        });
+      } else {
+        swal("Error","La cantidad ingresada debe ser igual o menor a la deuda total",'error');
+      }
     }
-  }).catch(swal.noop);
+  });
 });
 //Agregar a la nueva tabla
 function registrarventa_(id) {
@@ -817,7 +805,7 @@ function input_seleccion(e = null) {
   var interno = $("#izq_interno");
 
   principal.addClass('modal-lg');
-  izquierda.removeClass('col-xs-12').addClass('col-xs-6');
+  izquierda.removeClass('col-sm-12').addClass('col-sm-6');
   derecha.show();
   interno.attr('style','height:auto');
 

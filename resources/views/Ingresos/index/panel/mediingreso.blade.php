@@ -1,22 +1,21 @@
 <div class="flex-row">
   <center>
-    <h5 class="text-success">Ingresos</h5>
+    <h5 class="text-purple">Medi ingreso</h5>
   </center>
 </div>
-<div class="flex-row border border-success mb-1"></div>
+<div class="flex-row border border-purple mb-1"></div>
 <div class="flex-row">
-  @if ($habitaciones_ingreso != null)
+  @if ($habitaciones_mediingreso != null)
     <table class="table table-hover table-sm">
       <thead>
-        <th style="width: 87px">Exp.</th>
         <th>Paciente</th>
         <th>Tiempo</th>
-        <th style="width: 80px">Opciones</th>
+        <th style="width: 80px">Opción</th>
       </thead>
       <tbody>
-        @foreach ($habitaciones_ingreso as $habitacion)
+        @foreach ($habitaciones_mediingreso as $habitacion)
           <tr class="table-secondary">
-            <td colspan="4" class="text-dark">
+            <td colspan="3" class="text-dark">
               <center>
                 <b class="text-monospace font-weight-light">
                   {{'Habitación '.$habitacion->numero}}
@@ -32,33 +31,21 @@
                 @endphp
                 <tr>
                   <td>
-                    <center>
-                      <span class="badge border border-dark text-dark col-12">
-                        {{$ingreso->expediente.'-'.$ingreso->fecha_ingreso->format('Y')}}
-                      </span>
-                    </center>
-                  </td>
-                  <td>
                     <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
                         {{$ingreso->paciente->apellido.', '.$ingreso->paciente->nombre}}
                       </a>
                   </td>
                   <td>
                     @php
-                      $hoy = Carbon\Carbon::today()->hour(7);
                       $ahora = Carbon\Carbon::now();
-                      if($ahora->lt($hoy)){
-                        $hoy = $hoy->subDays(1);
-                      }
-                      $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
-                      if($ingreso->fecha_ingreso->lt($dia_ingreso)){
-                        $dia_ingreso->subDay();
-                      }
-                      $dias = $dia_ingreso->diffInDays($hoy);
-                      $dias++;
+                      $horas = $ingreso->fecha_ingreso->diffInHours($ahora);
                     @endphp
-                    <span class="badge border border-primary text-primary col-12">
-                      {{($dias).(($dias > 1)?' días':' día')}}
+                    @if ($horas > 6)
+                      <span class="badge border border-danger text-danger col-12">
+                    @else
+                      <span class="badge border border-primary text-primary col-12">
+                    @endif
+                      {{($horas).(($horas > 1)?' horas':' hora')}}
                     </span>
                   </td>
                   <td>
@@ -67,7 +54,7 @@
                 </tr>
               @else
                 <tr class="table-success">
-                  <td colspan="3">
+                  <td colspan="2">
                     <span class="badge badge-light border border-dark">
                       {{'Cama H'.$cama->habitacion->numero.'C'.$cama->numero}}
                     </span>
@@ -75,7 +62,7 @@
                   </td>
                   <td>
                     <div class="btn-group alignright">
-                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',0)'}} title="Agregar"><i class="fas fa-plus"></i></button>
+                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',1)'}} title="Agregar"><i class="fas fa-plus"></i></button>
                     </div>
                   </td>
                 </tr>
@@ -83,7 +70,7 @@
             @endforeach
           @else
             <tr>
-              <td colspan="4" class="gray">
+              <td colspan="3" class="gray">
                 <b>
                   Sin camas
                 </b>
@@ -105,4 +92,3 @@
     </center>  
   @endif
 </div>
-@include('Ingresos.index.modal.ingreso')

@@ -85,27 +85,30 @@ class Ingreso extends Model
         $precio_habitacion = $ingreso->habitacion->precio;
         $total = $precio_habitacion;
         //Gastos por examenes de laboratorio
-        if($ingreso->transaccion->solicitud != null){
-          foreach($ingreso->transaccion->solicitud as $solicitud){
-            if($solicitud->estado != 0){
-              if($solicitud->examen != null){
-                $total += $solicitud->examen->servicio->precio;
-              }else if($solicitud->rayox != null){
-                $total += $solicitud->rayox->servicio->precio;
-              }else if($solicitud->ultrasonografia != null){
-                $total += $solicitud->ultrasonografia->servicio->precio;
-              }else{
-                $total += $solicitud->tac->servicio->precio;
+        if($ingreso->transaccion != null) {
+
+          if($ingreso->transaccion->solicitud != null){
+            foreach($ingreso->transaccion->solicitud as $solicitud){
+              if($solicitud->estado != 0){
+                if($solicitud->examen != null){
+                  $total += $solicitud->examen->servicio->precio;
+                }else if($solicitud->rayox != null){
+                  $total += $solicitud->rayox->servicio->precio;
+                }else if($solicitud->ultrasonografia != null){
+                  $total += $solicitud->ultrasonografia->servicio->precio;
+                }else{
+                  $total += $solicitud->tac->servicio->precio;
+                }
               }
             }
           }
-        }
-        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-          if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "TAC"){
-            $total += $detalle->precio;
-          }
-          if($detalle->servicio->categoria->nombre == "Cama"){
-            $total += $detalle->precio;
+          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
+            if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "TAC"){
+              $total += $detalle->precio;
+            }
+            if($detalle->servicio->categoria->nombre == "Cama"){
+              $total += $detalle->precio;
+            }
           }
         }
       }else{
@@ -162,10 +165,12 @@ class Ingreso extends Model
       $ingreso = Ingreso::find($id);
       $total = 0;
       if($dia == -1){
-        if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
-          foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
-            if($detalle->f_servicio == null){
-              $total += $detalle->precio * $detalle->cantidad;
+        if($ingreso->transaccion != null){
+          if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
+            foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
+              if($detalle->f_servicio == null){
+                $total += $detalle->precio * $detalle->cantidad;
+              }
             }
           }
         }
@@ -203,10 +208,12 @@ class Ingreso extends Model
       $total = 0;
 
       if($dia == -1){
-        if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)) > 0){
-          foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
-            if($detalle->servicio->categoria->nombre == 'Honorarios'){
-              $total += $detalle->precio;
+        if($ingreso->transaccion != null){
+          if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)) > 0){
+            foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
+              if($detalle->servicio->categoria->nombre == 'Honorarios'){
+                $total += $detalle->precio;
+              }
             }
           }
         }
@@ -227,23 +234,25 @@ class Ingreso extends Model
       $ingreso = Ingreso::find($id);
       $total = 0;
       
-      if(count($ingreso->transaccion->abono)>0){
-        if($dia == -1){
-          foreach($ingreso->transaccion->abono as $abono){
-            $total += $abono->monto;
-          }
-        }else{
-          $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
-          $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
-          $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
-          if($fecha_ingreso->lt($fecha)){
-            $fecha->subDay();
-            $fecha_mayor->subDay();
-          }
-          $fecha_mayor->addDay();
-          foreach($ingreso->transaccion->abono as $abono){
-            if($abono->created_at->between($fecha, $fecha_mayor)){
+      if($ingreso->transaccion != null){
+        if(count($ingreso->transaccion->abono)>0){
+          if($dia == -1){
+            foreach($ingreso->transaccion->abono as $abono){
               $total += $abono->monto;
+            }
+          }else{
+            $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
+            $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+            $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+            if($fecha_ingreso->lt($fecha)){
+              $fecha->subDay();
+              $fecha_mayor->subDay();
+            }
+            $fecha_mayor->addDay();
+            foreach($ingreso->transaccion->abono as $abono){
+              if($abono->created_at->between($fecha, $fecha_mayor)){
+                $total += $abono->monto;
+              }
             }
           }
         }

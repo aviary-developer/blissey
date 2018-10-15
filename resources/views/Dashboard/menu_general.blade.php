@@ -1,4 +1,10 @@
 <li>
+  <a href={{asset( '/calendarios')}}>
+    <i class="far fa-calendar"></i> 
+    Agenda
+  </a>
+</li>
+<li>
   <a>
     <i class="fas fa-info-circle"></i> Información
     <span class="fas fa-chevron-down float-right"></span>

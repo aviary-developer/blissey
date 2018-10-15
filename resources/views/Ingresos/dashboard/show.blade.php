@@ -1,153 +1,97 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   {{-- Base del dashboard --}}
   {{-- Inicialización del formato para fechas--}}
   @php
     setlocale(LC_ALL,'es');
   @endphp
-
+  @include('Ingresos.Barra.show')
   {{-- Condiconal de tipo de usuario, segun sea el tipo de usuario así sera el dashboard a mostrar --}}
-  <div class="col-xs-12">
-    <div class="x_panel">
-
-      {{-- Encabezado con los datos del usuario y configuraciones --}}
-      
-      <div class="row bg-gray" style="padding: 5px;">
-        <div class="col-xs-1">
-
-          {{-- Imagen de perfil segun el sexo --}}
-
-          <div class="row">
+  <div class="col-sm-12">
+    <div class="flex-row">
+      <div class="x_panel border border-secondary rounded">
+        <div class="flex-row">
+          <div class="col-sm-1">
             <center>
               <img src={{asset((($paciente->sexo)?'img/hombre.png':'img/mujer.png'))}} class="img-circle" style="width: 60px; height: 60px;">
             </center>
           </div>
-        </div>
-
-        {{-- Datos personales del usuario --}}
-        
-        <div class="col-xs-10">
-          <div class="row black">
-            <h4>
-              {{$paciente->nombre.' '}}
-              <b>
-                {{$paciente->apellido}}
-              </b>
-              @if ($ingreso->tipo < 3)
-                <small>
-                  {{ $ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y') }}
-                </small>
-              @endif
-            </h4>
+  
+          <div class="col-sm-7">
+            <div class="row">
+              <span class="font-weight-bold text-monospace">
+                {{ $ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y') }}
+              </span>
+            </div>
+            <div class="row">
+              <span class="font-md">
+                {{$paciente->nombre.' '}}
+                <b>
+                  {{$paciente->apellido}}
+                </b>
+                <span class="badge badge-pill badge-primary">
+                  {{$paciente->fechaNacimiento->age.' años' }}
+                </span>
+              </span>
+            </div>
           </div>
-          <div class="row">
-            <span class="label label-lg label-default col-xs-1" style="margin-right: 5px;">
-              {{$paciente->fechaNacimiento->age.' años'}}
-            </span>
-            @if ($ingreso->tipo < 3)
-              @if ($ingreso->estado==1)
-                <span class="label label-lg label-primary col-xs-2">{{($ingreso->paciente->sexo)?"Hospitalizado":"Hospitalizada"}}</span>
-              @elseif($ingreso->estado == 0)
-                <span class="label label-lg label-warning col-xs-2">Pendiente de acta</span>
-              @else
-                <span class="label label-lg label-success col-xs-2">Con alta</span>
-              @endif
+  
+          <div class="col-sm-4">
+            <div class="flex-row">
+              <span class="font-weight-light text-monospace">
+                Fecha de ingreso
+              </span>
+            </div>
+            <div class="flex-row">
+              <span class="font-weight-bold font-sm">
+                <i class="far fa-calendar"></i>
+                {{$ingreso->fecha_ingreso->formatLocalized('%d de %B del %Y a las %H:%M:%S')}}
+              </span>
+            </div>
+            <div class="ln_solid mb-1 mt-1"></div>
+            @if ($ingreso->estado == 2)
+              <div class="flex-row">
+                <span class="font-weight-light text-monospace">
+                  Fecha de alta
+                </span>
+              </div>
+              <div class="flex-row">
+                <span class="font-weight-bold font-sm">
+                  <i class="far fa-calendar"></i>
+                  {{$ingreso->fecha_alta->formatLocalized('%d de %B del %Y a las %H:%M:%S')}}
+                </span>
+              </div>
             @else
-              @if ($ingreso->estado == 0 && $ingreso->tipo == 3)
-                <span class="label label-lg label-primary col-xs-2">En consulta</span>
-              @else
-                <span class="label label-lg label-success col-xs-2">Con alta</span>
-              @endif
-            @endif
-          </div>
-        </div>
-
-        {{-- Estado del ingreso del paciente y configuracion --}}
-        
-        <div class="col-xs-1">
-          <div class="row">
-            @if ($ingreso->estado == 1)  
-              <button type="button" class="btn btn-xs btn-dark col-xs-12" data-toggle="modal" data-target="#acciones"><i class="fa fa-cog"></i> Acciones</button>
-            @endif
-          </div>
-          <div class="row">
-            <button type="button" class="btn btn-dark btn-xs col-xs-12" data-target="#datos_paciente" data-toggle="modal"><i class="fa fa-user"></i> Paciente</button>
-          </div>
-          <div class="row">
-            @if ($ingreso->tipo == 0)
-              <a href={!!asset('/acta/'.$ingreso->id)!!} class="btn btn-xs btn-dark col-xs-12" target="_blank"><i class="fa fa-print"></i> Acta</a>
+              <div class="flex-row">
+                <span class="font-weight-light text-monospace">
+                  Habitación
+                </span>
+              </div>
+              <div class="flex-row">
+                <span class="font-weight-bold font-md">
+                  <span class="badge badge-light border border-dark text-dark col-sm-4">
+                    {{'H'.$ingreso->habitacion->habitacion->numero.'C'.$ingreso->habitacion->numero}}
+                  </span>
+                </span>
+              </div>
             @endif
           </div>
         </div>
       </div>
-
-      @if ($ingreso->estado == 0)
-        <div class="row bg-blue">
-      @elseif($ingreso->estado == 1)
-        <div class="row bg-green">
-      @else
-        <div class="row bg-danger">
-      @endif
-        <div class="col-xs-1">
-          @if ($ingreso->estado > 1)
-            @php
-              $regreso = "?estado=2";
-            @endphp
-          @else
-            @php
-              $regreso = "";
-            @endphp
-          @endif
-          <div class="row">
-
-            <a href={!! asset('/ingresos'.$regreso)!!} class="btn btn-dark btn-xs col-xs-12" style="margin-bottom: 0px; margin-right: 0px;">
-              <i class="fa fa-arrow-left"></i> Atras
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-3">
-          <center>
-            <span>
-              <i class="fa fa-arrow-down"></i> {{$ingreso->fecha_ingreso->formatLocalized('%d / %b / %Y a las %H:%M:%S')}}
-            </span>
-          </center>
-        </div>
-        <div class="col-xs-4">
-          @if ($ingreso->habitacion != null)
-            <center>
-              <span>
-                {{'Habitación '.$ingreso->habitacion->numero}}
-              </span>
-            </center>
-          @endif
-        </div>
-        <div class="col-xs-3">
-          <center>
-            @if ($ingreso->fecha_alta != null)
-              <span>
-                <i class="fa fa-arrow-up"></i> {{$ingreso->fecha_alta->formatLocalized('%d / %b / %Y a las %H:%M:%S')}}
-              </span>
-            @endif
-          </center>
-        </div>
-        <div class="col-xs-1">
-          <div class="row">
-            <button type="button" class="btn btn-primary btn-xs col-xs-12" style="margin-bottom: 0px; margin-right: 0px;"><i class="fa fa-question-circle"></i> Ayuda</button>
-          </div>
-        </div>
-      </div>
-
-      @include('Ingresos.dashboard.modales.datos_paciente')
-      
     </div>
-      
-      @if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)
-        @include('Ingresos.dashboard.usuarios.recepcion')
-      @elseif(Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo == 3)
-        @include('Ingresos.dashboard.usuarios.recepcion_consulta')
-      @elseif(Auth::user()->tipoUsuario == "Médico")
-        @include('Ingresos.dashboard.usuarios.medico')
-      @endif
+
+    @include('Ingresos.dashboard.modales.datos_paciente')
+    @if ($responsable != null)  
+      @include('Ingresos.dashboard.modales.datos_responsable')
+    @endif
+    
+    @if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)
+      @include('Ingresos.dashboard.usuarios.recepcion')
+    @elseif(Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo == 3)
+      @include('Ingresos.dashboard.usuarios.recepcion_consulta')
+    @elseif(Auth::user()->tipoUsuario == "Médico")
+      @include('Ingresos.dashboard.usuarios.medico')
+    @endif
 
   </div>
 
