@@ -102,7 +102,7 @@ class UserController extends Controller
 
         if($request->tipoUsuario == "Médico" || $request->tipoUsuario == "Gerencia"){
           $categoria_existe = CategoriaServicio::where('nombre','Honorarios')->first();
-          if(count($categoria_existe) < 1){
+          if($categoria_existe==null){
             $categoria = new CategoriaServicio;
             $categoria->nombre = "Honorarios";
             $categoria->save();
@@ -125,7 +125,7 @@ class UserController extends Controller
         DB::commit();
       }catch(Exception $e){
         DB::rollback();
-        return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');  
+        return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');
       }
       Bitacora::bitacora('store','users','usuarios',$user->id);
       return redirect('/usuarios')->with('mensaje', '¡Guardado!');
