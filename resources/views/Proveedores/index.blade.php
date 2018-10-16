@@ -15,44 +15,46 @@
   @include('Proveedores.Barra.index')
   <div class="col-12">
     <div class="x_panel">
-        <table class="table table-hover table-sm table-striped index-table">
-          <thead>
+      <table class="table table-hover table-sm table-striped index-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th style="width: 230px">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @php
+          $correlativo = 1;
+          @endphp
+          @foreach ($proveedores as $proveedor)
             <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Teléfono</th>
-              <th style="width: 230px">Opciones</th>
+              <td>{{ $correlativo + $pagina}}</td>
+              <td>
+                <a href={{asset('/proveedores/'.$proveedor->id)}}>
+                  {{ $proveedor->nombre }}
+                </a>
+              </td>
+              <td>{{ $proveedor->correo }}</td>
+              <td>{{ $proveedor->telefono }}</td>
+              <td>
+                <center>
+                  @if ($estadoOpuesto)
+                    @include('proveedores.Formularios.activate')
+                  @else
+                    @include('proveedores.Formularios.desactivate')
+                  @endif
+                </center>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-              @php
-              $correlativo = 1;
-              @endphp
-              @foreach ($proveedores as $proveedor)
-                <tr>
-                  <td>{{ $correlativo + $pagina}}</td>
-                  <td>
-                    <a href={{asset('/proveedores/'.$proveedor->id)}}>
-                      {{ $proveedor->nombre }}
-                    </a>
-                  </td>
-                  <td>{{ $proveedor->correo }}</td>
-                  <td>{{ $proveedor->telefono }}</td>
-                  <td>
-                    @if ($estadoOpuesto)
-                      @include('proveedores.Formularios.activate')
-                    @else
-                      @include('proveedores.Formularios.desactivate')
-                    @endif
-                  </td>
-                </tr>
-                @php
-                $correlativo++;
-                @endphp
-              @endforeach
-          </tbody>
-        </table>
+            @php
+            $correlativo++;
+            @endphp
+          @endforeach
+        </tbody>
+      </table>
     </div>
   </div>
   <!-- /page content -->

@@ -12,7 +12,7 @@
   @php
   $index = true;
   @endphp
-    @include('Visitadores.Barra.index')
+  @include('Visitadores.Barra.index')
   <div class="col-12">
     <div class="x_panel">
       <table class="table table-hover table-sm table-striped index-table">
@@ -26,35 +26,33 @@
           </tr>
         </thead>
         <tbody>
-            @php
-            $correlativo = 1;
-            @endphp
-            @foreach ($visitadores as $visitador)
-              <tr>
-                <td>{{ $correlativo + $pagina}}</td>
-                <td>
-                  <a href={{asset("/visitadores/".$visitador->id)}}>
-                    {{ $visitador->nombre }}
-                  </a>
-                </td>
-                <td>
-                  <a href={{asset('/visitadores/'.$visitador->id)}}>
-                    {{ $visitador->apellido }}
-                  </a>
-                </td>
-                <td>{{ $visitador->telefono }}</td>
-                <td>
+          @php
+          $correlativo = 1;
+          @endphp
+          @foreach ($visitadores as $visitador)
+            <tr>
+              <td>{{ $correlativo + $pagina}}</td>
+              <td>
+                {{ $visitador->nombre }}
+              </td>
+              <td>
+                {{ $visitador->apellido }}
+              </td>
+              <td>{{ $visitador->telefono }}</td>
+              <td>
+                <center>
                   @if ($estadoOpuesto)
                     @include('Visitadores.Formularios.activate')
                   @else
                     @include('Visitadores.Formularios.desactivate')
                   @endif
-                </td>
-              </tr>
-              @php
-              $correlativo++;
-              @endphp
-            @endforeach
+                </center>
+              </td>
+            </tr>
+            @php
+            $correlativo++;
+            @endphp
+          @endforeach
         </tbody>
       </table>
     </div>
