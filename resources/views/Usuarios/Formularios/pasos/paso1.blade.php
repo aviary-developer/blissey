@@ -33,8 +33,6 @@
             'placeholder'=>'Apellido del usuario',
             'id'=>'apellido_usuario_field']
         ) !!}
-        {{-- Mensaje para validar --}}
-        <div class="invalid-feedback"></div>
       </div>
     </div>
     <div class="form-group">

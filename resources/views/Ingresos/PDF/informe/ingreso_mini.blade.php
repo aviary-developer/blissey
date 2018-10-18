@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-xs-6">
     <h4><center>Medicamentos</center></h4>
     <table class="table-simple">
       <thead>
@@ -56,7 +56,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-sm-6">
+  <div class="col-xs-6">
     <h4><center>Servicios hospitalarios</center></h4>
     <table class="table-simple">
       <thead>
@@ -404,7 +404,7 @@
 <div class="flex-row">
   <br>
   <h4><center>Resumen</center></h4>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
     <table style="width: 100%">
       @php
         $var_habitacion = number_format($total_habitacion,2,'.','');
@@ -432,7 +432,7 @@
       </tr>
     </table>
   </div>
-  <div class="col-sm-4" style="border-left: 1px black solid; border-right: 1px black solid;">
+  <div class="col-xs-4" style="border-left: 1px black solid; border-right: 1px black solid;">
     <table style="width: 100%">
       <tr>
         <td>Servicios hospitalarios</td>
@@ -469,7 +469,7 @@
       </tr>
     </table>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
     <table style="width: 100%">
       <tr>
         <td>Total</td>

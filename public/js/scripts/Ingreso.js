@@ -120,7 +120,6 @@ $(document).on('ready', function () {
     var v_departamento = $("#departamento_select").val();
     var v_municipio = $("#municipio_select").val();
     var v_direccion = $("#direccion_paciente").val();
-    var token = $("#tokenPaciente").val();
 
     if (v_nombre == "" || v_apellido == "") {
       swal('¡Error!', 'El nombre y apellido son obligatorios, intentelo de nuevo', 'error');
@@ -137,7 +136,6 @@ $(document).on('ready', function () {
       $.ajax({
         type: "POST",
         url: "/blissey/public/guardar_paciente",
-        headers: { 'X-CSRF-TOKEN': token },
         data: {
           nombre: v_nombre,
           apellido: v_apellido,
@@ -155,7 +153,14 @@ $(document).on('ready', function () {
           if (respuesta != false) {
             input_id.val(respuesta.id);
             input_nombre.val(respuesta.apellido + ", " + respuesta.nombre);
-            return swal('¡Hecho!', 'Persona guardada', 'success');
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
+            });
           } else {
             return swal('¡Algo salio mal!', 'No se almaceno la información', 'error');
           }
@@ -190,7 +195,6 @@ $(document).on('ready', function () {
 
   $("#guardarMedicoModal").on("click", function (e) {
     e.preventDefault();
-    var token = $("#token").val();
     var transaccion_id = $("#id_t").val();
     var medicos = $("input[name='medicos[]']").serializeArray();
     var union = [];
@@ -200,7 +204,6 @@ $(document).on('ready', function () {
     if (union.length > 0) {
       $.ajax({
         url: "/blissey/public/servicio_medicos",
-        headers: { 'X-CSRF-TOKEN': token },
         type: "POST",
         data: {
           f_transaccion: transaccion_id,
@@ -208,7 +211,7 @@ $(document).on('ready', function () {
         },
         success: function (res) {
           if (res) {
-            swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+            localStorage.setItem('msg', 'yes');
             location.reload();
           } else {
             swal("¡Error!","Algo salio mal", "error");      
@@ -222,7 +225,6 @@ $(document).on('ready', function () {
 
   $("#guardarSolicitudModal").on("click", function (e) {
     e.preventDefault();
-    var token = $("#token").val();
     var examen = $("input[name='examen[]']").serializeArray();
     var paciente = $("#id_p").val();
     var transaccion_id = $("#id_t").val();
@@ -244,12 +246,7 @@ $(document).on('ready', function () {
         },
         success: function (respuesta) {
           if (respuesta) {
-            swal({
-              title: "¡Hecho!",
-              text: "Solicitud enviada satisfactoriamente",
-              type: "success",
-              showConfirmButton: false,
-            });
+            localStorage.setItem('msg', 'yes');
             location.reload();
           }
         }
@@ -270,7 +267,7 @@ $(document).on('ready', function () {
           "<th colspan='2'>Resultado</th>" +
           "<th>Existencias</th>" +
           "<th>Precio</th>" +
-          "<th style='width : 80px'>Acción</th>" +
+          "<th style='width : 50px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
         $(res).each(function (key, value) {
@@ -287,9 +284,9 @@ $(document).on('ready', function () {
                 "<td id='ct" + value2.id + "'>" + value2.inventario + "</td>" +
                 "<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
                 "<td>" +
-                "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value2.id + ");'>" +
+                "<center><button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value2.id + ");'>" +
                 "<i class='fa fa-check'></i>" +
-                "</button>" +
+                "</button></center>" +
                 "</td>" +
                 "</tr>";
               tabla.append(html);
@@ -308,7 +305,7 @@ $(document).on('ready', function () {
           "<th>Existencias</th>" +
           "<th>Precio</th>" +
           "<th>Componente</th>" +
-          "<th style='width : 80px'>Acción</th>" +
+          "<th style='width : 50px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
         $(res).each(function (key, value) {
@@ -327,9 +324,9 @@ $(document).on('ready', function () {
                   "<td>$ <label id='cc" + value3.id + "'>" + parseFloat(value3.precio).toFixed(2) + "</label></td>" +
                   "<td>" + value.nombre + "</td>" +
                   "<td>" +
-                  "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value3.id + ");'>" +
+                  "<center><button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value3.id + ");'>" +
                   "<i class='fa fa-check'></i>" +
-                  "</button>" +
+                  "</button></center>" +
                   "</td>" +
                   "</tr>";
                 tabla.append(html);
@@ -351,7 +348,7 @@ $(document).on('ready', function () {
         cab = "<thead>" +
           "<th>Resultado</th>" +
           "<th>Precio</th>" +
-          "<th style='width : 80px'>Acción</th>" +
+          "<th style='width : 50px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
         $(res).each(function (key, value) {
@@ -359,9 +356,9 @@ $(document).on('ready', function () {
             "<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
             "<td>$ <label id='cd" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
             "<td>" +
-            "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value.id + ");'>" +
+            "<center><button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value.id + ");'>" +
             "<i class='fa fa-check'></i>" +
-            "</button>" +
+            "</button></center>" +
             "</td>" +
             "</tr>";
           tabla.append(html);
@@ -373,7 +370,6 @@ $(document).on('ready', function () {
   $("#dar_alta").on("click", async function (e) {
     e.preventDefault();
     $("#acciones").modal('toggle');
-    var token = $("#token").val();
     var transaccion_id = $("#id_t").val();
     var deuda = $("#deuda_para_alta").val();
     var id = $("#id").val();
@@ -392,7 +388,6 @@ $(document).on('ready', function () {
         $.ajax({
           url: "/blissey/public/abonar",
           type: "POST",
-          headers: { 'X-CSRF-TOKEN': token },
           data: {
             transaccion: transaccion_id,
             abono: deuda,
@@ -400,15 +395,17 @@ $(document).on('ready', function () {
           },
           success: function (r) {
             if (r == 1) {
-              swal({
-                type: 'success',
-                title: '¡Hecho!',
-                text: 'Cambio exitoso',
-                showConfirmButton: false
-              });
+              localStorage.setItem('msg', 'yes');
               location.reload();
             } else {
-              swal("¡Algo salio mal!", 'No se guardo', 'error');
+              swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
             }
           }
         });
@@ -421,7 +418,6 @@ $(document).on('ready', function () {
   
   $("#fin_consulta").on("click", async function (e) {
     e.preventDefault();
-    var token = $("#token").val();
     var transaccion_id = $("#id_t").val();
     var deuda = $("#precio_consulta").val();
     var id = $("#id").val();
@@ -440,7 +436,6 @@ $(document).on('ready', function () {
         $.ajax({
           url: "/blissey/public/abonar",
           type: "POST",
-          headers: { 'X-CSRF-TOKEN': token },
           data: {
             transaccion: transaccion_id,
             abono: deuda,
@@ -448,15 +443,17 @@ $(document).on('ready', function () {
           },
           success: function (r) {
             if (r == 1) {
-              swal({
-                type: 'success',
-                title: '¡Hecho!',
-                text: 'Cambio exitoso',
-                showConfirmButton: false
-              });
+              localStorage.setItem('msg', 'yes');
               location.reload();
             } else {
-              swal("¡Algo salio mal!", 'No se guardo', 'error');
+              swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
             }
           }
         });
@@ -491,7 +488,14 @@ $(document).on('ready', function () {
           localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
-          swal('¡Error!', 'Algo salio mal', 'error');
+          swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
         }
       }
     });
@@ -527,12 +531,26 @@ $("#nuevo_abono").on('click', function (e) {
               localStorage.setItem('msg', 'yes');
               location.reload();
             } else {
-              swal("¡Algo salio mal!", 'No se guardo', 'error');
+              swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
             }
           }
         });
       } else {
-        swal("Error","La cantidad ingresada debe ser igual o menor a la deuda total",'error');
+        swal({
+          type: 'error',
+          title: '¡Error!',
+          text: 'La cantidad ingresada debe ser igual o menor a la deuda total',
+          toast: true,
+          timer: 5000,
+          showConfirmButton: false,
+        });
       }
     }
   });
@@ -541,7 +559,6 @@ $("#nuevo_abono").on('click', function (e) {
 function registrarventa_(id) {
   var cantidad = parseFloat($('#cantidad_resultado').val());
   var existencia = parseFloat($('#ct' + id).text());
-  var token = $("#token").val();
   var transaccion_id = $("#id_t").val();
   var tipo_usuario = $("#tipo_usuario").val();
   c1 = $('#cu' + id).text();
@@ -549,18 +566,19 @@ function registrarventa_(id) {
   var fecha = new Date();
   if (radio != 3) {
     if (cantidad > existencia) {
-      new PNotify({
-        title: 'Error!',
-        text: "La cantidad solicitada supera las existencias",
+      swal({
         type: 'error',
-        styling: 'bootstrap3'
+        title: '¡Error!',
+        text: 'La cantidad solicitada supera las existencias',
+        toast: true,
+        timer: 5000,
+        showConfirmButton: false,
       });
     } else {
       c4 = parseFloat($('#cc' + id).text()).toFixed(2);
       
       $.ajax({
         url: "/blissey/public/tratamiento",
-        headers: { 'X-CSRF-TOKEN': token },
         type: "POST",
         data: {
           transaccion: transaccion_id,
@@ -570,13 +588,12 @@ function registrarventa_(id) {
           precio: c4
         },
         success: function (res) {
-          console.log(res);
           if (res != -1) {
             if (transaccion_count_p == 0) {
               $("#mensaje_provisional").empty();
 
-              html_2 = '<div class="col-xs-12">' +
-                '<table class="table" id="tablaDetalle">' +
+              html_2 = '<div class="col-sm-12">' +
+                '<table class="table table-sm table-hover table-striped" id="tablaDetalle">' +
                 '<thead>' +
                 '<th>Detalle</th>' +
                 '<th style="width: 40px">Acción</th>'
@@ -589,29 +606,33 @@ function registrarventa_(id) {
 
             tabla = $('#tablaDetalle');
             html = "<tr id='r" + res + "'>" +
-              "<td>" + cantidad + " " + c2 +  "<b class='big-text'> " + c1 + "</b></td>";
+              "<td>" + cantidad + " <span class='text-monospace font-weight-light'>" + c2 +  "</span><b class='big-text'> " + c1 + "</b></td>";
             if (tipo_usuario == "Enfermería") {
-              html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
+              html += "<td><span class='badge badge-warning col-sm-12'>Pendiente</span></td>";
             } else {
-              html += "<td><center><button type='button' id='"+ res +"' class='btn btn-sm btn-danger' onclick='accion24(3,"+ res +",this)'><i class='fa fa-remove'></i></button></center></td>";
+              html += "<td><center><button type='button' id='"+ res +"' class='btn btn-sm btn-danger' onclick='accion24(3,"+ res +",this)'><i class='fa fa-times'></i></button></center></td>";
             }
               html += "</tr>";
 
             tabla.append(html);
             transaccion_count_p = 1;
             
-            new PNotify({
-              title: '¡Hecho!',
-              text: "Medicamento almacenado",
-              type: 'info',
-              styling: 'bootstrap3'
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
             });
           } else {
-            new PNotify({
-              title: '¡Error!',
-              text: "Algo salio mal",
+            swal({
               type: 'error',
-              styling: 'bootstrap3'
+              toast: true,
+              title: '¡Algo salio mal!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
             });
           }
         }
@@ -623,7 +644,6 @@ function registrarventa_(id) {
     
     $.ajax({
       url: "/blissey/public/tratamiento",
-      headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
         transaccion: transaccion_id,
@@ -637,7 +657,7 @@ function registrarventa_(id) {
           if (transaccion_count_s == 0) {
             $("#mensaje_provisional_s").empty();
 
-            html_2 = '<div class="col-xs-12">' +
+            html_2 = '<div class="col-sm-12">' +
               '<table class="table" id="tablaDetalle_s">' +
               '<thead>' +
               '<th>Detalle</th>' +
@@ -654,7 +674,7 @@ function registrarventa_(id) {
             "<td>" + cantidad + " " +
             "<b class='big-text'>" + c1 + "</b></td>";
           if (tipo_usuario == "Enfermería") {
-            html += "<td><span class='label label-lg label-warning col-xs-12'>Pendiente</span></td>";
+            html += "<td><span class='label label-lg label-warning col-sm-12'>Pendiente</span></td>";
           } else {
             html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-remove'></i></button></center></td>";
           }
@@ -662,18 +682,22 @@ function registrarventa_(id) {
           tabla.append(html);
           transaccion_count_s = 1;
 
-          new PNotify({
-            title: '¡Hecho!',
-            text: "Servicio almacenado",
-            type: 'info',
-            styling: 'bootstrap3'
+          swal({
+            type: 'success',
+            toast: true,
+            title: '¡Acción exitosa!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
           });
         } else {
-          new PNotify({
-            title: '¡Error!',
-            text: "Algo salio mal",
+          swal({
             type: 'error',
-            styling: 'bootstrap3'
+            toast: true,
+            title: '¡Algo salio mal!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
           });
         }
       }
@@ -688,7 +712,6 @@ var aux;
 
 function accion24(tipo, id, objeto = null) {
   //0: Eliminar, 1: Editar y 2: Cambiar estado
-  var token = $("#token").val();
   if (tipo == 1) {
     var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad">';
 
@@ -700,37 +723,44 @@ function accion24(tipo, id, objeto = null) {
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default'
-    }).then(function() {
-      var cantidad= $("#edit_cantidad").val();
-      $.ajax({
-        url: "/blissey/public/editar24",
-        type: "post",
-        headers: { 'X-CSRF-TOKEN': token },
-        data: {
-          id: id,
-          cantidad: cantidad
-        },
-        success: function (res) {
-          if (res) {
-            swal('¡Hecho!', 'Acción realizada satisfactoriamente', 'success');
-            location.reload();
-          } else {
-            swal('¡Error!', 'Algo salio mal', 'error');
+    }).then((result) => {
+      if (result.value) {
+        var cantidad= $("#edit_cantidad").val();
+        $.ajax({
+          url: "/blissey/public/editar24",
+          type: "post",
+          data: {
+            id: id,
+            cantidad: cantidad
+          },
+          success: function (res) {
+            if (res) {
+              localStorage.setItem('msg', 'yes');
+              location.reload();
+            } else {
+              swal({
+                  type: 'error',
+                  toast: true,
+                  title: '¡Algo salio mal!',
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 4000
+                });
+            }
           }
-        }
-      });
-    }).catch(swal.noop);
+        });
+      }
+    });
   } else if (tipo == 2) { 
     $.ajax({
       url: '/blissey/public/cambiar_estado',
       type: 'post',
-      headers: { 'X-CSRF-TOKEN': token },
       data: {
         id: id
       },
       success: function (r) {
         if (r) {
-          swal('¡Hecho!', '¡Acción realizada satisfactoriamente!', 'success');
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
           swal('¡Erro!', 'Algo salio mal', 'error');
@@ -741,22 +771,29 @@ function accion24(tipo, id, objeto = null) {
     $.ajax({
         url: "/blissey/public/eliminar24",
         type: "post",
-        headers: { 'X-CSRF-TOKEN': token },
         data: {
           id: id
         },
         success: function (res) {
           if (res) {
-            console.log($('#r' + objeto.id));
             $("#r" + objeto.id).remove();
-            new PNotify({
-              title: '¡Hecho!',
-              text: "Detalle eliminado",
-              type: 'warning',
-              styling: 'bootstrap3'
+            swal({
+              type: 'success',
+              toast: true,
+              title: '¡Acción exitosa!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
             });
           } else {
-            swal('¡Error!', 'Algo salio mal', 'error');
+            swal({
+              type: 'error',
+              toast: true,
+              title: '¡Algo salio mal!',
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4000
+            });
           }
         }
       });
@@ -770,29 +807,32 @@ function accion24(tipo, id, objeto = null) {
       cancelButtonText: "No, ¡Cancelar!",
       confirmButtonClass: 'btn btn-danger',
       cancelButtonClass: 'btn btn-default',
-    }).then(function () {
-      $.ajax({
-        url: "/blissey/public/eliminar24",
-        type: "post",
-        headers: { 'X-CSRF-TOKEN': token },
-        data: {
-          id: id
-        },
-        success: function (res) {
-          if (res) {
-            swal({
-              title: '¡Eliminado!',
-              text: 'Acción realizada satisfactoriamente',
-              type: 'success',
-              showConfirmButton: false,
-            });
-            location.reload();
-          } else {
-            swal('¡Error!', 'Algo salio mal', 'error');
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url: "/blissey/public/eliminar24",
+          type: "post",
+          data: {
+            id: id
+          },
+          success: function (res) {
+            if (res) {
+              localStorage.setItem('msg', 'yes');
+              location.reload();
+            } else {
+              swal({
+                  type: 'error',
+                  toast: true,
+                  title: '¡Algo salio mal!',
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 4000
+                });
+            }
           }
-        }
-      });
-    }).catch(swal.noop);
+        });
+      }
+    });
   }
 }
 

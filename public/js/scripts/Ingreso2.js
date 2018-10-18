@@ -19,15 +19,17 @@ $(document).on('ready', function () {
       },
       success: function (r) {
         if (r == 3) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
-          swal("¡Error!", "Algo ha salido mal", "error");
+          swal({
+            type: 'error',
+            toast: true,
+            title: '¡Algo salio mal!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
         }
       }
     });
@@ -164,7 +166,8 @@ $(document).on('ready', function () {
                   display: true,
                   labelString: 'Fecha'
                 }
-              }]
+              }],
+              maintainAspectRatio: false
             }
           }
         });

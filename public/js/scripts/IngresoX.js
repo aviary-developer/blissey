@@ -8,7 +8,7 @@ function eliminar_ingreso(id) {
     confirmButtonText: 'Si, ¡Eliminar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-danger',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then(function () {
     var dominio = window.location.host;
@@ -43,7 +43,7 @@ function confirmar_ingreso(id) {
     confirmButtonText: 'Si, ¡Confirmar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then(function () {
     var dominio = window.location.host;
@@ -143,12 +143,12 @@ function medicamento_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
-          '<table class="table" id="tabla_v_p">' +
+        html = '<div class="col-sm-12">' +
+          '<table class="table table-hover table-striped table-sm" id="tabla_v_p">' +
           '<thead>' +
           '<th>Hora</th>'+
           '<th>Detalle</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -161,9 +161,9 @@ function medicamento_fecha() {
             value.cantidad + " " + value.division + ' <b class="big-text">' + value.nombre + '</b>'+
             '</td>';
           if (value.estado == 1) {
-            html += '<td><button type="button" id = "'+ value.id +'" class="btn btn-danger btn-xs" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-remove"></i></button></td>';
+            html += '<td><center><button type="button" id = "'+ value.id +'" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
           } else {
-            html += '<td><button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button></td>';
+            html += '<td><center><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></center></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -194,12 +194,12 @@ function servicio_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
+        html = '<div class="col-sm-12">' +
           '<table class="table" id="tabla_v_s">' +
           '<thead>' +
           '<th>Hora</th>' +
           '<th>Detalle</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -212,9 +212,9 @@ function servicio_fecha() {
             value.cantidad + " " + ' <b class="big-text">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 1) {
-            html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-xs" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-remove"></i></button></td>';
+            html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></td>';
           } else {
-            html += '<td><button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button></td>';
+            html += '<td><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -245,12 +245,12 @@ function rayos_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
+        html = '<div class="col-sm-12">' +
           '<table class="table" id="tabla_v_r">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -263,11 +263,11 @@ function rayos_fecha() {
             ' <b class="big-text">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if(value.estado == 1) {
-            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
-            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -298,12 +298,12 @@ function laboratorio_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
+        html = '<div class="col-sm-12">' +
           '<table class="table" id="tabla_v_l">' +
           '<thead>' +
           '<th>Hora</th>' +
           '<th>Detalle</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -316,11 +316,11 @@ function laboratorio_fecha() {
             value.muestra + " " + ' <b class="big-text">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
-            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -351,12 +351,12 @@ function ultra_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
+        html = '<div class="col-sm-12">' +
           '<table class="table" id="tabla_v_u">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -369,11 +369,11 @@ function ultra_fecha() {
             ' <b class="big-text">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
-            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -404,12 +404,12 @@ function tac_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
+        html = '<div class="col-sm-12">' +
           '<table class="table" id="tabla_v_t">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -422,11 +422,11 @@ function tac_fecha() {
             ' <b class="big-text">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
-            html += '<td><span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -457,11 +457,11 @@ function signos_fecha() {
       fecha_title.text(r.fecha_f);
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
-          '<table class="table" id="tabla_sv">' +
+        html = '<div class="w-100">' +
+          '<table class="table table-striped table-sm table-hover" id="tabla_sv">' +
           '<thead>' +
-          '<th>Hora</th>' +
-          '<th style="width: 40px">Acción</th>'
+          '<th class="w-75">Hora</th>' +
+          '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
           '</div>';
@@ -472,7 +472,7 @@ function signos_fecha() {
             '<td>' +
             value.hora + 
             '</td>';
-          html += '<td><button type="button" id = "' + value.id + '" class="btn btn-primary btn-xs" onclick="carga_signos(' + value.id + ')"><i class="fa fa-eye"></i></button></td>';
+          html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="carga_signos(' + value.id + ')"><i class="fa fa-eye"></i></button></center></td>';
           html += '</tr>';
           tabla.append(html);
         });
@@ -502,7 +502,7 @@ function laboratorio_pendientes_ver() {
       
       if (r.indice > 0) {
         panel.empty();
-        html = '<div class="col-xs-12">' +
+        html = '<div class="col-sm-12">' +
           '<table class="table" id="tabla_l">' +
           '<thead>' +
           '<th style="width: 100px;">Fecha</th>' +
@@ -700,41 +700,41 @@ function carga_signos(id) {
       var super_ = $("#mensaje_v_sv");
       super_.empty();
       $("#date_sv_2").text(r.fecha);
-      var html_ = '<div class="col-xs-6" id="izq"></div><div class="col-xs-6" id="der">';
+      var html_ = '<div class="col-sm-6" id="izq"></div><div class="col-sm-6" id="der">';
       super_.append(html_);
       var panel = $("#izq");
       //Temperatura
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Temperatura: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Temperatura: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.temperatura == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else if (r.signos.temperatura > 37) {
-        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.temperatura + ' °C</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">' + r.signos.temperatura + ' °C</span>';
       } else {
-        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.temperatura + ' °C</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">' + r.signos.temperatura + ' °C</span>';
       }
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Peso
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Peso: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Peso: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.peso == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else {
-        html_ += '<span class="label label-lg label-white col-xs-12">' + r.signos.peso + ' ' + ((r.signos.medida) ? 'Kg' : 'lb') + '</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-white col-sm-12">' + r.signos.peso + ' ' + ((r.signos.medida) ? 'Kg' : 'lb') + '</span>';
       }
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Presion arterial
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Presión Arterial: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Presión Arterial: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.sistole == null || r.signos.diastole == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else if ((r.sexo &&
         (((r.edad >= 16 && r.edad <= 18) && (r.signos.sistole >= 105 && r.signos.sistole <= 135) && (r.signos.diastole >= 60 && r.signos.diastole <= 86)) ||
           ((r.edad >= 19 && r.edad <= 24) && (r.signos.sistole >= 105 && r.signos.sistole <= 139) && (r.signos.diastole >= 62 && r.signos.diastole <= 88)) ||
@@ -752,39 +752,39 @@ function carga_signos(id) {
             ((r.edad >= 50 && r.edad <= 59) && (r.signos.sistole >= 110 && r.signos.sistole <= 155) && (r.signos.diastole >= 70 && r.signos.diastole <= 98)) ||
             ((r.edad >= 60) && (r.signos.sistole >= 115 && r.signos.sistole <= 160) && (r.signos.diastole >= 70 && r.signos.diastole <= 100))))
       ) {
-        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
       } else if (r.edad < 16) {
-        html_ += '<span class="label label-lg label-white col-xs-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-white col-sm-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
       } else {
-        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
       }
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Pulso
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Pulso: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Pulso: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.pulso == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else if (r.signos.pulso > 59 && r.signos.pulso < 121) {
-        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.pulso + '  lpm</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">' + r.signos.pulso + '  lpm</span>';
       } else {
-        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.pulso + '  lpm</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">' + r.signos.pulso + '  lpm</span>';
       }
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Glucosa
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Glucosa: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Glucosa: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.glucosa == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else if (r.signos.glucosa >= 70 && r.signos.glucosa <= 110) {
-        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.glucosa + '  mg / dl </span>';
+        html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">' + r.signos.glucosa + '  mg / dl </span>';
       } else {
-        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.glucosa + '  mg / dl</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">' + r.signos.glucosa + '  mg / dl</span>';
       }
       html_ += '</div>' +
         '</div>';
@@ -792,40 +792,40 @@ function carga_signos(id) {
       var panel = $("#der");
       //Altura
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Altura: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Altura: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.altura == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else {
-        html_ += '<span class="label label-lg label-white col-xs-12">' + r.signos.altura + '  cm</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-white col-sm-12">' + r.signos.altura + '  cm</span>';
       }
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Frecuencia cardiaca
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Frecuencia Cardiaca: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Frecuencia Cardiaca: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.frecuencia_cardiaca == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else if (r.signos.frecuencia_cardiaca >= 60 && r.signos.frecuencia_cardiaca <= 101) {
-        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.frecuencia_cardiaca + '  lpm </span>';
+        html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">' + r.signos.frecuencia_cardiaca + '  lpm </span>';
       } else {
-        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.frecuencia_cardiaca + ' lpm</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">' + r.signos.frecuencia_cardiaca + ' lpm</span>';
       }
       html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Frecuencia Respiratoria
       html_ = '<div class="row">' +
-        '<div class="col-xs-7">Frecuencia Respiratoria: </div>' +
-        '<div class="col-xs-5">';
+        '<div class="col-sm-6">Frecuencia Respiratoria: </div>' +
+        '<div class="col-sm-6">';
       if (r.signos.frecuencia_respiratoria == null) {
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
       } else if (r.signos.frecuencia_respiratoria >= 12 && r.signos.frecuencia_respiratoria <= 20) {
-        html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.frecuencia_respiratoria + '  rpm </span>';
+        html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">' + r.signos.frecuencia_respiratoria + '  rpm </span>';
       } else {
-        html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.frecuencia_respiratoria + ' rpm</span>';
+        html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">' + r.signos.frecuencia_respiratoria + ' rpm</span>';
       }
       html_ += '</div>' +
         '</div>';
@@ -838,31 +838,31 @@ function carga_signos(id) {
         altura = altura / 100;
         var imc = (peso / (altura * altura));
         html_ = '<div class="row">' +
-          '<div class="col-xs-7">Índice de Masa Corporal: </div>' +
-          '<div class="col-xs-5">';
+          '<div class="col-sm-6">Índice de Masa Corporal: </div>' +
+          '<div class="col-sm-6">';
         if (imc < 18.5) {
-          html_ += '<span class="label label-lg label-warning col-xs-12">Bajo peso</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-warning col-sm-12">Bajo peso</span>';
         } else if (imc >= 18.5 && imc < 25) {
-          html_ += '<span class="label label-lg label-success col-xs-12">Peso normal</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-success col-sm-12">Peso normal</span>';
         } else if (imc >= 25 && imc < 30) {
-          html_ += '<span class="label label-lg label-warning col-xs-12">Sobrepeso</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-warning col-sm-12">Sobrepeso</span>';
         } else if (imc >= 30 && imc < 35) {
-          html_ += '<span class="label label-lg label-danger col-xs-12">Obesidad I</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">Obesidad I</span>';
         } else if (imc >= 35 && imc < 40) {
-          html_ += '<span class="label label-lg label-danger col-xs-12">Obesidad II</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">Obesidad II</span>';
         } else if (imc >= 40 && imc < 50) {
-          html_ += '<span class="label label-lg label-danger col-xs-12">Obesidad III</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">Obesidad III</span>';
         } else {
-          html_ += '<span class="label label-lg label-danger col-xs-12">Obesidad IV</span>';
+          html_ += '<span class="badge font-sm mb-1 badge-danger col-sm-12">Obesidad IV</span>';
         }
         html_ += '</div>' +
           '</div>';
         panel.append(html_);
       } else {
         html_ = '<div class="row">' +
-          '<div class="col-xs-7">Índice de Masa Corporal: </div>' +
-          '<div class="col-xs-5">';
-        html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
+          '<div class="col-sm-6">Índice de Masa Corporal: </div>' +
+          '<div class="col-sm-6">';
+        html_ += '<span class="badge font-sm mb-1 badge-secondary col-sm-12">Vacio</span>';
         html_ += '</div>' +
           '</div>';
         panel.append(html_);
@@ -887,12 +887,12 @@ function ver_medico(servicio) {
       var panel = $("#mensaje_v_m");
       
       panel.empty();
-      html = '<div class="col-xs-12">' +
+      html = '<div class="col-sm-12">' +
         '<table class="table" id="tabla_v_m">' +
         '<thead>' +
         '<th>Fecha</th>' +
         '<th>Hora</th>' +
-        '<th style="width: 40px">Acción</th>'
+        '<th class="w-25">Acción</th>'
       '</thead>' +
         '</table>' +
         '</div>';
@@ -903,9 +903,9 @@ function ver_medico(servicio) {
           '<td>' + value.fecha + '</td>' +
           '<td>' + value.hora + '</td>';
         if (value.estado == 1) {
-          html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-xs" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-remove"></i></button></td>';
+          html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></td>';
         } else {
-          html += '<td><button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button></td>';
+          html += '<td><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></td>';
         }
         html += '</tr>';
         tabla.append(html);

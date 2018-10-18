@@ -7,9 +7,11 @@
         </div>
       </div>
     </div>
-    <div class="row alignright">
-      <a href={{asset('/informe_financiero/'.$ingreso->id)}} class="btn btn-sm btn-primary" target="_blank">Ver PDF</a>
-      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" onclick="location.reload()">Cerrar</button>
+    <div class="m_panel x_panel bg-transparent" style="border:0px !important">
+      <center>
+        <a href={{asset('/informe_financiero/'.$ingreso->id)}} class="btn btn-sm btn-primary col-2" target="_blank">Ver PDF</a>
+      <button type="button" class="btn btn-light btn-sm col-2" onclick="location.reload()">Cerrar</button>
+      </center>
     </div>
   </div>
 </div>

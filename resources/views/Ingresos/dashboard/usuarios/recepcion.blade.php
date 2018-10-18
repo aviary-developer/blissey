@@ -32,10 +32,10 @@
       </div>
     </div>
     <div class="col-sm-4">
-      <div class="x_panel">
+      <div class="x_panel border border-danger rounded">
         @include('Ingresos.dashboard.partes.signos_r')
       </div>
-      <div class="x_panel">
+      <div class="x_panel border border-primary rounded">
         @include('Ingresos.dashboard.partes.producto_r')
       </div>
     </div>

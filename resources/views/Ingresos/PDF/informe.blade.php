@@ -129,5 +129,5 @@
   </div>
 </div>
 <br>
-  @include('Ingresos.PDF.informe.ingreso')
+  @include('Ingresos.PDF.informe.ingreso_mini')
 @endsection
