@@ -58,6 +58,9 @@ class InventarioController extends Controller
         $cuenta=0;
         $i=0;
         $ultimos=[];
+        if(!$inventario){
+          return $ultimos;
+        }
         foreach ($compras as $compra) {
           $devoluciones=DetalleDevolucion::total($compra->id);
           $retirados=CambioProducto::total($compra->id);

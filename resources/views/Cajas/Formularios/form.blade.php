@@ -1,45 +1,47 @@
-@if (isset($estante)){{--Si se esta editando --}}
-  @php $opcion = ($estante->localizacion) ? '1' : '0'; @endphp {{--1 para recepción y 0 para farmacia--}}
-@else{{--Si se esta creando--}}
-  @php $opcion=null;@endphp
-@endif
-<div class="x_panel">
-<div class="x_content">
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Localizacón *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-      @php
-      // if(Auth::user()->administrador){
-      //   $opciones=['0'=> 'Farmacia','1'=> 'Recepción'];
-      // }else
-      if(Auth::user()->tipoUsuario=='Farmacia'){
-        $opciones=['0'=> 'Farmacia'];
-      }elseif(Auth::user()->tipoUsuario=='Recepción'){
-        $opciones=['1'=> 'Recepción'];
-      }
-      $num=App\Caja::correlativo();
-      @endphp
-        {!!Form::select('localizacion',$opciones,$opcion, ['class'=>'form-control has-feedback-left'])!!}
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Caja N° *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('nombre',$num,['class'=>'form-control has-feedback-left','placeholder'=>'Número identidicador de la caja','readonly'=>'readonly']) !!}
-    </div>
-  </div>
+@php
+if(Auth::user()->tipoUsuario=='Farmacia'){
+  $opciones=['0'=> 'Farmacia'];
+}elseif(Auth::user()->tipoUsuario=='Recepción'){
+  $opciones=['1'=> 'Recepción'];
+}
+$num=App\Caja::correlativo();
+@endphp
+<div class="alert alert-danger" id="mout">
   <center>
-    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+    <p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
   </center>
-  <div class="ln_solid"></div>
-  <div class="form-group">
-    <center>
-      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-      <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/cajas') !!} class="btn btn-default">Cancelar</a>
-    </center>
-  </div>
 </div>
+<div class="x_panel">
+  <center>
+    <h5 class="mb-1">Datos de la caja</h5>
+  </center>
+  <div class="ln_solid mb-1 mt-1"></div>
+
+  <div class="form-group">
+    <label class="" for="localizacion">Localización *</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><i class="fas fa-user"></i></div>
+      </div>
+      {!!Form::select('localizacion',$opciones,null, ['class'=>'form-control form-control-sm'])!!}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="" for="localizacion">Caja N° *</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><i class="fas fa-user"></i></div>
+      </div>
+      {!! Form::number('nombre',$num,['class'=>'form-control form-control-sm','readonly'=>'readonly']) !!}
+    </div>
+  </div>
+
+</div>
+<div class="x_panel">
+  <center>
+    {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
+    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
+    <a href={!! asset('/cajas') !!} class="btn btn-default">Cancelar</a>
+  </center>
 </div>

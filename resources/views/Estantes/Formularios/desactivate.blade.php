@@ -1,8 +1,5 @@
 {!!Form::open(['url'=>['desactivateEstante',$estante->id],'method'=>'POST'])!!}
 <div class="btn-group">
-  <a href={!! asset('/estantes/'.$estante->id)!!} class="btn btn-sm btn-info"  title="Ver">
-    <i class="fa fa-info-circle"></i>
-  </a>
   <a href={!! asset('/estantes/'.$estante->id.'/edit')!!} class="btn btn-sm btn-primary"  title="Editar">
     <i class="fa fa-edit"></i>
   </a>

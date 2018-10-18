@@ -1,9 +1,6 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
   <div class="btn-group">
-    <a href={!! asset('/unidades/'.$unidad->id)!!} class="btn btn-sm btn-info"  title="Ver">
-      <i class="fas fa-info-circle"></i>
-    </a>
     <a href={!! asset('/unidades/'.$unidad->id.'/edit')!!} class="btn btn-sm btn-primary"  title="Editar">
       <i class="fas fa-edit"></i>
     </a>

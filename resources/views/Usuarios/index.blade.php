@@ -26,7 +26,7 @@
           <th>Opciones</th>
         </thead>
         <tbody>
-          @if (count($usuarios)>0)
+          @if ($usuarios!=null)
             @php
             $correlativo = 1;
             @endphp
@@ -55,12 +55,12 @@
                   @endif
                 </td>
                 <td>
-                  
+
                   @if (count($usuario->telephone)>0)
                   <center>
                     {{$usuario->telephone->first()->telefono}}
                   </center>
-                  
+
                   @else
                     <span class="badge border border-danger text-danger col-12">Sin télefono</span>
                   @endif

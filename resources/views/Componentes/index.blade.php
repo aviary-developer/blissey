@@ -14,41 +14,43 @@
   @endphp
   @include('Componentes.Barra.index')
   <div class="col-8">
-      <div class="x_panel">
-        <table class="table table-hover table-sm table-striped index-table">
-          <thead>
+    <div class="x_panel">
+      <table class="table table-hover table-sm table-striped index-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th style="width: 30%">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @php
+          $correlativo = 1;
+          @endphp
+          @foreach ($componentes as $componente)
             <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th style="width: 30%">Opciones</th>
+              <td>{{ $correlativo + $pagina }}</td>
+              <td>
+                <a href={{asset('/componentes/'.$componente->id)}}>
+                  {{ $componente->nombre}}
+                </a>
+              </td>
+              <td>
+                <center>
+                  @if ($estadoOpuesto)
+                    @include('Componentes.Formularios.activate')
+                  @else
+                    @include('Componentes.Formularios.desactivate')
+                  @endif
+                </center>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-              @php
-              $correlativo = 1;
-              @endphp
-              @foreach ($componentes as $componente)
-                <tr>
-                  <td>{{ $correlativo + $pagina }}</td>
-                  <td>
-                    <a href={{asset('/componentes/'.$componente->id)}}>
-                      {{ $componente->nombre}}
-                    </a>
-                  </td>
-                  <td>
-                    @if ($estadoOpuesto)
-                      @include('Componentes.Formularios.activate')
-                    @else
-                      @include('Componentes.Formularios.desactivate')
-                    @endif
-                  </td>
-                </tr>
-                @php
-                $correlativo++;
-                @endphp
-              @endforeach
-          </tbody>
-        </table>
+            @php
+            $correlativo++;
+            @endphp
+          @endforeach
+        </tbody>
+      </table>
     </div>
   </div>
   <!-- /page content -->
