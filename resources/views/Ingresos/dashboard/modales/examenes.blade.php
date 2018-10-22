@@ -1,22 +1,42 @@
 <div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="laboratorio_m" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="row">
-      <div role="tabpanel" data-example-id="togglable-tabs">
-        <div class="col-xs-3">
-          <div class="x_panel m_panel">
-            @include('SolicitudExamenes.Formularios.opciones')
-          </div>
-        </div>
-        <div class="col-xs-9">
-          <div class="x_panel m_panel" style="height: 447px">
-            @include('SolicitudExamenes.Formularios.contenido')
+      <div class="col-sm-12">
+        <div class="col-sm-12">
+          <div class="x_panel m_panel text-danger">
+            <center>
+              <h4 class="mb-1">
+                <i class="fas fa-microscope"></i>
+                Laboratorio Clínico
+              </h4>
+            </center>
           </div>
         </div>
       </div>
     </div>
-    <div class="row alignright">
-      <button type="button" id="guardarSolicitudModal" class="btn btn-primary btn-sm">Guardar</button>
-      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" onclick="location.reload();">Cerrar</button>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div role="tabpanel" data-example-id="togglable-tabs">
+          <div class="col-sm-3">
+            <div class="x_panel m_panel">
+              @include('SolicitudExamenes.Formularios.opciones')
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="x_panel m_panel" style="height: 369px">
+              @include('SolicitudExamenes.Formularios.contenido')
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m_panel x_panel bg-transparent" style="border:0px !important">
+      <center>
+        <button type="button" id="guardarSolicitudModal" class="btn btn-primary btn-sm col-2">Guardar</button>
+        <button type="button" class="btn btn-light col-2 btn-sm" onclick="location.reload()">Cerrar</button>
+      </center>
     </div>
   </div>
 </div>
@@ -26,47 +46,41 @@ var solicitudes=0;
     document.getElementById('seleccion').value = e;
   }
   async function agregarExamenEnSolicitud(boton){
-    if (boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-defualt") {
+    if (boton.className==="btn col-12 btn-sm btn-defualt") {
       solicitudes=solicitudes+1;
       $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
-      new PNotify({
-        title: 'Solicitud de:',
+      swal({
         type: 'success',
-        text: '<strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
-        nonblock: {
-          nonblock: true
-        },
-        styling: 'bootstrap3',
-        addclass: 'info'
+        html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
+        toast: true,
+        position: 'top-end',
+        timer: '4000',
+        showConfirmButton: false
       });
-    } else if(boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-success") {
+    } else if(boton.className==="btn col-12 btn-sm btn-success") {
       solicitudes=solicitudes-1;
-      new PNotify({
-        title: 'Solicitud de:',
+      swal({
         type: 'warning',
-        text:  '<strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
-        nonblock: {
-          nonblock: true
-        },
-        styling: 'bootstrap3',
-        addclass: 'info'
+        html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
+        toast: true,
+        position: 'top-end',
+        timer: '4000',
+        showConfirmButton: false
       });
     }
   }
 
   async function agregarExamenEnSolicitud2(boton){
-    if (boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-defualt") {
+    if (boton.className==="btn col-12 btn-sm btn-defualt") {
       solicitudes=solicitudes+1;
       $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
-      new PNotify({
-        title: 'Solicitud de:',
+      swal({
         type: 'success',
-        text: '<strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
-        nonblock: {
-          nonblock: true
-        },
-        styling: 'bootstrap3',
-        addclass: 'info'
+        html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
+        toast: true,
+        position: 'top-end',
+        timer: '4000',
+        showConfirmButton: false
       });
 
       var panel = $("#texto_receta_laboratorio");
@@ -81,17 +95,15 @@ var solicitudes=0;
         '</div>';
       
       panel.append(html);
-    } else if(boton.className==="btn col-md-12 col-sm-12 col-xs-12 btn-success") {
+    } else if(boton.className==="btn col-12 btn-sm btn-success") {
       solicitudes=solicitudes-1;
-      new PNotify({
-        title: 'Solicitud de:',
+      swal({
         type: 'warning',
-        text:  '<strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
-        nonblock: {
-          nonblock: true
-        },
-        styling: 'bootstrap3',
-        addclass: 'info'
+        html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
+        toast: true,
+        position: 'top-end',
+        timer: '4000',
+        showConfirmButton: false
       });
 
       var texto_boton = $(boton).find('span').text();

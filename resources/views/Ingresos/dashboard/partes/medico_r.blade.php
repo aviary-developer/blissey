@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-xs-8">
-    <h5 class="big-text">Médicos</h5>
+  <div class="col-sm-8">
+    <h5 class="text-info">Médicos</h5>
   </div>
-  <div class="col-xs-4">
+  <div class="col-sm-4">
     <div class="btn-group alignright">
       @if ($ingreso->estado == 1)  
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#medico_m" ><i class="fa fa-plus"></i></button>
@@ -26,7 +26,7 @@
               </a>
             <td>{{$medico['nombre']}}</td>
             <td>
-              <span class="badge bg-green"><i>
+              <span class="badge badge-info badge-pill"><i>
                 {{'x'.$medico['frec']}}</td>
               </i></span>
           </tr>
@@ -35,7 +35,7 @@
     </table>
   </div>
 @else
-  <div class="row" style="height: 184px; padding: 20px">
+  <div class="flex-row" style="height: 184px; padding: 20px">
     <center>
       <h4 class="gray">Información</h4>
     </center>

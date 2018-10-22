@@ -40,37 +40,37 @@
       </div>
     </div>
   </div>
-  <div class="flex-row">
+  <div class="row">
     <div class="col-sm-4">
-      <div class="x_panel">
+      <div class="x_panel border border-info rounded">
         @include('Ingresos.dashboard.partes.medico_r')
       </div>
     </div>
     <div class="col-sm-4">
-      <div class="x_panel">
-        @include('Ingresos.dashboard.partes.tac_r')
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="x_panel">
-        @include('Ingresos.dashboard.partes.servicio_r')
-      </div>
-    </div>
-  </div>
-  <div class="flex-row">
-    <div class="col-sm-4">
-      <div class="x_panel">
+      <div class="x_panel border border-purple rounded">
         @include('Ingresos.dashboard.partes.laboratorio_r')
       </div>
     </div>
     <div class="col-sm-4">
-      <div class="x_panel">
+      <div class="x_panel border border-primary rounded">
+        @include('Ingresos.dashboard.partes.servicio_r')
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="x_panel border border-purple rounded">
         @include('Ingresos.dashboard.partes.rayos_x_r')
       </div>
     </div>
     <div class="col-sm-4">
-      <div class="x_panel">
+      <div class="x_panel border border-purple rounded">
         @include('Ingresos.dashboard.partes.ultra_r')
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="x_panel border border-purple rounded">
+        @include('Ingresos.dashboard.partes.tac_r')
       </div>
     </div>
   </div>

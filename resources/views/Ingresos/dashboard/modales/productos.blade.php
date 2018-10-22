@@ -33,7 +33,7 @@
           </div>
 
           <div class="form-group">
-            <label class="" for="apellido">Cantidad</label>
+            <label class="" for="cantidad_resultado">Cantidad</label>
             <div class="input-group mb-2 mr-sm-2">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-cubes"></i></div>
@@ -51,7 +51,7 @@
           </div>
 
           <div class="form-group">
-            <label class="" for="apellido">Cantidad</label>
+            <label class="" for="resultadoVenta_">Buscar</label>
             <div class="input-group mb-2 mr-sm-2">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-search"></i></div>

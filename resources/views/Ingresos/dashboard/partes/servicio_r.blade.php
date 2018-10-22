@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-xs-8">
-    <h5 class="big-text">Servicios</h5>
+  <div class="col-sm-8">
+    <h5 class="text-primary">Servicios</h5>
   </div>
-  <div class="col-xs-4">
+  <div class="col-sm-4">
     <div class="btn-group alignright">
       @if ($ingreso->estado == 1)  
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#servicios_m" onclick="cambioRadio(3)"><i class="fa fa-plus"></i></button>
@@ -12,7 +12,7 @@
   </div>
 </div>
 @if ($count_s24 > 0)    
-  <div class="row" style="overflow-x:hidden; overflow-y:scroll; height: 184px;">
+  <div class="flex-row" style="overflow-x:hidden; overflow-y:scroll; height: 184px;">
     <table class="table-basic">
       <thead>
         <tr>
@@ -29,16 +29,16 @@
                   {{$detalle->cantidad.' '}}
                 </small>
                 &nbsp;
-                <b class="big-text">
+                <b class="">
                   {{$detalle->servicio->nombre}}
                 </b>
               </td>
               <td>
                 <center>
                    @if ($ingreso->estado == 2)
-                    <button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-ban"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" disabled><i class="fa fa-ban"></i></button>
                   @else
-                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-remove" ></i></button>
+                    <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-times" ></i></button>
                   @endif
                 </center>
               </td>
@@ -49,7 +49,7 @@
     </table>
   </div>
 @else
-  <div class="row" style="height: 184px; padding: 20px">
+  <div class="flex-row" style="height: 184px; padding: 20px">
     <center>
       <h4 class="gray">Información</h4>
     </center>

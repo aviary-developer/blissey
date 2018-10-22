@@ -505,7 +505,7 @@ $(document).on('ready', function () {
 $("#nuevo_abono").on('click', function (e) {
   e.preventDefault();
   var transaccion_id = $("#id_t").val();
-  var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar" autofocus>';
+  var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar" autofocus aria-autocomplete="false">';
   var deuda = $("#deuda_para_alta").val();
   swal({
     title: 'Nuevo abono',
@@ -518,6 +518,7 @@ $("#nuevo_abono").on('click', function (e) {
     cancelButtonClass: 'btn btn-default'
   }).then((result) => {
     if (result.value) {
+      console.log($("#monto").val())
       if ($("#monto").val() <= deuda) {
         $.ajax({
           url: "/blissey/public/abonar",
@@ -606,7 +607,7 @@ function registrarventa_(id) {
 
             tabla = $('#tablaDetalle');
             html = "<tr id='r" + res + "'>" +
-              "<td>" + cantidad + " <span class='text-monospace font-weight-light'>" + c2 +  "</span><b class='big-text'> " + c1 + "</b></td>";
+              "<td>" + cantidad + " <span class='text-monospace font-weight-light'>" + c2 +  "</span><b class=''> " + c1 + "</b></td>";
             if (tipo_usuario == "Enfermería") {
               html += "<td><span class='badge badge-warning col-sm-12'>Pendiente</span></td>";
             } else {
@@ -658,7 +659,7 @@ function registrarventa_(id) {
             $("#mensaje_provisional_s").empty();
 
             html_2 = '<div class="col-sm-12">' +
-              '<table class="table" id="tablaDetalle_s">' +
+              '<table class="table table-sm table-hover table-striped" id="tablaDetalle_s">' +
               '<thead>' +
               '<th>Detalle</th>' +
               '<th style="width: 40px">Acción</th>'
@@ -672,11 +673,11 @@ function registrarventa_(id) {
           tabla = $('#tablaDetalle_s');
           html = "<tr id='r" + res + "'>" +
             "<td>" + cantidad + " " +
-            "<b class='big-text'>" + c1 + "</b></td>";
+            "<b class=''>" + c1 + "</b></td>";
           if (tipo_usuario == "Enfermería") {
             html += "<td><span class='label label-lg label-warning col-sm-12'>Pendiente</span></td>";
           } else {
-            html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-remove'></i></button></center></td>";
+            html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-times'></i></button></center></td>";
           }
             
           tabla.append(html);

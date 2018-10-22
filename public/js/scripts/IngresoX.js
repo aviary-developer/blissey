@@ -158,7 +158,7 @@ function medicamento_fecha() {
           html = '<tr id="r' + value.id + '">' +
             '<td>'+ value.hora +'</td>'+
             '<td>' +
-            value.cantidad + " " + value.division + ' <b class="big-text">' + value.nombre + '</b>'+
+            value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>'+
             '</td>';
           if (value.estado == 1) {
             html += '<td><center><button type="button" id = "'+ value.id +'" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
@@ -195,7 +195,7 @@ function servicio_fecha() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
-          '<table class="table" id="tabla_v_s">' +
+          '<table class="table table-hover table-sm table-striped" id="tabla_v_s">' +
           '<thead>' +
           '<th>Hora</th>' +
           '<th>Detalle</th>' +
@@ -209,10 +209,10 @@ function servicio_fecha() {
           html = '<tr id="r' + value.id +'">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
-            value.cantidad + " " + ' <b class="big-text">' + value.nombre + '</b>' +
+            value.cantidad + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 1) {
-            html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></td>';
+            html += '<td></center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
           } else {
             html += '<td><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></td>';
           }
@@ -246,7 +246,7 @@ function rayos_fecha() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
-          '<table class="table" id="tabla_v_r">' +
+          '<table class="table table-striped table-hover table-sm" id="tabla_v_r">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
@@ -260,10 +260,10 @@ function rayos_fecha() {
           html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
-            ' <b class="big-text">' + value.nombre + '</b>' +
+            ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if(value.estado == 1) {
             html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
@@ -299,7 +299,7 @@ function laboratorio_fecha() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
-          '<table class="table" id="tabla_v_l">' +
+          '<table class="table table-striped table-hover table-sm" id="tabla_v_l">' +
           '<thead>' +
           '<th>Hora</th>' +
           '<th>Detalle</th>' +
@@ -313,10 +313,10 @@ function laboratorio_fecha() {
           html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
-            value.muestra + " " + ' <b class="big-text">' + value.nombre + '</b>' +
+            value.muestra + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
             html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
@@ -352,7 +352,7 @@ function ultra_fecha() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
-          '<table class="table" id="tabla_v_u">' +
+          '<table class="table table-striped table-hover table-sm" id="tabla_v_u">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
@@ -366,10 +366,10 @@ function ultra_fecha() {
           html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
-            ' <b class="big-text">' + value.nombre + '</b>' +
+            ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
             html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
@@ -405,7 +405,7 @@ function tac_fecha() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
-          '<table class="table" id="tabla_v_t">' +
+          '<table class="table table-striped table-hover table-sm" id="tabla_v_t">' +
           '<thead>' +
           '<th style="width: 150px">Hora</th>' +
           '<th>Detalle</th>' +
@@ -419,10 +419,10 @@ function tac_fecha() {
           html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
-            ' <b class="big-text">' + value.nombre + '</b>' +
+            ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
             html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
@@ -503,7 +503,7 @@ function laboratorio_pendientes_ver() {
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
-          '<table class="table" id="tabla_l">' +
+          '<table class="table table-striped table-hover table-sm" id="tabla_l">' +
           '<thead>' +
           '<th style="width: 100px;">Fecha</th>' +
           '<th>Detalle</th>' +
@@ -516,7 +516,7 @@ function laboratorio_pendientes_ver() {
           html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
-            value.muestra + " " + ' <b class="big-text">' + value.nombre + '</b>' +
+            value.muestra + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           html += '</tr>';
           tabla.append(html);
@@ -629,12 +629,7 @@ function ultra_rayos(tipo) {
       },
       success: function (respuesta) {
         if (respuesta) {
-          swal({
-            title: "¡Hecho!",
-            text: "Solicitud enviada satisfactoriamente",
-            type: "success",
-            showConfirmButton: false,
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         }
       }
@@ -653,12 +648,7 @@ function ultra_rayos(tipo) {
       },
       success: function (respuesta) {
         if (respuesta) {
-          swal({
-            title: "¡Hecho!",
-            text: "Solicitud enviada satisfactoriamente",
-            type: "success",
-            showConfirmButton: false,
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         }
       }
@@ -676,12 +666,7 @@ function ultra_rayos(tipo) {
       },
       success: function (respuesta) {
         if (respuesta) {
-          swal({
-            title: "¡Hecho!",
-            text: "Solicitud enviada satisfactoriamente",
-            type: "success",
-            showConfirmButton: false,
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         }
       }
@@ -888,7 +873,7 @@ function ver_medico(servicio) {
       
       panel.empty();
       html = '<div class="col-sm-12">' +
-        '<table class="table" id="tabla_v_m">' +
+        '<table class="table table-striped table-hover table-sm" id="tabla_v_m">' +
         '<thead>' +
         '<th>Fecha</th>' +
         '<th>Hora</th>' +
@@ -903,9 +888,9 @@ function ver_medico(servicio) {
           '<td>' + value.fecha + '</td>' +
           '<td>' + value.hora + '</td>';
         if (value.estado == 1) {
-          html += '<td><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></td>';
+          html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
         } else {
-          html += '<td><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></td>';
+          html += '<td><center><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></center></td>';
         }
         html += '</tr>';
         tabla.append(html);

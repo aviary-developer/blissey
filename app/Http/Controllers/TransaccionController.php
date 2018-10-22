@@ -344,13 +344,14 @@ class TransaccionController extends Controller
       return redirect('/requisiciones?tipo='.$tipo);
     }
     }
+
     public static function buscarServicio($texto){
       $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
       $service = [];
       $i = 0;
       if($servicios != null){
         foreach($servicios as $servicio){
-          if($servicio->categoria->nombre != "Honorarios" && $servicio->categoria->nombre != "Habitación" && $servicio->categoria->nombre != "Laboratorio Clínico" &&$servicio->categoria->nombre != "Rayos X" && $servicio->categoria->nombre != "Ultrasonografía"){
+          if($servicio->categoria->nombre != "Honorarios" && $servicio->categoria->nombre != "Habitación" && $servicio->categoria->nombre != "Laboratorio Clínico" &&$servicio->categoria->nombre != "Rayos X" && $servicio->categoria->nombre != "Ultrasonografía" && $servicio->categoria->nombre != "Cama" && $servicio->categoria->nombre != "TAC"){
             $service[$i] = $servicio;
             $i++;
           }

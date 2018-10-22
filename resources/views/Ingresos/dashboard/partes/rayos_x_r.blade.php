@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-xs-8">
-    <h5 class="big-text">Rayos X</h5>
+  <div class="col-sm-8">
+    <h5 class="text-purple">Rayos X</h5>
   </div>
-  <div class="col-xs-4">
+  <div class="col-sm-4">
     <div class="btn-group alignright">
       @if ($ingreso->estado == 1)  
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#rayosx_m" ><i class="fa fa-plus"></i></button>
@@ -12,7 +12,7 @@
   </div>
 </div>
 @if ($count_r24 > 0)    
-  <div class="row" style="overflow-x:hidden; overflow-y:scroll; height: 184px;">
+  <div class="flex-row" style="overflow-x:hidden; overflow-y:scroll; height: 184px;">
     <table class="table-basic">
       <thead>
         <tr>
@@ -26,14 +26,14 @@
             @if($solicitud->created_at->between($ultima24, $ultima48))
               <tr>
                 <td>
-                  <b class="big-text">{{$solicitud->rayox->nombre}}</b></td>
+                  <b class="">{{$solicitud->rayox->nombre}}</b></td>
                 <td>
                   @if ($solicitud->estado == 0)
-                    <span class="label label-lg label-default col-xs-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span>
+                    <span class="badge badge-light col-sm-10" title="Pendiente"><i class="fa fa-spinner"></i></span>
                   @elseif($solicitud->estado == 1)
-                    <span class="label label-lg label-primary col-xs-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span>
+                    <span class="badge badge-primary col-sm-10" title="Evaluando"><i class="fa fa-cog"></i></span>
                   @else
-                    <span class="label label-lg label-success col-xs-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span>
+                    <span class="badge badge-success col-xs-10" title="Listo"><i class="fa fa-check"></i></span>
                   @endif
                 </td>
               </tr>
@@ -44,7 +44,7 @@
     </table>
   </div>
 @else
-  <div class="row" style="height: 184px; padding: 20px">
+  <div class="flex-row" style="height: 184px; padding: 20px">
     <center>
       <h4 class="gray">Información</h4>
     </center>

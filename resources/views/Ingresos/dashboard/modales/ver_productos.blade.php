@@ -7,7 +7,7 @@
           <h4 class="mb-1">
             <i class="fas fa-medkit"></i>
             Medicamentos
-            <button type="button" class="btn btn-sm btn-light float-right" id="s-earch" title="Busqueda">
+            <button type="button" class="btn btn-sm btn-light float-right" id="s-earch-p" title="Busqueda">
               <i class="fas fa-search"></i>
             </button>
           </h4>
@@ -71,7 +71,7 @@
 </div>
 
 <script>
-  $("#s-earch").click(function(e){
+  $("#s-earch-p").click(function(e){
     e.preventDefault();
     $("#b_ver_medicamento").slideToggle();
   });

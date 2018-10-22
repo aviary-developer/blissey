@@ -34,7 +34,7 @@
                   @endif
                 </small>
                 &nbsp;
-                <b class="big-text">{{$detalle->divisionProducto->producto->nombre}}</b>
+                <b class="">{{$detalle->divisionProducto->producto->nombre}}</b>
               </td>
               <td>
                 <center>

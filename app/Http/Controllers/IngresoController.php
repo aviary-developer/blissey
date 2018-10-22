@@ -232,7 +232,12 @@ class IngresoController extends Controller
           ->from('especialidad_usuarios')
           ->whereRaw('especialidad_usuarios.f_usuario = users.id');
         }
-      )->where('tipoUsuario','Médico')->orWhere('tipoUsuario','Gerencia')->where('estado',true)->orderBy('apellido')->get();
+      )->where(
+        function($query){
+          $query->where('tipoUsuario','Médico')
+          ->orWhere('tipoUsuario','Gerencia');
+        }
+        )->where('estado',true)->orderBy('apellido')->get();
       $total_especialidad = $especialidades->count();
       /**Calculo de dia efectivo en que fue ingresado el paciente */
       $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
@@ -1159,7 +1164,7 @@ class IngresoController extends Controller
       if($request->pendiente == null){
         $laboratorio[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       }else{
-        $laboratorio[$indice]['hora'] = $detalle->created_at->format('d / m / Y');
+        $laboratorio[$indice]['hora'] = $detalle->created_at->format('d/m/Y');
       }
       $laboratorio[$indice]['muestra'] = $detalle->codigo_muestra;
       $laboratorio[$indice]['nombre'] = $detalle->examen->nombreExamen;
