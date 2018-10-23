@@ -81,6 +81,8 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/acta/{id}','IngresoController@acta_pdf');
   Route::get('/informe_financiero/{id}','IngresoController@informe_pdf');
   Route::get('/chart_financiero','IngresoController@chart_financiero');
+  //Rutas de Camas
+  Route::get('/cama/lista','HabitacionController@camas');
 });
 //Grupo Farmacia
 Route::group(['middleware'=>'farmacia'], function(){

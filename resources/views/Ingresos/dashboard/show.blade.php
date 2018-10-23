@@ -6,6 +6,17 @@
     setlocale(LC_ALL,'es');
   @endphp
   @include('Ingresos.Barra.show')
+  {{-- Determinar si es permitido que este en observacion o en medi ingreso --}}
+    @if ($ingreso->tipo == 1 && $horas > 6 && $ingreso->estado != 2)
+      <script>
+        swal('¡Advertencia!','Este paciente ya excedio el tiempo recomendado en medi ingreso, por favor darle de alta o cambiar su tipo de hospitalización','warning');
+      </script>
+    @elseif($ingreso->tipo == 2 && $horas > 2 && $ingreso->estado != 2)
+      <script>
+        swal('¡Advertencia!','Este paciente ya excedio el tiempo recomendado en observación, por favor darle de alta o cambiar su tipo de hospitalización','warning');
+      </script>
+    @endif
+  
   {{-- Condiconal de tipo de usuario, segun sea el tipo de usuario así sera el dashboard a mostrar --}}
   <div class="col-sm-12">
     <div class="flex-row">
@@ -61,7 +72,7 @@
                   {{$ingreso->fecha_alta->formatLocalized('%d de %B del %Y a las %H:%M:%S')}}
                 </span>
               </div>
-            @else
+            @elseif($ingreso->tipo < 3)
               <div class="flex-row">
                 <span class="font-weight-light text-monospace">
                   Habitación
@@ -70,7 +81,7 @@
               <div class="flex-row">
                 <span class="font-weight-bold font-md">
                   <span class="badge badge-light border border-dark text-dark col-sm-4">
-                    {{'H'.$ingreso->habitacion->habitacion->numero.'C'.$ingreso->habitacion->numero}}
+                    {{$ingreso->habitacion->servicio->nombre}}
                   </span>
                 </span>
               </div>

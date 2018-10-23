@@ -369,7 +369,7 @@ $(document).on('ready', function () {
 
   $("#dar_alta").on("click", async function (e) {
     e.preventDefault();
-    $("#acciones").modal('toggle');
+
     var transaccion_id = $("#id_t").val();
     var deuda = $("#deuda_para_alta").val();
     var id = $("#id").val();
@@ -384,7 +384,7 @@ $(document).on('ready', function () {
       type: "warning"
     }).then((result) => {
       console.log(result);
-      if (result) {
+      if (result.value) {
         $.ajax({
           url: "/blissey/public/abonar",
           type: "POST",
@@ -412,7 +412,7 @@ $(document).on('ready', function () {
       } else if(result.dismiss === swal.DismissReason.cancel ) {
         location.reload();
       }
-    }).catch(swal.noop);
+    });
     location.reload();
   });
   
@@ -432,7 +432,7 @@ $(document).on('ready', function () {
       type: "warning"
     }).then((result) => {
       console.log(result.value);
-      if (result) {
+      if (result.value) {
         $.ajax({
           url: "/blissey/public/abonar",
           type: "POST",
@@ -458,8 +458,7 @@ $(document).on('ready', function () {
           }
         });
       }
-      }).catch(swal.noop);
-    console.log("W");
+      });
     location.reload();
   });
 

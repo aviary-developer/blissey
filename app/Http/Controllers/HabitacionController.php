@@ -249,4 +249,10 @@ class HabitacionController extends Controller
       Bitacora::bitacora('activate','habitacions','habitaciones',$id);
       return Redirect::to('/habitaciones?estado=0');
     }
+
+    public function camas(Request $request){
+      $id = $request->id;
+      $camas = Cama::where('f_habitacion',$id)->where('activo',true)->where('estado',false)->get();
+      return $camas;
+    }
 }

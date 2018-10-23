@@ -36,7 +36,7 @@
     </table>
   </div>
 @else
-  <div class="flex-row" style="height: 184px;">
+  <div class="flex-row" style="height: 70px;">
     <center>
       <h4 class="gray">Información</h4>
     </center>

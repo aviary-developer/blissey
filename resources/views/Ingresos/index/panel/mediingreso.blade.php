@@ -56,7 +56,7 @@
                 <tr class="table-success">
                   <td colspan="2">
                     <span class="badge badge-light border border-dark">
-                      {{'Cama H'.$cama->habitacion->numero.'C'.$cama->numero}}
+                      {{$cama->servicio->nombre}}
                     </span>
                     disponible
                   </td>

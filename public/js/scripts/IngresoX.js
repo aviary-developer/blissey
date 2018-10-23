@@ -532,26 +532,20 @@ function laboratorio_pendientes_ver() {
 
 $("#guardar_cambio_habitacion").on("click", function (e) { 
   e.preventDefault();
-  habitacion = $("#f_habitacion").val();
+  cama = $("#f_cama").val();
   id = $("#id").val();
-  token = $("#token").val();
-  if (habitacion != 0) {
+  console.log(cama);
+  if (cama != null) {
     $.ajax({
       url: "/blissey/public/cambio_ingreso",
       type: "post",
-      headers: { 'X-CSRF-TOKEN': token },
       data: {
-        f_habitacion: habitacion,
+        f_cama: cama,
         ingreso: id,
       },
       success: function (r) {
         if (r == 1) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
           swal('¡Error!', 'Algo salio mal', 'error');
@@ -559,43 +553,39 @@ $("#guardar_cambio_habitacion").on("click", function (e) {
       }
     });
   } else {
-    swal('¡Error!', 'Es necesario que haya al menos una habitación disponible', 'error');
+    swal({
+      title: '¡Error!',
+      text: 'Es necesario que haya al menos una habitación disponible',
+      type: 'error',
+      toast: true,
+      timer: 4000,
+      showConfirmButton: false
+    });
   }
 });
-
-function cambio_tipo_activo(tipo) {
-  $("#activo").val(tipo);
-}
 
 $("#cambio_hospitalizacion_").on("click", function (e) { 
   activo = $("#activo").val();
   if (activo == 0) {
-    habitacion = $("#f_habitacion_i").val();
+    cama = $("#f_cama_i").val();
   } else if (activo == 1) {
-    habitacion = $("#f_habitacion_m").val();
+    cama = $("#f_cama_m").val();
   } else {
-    habitacion = $("#f_habitacion_o").val();
+    cama = $("#f_cama_o").val();
   }
   id = $("#id").val();
-  token = $("#token").val();
-  if (habitacion != 0) {
+  if (cama != null) {
     $.ajax({
       url: "/blissey/public/cambio_ingreso",
       type: "post",
-      headers: { 'X-CSRF-TOKEN': token },
       data: {
         tipo: activo,
-        f_habitacion: habitacion,
+        f_cama: cama,
         ingreso: id,
       },
       success: function (r) {
         if (r == 1) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
           swal('¡Error!', 'Algo salio mal', 'error');
@@ -603,7 +593,14 @@ $("#cambio_hospitalizacion_").on("click", function (e) {
       }
     });
   } else {
-    swal('¡Error!', 'Es necesario que haya al menos una habitación disponible', 'error');
+    swal({
+      title: '¡Error!',
+      text: 'Es necesario que haya al menos una habitación disponible',
+      type: 'error',
+      toast: true,
+      timer: 4000,
+      showConfirmButton: false
+    });
   }
 });
 

@@ -219,6 +219,7 @@ class IngresoController extends Controller
       /**Obtener las habitaciones para realizar el cambio de habitacion */
       $habitaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',1)->orderBy('numero')->get();
       $observaciones = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',0)->orderBy('numero')->get();
+      $mediingresos = Habitacion::where('estado',true)->where('ocupado',false)->where('tipo',2)->orderBy('numero')->get();
       /**Examenes de ultrasonografía y de rayos x */
       $rayosx = Rayosx::where('estado',true)->orderBy('nombre')->get();
       $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
@@ -509,6 +510,7 @@ class IngresoController extends Controller
         'examenes',
         'habitaciones',
         'observaciones',
+        'mediingresos',
         'horas',
         'horas_f',
         'obs',
@@ -936,20 +938,20 @@ class IngresoController extends Controller
     DB::beginTransaction();
     try{
       $ingreso = Ingreso::find($request->ingreso);
-      $habitacion_actual = $ingreso->f_habitacion;
-      $ingreso->f_habitacion = $request->f_habitacion;
+      $cama_actual = $ingreso->f_cama;
+      $ingreso->f_cama = $request->f_cama;
       if($request->tipo != null){
         $ingreso->tipo = $request->tipo;
       }
       $ingreso->save();
 
-      $habitacion_ = Cama::find($habitacion_actual);
-      $habitacion_->estado = false;
-      $habitacion_->save();
+      $cama_ = Cama::find($cama_actual);
+      $cama_->estado = false;
+      $cama_->save();
 
-      $habitacion = Cama::find($request->f_habitacion);
-      $habitacion->estado = true;
-      $habitacion->save();
+      $cama = Cama::find($request->f_cama);
+      $cama->estado = true;
+      $cama->save();
       DB::commit();
       return 1;
     }catch(Exception $e){

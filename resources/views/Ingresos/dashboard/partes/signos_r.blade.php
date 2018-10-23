@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-8 mb-1">
+  <div class="col-sm-8">
     <h5 class="text-danger">Signos Vitales</h5>
   </div>
   <div class="col-sm-4">
@@ -237,9 +237,13 @@
     @endforeach
   </div>
 @else
-  <div class="flex-row" style="height: 122px; padding: 10px">
+  @if (Auth::user()->tipoUsuario == "Médico")
+    <div class="flex-row" style="height: 184px; padding: 20px">
+  @else
+    <div class="flex-row" style="height: 122px; padding: 10px">
+  @endif
     <center>
-      <h4 class="secondary">Información</h4>
+      <h4 class="gray">Información</h4>
     </center>
     <center>
       <span>No se ha registrado ningun signo vital al paciente en las últimas 24 horas</span>

@@ -1,45 +1,51 @@
-  <div class="row" style="height: 420px; overflow-x:hidden; overflow-y:scroll;" id="ver_consulta" hidden>
-  <div class="row bg-blue-2 big-text" style="margin: 0px;">
+  <div class="col-sm-12" style="height: 420px; overflow-x:hidden; overflow-y:scroll; display:none" id="ver_consulta">
+  <div class="flex-row">
     <center>
-      <h4>
-        <i class="fa fa-calendar"></i>
+      <h5 class="text-primary mb-2">
+        <i class="far fa-calendar"></i>
         <span id="fechado">Fecha</span>
-      </h4>
+      </h5>
     </center>
   </div>
-  <div class="row bg-gray big-text black" style="margin: 0px;">
-    <center>
-      Consultó por:
-    </center>
+  <div class="flex-row">
+    <span class="font-weight-light text-monospace">
+      Consulta por
+    </span>
   </div>
-  <div class="row" style="margin: 0">
-    <p id="s_motivo" class=" medium-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
+  <div class="flex-row">
+    <p id="s_motivo" class="font-md font-weight-bold mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
   </div>
-  <div class="row bg-gray big-text black" style="margin: 0px;">
-    <center>
-      Historia clínica:
-    </center>
+  <div class="ln_solid mb-2 mt-1"></div>
+
+  <div class="flex-row">
+    <span class="font-weight-light text-monospace">
+      Historia Clínica
+    </span>
   </div>
-  <div class="row" style="margin: 0">
-    <p id="s_historia" class=" medium-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
+  <div class="flex-row" style="margin: 0">
+    <p id="s_historia" class="font-md font-weight-bold mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
   </div>
-  <div class="row bg-gray big-text black" style="margin: 0px;">
-    <center>
-      Examén físico:
-    </center>
+  <div class="ln_solid mb-2 mt-1"></div>
+  
+  <div class="flex-row">
+    <span class="font-weight-light text-monospace">
+      Examen Físico
+    </span>
   </div>
-  <div class="row" style="margin: 0">
-    <p id="s_fisico" class=" medium-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
+  <div class="flex-row" style="margin: 0">
+    <p id="s_fisico" class="font-md font-weight-bold mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
   </div>
-  <div class="row bg-gray big-text black" style="margin: 0px;">
-    <center>
+  <div class="ln_solid mb-2 mt-1"></div>
+  
+  <div class="flex-row">
+    <span class="font-weight-light text-monospace">
       Diagnostico
-    </center>
+    </span>
   </div>
-  <div class="row" style="margin: 0">
-    <p id="s_diagnostico" class=" medium-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
+  <div class="flex-row" style="margin: 0">
+    <p id="s_diagnostico" class="font-md font-weight-bold mb-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, consectetur quisquam. Explicabo, nulla pariatur libero aliquid et illum, sunt eos corrupti sint aperiam nesciunt, consectetur iusto consequuntur. Minus, praesentium quos.</p>
   </div>
-  <div class="row alignright" style="margin: 0">
+  <div class="flex-row alignright" style="margin: 0">
     <i class="fa fa-stethoscope"></i>
     <b id="s_medico" style="font-family: 'monotype corsiva'; font-size: 120%">Carlos René Ruiz Morazán</b>
   </div>

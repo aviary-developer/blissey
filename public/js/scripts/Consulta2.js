@@ -46,26 +46,26 @@ async function v_consulta(id, tipo, nivel = 0) {
         $("#ver_ingresos").empty();
 
         $(r.consultas).each(function (key, value) {
-          var html = '<div class="row borde" style="margin: 5px; border-radius: 4px;">' +
-            '<div class="row blue">' +
+          var html = '<div class="col-sm-12 m-1 border border-secondary rounded">' +
+            '<div class="flex-row">' +
             '<center>' +
-            '<h4>' +
-            '<i class="fa fa-calendar"></i> ' +
+            '<h6 class="text-primary mt-1">' +
+            '<i class="far fa-calendar"></i> ' +
             r.fechas[key] +
-            '</h4>' +
+            '</h6>' +
             '</center>' +
             '</div>' +
-            '<div class="row" style="margin-bottom: 8px;">' +
-            '<div class="col-xs-10">' +
-            '<div class="row">' +
+            '<div class="flex-row mb-1">' +
+            '<div class="col-sm-10">' +
+            '<div class="flex-row">' +
             '<center>' +
-            '<span class="big-text">' +
+            '<span class="font-weight-bold">' +
             '<i class="fa fa-stethoscope"></i> ' +
             r.medicos[key] +
             '</span>' +
             '</center>' +
             '</div>' +
-            '<div class="row" style="margin-bottom: 5px;">' +
+            '<div class="flex-row mb-1">' +
             '<center>' +
             '<i>' +
             '<span>' +
@@ -74,13 +74,12 @@ async function v_consulta(id, tipo, nivel = 0) {
             '</i>' +
             '</center>' +
             '</div>' +
-            '<div class="row">' +
-            '<div class="col-xs-3"></div>' +
-            '<span class="col-xs-6 label label-lg label-pink">Consulta Médica</span>' +
+            '<div class="flex-row">' +
+            '<center><span class="col-6 badge font-sm mb-2 badge-pink">Consulta Médica</span></center>' +
             '</div>' +
             '</div>' +
-            '<div class="col-xs-2">' +
-            '<button type="button" class="btn btn-xs btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',3,1)">' +
+            '<div class="col-sm-2">' +
+            '<button type="button" class="mb-2 btn btn-sm btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',3,1)">' +
             '<i class="fa fa-eye"></i> Ver' +
             '</button>' +
             '</div>' +
