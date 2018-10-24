@@ -61,9 +61,11 @@
                     disponible
                   </td>
                   <td>
-                    <div class="btn-group alignright">
-                      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',1)'}} title="Agregar"><i class="fas fa-plus"></i></button>
-                    </div>
+                    @if (Auth::user()->tipoUsuario == "Recepción")
+                      <div class="btn-group alignright">
+                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo('.$cama->id.',1)'}} title="Agregar"><i class="fas fa-plus"></i></button>
+                      </div>
+                    @endif
                   </td>
                 </tr>
               @endif

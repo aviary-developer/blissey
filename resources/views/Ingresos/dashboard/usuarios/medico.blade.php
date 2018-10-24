@@ -7,7 +7,7 @@
 @else
   <div class="row">
     <div class="col-sm-6">
-      <div class="x_panel">
+      <div class="x_panel border border-success rounded">
         @include('Ingresos.dashboard.partes.consulta_m')
       </div>
     </div>

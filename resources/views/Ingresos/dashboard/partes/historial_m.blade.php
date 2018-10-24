@@ -10,7 +10,7 @@
   </div>
   <div class="col-sm-2"></div>
 </div>
-<div class="col-sm-12" style="height: 450px; overflow-x:hidden; overflow-y:scroll" id="historial">
+<div class="col-sm-12" style="height: 480px; overflow-x:hidden; overflow-y:scroll" id="historial">
   @if ($historial != null)
     @foreach ($historial as $ingreso)
       <div class="col-sm-12 m-1 border border-secondary rounded">

@@ -138,7 +138,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p>
-            <i class="fa fa-check blue"></i> Realizarse una evaluación de rayos x 
+            <i class="fa fa-check blue"></i> Realizarse una radiografía  
             {{$consulta->articulo($receta->rayox->nombre)}} 
             <b class="blue">
               {{$receta->rayox->nombre}}

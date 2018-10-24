@@ -71,7 +71,7 @@ var solicitudes=0;
   }
 
   async function agregarExamenEnSolicitud2(boton){
-    if (boton.className==="btn col-12 btn-sm btn-defualt") {
+    if (boton.className==="btn btn-sm col-sm-12 btn-defualt") {
       solicitudes=solicitudes+1;
       $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
       swal({
@@ -89,13 +89,13 @@ var solicitudes=0;
 
       var html = '<div class="row" id="' + selector + '" style="margin: 0px 10px 0px 15px">'+
         '<p style="font-size: medium">'+
-          '<i class="fa fa-check blue"></i> '+
-          'Realizarse un examen de <b class="blue">' + texto_boton + '</b>' +
+          '<i class="fa fa-check text-primary"></i> '+
+          'Realizarse un examen de <b class="text-primary">' + texto_boton + '</b>' +
         '</p>'+
         '</div>';
       
       panel.append(html);
-    } else if(boton.className==="btn col-12 btn-sm btn-success") {
+    } else if(boton.className==="btn btn-sm col-sm-12 btn-success") {
       solicitudes=solicitudes-1;
       swal({
         type: 'warning',

@@ -1,14 +1,16 @@
-<div class="row">
+<div class="flex-row">
   <center>
-    <h5 class="big-text">Buscar medicamento</h5>
+    <h5 class="">Buscar medicamento</h5>
   </center>
 </div>
 <form action="" class="form-horizontal input_mask">
-  <div class="form-group col-xs-12">
-    <label class="control-label col-md-3">Medicamento:</label>
-    <div class="col-md-9">
-      <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-      <input type="text" class="form-control has-feedback-left" placeholder="Medicamento" id="nombre_producto" list="productos">
+  <div class="form-group col-sm-12">
+    <label class="" for="nombre_producto">Medicamento *</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><i class="fas fa-prescription-bottle"></i></div>
+      </div>
+      <input type="text" class="form-control form-control-sm" placeholder="Medicamento" id="nombre_producto" list="productos">
       <datalist id="productos">
         @foreach ($lista_medicamentos as $lista)
           <option value="{{$lista->nombre}}"></option>
@@ -16,19 +18,17 @@
       </datalist>
     </div>
   </div>
-  <div class="form-group col-xs-12">
-    <label class="control-label col-md-3">Presentación: </label>
-    <div class="col-md-9">
-      <label class="control-label"><i class="gray" id="presentacion-selecta">Buscando...</i></label>
-    </div>
+
+  <div class="form-group col-sm-12">
+    <label class="" for="presentacion_selecta">Presentación: </label>
+    <label class=""><i class="gray" id="presentacion-selecta">Buscando...</i></label>
   </div>
-  <div class="form-group col-xs-12">
-    <label class="control-label col-md-3">Dosis:</label>
-    <div class="col-xs-3">
-      <input type="number" class="form-control col-xs-4" placeholder="Cant" id="numero-dosis" min="0" value="1"> 
-    </div>
-    <div class="col-xs-6">
-      <select name="" id="forma-dosis" class="form-control">
+
+  <div class="form-group col-sm-12">
+    <label class="" for="numero-dosis">Dosis</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <input type="number" class="form-control form-control-sm" placeholder="Cant" id="numero-dosis" min="0" value="1"> 
+      <select name="" id="forma-dosis" class="form-control form-control-sm">
         <option value="0">Unidad</option>
         <option value="1">Cucharadita</option>
         <option value="2">Cucharada</option>
@@ -42,13 +42,12 @@
       </select>
     </div>
   </div>
-  <div class="form-group col-xs-12">
-    <label class="control-label col-md-3">Frecuencia:</label>
-    <div class="col-xs-3">
-      <input type="number" class="form-control col-xs-4" placeholder="Cant" id="numero-frec" min="0" value="1"> 
-    </div>
-    <div class="col-xs-6">
-      <select name="" id="forma-frec" class="form-control">
+
+  <div class="form-group col-sm-12">
+    <label class="" for="numero-frec">Frecuencia</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <input type="number" class="form-control form-control-sm" placeholder="Cant" id="numero-frec" min="0" value="1"> 
+      <select name="" id="forma-frec" class="form-control form-control-sm">
         <option value="0">Minuto</option>
         <option value="1">Hora</option>
         <option value="2">Día</option>
@@ -57,13 +56,12 @@
       </select>
     </div>
   </div>
-  <div class="form-group col-xs-12">
-    <label class="control-label col-md-3">Duración:</label>
-    <div class="col-xs-3">
-      <input type="number" class="form-control col-xs-4" placeholder="Cant" id="numero-duracion" min="0" value="1"> 
-    </div>
-    <div class="col-xs-6">
-      <select name="" id="forma-duracion" class="form-control">
+
+  <div class="form-group col-sm-12">
+    <label class="" for="numero-duracion">Duración</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <input type="number" class="form-control form-control-sm" placeholder="Cant" id="numero-duracion" min="0" value="1"> 
+      <select name="" id="forma-duracion" class="form-control form-control-sm">
         <option value="0">Minuto</option>
         <option value="1">Hora</option>
         <option value="2">Día</option>
@@ -73,8 +71,9 @@
       </select>
     </div>
   </div>
-  <div class="form-group col-xs-12">
-    <div class="col-xs-12">
+
+  <div class="form-group col-sm-12">
+    <div class="col-sm-12">
       <center>
           <div class="">
             <label>
@@ -83,11 +82,11 @@
           </div>
         </center>
     </div>
-    <div class="col-xs-12" id="divObservacion" hidden>
-      <textarea id="observacion-receta" rows="3" class="form-control" placeholder="Opcional"></textarea>
+    <div class="col-sm-12" id="divObservacion" style="display: none">
+      <textarea id="observacion-receta" rows="2" class="form-control form-control-sm" placeholder="Opcional"></textarea>
     </div>
   </div>
-  <div class="row">
+  <div class="flex-row">
     <center>
       <button type="button" class="btn btn-sm btn-primary" id="agregar-medicamento-receta"><i class="fa fa-plus" ></i> Agregar</button>
     </center>

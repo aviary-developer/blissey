@@ -8,10 +8,10 @@ $(document).on('ready', function () {
     e.preventDefault();
 
     //Metodos de botones
-    $("#med-btn").removeClass('btn-default').addClass('btn-primary');
-    $('#lab-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#ryu-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#otro-btn').removeClass('btn-primary').addClass('btn-default');
+    $("#med-btn").removeClass('btn-light').addClass('btn-danger');
+    $('#lab-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#ryu-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#otro-btn').removeClass('btn-danger').addClass('btn-light');
 
     //Metodos de los divs
     $("#med-div").show();
@@ -24,10 +24,10 @@ $(document).on('ready', function () {
     e.preventDefault();
 
     //Metodos de botones
-    $("#lab-btn").removeClass('btn-default').addClass('btn-primary');
-    $('#med-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#ryu-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#otro-btn').removeClass('btn-primary').addClass('btn-default');
+    $("#lab-btn").removeClass('btn-light').addClass('btn-danger');
+    $('#med-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#ryu-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#otro-btn').removeClass('btn-danger').addClass('btn-light');
 
     //Metodos de los divs
     $("#lab-div").show();
@@ -40,10 +40,10 @@ $(document).on('ready', function () {
     e.preventDefault();
 
     //Metodos de botones
-    $("#ryu-btn").removeClass('btn-default').addClass('btn-primary');
-    $('#lab-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#med-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#otro-btn').removeClass('btn-primary').addClass('btn-default');
+    $("#ryu-btn").removeClass('btn-light').addClass('btn-danger');
+    $('#lab-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#med-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#otro-btn').removeClass('btn-danger').addClass('btn-light');
 
     //Metodos de los divs
     $("#ryu-div").show();
@@ -56,10 +56,10 @@ $(document).on('ready', function () {
     e.preventDefault();
 
     //Metodos de botones
-    $("#otro-btn").removeClass('btn-default').addClass('btn-primary');
-    $('#lab-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#ryu-btn').removeClass('btn-primary').addClass('btn-default');
-    $('#med-btn').removeClass('btn-primary').addClass('btn-default');
+    $("#otro-btn").removeClass('btn-light').addClass('btn-danger');
+    $('#lab-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#ryu-btn').removeClass('btn-danger').addClass('btn-light');
+    $('#med-btn').removeClass('btn-danger').addClass('btn-light');
 
     //Metodos de los divs
     $("#otro-div").show();
@@ -109,25 +109,41 @@ $(document).on('ready', function () {
       confirmButtonText: '¡Guardar!',
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default'
-    }).then(function () {
-      $.ajax({
-        url: "/blissey/public/editar_alergia",
-        type: "POST",
-        data: {
-          id: paciente,
-          alergia: $("#a_lergia").val()
-        },
-        success: function (r) {
-          if (r != 2) {
-            swal("¡Hecho!", "Acción realizada exitosamente", 'success');
-            $("#alergias").text(r);
-          } else {
-            swal("¡Algo salio mal!", 'No se guardo', 'error');
+      cancelButtonClass: 'btn btn-light'
+    }).then((result)=> {
+      if(result.value){
+        $.ajax({
+          url: "/blissey/public/editar_alergia",
+          type: "POST",
+          data: {
+            id: paciente,
+            alergia: $("#a_lergia").val()
+          },
+          success: function (r) {
+            if (r != 2) {
+              swal({
+                type: 'success',
+                toast: true,
+                title: '¡Acción exitosa!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
+              $("#alergias").text(r);
+            } else {
+              swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
+            }
           }
-        }
-      });
-    }).catch(swal.noop);
+        });
+      }
+    });
   });
 
   $("#agregar-medicamento-receta").click(function (e) {
@@ -151,9 +167,9 @@ $(document).on('ready', function () {
       
       var html = '<div class="row">' +
         '<div class="row" style="margin: 0 10px 0 15px">' +
-        '<p style="font-size: medium">' +
-        '<button type="button" class="btn btn-xs btn-danger" id="remove_medicamento">' +
-        '<i class="fa fa-remove"></i>' +
+        '<p class="mb-1 h-auto" style="font-size: medium">' +
+        '<button type="button" class="btn btn-sm btn-danger" id="remove_medicamento">' +
+        '<i class="fa fa-times"></i>' +
         '</button>' +
         cant_dosis + ' ' + ((forma_dosis == 0 && presentacion != "¡No está disponible!") ? presentacion : texto_dosis) + ' de ' +
         '<b class="blue">' +
@@ -175,7 +191,14 @@ $(document).on('ready', function () {
       
       $("#texto-medicamento").append(html);
     } else {
-      swal('Error', 'No ha seleccionado ningún medicamento', 'error');
+      swal({
+        title: '¡Error!',
+        text: 'No ha seleccionado ningún medicamento',
+        type: 'error',
+        toast: true,
+        timer: 4000,
+        showConfirmButton: false
+      });
     }
 
     $("#nombre_producto").val("");
@@ -251,12 +274,12 @@ $(document).on('ready', function () {
           $(r.productos).each(function (key, value) {
             var presentacion = value.presentacion;
             var html = '<div class="x_panel m_panel">' +
-              '<form class="form-horizontal form-label-left input_mask">' +
+              '<form class="form-horizontal form-badge-left input_mask">' +
               '<div class="row">' +
               '<center>' +
               '<h4><span>' +
               value.nombre + '</span> ' +
-              '<b class="label label-lg label-primary">' +
+              '<b class="badge font-sm badge-primary">' +
               value.presentacion +
               '</b>' +
               '</h4>' +
@@ -266,10 +289,10 @@ $(document).on('ready', function () {
               '<div class="ln_solid"></div>' +
               '<div class="row">' +
               '<div class="form-group">' +
-              '<label class="col-xs-4 control-label">' +
+              '<badge class="col-sm-4 control-label">' +
               'División:' +
               '</label>' +
-              '<div class="col-xs-8">' +
+              '<div class="col-sm-8">' +
               '<select class="form-control" id="div_seleccion">';
             
             var indice = key;
@@ -297,30 +320,30 @@ $(document).on('ready', function () {
               '</div>' +
               '</div>' +
               '<div class="form-group">' +
-              '<label class="col-xs-4 control-label">' +
+              '<badge class="col-sm-4 control-label">' +
               'Cantidad:' +
               '</label>' +
-              '<div class="col-xs-8">' +
+              '<div class="col-sm-8">' +
               '<input class="form-control" id="cant" value="1" type="number" min="1">' +
               '</div>' +
               '</div>' +
               '</div>' +
               '<div class="row">' +
-              '<div class="col-xs-4">' +
+              '<div class="col-sm-4">' +
               '<center>' +
               '<label>' +
               'Precio' +
               '</label>' +
               '</center>' +
               '</div>' +
-              '<div class="col-xs-4">' +
+              '<div class="col-sm-4">' +
               '<center>' +
               '<label>' +
               'Inventario' +
               '</label>' +
               '</center>' +
               '</div>' +
-              '<div class="col-xs-4">' +
+              '<div class="col-sm-4">' +
               '<center>' +
               '<label>' +
               'Estante | Nivel' +
@@ -329,24 +352,24 @@ $(document).on('ready', function () {
               '</div>' +
               '</div>' +
               '<div class="row">' +
-              '<div class="col-xs-4">' +
-              '<h5 class="big-text"><b class="label label-lg label-success col-xs-12"> $ ' +
+              '<div class="col-sm-4">' +
+              '<h5 class="big-text"><b class="badge font-sm badge-success col-sm-12"> $ ' +
               v_pre_receta[indice][0] +
               '</b></h5>' +
               '</div>' +
-              '<div class="col-xs-4">' +
-              '<h5 class="big-text"><b class="label label-lg label-default col-xs-12">' +
+              '<div class="col-sm-4">' +
+              '<h5 class="big-text"><b class="badge font-sm badge-light col-sm-12">' +
               v_inv_receta[indice][0] +
               '</b></h5>' +
               '</div>' +
-              '<div class="col-xs-4">' +
-              '<div class="col-xs-6">' +
-              '<h5 class="big-text"><b class="label label-lg label-primary col-xs-12">' +
+              '<div class="col-sm-4">' +
+              '<div class="col-sm-6">' +
+              '<h5 class="big-text"><b class="badge font-sm badge-primary col-sm-12">' +
               ((v_inv_receta[indice][0] == 0) ? '--' : v_est_receta[indice][0]) +
               '</b></h5>' +
               '</div>' +
-              '<div class="col-xs-6">' +
-              '<h5 class="big-text"><b class="label label-lg label-cian col-xs-12">' +
+              '<div class="col-sm-6">' +
+              '<h5 class="big-text"><b class="badge font-sm badge-cian col-sm-12">' +
               ((v_inv_receta[indice][0] == 0) ? '--' : v_niv_receta[indice][0]) +
               '</b></h5>' +
               '</div>' +
@@ -420,8 +443,8 @@ $(document).on('ready', function () {
         '<input type="hidden" name="cantidad[]" value="' + cantidad + '">' +
         '<input type="hidden" name="precio[]" value="' + precio + '">' +
         '<input type="hidden" name="tipo_detalle[]" value="1">' +
-        '<button type="button" class="btn btn-xs btn-danger" id="eliminar_detalle">' +
-        '<i class="fa fa-remove"></i>' +
+        '<button type="button" class="btn btn-sm btn-danger" id="eliminar_detalle">' +
+        '<i class="fa fa-times"></i>' +
         '</button>' +
         '</td>' +
         '</tr>';
@@ -452,7 +475,7 @@ function agregar_text_receta_evaluacion(tipo) {
   } else if (tipo == 'rayo') {
     var texto = $("#f_rayo_receta option:selected").text();
     var id = $("#f_rayo_receta").val();
-    var tipo_l = 'una evaluación de rayos X';
+    var tipo_l = 'una radiografía';
   } else {
     var texto = $("#f_tac_receta option:selected").text();
     var id = $("#f_tac_receta").val();
@@ -482,9 +505,9 @@ function agregar_text_receta_evaluacion(tipo) {
 
   var html = '<div class="row">' +
     '<div class="row" style="margin: 0 10px 0 15px">' +
-    '<p style="font-size: medium">' +
-    '<button type="button" class="btn btn-xs btn-danger" id="remove_eva">' +
-    '<i class="fa fa-remove"></i>' +
+    '<p class="mb-1 h-auto" style="font-size: medium">' +
+    '<button type="button" class="btn btn-sm btn-danger" id="remove_eva">' +
+    '<i class="fa fa-times"></i>' +
     '</button>' +
     'Realizarse ' + tipo_l + ' ' + art + ' <b class="blue">' +
     texto +

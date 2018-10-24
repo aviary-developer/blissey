@@ -152,10 +152,26 @@ $(document).on("ready", function () {
 
   $("#ver_crear_receta").click(function (e) {
     e.preventDefault();
-    if ($("#motivo").val() != "" && $("#historia").val() != "" && $("#ex_fisico").val() != "" && $("#diagnostico").val() != "") {
+    var is_valid = true;
+    
+    var valido = new Validated('motivo');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    var valido = new Validated('historia');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    var valido = new Validated('ex_fisico');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    var valido = new Validated('diagnostico');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    if (is_valid) {
       $("#receta").modal('show');
-    } else {
-      swal("Error", "Llene todos los campos para continuar", "error");
     }
   });
 

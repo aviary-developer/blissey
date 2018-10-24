@@ -1,4 +1,4 @@
-  <div class="col-sm-12" style="height: 420px; overflow-x:hidden; overflow-y:scroll; display:none" id="ver_consulta">
+  <div class="col-sm-12" style="height: 450px; overflow-x:hidden; overflow-y:scroll; display:none" id="ver_consulta">
   <div class="flex-row">
     <center>
       <h5 class="text-primary mb-2">
