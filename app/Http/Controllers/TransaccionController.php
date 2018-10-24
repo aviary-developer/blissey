@@ -338,11 +338,7 @@ class TransaccionController extends Controller
     public function eliminarPedido($id,$tipo){
       DetalleTransacion::where('f_transaccion',$id)->delete();
       Transacion::destroy($id);
-      if($tipo==0){
-      return redirect('/transacciones?tipo='.$tipo);
-    }else{
-      return redirect('/requisiciones?tipo='.$tipo);
-    }
+      return redirect('/transacciones?tipo='.$tipo)->with('mensaje', '¡Eliminado!');;
     }
 
     public static function buscarServicio($texto){

@@ -1,9 +1,8 @@
-<a class="btn btn-danger btn-sm" onclick={!! "'eliminarPedido(".$transaccion->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
-  <i class="fa fa-remove"></i>
+<a class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$transaccion->id.");'" !!} title="Eliminar"/>
+  <i class="fas fa-times" style="color:#fff;"></i>
 </a>
-{{-- href={!! asset('/eliminarPedido/'.$transaccion->id)!!} --}}
 <script type="text/javascript">
-function eliminarPedido(id){
+function eliminar(id){
   return swal({
     title: 'Eliminar pedido',
     text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
@@ -15,23 +14,10 @@ function eliminarPedido(id){
     confirmButtonClass: 'btn btn-danger',
     cancelButtonClass: 'btn btn-default',
     buttonsStyling: false
-  }).then(function () {
-    var dominio = window.location.host;
-    location.href ='http://'+dominio+'/blissey/public/eliminarPedido/'+id+"/0";
-    // $('#formulario').attr('action','http://'+dominio+'/blissey/public/eliminarPedido/'+id);
-    $('#formulario').submit();
-    swal(
-      '¡Eliminado!',
-      'Acción realizada satisfactorimente',
-      'success'
-    )
-  }, function (dismiss) {
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
+  }).then((result) => {
+    if (result.value) {
+      var dominio = window.location.host;
+      location.href ='http://'+dominio+'/blissey/public/eliminarPedido/'+id+"/0";
     }
   });
 }
