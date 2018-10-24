@@ -18,34 +18,89 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href={!! asset('/divisiones/create') !!}>Nuevo</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Reporte</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Ver
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={!! asset('/divisiones?estado='.$estadoOpuesto) !!}>
-            @if ($estadoOpuesto)
-              Activos
-              <span class="badge badge-primary float-right">
-                {{$activos}}
-              </span>
-            @else
-              Papelera
-              <span class="badge badge-warning float-right">
-                {{$inactivos}}
-              </span>
-            @endif
-          </a>
-        </div>
-      </li>
-    </ul>
-    @include('Dashboard.boton_salir')
-  </div>
+@if($tipo==0)
+  <li class="nav-item">
+    <a class="nav-link" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Ver
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href={!! asset('/transacciones?tipo=1') !!}>
+        Confirmados
+        <span class="badge badge-success float-right">
+          {{ App\Transacion::where('tipo',1)->where('localizacion',App\Transacion::tipoUsuario())->count() }}
+        </span>
+      </a>
+    </div>
+  </li>
+@endif
+
+@if($tipo==1)
+  <li class="nav-item">
+    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Ver
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href={!! asset('/transacciones?tipo=0') !!}>
+        Por confirmar
+        <span class="badge badge-primary float-right">
+          {{ App\Transacion::where('tipo',0)->where('localizacion',App\Transacion::tipoUsuario())->count() }}
+        </span>
+      </a>
+    </div>
+  </li>
+@endif
+
+@if($tipo==2)
+  <li class="nav-item">
+    <a class="nav-link" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Ver
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href={!! asset('/transacciones?tipo=3') !!}>
+        Anuladas
+        <span class="badge badge-danger float-right">
+          {{ App\Transacion::where('tipo',3)->where('localizacion',App\Transacion::tipoUsuario())->count() }}
+        </span>
+      </a>
+    </div>
+  </li>
+@endif
+
+@if($tipo==3)
+  <li class="nav-item">
+    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Ver
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href={!! asset('/transacciones?tipo=2') !!}>
+        Realizadas
+        <span class="badge badge-success float-right">
+          {{ App\Transacion::where('tipo',2)->where('localizacion',App\Transacion::tipoUsuario())->count() }}
+        </span>
+      </a>
+    </div>
+  </li>
+@endif
+</ul>
+@include('Dashboard.boton_salir')
+</div>
 </nav>
 <input type="hidden" name="u" id="ubi" value="index">
