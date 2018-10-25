@@ -32,8 +32,8 @@ $('#agregar_parametro_x').on('click', function (e) {
   "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
   "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
   "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
-  "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
-  "<i class='fa fa-remove'></i>"
+  "<button id='eliminar_fila' class='btn btn-sm btn-danger'>" +
+  "<i class='fa fa-times'></i>"
   "<button>"+
   "</td>" +
   "</tr>";
@@ -68,21 +68,21 @@ $("#listo_x").on("click", function (e) {
 
 
       var panel = $("#panel_seccion");
-      html = '<div class="btn-default col-xs-3" style="height: 130px; margin: 0px" id="x_seccion_x' + x + '">' +
+      html = '<div class="btn-light col-sm-3 border border-primary rounded" style="height: 130px; margin: 0px" id="x_seccion_x' + x + '">' +
       '<input type="hidden" name="seccion_a_ver" value="seccion_x'+ x+'">' +
       '<center>' +
-      '<i class="fa fa-flask blue" style="font-size: 300%; margin: 15px;"></i>' +
+      '<i class="fa fa-flask text-primary" style="font-size: 300%; margin: 15px 15px 10px 15px;"></i>' +
       '<br>' +
-      '<div style="margin-bottom: 10px;">' +
-      '<span class="label label-lg label-primary" >' + n_seccion + '</span>' +
+      '<div style="margin-bottom: 4px;">' +
+      '<span class="badge font-sm badge-primary" >' + n_seccion + '</span>' +
       '</div>' +
       '<div id="seccion_x' + x + '">' +
       '<input type="hidden" id="y_seccion" name="y_seccion[]" value="'+ v_seccion+'">'+
-      '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+      '<button class="btn btn-sm btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
       '<i class="fa fa-search"></i>' +
       '</button>' +
-      '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
-      '<i class="fa fa-remove"></i>' +
+      '<button class="btn btn-sm btn-danger" id="eliminar_ficha">' +
+      '<i class="fa fa-times"></i>' +
       '</button>' +
       '</div>' +
       '</center>' +
@@ -127,18 +127,18 @@ $("#listo_x").on("click", function (e) {
       var ficha = $("#x_" + seccion_vista);
       var html = '<input type="hidden" name="seccion_a_ver" value="' + seccion_vista + '">' +
       '<center>' +
-      '<i class="fa fa-flask" style="font-size: 300%; margin: 15px;"></i>' +
+      '<i class="fa fa-flask text-primary" style="font-size: 300%; margin: 15px 15px 10px 15px;"></i>' +
       '<br>' +
-      '<div style="margin-bottom: 10px;">' +
-      '<span class="label label-lg label-default" >' + n_seccion + '</span>' +
+      '<div style="margin-bottom: 4px;">' +
+      '<span class="badge font-sm badge-primary" >' + n_seccion + '</span>' +
       '</div>' +
       '<div id="' + seccion_vista + '">' +
       '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
-      '<button class="btn btn-xs btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+      '<button class="btn btn-sm btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
       '<i class="fa fa-search"></i>' +
       '</button>' +
-      '<button class="btn btn-xs btn-danger" id="eliminar_ficha">' +
-      '<i class="fa fa-remove"></i>' +
+      '<button class="btn btn-sm btn-danger" id="eliminar_ficha">' +
+      '<i class="fa fa-times"></i>' +
       '</button>' +
       '</div>' +
       '</center>';
@@ -231,8 +231,8 @@ $('#panel_seccion').on('click','#ver_seccion', function (e) {
     "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
     "</td>" +
     "<td>" +
-    "<button id='eliminar_fila' class='btn btn-xs btn-danger'>" +
-    "<i class='fa fa-remove'></i>"
+    "<button id='eliminar_fila' class='btn btn-sm btn-danger'>" +
+    "<i class='fa fa-times'></i>"
     "<button>" +
     "</td>" +
     "</tr>";
@@ -262,49 +262,34 @@ $("#guardar_examen").on("click", function (e) {
   e.preventDefault();
     var imagens;
     if(imagen=$("#checkImagenExamen:checked").val()!=null){
-    imagen=imagen;
-  }else{
-      imagen=imagen;
-    }
+			imagen=imagen;
+		}else{
+			imagen=imagen;
+		}
   var nombre = $("#nombre_examen").val();
   var precio = $("#precio_campo").val();
   var bandera = true;
   if ((total_seccion < 1) && (imagen==false)) {
-    new PNotify({
-      title: '¡Error!',
-      text: 'Se necesita 1 sección como mínimo',
-      type: 'error',
-      nonblock: {
-        nonblock: false
-      },
-      styling: 'bootstrap3'
-    });
+		swal({
+			type: 'error',
+			title: '¡Error!',
+			text: 'Se necesita al menos una sección o una imagen',
+			toast: true,
+			timer: 5000,
+			showConfirmButton: false,
+		});
     bandera = false;
   }
-  if (nombre.length < 4) {
-    new PNotify({
-      title: '¡Error!',
-      text: 'El campo nombre necesita 4 caracteres como mínimo',
-      type: 'error',
-      nonblock: {
-        nonblock: false
-      },
-      styling: 'bootstrap3'
-    });
-    bandera = false;
-  }
-  if (precio.length < 1) {
-    new PNotify({
-      title: '¡Error!',
-      text: 'El campo precio es obligatorio',
-      type: 'error',
-      nonblock: {
-        nonblock: false
-      },
-      styling: 'bootstrap3'
-    });
-    bandera = false;
-  }
+	var valido = new Validated('nombre_examen');
+	valido.required();
+	valido.min(4);
+	valido.max(30);
+	bandera = valido.value(bandera);
+
+	var valido = new Validated('precio_campo');
+	valido.required();
+	bandera = valido.value(bandera);
+
   if (bandera) {
     if (imagen) {
       imagen="Si";
@@ -352,10 +337,12 @@ $("#guardar_examen").on("click", function (e) {
       confirmButtonText: 'Si, ¡Guardar!',
       cancelButtonText: 'No, ¡Seguir trabajando!',
       confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default'
-    }).then(function () {
-      $("#examen_form").submit();
-    }).catch(swal.noop);
+      cancelButtonClass: 'btn btn-light'
+		}).then((result) => {
+			if (result.value) {
+				$("#examen_form").submit();
+			}
+    });
   }
 });
 

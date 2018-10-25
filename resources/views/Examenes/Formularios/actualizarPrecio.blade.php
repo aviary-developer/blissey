@@ -1,6 +1,3 @@
-<button value={{ $servicio->id}} id="idServicio" type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modalActualizarPrecio">
-  <i class="fa fa-refresh"></i> Actualizar precio
-</button>
 <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modalActualizarPrecio">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -25,13 +22,6 @@
             </div>
             <br><br>
             </div>
-            <!--<div class="form-group">
-            <label class="control-label col-sm-3 col-xs-12">Descripción</label>
-            <div class="col-sm-9 col-xs-12">
-              <span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::textarea('descripcionExistencias',null,['id'=>'descripcionExistencias','class'=>'form-control has-feedback-left','placeholder'=>'Describa el movimiento en la cantidad de reactivos','rows'=>'3']) !!}
-            </div>
-          </div>-->
 
           <input type="hidden" id="tokenExistenciaModal" name="tokenExistenciaModal" value="<?php echo csrf_token(); ?>">
         </div>

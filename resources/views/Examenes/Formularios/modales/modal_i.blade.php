@@ -1,99 +1,116 @@
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal1">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal1">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+		<div class="x_panel m_panel text-danger">
+			<center>
+				<h4 class="mb-1">
+					Sección
+					<span class="badge badge-danger">Agregar</span>
+				</h4>
+			</center>
+		</div>
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">Sección <span class="label label-lg label-success">Agregar</span></h4>
-      </div>
+		<div class="x_panel m_panel">
+			<div class="form-group col-sm-12">
+				<label class="" for="seccion_select">Tipo de sección *</label>
+				<div class="input-group mb-2 mr-sm-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text"><i class="fas fa-tint"></i></div>
+					</div>
+					<select class="form-control form-control-sm" id="seccion_select" >
+						@foreach ($secciones as $seccion)
+							<option value={{$seccion->id}}>
+								{{ $seccion->nombre}}
+							</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
+		</div>
 
-      <div class="modal-body">
-        <div class="x_panel" style="min-height: 350px;">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="x_panel m_panel" style="height:295px;">
+					<div class="form-group col-sm-12">
+						<label class="" for="parametro_select">Parametro *</label>
+						<div class="input-group mb-2 mr-sm-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text"><i class="fas fa-tint"></i></div>
+							</div>
+							<select class="form-control form-control-sm" id="parametro_select" >
+								@foreach ($parametros as $parametro)
+									<option value={{$parametro->id}}>
+										{{ $parametro->nombreParametro}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
 
-          <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">Tipo de sección *</label>
-            <div class="col-md-10 col-sm-10 col-xs-12">
-              <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
-              <select class="form-control has-feedback-left" id="seccion_select" >
-                @foreach ($secciones as $seccion)
-                  <option value={{$seccion->id}}>
-                    {{ $seccion->nombre}}
-                  </option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          <div class="ln_solid"></div>
+					<div class="form-group">
+						<center>
+							<label>
+								<input type="checkbox" name="checkReactivo" id="checkReactivo" onClick="chekearReactivo(this,0);" class="js-switch" unchecked /> Añadir reactivo
+							</label>
+						</center>
+					</div>
 
-          <div class="col-sm-6 col-xs-12">
+					<div class="form-group col-sm-12" id="divReactivo0" style="display:none">
+						<label class="" for="parametro_select">Parametro *</label>
+						<div class="input-group mb-2 mr-sm-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text"><i class="fas fa-tint"></i></div>
+							</div>
+							<select class='form-control form-control-sm' id="reactivo_select">
+								@foreach ($reactivos as $reactivo)
+									<option value={{$reactivo->id}}>
+										{{ $reactivo->nombre}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
 
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-12">Parametro *</label>
-              <div class="col-md-8 col-sm-8 col-xs-12">
-                <span class="fa fa-sliders form-control-feedback left" aria-hidden="true"></span>
-                <select class="form-control has-feedback-left" id="parametro_select" >
-                  @foreach ($parametros as $parametro)
-                    <option value={{$parametro->id}}>
-                      {{ $parametro->nombreParametro}}
-                    </option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
+					<div class="clearfix"></div>
+					<div class="ln_solid"></div>
+					<center>
+						<button type="button" class="btn btn-sm btn-primary" id="agregar_parametro_x">
+							Agregar
+							<i class="fa fa-arrow-right"></i>
+						</button>
+					</center>
+				</div>
+			</div>
 
-            <div class="form-group">
-              <center>
-                <label>
-                  <input type="checkbox" name="checkReactivo" id="checkReactivo" onClick="chekearReactivo(this,0);" class="js-switch" unchecked /> Añadir reactivo
-                </label>
-              </center>
-            </div>
+			<div class="col-sm-6">
+				<div class="x_panel m_panel" style="height:295px; width: 100%">
+					<div class="flex-row">
+						<center>
+							<h5>Parametros agragados</h5>
+						</center>
+					</div>
+					<div style="overflow-x:hidden; overflow-y:scroll; height:225px; width:100%">
+	
+						<table class="table table-hover table-striped table-sm" id="tabla_parametros">
+							<thead>
+								<th>Parametro</th>
+								<th>Reactivo</th>
+								<th style="width: 80px">Opción</th>
+							</thead>
+							<tbody>
+	
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            <div id="divReactivo0" class='form-group' style="display:none;">
-              <label class="control-label col-md-4 col-sm-4 col-xs-12">Reactivo *</label>
-              <div class="col-md-8 col-sm-8 col-xs-12">
-                <span class='fa fa-tint form-control-feedback left' aria-hidden='true'></span>
-                <select class='form-control has-feedback-left' id="reactivo_select">
-                  @foreach ($reactivos as $reactivo)
-                    <option value={{$reactivo->id}}>
-                      {{ $reactivo->nombre}}
-                    </option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
+		<div class="m_panel x_panel bg-transparent" style="border:0px !important">
+			<center>
+				<button type="button" class="btn btn-sm btn-primary disabled col-2" id="listo_x">¡Listo!</button>
+        <button type="button" class="btn btn-sm btn-light col-2" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
+			</center>
+		</div>
 
-            <div class="ln_solid"></div>
-            <center>
-              <button type="button" class="btn btn-sm btn-primary" id="agregar_parametro_x">
-                Agregar
-                <i class="fa fa-arrow-right"></i>
-              </button>
-            </center>
-          </div>
-
-          <div class="col-sm-6 col-xs-12">
-            <h4>Parametros agregados</h4>
-            <table class="table" id="tabla_parametros">
-              <thead>
-                <th>Parametro</th>
-                <th>Reactivo</th>
-                <th style="width: 80px">Acción</th>
-              </thead>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary disabled" id="listo_x">¡Listo!</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
-      </div>
-
-    </div>
   </div>
 </div>
