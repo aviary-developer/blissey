@@ -1,56 +1,78 @@
-{{--  MODAL INICIO--}}
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">Buscar</h4>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="x_panel m_panel text-danger">
+          <center>
+            <h4 class="mb-1">
+              <i class="fas fa-search"></i>
+              Buscar
+            </h4>
+          </center>
+        </div>
       </div>
-
-      <div class="modal-body">
-        <div class="x_panel">
-          <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">Buscar por: </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              Producto {!!Form::radio('busq', '1',true,['onclick'=>'cambioRadio(1)'])!!}
-              Componente {!!Form::radio('busq', '2',null,['onclick'=>'cambioRadio(2)'])!!}
-              @if(Auth::user()->tipoUsuario=="Recepción")
-                Servicios {!!Form::radio('busq', '3',null,['onclick'=>'cambioRadio(3)'])!!}
-              @endif
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">Buscar</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('resultadoVenta',null,['id'=>'resultadoVenta','class'=>'form-control has-feedback-left','placeholder'=>'Buscar']) !!}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12">Cantidad *</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
-            </div>
-          </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="x_panel m_panel">
+          <div class="ln_solid mb-1 mt-1"></div>
           <div class="row">
-            <div class="col-md-12 col-xs-12">
-              <h4 class="StepTitle">Resultado de busqueda</h4>
-              <table class="table" id="tablaBuscar">
-                <thead>
-                </thead>
-              </table>
+
+            <div class="form-group col-sm-12">
+              <label for="radios">Buscar por:</label>
+              <div class="input-group mb-2 mr-sm-2">
+                Producto {!!Form::radio('busq', '1',true,['onclick'=>'cambioRadio(1)'])!!}
+                Componente {!!Form::radio('busq', '2',null,['onclick'=>'cambioRadio(2)'])!!}
+                @if(Auth::user()->tipoUsuario=="Recepción")
+                  Servicios {!!Form::radio('busq', '3',null,['onclick'=>'cambioRadio(3)'])!!}
+                @endif
+              </div>
             </div>
+
+            <div class="form-group col-sm-8">
+              <label class="" for="nombre">Buscar</label>
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-search"></i></div>
+                </div>
+                {!! Form::text('resultadoVenta',null,['id'=>'resultadoVenta','class'=>'form-control form-control-sm','placeholder'=>'Buscar']) !!}
+              </div>
+            </div>
+
+            <div class="form-group col-sm-4">
+              <label class="" for="cantidad">Cantidad *</label>
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user"></i></div>
+                </div>
+                {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control form-control-sm','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+              </div>
+            </div>
+
+              <div class="x_panel">
+              <div class="col-md-12 col-xs-12">
+                <h6>Resultado de búsqueda</h6>
+                <center>
+                  <table class="table table-striped table-sm" id="tablaBuscar">
+                    <thead>
+                    </thead>
+                  </table>
+                </center>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarTablaVenta()">Cerrar</button>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="m_panel x_panel bg-transparent" style="border:0px !important">
+          <center>
+            <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal" onclick="limpiarTablaVenta()">Cerrar</button>
+          </center>
+        </div>
       </div>
     </div>
   </div>
 </div>
-  {{-- MODAL FINAL --}}
