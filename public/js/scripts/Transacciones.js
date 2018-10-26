@@ -48,8 +48,8 @@ $(document).on('ready',function(){
                       "<input type='hidden' name='producto_division[]' value ='"+n_division+"'>"+
                       "<input type='hidden' name='nombre_producto[]' value ='"+value.nombre+"'>"+
                       "<input type='hidden' name='id_producto[]' value ='"+value2.id+"'>"+
-                      "<button type='button' class='btn btn-xs btn-primary' id='agregar_resultado'>"+
-                      "<i class='fa fa-arrow-right'></i>"+
+                      "<button type='button' class='btn btn-sm btn-primary' id='agregar_resultado'>"+
+                      "<i class='fas fa-arrow-right'></i>"+
                       "</button>"+
                       "</td>"+
                       "</tr>";
@@ -89,7 +89,7 @@ $(document).on('ready',function(){
           "<th colspan='2'>Resultado</th>"+
           "<th>Estante|Nivel</th>"+
           "<th>Existencias</th>"+
-          "<th>Precio</th>"+
+          "<th style='width : 80px'>Precio</th>"+
           "<th style='width : 80px'>Acción</th>"+
           "</thead>";
           tabla.append(cab);
@@ -108,8 +108,8 @@ $(document).on('ready',function(){
               "<td id='ct"+value2.id+"'>"+value2.inventario+"</td>"+
               "<td>$ <label id='cc"+value2.id+"'>"+parseFloat(value2.precio).toFixed(2)+"</label></td>"+
               "<td>"+
-              "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa("+value2.id+");'>"+
-              "<i class='fa fa-arrow-right'></i>"+
+              "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa("+value2.id+");'>"+
+              "<i class='fas fa-arrow-right'></i>"+
               "</button>"+
               "</td>"+
               "</tr>";
@@ -153,8 +153,8 @@ $(document).on('ready',function(){
                 "<td>$ <label id='cc"+value3.id+"'>"+parseFloat(value3.precio).toFixed(2)+"</label></td>"+
                 "<td>"+value.nombre+"</td>"+
                 "<td>"+
-                "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa("+value3.id+");'>"+
-                "<i class='fa fa-arrow-right'></i>"+
+                "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa("+value3.id+");'>"+
+                "<i class='fas fa-arrow-right'></i>"+
                 "</button>"+
                 "</td>"+
                 "</tr>";
@@ -183,8 +183,8 @@ $(document).on('ready',function(){
                 "<td id='cu"+value.id+"'>"+value.nombre+"</td>"+
                 "<td>$ <label id='cd"+value.id+"'>"+parseFloat(value.precio).toFixed(2)+"</label></td>"+
                 "<td>"+
-                "<button type='button' class='btn btn-xs btn-primary' onclick='registrarventa("+value.id+");'>"+
-                "<i class='fa fa-arrow-right'></i>"+
+                "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa("+value.id+");'>"+
+                "<i class='fas fa-arrow-right'></i>"+
                 "</button>"+
                 "</td>"+
                 "</tr>";
@@ -245,8 +245,8 @@ $(document).on('ready',function(){
             "<td>"+
             "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
             "<input type='hidden' name='cantidad[]' value ='"+cantidad+"'>"+
-            "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-            "<i class='fa fa-remove'></i>"+
+            "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+            "<i class='fas fa-times'></i>"+
             "</button>"+
             "</td>"+
             "</tr>";
@@ -264,8 +264,8 @@ $(document).on('ready',function(){
           "<td>"+
           "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
           "<input type='hidden' name='estado[]' value ='nuevo'>"+
-          "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-          "<i class='fa fa-remove'></i>"+
+          "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+          "<i class='fas fa-times'></i>"+
           "</button>"+
           "</td>"+
           "</tr>";
@@ -361,8 +361,8 @@ $(document).on('ready',function(){
               html=html+"<input type='hidden' name='precio[]' value ='"+$("#preoculto").val()+"'>"+
               "<input type='hidden' name='tipo_detalle[]' value ='1'>";
             }
-            html=html+"<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-            "<i class='fa fa-remove'></i>"+
+            html=html+"<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+            "<i class='fas fa-times'></i>"+
             "</button>"+
             "</td>"+
             "</tr>";
@@ -385,8 +385,8 @@ $(document).on('ready',function(){
         "<td>"+
         "<input type='hidden' name='f_producto[]' value ='"+f_producto+"'>"+
         "<input type='hidden' name='estado[]' value ='nuevo'>"+
-        "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-        "<i class='fa fa-remove'></i>"+
+        "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+        "<i class='fas fa-times'></i>"+
         "</button>"+
         "</td>"+
         "</tr>";
@@ -424,8 +424,8 @@ $(document).on('ready',function(){
               "<td>"+value.telefono+"</td>"+
               "<td>"+value.dui+"</td>"+
               "<td>"+
-              "<button type='button' class='btn btn-xs btn-primary' onclick='agregarCliente("+value.id+");' data-dismiss='modal'>"+
-              "<i class='fa fa-arrow-right'></i>"+
+              "<button type='button' class='btn btn-sm btn-primary' onclick='agregarCliente("+value.id+");' data-dismiss='modal'>"+
+              "<i class='fas fa-arrow-right'></i>"+
               "</button>"+
               "</td>"+
               "</tr>";
@@ -578,8 +578,8 @@ function registrarventa(id){
     "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
     "<input type='hidden' name='precio[]' value='"+c4+"'>"+
     "<input type='hidden' name='tipo_detalle[]' value='1'>"+
-    "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-    "<i class='fa fa-remove'></i>"+
+    "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+    "<i class='fas fa-times'></i>"+
     "</button>"+
     "</td>"+
     "</tr>";
@@ -601,8 +601,8 @@ function registrarventa(id){
   "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
   "<input type='hidden' name='precio[]' value='"+c2+"'>"+
   "<input type='hidden' name='tipo_detalle[]' value='2'>"+
-  "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-  "<i class='fa fa-remove'></i>"+
+  "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+  "<i class='fas fa-times'></i>"+
   "</button>"+
   "</td>"+
   "</tr>";

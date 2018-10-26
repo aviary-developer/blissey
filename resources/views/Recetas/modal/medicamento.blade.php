@@ -1,18 +1,23 @@
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="medicamento_m" data-backdrop="static">
-  <div class="modal-dialog">
+<div class="modal fade" tabindex="-1" role="dialog" id="medicamento_m" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="row">
       <div class="col-sm-12">
-        <div class="m_panel x_panel">
+        <div class="x_panel m_panel text-danger">
+          <center>
+            <h4 class="mb-1">
+              <i class="fas fa-search"></i>
+              Buscar Receta
+            </h4>
+          </center>
           <div class="row">
-            <center>
-              <h4>Buscar Receta</h4>
-            </center>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-sm-12">Código</label>
-            <div class="col-md-7 col-sm-7 col-sm-12">
-              <div class="input-group">
-                {!! Form::text('codi-receta',null,['id'=>'codi-receta','class'=>'form-control ','placeholder'=>'Código de la receta','data-inputmask'=>"'mask' : '9999999999'"]) !!}
+
+            <div class="form-group col-sm-12">
+              <label class="" for="codigo">Código</label>
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-search"></i></div>
+                </div>
+                {!! Form::text('codi-receta',null,['id'=>'codi-receta','class'=>'form-control','placeholder'=>'Código de la receta','data-inputmask'=>"'mask' : '9999999999'"]) !!}
                 <span class="input-group-btn">
                   <button type="button" name="button" class="btn btn-primary" id="buscar_receta_m" data-tooltip="tooltip" title="Buscar Código">
                     <i class="fa fa-search"></i>
@@ -20,11 +25,13 @@
                 </span>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
-    <div class="row" id="res_solicitud_m" hidden>
+
+    <div class="row" id="res_solicitud_m" tyle="display:none;">
       <div class="col-sm-12">
         <div class="m_panel x_panel">
           <div class="row">
@@ -50,7 +57,8 @@
         </div>
       </div>
     </div>
-    <div class="row" id="res_negativa_m" hidden>
+
+    <div class="row" id="res_negativa_m" tyle="display:none;">
       <div class="col-sm-12">
         <div class="x_panel m_panel">
           <center>
@@ -61,13 +69,20 @@
         </div>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-sm-12" id="lista_paneles" style="height:331px; overflow-x:hidden; overflow-y:auto" hidden>
-  
+      <div class="col-sm-12" id="lista_paneles" style="height:331px; overflow-x:hidden; overflow-y:auto; display:none;">
       </div>
     </div>
-    <div class="row alignright" style="margin-top:10px;">
-      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" id="close-search-receta-m">Cerrar</button>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="m_panel x_panel bg-transparent" style="border:0px !important">
+          <center>
+            <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal">Cerrar</button>
+          </center>
+        </div>
+      </div>
     </div>
   </div>
 </div>
