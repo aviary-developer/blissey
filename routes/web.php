@@ -152,7 +152,9 @@ Route::group(['middleware'=>'general'], function(){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
       $tercero = App\Reactivo::where('contenidoPorEnvase','<',20)->get();
-      $proximosReactivosVencer = App\Reactivo::where('estado',1)->get();
+			$proximosReactivosVencer = App\Reactivo::where('estado',1)->get();
+			
+			$count_existencia_reactivo = App\Reactivo::where('contenidoPorEnvase','<',20)->count();
     }
     $empresa = App\Empresa::latest()->first();
     // App\Transacion::llenar();
@@ -162,7 +164,8 @@ Route::group(['middleware'=>'general'], function(){
       "segundo",
       "tercero",
       "proximosReactivosVencer",
-      'examen'
+			'examen',
+			'count_existencia_reactivo'
     ));
   });
 

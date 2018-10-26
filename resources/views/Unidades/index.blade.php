@@ -18,9 +18,9 @@
       <table class="table table-hover table-sm table-striped index-table">
         <thead>
           <tr>
-            <th>#</th>
+            <th style="width: 30px;">#</th>
             <th>Nombre</th>
-            <th style="width: 30%">Opciones</th>
+            <th style="width: 100px">Opciones</th>
           </tr>
         </thead>
         <tbody>

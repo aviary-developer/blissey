@@ -7,8 +7,5 @@
     <li>
       <a href={{asset( '/solicitudex')}}>Evaluación de exámenes</a>
     </li>
-    <li>
-      <a href={{asset( '/ultrasonografias')}}>Ultrasonografías</a>
-    </li>
   </ul>
 </li>

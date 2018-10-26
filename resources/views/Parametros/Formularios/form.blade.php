@@ -1,92 +1,171 @@
-<div class="x_content">
-  <br />
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre *</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-pencil-square-o form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('nombreParametro',null,['class'=>'form-control has-feedback-left','placeholder'=>'Nombre del nuevo parametro','required']) !!}
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-  <div class="">
-    <label>
-      <input type="checkbox"name="checkValores" id="checkValores" class="js-switch" unchecked /> Información avanzada
-    </label>
-  </div>
-  </div>
-  </div>
-  <div id="divValoresNormales" style="display:none;">
-  <div class="form-group" id="grupoUnidadParametro">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Unidad de medición</label>
-    <div class="col-md-9 col-sm-9 col-xs-12" id="unidadParametro">
-      <span class="fa fa-tasks form-control-feedback left" aria-hidden="true"></span>
-        <select class="form-control has-feedback-left" id="selectUnidadParametro" name="unidad">
-          <option value=""></option>
-          @foreach ($unidades as $unidad)
-            @if (!$create)
-              @if ($unidad->id==$parametros->unidad)
-              <option value={{ $unidad->id }} selected>{{ $unidad->nombre }}</option>
-            @else
-              <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
-            @endif
-          @else
-          <option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
-          @endif
-          @endforeach
-        </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-md-2 col-sm-2 col-xs-2">
-    </div>
-    <span class="label-lg label label-cian col-xs-4">Masculino</span>
-    <div class="col-md-2 col-sm-2 col-xs-2">
-    </div>
-    <span class="label-lg label label-pink col-xs-4">Femenino</span>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Mínimo</label>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-      <span class="fa fa-arrow-circle-o-down form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('valorMinimo',null,['id'=>'valorMinimo','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
-    </div>
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Mínimo</label>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-      <span class="fa fa-arrow-circle-o-down form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('valorMinimoFemenino',null,['id'=>'valorMinimoFemenino','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Máximo</label>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-      <span class="fa fa-arrow-circle-o-up form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('valorMaximo',null,['id'=>'valorMaximo','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
-    </div>
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Máximo</label>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-      <span class="fa fa-arrow-circle-o-up form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::number('valorMaximoFemenino',null,['id'=>'valorMaximoFemenino','class'=>'form-control has-feedback-left','placeholder'=>'0','step'=>'any','readonly']) !!}
-    </div>
-  </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Valor predeterminado</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-check-circle-o form-control-feedback left" aria-hidden="true"></span>
-      {!! Form::text('valorPredeterminado',null,['class'=>'form-control has-feedback-left','placeholder'=>'']) !!}
-    </div>
-</div>
-    <center>
-    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
+<div class="alert alert-danger" id="mout">
+  <center>
+    <p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
   </center>
-  <div class="ln_solid"></div>
-  <div class="form-group">
-    <center>
-      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-      <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/parametros') !!} class="btn btn-default">Cancelar</a>
-    </center>
-  </div>
 </div>
+
+<div class="x_panel">
+	<div class="form-group col-sm-12">
+		<label class="" for="seccion_select">Nombre *</label>
+		<div class="input-group mb-2 mr-sm-2">
+			<div class="input-group-prepend">
+				<div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+			</div>
+			{!! Form::text(
+				'nombreParametro',
+				null,
+				['id'=>'nombreParametro',
+				'class'=>'form-control form-control-sm',
+				'placeholder'=>'Nombre del parametro']) !!}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<center>
+			<div class="">
+				<label>
+					<input type="checkbox"name="checkValores" id="checkValores" class="js-switch" unchecked /> Información avanzada
+				</label>
+			</div>
+		</center>
+	</div>
+	
+	<div id="divValoresNormales" style="display:none;">
+		<div class="form-group col-sm-12">
+			<label class="" for="seccion_select">Unidad de medida</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="fas fa-weight"></i></div>
+				</div>
+				<select class="form-control form-control-sm" id="selectUnidadParametro" name="unidad">
+					@if ($create)
+						<option value=""></option>
+						@foreach ($unidades as $unidad)
+							<option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
+						@endforeach
+					@else
+						@if ($parametros->unidad == null)
+							<option value="" selected></option>
+						@else
+							<option value=""></option>
+						@endif
+						@foreach ($unidades as $unidad)
+							@if ($parametros->unidad == $unidad->id)	
+								<option value={{ $unidad->id }} selected>{{ $unidad->nombre }}</option>
+							@else
+								<option value={{ $unidad->id }}>{{ $unidad->nombre }}</option>
+							@endif
+						@endforeach
+					@endif
+				</select>
+			</div>
+		</div>
+
+		<div class="flex-row">
+			<div class="col-sm-1"></div>
+			<span class="badge font-sm border border-primary text-primary col-sm-4">Masculino</span>
+			<div class="col-sm-2"></div>
+			<span class="badge font-sm border border-pink text-pink col-sm-4">Femenino</span>
+		</div>
+
+		<div class="form-group col-sm-6">
+			<label class="" for="seccion_select">Valor mínimo</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="far fa-minus-square text-primary"></i></div>
+				</div>
+				{!! Form::number(
+					'valorMinimo',
+					null,
+					['id'=>'valorMinimo',
+					'class'=>'form-control form-control-sm',
+					'placeholder'=>'0',
+					'step'=>'any']) !!}
+			</div>
+		</div>
+
+		<div class="form-group col-sm-6">
+			<label class="" for="seccion_select">Valor mínimo</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="far fa-minus-square text-pink"></i></div>
+				</div>
+				{!! Form::number(
+					'valorMinimoFemenino',
+					null,
+					['id'=>'valorMinimoFemenino',
+					'class'=>'form-control form-control-sm',
+					'placeholder'=>'0',
+					'step'=>'any']) !!}
+			</div>
+		</div>
+
+		<div class="form-group col-sm-6">
+			<label class="" for="seccion_select">Valor máximo</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="far fa-plus-square text-primary"></i></div>
+				</div>
+				{!! Form::number(
+					'valorMaximo',
+					null,
+					['id'=>'valorMaximo',
+					'class'=>'form-control form-control-sm',
+					'placeholder'=>'0',
+					'step'=>'any']) !!}
+			</div>
+		</div>
+
+		<div class="form-group col-sm-6">
+			<label class="" for="seccion_select">Valor máximo</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="far fa-plus-square text-pink"></i></div>
+				</div>
+				{!! Form::number(
+					'valorMaximoFemenino',
+					null,[
+						'id'=>'valorMaximoFemenino',
+						'class'=>'form-control form-control-sm',
+						'placeholder'=>'0',
+						'step'=>'any']) !!}
+			</div>
+		</div>
+
+	</div>
+
+	<div class="form-group col-sm-12">
+		<label class="" for="seccion_select">Valor predeterminado</label>
+		<div class="input-group mb-2 mr-sm-2">
+			<div class="input-group-prepend">
+				<div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+			</div>
+			{!! Form::text(
+				'valorPredeterminado',
+				null,
+				['id'=>'valorPredeterminado',
+				'class'=>'form-control form-control-sm',
+				'placeholder'=>'Valor predeterminado']) !!}
+		</div>
+	</div>
+</div>
+
+<div class="x_panel">
+  <center>
+    <button type="button" class="btn btn-primary btn-sm" id="save_me">Guardar</button>
+    <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+    <a href={!! asset('/parametros') !!} class="btn btn-light btn-sm">Cancelar</a>
+  </center>
+</div>
+
+<script>
+  $("#save_me").click(function(){
+    var valido = new Validated('nombreParametro');
+    valido.required();
+    is_valid = valido.value(true);
+
+    if(is_valid){
+      $('#form').submit();
+    }
+  });
+</script>

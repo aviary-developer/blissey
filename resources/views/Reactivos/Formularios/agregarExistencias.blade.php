@@ -1,49 +1,54 @@
-<td><button value={{ $reactivo->contenidoPorEnvase}}  onclick="botonExistencias(this,'{{$reactivo->nombre}}','{{$reactivo->id}}');" type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modalExistencias">
-  <i class="fa fa-unsorted"></i>
-</button></td>
-<div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modalExistencias">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalExistencias">
   <div class="modal-dialog">
-    <div class="modal-content">
+		<div class="x_panel m_panel text-danger">
+			<center>
+				<h4 class="mb-1">
+					Existencia de Reactivos
+					<span class="badge badge-danger">Editar</span>
+				</h4>
+			</center>
+		</div>
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">Existencias de Reactivos <span class="label label-lg label-primary">Agregar/Quitar</span></h4>
-      </div>
+		<div class="x_panel m_panel">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<center>
+					Actualmente tiene: <strong><span id="spanExistenciasActuales"></span> <span id="spanNomReac"></span> en existencias</strong>
+				</center>
+			</div>
+									
+			<div class="form-group col-sm-12">
+				<label class="" for="seccion_select">Cantidad *</label>
+				<div class="input-group mb-2 mr-sm-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+					</div>
+					{!! Form::number(
+						'cantidadExistencias',
+						null,['id'=>'cantidadExistencias',
+						'class'=>'form-control form-control-sm',
+						'placeholder'=>'0']) !!}
+				</div>
+			</div>
 
-      <div class="modal-body">
-        <div class="x_panel">
+			<div class="form-group col-sm-12">
+				<label class="" for="seccion_select">Descripción	</label>
+				<div class="input-group mb-2 mr-sm-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+					</div>
+					{!! Form::textarea('descripcionExistencias',null,['id'=>'descripcionExistencias','class'=>'form-control form-control-sm','placeholder'=>'Describa el movimiento en la cantidad de reactivos','rows'=>'3']) !!}
+				</div>
+			</div>
+			<input type="hidden" name="idReactivo" id="idReactivo">
+		</div>
 
-            <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                    Actualmente tiene: <strong><span id="spanExistenciasActuales"></span> <span id="spanNomReac"></span> en existencias</strong>
-                  </div>
-            <div class="form-group">
-            <label class="control-label col-sm-3 col-xs-12">Cantidad</label>
-            <div class="col-sm-3 col-xs-12">
-              <span class="fa fa-list-alt form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::number('cantidadExistencias',null,['id'=>'cantidadExistencias','class'=>'form-control has-feedback-left','placeholder'=>'0']) !!}
-            </div>
-            <br><br>
-            </div>
-            <div class="form-group">
-            <label class="control-label col-sm-3 col-xs-12">Descripción</label>
-            <div class="col-sm-9 col-xs-12">
-              <span class="fa fa-edit form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::textarea('descripcionExistencias',null,['id'=>'descripcionExistencias','class'=>'form-control has-feedback-left','placeholder'=>'Describa el movimiento en la cantidad de reactivos','rows'=>'3']) !!}
-            </div>
-          </div>
+		<div class="m_panel x_panel bg-transparent" style="border:0px !important">
+			<center>
+				<button type="button" id="guardarCantidadExistencias" onclick="comprobacionTemporal();" class="btn btn-primary btn-sm col-2">Guardar</button>
+        <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
+			</center>
+		</div>
 
-          <input type="hidden" id="tokenExistenciaModal" name="tokenExistenciaModal" value="<?php echo csrf_token(); ?>">
-<input type="hidden" id="idReactivo" name="idReactivo" value="">
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" id="guardarCantidadExistencias" onclick="comprobacionTemporal();" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modalExistencias">Cerrar</button>
-      </div>
-
-    </div>
   </div>
 </div>
 <script>
@@ -51,9 +56,9 @@ function botonExistencias(existencias,nombre,id) {
   $("#spanExistenciasActuales").text(existencias.value);
   $("#spanNomReac").text(nombre);
   $("#idReactivo").val(id);
-$("#cerrar_modalExistencias").on('click', function () {
-  $("#cantidadExistencias").val("");
-});
+	$("#cerrar_modalExistencias").on('click', function () {
+		$("#cantidadExistencias").val("");
+	});
 }
 
 function comprobacionTemporal(){
@@ -61,65 +66,65 @@ function comprobacionTemporal(){
   var descripcion=$('#descripcionExistencias').val();
   var actual= parseInt($("#spanExistenciasActuales").text());
   var cantidad= parseInt($("#cantidadExistencias").val());
-  total=actual+cantidad;
-  if(Number.isNaN(cantidad)){
-    new PNotify({
-      title: 'Error!',
-      text: 'Ingrese una cantidad válida',
-      type: 'error',
-      styling: 'bootstrap3'
-    });
-  }
-  else if(total<0){
-    new PNotify({
-      title: 'Error!',
-      text: 'Cantidad total menor a 0',
-      type: 'error',
-      styling: 'bootstrap3'
-    });
-  }else if(total==0){
-    swal({
-      title: 'Existencias igual a 0',
-      text: '¿Está seguro? ¡No se realizarán examenes con este reactivo!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, ¡Estoy seguro!',
-      cancelButtonText: 'No, ¡Cancelar!',
-      confirmButtonClass: 'btn btn-warning',
-      cancelButtonClass: 'btn btn-default',
-      buttonsStyling: false
-    }).then(function () {
-      guardarExistencias(total);
-    }, function (dismiss) {
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'El registro se mantiene',
-          'info'
-        )
-      }
-    });
-  }
-  else if(!descripcion){
-    new PNotify({
-      title: 'Error!',
-      text: 'Ingrese descripción del movimiento',
-      type: 'error',
-      styling: 'bootstrap3'
-    });
-  }else if(total>0){
-  guardarExistencias(total,cantidad);
-}
+	total=actual+cantidad;
+	
+	var valido = new Validated('descripcionExistencias');
+	valido.required();
+	bandera = valido.value(true);
+
+	var valido = new Validated('cantidadExistencias');
+	valido.required();
+	bandera = valido.value(bandera);
+
+	if(bandera){
+
+		if(Number.isNaN(cantidad)){
+			swal({
+				type: 'error',
+				toast: true,
+				title: '¡Error!',
+				text: 'Ingrese una cantidad valida',
+				showConfirmButton: false,
+				timer: 4000
+			});
+		}else if(total<0){
+			swal({
+				type: 'error',
+				toast: true,
+				title: '¡Error!',
+				text: 'Cantidad total menor a cero',
+				showConfirmButton: false,
+				timer: 4000
+			});
+		}else if(total==0){
+			swal({
+				title: 'Existencias igual a cero',
+				text: '¿Está seguro? ¡No se realizarán examenes con este reactivo!',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#DD6B55',
+				confirmButtonText: 'Si, ¡Estoy seguro!',
+				cancelButtonText: 'No, ¡Cancelar!',
+				confirmButtonClass: 'btn btn-warning',
+				cancelButtonClass: 'btn btn-default',
+				buttonsStyling: false
+			}).then((result) => {
+				if(result.value){
+					guardarExistencias(total);
+				}
+			});
+		}else if(total>0){
+			guardarExistencias(total,cantidad);
+		}
+	}
+
 }
 function guardarExistencias(total,cantidad){
   var ruta="/blissey/public/actualizarExistenciaReactivos";
-  var token = $('#tokenExistenciaModal').val();
   var id = $('#idReactivo').val();
   var descripcion = $('#descripcionExistencias').val();
   $.ajax({
     url:ruta,
-    headers:{'X-CSRF-TOKEN':token},
     type:'POST',
     data: {
       id:id,
@@ -128,35 +133,8 @@ function guardarExistencias(total,cantidad){
       descripcionExistencias:descripcion
     },
     success: function(){
-      $(".modal").modal('hide');
-      swal({
-        title: '¡Cantidad registrada!',
-        text: 'Actualizando existencias',
-        timer: 2500,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      );
+      localStorage.setItem('msg','yes');
       location.reload();
-    },
-    error: function(data){
-      if (data.status === 422 ) {
-        var errors = $.parseJSON(data.responseText);
-        $.each(errors, function (index, value) {
-          new PNotify({
-            title: 'Error!',
-            text: value,
-            type: 'error',
-            styling: 'bootstrap3'
-          });
-        });
-      }
     }
   });
   $("#cantidadExistencias").val("");

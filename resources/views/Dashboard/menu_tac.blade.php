@@ -7,8 +7,5 @@
     <li>
       <a href={{asset( '/solicitudex')}}>Evaluación de exámenes</a>
     </li>
-    <li>
-      <a href={{asset( '/tacs')}}>TAC</a>
-    </li>
   </ul>
 </li>

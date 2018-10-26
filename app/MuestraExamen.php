@@ -10,7 +10,7 @@ class MuestraExamen extends Model
       'nombre'
   ];
   public static function buscar($nombre, $estado){
-    return MuestraExamen::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return MuestraExamen::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
   }
 
   public function scopeNombre($query, $nombre){

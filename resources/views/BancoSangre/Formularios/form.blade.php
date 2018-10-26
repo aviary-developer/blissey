@@ -1,57 +1,67 @@
-<div class="x_content">
-  <div class="col-md-6 col-xs-12">
-  <center>
-    <p>Los campos marcados con un * son de registro <b>obligatorio</b>.</p>
-  </center>
-  <br />
-  <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Area de examen</label>
-    <div class="col-md-9 col-sm-9 col-xs-12">
-      <span class="fa fa-tint form-control-feedback left" aria-hidden="true"></span>
-      <select class="form-control has-feedback-left" name="tipoSangre" id="" required>
-      <option value="A+">A+</option>
-      <option value="A-">A-</option>
-      <option value="B+">B+</option>
-      <option value="B-">B-</option>
-      <option value="AB+">AB+</option>
-      <option value="AB-">AB-</option>
-      <option value="O+">O+</option>
-      <option value="O-">O-</option>
-      </select>
-    </div>
-  </div>
-    <div class="form-group">
-      <label class="control-label col-md-3 col-sm-3 col-xs-12">Prueba cruzada</label>
-      <div class="col-md-9 col-sm-9 col-xs-12">
-        <span class="fa fa-pencil form-control-feedback left" aria-hidden="true"></span>
-        {!! Form::file('pruebaCruzada',['id'=>'pruebaCruzada','class'=>'form-control has-feedback-left']) !!}
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de vencimiento</label>
-      <div class="col-md-9 col-sm-9 col-xs-12">
-        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-        @php
+<div class="col-sm-12">
+	<div class="alert alert-danger" id="mout">
+		<center>
+			<p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
+		</center>
+	</div>
+</div>
+
+<div class="col-sm-6">
+	<div class="x_panel">
+		<div class="form-group">
+			<label class="" for="nombre">Tipo de sangre *</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="fas fa-tint"></i></div>
+				</div>
+				<select class="form-control form-control-sm" name="tipoSangre" id="campo1">
+					<option value="A+">A+</option>
+					<option value="A-">A-</option>
+					<option value="B+">B+</option>
+					<option value="B-">B-</option>
+					<option value="AB+">AB+</option>
+					<option value="AB-">AB-</option>
+					<option value="O+">O+</option>
+					<option value="O-">O-</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="" for="nombre">Prueba cruzada *</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="custom-file input-group">
+					<input type="file" name="pruebaCruzada" class="custom-file-input" id="pruebaCruzada" lang="es" required>
+					<label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar Archivo</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="" for="nombre">Tipo de sangre *</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="fas fa-calendar"></i></div>
+				</div>
+				@php
           $ahora = Carbon\Carbon::now();
         @endphp
-        {!! Form::date('fechaVencimiento',$fecha,['id'=>'fecha_paciente','min'=>$ahora->addDay(1)->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
-      </div>
-    </div>
-  <center>
-    <p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
-  </center>
-  <div class="ln_solid"></div>
-  <div class="form-group">
-    <center>
-      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-      <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/bancosangre') !!} class="btn btn-default">Cancelar</a>
-    </center>
-  </div>
+        {!! Form::date('fechaVencimiento',$fecha,['id'=>'campo3','min'=>$ahora->addDay(1)->format('Y-m-d'),'class'=>'form-control form-control-sm']) !!}
+			</div>
+		</div>
+	</div>
+
+	<div class="x_panel">
+		<center>
+			<button type="button" class="btn btn-primary btn-sm" id="save_me">Guardar</button>
+			<button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+			<a href={!! asset('/bancosangre') !!} class="btn btn-light btn-sm">Cancelar</a>
+		</center>
+	</div>
 </div>
-<div class="col-md-6 col-xs-12">
-  <div class="">
-    <center>
+<div class="col-sm-6">
+	<div class="x_panel">
+		<center>
       <output id="listPC" style="height:400px">
         @if ($create)
           <img src={{asset(Storage::url('noImgen.jpg'))}} style="height: 400px; width: 400px; object-fit: scale-down">
@@ -60,11 +70,30 @@
         @endif
       </output>
     </center>
-  </div>
+	</div>
 </div>
-</div>
+<input type="hidden" id="tipo" value={{$create}}>
+
 <script>
+	var cambio_ = false;
+
+	$("#save_me").click(function(){
+		var tipo = $("#tipo").val();
+    var valido = new Validated('campo1');
+    valido.required();
+		is_valid = valido.value(true);
+		
+		var valido = new Validated('campo3');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    if(is_valid && (cambio_ || !tipo)){
+      $('#form').submit();
+    }
+	});
+	
 function pruebaCruzada(evt){
+	cambio_ = true;
   var files = evt.target.files;
 
   for(var i = 0, f; f = files[i]; i++){

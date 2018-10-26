@@ -10,7 +10,7 @@ class Reactivo extends Model
       'nombre', 'fechaVencimiento', 'contenidoPorEnvase',
   ];
   public static function buscar($nombre, $estado){
-    return Reactivo::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return Reactivo::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
   }
 
   public function scopeNombre($query, $nombre){

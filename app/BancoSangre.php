@@ -12,7 +12,7 @@ class BancoSangre extends Model
 
   protected $dates = ['fechaVencimiento'];
   public static function buscar($nombre, $estado){
-    return BancoSangre::nombre($nombre)->estado($estado)->orderBy('tipoSangre')->paginate(10);
+    return BancoSangre::nombre($nombre)->estado($estado)->orderBy('tipoSangre')->get();
   }
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){

@@ -1,142 +1,137 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   @php
     $index = false;
     setlocale(LC_ALL,'es');
-  @endphp
-<div class="col-md-10 col-sm-10 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2>
-        Parametro
-        <small>
-          {{ $parametro->nombreParametro}}
-        </small>
-      </h2>
-      <div class="clearfix"></div>
-    </div>
-    <div class="x_content">
-      <div class="row">
-        <div class="col-md-6 col-xs-12">
-          @include('Parametros.Formularios.activate')
-        </div>
-      </div>
-      <br>
-      {{-- Incio de tab --}}
-      <div class="" role="tabpanel" data-example-id="togglable-tabs">
-        <div class="col-xs-2">
-          <ul id="myTab" class="nav nav-tabs tabs-left" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_content1" id="datos-tab" role="tab" data-toggle="tab" aria-expanded="true">Información General</a>
-            </li>
-          </ul>
-        </div>
-        {{-- Contenido del tab --}}
-        <div class="col-xs-10">
-          <div id="myTabContent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="datos-tab">
-              <h3>Información General</h3>
-              <table class="table">
-                <tr>
-                  <th>Nombre</th>
-                  <td>{{ $parametro->nombreParametro }}</td>
-                </tr>
-                <tr>
-                  <th>Unidad de medición</th>
-                  @if($parametro->unidad!=null)
-                  <td>{{ $parametro->nombreUnidad($parametro->unidad)}}</td>
-                  @else
-                    <td>
-                      <span class="label label-lg label-gray col-xs-4">Ninguna</span>
-                    </td>
-                  @endif
-                </tr>
-                <tr>
-                  <th>Valores normales</th>
-                  <td>
-                    <span class="label-lg label label-primary col-xs-4">Masculino</span>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                    </div>
-                    <span class="label-lg label label-pink col-xs-4">Femenino</span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Valor mínimo</th>
-                  @if($parametro->valorMinimo!=null)
-                  <td>
-                    <span class="label label-lg label-cian col-xs-4">
-                      {{number_format($parametro->valorMinimo, 2, '.', ',')}}
-                    </span>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                    </div>
-                    <span class="label label-lg label-cian col-xs-4">
-                      {{number_format($parametro->valorMinimoFemenino, 2, '.', ',')}}
-                    </span>
-                  </td>
-                  @else
-                    <td>
-                      <span class="label label-lg label-gray col-xs-4">Ninguno</span>
-                    </td>
-                  @endif
-                </tr>
-                <tr>
-                  <th>Valor máximo</th>
-                  @if($parametro->valorMaximo!=null)
-                  <td>
-                    <span class="label label-lg label-danger col-xs-4">{{number_format($parametro->valorMaximo, 2, '.', ',')}}</span>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                    </div>
-                    <span class="label label-lg label-danger col-xs-4">{{number_format($parametro->valorMaximoFemenino, 2, '.', ',')}}</span>
-                  </td>
-                  @else
-                    <td>
-                      <span class="label label-lg label-gray col-xs-4">Ninguno</span>
-                    </td>
-                  @endif
-                </tr>
-                <tr>
-                  <th>Valor predeterminado</th>
-                  @if($parametro->valorPredeterminado!=null)
-                    @if (!is_numeric($parametro->valorPredeterminado))
-                      <td>
-                        <span class="label label-lg label-default col-xs-4">{{$parametro->valorPredeterminado}}</span>
-                      </td>
-                    @else
-                      <td>
-                        <span class="label label-lg label-default col-xs-4">{{number_format($parametro->valorPredeterminado, 2, '.', ',')}}</span>
-                      </td>
-                    @endif
-                  @else
-                    <td>
-                      <span class="label label-lg label-gray col-xs-4">Ninguno</span>
-                    </td>
-                  @endif
-                </tr>
-                <tr>
-                  <th>Estado</th>
-                  <td>
-                    @if ($parametro->estado)
-                      <span class="label label-lg label-success col-xs-4">Activo</span>
-                    @else
-                      <span class="label label-lg label-danger col-xs-4">En papelera</span>
-                    @endif
-                  </td>
-                </tr>
-                <tr>
-                  <th>Fecha de creación</th>
-                  <td>{{ $parametro->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
-                </tr>
-                <tr>
-                  <th>Fecha de modificación</th>
-                  <td>{{ $parametro->updated_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
-                </tr>
-              </table>
-            </div>
-            {{-- Otra pestaña --}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	@endphp
+	@include('Parametros.Barra.show')
+<div class="col-sm-4">
+	<div class="x_panel">
+		<div class="flex-row">
+			<center>
+				<h5>Información General</h5>
+			</center>
+		</div>
+
+		<div class="flex-row">
+			<span class="font-weight-light text-monospace">
+				Nombre
+			</span>
+		</div>
+		<div class="flex-row">
+			<h6 class="font-weight-bold">
+				{{$parametro->nombreParametro}}
+			</h6>
+		</div>
+
+		<div class="ln_solid mb-1 mt-1"></div>
+		<div class="flex-row">
+			<span class="font-weight-light text-monospace">
+				Unidad de medida
+			</span>
+		</div>
+		<div class="flex-row">
+			<h6 class="font-weight-bold">
+				@if($parametro->unidad!=null)
+					{{ $parametro->nombreUnidad($parametro->unidad)}}
+				@else
+					<span class="badge border border-secondary text-secondary col-4">Ninguna</span>
+				@endif
+			</h6>
+		</div>
+
+		<div class="ln_solid mb-1 mt-1"></div>
+		<div class="flex-row">
+			<span class="font-weight-light text-monospace">
+				Valor Normal Mínimo
+			</span>
+		</div>
+		<div class="flex-row">
+			<h6 class="font-weight-bold">
+				@if($parametro->valorMinimo != null)
+					<span class="badge border border-primary text-primary col-4">
+						<i class="fas fa-male float-left"></i>
+						{{number_format($parametro->valorMinimo, 2, '.', ',')}}
+					</span>
+				@else
+					<span class="badge border border-secondary text-secondary col-4">Ninguno</span>
+				@endif
+
+				@if($parametro->valorMinimoFemenino != null)
+					<span class="badge border border-pink text-pink col-4">
+						<i class="fas fa-female float-left"></i>
+						{{number_format($parametro->valorMinimoFemenino, 2, '.', ',')}}
+					</span>
+				@else
+					<span class="badge border border-secondary text-secondary col-4">Ninguno</span>
+				@endif
+			</h6>
+		</div>
+
+		<div class="ln_solid mb-1 mt-1"></div>
+		<div class="flex-row">
+			<span class="font-weight-light text-monospace">
+				Valor Normal Máximo
+			</span>
+		</div>
+		<div class="flex-row">
+			<h6 class="font-weight-bold">
+				@if($parametro->valorMaximo != null)
+					<span class="badge border border-primary text-primary col-4">
+						<i class="fas fa-male float-left"></i>
+						{{number_format($parametro->valorMaximo, 2, '.', ',')}}
+					</span>
+				@else
+					<span class="badge border border-secondary text-secondary col-4">Ninguno</span>
+				@endif
+
+				@if($parametro->valorMaximoFemenino != null)
+					<span class="badge border border-pink text-pink col-4">
+						<i class="fas fa-female float-left"></i>
+						{{number_format($parametro->valorMaximoFemenino, 2, '.', ',')}}
+					</span>
+				@else
+					<span class="badge border border-secondary text-secondary col-4">Ninguno</span>
+				@endif
+			</h6>
+		</div>
+
+		<div class="ln_solid mb-1 mt-1"></div>
+		<div class="flex-row">
+			<span class="font-weight-light text-monospace">
+				Valor Normal Predeterminado
+			</span>
+		</div>
+		<div class="flex-row">
+			<h6 class="font-weight-bold">
+				@if($parametro->valorPredeterminado!=null)
+					@if (!is_numeric($parametro->valorPredeterminado))
+						<span class="badge border border-dark text-dark col-4">{{$parametro->valorPredeterminado}}</span>
+					@else
+						<span class="badge border border-dark text-dark col-4">{{number_format($parametro->valorPredeterminado, 2, '.', ',')}}</span>
+					@endif
+				@else
+					<span class="badge border border-secondary text-secondary col-4">Ninguno</span>
+				@endif
+			</h6>
+		</div>
+
+		<div class="ln_solid mb-1 mt-1"></div>
+		<div class="flex-row">
+			<span class="font-weight-light text-monospace">
+				Estado
+			</span>
+		</div>
+		<div class="flex-row">
+			<h6 class="font-weight-bold">
+				@if ($parametro->estado)
+					<span class="badge text-success border border-success col-4">Activo</span>
+				@else
+					<span class="badge text-danger border border-danger col-4">En papelera</span>
+				@endif
+			</h6>
+		</div>
+	</div>
 </div>
+
 @endsection

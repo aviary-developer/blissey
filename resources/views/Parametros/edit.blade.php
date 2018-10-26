@@ -1,18 +1,13 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::model($parametros,['class' =>'form-horizontal form-label-left input_mask','route' =>['parametros.update',$parametros->id],'method' =>'PUT','autocomplete'=>'off'])!!}
-  @php
-    $fecha = $parametros->fechaNacimiento;
-    $create=false;
-  @endphp
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Parametro<small>Editar</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('Parametros.Formularios.form')
-    </div>
+	@php
+		$fecha = $parametros->fechaNacimiento;
+		$create=false;
+	@endphp
+	@include('Parametros.Barra.create')
+  {!!Form::model($parametros,['class' =>'form-horizontal form-label-left input_mask','route' =>['parametros.update',$parametros->id],'method' =>'PUT','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
+		@include('Parametros.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

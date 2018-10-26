@@ -4,10 +4,6 @@
   </center>
 </div>
 <div class="x_panel">
-  <center>
-    <h5 class="mb-1">Datos de la unidad</h5>
-  </center>
-  <div class="ln_solid mb-1 mt-1"></div>
   <div class="form-group">
     <label class="" for="nombre">Nombre *</label>
     <div class="input-group mb-2 mr-sm-2">
@@ -28,8 +24,8 @@
 </div>
 <div class="x_panel">
   <center>
-    {!! Form::button('Guardar',['class'=>'btn btn-primary','onClick'=>'save_Unidad()']) !!}
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/unidades') !!} class="btn btn-default">Cancelar</a>
+    {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'save_Unidad()']) !!}
+    <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+    <a href={!! asset('/unidades') !!} class="btn btn-light btn-sm">Cancelar</a>
   </center>
 </div>

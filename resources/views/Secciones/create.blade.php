@@ -1,17 +1,13 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'secciones.store','method' =>'POST','autocomplete'=>'off'])!!}
-  @php
-    $fecha = Carbon\Carbon::now();
-  @endphp
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Tipo de sección<small>Nuevo</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('Secciones.Formularios.form')
-    </div>
+	@php
+		$fecha = Carbon\Carbon::now();
+		$create = true;
+	@endphp
+	@include('Secciones.Barra.create')
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'secciones.store','method' =>'POST','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
+		@include('Secciones.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

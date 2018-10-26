@@ -11,7 +11,7 @@ class Parametro extends Model
       'nombreParametro', 'valorMinimo','valorMaximo', 'valorMinimoFemenino','valorMaximoFemenino','valorPredeterminado','unidad'
   ];
   public static function buscar($nombre, $estado){
-    return Parametro::nombre($nombre)->estado($estado)->orderBy('nombreParametro')->paginate(10);
+    return Parametro::nombre($nombre)->estado($estado)->orderBy('nombreParametro')->get();
   }
 
   public function scopeNombre($query, $nombre){

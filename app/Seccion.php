@@ -10,7 +10,7 @@ class Seccion extends Model
       'nombre'
   ];
   public static function buscar($nombre, $estado){
-    return Seccion::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return Seccion::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
   }
   public function nombreSeccion($id){
     $nombre = Seccion::find($id);

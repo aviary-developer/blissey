@@ -45,6 +45,22 @@
     </li>
     <li>
       <a href={{asset( '/solicitudex?tipo=tac')}}>TAC</a>
+		</li>
+		<li>
+      <a>Mantenimiento
+        <span class="fas fa-chevron-down float-right"></span>
+      </a>
+      <ul class="nav child_menu submenu">
+        <li>
+					<a href={{asset( '/rayosx')}}>Rayos X</a>
+				</li>
+        <li>
+					<a href={{asset( '/ultrasonografias')}}> Ultrasonografías</a>
+				</li>
+        <li>
+          <a href={{asset( '/tacs')}}>TAC</a>
+        </li>
+      </ul>
     </li>
   </ul>
 </li>

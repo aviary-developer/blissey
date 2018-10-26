@@ -40,7 +40,7 @@
             @include('Dashboard.menu_laboratorio')
           @elseif(Auth::user()->tipoUsuario == "Farmacia")
             @include('Dashboard.menu_farmacia')
-          @elseif(Auth::user()->tipoUsuario == "Enfermería" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencía")
+          @elseif(Auth::user()->tipoUsuario == "Enfermería" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencia")
             @include('Dashboard.menu_medico')
           @elseif(Auth::user()->tipoUsuario == "Ultrasonografía")
             @include('Dashboard.menu_ultra')
