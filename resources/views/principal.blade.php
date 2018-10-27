@@ -146,14 +146,12 @@
   <!-- Blissey -->
   @yield('agregarjs')
   {!!Html::script('js/scripts/Examenes.js')!!}
-  {!!Html::script('js/scripts/Calendario.js')!!}
   {!!Html::script('js/scripts/Examenes2.js')!!}
   {!!Html::script('js/scripts/Transacciones.js')!!}
   {!!Html::script('js/scripts/Ingreso.js')!!}
   {!!Html::script('js/scripts/Ingreso2.js')!!}
   {!!Html::script('js/scripts/IngresoX.js')!!}
   {!!Html::script('js/scripts/Ingreso_finanza.js')!!}
-  {!!Html::script('js/scripts/Habitacion.js')!!}
   {!!Html::script('js/scripts/Consulta.js')!!}
   {!!Html::script('js/scripts/Consulta2.js')!!}
   {!!Html::script('js/scripts/Receta.js')!!}

@@ -1,14 +1,12 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::model($servicios,['class' =>'form-horizontal form-label-left input_mask','route' =>['servicios.update',$servicios->id],'method' =>'PUT','autocomplete'=>'off'])!!}
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Servicio<small>Editar</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('Servicios.Formularios.form')
-    </div>
+	@php
+		$create = false;
+	@endphp
+	@include('Servicios.Barra.create')
+  {!!Form::model($servicios,['class' =>'form-horizontal form-label-left input_mask','route' =>['servicios.update',$servicios->id],'method' =>'PUT','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
+		@include('Servicios.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

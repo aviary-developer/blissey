@@ -11,7 +11,7 @@ class Servicio extends Model
     ];
 
     public static function buscar($nombre, $estado){
-      return Servicio::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+      return Servicio::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
     }
 
     public function scopeNombre($query, $nombre){

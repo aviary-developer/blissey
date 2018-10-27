@@ -80,91 +80,89 @@ $(document).on('ready', function () {
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-default'
-    }).then(function () {
+    }).then((result)=> {
 
-      var id = $("#id").val();
-
-      if (id > 0) {
-        
-        var numero;
-
-        if (tipo == 0) {
-          numero = $("#count_co").val();
-        } else if(tipo == 1){
-          numero = $("#count_ci").val();
-        } else {
-          numero = $("#count_cm").val();
-        }
-
-        $.ajax({
-          type: 'post',
-          url: '/blissey/public/cama/nueva',
-          data: {
-            id: id,
-            precio: $("#precio").val(),
-            numero: numero,
-            tipo: tipo
-          },
-          success: function (r) {
-            if (r == 1) {
-              swal({
-                type: 'success',
-                title: '¡Hecho!',
-                text: 'Cambio exitoso',
-                showConfirmButton: false
-              });
-              location.reload();
-            } else {
-              swal('¡Error!', 'Algo salio mal', 'error');
-            }
-          }
-        });
-
-      } else {
-        var panel = $("#msg");
-        if (add_rows == 0) {
-          panel.empty();
-        }
-  
-        var html = '<div class="col-xs-3 btn-default" style="border-radius: 4px">' + 
-          '<div class="row">' +
-          '<center>' +
-          '<span class="big-text">Cama</span>' +
-          '</center>' +
-          '</div>' +
-          '<div class="row">' +
-          '<center>' +
-        '<div class ="circulo-div-mini bg-c4">';
-  
-        if (tipo == 0) {
-          html += '<span>' + count_co + '</span><input type="hidden" name = "cama[]" value = "'+ count_co+'">';
-          count_co++;
-        } else if(tipo == 1) {
-          html += '<span>' + count_ci + '</span><input type="hidden" name = "cama[]" value = "' + count_ci + '">';
-          count_ci++;
-        } else {
-          html += '<span>' + count_cm + '</span><input type="hidden" name = "cama[]" value = "' + count_cm + '">';
-          count_cm++;
-        }
-        html += '</div>' +
-          '</center>' +
-          '</div>' +
-          '<div class="row" style="margin: 3px 0 7px 0;">' +
-          '<center>' +
-          '<span class = "label label-lg label-default">$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format($("#precio").val()) + '</span><input type="hidden" name="c_precio[]" value ="' + $("#precio").val() + '">' +
-          '</center>' +
-          '</div>' +
-          '<div class="row bg-blue-sky" style="border-radius: 0 0 4px 4px;">' +
-          '<center>' +
-          '<button type="button" class="btn btn-xs btn-default blue" id="delete_card" style="margin: 2px 0 2px 0;"><i class="fa fa-remove"></i> Eliminar</button>' +
-          '</center>' +
-          '</div>' +
-          '</div>';
-  
-        panel.append(html);
-        add_rows++;
-      }
-    }).catch(swal.noop);
+			if (result.value) {
+				
+				var id = $("#id").val();
+	
+				if (id > 0) {
+					
+					var numero;
+	
+					if (tipo == 0) {
+						numero = $("#count_co").val();
+					} else if(tipo == 1){
+						numero = $("#count_ci").val();
+					} else {
+						numero = $("#count_cm").val();
+					}
+	
+					$.ajax({
+						type: 'post',
+						url: '/blissey/public/cama/nueva',
+						data: {
+							id: id,
+							precio: $("#precio").val(),
+							numero: numero,
+							tipo: tipo
+						},
+						success: function (r) {
+							if (r == 1) {
+								localStorage.setItem('msg', 'yes');
+								location.reload();
+							} else {
+								swal('¡Error!', 'Algo salio mal', 'error');
+							}
+						}
+					});
+	
+				} else {
+					var panel = $("#msg");
+					if (add_rows == 0) {
+						panel.empty();
+					}
+		
+					var html = '<div class="col-sm-3 btn-light rounded border border-secondary">' + 
+						'<div class="flex-row">' +
+						'<center>' +
+						'<span class="font-weight-bold">Cama</span>' +
+						'</center>' +
+						'</div>' +
+						'<div class="flex-row">' +
+						'<center>' +
+					'<div class ="circulo-div-mini bg-c4">';
+		
+					if (tipo == 0) {
+						html += '<span>' + count_co + '</span><input type="hidden" name = "cama[]" value = "'+ count_co+'">';
+						count_co++;
+					} else if(tipo == 1) {
+						html += '<span>' + count_ci + '</span><input type="hidden" name = "cama[]" value = "' + count_ci + '">';
+						count_ci++;
+					} else {
+						html += '<span>' + count_cm + '</span><input type="hidden" name = "cama[]" value = "' + count_cm + '">';
+						count_cm++;
+					}
+					html += '</div>' +
+						'</center>' +
+						'</div>' +
+						'<div class="flex-row" style="margin: 3px 0 7px 0;">' +
+						'<center>' +
+						'<span class = "badge font-sm badge-dark">$ ' + new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format($("#precio").val()) + '</span><input type="hidden" name="c_precio[]" value ="' + $("#precio").val() + '">' +
+						'</center>' +
+						'</div>' +
+						'<div class="flex-row" style="border-radius: 0 0 4px 4px;">' +
+						'<center>' +
+						'<button type="button" class="btn btn-sm btn-danger" id="delete_card" style="margin: 2px 0 2px 0;"><i class="fa fa-times"></i> Eliminar</button>' +
+						'</center>' +
+						'</div>' +
+						'</div>';
+		
+					panel.append(html);
+					add_rows++;
+				}
+			}
+    });
   });
 
   $("#msg").on('click', '#delete_card', function (e) {
@@ -209,7 +207,7 @@ $(document).on('ready', function () {
       var html = '<center style="margin-top: 60px">' +
         '<i class="fa fa-info-circle gray" style="font-size: 800%"></i>' +
         '</center>' +
-        '<center class="big-text gray">' +
+        '<center class="font-weight-bold gray">' +
         '<h4>Información</h4>' +
         '</center>' +
         '<center>' +
@@ -225,15 +223,31 @@ $(document).on('ready', function () {
     e.preventDefault();
     $("#cama_activa").show();
     $("#cama_papelera").hide();
-    $("#etiqueta_cama").removeClass('label-danger').addClass('label-success').text('Activas');
+    $("#etiqueta_cama").removeClass('badge-danger').addClass('badge-success').text('Activas');
   });
 
   $("#show_papelera").on("click", function (e) {
     e.preventDefault();
     $("#cama_activa").hide();
     $("#cama_papelera").show();
-    $("#etiqueta_cama").removeClass('label-success').addClass('label-danger').text('Papelera');
-  });
+    $("#etiqueta_cama").removeClass('badge-success').addClass('badge-danger').text('Papelera');
+	});
+	
+	$("#save_me").click(function (e) { 
+		e.preventDefault();
+		if (add_rows > 0) {
+			$("#form").submit();
+		} else {
+			swal({
+				type: 'error',
+				title: '¡Error!',
+				text: 'Debe agregar al menos una cama para guardar la habitación',
+				timer: 4000,
+				toast: true,
+				showConfirmButton: false
+			});
+		}
+	});
 });
 
 function cama_desactivar(id) {
@@ -247,35 +261,24 @@ function cama_desactivar(id) {
     confirmButtonClass: 'btn btn-danger',
     cancelButtonClass: 'btn btn-default',
     buttonsStyling: false
-  }).then(function () {
-    $.ajax({
-      type: 'post',
-      url: '/blissey/public/cama/desactivar',
-      data: {
-        id: id
-      },
-      success: function (r) {
-        if (r == 1) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
-          location.reload();
-        } else {
-          swal('¡Error!', 'Algo salio mal', 'error');
-        }
-      }
-    }); 
-  }, function (dismiss) {
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
-    }
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: 'post',
+				url: '/blissey/public/cama/desactivar',
+				data: {
+					id: id
+				},
+				success: function (r) {
+					if (r == 1) {
+						localStorage.setItem('msg', 'yes');
+						location.reload();
+					} else {
+						swal('¡Error!', 'Algo salio mal', 'error');
+					}
+				}
+			}); 
+		}
   });
 }
 
@@ -290,35 +293,24 @@ function cama_activate(id) {
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-default',
     buttonsStyling: false
-  }).then(function () {
-    $.ajax({
-      type: 'post',
-      url: '/blissey/public/cama/activar',
-      data: {
-        id: id
-      },
-      success: function (r) {
-        if (r == 1) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
-          location.reload();
-        } else {
-          swal('¡Error!', 'Algo salio mal', 'error');
-        }
-      }
-    });
-  }, function (dismiss) {
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
-    }
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				type: 'post',
+				url: '/blissey/public/cama/activar',
+				data: {
+					id: id
+				},
+				success: function (r) {
+					if (r == 1) {
+						localStorage.setItem('msg', 'yes');
+						location.reload();
+					} else {
+						swal('¡Error!', 'Algo salio mal', 'error');
+					}
+				}
+			});
+		}
   });
 }
 
@@ -335,28 +327,24 @@ function editar_cama(id, precio_actual) {
     cancelButtonText: 'Cancelar',
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-default'
-  }).then(async function () {
-    console.log("Entra aca");
-    await $.ajax({
-      type: 'post',
-      url: '/blissey/public/cama/editar',
-      data: {
-        id: id,
-        precio: $("#precio").val(),
-      },
-      success: function (r) {
-        if (r == 1) {
-          swal({
-            type: 'success',
-            title: '¡Hecho!',
-            text: 'Cambio exitoso',
-            showConfirmButton: false
-          });
-          location.reload();
-        } else {
-          swal('¡Error!', 'Algo salio mal', 'error');
-        }
-      },
-    });
-  }).catch(swal.noop);
+  }).then(async (result) => {
+		if (result.value) {
+			await $.ajax({
+				type: 'post',
+				url: '/blissey/public/cama/editar',
+				data: {
+					id: id,
+					precio: $("#precio").val(),
+				},
+				success: function (r) {
+					if (r == 1) {
+						localStorage.setItem('msg', 'yes');
+						location.reload();
+					} else {
+						swal('¡Error!', 'Algo salio mal', 'error');
+					}
+				},
+			});
+		}
+  });
 }

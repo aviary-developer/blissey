@@ -25,7 +25,7 @@
             </td>
           </tr>
           @if ($habitacion->camas->count() > 0)
-            @foreach ($habitacion->camas as $cama)
+            @foreach ($habitacion->camas->where('activo',true) as $cama)
               @if ($cama->estado)
                 @php
                   $ingreso = $cama->ingreso->where('estado','<',2)->first();

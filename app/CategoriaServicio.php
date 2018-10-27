@@ -11,7 +11,7 @@ class CategoriaServicio extends Model
   ];
 
   public static function buscar($nombre, $estado){
-    return CategoriaServicio::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return CategoriaServicio::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
   }
 
   public function scopeNombre($query, $nombre){

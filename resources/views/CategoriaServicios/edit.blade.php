@@ -1,14 +1,13 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::model($categoria_servicios,['class' =>'form-horizontal form-label-left input_mask','route' =>['categoria_servicios.update',$categoria_servicios->id],'method' =>'PUT','autocomplete'=>'off'])!!}
-  <div class="col-md-6 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Categorías de servicios<small>Editar</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('CategoriaServicios.Formularios.form')
-    </div>
-  </div>
+	@php
+		$create = false;
+	@endphp
+	@include('CategoriaServicios.Barra.create')
+  {!!Form::model($categoria_servicios,['class' =>'form-horizontal form-label-left input_mask','route' =>['categoria_servicios.update',$categoria_servicios->id],'method' =>'PUT','autocomplete'=>'off','id'=>'form'])!!}
+  <div class="col-sm-6">
+		@include('CategoriaServicios.Formularios.form')
+	</div>
+	<input type="hidden" id="method" value="edit">
   {!!Form::close()!!}
 @endsection

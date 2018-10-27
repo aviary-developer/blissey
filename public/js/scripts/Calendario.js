@@ -45,7 +45,9 @@ $(document).ready(function () {
       month: 'Mes',
       week: 'Semana',
       day: 'Día',
-      list: 'Lista'
+			list: 'Lista',
+			next: 'Siguiente',
+			prev: 'Anterior'
     },
 
     themeSystem: 'bootstrap3',
@@ -133,7 +135,7 @@ $(document).ready(function () {
       },
       success: function (r) {
         if (r == 1) {
-          swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+					localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");   
@@ -158,7 +160,7 @@ $(document).ready(function () {
       },
       success: function (r) {
         if (r == 1) {
-          swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");
@@ -189,7 +191,7 @@ $(document).ready(function () {
         url: '/blissey/public/calendarios/' + id,
         success: function (r) {
           if (r == 1) {
-            swal("¡Hecho!", "Acción realizada satisfactoriamente", "success");
+            localStorage.setItem('msg', 'yes');
             location.reload();
           } else {
             swal("¡Error!", "Algo salio mal", "error");
