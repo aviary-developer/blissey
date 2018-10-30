@@ -1,6 +1,6 @@
 <li>
   <a>
-    <i class="fas fa-desktop"></i> Departamento de TAC
+    <i class="fas fa-desktop"></i> TAC
     <span class="fas float-right fa-chevron-down"></span>
   </a>
   <ul class="nav child_menu">
