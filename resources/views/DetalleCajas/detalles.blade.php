@@ -1,43 +1,12 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   @php
     $apertura=App\DetalleCaja::cajaApertura();
   @endphp
-  <div class="col-md-8 col-sm-8 col-xs-12">
+    @include('DetalleCajas.Barra.detalle')
+  <div class="col-8">
     <div class="x_panel">
-      <div class="row bg-blue">
-        <center>
-          <h3>Apertura de Caja
-            @if ($apertura)
-              <small class="label-white badge green ">Abierta</small>
-            @else
-              <small class="label-white badge red ">Cerrada</small>
-            @endif
-          </h3>
-        </center>
-      </div>
-      <div class="row">
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
-            <ul class="nav navbar-nav">
-              <li>
-                <a href={!! asset('/cajas/create') !!}><i class="fa fa2 fa-plus"></i> Nuevo</a>
-              </li>
-              <li>
-                <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
-              </li>
-              <li>
-                <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
-    <div class="x_panel">
-      <div class="x_content">
-        <div class="row">
-        <table class="table table-striped " id="index-table">
+      <table class="table table-hover table-sm table-striped index-table">
           <thead>
             <tr>
               <th>#</th>
@@ -60,35 +29,37 @@
                   </td>
                   <td>
                     @if($caja->localizacion)
-                      <span class="label label-primary label-lg col-xs-8">Recepción</span>
-                    @else
-                      <span class="label label-success label-lg col-xs-8">Farmacia</span>
-                    @endif
+                    <span class="badge border border-danger  col-12 text-danger">Recepción</span>
+                  @else
+                    <span class="badge border border-dark  col-12">Farmacia</span>
+                  @endif
                   </td>
                   <td>
+                    <center>
                     @if (App\DetalleCaja::verificacionCaja($caja->id))
                       @if (App\DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id)
-                        <a href={!! asset('/cerrar/'.$caja->id)!!} class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Efectuar cierre">
-                          <i class="fa fa-check-circle"></i>
+                        <a href={!! asset('/cerrar/'.$caja->id)!!} class="btn btn-warning btn-sm" title="Efectuar cierre">
+                          <i class="fas fa-check-circle"></i>
                         </a>
                       @else
-                        <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="En uso por otro usuario">
-                          <i class="fa fa-warning"></i>
+                        <button type="button" class="btn btn-sm btn-danger disabled" title="En uso por otro usuario">
+                          <i class="fas fa-warning"></i>
                         </button>
                       @endif
                     @else
                       @if ($apertura)
-                        <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="No disponible">
-                          <i class="fa fa-warning"></i>
+                        <button type="button" class="btn btn-sm btn-danger disabled" title="No disponible">
+                          <i class="fas fa-warning"></i>
                         </button>
                       @else
                         {{-- {!!Form::open(['method'=>'POST','id'=>'formulario'])!!} --}}
-                        <a href={!! asset('/aperturar/'.$caja->id)!!} class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Aperturar">
-                          <i class="fa fa-check"></i>
+                        <a href={!! asset('/aperturar/'.$caja->id)!!} class="btn btn-success btn-sm" title="Aperturar">
+                          <i class="fas fa-check"></i>
                         </a>
                         {{-- {!!Form::close()!!} --}}
                       @endif
                     @endif
+                    </center>
                   </td>
                 </tr>
                 @php
@@ -96,10 +67,7 @@
                 @endphp
               @endforeach
           </tbody>
-        </table>
-      </div>
-        <div class="ln_solid"></div>
-      </div>
+      </table>
     </div>
   </div>
   <!-- /page content -->

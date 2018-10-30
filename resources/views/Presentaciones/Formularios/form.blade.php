@@ -28,8 +28,8 @@
 </div>
 <div class="x_panel">
   <center>
-    {!! Form::button('Guardar',['class'=>'btn btn-primary','onClick'=>'save_Presentacion()']) !!}
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/presentaciones') !!} class="btn btn-default">Cancelar</a>
+    {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'save_Presentacion()']) !!}
+    <button type="reset" name="button" class="btn btn-default btn-sm">Limpiar</button>
+    <a href={!! asset('/presentaciones') !!} class="btn btn-default btn-sm">Cancelar</a>
   </center>
 </div>
