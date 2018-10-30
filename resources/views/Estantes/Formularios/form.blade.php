@@ -58,8 +58,8 @@ if(isset($estante)){
 </div>
 <div class="x_panel">
   <center>
-    {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/estantes') !!} class="btn btn-default">Cancelar</a>
+    {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
+    <button type="reset" name="button" class="btn btn-default btn-sm">Limpiar</button>
+    <a href={!! asset('/estantes') !!} class="btn btn-default btn-sm">Cancelar</a>
   </center>
 </div>

@@ -28,8 +28,8 @@
 </div>
 <div class="x_panel">
   <center>
-    {!! Form::button('Guardar',['class'=>'btn btn-primary','onClick'=>'save_categoriaProducto()']) !!}
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/categoria_productos') !!} class="btn btn-default">Cancelar</a>
+    {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'save_categoriaProducto()']) !!}
+    <button type="reset" name="button" class="btn btn-default btn-sm">Limpiar</button>
+    <a href={!! asset('/categoria_productos') !!} class="btn btn-default btn-sm">Cancelar</a>
   </center>
 </div>
