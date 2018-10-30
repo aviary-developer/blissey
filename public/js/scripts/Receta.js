@@ -273,27 +273,30 @@ $(document).on('ready', function () {
           lista_paneles.empty();
           $(r.productos).each(function (key, value) {
             var presentacion = value.presentacion;
-            var html = '<div class="x_panel m_panel">' +
+            var html = '<div class="x_panel m_panel" style="margin-left: -3px">' +
               '<form class="form-horizontal form-badge-left input_mask">' +
-              '<div class="row">' +
+              '<div class="flex-row">' +
               '<center>' +
-              '<h4><span>' +
+              '<h5><span>' +
               value.nombre + '</span> ' +
               '<b class="badge font-sm badge-primary">' +
               value.presentacion +
               '</b>' +
-              '</h4>' +
+              '</h5>' +
               '</center>' +
               '<input type="hidden" name="id_pro" value="' + value.id + '">' +
               '</div>' +
-              '<div class="ln_solid"></div>' +
+              '<div class="ln_solid mb-2 mt-"></div>' +
               '<div class="row">' +
-              '<div class="form-group">' +
-              '<badge class="col-sm-4 control-label">' +
+              '<div class="form-group col-sm-12">' +
+              '<label>' +
               'División:' +
               '</label>' +
-              '<div class="col-sm-8">' +
-              '<select class="form-control" id="div_seleccion">';
+							'<div class="input-group mb-2 mr-sm-2">' +
+							'<div class="input-group-prepend">'+
+								'<div class="input-group-text"><i class="fas fa-cubes"></i></div>'+
+							'</div>'+
+              '<select class="form-control form-control-sm" id="div_seleccion">';
             
             var indice = key;
             var precio = [];
@@ -319,12 +322,15 @@ $(document).on('ready', function () {
               '<input type="hidden" name="index_panel" value="' + indice + '">' +
               '</div>' +
               '</div>' +
-              '<div class="form-group">' +
-              '<badge class="col-sm-4 control-label">' +
+              '<div class="form-group col-sm-12">' +
+              '<label>' +
               'Cantidad:' +
               '</label>' +
-              '<div class="col-sm-8">' +
-              '<input class="form-control" id="cant" value="1" type="number" min="1">' +
+							'<div class="input-group mb-2 mr-sm-2">' +
+							'<div class="input-group-prepend">' +
+							'<div class="input-group-text"><i class="fas fa-cubes"></i></div>' +
+							'</div>' +
+              '<input class="form-control form-control-sm" id="cant" value="1" type="number" min="1">' +
               '</div>' +
               '</div>' +
               '</div>' +
@@ -353,30 +359,30 @@ $(document).on('ready', function () {
               '</div>' +
               '<div class="row">' +
               '<div class="col-sm-4">' +
-              '<h5 class="big-text"><b class="badge font-sm badge-success col-sm-12"> $ ' +
+              '<h5 class=""><b class="badge font-sm badge-success col-sm-12"> $ ' +
               v_pre_receta[indice][0] +
               '</b></h5>' +
               '</div>' +
               '<div class="col-sm-4">' +
-              '<h5 class="big-text"><b class="badge font-sm badge-light col-sm-12">' +
+              '<h5 class=""><b class="badge font-sm badge-light col-sm-12">' +
               v_inv_receta[indice][0] +
               '</b></h5>' +
               '</div>' +
               '<div class="col-sm-4">' +
               '<div class="col-sm-6">' +
-              '<h5 class="big-text"><b class="badge font-sm badge-primary col-sm-12">' +
+              '<h5 class=""><b class="badge font-sm badge-primary col-sm-12">' +
               ((v_inv_receta[indice][0] == 0) ? '--' : v_est_receta[indice][0]) +
               '</b></h5>' +
               '</div>' +
               '<div class="col-sm-6">' +
-              '<h5 class="big-text"><b class="badge font-sm badge-cian col-sm-12">' +
+              '<h5 class=""><b class="badge font-sm badge-cian col-sm-12">' +
               ((v_inv_receta[indice][0] == 0) ? '--' : v_niv_receta[indice][0]) +
               '</b></h5>' +
               '</div>' +
               '</div>' +
               '</div>' +
-              '<div class="ln_solid"></div>' +
-              '<div class="row">' +
+              '<div class="ln_solid mb-2 mt-2"></div>' +
+              '<div class="flex-row">' +
               '<center>' +
               '<button type="button" id="add_m_receta" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Agregar</button>' +
               '</center>' +
@@ -397,10 +403,10 @@ $(document).on('ready', function () {
     var index = $(this).prop('selectedIndex');
     var panel = $(this).parent('div').find('input').val();
 
-    var precio = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(0)').find('b');
-    var inventario = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(1)').find('b');
-    var estante = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(2)').find('b');
-    var nivel = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(3)').find('b');
+    var precio = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(1)').find('b');
+    var inventario = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(2)').find('b');
+    var estante = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(3)').find('b');
+    var nivel = $(this).parent('div').parent('div').parent('div').parent('form').find('h5:eq(4)').find('b');
 
     precio.text('$ ' + v_pre_receta[panel][index]);
     inventario.text(v_inv_receta[panel][index]);
@@ -411,11 +417,11 @@ $(document).on('ready', function () {
   $("#lista_paneles").on('click', '#add_m_receta', function (e) {
     e.preventDefault();
 
-    var n_producto = $(this).parent('center').parent('div').parent('form').find('h4').find('span').text();
+    var n_producto = $(this).parent('center').parent('div').parent('form').find('h5:eq(0)').find('span').text();
     var n_division = $(this).parent('center').parent('div').parent('form').find('select option:selected').text();
     var id_division = $(this).parent('center').parent('div').parent('form').find('select option:selected').val();
-    var precio = $(this).parent('center').parent('div').parent('form').find('h5:eq(0)').find('b').text();
-    var inventario = $(this).parent('center').parent('div').parent('form').find('h5:eq(1)').find('b').text();
+    var precio = $(this).parent('center').parent('div').parent('form').find('h5:eq(1)').find('b').text();
+    var inventario = $(this).parent('center').parent('div').parent('form').find('h5:eq(2)').find('b').text();
     var cantidad = $(this).parent('center').parent('div').parent('form').find('#cant').val();
 
     cantidad = parseInt(cantidad);

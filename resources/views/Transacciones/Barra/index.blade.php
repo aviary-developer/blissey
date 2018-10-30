@@ -4,13 +4,13 @@
       <span class="badge border-primary border text-primary">Por confirmar</span>
     @endif
     @if($tipo==1)Pedidos
-      <span class="badge border-primary border text-success">Confirmados</span>
+      <span class="badge border-success border text-success">Confirmados</span>
     @endif
     @if($tipo==2)Ventas
-      <span class="badge border-primary border text-success">Realizadas</span>
+      <span class="badge border-success border text-success">Realizadas</span>
     @endif
     @if($tipo==3)Ventas
-      <span class="badge border-primary border text-danger">Anuladas</span>
+      <span class="badge border-danger border text-danger">Anuladas</span>
     @endif
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

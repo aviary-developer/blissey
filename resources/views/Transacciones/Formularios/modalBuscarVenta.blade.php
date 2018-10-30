@@ -15,19 +15,20 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="x_panel m_panel">
-          <div class="ln_solid mb-1 mt-1"></div>
           <div class="row">
-
-            <div class="form-group col-sm-12">
-              <label for="radios">Buscar por:</label>
-              <div class="input-group mb-2 mr-sm-2">
-                Producto {!!Form::radio('busq', '1',true,['onclick'=>'cambioRadio(1)'])!!}
-                Componente {!!Form::radio('busq', '2',null,['onclick'=>'cambioRadio(2)'])!!}
-                @if(Auth::user()->tipoUsuario=="Recepción")
-                  Servicios {!!Form::radio('busq', '3',null,['onclick'=>'cambioRadio(3)'])!!}
-                @endif
-              </div>
-            </div>
+						<div class="form-group col-sm-12" id="radios">
+							<label class="" for="nombre">Buscar por</label>
+								<div class="input-group mb-2 mr-sm-2">
+									<div id="radioBtn" class="btn-group col-sm-12">
+										<a class="btn btn-primary btn-sm active col-sm-auto" data-toggle="busq" data-title="1" onclick="cambioRadio(1)">Producto</a>
+										<a class="btn btn-primary btn-sm notActive col-sm-auto" data-toggle="busq" data-title="2" onclick="cambioRadio(2)">Componente</a>
+										@if(Auth::user()->tipoUsuario=="Recepción")
+											<a class="btn btn-primary btn-sm notActive col-sm-auto" data-toggle="busq" data-title="3" onclick="cambioRadio(3)">Servicios</a>
+										@endif
+									</div>
+									<input type="hidden" name="busq" id="busq" value="1">
+								</div>
+						</div>
 
             <div class="form-group col-sm-8">
               <label class="" for="nombre">Buscar</label>
@@ -49,20 +50,23 @@
               </div>
             </div>
 
-              <div class="x_panel">
-              <div class="col-md-12 col-xs-12">
-                <h6>Resultado de búsqueda</h6>
-                <center>
-                  <table class="table table-striped table-sm" id="tablaBuscar">
-                    <thead>
-                    </thead>
-                  </table>
-                </center>
-              </div>
-            </div>
+						
+					</div>
+					
+				</div>
+				
+				<div class="x_panel m_panel">
+					<div class="flex-row">
+						<center>
+							<h5>Resultado de búsqueda</h5s>
+						</center>
+					</div>
+					<table class="table table-striped table-sm" id="tablaBuscar">
+						<thead>
+						</thead>
+					</table>
+				</div>
 
-          </div>
-        </div>
       </div>
     </div>
     <div class="row">

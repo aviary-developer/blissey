@@ -15,7 +15,6 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="x_panel m_panel">
-            <div class="ln_solid mb-1 mt-1"></div>
             <div class="row">
 
               <div class="form-group col-sm-8">
@@ -38,20 +37,20 @@
                 </div>
               </div>
 
-                <div class="x_panel">
-                <div class="col-md-12 col-xs-12">
-                  <h6>Resultado de búsqueda</h6>
-                  <center>
-                    <table class="table table-striped table-sm" id="tablaBuscar">
-                      <thead>
-                      </thead>
-                    </table>
-                  </center>
-                </div>
-              </div>
-
             </div>
-          </div>
+					</div>
+					
+					<div class="x_panel m_panel">
+						<div class="flex-row">
+							<center>
+								<h5>Resultado de búsqueda</h5s>
+							</center>
+						</div>
+						<table class="table table-striped table-sm" id="tablaBuscar">
+							<thead>
+							</thead>
+						</table>
+					</div>
         </div>
       </div>
       <div class="row">

@@ -45,15 +45,19 @@
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="fas fa-user"></i></div>
             </div>
-            {!! Form::text('f_clientea',null,['class'=>'form-control form-control-sm','placeholder'=>'Cliente','id'=>'f_clientea','readonly'=>'readonly']) !!}
-            <span class="input-group-btn">
-              <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal2" onclick="limpiarTabla()">
-                <i class="fas fa-save"></i>
-              </a>
-              <a class="btn btn-danger btn-sm" onclick="limpiarCliente()">
-                <i class="fas fa-times" style="color:#fff;"></i>
-              </a>
-            </span>
+						{!! Form::text('f_clientea',null,['class'=>'form-control form-control-sm','placeholder'=>'Cliente','id'=>'f_clientea','readonly'=>'readonly']) !!}
+						<div class="input-group-append">
+							<div class="input-group-btn">
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal2" onclick="limpiarTabla()">
+										<i class="fas fa-save"></i>
+									</button>
+									<button type="button" class="btn btn-danger btn-sm" onclick="limpiarCliente()">
+										<i class="fas fa-times"></i>
+									</button>
+								</div>
+							</div>
+						</div>
           </div>
         </div>
       @else
@@ -124,12 +128,12 @@
         </div>
 
         <div class="btn-group">
-          <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-default btn-sm" data-tooltip="tooltip" title="Buscar">
+          <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-outline-success btn-sm" title="Buscar">
             <i class="fa fa-search"></i>
           </button>
 
         @if ($tipo == 2)
-          <button type="button" data-tooltip="tooltip" title="Buscar Receta" class="btn btn-sm btn-default" data-toggle="modal" data-target="#medicamento_m">
+          <button type="button" title="Buscar Receta" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#medicamento_m">
             <i class="fa fa-medkit"></i>
           </button>
         @endif
@@ -142,7 +146,7 @@
     <center>
       <div class="btn-group">
         {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
-        <a href="/blissey/public/transacciones?tipo={{$tipo}}" class="btn btn-default btn-sm">Cancelar</a>
+        <a href="/blissey/public/transacciones?tipo={{$tipo}}" class="btn btn-light btn-sm">Cancelar</a>
       </div>
     </center>
   </div>

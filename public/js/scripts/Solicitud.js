@@ -190,32 +190,32 @@ $(document).on("ready", function () {
   function build_display(vector, panel, tipo) {
     if (tipo == 0) {
       var name = 'lab';
-      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+      var html = '<div class="x_panel m_panel" style="margin-left: -3px;" id="p_' + name + '" >' +
         '<div class="flex-row"><center>' +
         '<h5 class="text-secondary"> Laboratorio Clínico </h5>' +
         '</center></div>' +
-        '</div></div>';
+        '</div>';
     } else if (tipo == 1) {
       var name = "ryx";
-      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+      var html = '<div class="x_panel m_panel" style="margin-left: -3px;" id="p_' + name + '" >' +
         '<div class="flex-row"><center>' +
         '<h5 class="text-secondary"> Rayos X </h5>'+
         '</center></div>' +
-        '</div></div>';
+        '</div>';
     } else if (tipo == 2) {
       var name = "ult";
-      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+      var html = '<div class="x_panel m_panel" style="margin-left: -3px;" id="p_' + name + '" >' +
         '<div class="flex-row"><center>' +
         '<h5 class="text-secondary"> Ultrasonografía </h5>' +
         '</center></div>' +
-        '</div></div>';
+        '</div>';
     } else {
       var name = "tac";
-      var html = '<div class="col-sm-12"><div class="x_panel m_panel" id="p_' + name + '" >' +
+      var html = '<div class="x_panel m_panel" style="margin-left: -3px;" id="p_' + name + '" >' +
         '<div class="flex-row"><center>' +
         '<h5 class="text-secondary"> TAC </h5>' +
         '</center></div>' +
-        '</div></div>';
+        '</div>';
     }
     
     panel.append(html);

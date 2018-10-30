@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="flex-row">
-          <div id="cont_solicitud_m" class="row m_panel x_panel bg-transparent p-0" style="overflow-x: hidden; overflow-y:scroll; height:270px; border: 0px !important">
+          <div id="cont_solicitud_m" class="col-sm-12 m_panel x_panel bg-transparent p-1" style="overflow-x: hidden; overflow-y:scroll; height:270px; border: 0px !important; ">
 
           </div>
         </div>
