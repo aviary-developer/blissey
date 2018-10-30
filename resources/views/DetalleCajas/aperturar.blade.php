@@ -45,32 +45,25 @@
     </div>
   {!!Form::close()!!}
   <script type="text/javascript">
-  function aperturar(id){
-    return swal({
-      title: 'Aperturar caja',
-      text: '¿Está seguro? ¡Sobre esta se realizarán las transacciones!',
-      type: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, ¡Aperturar!',
-      cancelButtonText: 'No, ¡Cancelar!',
-      confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default',
-      buttonsStyling: false
-    }).then(function () {
+  function aperturar(){
+  return swal({
+    title: 'Aperturar caja',
+    text: '¿Está seguro? ¡Sobre esta se realizarán las transacciones!',
+    type: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Si, ¡Aperturar!',
+    cancelButtonText: 'No, ¡Cancelar!',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-default',
+    buttonsStyling: false
+  }).then((result) => {
+    if (result.value) {
+      localStorage.setItem('msg','yes');
       var dominio = window.location.host;
       $('#formulario').submit();
-    }, function (dismiss) {
-      // dismiss can be 'cancel', 'overlay',
-      // 'close', and 'timer'
-      if (dismiss === 'cancel') {
-        swal(
-          'Cancelado',
-          'Acción no realizada',
-          'info'
-        )
-      }
-    });
-  }
+    }
+  });
+}
   </script>
 @endsection

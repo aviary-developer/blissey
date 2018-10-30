@@ -39,17 +39,17 @@
                     @if (App\DetalleCaja::verificacionCaja($caja->id))
                       @if (App\DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id)
                         <a href={!! asset('/cerrar/'.$caja->id)!!} class="btn btn-warning btn-sm" title="Efectuar cierre">
-                          <i class="fas fa-check-circle"></i>
+                          <i class="fas fa-check-circle" style="color:white"></i>
                         </a>
                       @else
                         <button type="button" class="btn btn-sm btn-danger disabled" title="En uso por otro usuario">
-                          <i class="fas fa-warning"></i>
+                          <i class="fas fa-exclamation-triangle"></i>
                         </button>
                       @endif
                     @else
                       @if ($apertura)
                         <button type="button" class="btn btn-sm btn-danger disabled" title="No disponible">
-                          <i class="fas fa-warning"></i>
+                          <i class="fas fa-exclamation-triangle"></i>
                         </button>
                       @else
                         {{-- {!!Form::open(['method'=>'POST','id'=>'formulario'])!!} --}}
