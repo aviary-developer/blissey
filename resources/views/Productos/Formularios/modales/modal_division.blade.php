@@ -19,7 +19,7 @@
             <div class="row">
 
               <div class="form-group col-sm-12">
-                <label class="" for="nombre">Código *</label>
+                <label class="" for="codigo">Código *</label>
                 <div class="input-group mb-2 mr-sm-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-user"></i></div>
@@ -29,7 +29,7 @@
               </div>
 
               <div class="form-group col-sm-12">
-                <label class="" for="nombre">División *</label>
+                <label class="" for="div">División *</label>
                 <div class="input-group mb-2 mr-sm-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-user"></i></div>

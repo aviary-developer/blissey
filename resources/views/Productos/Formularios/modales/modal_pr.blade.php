@@ -19,12 +19,12 @@
           <div class="row">
 
             <div class="form-group col-sm-12">
-              <label class="" for="nombre">Nombre *</label>
+              <label class="" for="nombrepr">Nombre *</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
                 </div>
-                {!! Form::text('nombre',null,['id'=>'nombreProveedorModal','class'=>'form-control form-control-sm','placeholder'=>'Nombre del proveedor']) !!}
+                {!! Form::text('nombrepr',null,['id'=>'nombreProveedorModal','class'=>'form-control form-control-sm','placeholder'=>'Nombre del proveedor']) !!}
               </div>
             </div>
 

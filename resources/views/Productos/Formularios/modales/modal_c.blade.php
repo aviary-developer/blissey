@@ -19,12 +19,12 @@
           <div class="row">
 
             <div class="form-group col-sm-12">
-              <label class="" for="nombre">Nombre *</label>
+              <label class="" for="nombrec">Nombre *</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
                 </div>
-                {!! Form::text('nombre',null,['id'=>'nombreCategoriaModal','class'=>'form-control form-control-sm','placeholder'=>'Nombre de la categoría']) !!}
+                {!! Form::text('nombrec',null,['id'=>'nombreCategoriaModal','class'=>'form-control form-control-sm','placeholder'=>'Nombre de la categoría']) !!}
               </div>
             </div>
             <input type="hidden" id="tokenCategoriaModal" name="tokenCategoriaModal" value="<?php echo csrf_token(); ?>">
