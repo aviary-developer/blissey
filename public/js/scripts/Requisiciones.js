@@ -31,13 +31,13 @@ $(document).on('ready',function(){
             "<td>";
             if(parseFloat(value2.inventario)>parseFloat(value2.stock)){
               html=html+
-              "<button type='button' class='btn btn-xs btn-primary' onclick='registrarRequisicion("+value2.id+");'>"+
+              "<button type='button' class='btn btn-sm btn-primary' onclick='registrarRequisicion("+value2.id+");'>"+
               "<i class='fa fa-arrow-right'></i>"+
               "</button>";
             }else{
               html=html+
-              "<button type='button' class='btn btn-xs btn-danger disabled' data-toggle='tooltip' data-placement='top' title='Inventario en inferior al stock mínimo'>"+
-              "<i class='fa fa-warning'></i>"+
+              "<button type='button' class='btn btn-sm btn-danger disabled' data-toggle='tooltip' data-placement='top' title='Inventario en inferior al stock mínimo'>"+
+              "<i class='fa fa-exclamation-triangle'></i>"+
               "</button>";
             }
             html=html+
@@ -74,8 +74,8 @@ function registrarRequisicion(id){
     "<td>"+
     "<input type='hidden' name='f_producto[]' value='"+id+"'>"+
     "<input type='hidden' name='cantidad[]' value='"+cantidad+"'>"+
-    "<button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>"+
-    "<i class='fa fa-remove'></i>"+
+    "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>"+
+    "<i class='fa fa-times'></i>"+
     "</button>"+
     "</td>"+
     "</tr>";

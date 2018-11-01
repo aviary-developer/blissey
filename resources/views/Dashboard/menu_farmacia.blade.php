@@ -21,12 +21,14 @@
     <li>
       <a href={{asset( '/inventarios')}}>Inventario</a>
     </li>
-
     <li>
       <a href={{asset( '/transacciones?tipo=0')}}>Pedidos</a>
     </li>
     <li>
       <a href={{asset( '/transacciones/create?tipo=2')}}>Ventas</a>
+		</li>
+		<li>
+      <a href={{asset( '/verrequisiciones?tipo=4')}}>Requisiciones</a>
     </li>
     <li>
       <a>Movimiento de caja

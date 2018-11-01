@@ -1,21 +1,15 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'requisiciones.store','method' =>'POST'])!!}
-  <div class="col-md-12 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Requisición<small>Nueva</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @php
-        if(!isset($fecha)){
-        $fecha = Carbon\Carbon::now();
-        }
-        $pantalla=1;//Crear
-      @endphp
-      {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-      @include('Requisiciones.Formularios.form')
-    </div>
+	@include('Requisiciones.Barra.create')
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'requisiciones.store','method' =>'POST','id'=>'form'])!!}
+	@php
+		if(!isset($fecha)){
+		$fecha = Carbon\Carbon::now();
+		}
+		$pantalla=1;//Crear
+	@endphp
+  <div class="col-sm-12">
+		@include('Requisiciones.Formularios.form')
   </div>
   {!!Form::close()!!}
 @endsection

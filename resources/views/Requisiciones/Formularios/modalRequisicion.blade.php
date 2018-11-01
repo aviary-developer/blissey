@@ -1,45 +1,53 @@
 {{--  MODAL INICIO--}}
-<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+		<div class="x_panel m_panel text-danger">
+			<center>
+				<h4 class="mb-1">
+					<i class="fas fa-search"></i>
+					Buscar
+				</h4>
+			</center>
+		</div>
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">Buscar</h4>
-      </div>
-      <div class="modal-body">
-        <div class="x_panel">
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Buscar</label>
-            <div class="col-md-7 col-sm-7 col-xs-12">
-              <span class="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::text('resultadoRequisicion',null,['id'=>'resultadoRequisicion','class'=>'form-control has-feedback-left','placeholder'=>'Buscar']) !!}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Cantidad *</label>
-            <div class="col-md-7 col-sm-7 col-xs-12">
-              <span class="fa fa-cubes form-control-feedback left" aria-hidden="true"></span>
-              {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control has-feedback-left','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2 col-xs-12"></div>
-            <div class="col-md-8 col-xs-12">
-              <h4 class="StepTitle">Resultado de busqueda</h4>
-              <table class="table" id="tablaRequisicion">
-                <thead>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarTablaVenta()">Cerrar</button>
-      </div>
-    </div>
+		<div class="x_panel m_panel">
+			<div class="form-group col-sm-8">
+				<label class="" for="seccion_select">Producto *</label>
+				<div class="input-group mb-2 mr-sm-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text"><i class="fas fa-search"></i></div>
+					</div>
+					{!! Form::text('resultadoRequisicion',null,['id'=>'resultadoRequisicion','class'=>'form-control form-control-sm','placeholder'=>'Buscar']) !!}
+				</div>
+			</div>
+			<div class="form-group col-sm-4">
+				<label class="" for="seccion_select">Cantidad *</label>
+				<div class="input-group mb-2 mr-sm-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text"><i class="fas fa-cubes"></i></div>
+					</div>
+					{!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control form-control-sm','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+				</div>
+			</div>
+		</div>
+
+		<div class="x_panel m_panel">
+			<div class="flex-row">
+				<center>
+					<h5>Resultado de la Busqueda</h5>
+				</center>
+			</div>
+			<table class="table table-sm table-hover table-striped" id="tablaRequisicion">
+				<thead>
+				</thead>
+			</table>
+		</div>
+
+		<div class="m_panel x_panel bg-transparent" style="border:0px !important">
+			<center>
+				<button type="button" class="btn btn-light btn-sm col-4" data-dismiss="modal" onclick="limpiarTablaVenta()">Cerrar</button>
+			</center>
+		</div>
   </div>
 </div>
   {{-- MODAL FINAL --}}
