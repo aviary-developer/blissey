@@ -1,29 +1,13 @@
-{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
-<div class="row">
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li>
-          <a href={!! asset('#') !!}><i class="fa fa2 fa-file"></i> Reporte</a>
-        </li>
-        @php
-        $contador=App\CambioProducto::where('estado',0)->where('localizacion',App\Transacion::tipoUsuario())->count();
-      @endphp
-      @if ($contador>0)
-        <li>
-          <a href="#" onclick={!! "'retirar();'" !!}><i class="fa fa2 fa-archive"></i> Retirar lotes vencidos</a>
-        </li>
-      @endif
-      <li>
-        <a href="#"><i class="fa fa2 fa-question"></i> Ayuda</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-</div>
-{!!Form::close()!!}
+  @php
+    $contador=App\CambioProducto::where('estado',0)->where('localizacion',App\Transacion::tipoUsuario())->count();
+  @endphp
+  @if ($contador>0)
+    <li class="nav-item">
+      <a class="nav-link"href="#" onclick={!! "'retirar();'" !!}>Retirar lotes vencidos</a>
+    </li>
+  @endif
 <script type="text/javascript">
-function retirar(){
+function retirar(id){
   return swal({
     title: 'Confirmar retiro de productos vencidos',
     text: '¿Está seguro? ¡Todos los lotes vencidos debe ser retirados!',
@@ -35,20 +19,11 @@ function retirar(){
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-default',
     buttonsStyling: false
-  }).then(function () {
+  }).then((result) => {
+    if (result.value) {
     var dominio = window.location.host;
     $('#formulario').attr('action','http://'+dominio+'/blissey/public/confirmarRetiroVencidos');
     $('#formulario').submit();
-  }, function (dismiss) {
-    // dismiss can be 'cancel', 'overlay',
-    // 'close', and 'timer'
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
-    }
   });
 }
 function individual(id){
@@ -63,20 +38,11 @@ function individual(id){
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-default',
     buttonsStyling: false
-  }).then(function () {
+  }).then((result) => {
+    if (result.value) {
     var dominio = window.location.host;
     $('#formulario').attr('action','http://'+dominio+'/blissey/public/confirmarRetiroIndividual/'+id);
     $('#formulario').submit();
-  }, function (dismiss) {
-    // dismiss can be 'cancel', 'overlay',
-    // 'close', and 'timer'
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
-    }
   });
 }
 </script>
