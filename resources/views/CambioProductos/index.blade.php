@@ -1,23 +1,12 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
   @php
       setlocale(LC_ALL,'es');
   @endphp
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  @include('CambioProductos.Barra.index')
+  <div class="col-12">
     <div class="x_panel">
-      <div class="row bg-blue">
-        <center>
-          <h3>Productos vencidos y
-              <small class="label-white badge blue ">próximos a vencer</small>
-          </h3>
-        </center>
-      </div>
-      @include('CambioProductos.Formularios.confirm')
-    </div>
-    <div class="x_panel">
-      <div class="x_content">
-        <div class="row">
-        <table class="table table-striped" id="index-table">
+      <table class="table table-hover table-sm table-striped index-table">
           <thead>
             <tr>
               <th>#</th>
@@ -43,7 +32,7 @@
                     $dv=$retirado->transaccion->divisionProducto;//división producto
                   @endphp
                   <td>
-                  {{$retirado->transaccion->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}
+                  {{$retirado->transaccion->fecha_vencimiento->formatLocalized('%d/%m/%Y')}}
                   </td>
                   <td>{{$dv->codigo}}</td>
                   <td>
@@ -53,14 +42,14 @@
                     @endphp
                     @if ($retirado->estado==0)
                       @if ($retirado->transaccion->fecha_vencimiento>$date)
-                        <span class="label label-warning label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="No retirado">Próximo a vencer</span>
+                      <span class="badge text-warning border border-warning col-12" title="No retirado">Próximo a vencer</span>
                       @else
-                        <span class="label label-danger label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="No retirado">Vencido</span>
+                      <span class="badge text-danger border border-danger col-12" title="No retirado">Vencido</span>
                       @endif
                     @elseif($retirado->estado==1)
-                      <span class="label label-dark-blue label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="Retirado sin cambio">{{$dv->codigo}}</span>
+                    <span class="badge text-primary border border-primary col-12" title="Retirado sin cambio">Retirado</span>
                     @else
-                      <span class="label label-success label-lg col-xs-12" data-toggle="tooltip" data-placement="top" title="Cambiado">{{$dv->codigo}}</span>
+                    <span class="badge text-dark-success border border-success col-12" title="Cambiado">Cambiado</span>
                     @endif
                   </td>
                   <td>{{$dv->producto->nombre." ".$dv->division->nombre." "}}
@@ -72,14 +61,17 @@
                   </td>
                   <td>{{$retirado->cantidad}}</td>
                   <td>{{$retirado->transaccion->lote}}</td>
-                  <td><a href={!! asset('/cambio_productos/'.$retirado->id)!!} class="btn btn-sm btn-info"  data-toggle="tooltip" data-placement="top" title="Ver">
-                    <i class="fa fa-info-circle"></i>
-                    </a>
-                    @if (!$retirado->estado)
-                      <a href="#" onclick={!! "'individual(".$retirado->id.");'" !!} class="btn btn-sm btn-danger"  data-tooltip="tooltip" title="Confirmar retiro">
-                        <i class="fa fa-check"></i>
+                  <td>
+                    <div class="btn-group">
+                      <a href={!! asset('/cambio_productos/'.$retirado->id)!!} class="btn btn-sm btn-info" title="Ver">
+                      <i class="fas fa-info-circle"></i>
+                      </a>
+                      @if (!$retirado->estado)
+                        <a href="#" onclick={!! "'individual(".$retirado->id.");'" !!} class="btn btn-sm btn-danger" title="Confirmar retiro">
+                          <i class="fas fa-check"></i>
                         </a>
-                    @endif
+                      @endif
+                    </div>
                   </td>
                 </tr>
                 @php
@@ -89,9 +81,6 @@
           </tbody>
         </table>
       </div>
-        <div class="ln_solid"></div>
-      </div>
-    </div>
   </div>
   <!-- /page content -->
   <script type="text/javascript">
