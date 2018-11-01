@@ -9,6 +9,8 @@ use App\transacion;
 use Auth;
 use App\DetalleTransacion;
 use DB;
+use App\DetalleDevolucion;
+use App\CambioProducto;
 
 class RequisicionController extends Controller
 {
@@ -180,8 +182,8 @@ class RequisicionController extends Controller
               $i++;
             }
             foreach ($compras as $compra) {
-              $devoluciones=App\DetalleDevolucion::total($compra->id);
-              $retirados=App\CambioProducto::total($compra->id);
+              $devoluciones=DetalleDevolucion::total($compra->id);
+              $retirados=CambioProducto::total($compra->id);
               $diferencia=$compra->cantidad-$devoluciones-$retirados;
               if ($diferencia!=0) {
                 $cuenta=$cuenta+$diferencia;
