@@ -19,9 +19,6 @@
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/componentes/create') !!}>Nuevo</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Reporte</a>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
