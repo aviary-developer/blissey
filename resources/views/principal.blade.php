@@ -159,7 +159,6 @@
   {!!Html::script('js/scripts/Empresa.js')!!}
   {!!Html::script('js/scripts/Solicitud.js')!!}
   {!!Html::script('js/scripts/Requisiciones.js')!!}
-  {!!Html::script('js/scripts/StockProveedor.js')!!}
 
   <!-- Custom -->
   {!!Html::script('library/Gentelella/custom.js')!!}
