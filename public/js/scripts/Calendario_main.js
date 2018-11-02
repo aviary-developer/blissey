@@ -12,7 +12,8 @@ $(document).ready(function () {
           end: value.end,
           title: value.title,
           desc: value.desc,
-          color: value.color
+					color: value.color,
+					text: value.text
         });
       });
       console.log(actividades);
@@ -53,7 +54,7 @@ $(document).ready(function () {
               title: v.title,
               desc: v.desc,
               color: v.color,
-              textColor: 'white'
+              textColor: v.text
             });
           });
           callback(events);

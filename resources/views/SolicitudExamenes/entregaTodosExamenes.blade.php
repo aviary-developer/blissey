@@ -8,10 +8,10 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <center>
-          <span><big>Examen realizado: <strong><u>{{$solicitud->examen->nombreExamen}}</u></strong></big><span>
+          <span><big>Examen realizado: <strong><u>{{$solicitud->examen['nombreExamen']}}</u></strong></big><span>
     		</center>
     		<div><span style="float:right"> Edad: <strong><u>{{$solicitud->paciente->fechaNacimiento->age}} años</u></strong></span><span>Paciente: <strong><u>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</u></strong></span></div>
-      	<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
+      	<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen['tipoMuestra'])}}</u></strong></span>
     		<div class="clearfix"></div>
         <div class="row">
           @php

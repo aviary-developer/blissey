@@ -12,9 +12,6 @@ $num=App\Caja::correlativo();
   </center>
 </div>
 <div class="x_panel">
-  <center>
-    <h5 class="mb-1">Datos de la caja</h5>
-  </center>
   <div class="ln_solid mb-1 mt-1"></div>
 
   <div class="form-group">

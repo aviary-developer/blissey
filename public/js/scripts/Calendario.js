@@ -12,7 +12,8 @@ $(document).ready(function () {
           end: value.end,
           title: value.title,
           desc: value.desc,
-          color: value.color
+					color: value.color,
+					text: value.text
         });
       });
       console.log(actividades);
@@ -69,7 +70,8 @@ $(document).ready(function () {
               end: v.end,
               title: v.title,
               desc: v.desc,
-              color: v.color
+							color: v.color,
+							textColor: v.text
             });
           });
           callback(events);

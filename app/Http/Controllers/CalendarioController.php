@@ -145,8 +145,13 @@ class CalendarioController extends Controller
 
     public function eventos(){
         $todos = Calendario::where('tipo_usuario','=','0')->get();
-        $usuario = Calendario::where('f_usuario', Auth::user()->id)->get();
-        $tipo = Calendario::where('tipo_usuario',Auth::user()->tipoUsuario)->get();
+				$usuario = Calendario::where('f_usuario', Auth::user()->id)->get();
+				$tipo = Calendario::where('tipo_usuario',Auth::user()->tipoUsuario)->get();
+				if(Auth::user()->tipoUsuario == "Recepción"){
+					$otros = Calendario::where('tipo_usuario','!=','Recepción')->where('tipo_usuario','!=','0')->get();
+				}else{
+					$otros = null;
+				}
 
         $medicos = [];
         if(Auth::user()->tipoUsuario == "Recepción"){
@@ -169,7 +174,8 @@ class CalendarioController extends Controller
                 $evento[$i]['end'] = $e->fecha_final;
                 $evento[$i]['title'] = $e->titulo;
                 $evento[$i]['desc'] = $e->descripcion;
-                $evento[$i]['color'] = 'lightseagreen';
+								$evento[$i]['color'] = 'lightseagreen';
+								$evento[$i]['text'] = 'white';
                 $i++;
             }
         }
@@ -180,7 +186,8 @@ class CalendarioController extends Controller
                 $evento[$i]['end'] = $e->fecha_final;
                 $evento[$i]['title'] = $e->titulo;
                 $evento[$i]['desc'] = $e->descripcion;
-                $evento[$i]['color'] = 'crimson';
+								$evento[$i]['color'] = 'crimson';
+								$evento[$i]['text'] = 'white';
                 $i++;
             }
         }
@@ -191,7 +198,20 @@ class CalendarioController extends Controller
                 $evento[$i]['end'] = $e->fecha_final;
                 $evento[$i]['title'] = $e->titulo;
                 $evento[$i]['desc'] = $e->descripcion;
-                $evento[$i]['color'] = 'dodgerblue';
+								$evento[$i]['color'] = 'dodgerblue';
+								$evento[$i]['text'] = 'white';
+                $i++;
+            }
+				}
+				if($otros != null){
+            foreach($otros as $e){
+                $evento[$i]['id'] = $e->id;
+                $evento[$i]['start'] = $e->fecha_inicio;
+                $evento[$i]['end'] = $e->fecha_final;
+                $evento[$i]['title'] = $e->titulo;
+                $evento[$i]['desc'] = $e->descripcion;
+								$evento[$i]['color'] = '#ccc';
+								$evento[$i]['text'] = 'black';
                 $i++;
             }
         }
@@ -202,7 +222,8 @@ class CalendarioController extends Controller
                 $evento[$i]['end'] = $e->fecha_final;
                 $evento[$i]['title'] = $e->titulo;
                 $evento[$i]['desc'] = $e->descripcion;
-                $evento[$i]['color'] = 'purple';
+								$evento[$i]['color'] = 'orange';
+								$evento[$i]['text'] = 'white';
                 $i++;
             }
         }
