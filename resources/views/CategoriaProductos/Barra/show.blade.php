@@ -34,6 +34,9 @@
           <a class="nav-link" href="#"  onclick={!! "'eliminar(".$categoria->id.");'" !!}>Eliminar</a>
         </li>
       @endif
+      <li class="nav-item">
+          <a class="nav-link" href="#">Ayuda</a>
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

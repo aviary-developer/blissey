@@ -16,6 +16,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Ayuda</a>
+          </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>
