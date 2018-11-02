@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use App\Especialidad;
 use App\User;
+use App\Habitacions;
+use App\Paciente;
+require 'C:\xampp\htdocs\blissey\vendor\autoload.php';
 
 class LlenarUsuarioSeeder extends Seeder
 {
@@ -77,7 +80,34 @@ class LlenarUsuarioSeeder extends Seeder
         $u->sello="noImgen.jpg";
         $u->foto="noImgen.jpg";
         $u->administrador=1;
-        $u->tipoUsuario="Laboratorio Clínico";
+        $u->tipoUsuario="Laboaratorio";
         $u->save();
+
+
+        $faker = Faker\Factory::create('es_ES');
+
+        for($i=0;$i<50;$i++){
+            $s=random_int(0,1);
+            if($s){
+                $n=$faker->firstNameMale; 
+            }else{
+                $n=$faker->firstNameFemale; 
+            }
+            $p= new Paciente();
+            $p->nombre =$n;
+            $p->apellido =   $faker->lastName;
+            $p->direccion = $faker->address;
+            $p->telefono = random_int(6000,7999).'-'.random_int(0,9999);
+            $p->sexo = $s;
+            $p->fechaNacimiento = $faker->date($format = 'Y-m-d', $max = '2018-06-01');
+            $p->dui =random_int(0,9).random_int(0,9).random_int(0,9).random_int(0,9).random_int(0,9).random_int(0,9).random_int(0,9).random_int(0,9).'-'.random_int(0,9);
+            $p->pais = null;
+            $p->departamento = 'San Vicente';
+            $p->municipio = 'San Lorenzo';
+            $p->alergia=null;
+            $p->estado=1;
+            $p->save();
+        }
+
     }
 }
