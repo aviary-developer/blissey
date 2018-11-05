@@ -161,11 +161,11 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" id="ret" class="btn btn-default" onclick="cambio_habitacion(-1)" style="display:none">Regresar</button>
+        <button type="button" id="ret" class="btn btn-light" onclick="cambio_habitacion(-1)" style="display:none">Regresar</button>
         @if (Auth::user()->tipoUsuario == "Recepción")
           <a href={{asset('/habitaciones/'.$ingreso->f_habitacion)}} class="btn btn-primary" id="go">Ir a registro</a>
         @endif
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

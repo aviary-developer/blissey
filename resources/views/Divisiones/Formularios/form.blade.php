@@ -29,7 +29,7 @@
 <div class="x_panel">
   <center>
     {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'save_Division()']) !!}
-    <button type="reset" name="button" class="btn btn-default btn-sm">Limpiar</button>
-    <a href={!! asset('/divisiones') !!} class="btn btn-default btn-sm">Cancelar</a>
+    <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+    <a href={!! asset('/divisiones') !!} class="btn btn-light btn-sm">Cancelar</a>
   </center>
 </div>

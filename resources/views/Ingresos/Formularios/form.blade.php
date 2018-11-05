@@ -107,8 +107,8 @@
   <div class="form-group">
     <center>
       <button type="button" class="btn btn-primary" id="guardar_ingreso">Guardar</button>
-      <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset($ruta) !!} class="btn btn-default">Cancelar</a>
+      <button type="reset" name="button" class="btn btn-light">Limpiar</button>
+      <a href={!! asset($ruta) !!} class="btn btn-light">Cancelar</a>
     </center>
   </div>
 </div>
@@ -149,7 +149,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

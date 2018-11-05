@@ -35,11 +35,16 @@
               </td>
               <td>
                 <center>
-                   @if ($ingreso->estado == 2)
-                    <button type="button" class="btn btn-default btn-sm" disabled><i class="fa fa-ban"></i></button>
-                  @else
-                    <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-times" ></i></button>
-                  @endif
+									<div class="btn-group">
+										@if ($ingreso->estado == 2 || Auth::user()->tipoUsuario != "Recepción")
+											<button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button>
+										@else
+											@if (!$detalle->estado)
+												<button class="btn btn-sm btn-success" title="Confirmar" onclick={{"accion24(2,".$detalle->id.")"}}><i class="fa fa-check" ></i></button>
+											@endif
+											<button class="btn btn-sm btn-danger" title="Eliminar" onclick={{"accion24(0,".$detalle->id.")"}}><i class="fa fa-times" ></i></button>
+										@endif
+									</div>
                 </center>
               </td>
             </tr>

@@ -101,7 +101,9 @@
     @elseif(Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo == 3)
       @include('Ingresos.dashboard.usuarios.recepcion_consulta')
     @elseif(Auth::user()->tipoUsuario == "Médico")
-      @include('Ingresos.dashboard.usuarios.medico')
+			@include('Ingresos.dashboard.usuarios.medico')
+		@elseif(Auth::user()->tipoUsuario == "Enfermería")
+			@include('Ingresos.dashboard.usuarios.enfermeria')
     @endif
 
   </div>

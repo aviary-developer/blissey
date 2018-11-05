@@ -15,7 +15,7 @@
   <input type="hidden" id="sid" value={{$detalle_sv[0]->id}}>
 @endif
 @if ($count_sv24 > 0)    
-  @if (Auth::user()->tipoUsuario == "Médico")
+  @if (Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería")
     <div class="flex-row" style="height: 184px;">
   @else
     <div class="flex-row" style="height: 122px;">
@@ -237,7 +237,7 @@
     @endforeach
   </div>
 @else
-  @if (Auth::user()->tipoUsuario == "Médico")
+  @if (Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería")
     <div class="flex-row" style="height: 184px; padding: 20px">
   @else
     <div class="flex-row" style="height: 122px; padding: 10px">

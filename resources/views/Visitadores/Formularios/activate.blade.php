@@ -58,7 +58,7 @@ function alta(id){
     confirmButtonText: 'Si, ¡Restaurar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
@@ -80,7 +80,7 @@ function eliminar(id){
     confirmButtonText: 'Si, ¡Eliminar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-danger',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {

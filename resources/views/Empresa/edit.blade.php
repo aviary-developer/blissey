@@ -30,7 +30,7 @@
       <div class="form-group">
         <center>
           {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-          <a href={!! asset('/grupo_promesa') !!} class="btn btn-default">Cancelar</a>
+          <a href={!! asset('/grupo_promesa') !!} class="btn btn-light">Cancelar</a>
         </center>
       </div>
     </div>

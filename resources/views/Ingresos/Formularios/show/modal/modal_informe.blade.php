@@ -20,7 +20,7 @@
 
       <div class="modal-footer">
         <a href={{asset('/informe_financiero/'.$ingreso->id)}} class="btn btn-primary" target="_blank">Ir a registro</a>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

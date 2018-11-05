@@ -29,7 +29,7 @@
 
       <div class="modal-footer">
         <button type="button" id="guardarActualizarPrecio" onclick="comprobacion();" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modalExistencias">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal" id="cerrar_modalExistencias">Cerrar</button>
       </div>
 
     </div>
@@ -72,7 +72,7 @@ function comprobacion(){
       confirmButtonText: 'Si, ¡Estoy seguro!',
       cancelButtonText: 'No, ¡Cancelar!',
       confirmButtonClass: 'btn btn-warning',
-      cancelButtonClass: 'btn btn-default',
+      cancelButtonClass: 'btn btn-light',
       buttonsStyling: false
     }).then(function () {
       guardarPrecio(precio);

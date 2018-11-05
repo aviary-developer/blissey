@@ -35,15 +35,15 @@
 
       <label class="col-md-2 col-sm-12 col-xs-12 form-group">Opciones </label>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <a href="#" class="btn btn-default" id="agregarStock">Agregar</a>
+        <a href="#" class="btn btn-light" id="agregarStock">Agregar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-default">
+        <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-light">
           Buscar
         </button>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
-        <a href="/blissey/public/transacciones?tipo={{$tipo}}" class="btn btn-default">Cancelar</a>
+        <a href="/blissey/public/transacciones?tipo={{$tipo}}" class="btn btn-light">Cancelar</a>
       </div>
       <div class="col-md-1 col-sm-12 col-xs-12 form-group">
         {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}

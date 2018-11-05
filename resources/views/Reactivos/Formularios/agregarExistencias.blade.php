@@ -106,7 +106,7 @@ function comprobacionTemporal(){
 				confirmButtonText: 'Si, ¡Estoy seguro!',
 				cancelButtonText: 'No, ¡Cancelar!',
 				confirmButtonClass: 'btn btn-warning',
-				cancelButtonClass: 'btn btn-default',
+				cancelButtonClass: 'btn btn-light',
 				buttonsStyling: false
 			}).then((result) => {
 				if(result.value){

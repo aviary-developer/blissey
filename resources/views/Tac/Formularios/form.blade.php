@@ -29,8 +29,8 @@
     @else
       {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
     @endif
-      <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/tacs') !!} class="btn btn-default">Cancelar</a>
+      <button type="reset" name="button" class="btn btn-light">Limpiar</button>
+      <a href={!! asset('/tacs') !!} class="btn btn-light">Cancelar</a>
     </center>
   </div>
 </div>

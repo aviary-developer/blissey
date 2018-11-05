@@ -22,7 +22,7 @@
         @if (Auth::user()->tipoUsuario == "Recepción")  
           <a href={{asset('/pacientes/'.$paciente->id)}} class="btn btn-primary">Ir a registro</a>
         @endif
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

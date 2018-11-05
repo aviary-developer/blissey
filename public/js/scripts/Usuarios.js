@@ -25,7 +25,7 @@ $(document).on('ready', function () {
         confirmButtonText: '¡Guardar!',
         cancelButtonText: 'Cancelar',
         confirmButtonClass: 'btn btn-primary',
-        cancelButtonClass: 'btn btn-default'
+        cancelButtonClass: 'btn btn-light'
       }).then(function () {
         $("#precio").val($("#precio_swal").val());
         $("#retencion").val($("#retencion_swal").val());

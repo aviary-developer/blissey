@@ -21,8 +21,8 @@
   <div class="form-group">
     <center>
       {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-      <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-      <a href={!! asset('/rayosx') !!} class="btn btn-default">Cancelar</a>
+      <button type="reset" name="button" class="btn btn-light">Limpiar</button>
+      <a href={!! asset('/rayosx') !!} class="btn btn-light">Cancelar</a>
     </center>
   </div>
 </div>

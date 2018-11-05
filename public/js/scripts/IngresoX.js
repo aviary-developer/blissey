@@ -128,7 +128,8 @@ $("#fecha_signo").on("change", function () {
 
 function medicamento_fecha() {
   var fecha = $("#fecha_producto").val();
-  var id = $("#id").val();
+	var id = $("#id").val();
+	var tipo_usuario = $("#tipo_usuario").val();
   
   $.ajax({
     type: 'get',
@@ -160,7 +161,7 @@ function medicamento_fecha() {
             '<td>' +
             value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>'+
             '</td>';
-          if (value.estado == 1) {
+          if (value.estado == 1 && tipo_usuario == "Recepción") {
             html += '<td><center><button type="button" id = "'+ value.id +'" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
           } else {
             html += '<td><center><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></center></td>';
@@ -179,7 +180,8 @@ function medicamento_fecha() {
 
 function servicio_fecha() {
   var fecha = $("#fecha_servicio").val();
-  var id = $("#id").val();
+	var id = $("#id").val();
+	var tipo_usuario = $("#tipo_usuario").val();
   
   $.ajax({
     type: 'get',
@@ -211,7 +213,7 @@ function servicio_fecha() {
             '<td>' +
             value.cantidad + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
-          if (value.estado == 1) {
+          if (value.estado == 1 && tipo_usuario == "Recepción") {
             html += '<td></center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
           } else {
             html += '<td><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></td>';
@@ -316,7 +318,7 @@ function laboratorio_fecha() {
             value.muestra + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
             html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {

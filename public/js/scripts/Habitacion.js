@@ -79,7 +79,7 @@ $(document).on('ready', function () {
       confirmButtonText: '¡Guardar!',
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default'
+      cancelButtonClass: 'btn btn-light'
     }).then((result)=> {
 
 			if (result.value) {
@@ -259,7 +259,7 @@ function cama_desactivar(id) {
     confirmButtonText: 'Si, ¡Enviar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-danger',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
 	}).then((result) => {
 		if (result.value) {
@@ -291,7 +291,7 @@ function cama_activate(id) {
     confirmButtonText: 'Si, ¡Restaurar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
 	}).then((result) => {
 		if (result.value) {
@@ -326,7 +326,7 @@ function editar_cama(id, precio_actual) {
     confirmButtonText: '¡Guardar!',
     cancelButtonText: 'Cancelar',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default'
+    cancelButtonClass: 'btn btn-light'
   }).then(async (result) => {
 		if (result.value) {
 			await $.ajax({

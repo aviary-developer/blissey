@@ -37,8 +37,8 @@
       <div class="x_panel">
           <center>
             {!! Form::button('Aperturar',['class'=>'btn btn-primary btn-sm','onclick'=>'aperturar()']) !!}
-            <button type="reset" name="button" class="btn btn-default btn-sm">Limpiar</button>
-            <a href={!! asset('/detalleCajas/create') !!} class="btn btn-default btn-sm">Cancelar</a>
+            <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+            <a href={!! asset('/detalleCajas/create') !!} class="btn btn-light btn-sm">Cancelar</a>
           </center>
         </div>
       {{--  --}}
@@ -55,7 +55,7 @@
     confirmButtonText: 'Si, ¡Aperturar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {

@@ -67,7 +67,7 @@
 <div class="x_panel">
   <center>
     {!! Form::button('Guardar',['class'=>'btn btn-primary','onClick'=>'save_visitador()']) !!}
-    <button type="reset" name="button" class="btn btn-default">Limpiar</button>
-    <a href={!! asset('/visitadores?estado='.$estado.'&id='.$id) !!} class="btn btn-default">Cancelar</a>
+    <button type="reset" name="button" class="btn btn-light">Limpiar</button>
+    <a href={!! asset('/visitadores?estado='.$estado.'&id='.$id) !!} class="btn btn-light">Cancelar</a>
   </center>
 </div>

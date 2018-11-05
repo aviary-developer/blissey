@@ -15,7 +15,7 @@ function anular(id){
     confirmButtonText: 'Si, ¡Anular!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-danger',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {

@@ -380,7 +380,7 @@ $(document).on('ready', function () {
       confirmButtonText: '¡Guardar!',
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default',
+      cancelButtonClass: 'btn btn-light',
       type: "warning"
     }).then((result) => {
       console.log(result);
@@ -428,7 +428,7 @@ $(document).on('ready', function () {
       confirmButtonText: '¡Guardar!',
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default',
+      cancelButtonClass: 'btn btn-light',
       type: "warning"
     }).then((result) => {
       console.log(result.value);
@@ -514,7 +514,7 @@ $("#nuevo_abono").on('click', function (e) {
     confirmButtonText: '¡Guardar!',
     cancelButtonText: 'Cancelar',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default'
+    cancelButtonClass: 'btn btn-light'
   }).then((result) => {
     if (result.value) {
       console.log($("#monto").val())
@@ -608,7 +608,7 @@ function registrarventa_(id) {
             html = "<tr id='r" + res + "'>" +
               "<td>" + cantidad + " <span class='text-monospace font-weight-light'>" + c2 +  "</span><b class=''> " + c1 + "</b></td>";
             if (tipo_usuario == "Enfermería") {
-              html += "<td><span class='badge badge-warning col-sm-12'>Pendiente</span></td>";
+              html += "<td><span class='badge badge-light col-sm-12'>Pendiente</span></td>";
             } else {
               html += "<td><center><button type='button' id='"+ res +"' class='btn btn-sm btn-danger' onclick='accion24(3,"+ res +",this)'><i class='fa fa-times'></i></button></center></td>";
             }
@@ -674,7 +674,7 @@ function registrarventa_(id) {
             "<td>" + cantidad + " " +
             "<b class=''>" + c1 + "</b></td>";
           if (tipo_usuario == "Enfermería") {
-            html += "<td><span class='label label-lg label-warning col-sm-12'>Pendiente</span></td>";
+						html += "<td><span class='badge badge-light col-sm-12'>Pendiente</span></td>";
           } else {
             html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-times'></i></button></center></td>";
           }
@@ -722,7 +722,7 @@ function accion24(tipo, id, objeto = null) {
       confirmButtonText: '¡Guardar!',
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-default'
+      cancelButtonClass: 'btn btn-light'
     }).then((result) => {
       if (result.value) {
         var cantidad= $("#edit_cantidad").val();
@@ -806,7 +806,7 @@ function accion24(tipo, id, objeto = null) {
       confirmButtonText: "Si, ¡Eliminar!",
       cancelButtonText: "No, ¡Cancelar!",
       confirmButtonClass: 'btn btn-danger',
-      cancelButtonClass: 'btn btn-default',
+      cancelButtonClass: 'btn btn-light',
     }).then((result) => {
       if (result.value) {
         $.ajax({

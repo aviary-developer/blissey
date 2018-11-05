@@ -104,7 +104,7 @@
                   </h4>
                 </div>
                 <div class="col-xs-2 alignright">
-                  <button type="button" name="button" class="btn btn-default blue btn-xs alignright" data-toggle="modal" data-target="#modal_financiero" onClick={{"resumen(".$ingreso->id.",".$i.");"}} style="margin-top: 7px;">
+                  <button type="button" name="button" class="btn btn-light blue btn-xs alignright" data-toggle="modal" data-target="#modal_financiero" onClick={{"resumen(".$ingreso->id.",".$i.");"}} style="margin-top: 7px;">
                     <i class="fa fa-list"></i> Detalle
                   </button>
                 </div>

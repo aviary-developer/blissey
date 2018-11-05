@@ -132,7 +132,7 @@
 
       <div class="modal-footer">
         <button type="button" id="guardarPaciente" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

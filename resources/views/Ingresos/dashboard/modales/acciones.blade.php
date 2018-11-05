@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="row alignright">
-      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+      <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cerrar</button>
     </div>
   </div>
 </div>

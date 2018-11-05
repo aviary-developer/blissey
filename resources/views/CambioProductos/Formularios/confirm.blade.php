@@ -17,7 +17,7 @@ function retirar(id){
     confirmButtonText: 'Si, ¡Confirmar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
@@ -36,7 +36,7 @@ function individual(id){
     confirmButtonText: 'Si, ¡Confirmar!',
     cancelButtonText: 'No, ¡Cancelar!',
     confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-default',
+    cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {

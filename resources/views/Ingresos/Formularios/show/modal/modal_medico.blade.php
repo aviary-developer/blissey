@@ -18,7 +18,7 @@
 
       <div class="modal-footer">
         <button type="button" id="guardarMedicoModal" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
       </div>
 
     </div>
