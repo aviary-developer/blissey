@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="form-group">
-			<label class="" for="nombre">Tipo de sangre *</label>
+			<label class="" for="nombre">Fecha de vencimiento *</label>
 			<div class="input-group mb-2 mr-sm-2">
 				<div class="input-group-prepend">
 					<div class="input-group-text"><i class="fas fa-calendar"></i></div>
@@ -82,7 +82,7 @@
     var valido = new Validated('campo1');
     valido.required();
 		is_valid = valido.value(true);
-		
+
 		var valido = new Validated('campo3');
     valido.required();
     is_valid = valido.value(is_valid);
@@ -91,7 +91,7 @@
       $('#form').submit();
     }
 	});
-	
+
 function pruebaCruzada(evt){
 	cambio_ = true;
   var files = evt.target.files;
