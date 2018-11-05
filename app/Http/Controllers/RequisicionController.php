@@ -9,6 +9,8 @@ use App\transacion;
 use Auth;
 use App\DetalleTransacion;
 use DB;
+use App\DetalleDevolucion;
+use App\CambioProducto;
 
 class RequisicionController extends Controller
 {
@@ -167,21 +169,14 @@ class RequisicionController extends Controller
         $detalles=$transaccion->detalleTransaccion;
         DetalleTransacion::where('f_transaccion',$id)->delete();
         foreach ($detalles as $detalle) {
-          $inventario=DivisionProducto::inventario($detalle->f_producto,2);
-            $compras=DivisionProducto::compras($detalle->f_producto,2);
+          $inventario=DivisionProducto::inventario($detalle->f_producto,1);
+            $compras=DivisionProducto::compras($detalle->f_producto,1);
             $cuenta=0;
             $i=0;
             $ultimos=[];
             foreach ($compras as $compra) {
-              $cuenta=$cuenta+$compra->cantidad;
-              $ultimos[$i]=$compra;
-              if($cuenta>=$inventario)
-              break;
-              $i++;
-            }
-            foreach ($compras as $compra) {
-              $devoluciones=App\DetalleDevolucion::total($compra->id);
-              $retirados=App\CambioProducto::total($compra->id);
+              $devoluciones=DetalleDevolucion::total($compra->id);
+              $retirados=CambioProducto::total($compra->id);
               $diferencia=$compra->cantidad-$devoluciones-$retirados;
               if ($diferencia!=0) {
                 $cuenta=$cuenta+$diferencia;
