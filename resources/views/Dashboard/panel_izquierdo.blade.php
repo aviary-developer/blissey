@@ -12,7 +12,9 @@
 
   <center>
     <span>
-      {{(Auth::user()->sexo)?"Bienvenido":"Bienvenida"}}
+        @if (Auth::check())
+          {{(Auth::user()->sexo)?"Bienvenido":"Bienvenida"}}
+        @endif
     </span>
   </center>
 

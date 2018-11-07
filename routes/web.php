@@ -168,17 +168,6 @@ Route::group(['middleware'=>'general'], function(){
 			'count_existencia_reactivo'
     ));
   });
-
-  Route::get('/validate',function(Illuminate\Http\Request $request){
-    $tabla = $request->tabla;
-    $campo = $request->campo;
-    $valor = $request->valor;
-
-    $cantidad = DB::table($tabla)->where($campo, $valor)->count();
-
-    return (json_encode($cantidad));
-  });
-
   //Ver si existe el servicio de honorarios médicos
   Route::get('/servicio_honorario', function(){
     $servicio = App\Servicio::where('nombre','Honorarios médicos por ingreso')->count();
@@ -367,3 +356,14 @@ Route::resource('calendarios', 'CalendarioController');
 Route::get('calendario/eventos','CalendarioController@eventos');
 
 Route::get('/graficar_examenes','SolicitudExamenController@graficar_examenes');
+
+//Ruta de validación 
+Route::get('/validate',function(Illuminate\Http\Request $request){
+  $tabla = $request->tabla;
+  $campo = $request->campo;
+  $valor = $request->valor;
+
+  $cantidad = DB::table($tabla)->where($campo, $valor)->count();
+
+  return (json_encode($cantidad));
+});
