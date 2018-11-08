@@ -830,9 +830,9 @@ class SolicitudExamenController extends Controller
   {
 
     if($bandera==0){//EXAMENES ENTREGADOS
-        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_paciente','=',$paciente)->orderBy('estado')->get();
+        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_paciente','=',$paciente)->where('codigo_muestra','!=',null)->orderBy('estado')->get();
     }else{
-    $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$paciente)->orderBy('estado')->get();
+    $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_paciente','=',$paciente)->where('codigo_muestra','!=',null)->orderBy('estado')->get();
   }
     if($bandera){
         foreach ($solicitudes as $solicitud) {
@@ -841,10 +841,13 @@ class SolicitudExamenController extends Controller
         $cambioEstadoSolicitud->save();
       }
     }
+    echo "Total solicitudes: ".count($solicitudes)."<br>";
     foreach ($solicitudes as $key => $solicitud) {
+
       $resultados[$key]=Resultado::where('f_solicitud','=',$solicitud->id)->first();
       $detallesResultado[$key]=DetalleResultado::where('f_resultado','=', $resultados[$key]->id)->get();
       $espr[$key]=ExamenSeccionParametro::where('f_examen','=',$solicitud->f_examen)->where('estado','=',1)->get();
+      echo "Total de espr:".count($espr[$key])." # de solicitud".$key."<br>";
       $contador=0;
       $contadorSecciones=0;
       if($espr[$key]!=null){
