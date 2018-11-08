@@ -27,7 +27,9 @@
         </div>
       </li>
     </ul>
-    @include('Dashboard.boton_salir')
+    @if(Auth::check())
+      @include('Dashboard.boton_salir')
+    @endif
   </div>
 </nav>
 
