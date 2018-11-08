@@ -367,3 +367,8 @@ Route::get('/validate',function(Illuminate\Http\Request $request){
 
   return (json_encode($cantidad));
 });
+
+//Rutas de ayuda
+Route::get('/ayuda/componentes',function(){
+	return view('Ayuda.Contenido.componentes');
+});
