@@ -33,7 +33,10 @@
         <li class="nav-item">
           <a class="nav-link" href="#"  onclick={!! "'eliminar(".$componente->id.");'" !!}>Eliminar</a>
         </li>
-      @endif
+			@endif
+			<li class="nav-item">
+        <a class="nav-link" href={!! asset('/ayuda/general?tipo=componentes') !!} target="_blank">Ayuda</a>
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

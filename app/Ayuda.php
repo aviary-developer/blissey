@@ -12,7 +12,11 @@ class Ayuda extends Model
 		if($tipo == 'componentes'){
 			$titulo = "Componentes";
 			$desc = "Elemento que indica la comoposición activa de un producto. Así como los elementos con los que ha sido elaborado.";
-		}else{
+		}else if($tipo == "presentaciones"){
+			$titulo = "Presentaciones";
+			$desc = "Almacena las diferentes formas en las que puede venir un medicamento.";
+		}
+		else{
 			$titulo = "General";
 			$desc = "La mayoria de los elementos del sistema Blissey hacen uso de esta lógica, puedes usar estos ejemplos para guiarte, si no te ayudan en tu problema, consulta la ayuda específica.";
 		}
