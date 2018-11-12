@@ -7,6 +7,8 @@ use App\Producto;
 use App\DivisionProducto;
 use App\DetalleDevolucion;
 use App\CambioProducto;
+use App\Estante;
+use App\DetalleTransacion;
 
 class InventarioController extends Controller
 {
@@ -53,34 +55,7 @@ class InventarioController extends Controller
      */
     public function show($id)
     {
-        $inventario=DivisionProducto::inventario($id,1);
-        $compras=DivisionProducto::compras($id,1);
-        $cuenta=0;
-        $i=0;
-        $ultimos=[];
-        if(!$inventario){
-          return $ultimos;
-        }
-        foreach ($compras as $compra) {
-          $devoluciones=DetalleDevolucion::total($compra->id);
-          $retirados=CambioProducto::total($compra->id);
-          $diferencia=$compra->cantidad-$devoluciones-$retirados;
-          if ($diferencia>0) {
-            $cuenta=$cuenta+$diferencia;
-            $compra->cantidad=$diferencia;
-            $ultimos[$i]=$compra;
-            if($cuenta>=$inventario)
-            break;
-            $i++;
-          }
-        }
-          $diferencia=$cuenta-$inventario;
-          if($diferencia!=0 && count($ultimos)>0 && isset($ultimos[$i])){
-            $fila=$ultimos[$i];
-            $fila->cantidad=$fila->cantidad-$diferencia;
-            $ultimos[$i]=$fila;
-          }
-          return $ultimos;
+        return DivisionProducto::lotes($id);
     }
 
     /**
@@ -91,7 +66,9 @@ class InventarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto=DivisionProducto::find($id);
+        $lotes=DivisionProducto::lotes($id);
+        return view('Inventarios.edit',compact('producto','lotes'));
     }
 
     /**
@@ -103,7 +80,16 @@ class InventarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $idv=$request->idv;
+        $f_estante=$request->f_estante;
+        $nivel=$request->nivel;
+        foreach($idv as $k => $valor){
+            $detalle=DetalleTransacion::find($valor);
+            $detalle->f_estante=$f_estante[$k];
+            $detalle->nivel=$nivel[$k];
+            $detalle->save();
+        }
+        Return redirect('/inventarios')->with('mensaje', '¡Editado!');
     }
 
     /**

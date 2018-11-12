@@ -45,4 +45,12 @@ class Estante extends Model
       return 1;
     }
   }
+  public static function nivel($id){//Recibe el id del estante y retorna un array hasta el numero de niveles
+    $cantidad=Estante::find($id)->cantidad;
+    $arrayN=[];
+    for($i=1;$i<=$cantidad;$i++) {
+      $arrayN[$i]=$i;
+    }
+    return $arrayN;
+  }
 }
