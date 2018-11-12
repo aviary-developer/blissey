@@ -1,6 +1,6 @@
 <li>
-  <a href={{asset( '/ayuda/componentes')}}>
+  <a href={{asset( '/ayuda/general')}}>
     <i class="far fa-question-circle"></i> 
-    Componentes
+    Uso general
   </a>
 </li>

@@ -40,7 +40,7 @@
         </div>
 			</li>
 			<li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/componentes') !!} target="_blank">Ayuda</a>
+        <a class="nav-link" href={!! asset('/ayuda/general?tipo=componentes') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

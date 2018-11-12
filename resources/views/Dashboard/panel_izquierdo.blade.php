@@ -1,9 +1,9 @@
 <div class="left_col scroll-view">
 
   <div class="navbar nav_title sticky-top" style="border: 0;">
-    <a href={{asset( '/')}} class="site_title">
+    <a href={{asset( '/')}}>
       <center>
-        <img src={{asset('img/blissey.svg')}} alt="" style="width: 55%;">
+        <img src={{asset('img/blissey1.svg')}} alt="" style="width: 55%;">
       </center>
     </a>
   </div>

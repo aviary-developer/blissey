@@ -49,7 +49,7 @@
   {!!Html::script('library/Gentelella/app.js')!!}
   {!!Html::script('library/FullCalendar/lib/jquery-migrate.js')!!}
 </head>
-<body class="nav-md">
+<body class="nav-md" style="background: #3498DB !important;">
   @if(Session::has('mensaje'))
   @php
     echo "<script>
@@ -80,7 +80,7 @@
   @endif
   <div class="container-fluid h-100">
     <div class="row h-100">
-      <div class="col-2 left_col side_back h-100 left-cont" style="overflow-x: hidden; overflow-y: scroll">
+      <div class="col-2 left_col side_back h-100 left-cont" style="overflow-x: hidden; overflow-y: scroll; background: #3498DB !important">
         @include('Ayuda.Menu.panel')
       </div>
       <div class="col-10 side_back bg-light right-cont" role="main" style="overflow-x: hidden; overflow-y: scroll">
