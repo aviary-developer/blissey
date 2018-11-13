@@ -1,18 +1,14 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'rayosx.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
-  @php
-    $fecha = Carbon\Carbon::now();
-    $create = true;
-  @endphp
-  <div class="col-md-7 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Rayos X<small>Nuevo</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('RayosX.Formularios.form')
-    </div>
+	@php
+		$fecha = Carbon\Carbon::now();
+		$create = true;
+	@endphp
+	@include('RayosX.Barra.create')
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'rayosx.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'form'])!!}
+  <div class="col-sm-6">
+		@include('RayosX.Formularios.form')
   </div>
-  {!!Form::close()!!}
+	{!!Form::close()!!}
+	<input type="hidden" id="method" value="create">
 @endsection

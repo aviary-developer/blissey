@@ -171,7 +171,7 @@ $(document).on("ready", function () {
             "</td>" +
             "<td>" +
                 "<button type = 'button' name='button' class='btn btn-danger btn-xs' id='eliminar_telefono'>" +
-                    "<i class='fa fa-remove'></i>" +
+                    "<i class='fa fa-times'></i>" +
                 "</button>" +
             "</td>" +
         "</tr>";

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/ultrasonografias') !!}>
-    Ultrasonografías
+  <a class="navbar-brand" href={!! asset('/rayosx') !!}>
+    Rayos X
     @if ($estadoOpuesto)
       <span class="badge border-danger border text-danger">
         Papelera
@@ -17,14 +17,14 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/ultrasonografias/create') !!}>Nuevo</a>
+        <a class="nav-link" href={!! asset('/rayosx/create') !!}>Nuevo</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={!! asset('/ultrasonografias?estado='.$estadoOpuesto) !!}>
+          <a class="dropdown-item" href={!! asset('/rayosx?estado='.$estadoOpuesto) !!}>
             @if ($estadoOpuesto)
               Activas
               <span class="badge badge-primary float-right">
@@ -40,7 +40,7 @@
         </div>
 			</li>
 			<li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/general?tipo=ultra') !!} target="_blank">Ayuda</a>
+        <a class="nav-link" href={!! asset('/ayuda/general?tipo=rayos') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

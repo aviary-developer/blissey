@@ -56,7 +56,7 @@ class RayosxController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RayoxRequest $request)
+    public function store(Request $request)
     {
       DB::beginTransaction();
       try{
@@ -122,7 +122,7 @@ class RayosxController extends Controller
      * @param  \App\Rayosx  $rayosx
      * @return \Illuminate\Http\Response
      */
-    public function update(RayoxRequest $request, $id)
+    public function update(Request $request, $id)
     {
       $servicio =Servicio::where('f_rayox',$id)->first();
       $servicio->precio=$request->precio;

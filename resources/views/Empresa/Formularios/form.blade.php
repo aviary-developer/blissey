@@ -1,66 +1,47 @@
-<div class="x_content">
-	<div class="form_wizard wizard_horizontal" id="wizard">
-		<ul class="wizard_steps">
-			<li>
-				<a href="#step-1">
-					<span class="step_no">
-						<i class="fa fa-hospital-o"></i>
-					</span>
-					<span class="step_descr">
-						Paso 1
-						<br>
-						<small>Datos del hospital</small>
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#step-2">
-					<span class="step_no">
-						<i class="fa fa-flask"></i>
-					</span>
-					<span class="step_descr">
-						Paso 2
-						<br>
-						<small>Datos del laboratorio</small>
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#step-3">
-					<span class="step_no">
-						<i class="fa fa-stethoscope"></i>
-					</span>
-					<span class="step_descr">
-						Paso 3
-						<br>
-						<small>Datos de la clínica</small>
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#step-4">
-					<span class="step_no">
-						<i class="fa fa-medkit"></i>
-					</span>
-					<span class="step_descr">
-						Paso 4
-						<br>
-						<small>Datos de la farmacia</small>
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#step-5">
-					<span class="step_no">
-						<i class="fa fa-image"></i>
-					</span>
-					<span class="step_descr">Paso 5
-						<br>
-						<small>Logos institucionales</small>
-					</span>
-				</a>
-			</li>
-		</ul>
+<div class="alert alert-danger" id="mout">
+  <center>
+    <p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
+  </center>
+</div>
+<div id="smartwizard">
+	<ul>
+		<li>
+			<a href="#step-1">
+				Paso 1
+				<br>
+				<small>Datos del hospital</small>
+			</a>
+		</li>
+		<li>
+			<a href="#step-2">
+				Paso 2
+				<br>
+				<small>Datos del laboratorio</small>
+			</a>
+		</li>
+		<li>
+			<a href="#step-3">
+				Paso 3
+				<br>
+				<small>Datos de la clínica</small>
+			</a>
+		</li>
+		<li>
+			<a href="#step-4">
+				Paso 4
+				<br>
+				<small>Datos de la farmacia</small>
+			</a>
+		</li>
+		<li>
+			<a href="#step-5">
+				Paso 5
+				<br>
+				<small>Logos institucionales</small>
+			</a>
+		</li>
+	</ul>
+	<div>
 		<div id="step-1">
 			@include('Empresa.Formularios.paso1')
 		</div>
@@ -78,3 +59,27 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$("#smartwizard").smartWizard({
+			lang: {
+				next: 'Siguiente',
+				previous: 'Anterior'
+			},
+			toolbarSettings: {
+				toolbarPosition: 'bottom', // none, top, bottom, both
+				toolbarButtonPosition: 'right', // left, right
+				showNextButton: true, // show/hide a Next button
+				showPreviousButton: true, // show/hide a Previous button
+				toolbarExtraButtons: [
+					$('<button type="submit"></button>').text('Guardar')
+						.addClass('btn btn-primary btn-sm')
+				]
+			},
+			keyNavigation: false,
+		});
+
+		$(document).find('.btn-secondary').addClass('btn-sm');
+	});
+</script>

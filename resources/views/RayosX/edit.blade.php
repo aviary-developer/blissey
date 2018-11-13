@@ -1,17 +1,13 @@
-@extends('dashboard')
+@extends('principal')
 @section('layout')
-  {!!Form::model($rayox,['class' =>'form-horizontal form-label-left input_mask','route' =>['rayosx.update',$rayox->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
-  @php
-    $create = false;
-  @endphp
-  <div class="col-md-7 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Rayos X<small>Editar</small></h2>
-        <div class="clearfix"></div>
-      </div>
-      @include('RayosX.Formularios.form')
-    </div>
+	@php
+		$create = false;
+	@endphp
+	@include('RayosX.Barra.create')
+  {!!Form::model($rayox,['class' =>'form-horizontal form-label-left input_mask','route' =>['rayosx.update',$rayox->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'form'])!!}
+  <div class="col-sm-6">
+		@include('RayosX.Formularios.form')
   </div>
-  {!!Form::close()!!}
+	{!!Form::close()!!}
+	<input type="hidden" id="method" value="edit">
 @endsection

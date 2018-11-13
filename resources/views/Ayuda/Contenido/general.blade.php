@@ -4,7 +4,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
 		<a class="navbar-brand" href={!! asset('/general?tipo='.$tipo) !!}>
 			{{$titulo}}
-			<span class="badge border-info border text-info">
+			<span class="badge badge-info">
 				Ayuda
 			</span>
 		</a>
@@ -14,7 +14,6 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav mr-auto">
 			</ul>
-			@include('Dashboard.boton_salir')
 		</div>
 	</nav>
 

@@ -1,18 +1,14 @@
-@extends('dashboard') @section('layout') 
-{!! Form::model($empresa, ['class' =>'form-horizontal form-label-left input_mask','route' =>['grupo_promesa.update',$empresa->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data']) !!}
-
+@extends('principal') 
+@section('layout') 
 @php 
   $fecha = Carbon\Carbon::now(); 
   $create = false;
 @endphp
-<div class="col-md-12 col-xs-12">
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>Grupo Promesa
-				<small>Editar</small>
-			</h2>
-			<div class="clearfix"></div>
-		</div>
+@include('Empresa.Barra.create')
+{!! Form::model($empresa, ['class' =>'form-horizontal form-label-left input_mask','route' =>['grupo_promesa.update',$empresa->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data']) !!}
+
+<div class="col-sm-12">
+	<div class="x_panel">		
     <div class="x_content">
       <input type="hidden" name="telefono_eliminados[]" value="ninguno" id="telefono_eliminados">
       @if($seccion==1)
@@ -26,14 +22,13 @@
       @else  
         @include('Empresa.Formularios.paso5')
       @endif
-      <div class="ln_solid"></div>
-      <div class="form-group">
-        <center>
-          {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
-          <a href={!! asset('/grupo_promesa') !!} class="btn btn-light">Cancelar</a>
-        </center>
-      </div>
     </div>
+	</div>
+	<div class="x_panel">
+		<center>
+			{!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
+      <a href={!! asset('/grupo_promesa') !!} class="btn btn-light btn-sm">Cancelar</a>
+		</center>
 	</div>
 </div>
 {!!Form::close()!!} @endsection

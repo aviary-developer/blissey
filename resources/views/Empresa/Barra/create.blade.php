@@ -1,14 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/ultrasonografias') !!}>
-    Ultrasonografía
+  <a class="navbar-brand" href={!! asset('/grupo_promesa') !!}>
+    Grupo Promesa
     @if ($create)
       <span class="badge border-success border text-success">
-        Nueva
+        Nuevo
       </span>  
     @else
       <span class="badge border-purple border text-purple">
         Editar
-      </span>
+      </span>  
     @endif
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,10 +16,10 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/general?tipo=ultra') !!} target="_blank">Ayuda</a>
-      </li>
+
     </ul>
-    @include('Dashboard.boton_salir')
+    @if(Auth::check())
+      @include('Dashboard.boton_salir')
+    @endif
   </div>
 </nav>

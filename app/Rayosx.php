@@ -10,7 +10,7 @@ class Rayosx extends Model
     'nombre'
   ];
   public static function buscar($nombre, $estado){
-    return Rayosx::nombre($nombre)->estado($estado)->orderBy('nombre')->paginate(10);
+    return Rayosx::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
   }
   public function scopeNombre($query, $nombre){
     if(trim($nombre)!=""){

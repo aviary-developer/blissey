@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-3 col-sm-3 col-xs-12">
+	<div class="col-sm-3">
 		<div class="form-group">
 			<label class="col-md-12 col-sm-12 col-xs-12">Logo de Hospital *</label>
 		</div>
@@ -13,13 +13,15 @@
 			</center>
 		</div>
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<span class="fa fa-hospital-o form-control-feedback left" aria-hidden="true"></span>
-				{!! Form::file('logo_hospital',['id'=>'logo_hospital','class'=>'form-control has-feedback-left']) !!}
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="custom-file input-group">
+					<input type="file" name="logo_hospital" class="custom-file-input" id="logo_hospital" lang="es">
+					<label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar Archivo</label>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3 col-sm-3 col-xs-12">
+	<div class="col-sm-3">
 		<div class="form-group">
 			<label class="col-md-12 col-sm-12 col-xs-12">Logo de Laboratorio *</label>
 		</div>
@@ -33,13 +35,15 @@
 			</center>
 		</div>
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<span class="fa fa-flask form-control-feedback left" aria-hidden="true"></span>
-				{!! Form::file('logo_laboratorio',['id'=>'logo_laboratorio','class'=>'form-control has-feedback-left']) !!}
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="custom-file input-group">
+					<input type="file" name="logo_laboratorio" class="custom-file-input" id="logo_laboratorio" lang="es">
+					<label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar Archivo</label>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3 col-sm-3 col-xs-12">
+	<div class="col-sm-3">
 		<div class="form-group">
 			<label class="col-md-12 col-sm-12 col-xs-12">Logo de Clínica *</label>
 		</div>
@@ -53,13 +57,15 @@
 			</center>
 		</div>
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<span class="fa fa-stethoscope form-control-feedback left" aria-hidden="true"></span>
-				{!! Form::file('logo_clinica',['id'=>'logo_clinica','class'=>'form-control has-feedback-left']) !!}
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="custom-file input-group">
+					<input type="file" name="logo_clinica" class="custom-file-input" id="logo_clinica" lang="es">
+					<label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar Archivo</label>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3 col-sm-3 col-xs-12">
+	<div class="col-sm-3">
 		<div class="form-group">
 			<label class="col-md-12 col-sm-12 col-xs-12">Logo de Farmacia *</label>
 		</div>
@@ -73,14 +79,12 @@
 			</center>
 		</div>
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<span class="fa fa-medkit form-control-feedback left" aria-hidden="true"></span>
-				{!! Form::file('logo_farmacia',['id'=>'logo_farmacia','class'=>'form-control has-feedback-left']) !!}
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="custom-file input-group">
+					<input type="file" name="logo_farmacia" class="custom-file-input" id="logo_farmacia" lang="es">
+					<label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar Archivo</label>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<br>
-<center>
-	<p style="color:red;">El campo marcado con un * es <b>obligatorio</b>.</p>
-</center>

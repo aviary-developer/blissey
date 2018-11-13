@@ -25,19 +25,19 @@ class EmpresaRequest extends FormRequest
     {
         return [
             'codigo_hospital' => 'required | min:2 | max:30',
-            'nombre_hospital' => 'required | min:2 | max:30',
+            'nombre_hospital' => 'required | min:2',
             'direccion_hospital' => 'required | min:2',
 
             'codigo_clinica' => 'required | min:2 | max:30',
-            'nombre_clinica' => 'required | min:2 | max:30',
+            'nombre_clinica' => 'required | min:2',
             'direccion_clinica' => 'required | min:2',
 
             'codigo_laboratorio' => 'required | min:2 | max:30',
-            'nombre_laboratorio' => 'required | min:2 | max:30',
+            'nombre_laboratorio' => 'required | min:2',
             'direccion_laboratorio' => 'required | min:2',
 
             'codigo_farmacia' => 'required | min:2 | max:30',
-            'nombre_farmacia' => 'required | min:2 | max:30',
+            'nombre_farmacia' => 'required | min:2',
             'direccion_farmacia' => 'required | min:2',
         ];
     }
