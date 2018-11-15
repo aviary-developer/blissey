@@ -6,7 +6,7 @@
     setlocale(LC_ALL,'es');
   @endphp
   @include('Ingresos.Barra.show')
-  {{-- Determinar si es permitido que este en observacion o en medi ingreso --}}
+	{{-- Determinar si es permitido que este en observacion o en medi ingreso --}}
     @if ($ingreso->tipo == 1 && $horas > 6 && $ingreso->estado != 2)
       <script>
         swal('¡Advertencia!','Este paciente ya excedio el tiempo recomendado en medi ingreso, por favor darle de alta o cambiar su tipo de hospitalización','warning');

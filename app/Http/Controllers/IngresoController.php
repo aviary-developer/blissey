@@ -258,7 +258,11 @@ class IngresoController extends Controller
           $ultima48->subDay();
         }
         /**Determinar horas de ingreso */
-        $horas = $ingreso->fecha_ingreso->diffInHours($hoy);
+				if($ingreso->tipo == 0){
+					$horas = $ingreso->fecha_ingreso->diffInHours($hoy);
+				}else{
+					$horas = $ingreso->fecha_ingreso->diffInHours($ahora);
+				}
         $horas_f = $hoy->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
         /**Generador automatico de transacciones por uso de la habitación */
         $habitacion_dia_guardado_count = 0;
@@ -480,7 +484,7 @@ class IngresoController extends Controller
       if(Auth::user()->tipoUsuario == "Médico"){
         $historial = $ingreso->paciente->ingreso;
         $lista_medicamentos = Producto::orderBy('nombre','asc')->get();
-      }
+			}
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
         'paciente',

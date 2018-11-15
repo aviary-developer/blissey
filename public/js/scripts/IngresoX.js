@@ -10,26 +10,13 @@ function eliminar_ingreso(id) {
     confirmButtonClass: 'btn btn-danger',
     cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
-  }).then(function () {
-    var dominio = window.location.host;
-    $('#formulario').attr('action', 'http://' + dominio + '/blissey/public/desactivateIngreso/' + id);
-    $('#formulario').submit();
-    swal({
-      type: 'success',
-      title: '¡Ingresado!',
-      text: 'Acción realizada satisfactoriamente',
-      showConfirmButton: false
-    });
-  }, function (dismiss) {
-    // dismiss can be 'cancel', 'overlay',
-    // 'close', and 'timer'
-    if (dismiss === 'cancel') {
-      swal(
-        'Cancelado',
-        'El registro se mantiene',
-        'info'
-      )
-    }
+	}).then((result) => {
+		if (result.value) {
+			var dominio = window.location.host;
+			$('#formulario').attr('action', 'http://' + dominio + '/blissey/public/desactivateIngreso/' + id);
+			localStorage.setItem('msg', 'yes');
+			$('#formulario').submit();
+		}
   });
 }
 
@@ -45,26 +32,13 @@ function confirmar_ingreso(id) {
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
-  }).then(function () {
-    var dominio = window.location.host;
-    $('#formulario').attr('action', 'http://' + dominio + '/blissey/public/activateIngreso/' + id);
-    $('#formulario').submit();
-    swal({
-      type: 'success',
-      title: '¡Ingresado!',
-      text: 'Acción realizada satisfactoriamente',
-      showConfirmButton: false
-    });
-  }, function (dismiss) {
-    // dismiss can be 'cancel', 'overlay',
-    // 'close', and 'timer'
-    if (dismiss === 'cancel') {
-      swal({
-        type: 'info',
-        title: 'Cancelado',
-        text: 'El registro se mantiene'
-      });
-    }
+	}).then((result) => {
+		if (result.value) {
+			var dominio = window.location.host;
+			$('#formulario').attr('action', 'http://' + dominio + '/blissey/public/activateIngreso/' + id);
+			localStorage.setItem('msg', 'yes');
+			$('#formulario').submit();
+		}
   });
 }
 
