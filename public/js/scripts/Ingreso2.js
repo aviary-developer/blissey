@@ -331,6 +331,7 @@ $(document).on('ready', function () {
     var tipo_u = $("#tipo_usuario").val();
     var id = $("#id").val();
     var consulta = $("#precio_consulta").val();
+		console.log("Entra a la funcion para graficar");
     if (tipo_u == "Recepción" && consulta == null) {
       $.ajax({
         type: 'get',
@@ -339,6 +340,7 @@ $(document).on('ready', function () {
           id: id,
         },
         success: function (r) {
+					console.log(r);
           var monto = [];
           var abono = [];
           var fecha_format = [];
