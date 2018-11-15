@@ -41,6 +41,9 @@
                   <a href={!! asset('#')!!} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal_inventario" onclick="llenarmodal({{$div->id}});" title="Lotes">
                     <i class="fa fa-info-circle"></i>
                   </a>
+                  <a href={!! asset('inventarios/'.$div->id.'/edit')!!} class="btn btn-sm btn-primary" title="Editar ubicación">
+                    <i class="fa fa-edit"></i>
+                  </a>
                 @else
                   <button type="button" class="btn btn-sm btn-danger disabled"  title="Sin lotes">
                     <i class="fas fa-exclamation-triangle"></i>

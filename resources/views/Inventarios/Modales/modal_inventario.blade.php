@@ -1,5 +1,5 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="modal_inventario" data-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="row">
       <div class="col-sm-12">
         <div class="x_panel m_panel text-danger">
@@ -45,6 +45,8 @@ function llenarmodal(id){
     "<thead>"+
     "<th>Cantidad</th>"+
     "<th>Lote</th>"+
+    "<th>Estante</th>"+
+    "<th>Nivel</th>"+
     "<th>Fecha de vencimiento</th>"+
     "</thead>";
     tabla.append(head);
@@ -52,6 +54,8 @@ function llenarmodal(id){
       html="<tr>"+
       "<td>"+value.cantidad+"</td>"+
       "<td>"+value.lote+"</td>"+
+      "<td>"+value.estante+"</td>"+
+      "<td>"+value.nivel+"</td>"+
       "<td>"+value.fecha_vencimiento.split('-').reverse().join('/');+"</td>"+
       "</tr>";
       tabla.append(html);

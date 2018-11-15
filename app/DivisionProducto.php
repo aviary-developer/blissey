@@ -245,4 +245,36 @@ class DivisionProducto extends Model
         }
       }
   }
+  public static function lotes($id){
+        $inventario=DivisionProducto::inventario($id,1);
+        $compras=DivisionProducto::compras($id,1);
+        $cuenta=0;
+        $i=0;
+        $ultimos=[];
+        if(!$inventario){
+          return $ultimos;
+        }
+        foreach ($compras as $compra) {
+          $compra->estante=Estante::find($compra->f_estante)->codigo;
+          $devoluciones=DetalleDevolucion::total($compra->id);
+          $retirados=CambioProducto::total($compra->id);
+          $diferencia=$compra->cantidad-$devoluciones-$retirados;
+          if ($diferencia>0) {
+            $cuenta=$cuenta+$diferencia;
+            $compra->cantidad=$diferencia;
+            $ultimos[$i]=$compra;
+            if($cuenta>=$inventario)
+            break;
+            $i++;
+          }
+        }
+          $diferencia=$cuenta-$inventario;
+          if($diferencia!=0 && count($ultimos)>0 && isset($ultimos[$i])){
+            $fila=$ultimos[$i];
+            $fila->cantidad=$fila->cantidad-$diferencia;
+            $ultimos[$i]=$fila;
+          }
+          return $ultimos;
+
+  } 
 }

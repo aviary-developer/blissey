@@ -56,7 +56,7 @@ class UnidadController extends Controller
   public function store(UnidadRequest $request)
   {
     $u=Unidad::create($request->All());
-    Bitacora::bitacora('store','unidades','unidads',$u->id);
+    Bitacora::bitacora('store','unidads','unidades',$u->id);
     return redirect('/unidades')->with('mensaje', '¡Guardado!');
   }
 
@@ -96,7 +96,7 @@ class UnidadController extends Controller
     $unidades = Unidad::find($id);
     $unidades->fill($request->all());
     $unidades->save();
-    Bitacora::bitacora('update','unidades','unidads',$unidades->id);
+    Bitacora::bitacora('update','unidads','unidades',$unidades->id);
     return redirect('/unidades?estado='.$unidades->estado)->with('mensaje', '¡Editado!');
   }
 
@@ -125,7 +125,7 @@ class UnidadController extends Controller
     $unidades = Unidad::find($id);
     $unidades->estado = false;
     $unidades->save();
-    Bitacora::bitacora('desactivate','unidades','unidads',$id);
+    Bitacora::bitacora('desactivate','unidads','unidades',$id);
     return Redirect::to('/unidades')->with('mensaje','¡Desactivado!');
   }
 
@@ -133,12 +133,12 @@ class UnidadController extends Controller
     $unidades = Unidad::find($id);
     $unidades->estado = true;
     $unidades->save();
-    Bitacora::bitacora('activate','unidades','unidads',$id);
+    Bitacora::bitacora('activate','unidads','unidades',$id);
     return Redirect::to('/unidades?estado=0')->with('mensaje','¡Restaurado!');
   }
   public static function ingresoUnidad(UnidadRequest $request){
     $u=Unidad::create($request->All());
-    Bitacora::bitacora('store','unidades','unidads',$u->id);
+    Bitacora::bitacora('store','unidads','unidades',$u->id);
     return Response::json('success');
   }
   public static function llenarUnidad(){
