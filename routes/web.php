@@ -311,9 +311,13 @@ Route::group(['middleware'=>'general'], function(){
 Auth::routes();
 //Rutas de login
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
+
+Route::group(['middleware'=>'primero'], function(){
+	Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+	Route::get('/login', 'Auth\LoginController@login')->name('login');
+	Route::post('/authenticate', 'Auth\LoginController@authenticate')->name('authenticate');
+});
+
 Route::get ('/github', 'PdfController@github');
 Route::get ('/llenar', 'RequisicionController@index');
 

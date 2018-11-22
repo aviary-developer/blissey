@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'farmacia' => \App\Http\Middleware\UsuarioFarmacia::class,
         'laboratorio' => \App\Http\Middleware\UsuarioLaboratorio::class,
         'admin' => \App\Http\Middleware\UsuarioAdmin::class,
-        'general' => \App\Http\Middleware\UsuarioGeneral::class,
+				'general' => \App\Http\Middleware\UsuarioGeneral::class,
+				'primero' => \App\Http\Middleware\FirstUser::class,
     ];
 }

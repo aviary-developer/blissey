@@ -327,20 +327,19 @@ $(document).on('ready', function () {
   chart_fin();
 
   /**Función para dibujar el grafico financiero */
-  function chart_fin() {
+  async function chart_fin() {
     var tipo_u = $("#tipo_usuario").val();
     var id = $("#id").val();
     var consulta = $("#precio_consulta").val();
-		console.log("Entra a la funcion para graficar");
+		console.log("Hola Mary");
     if (tipo_u == "Recepción" && consulta == null) {
-      $.ajax({
+      await $.ajax({
         type: 'get',
         url: '/blissey/public/chart_financiero',
         data: {
           id: id,
         },
         success: function (r) {
-					console.log(r);
           var monto = [];
           var abono = [];
           var fecha_format = [];
@@ -351,7 +350,8 @@ $(document).on('ready', function () {
             fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
           });
 
-          var canva = $("#chart_financiero");
+					var canva = $("#chart_financiero");
+					console.log("Antes de graficar");
           var chart = new Chart(canva, {
             type: 'line',
             data: {
@@ -395,7 +395,8 @@ $(document).on('ready', function () {
                 }]
               }
             }
-          });
+					});
+					console.log("despues");
         }
       });
     }
