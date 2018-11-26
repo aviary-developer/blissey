@@ -9,10 +9,19 @@
 		</a>
 		<button type="button" class="btn btn-success btn-sm" title="Restaurar" onclick={!! "'alta(".$parametro->id.");'" !!}/>
 			<i class="fa fa-check"></i>
-		</button>
-		<button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$parametro->id.");'" !!}/>
-			<i class="fa fa-times"></i>
-		</button>
+    </button>
+    @php
+    $cuenta=App\Parametro::foreanos($componente->id);
+    @endphp
+    @if ($cuenta>0)
+      <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">
+        <i class="fas fa-ban"></i>
+      </button>
+    @else
+      <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$parametro->id.");'" !!}/>
+        <i class="fa fa-times"></i>
+      </button>
+    @endif
 	</div>
 @endif
 {!!Form::close()!!}

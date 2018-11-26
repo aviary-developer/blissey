@@ -43,4 +43,5 @@ class ExamenSeccionParametro extends Model
   public function reactivo(){
     return $this->belongsTo('App\Reactivo','f_reactivo');
   }
+
 }

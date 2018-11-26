@@ -196,10 +196,14 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
+      try{
         $pacientes = Paciente::findOrFail($id);
         $pacientes->delete();
         Bitacora::bitacora('destroy','pacientes','pacientes',$id);
-        return redirect('/pacientes?estado=0');
+        return redirect('/pacientes?estado=0')->with('mensaje', 'Eliminado');;
+      } catch (\Exception $e) {
+        return redirect('/pacientes?estado=0')->with('error', 'Algo salio mal');
+      }
     }
 
     public function desactivate($id){

@@ -109,7 +109,7 @@ $presentaciones=App\Producto::arrayPresentaciones();
                             </button>
                           @else
                             <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
-                              <i class="fas fa-exclamation-triangle"></i>
+                              <i class="fas fa-ban"></i>
                             </button>
                           @endif
                           <a data-toggle="tooltip" data-placement="top" title="Editar">

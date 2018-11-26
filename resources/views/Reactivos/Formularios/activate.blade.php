@@ -6,13 +6,24 @@
 		</a>
 		<a href={!! asset('/reactivos/'.$reactivo->id.'/edit')!!} class="btn btn-sm btn-primary" title="Editar">
 			<i class="fa fa-edit"></i>
-		</a>
+    </a>
+  </div>
+  <div class="btn-group">
 		<button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$reactivo->id.");'" !!} title="Restaurar"/>
 			<i class="fa fa-check"></i>
-		</button>
+    </button>
+    @php
+    $cuenta=App\Reactivo::foraneos($reactivo->id);
+    @endphp
+    @if ($cuenta>0)
+      <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">
+        <i class="fas fa-ban"></i>
+      </button>
+    @else
 		<button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$reactivo->id.");'" !!}/>
 			<i class="fa fa-times"></i>
-		</button>
+    </button>
+    @endif
 	</div>
 @endif
 {!!Form::close()!!}
