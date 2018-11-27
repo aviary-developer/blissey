@@ -13,7 +13,7 @@
     <i class="fas fa-check"></i>
   </button>
   @php
-  $cuenta=App\Division::foreanos($division->id);
+  $cuenta=App\Division::foraneos($division->id);
   @endphp
   @if ($cuenta>0)
     <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">

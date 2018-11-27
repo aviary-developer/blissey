@@ -33,4 +33,7 @@ class Parametro extends Model
   public function unidad(){
     return $this->belongsTo('App\Unidad','unidad');
   }
+  public static function foraneos($id){
+    return ExamenSeccionParametro::where('f_parametro',$id)->count();
+  }
 }

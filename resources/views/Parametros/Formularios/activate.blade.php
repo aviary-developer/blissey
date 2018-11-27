@@ -11,7 +11,7 @@
 			<i class="fa fa-check"></i>
     </button>
     @php
-    $cuenta=App\Parametro::foreanos($componente->id);
+    $cuenta=App\Parametro::foraneos($parametro->id);
     @endphp
     @if ($cuenta>0)
       <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">

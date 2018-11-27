@@ -21,12 +21,7 @@
                             <th>Precio unitario</th>
                             <th>Descuento</th>
                             <th>Subtotal</th>
-                        </thead>
-                        @php
-                        $detalles=$transaccion->detalleTransaccion;
-                        $total=0;
-                        @endphp
-      
+                        </thead>      
                         <tbody>
                         @foreach ($detalles as $detalle)
                           <tr>

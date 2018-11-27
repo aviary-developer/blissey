@@ -16,7 +16,7 @@
     <i class="fas fa-check"></i>
   </button>
   @php
-    $cuenta=App\Proveedor::foreanos($proveedor->id);
+    $cuenta=App\Proveedor::foraneos($proveedor->id);
   @endphp
   @if ($cuenta>0)
     <button type="button" class="btn btn-sm btn-danger disabled" title="No se puede eliminar">

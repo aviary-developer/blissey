@@ -24,7 +24,7 @@ class CategoriaProducto extends Model
     }
     return $arrayC;
   }
-  public static function foreanos($id){
+  public static function foraneos($id){
     return Producto::where('f_categoria',$id)->count();
   }
   public static function productos($id){
