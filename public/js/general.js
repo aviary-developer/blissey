@@ -29,7 +29,7 @@ $(function () {
       if (isChecked) {
         $button
           .removeClass('btn-defualt')
-          .addClass('btn-' + color );
+          .addClass('btn-' + color);
       } else {
         $button
           .removeClass('btn-' + color)
@@ -85,10 +85,10 @@ $('#radioBtn a').on('click', function () {
   $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
 });
 
-function recarga(){
+function recarga() {
   location.reload();
 }
-$("#entregar").click(function() {
+$("#entregar").click(function () {
   setTimeout(recarga, 7000);
 });
 
@@ -141,10 +141,10 @@ $("#blissey-out").click(function (e) {
   });
 });
 
-function validate(value ,id, type = null, amount = 0, campo = null) {
+function validate(value, id, type = null, amount = 0, campo = null) {
   var object = $('#' + id);
   var label = object.parents('.form-group').find('label').text();
-  label = label.substr(0, label.length-1);
+  label = label.substr(0, label.length - 1);
   var html;
   if (type == 'uni') {
     if (object.val().length > 0) {
@@ -187,7 +187,7 @@ function validate(value ,id, type = null, amount = 0, campo = null) {
     return false;
   }
 }
-function notaError(sms){
+function notaError(sms) {
   swal({
     type: 'error',
     toast: true,
@@ -198,7 +198,7 @@ function notaError(sms){
     timer: 4000
   });
 }
-function notaNotice(sms){
+function notaNotice(sms) {
   swal({
     type: 'success',
     toast: true,
@@ -209,7 +209,7 @@ function notaNotice(sms){
     timer: 4000
   });
 }
-function notaInfo(sms){
+function notaInfo(sms) {
   swal({
     type: 'info',
     toast: true,
@@ -220,3 +220,14 @@ function notaInfo(sms){
     timer: 4000
   });
 }
+function ruta() {
+  var dominio = window.location.host;
+  if (dominio == "localhost" || dominio == "127.0.0.1") {
+    $('#guardarruta').val("localhost/blissey/public");
+  } else {
+    $('#guardarruta').val(dominio);
+  }
+}
+$(document).on('ready', function () {
+  ruta();
+});
