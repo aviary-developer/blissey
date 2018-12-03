@@ -53,7 +53,7 @@ class UserController extends Controller
     public function create()
     {
       $especialidades = Especialidad::where('estado',true)->orderBy('nombre','asc')->get();
-      return view('usuarios.create',compact('especialidades'));
+      return view('Usuarios.create',compact('especialidades'));
     }
 
     /**

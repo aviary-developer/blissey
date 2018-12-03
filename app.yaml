@@ -11,10 +11,11 @@ skip_files:
 env_variables:
   # Put production environment variables here.
   APP_LOG: errorlog
-  APP_KEY: base64:6evZZN0ZUQsUUZyf/GpaTRGG1I41f8zNfedI2Tn3E9M=
+  APP_KEY: base64:7jfZ0v47KbUkqWqSJcjZa5vI9AUQlHWwGw8Xoj+ZYrQ=
   STORAGE_DIR: /tmp
   CACHE_DRIVER: database
   SESSION_DRIVER: database
+  APP_DEBUG : true
   ## Set these environment variables according to your CloudSQL configuration.
   DB_HOST: localhost
   DB_DATABASE: blissey
