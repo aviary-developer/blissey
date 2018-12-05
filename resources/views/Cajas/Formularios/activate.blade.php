@@ -7,11 +7,11 @@
     <i class="fas fa-check"></i>
   </button>
   @php
-  $cuenta=App\Caja::foreanos($caja->id);
+  $cuenta=App\Caja::foraneos($caja->id);
   @endphp
   @if ($cuenta>0)
     <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">
-      <i class="fas fa-exclamation-triangle"></i>
+      <i class="fas fa-ban"></i>
     </button>
   @else
     <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$caja->id.");'" !!}  title="Eliminar"/>

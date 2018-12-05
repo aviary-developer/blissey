@@ -8,6 +8,8 @@ use App\Http\Requests\SeccionRequest;
 use Redirect;
 use Response;
 use Carbon\Carbon;
+use DB;
+use App\Bitacora;
 
 class SeccionController extends Controller
 {
@@ -111,9 +113,17 @@ class SeccionController extends Controller
      */
     public function destroy($id)
     {
-      $secciones = Seccion::findOrFail($id);
-      $secciones->delete();
-      return redirect('/secciones?estado=0');
+      DB::beginTransaction();
+      try {
+        $seccion = Seccion::findOrFail($id);
+        $seccion->delete();
+        Bitacora::bitacora('destroy','seccions','secciones',$id);
+        DB::commit();
+        return redirect('/secciones?estado=0')->with('mensaje','¡Eliminado!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('/secciones?estado=0')->with('error','¡No se puede eliminar!');
+      }
     }
     public function desactivate($id){
       $secciones = Seccion::find($id);

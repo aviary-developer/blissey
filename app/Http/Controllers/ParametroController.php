@@ -10,6 +10,8 @@ use App\Unidad;
 use Redirect;
 use Response;
 use Carbon\Carbon;
+use DB;
+use App\Bitacora;
 
 class ParametroController extends Controller
 {
@@ -116,9 +118,17 @@ class ParametroController extends Controller
   */
   public function destroy($id)
   {
-    $parametros = Parametro::findOrFail($id);
-    $parametros->delete();
-    return redirect('/parametros?estado=0');
+    DB::beginTransaction();
+    try {
+      $parametro = Parametro::findOrFail($id);
+      $parametro->delete();
+      Bitacora::bitacora('destroy','parametros','parametros',$id);
+      DB::commit();
+      return redirect('/parametros?estado=0')->with('mensaje','¡Eliminado!');
+    } catch (\Exception $e) {
+      DB::rollback();
+      return redirect('/parametros?estado=0')->with('error','¡No se puede eliminar!');
+    }
   }
   public function desactivate($id){
     $parametros = Parametro::find($id);

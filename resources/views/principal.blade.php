@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Blissey</title>
+  <input type="hidden" id="guardarruta" value="">
 
   <!-- Bootstrap 4 -->
   {!! Html::style('library/Bootstrap4/css/bootstrap.css') !!}

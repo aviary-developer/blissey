@@ -25,4 +25,7 @@ class Reactivo extends Model
     }
     $query->where('estado',$estado);
   }
+  public static function foraneos($id){
+    return ExamenSeccionParametro::where('f_reactivo',$id)->count();
+  }
 }

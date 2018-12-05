@@ -27,7 +27,7 @@ class Caja extends Model
       }
     // }
   }
-  public static function foreanos($id){
+  public static function foraneos($id){
     return DetalleCaja::where('f_caja',$id)->count();
   }
   public static function correlativo(){

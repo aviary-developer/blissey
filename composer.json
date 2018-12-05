@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "ext-gd": "*",
         "backup-manager/backup-manager": "^1.2",
         "backup-manager/laravel": "^1.3",
         "barryvdh/laravel-dompdf": "^0.8.1",
@@ -50,6 +51,10 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "post-deploy-cmd": [
+            "php artisan cache:clear",
+            "chmod -R 755 bootstrap\/cache"
         ]
     },
     "config": {

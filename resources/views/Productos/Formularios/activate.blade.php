@@ -13,11 +13,11 @@
     <i class="fas fa-check"></i>
   </button>
   @php
-    $cuenta=App\Transacion::foreanos($producto->id);
+    $cuenta=App\Transacion::foraneos($producto->id);
   @endphp
   @if ($cuenta>0)
     <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">
-      <i class="fas fa-exclamation-triangle"></i>
+      <i class="fas fa-ban"></i>
     </button>
   @else
   <button type="button" class="btn btn-danger btn-sm"  title="Eliminar" onclick={!! "'eliminar(".$producto->id.");'" !!}/>

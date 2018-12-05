@@ -1,7 +1,8 @@
-class Validated{
+class Validated {
   constructor(name) {
+    this.direccion = $('#guardarruta').val();
     this.name = name;
-    
+
     this.rq = true; //Bandera requerido
     this.mn = true; //Bandera mínimo
     this.mx = true; //Bandera máximo
@@ -46,11 +47,11 @@ class Validated{
     var data = { tabla: table, campo: column, valor: object.val() };
 
     var helper = true;
-    
+
     if (method == "create") {
       await $.ajax({
         type: 'get',
-        url: '/blissey/public/validate',
+        url: '/validate',
         data: data,
         success: function (e) {
           if (e != 0) {
@@ -131,7 +132,7 @@ class Validated{
 
             await $.ajax({
               type: 'get',
-              url: '/blissey/public/validate',
+              url: '/validate',
               data: data,
               success: function (e) {
                 if (e != 0) {

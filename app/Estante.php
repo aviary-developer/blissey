@@ -35,7 +35,7 @@ class Estante extends Model
     }
     return $arrayE;
   }
-  public static function foreanos($id){
+  public static function foraneos($id){
     return DetalleTransacion::where('f_estante',$id)->count();
   }
   public static function correlativo(){

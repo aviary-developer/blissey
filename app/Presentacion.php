@@ -20,7 +20,7 @@ class Presentacion extends Model
     }
     $query->where('estado',$estado);
   }
-  public static function foreanos($id){
+  public static function foraneos($id){
     return Producto::where('f_presentacion',$id)->count();
   }
   public static function productos($id){

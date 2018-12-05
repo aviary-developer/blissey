@@ -6,10 +6,19 @@
 		</a>
 		<button type="button" class="btn btn-success btn-sm" title="Restaurar" onclick={!! "'alta(".$seccion->id.");'" !!}/>
 			<i class="fa fa-check"></i>
-		</button>
+    </button>
+    @php
+    $cuenta=App\Seccion::foraneos($seccion->id);
+    @endphp
+    @if ($cuenta>0)
+      <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">
+        <i class="fas fa-ban"></i>
+      </button>
+    @else
 		<button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$seccion->id.");'" !!}/>
 			<i class="fa fa-times"></i>
-		</button>
+    </button>
+    @endif
 	</div>
 @endif
 {!!Form::close()!!}

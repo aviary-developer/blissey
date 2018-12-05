@@ -16,7 +16,7 @@ class Division extends Model
     }
     $query->where('estado',$estado);
   }
-  public static function foreanos($id){
+  public static function foraneos($id){
     return DivisionProducto::where('f_division',$id)->count();
   }
 }

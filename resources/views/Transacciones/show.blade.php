@@ -3,6 +3,8 @@
   @php
     $index = false;
     setlocale(LC_ALL,'es');
+    $detalles=$transaccion->detalleTransaccion;
+    $total=0;
   @endphp
   @include('Transacciones.Barra.show')
 <div class="col-sm-8"> 
@@ -24,7 +26,7 @@
               @include('Transacciones.Partes.datos_productos')
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              Otro
+              @include('Transacciones.Partes.datos_devoluciones')
           </div>
         </div>
     </div>   
