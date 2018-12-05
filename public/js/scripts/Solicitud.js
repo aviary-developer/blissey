@@ -254,7 +254,7 @@ function remove_vector(obj, tipo) {
     c_lab--;
 
     if (c_lab <= 0) {
-      $(obj).parent('div').parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').parent('div').remove();
     } else {
       $(obj).parent('div').parent('div').remove();
     }
@@ -262,7 +262,7 @@ function remove_vector(obj, tipo) {
     c_ryx--;
     console.log(c_ryx);
     if (c_ryx <= 0) {
-      $(obj).parent('div').parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').parent('div').remove();
     } else {
       $(obj).parent('div').parent('div').remove();
     }
@@ -270,7 +270,7 @@ function remove_vector(obj, tipo) {
     c_ult--;
 
     if (c_ult <= 0) {
-      $(obj).parent('div').parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').parent('div').remove();
     } else {
       $(obj).parent('div').parent('div').remove();
     }
@@ -278,7 +278,7 @@ function remove_vector(obj, tipo) {
     c_tac--;
 
     if (c_tac <= 0) {
-      $(obj).parent('div').parent('div').parent('div').parent('div').remove();
+      $(obj).parent('div').parent('div').parent('div').remove();
     } else {
       $(obj).parent('div').parent('div').remove();
     }
@@ -409,5 +409,5 @@ async function solicitar(obj, tipo) {
       });
     });
   }
-  $(obj).parent('center').parent('div').parent('div').parent('div').remove();
+  $(obj).parent('center').parent('div').parent('div').remove();
 }

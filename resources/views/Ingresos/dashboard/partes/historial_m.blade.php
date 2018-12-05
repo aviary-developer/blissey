@@ -60,9 +60,16 @@
             </div> 
           </div>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-sm btn-dark mb-2" onclick={{'v_consulta('.(($ingreso->tipo == 3 && $ingreso->consulta->count() > 0)?$ingreso->consulta[0]->id:$ingreso->id).','.$ingreso->tipo.')'}}>
-              <i class="fa fa-eye"></i> Ver
-            </button>
+						<div class="btn-group">
+							<button type="button" class="btn btn-sm btn-dark mb-2" onclick={{'v_consulta('.(($ingreso->tipo == 3 && $ingreso->consulta->count() > 0)?$ingreso->consulta[0]->id:$ingreso->id).','.$ingreso->tipo.')'}}>
+								<i class="fa fa-eye"></i>
+							</button>
+							@if ($ingreso->tipo == 3 && $ingreso->consulta->count() > 0)
+								<a href={!!asset('/recetas/'.$ingreso->consulta[0]->id) !!} class="btn btn-sm btn-primary mb-2" target="_blank">
+									<i class="fa fa-prescription"></i>
+								</a>
+							@endif
+						</div>
           </div>
         </div>
       </div>

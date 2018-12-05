@@ -45,7 +45,12 @@ async function v_consulta(id, tipo, nivel = 0) {
       success: function (r) {
         $("#ver_ingresos").empty();
 
-        $(r.consultas).each(function (key, value) {
+				$(r.consultas).each(function (key, value) {
+					var ubicacion = window.location.hostname;
+					var ruta = "/";
+					if (ubicacion == "localhost") {
+						ruta = "/blissey/public/";
+					}
           var html = '<div class="col-sm-12 m-1 border border-secondary rounded">' +
             '<div class="flex-row">' +
             '<center>' +
@@ -78,10 +83,15 @@ async function v_consulta(id, tipo, nivel = 0) {
             '<center><span class="col-6 badge font-sm mb-2 badge-pink">Consulta Médica</span></center>' +
             '</div>' +
             '</div>' +
-            '<div class="col-sm-2">' +
+						'<div class="col-sm-2">' +
+						'<div class="btn-group">'+
             '<button type="button" class="mb-2 btn btn-sm btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',3,1)">' +
-            '<i class="fa fa-eye"></i> Ver' +
-            '</button>' +
+						'<i class="fa fa-eye"></i>' +
+						'</button>' +
+						'<a href="' + ruta + 'recetas/' + value.id + '" target="_blank" class="btn btn-sm btn-primary mb-2">' +
+						'<i class="fas fa-prescription"></i>' +
+						'</a>'+
+						'</div>'+
             '</div>' +
             '</div>' +
             '</div>';

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Empresa;
 
 class UsuarioGeneral
 {
@@ -15,9 +16,14 @@ class UsuarioGeneral
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->check())
+      if(auth()->check())
       {
-        return $next($request);
+				$contador_empresa = Empresa::count();
+				if($contador_empresa > 0){
+					return $next($request);
+				}else{
+					return redirect('/grupo_promesa/create');
+				}
       }
       return redirect("/login");
     }
