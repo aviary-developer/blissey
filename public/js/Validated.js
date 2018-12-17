@@ -1,6 +1,5 @@
 class Validated {
   constructor(name) {
-    this.direccion = $('#guardarruta').val();
     this.name = name;
 
     this.rq = true; //Bandera requerido

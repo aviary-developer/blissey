@@ -29,7 +29,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateRayosx/'+id);
+        $('#formulario').attr('action','activateRayosx/'+id);
         $('#formulario').submit();
       }
     });
@@ -51,7 +51,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyRayosx/'+id);
+        $('#formulario').attr('action','destroyRayosx/'+id);
       $('#formulario').submit();
       }
     });

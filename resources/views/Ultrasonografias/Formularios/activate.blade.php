@@ -29,7 +29,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateUltrasonografia/'+id);
+        $('#formulario').attr('action','activateUltrasonografia/'+id);
         $('#formulario').submit();
       }
     });
@@ -51,7 +51,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyUltrasonografia/'+id);
+        $('#formulario').attr('action','destroyUltrasonografia/'+id);
       $('#formulario').submit();
       }
     });

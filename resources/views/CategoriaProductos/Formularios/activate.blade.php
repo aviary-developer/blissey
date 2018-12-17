@@ -41,9 +41,8 @@ function alta(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      localStorage.setItem('msg','yes');
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateCategoriaProducto/'+id);
+      var dominio = $('#guardarruta').val();
+      $('#formulario').attr('action','activateCategoriaProducto/'+id);
       $('#formulario').submit();
     }
   });
@@ -62,9 +61,8 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      localStorage.setItem('msg','yes');
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyCategoriaProducto/'+id);
+      var dominio = $('#guardarruta').val();
+      $('#formulario').attr('action','destroyCategoriaProducto/'+id);
       $('#formulario').submit();
     }
   });

@@ -46,7 +46,7 @@ function eliminarSolicitud(id){
   }).then((result) => {
     if(result.value){
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroySolicitudExamen/'+id);
+      $('#formulario').attr('action','destroySolicitudExamen/'+id);
       localStorage.setItem('msg', 'yes');
       $('#formulario').submit();
     }

@@ -38,7 +38,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateSeccion/'+id);
+        $('#formulario').attr('action','activateSeccion/'+id);
         $('#formulario').submit();
       }
     });
@@ -60,7 +60,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroySeccion/'+id);
+        $('#formulario').attr('action','destroySeccion/'+id);
       $('#formulario').submit();
       }
     });

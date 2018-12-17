@@ -29,7 +29,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateTac/'+id);
+        $('#formulario').attr('action','activateTac/'+id);
         $('#formulario').submit();
       }
     });
@@ -51,7 +51,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyTac/'+id);
+        $('#formulario').attr('action','destroyTac/'+id);
       $('#formulario').submit();
       }
     });

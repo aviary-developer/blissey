@@ -28,8 +28,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateCategoriaServicio/'+id);
+        $('#formulario').attr('action','activateCategoriaServicio/'+id);
         $('#formulario').submit();
       }
     });
@@ -50,8 +49,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyCategoriaServicio/'+id);
+        $('#formulario').attr('action','destroyCategoriaServicio/'+id);
       $('#formulario').submit();
       }
     });

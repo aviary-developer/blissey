@@ -62,7 +62,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateIngreso/'+id);
+      $('#formulario').attr('action','desactivateIngreso/'+id);
       $('#formulario').submit();
       swal(
         '¡Eliminado!',
@@ -96,7 +96,7 @@
       buttonsStyling: false
     }).then(function () {
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateIngreso/'+id);
+      $('#formulario').attr('action','activateIngreso/'+id);
       $('#formulario').submit();
       swal(
         '¡Ingresado!',
