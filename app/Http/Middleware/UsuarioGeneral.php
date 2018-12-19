@@ -19,7 +19,7 @@ class UsuarioGeneral
       if(auth()->check())
       {
 				$contador_empresa = Empresa::count();
-				if($contador_empresa > 0){
+				if($contador_empresa > 0 || $request->path() == 'grupo_promesa/create'){
 					return $next($request);
 				}else{
 					return redirect('/grupo_promesa/create');
