@@ -15,6 +15,8 @@ class AddDevolucionTransaccion extends Migration
 
     public function down()
     {
+      Schema::table('transacions', function (Blueprint $table) {
           $table->dropColumn('devolucion');
+          });
     }
 }
