@@ -21,8 +21,7 @@ function retirar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-    var dominio = window.location.host;
-    $('#formulario').attr('action','http://'+dominio+'/blissey/public/confirmarRetiroVencidos');
+    $('#formulario').attr('action','confirmarRetiroVencidos');
     $('#formulario').submit();
   });
 }
@@ -40,8 +39,7 @@ function individual(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-    var dominio = window.location.host;
-    $('#formulario').attr('action','http://'+dominio+'/blissey/public/confirmarRetiroIndividual/'+id);
+    $('#formulario').attr('action','confirmarRetiroIndividual/'+id);
     $('#formulario').submit();
   });
 }

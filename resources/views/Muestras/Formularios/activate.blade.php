@@ -29,7 +29,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateMuestraExamen/'+id);
+        $('#formulario').attr('action','activateMuestraExamen/'+id);
         $('#formulario').submit();
       }
     });
@@ -51,7 +51,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyMuestraExamen/'+id);
+        $('#formulario').attr('action','destroyMuestraExamen/'+id);
       $('#formulario').submit();
       }
     });

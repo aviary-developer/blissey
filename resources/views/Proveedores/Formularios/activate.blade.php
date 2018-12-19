@@ -79,7 +79,7 @@ function alta(id){
     if (result.value) {
       localStorage.setItem('msg','yes');
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateProveedor/'+id);
+      $('#formulario').attr('action','activateProveedor/'+id);
       $('#formulario').submit();
     }
   });
@@ -101,7 +101,7 @@ function eliminar(id){
     if (result.value) {
       localStorage.setItem('msg','yes');
       var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProveedor/'+id);
+      $('#formulario').attr('action','destroyProveedor/'+id);
       $('#formulario').submit();
     }
   });

@@ -35,9 +35,7 @@ function alta(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      localStorage.setItem('msg','yes');
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateCaja/'+id);
+      $('#formulario').attr('action','activateCaja/'+id);
       $('#formulario').submit();
     }
   });
@@ -56,9 +54,7 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      localStorage.setItem('msg','yes');
-      var dominio = window.location.host;
-      $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyCaja/'+id);
+      $('#formulario').attr('action','destroyCaja/'+id);
       $('#formulario').submit();
     }
   });

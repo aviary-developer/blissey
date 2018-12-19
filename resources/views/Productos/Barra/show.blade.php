@@ -18,6 +18,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/productos/'.$producto->id.'/edit') !!}>Editar</a>
@@ -35,6 +36,7 @@
         </li>
       @endif
     </ul>
+    {!!Form::close()!!}
     @include('Dashboard.boton_salir')
   </div>
 </nav>
@@ -54,9 +56,7 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateProducto/'+id);
+        $('#formulario').attr('action','activateProducto/'+id);
         $('#formulario').submit();
       }
     });
@@ -76,9 +76,7 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyProducto/'+id);
+        $('#formulario').attr('action','destroyProducto/'+id);
         $('#formulario').submit();
       }
     });
@@ -97,10 +95,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateProducto/'+id);
-        submit();
+        $('#formulario').attr('action','desactivateProducto/'+id);
+        $('#formulario').submit();
       }
     });
   }

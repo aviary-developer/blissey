@@ -37,8 +37,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateBancoSangre/'+id);
+        $('#formulario').attr('action','activateBancoSangre/'+id);
         $('#formulario').submit();
       }
     });
@@ -59,8 +58,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyBancoSangre/'+id);
+        $('#formulario').attr('action','destroyBancoSangre/'+id);
       $('#formulario').submit();
       }
     });

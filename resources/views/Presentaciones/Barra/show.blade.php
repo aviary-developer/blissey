@@ -18,6 +18,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/presentaciones/'.$presentacion->id.'/edit') !!}>Editar</a>
@@ -38,6 +39,7 @@
         <a class="nav-link" href={!! asset('/ayuda/general?tipo=presentaciones') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
+  {!!Form::close()!!}
     @include('Dashboard.boton_salir')
   </div>
 </nav>
@@ -57,9 +59,7 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePresentacion/'+id);
+        $('#formulario').attr('action','activatePresentacion/'+id);
         $('#formulario').submit();
       }
     });
@@ -79,9 +79,7 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPresentacion/'+id);
+        $('#formulario').attr('action','destroyPresentacion/'+id);
         $('#formulario').submit();
       }
     });
@@ -100,9 +98,7 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivatePresentacion/'+id);
+        $('#formulario').attr('action','desactivatePresentacion/'+id);
         submit();
       }
     });

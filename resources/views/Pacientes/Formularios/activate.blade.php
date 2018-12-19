@@ -44,7 +44,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activatePaciente/'+id);
+        $('#formulario').attr('action','activatePaciente/'+id);
         $('#formulario').submit();
       }
     });
@@ -65,7 +65,7 @@
     }).then((result) => {
       if (result.value) {
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyPaciente/'+id);
+        $('#formulario').attr('action','destroyPaciente/'+id);
         $('#formulario').submit();
       }
     });

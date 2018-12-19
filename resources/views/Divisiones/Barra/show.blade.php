@@ -56,7 +56,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/activateDivision/'+id);
+        $('#formulario').attr('action','activateDivision/'+id);
         $('#formulario').submit();
       }
     });
@@ -78,7 +78,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/destroyDivision/'+id);
+        $('#formulario').attr('action','destroyDivision/'+id);
         $('#formulario').submit();
       }
     });
@@ -99,7 +99,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+dominio+'/blissey/public/desactivateDivision/'+id);
+        $('#formulario').attr('action','desactivateDivision/'+id);
         submit();
       }
     });
