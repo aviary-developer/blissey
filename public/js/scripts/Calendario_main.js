@@ -3,7 +3,7 @@ $(document).ready(function () {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/calendario/eventos',
+    url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
     success: async function (r) {
       await $(r).each(function (key, value) {
         actividades.push({
@@ -12,8 +12,8 @@ $(document).ready(function () {
           end: value.end,
           title: value.title,
           desc: value.desc,
-					color: value.color,
-					text: value.text
+          color: value.color,
+          text: value.text
         });
       });
       console.log(actividades);

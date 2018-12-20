@@ -220,7 +220,7 @@ function notaInfo(sms) {
     timer: 4000
   });
 }
-function ruta() {
+function ruta() { //No tocar es para ver la ruta
   var dominio = window.location.host;
   if (dominio == "localhost" || dominio == "127.0.0.1") {
     $('#guardarruta').val("localhost/blissey/public");
