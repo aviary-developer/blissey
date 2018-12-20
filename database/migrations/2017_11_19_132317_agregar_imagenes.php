@@ -14,10 +14,10 @@ class AgregarImagenes extends Migration
     public function up()
     {
         Schema::table('empresas', function (Blueprint $table) {
-            $table->string('logo_hospital')->default('noImgen');
-            $table->string('logo_clinica')->default('noImgen');
-            $table->string('logo_farmacia')->default('noImgen');
-            $table->string('logo_laboratorio')->default('noImgen');
+            $table->string('logo_hospital')->default('noImgen.jpg');
+            $table->string('logo_clinica')->default('noImgen.jpg');
+            $table->string('logo_farmacia')->default('noImgen.jpg');
+            $table->string('logo_laboratorio')->default('noImgen.jpg');
         });
     }
 
@@ -29,10 +29,10 @@ class AgregarImagenes extends Migration
     public function down()
     {
         Schema::table('empresas', function (Blueprint $table) {
-            $table->string('logo_hospital')->default('noImgen');
-            $table->string('logo_clinica')->default('noImgen');
-            $table->string('logo_farmacia')->default('noImgen');
-            $table->string('logo_laboratorio')->default('noImgen');
+            $table->string('logo_hospital')->default('noImgen.jpg');
+            $table->string('logo_clinica')->default('noImgen.jpg');
+            $table->string('logo_farmacia')->default('noImgen.jpg');
+            $table->string('logo_laboratorio')->default('noImgen.jpg');
         });
     }
 }

@@ -50,7 +50,7 @@ class Validated {
     if (method == "create") {
       await $.ajax({
         type: 'get',
-        url: '/validate',
+        url: 'http://'+$('#guardarruta').val()+'/validate',
         data: data,
         success: function (e) {
           if (e != 0) {
