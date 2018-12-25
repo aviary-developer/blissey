@@ -61,7 +61,6 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      var dominio = $('#guardarruta').val();
       $('#formulario').attr('action','destroyCategoriaProducto/'+id);
       $('#formulario').submit();
     }

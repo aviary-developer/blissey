@@ -23,7 +23,7 @@ function anular(id){
         anularVenta(id);
       }else{
         var dominio = window.location.host;
-        location.href ='http://'+dominio+'/blissey/public/anularVenta/'+id+'/'+$('#comentario').val();
+        location.href ='http://' + $('#guardarruta').val() + '/anularVenta/'+id+'/'+$('#comentario').val();
       }
     }
   });

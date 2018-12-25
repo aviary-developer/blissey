@@ -128,7 +128,7 @@
     function camas(){
       $.ajax({
         type: 'get',
-        url: '/blissey/public/cama/lista',
+        url: 'http://' + $('#guardarruta').val() + '/cama/lista',
         data:{
           id: $("#f_habitacion").val()
         },

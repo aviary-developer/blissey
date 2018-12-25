@@ -46,7 +46,7 @@
 
 		if(bandera){
 			await $.ajax({
-				url: "/blissey/public/ingresoMuestra",
+				url: 'http://' + $('#guardarruta').val() + "/ingresoMuestra",
 				type: 'POST',
 				data: {
 					nombre: v_nombre,
@@ -72,7 +72,7 @@
 
   function rellenarMuestra() {
     var muestras = $("#tipo_muestra_select");
-    var ruta = "/blissey/public/llenarMuestrasExamenes";
+    var ruta = 'http://' + $('#guardarruta').val() + "/llenarMuestrasExamenes";
     $.get(ruta, function (res) {
       muestras.empty();
       $(res).each(function (key, value) {

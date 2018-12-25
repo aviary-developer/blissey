@@ -1,5 +1,5 @@
 $(document).on("ready", function () {
-  $("#guardar_consulta").on("click", async function (e) { 
+  $("#guardar_consulta").on("click", async function (e) {
     e.preventDefault();
     /**Guardar el texto del editor en un text area */
     var contenedor = $('#texto-receta');
@@ -43,7 +43,7 @@ $(document).on("ready", function () {
       observacion.push(observacion_prov[key].value);
     });
 
-    $(examen_prov).each(function (key, value) { 
+    $(examen_prov).each(function (key, value) {
       examen.push(value.value);
     });
 
@@ -61,7 +61,7 @@ $(document).on("ready", function () {
 
     await $.ajax({
       type: "post",
-      url: "/blissey/public/consulta",
+      url: 'http://' + $('#guardarruta').val() + "/consulta",
       data: {
         motivo: $("#motivo").val(),
         historia: $("#historia").val(),
@@ -85,7 +85,7 @@ $(document).on("ready", function () {
       success: function (r) {
         if (r != 0) {
           swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
-          window.open("/blissey/public/recetas/"+r,'_blank');
+          window.open('http://' + $('#guardarruta').val() + "/recetas/" + r, '_blank');
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");
@@ -94,7 +94,7 @@ $(document).on("ready", function () {
     });
   });
 
-  $("#btn_lista").on("click", function (e) { 
+  $("#btn_lista").on("click", function (e) {
     lista();
   });
 
@@ -111,7 +111,7 @@ $(document).on("ready", function () {
     $("#examenes__").hide();
   });
 
-  $("#btn_signos").on("click", function(e){
+  $("#btn_signos").on("click", function (e) {
     lista_signos();
   });
 
@@ -153,7 +153,7 @@ $(document).on("ready", function () {
   $("#ver_crear_receta").click(function (e) {
     e.preventDefault();
     var is_valid = true;
-    
+
     var valido = new Validated('motivo');
     valido.required();
     is_valid = valido.value(is_valid);
@@ -191,14 +191,14 @@ function consulta_load(id) {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/consultar',
+    url: 'http://' + $('#guardarruta').val() + '/consultar',
     data: {
       id: id
     },
     success: function (r) {
       var padre = $("#consulta_body");
       padre.empty();
-      var html_ = '<div class="row bg-blue" style="margin: 5px;"><center><h4><i class="fa fa-calendar"></i> '+ r.fecha+'</h4></center></div>';
+      var html_ = '<div class="row bg-blue" style="margin: 5px;"><center><h4><i class="fa fa-calendar"></i> ' + r.fecha + '</h4></center></div>';
       padre.append(html_);
       html_ = '<div class="row blue"><center><span>' + r.medico + '</span></center></div>';
       padre.append(html_);
@@ -235,7 +235,7 @@ function signos_load(id) {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ver_signos',
+    url: 'http://' + $('#guardarruta').val() + '/ver_signos',
     data: {
       id: id
     },
@@ -258,7 +258,7 @@ function signos_load(id) {
       } else {
         html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.temperatura + ' °C</span>';
       }
-      html_ += '</div>'  +
+      html_ += '</div>' +
         '</div>';
       panel.append(html_);
       //Peso
@@ -268,7 +268,7 @@ function signos_load(id) {
       if (r.signos.peso == null) {
         html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
       } else {
-        html_ += '<span class="label label-lg label-white col-xs-12">' + r.signos.peso + ' ' + ((r.signos.medida)?'Kg':'lb') +'</span>';
+        html_ += '<span class="label label-lg label-white col-xs-12">' + r.signos.peso + ' ' + ((r.signos.medida) ? 'Kg' : 'lb') + '</span>';
       }
       html_ += '</div>' +
         '</div>';
@@ -281,20 +281,20 @@ function signos_load(id) {
         html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
       } else if ((r.sexo &&
         (((r.edad >= 16 && r.edad <= 18) && (r.signos.sistole >= 105 && r.signos.sistole <= 135) && (r.signos.diastole >= 60 && r.signos.diastole <= 86)) ||
-        ((r.edad >= 19 && r.edad <= 24) && (r.signos.sistole >= 105 && r.signos.sistole <= 139) && (r.signos.diastole >= 62 && r.signos.diastole <= 88)) ||
-        ((r.edad >= 25 && r.edad <= 29) && (r.signos.sistole >= 108 && r.signos.sistole <= 139) && (r.signos.diastole >= 65 && r.signos.diastole <= 89)) ||
-        ((r.edad >= 30 && r.edad <= 39) && (r.signos.sistole >= 110 && r.signos.sistole <= 145) && (r.signos.diastole >= 68 && r.signos.diastole <= 92)) ||
-        ((r.edad >= 40 && r.edad <= 49) && (r.signos.sistole >= 110 && r.signos.sistole <= 150) && (r.signos.diastole >= 70 && r.signos.diastole <= 96)) ||
-        ((r.edad >= 50 && r.edad <= 59) && (r.signos.sistole >= 115 && r.signos.sistole <= 155) && (r.signos.diastole >= 70 && r.signos.diastole <= 98)) ||
-        ((r.edad >= 60) && (r.signos.sistole >= 115 && r.signos.sistole <= 160) && (r.signos.diastole >= 70 && r.signos.diastole <= 100)))) || 
+          ((r.edad >= 19 && r.edad <= 24) && (r.signos.sistole >= 105 && r.signos.sistole <= 139) && (r.signos.diastole >= 62 && r.signos.diastole <= 88)) ||
+          ((r.edad >= 25 && r.edad <= 29) && (r.signos.sistole >= 108 && r.signos.sistole <= 139) && (r.signos.diastole >= 65 && r.signos.diastole <= 89)) ||
+          ((r.edad >= 30 && r.edad <= 39) && (r.signos.sistole >= 110 && r.signos.sistole <= 145) && (r.signos.diastole >= 68 && r.signos.diastole <= 92)) ||
+          ((r.edad >= 40 && r.edad <= 49) && (r.signos.sistole >= 110 && r.signos.sistole <= 150) && (r.signos.diastole >= 70 && r.signos.diastole <= 96)) ||
+          ((r.edad >= 50 && r.edad <= 59) && (r.signos.sistole >= 115 && r.signos.sistole <= 155) && (r.signos.diastole >= 70 && r.signos.diastole <= 98)) ||
+          ((r.edad >= 60) && (r.signos.sistole >= 115 && r.signos.sistole <= 160) && (r.signos.diastole >= 70 && r.signos.diastole <= 100)))) ||
         (!r.sexo &&
-        (((r.edad >= 16 && r.edad <= 18) && (r.signos.sistole >= 100 && r.signos.sistole <= 130) && (r.signos.diastole >= 60 && r.signos.diastole <= 85)) ||
-        ((r.edad >= 19 && r.edad <= 24) && (r.signos.sistole >= 100 && r.signos.sistole <= 130) && (r.signos.diastole >= 60 && r.signos.diastole <= 85)) ||
-        ((r.edad >= 25 && r.edad <= 29) && (r.signos.sistole >= 102 && r.signos.sistole <= 135) && (r.signos.diastole >= 60 && r.signos.diastole <= 86)) ||
-        ((r.edad >= 30 && r.edad <= 39) && (r.signos.sistole >= 105 && r.signos.sistole <= 139) && (r.signos.diastole >= 65 && r.signos.diastole <= 89)) ||
-        ((r.edad >= 40 && r.edad <= 49) && (r.signos.sistole >= 105 && r.signos.sistole <= 150) && (r.signos.diastole >= 65 && r.signos.diastole <= 96)) ||
-        ((r.edad >= 50 && r.edad <= 59) && (r.signos.sistole >= 110 && r.signos.sistole <= 155) && (r.signos.diastole >= 70 && r.signos.diastole <= 98)) ||
-        ((r.edad >= 60) && (r.signos.sistole >= 115 && r.signos.sistole <= 160) && (r.signos.diastole >= 70 && r.signos.diastole <= 100))))
+          (((r.edad >= 16 && r.edad <= 18) && (r.signos.sistole >= 100 && r.signos.sistole <= 130) && (r.signos.diastole >= 60 && r.signos.diastole <= 85)) ||
+            ((r.edad >= 19 && r.edad <= 24) && (r.signos.sistole >= 100 && r.signos.sistole <= 130) && (r.signos.diastole >= 60 && r.signos.diastole <= 85)) ||
+            ((r.edad >= 25 && r.edad <= 29) && (r.signos.sistole >= 102 && r.signos.sistole <= 135) && (r.signos.diastole >= 60 && r.signos.diastole <= 86)) ||
+            ((r.edad >= 30 && r.edad <= 39) && (r.signos.sistole >= 105 && r.signos.sistole <= 139) && (r.signos.diastole >= 65 && r.signos.diastole <= 89)) ||
+            ((r.edad >= 40 && r.edad <= 49) && (r.signos.sistole >= 105 && r.signos.sistole <= 150) && (r.signos.diastole >= 65 && r.signos.diastole <= 96)) ||
+            ((r.edad >= 50 && r.edad <= 59) && (r.signos.sistole >= 110 && r.signos.sistole <= 155) && (r.signos.diastole >= 70 && r.signos.diastole <= 98)) ||
+            ((r.edad >= 60) && (r.signos.sistole >= 115 && r.signos.sistole <= 160) && (r.signos.diastole >= 70 && r.signos.diastole <= 100))))
       ) {
         html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.sistole + ' / ' + r.signos.diastole + ' °Hg</span>';
       } else if (r.edad < 16) {
@@ -325,7 +325,7 @@ function signos_load(id) {
         '<div class="col-xs-4">';
       if (r.signos.glucosa == null) {
         html_ += '<span class="label label-lg label-gray col-xs-12">Vacio</span>';
-      } else if (r.signos.glucosa >= 70  && r.signos.glucosa <= 110) {
+      } else if (r.signos.glucosa >= 70 && r.signos.glucosa <= 110) {
         html_ += '<span class="label label-lg label-success col-xs-12">' + r.signos.glucosa + '  mg / dl </span>';
       } else {
         html_ += '<span class="label label-lg label-danger col-xs-12">' + r.signos.glucosa + '  mg / dl</span>';

@@ -100,7 +100,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta="/blissey/public/actualizarPrecioTac";
+  var ruta='http://' + $('#guardarruta').val() + "/actualizarPrecioTac";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,

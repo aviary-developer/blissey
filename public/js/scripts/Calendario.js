@@ -3,24 +3,24 @@ $(document).ready(function () {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/calendario/eventos',
+    url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
     success: async function (r) {
-      await $(r).each(function (key, value) { 
+      await $(r).each(function (key, value) {
         actividades.push({
           id: value.id,
           start: value.start,
           end: value.end,
           title: value.title,
           desc: value.desc,
-					color: value.color,
-					text: value.text
+          color: value.color,
+          text: value.text
         });
       });
       console.log(actividades);
 
     }
   });
-  
+
   $('#calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -46,9 +46,9 @@ $(document).ready(function () {
       month: 'Mes',
       week: 'Semana',
       day: 'Día',
-			list: 'Lista',
-			next: 'Siguiente',
-			prev: 'Anterior'
+      list: 'Lista',
+      next: 'Siguiente',
+      prev: 'Anterior'
     },
 
     themeSystem: 'bootstrap3',
@@ -60,7 +60,7 @@ $(document).ready(function () {
     events: function (start, end, timezone, callback) {
       $.ajax({
         type: 'get',
-        url: '/blissey/public/calendario/eventos',
+        url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
         success: function (r) {
           var events = [];
           $(r).each(function (k, v) {
@@ -70,8 +70,8 @@ $(document).ready(function () {
               end: v.end,
               title: v.title,
               desc: v.desc,
-							color: v.color,
-							textColor: v.text
+              color: v.color,
+              textColor: v.text
             });
           });
           callback(events);
@@ -126,7 +126,7 @@ $(document).ready(function () {
     console.log(fecha_inicio + ' | ' + fecha_final);
     $.ajax({
       type: 'post',
-      url: '/blissey/public/calendarios',
+      url: 'http://' + $('#guardarruta').val() + '/calendarios',
       data: {
         fecha_inicio: fecha_inicio,
         fecha_final: fecha_final,
@@ -137,16 +137,16 @@ $(document).ready(function () {
       },
       success: function (r) {
         if (r == 1) {
-					localStorage.setItem('msg', 'yes');
+          localStorage.setItem('msg', 'yes');
           location.reload();
         } else {
-          swal("¡Error!", "Algo salio mal", "error");   
+          swal("¡Error!", "Algo salio mal", "error");
         }
       }
     });
   });
 
-  $("#editar_evento").click(function (e) { 
+  $("#editar_evento").click(function (e) {
     e.preventDefault();
 
     var titulo = $("#titulo-ev-u").val();
@@ -155,7 +155,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: 'put',
-      url: '/blissey/public/calendarios/'+id,
+      url: 'http://' + $('#guardarruta').val() + '/calendarios/' + id,
       data: {
         titulo: titulo,
         descripcion: descripcion
@@ -190,7 +190,7 @@ $(document).ready(function () {
     }).then(function () {
       $.ajax({
         type: 'delete',
-        url: '/blissey/public/calendarios/' + id,
+        url: 'http://' + $('#guardarruta').val() + '/calendarios/' + id,
         success: function (r) {
           if (r == 1) {
             localStorage.setItem('msg', 'yes');

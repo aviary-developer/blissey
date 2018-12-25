@@ -43,7 +43,7 @@ $(document).ready(function () {
     events: function (start, end, timezone, callback) {
       $.ajax({
         type: 'get',
-        url: '/blissey/public/calendario/eventos',
+        url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
         success: function (r) {
           var events = [];
           $(r).each(function (k, v) {

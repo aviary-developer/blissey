@@ -6,7 +6,7 @@
     <th>Usuario</th>
     <th>Acción</th>
     <th>Descripción</th>
-    <th>Ver</th>
+    {{-- <th>Ver</th> --}}
   </thead>
   <tbody>
     @php
@@ -69,7 +69,7 @@
             }
           @endphp
         </td>
-        <td>
+        {{-- <td>
           @if ($bitacora->existeRegistro($bitacora->indice,$bitacora->tabla) > 0)
             <a href={!! asset($bitacora->ruta.'/'.$bitacora->indice)!!} class="btn btn-sm btn-primary" title="Ver">
               <i class="fa fa-eye"></i>
@@ -79,7 +79,7 @@
               <i class="fa fa-ban"></i>
             </a>
           @endif
-        </td>
+        </td> --}}
       </tr>
       @php
       $correlativo++;

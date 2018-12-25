@@ -12,12 +12,12 @@ $(document).on("ready", function () {
     var celda = $(this).parents('tr').find("td:eq(3)");
     var tooltip = $(".tooltip-inner").parent('div');
     var html =
-      '<center><a id="evaluar" href="evaluarExamen/'+id+'/'+ examen +'" class="btn btn-dark btn-sm" title="Evaluar" >' +
-        '<i class="fa fa-paste"></i>' +
+      '<center><a id="evaluar" href="evaluarExamen/' + id + '/' + examen + '" class="btn btn-dark btn-sm" title="Evaluar" >' +
+      '<i class="fa fa-paste"></i>' +
       '</a ></center>';
     $.ajax({
       type: "GET",
-      url: "/blissey/public/aceptarSolicitudExamen/" + id,
+      url: 'http://' + $('#guardarruta').val() + "/aceptarSolicitudExamen/" + id,
       dataType: 'json',
       success: function (respuesta) {
         if (respuesta == 1) {
@@ -51,7 +51,7 @@ $(document).on("ready", function () {
       if (result.value) {
         $.ajax({
           type: "GET",
-          url: "/blissey/public/destroySolicitudExamen/" + id,
+          url: 'http://' + $('#guardarruta').val() + "/destroySolicitudExamen/" + id,
           dataType: 'json',
           success: function (respuesta) {
             fila.remove();
@@ -89,7 +89,7 @@ $(document).on("ready", function () {
     if (is_valid) {
       $.ajax({
         type: 'post',
-        url: '/blissey/public/paciente/guardar',
+        url: 'http://' + $('#guardarruta').val() + '/paciente/guardar',
         data: {
           nombre: nombre.val(),
           apellido: apellido.val(),
@@ -127,36 +127,36 @@ $(document).on("ready", function () {
   });
 
   //Receta
-  $("#buscar_receta_s").click(async function (e) { 
+  $("#buscar_receta_s").click(async function (e) {
     e.preventDefault();
     var codigo = $("#codi-receta").val();
 
     if (codigo.length > 0) {
       await $.ajax({
         type: 'get',
-        url: '/blissey/public/receta/buscar_solicitud',
+        url: 'http://' + $('#guardarruta').val() + '/receta/buscar_solicitud',
         data: {
           codigo: codigo
         },
         success: function (r) {
           var panel = $("#cont_solicitud_m");
-  
-          
+
+
           if (r.cero == false) {
             $("#res_solicitud_m").show();
             $("#res_negativa_m").hide();
-  
+
             $("#n_pac").text(r.paciente);
             $("#id_p_").val(r.id_p);
             $("#f_rec").text(r.fecha);
-    
+
             c_lab = r.total_lab;
             console.log(c_lab);
             c_ult = r.total_ultra;
             c_ryx = r.total_rayo;
             c_tac = r.total_tac;
-  
-            panel.empty();  
+
+            panel.empty();
             if (r.total_lab > 0) {
               build_display(r.lab_v, panel, 0);
             }
@@ -179,7 +179,7 @@ $(document).on("ready", function () {
 
     $("#codi-receta").val('');
   });
-  
+
   $("#close-search-receta").click(function (e) {
     $("#codi-receta").val('');
     $("#res_negativa_m").hide();
@@ -199,7 +199,7 @@ $(document).on("ready", function () {
       var name = "ryx";
       var html = '<div class="x_panel m_panel" style="margin-left: -3px;" id="p_' + name + '" >' +
         '<div class="flex-row"><center>' +
-        '<h5 class="text-secondary"> Rayos X </h5>'+
+        '<h5 class="text-secondary"> Rayos X </h5>' +
         '</center></div>' +
         '</div>';
     } else if (tipo == 2) {
@@ -217,34 +217,34 @@ $(document).on("ready", function () {
         '</center></div>' +
         '</div>';
     }
-    
+
     panel.append(html);
 
-    var subpanel = $("#p_"+name);
+    var subpanel = $("#p_" + name);
     $(vector).each(function (key, value) {
       html = '<div class="row">' +
         '<div class="col-sm-10">' +
         '<b class="blue">' + value.nombre + '</b>' +
-        '<input type="hidden" name="' + name + '[]" value="' + value.id + '">'+
+        '<input type="hidden" name="' + name + '[]" value="' + value.id + '">' +
         '</div>' +
         '<div class="col-sm-2">' +
         '<button type="button" class="btn btn-sm btn-danger" onclick="remove_vector(this,' + tipo + ')">' +
-        '<i class="fa fa-times"></i>'+
+        '<i class="fa fa-times"></i>' +
         '</button>'
-        '</div>'+
+      '</div>' +
         '</div>';
-      
+
       subpanel.append(html);
     });
 
     html = '<div class="flex-row">' +
-      '<center>'+
+      '<center>' +
       '<button type="button" class="btn btn-sm btn-success" onclick="solicitar(this,' + tipo + ')">' +
-      '¡Listo!'+
-      '</button>'+
-      '</center>'+
-    '</div >';
-    
+      '¡Listo!' +
+      '</button>' +
+      '</center>' +
+      '</div >';
+
     subpanel.append(html);
   }
 });
@@ -295,7 +295,7 @@ async function solicitar(obj, tipo) {
     });
 
     await $.ajax({
-      url: "/blissey/public/solicitudex",
+      url: 'http://' + $('#guardarruta').val() + "/solicitudex",
       type: "POST",
       data: {
         f_paciente: paciente,
@@ -316,7 +316,7 @@ async function solicitar(obj, tipo) {
       }
     });
 
-    
+
   } else if (tipo == 1) {
     var rayo_prov = $("input[name = 'ryx[]']").serializeArray();
     var rayo = [];
@@ -326,7 +326,7 @@ async function solicitar(obj, tipo) {
 
     $(rayo).each(async function (key, value) {
       await $.ajax({
-        url: "/blissey/public/solicitudex",
+        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,
@@ -347,17 +347,17 @@ async function solicitar(obj, tipo) {
         }
       });
     });
-    
+
   } else if (tipo == 2) {
     var ultra_prov = $("input[name = 'ult[]']").serializeArray();
     var ultra = [];
     $(ultra_prov).each(function (key, value) {
       ultra.push(value.value);
     });
-    
+
     $(ultra).each(async function (key, value) {
       await $.ajax({
-        url: "/blissey/public/solicitudex",
+        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,
@@ -378,7 +378,7 @@ async function solicitar(obj, tipo) {
         }
       });
     });
-  } else {   
+  } else {
     var tac_prov = $("input[name = 'tac[]']").serializeArray();
     var tac = [];
     $(tac_prov).each(function (key, value) {
@@ -387,7 +387,7 @@ async function solicitar(obj, tipo) {
 
     $(tac).each(async function (key, value) {
       await $.ajax({
-        url: "/blissey/public/solicitudex",
+        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,

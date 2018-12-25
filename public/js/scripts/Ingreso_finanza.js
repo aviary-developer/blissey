@@ -2,7 +2,7 @@ function resumen(id, dia) {
   var super_body = $("#cuerpo");
   var mini_resumen = $("#mini_resumen");
   $.ajax({
-    url: "/blissey/public/total_resumen",
+    url: 'http://' + $('#guardarruta').val() + "/total_resumen",
     type: "get",
     data: {
       id: id,
@@ -194,7 +194,7 @@ function resumen(id, dia) {
 
         body.append(html);
       }
-      
+
       if (respuesta.tacs != 0) {
         html = '<div class = "row">' +
           '<div class="col-sm-9">' +

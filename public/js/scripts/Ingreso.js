@@ -15,7 +15,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: "GET",
-      url: "/blissey/public/municipios/" + v_departamento,
+      url: 'http://' + $('#guardarruta').val() + "/municipios/" + v_departamento,
       success: function (respuesta) {
         municipio_select.empty();
         $(respuesta).each(function (key, value) {
@@ -35,7 +35,7 @@ $(document).on('ready', function () {
     if (valor.length > 0) {
       var tabla = $("#tablaPaciente");
       await $.ajax({
-        url: "/blissey/public/buscarPersonas",
+        url: 'http://' + $('#guardarruta').val() + "/buscarPersonas",
         type: "GET",
         data: {
           nombre: valor,
@@ -95,7 +95,7 @@ $(document).on('ready', function () {
       "</thead>";
     tabla.append(head);
 
-    if (ubicacion.indexOf("/blissey/public/ingresos") > -1){
+    if (ubicacion.indexOf("/blissey/public/ingresos") > -1) {
       $("#centro").removeClass('modal-lg');
       $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
       $("#derecha").hide();
@@ -132,10 +132,10 @@ $(document).on('ready', function () {
         var input_nombre = $("#n_responsable");
         var input_id = $("#f_responsable");
       }
-  
+
       $.ajax({
         type: "POST",
-        url: "/blissey/public/guardar_paciente",
+        url: 'http://' + $('#guardarruta').val() + "/guardar_paciente",
         data: {
           nombre: v_nombre,
           apellido: v_apellido,
@@ -168,7 +168,7 @@ $(document).on('ready', function () {
         error: function () {
           swal('¡Aviso!', 'El registro no fue agregado, intentelo de nuevo', 'warning');
         }
-  
+
       });
 
       $("#nombre_paciente").val("");
@@ -203,7 +203,7 @@ $(document).on('ready', function () {
     });
     if (union.length > 0) {
       $.ajax({
-        url: "/blissey/public/servicio_medicos",
+        url: 'http://' + $('#guardarruta').val() + "/servicio_medicos",
         type: "POST",
         data: {
           f_transaccion: transaccion_id,
@@ -214,12 +214,12 @@ $(document).on('ready', function () {
             localStorage.setItem('msg', 'yes');
             location.reload();
           } else {
-            swal("¡Error!","Algo salio mal", "error");      
+            swal("¡Error!", "Algo salio mal", "error");
           }
         }
       });
     } else {
-      swal("¡Error!", "Se debe seleccionar al menos un médico","error");
+      swal("¡Error!", "Se debe seleccionar al menos un médico", "error");
     }
   });
 
@@ -235,7 +235,7 @@ $(document).on('ready', function () {
     });
     if (concat.length > 0) {
       $.ajax({
-        url: "/blissey/public/solicitudex",
+        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,
@@ -259,7 +259,7 @@ $(document).on('ready', function () {
   $("#resultadoVenta_").keyup(function () {
     var valor = $("#resultadoVenta_").val();
     if (radio == '1') {
-      var ruta = "/blissey/public/buscarProductoVenta/" + valor;
+      var ruta = 'http://' + $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -296,7 +296,7 @@ $(document).on('ready', function () {
       });
     }
     if (radio == '2') {
-      var ruta = "/blissey/public/buscarComponenteVenta/" + valor;
+      var ruta = 'http://' + $('#guardarruta').val() + "/buscarComponenteVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -341,7 +341,7 @@ $(document).on('ready', function () {
   $("#resultadoVentaS_").keyup(function () {
     var valor = $("#resultadoVentaS_").val();
     if (radio == '3') {
-      var ruta = "/blissey/public/buscarServicios/" + valor;
+      var ruta = 'http://' + $('#guardarruta').val() + "/buscarServicios/" + valor;
       var tabla = $("#tablaBuscarS");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -386,7 +386,7 @@ $(document).on('ready', function () {
       console.log(result);
       if (result.value) {
         $.ajax({
-          url: "/blissey/public/abonar",
+          url: 'http://' + $('#guardarruta').val() + "/abonar",
           type: "POST",
           data: {
             transaccion: transaccion_id,
@@ -409,13 +409,13 @@ $(document).on('ready', function () {
             }
           }
         });
-      } else if(result.dismiss === swal.DismissReason.cancel ) {
+      } else if (result.dismiss === swal.DismissReason.cancel) {
         location.reload();
       }
     });
     location.reload();
   });
-  
+
   $("#fin_consulta").on("click", async function (e) {
     e.preventDefault();
     var transaccion_id = $("#id_t").val();
@@ -434,7 +434,7 @@ $(document).on('ready', function () {
       console.log(result.value);
       if (result.value) {
         $.ajax({
-          url: "/blissey/public/abonar",
+          url: 'http://' + $('#guardarruta').val() + "/abonar",
           type: "POST",
           data: {
             transaccion: transaccion_id,
@@ -458,7 +458,7 @@ $(document).on('ready', function () {
           }
         });
       }
-      });
+    });
     location.reload();
   });
 
@@ -473,7 +473,7 @@ $(document).on('ready', function () {
     value = ($("#c_responsable").is(':checked') == true) ? 1 : 0;
     $.ajax({
       type: 'post',
-      url: '/blissey/public/ingresos',
+      url: 'http://' + $('#guardarruta').val() + '/ingresos',
       data: {
         f_paciente: $("#f_paciente").val(),
         c_responsable: value,
@@ -488,13 +488,13 @@ $(document).on('ready', function () {
           location.reload();
         } else {
           swal({
-                type: 'error',
-                toast: true,
-                title: '¡Algo salio mal!',
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4000
-              });
+            type: 'error',
+            toast: true,
+            title: '¡Algo salio mal!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
         }
       }
     });
@@ -520,7 +520,7 @@ $("#nuevo_abono").on('click', function (e) {
       console.log($("#monto").val())
       if ($("#monto").val() <= deuda) {
         $.ajax({
-          url: "/blissey/public/abonar",
+          url: 'http://' + $('#guardarruta').val() + "/abonar",
           type: "POST",
           data: {
             transaccion: transaccion_id,
@@ -576,9 +576,9 @@ function registrarventa_(id) {
       });
     } else {
       c4 = parseFloat($('#cc' + id).text()).toFixed(2);
-      
+
       $.ajax({
-        url: "/blissey/public/tratamiento",
+        url: 'http://' + $('#guardarruta').val() + "/tratamiento",
         type: "POST",
         data: {
           transaccion: transaccion_id,
@@ -597,7 +597,7 @@ function registrarventa_(id) {
                 '<thead>' +
                 '<th>Detalle</th>' +
                 '<th style="width: 40px">Acción</th>'
-                '</thead>' +
+              '</thead>' +
                 '</table>' +
                 '</div>';
 
@@ -606,17 +606,17 @@ function registrarventa_(id) {
 
             tabla = $('#tablaDetalle');
             html = "<tr id='r" + res + "'>" +
-              "<td>" + cantidad + " <span class='text-monospace font-weight-light'>" + c2 +  "</span><b class=''> " + c1 + "</b></td>";
+              "<td>" + cantidad + " <span class='text-monospace font-weight-light'>" + c2 + "</span><b class=''> " + c1 + "</b></td>";
             if (tipo_usuario == "Enfermería") {
               html += "<td><span class='badge badge-light col-sm-12'>Pendiente</span></td>";
             } else {
-              html += "<td><center><button type='button' id='"+ res +"' class='btn btn-sm btn-danger' onclick='accion24(3,"+ res +",this)'><i class='fa fa-times'></i></button></center></td>";
+              html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-times'></i></button></center></td>";
             }
-              html += "</tr>";
+            html += "</tr>";
 
             tabla.append(html);
             transaccion_count_p = 1;
-            
+
             swal({
               type: 'success',
               toast: true,
@@ -639,11 +639,11 @@ function registrarventa_(id) {
       });
     }
   } else {
-    
+
     c2 = parseFloat(c2).toFixed(2);
-    
+
     $.ajax({
-      url: "/blissey/public/tratamiento",
+      url: 'http://' + $('#guardarruta').val() + "/tratamiento",
       type: "POST",
       data: {
         transaccion: transaccion_id,
@@ -662,7 +662,7 @@ function registrarventa_(id) {
               '<thead>' +
               '<th>Detalle</th>' +
               '<th style="width: 40px">Acción</th>'
-              '</thead>' +
+            '</thead>' +
               '</table>' +
               '</div>';
 
@@ -674,11 +674,11 @@ function registrarventa_(id) {
             "<td>" + cantidad + " " +
             "<b class=''>" + c1 + "</b></td>";
           if (tipo_usuario == "Enfermería") {
-						html += "<td><span class='badge badge-light col-sm-12'>Pendiente</span></td>";
+            html += "<td><span class='badge badge-light col-sm-12'>Pendiente</span></td>";
           } else {
             html += "<td><center><button type='button' id='" + res + "' class='btn btn-sm btn-danger' onclick='accion24(3," + res + ",this)'><i class='fa fa-times'></i></button></center></td>";
           }
-            
+
           tabla.append(html);
           transaccion_count_s = 1;
 
@@ -725,9 +725,9 @@ function accion24(tipo, id, objeto = null) {
       cancelButtonClass: 'btn btn-light'
     }).then((result) => {
       if (result.value) {
-        var cantidad= $("#edit_cantidad").val();
+        var cantidad = $("#edit_cantidad").val();
         $.ajax({
-          url: "/blissey/public/editar24",
+          url: 'http://' + $('#guardarruta').val() + "/editar24",
           type: "post",
           data: {
             id: id,
@@ -739,21 +739,21 @@ function accion24(tipo, id, objeto = null) {
               location.reload();
             } else {
               swal({
-                  type: 'error',
-                  toast: true,
-                  title: '¡Algo salio mal!',
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 4000
-                });
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
             }
           }
         });
       }
     });
-  } else if (tipo == 2) { 
+  } else if (tipo == 2) {
     $.ajax({
-      url: '/blissey/public/cambiar_estado',
+      url: 'http://' + $('#guardarruta').val() + '/cambiar_estado',
       type: 'post',
       data: {
         id: id
@@ -769,35 +769,35 @@ function accion24(tipo, id, objeto = null) {
     });
   } else if (tipo == 3) {
     $.ajax({
-        url: "/blissey/public/eliminar24",
-        type: "post",
-        data: {
-          id: id
-        },
-        success: function (res) {
-          if (res) {
-            $("#r" + objeto.id).remove();
-            swal({
-              type: 'success',
-              toast: true,
-              title: '¡Acción exitosa!',
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 4000
-            });
-          } else {
-            swal({
-              type: 'error',
-              toast: true,
-              title: '¡Algo salio mal!',
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 4000
-            });
-          }
+      url: 'http://' + $('#guardarruta').val() + "/eliminar24",
+      type: "post",
+      data: {
+        id: id
+      },
+      success: function (res) {
+        if (res) {
+          $("#r" + objeto.id).remove();
+          swal({
+            type: 'success',
+            toast: true,
+            title: '¡Acción exitosa!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
+        } else {
+          swal({
+            type: 'error',
+            toast: true,
+            title: '¡Algo salio mal!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
         }
-      });
-  }  else {
+      }
+    });
+  } else {
     swal({
       title: 'Eliminar registro',
       text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
@@ -810,7 +810,7 @@ function accion24(tipo, id, objeto = null) {
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url: "/blissey/public/eliminar24",
+          url: 'http://' + $('#guardarruta').val() + "/eliminar24",
           type: "post",
           data: {
             id: id
@@ -821,13 +821,13 @@ function accion24(tipo, id, objeto = null) {
               location.reload();
             } else {
               swal({
-                  type: 'error',
-                  toast: true,
-                  title: '¡Algo salio mal!',
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 4000
-                });
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
             }
           }
         });
@@ -847,7 +847,7 @@ function input_seleccion(e = null) {
   principal.addClass('modal-lg');
   izquierda.removeClass('col-sm-12').addClass('col-sm-6');
   derecha.show();
-  interno.attr('style','height:auto');
+  interno.attr('style', 'height:auto');
 
   $("#busqueda").focus();
 }

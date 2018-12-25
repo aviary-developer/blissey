@@ -160,7 +160,7 @@
 		var valorMinimoF= $('#valorMinimoFemenino').val();
 		var valorMaximoF= $('#valorMaximoFemenino').val();
 		var valorPredeterminado= $('#valorPredeterminado').val();
-		var ruta="/blissey/public/ingresoParametro";
+		var ruta='http://' + $('#guardarruta').val() + "/ingresoParametro";
 
 		var valido = new Validated('nombreParametro');
 		valido.required();
@@ -208,7 +208,7 @@
 
 function rellenarCombosParametros(){
   var parametros = $("#parametro_select");
-  var ruta="/blissey/public/llenarParametrosExamenes";
+  var ruta='http://' + $('#guardarruta').val() + "/llenarParametrosExamenes";
   $.get(ruta,function(res){
     parametros.empty();
     $(res).each(function(key,value){

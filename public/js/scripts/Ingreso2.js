@@ -1,9 +1,9 @@
 $(document).on('ready', function () {
-  $("#guardarSignoModal").on("click", function (e) { 
+  $("#guardarSignoModal").on("click", function (e) {
     $.ajax({
-      type : 'post',
-      url  : '/blissey/public/signos',
-      headers: { 'X-CSRF-TOKEN': $("#token").val()},
+      type: 'post',
+      url: 'http://' + $('#guardarruta').val() + '/signos',
+      headers: { 'X-CSRF-TOKEN': $("#token").val() },
       data: {
         temperatura: $("#temperatura").val(),
         pulso: $("#pulso").val(),
@@ -58,7 +58,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: '/blissey/public/signo_lista',
+      url: 'http://' + $('#guardarruta').val() + '/signo_lista',
       data: {
         id: id,
       },
@@ -86,7 +86,7 @@ $(document).on('ready', function () {
           if (!value.medida) {
             medida = "Libra";
           }
-        });   
+        });
         //console.log(temperatura_);
         //Primer grafico
         var canva = $("#temperatura_chart_s");
@@ -331,11 +331,11 @@ $(document).on('ready', function () {
     var tipo_u = $("#tipo_usuario").val();
     var id = $("#id").val();
     var consulta = $("#precio_consulta").val();
-		console.log("Hola Mary");
+    console.log("Hola Mary");
     if (tipo_u == "Recepción" && consulta == null) {
       await $.ajax({
         type: 'get',
-        url: '/blissey/public/chart_financiero',
+        url: 'http://' + $('#guardarruta').val() + '/chart_financiero',
         data: {
           id: id,
         },
@@ -350,8 +350,8 @@ $(document).on('ready', function () {
             fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
           });
 
-					var canva = $("#chart_financiero");
-					console.log("Antes de graficar");
+          var canva = $("#chart_financiero");
+          console.log("Antes de graficar");
           var chart = new Chart(canva, {
             type: 'line',
             data: {
@@ -395,13 +395,13 @@ $(document).on('ready', function () {
                 }]
               }
             }
-					});
-					console.log("despues");
+          });
+          console.log("despues");
         }
       });
     }
   }
-  
+
   function mes(x) {
     if (x == 0) {
       return "Enero";

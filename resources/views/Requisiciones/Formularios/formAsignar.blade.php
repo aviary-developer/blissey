@@ -50,7 +50,7 @@ idEstante=$('#f_estante'+idp).find('option:selected').val();
 console.log(idEstante);
 $('#nivel'+idp).empty();
 if(idEstante!=""){
-var ruta = "/blissey/public/niveles/"+idEstante;
+var ruta = 'http://' + $('#guardarruta').val() + "/niveles/"+idEstante;
 $.get(ruta,function(res){
   cantidad=parseFloat(res);
   for(i=1;i<=cantidad;i++){

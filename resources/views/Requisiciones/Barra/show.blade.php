@@ -38,7 +38,7 @@
 			if (result.value) {
 				localStorage.setItem('msg','yes');
 				var dominio = window.location.host;
-				location.href = 'http://'+dominio+'/blissey/public/eliminarPedido/'+id+"/4";
+				location.href = 'http://' + $('#guardarruta').val() + '/eliminarPedido/'+id+"/4";
 				$('#formulario').submit();
 			}
 		});
