@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$categoria->estado)
     @php
@@ -18,7 +19,6 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-  {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/categoria_productos/'.$categoria->id.'/edit') !!}>Editar</a>
@@ -31,18 +31,23 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$categoria->id.");'"!!}>Activar</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$categoria->id.");'" !!}>Eliminar</a>
-        </li>
+        @php
+          $cuenta=App\CategoriaProducto::foraneos($categoria->id);
+        @endphp
+        @if (!$cuenta>0)
+          <li class="nav-item">
+            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$categoria->id.");'" !!}>Eliminar</a>
+          </li>
+        @endif
       @endif
       <li class="nav-item">
           <a class="nav-link" href="#">Ayuda</a>
       </li>
     </ul>
-  {!!Form::close()!!}
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -59,7 +64,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','activateCategoriaProducto/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/activateCategoriaProducto/'+id);
         $('#formulario').submit();
       }
     });
@@ -79,7 +85,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','destroyCategoriaProducto/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/destroyCategoriaProducto/'+id);
         $('#formulario').submit();
       }
     });
@@ -98,7 +105,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','desactivateCategoriaProducto/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/desactivateCategoriaProducto/'+id);
         submit();
       }
     });

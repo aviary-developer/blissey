@@ -41,6 +41,7 @@ function alta(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
+      localStorage.setItem('msg','yes');
       $('#formulario').attr('action','activateComponente/'+id);
       $('#formulario').submit();
     }
@@ -60,6 +61,7 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
+      localStorage.setItem('msg','yes');
       $('#formulario').attr('action','destroyComponente/'+id);
       $('#formulario').submit();
     }
