@@ -114,10 +114,10 @@ class UnidadController extends Controller
       $unidades->delete();
       Bitacora::bitacora('destroy','unidades','unidads',$id);
       DB::commit();
-      return redirect('/unidades?estado=0')->with('mensaje','¡Eliminado!');
+      return redirect('/unidades?estado=0');
     } catch (\Exception $e) {
       DB::rollback();
-      return redirect('/unidades?estado=0')->with('error','¡No se puede eliminar!');
+      return redirect('/unidades?estado=0');
     }
   }
 
@@ -126,7 +126,7 @@ class UnidadController extends Controller
     $unidades->estado = false;
     $unidades->save();
     Bitacora::bitacora('desactivate','unidads','unidades',$id);
-    return Redirect::to('/unidades')->with('mensaje','¡Desactivado!');
+    return Redirect::to('/unidades');
   }
 
   public function activate($id){
@@ -134,7 +134,7 @@ class UnidadController extends Controller
     $unidades->estado = true;
     $unidades->save();
     Bitacora::bitacora('activate','unidads','unidades',$id);
-    return Redirect::to('/unidades?estado=0')->with('mensaje','¡Restaurado!');
+    return Redirect::to('/unidades?estado=0');
   }
   public static function ingresoUnidad(UnidadRequest $request){
     $u=Unidad::create($request->All());

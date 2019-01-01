@@ -120,10 +120,10 @@ class DivisionController extends Controller
         $division->delete();
         Bitacora::bitacora('destroy','divisions','divisiones',$id);
         DB::commit();
-        return redirect('/divisiones?estado=0')->with('mensaje','¡Eliminado!');
+        return redirect('/divisiones?estado=0');
       } catch (\Exception $e) {
         DB::rollback();
-        return redirect('/divisiones?estado=0')->with('error','¡No se puede eliminar!');
+        return redirect('/divisiones?estado=0');
       }
     }
 
@@ -132,14 +132,14 @@ class DivisionController extends Controller
       $divisiones->estado = false;
       $divisiones->save();
       Bitacora::bitacora('desactivate','divisions','divisiones',$id);
-      return Redirect::to('/divisiones')->with('mensaje','¡Desactivado!');
+      return Redirect::to('/divisiones');
     }
     public function activate($id){
       $divisiones = Division::find($id);
       $divisiones->estado = true;
       $divisiones->save();
       Bitacora::bitacora('activate','divisions','divisiones',$id);
-      return Redirect::to('/divisiones?estado=0')->with('mensaje','¡Restuarado!');
+      return Redirect::to('/divisiones?estado=0');
     }
     public static function ingresoDivision(DivisionRequest $request){
       $d=Division::create($request->All());
