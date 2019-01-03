@@ -22,7 +22,7 @@
           <a href={{asset( '/reactivos')}}>Reactivos</a>
         </li>
         <li>
-          <a href={{asset( '/parametros')}}>Parametros</a>
+          <a href={{asset( '/parametros')}}>Parámetros</a>
         </li>
         <li>
           <a href={{asset( '/secciones')}}>Tipo de secciones</a>

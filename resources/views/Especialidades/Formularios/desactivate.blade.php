@@ -8,9 +8,9 @@
   </a>
 
   @if (App\Especialidad::contar_medicos($especialidad->id))
-    <a href="#" class="btn btn-sm btn-danger disabled" title="Especialidad en uso">
+    <button type="button" class="btn btn-sm btn-danger disabled" title="Especialidad en uso">
       <i class="fas fa-ban"></i>
-    </a>
+    </button>
   @else
     <button type="button" class="btn btn-danger btn-sm" title="Enviar a papelera" onclick="
       return swal({

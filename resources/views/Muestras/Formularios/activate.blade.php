@@ -6,10 +6,19 @@
 		</a>
 		<button type="button" class="btn btn-success btn-sm" title="Restaurar" onclick={!! "'alta(".$muestra->id.");'" !!}/>
 			<i class="fa fa-check"></i>
-		</button>
-		<button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$muestra->id.");'" !!}/>
-			<i class="fa fa-times"></i>
-		</button>
+    </button>
+    @php
+      $cuenta=App\MuestraExamen::foraneos($muestra->id);
+    @endphp
+    @if ($cuenta>0)
+      <button type="button" class="btn btn-sm btn-danger disabled"  title="No se puede eliminar">
+        <i class="fas fa-ban"></i>
+      </button>
+    @else
+      <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$muestra->id.");'" !!}/>
+        <i class="fa fa-times"></i>
+      </button>
+    @endif
 	</div>
 @endif
 {!!Form::close()!!}
@@ -28,7 +37,6 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
         $('#formulario').attr('action','activateMuestraExamen/'+id);
         $('#formulario').submit();
       }
@@ -50,7 +58,6 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
         $('#formulario').attr('action','destroyMuestraExamen/'+id);
       $('#formulario').submit();
       }

@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$reactivo->estado)
     @php
@@ -30,14 +31,20 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$reactivo->id.");'"!!}>Activar</a>
         </li>
+      @php
+        $cuenta=App\Reactivo::foraneos($reactivo->id);
+      @endphp
+      @if (!$cuenta>0)
         <li class="nav-item">
           <a class="nav-link" href="#"  onclick={!! "'eliminar(".$reactivo->id.");'" !!}>Eliminar</a>
         </li>
+      @endif
       @endif
     </ul>
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -55,8 +62,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','activateReactivo/'+id);
+        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/activateReactivo/'+id);
         $('#formulario').submit();
       }
     });
@@ -77,8 +83,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','destroyReactivo/'+id);
+        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/destroyReactivo/'+id);
         $('#formulario').submit();
       }
     });
@@ -98,9 +103,8 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
-        $('#formulario').attr('action','desactivateReactivo/'+id);
-        submit();
+        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/desactivateReactivo/'+id);
+        $('#formulario').submit();
       }
     });
   }

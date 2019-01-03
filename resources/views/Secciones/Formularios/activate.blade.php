@@ -37,7 +37,6 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
         $('#formulario').attr('action','activateSeccion/'+id);
         $('#formulario').submit();
       }
@@ -59,7 +58,6 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
         $('#formulario').attr('action','destroySeccion/'+id);
       $('#formulario').submit();
       }

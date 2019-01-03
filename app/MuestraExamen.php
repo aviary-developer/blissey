@@ -29,4 +29,7 @@ class MuestraExamen extends Model
     $n= MuestraExamen::find($id);
     return $n->nombre;
   }
+  public static function foraneos($id){
+    return Examen::where('tipoMuestra',$id)->count();
+  }
 }
