@@ -14,3 +14,4 @@ composer.lock
 *.sql
 *.jpeg
 composer.lock
+config/filesystems.php
