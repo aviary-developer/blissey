@@ -61,7 +61,7 @@ $(document).on("ready", function () {
 
     await $.ajax({
       type: "post",
-      url: 'http://' + $('#guardarruta').val() + "/consulta",
+      url: $('#guardarruta').val() + "/consulta",
       data: {
         motivo: $("#motivo").val(),
         historia: $("#historia").val(),
@@ -85,7 +85,7 @@ $(document).on("ready", function () {
       success: function (r) {
         if (r != 0) {
           swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
-          window.open('http://' + $('#guardarruta').val() + "/recetas/" + r, '_blank');
+          window.open($('#guardarruta').val() + "/recetas/" + r, '_blank');
           location.reload();
         } else {
           swal("¡Error!", "Algo salio mal", "error");
@@ -191,7 +191,7 @@ function consulta_load(id) {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/consultar',
+    url: $('#guardarruta').val() + '/consultar',
     data: {
       id: id
     },
@@ -235,7 +235,7 @@ function signos_load(id) {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ver_signos',
+    url: $('#guardarruta').val() + '/ver_signos',
     data: {
       id: id
     },

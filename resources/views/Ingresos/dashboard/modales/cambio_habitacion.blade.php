@@ -128,7 +128,7 @@
     function camas(){
       $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/cama/lista',
+        url: $('#guardarruta').val() + '/cama/lista',
         data:{
           id: $("#f_habitacion").val()
         },

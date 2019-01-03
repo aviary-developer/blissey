@@ -100,7 +100,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta='http://' + $('#guardarruta').val() + "/actualizarPrecioTac";
+  var ruta=$('#guardarruta').val() + "/actualizarPrecioTac";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,

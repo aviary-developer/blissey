@@ -34,7 +34,7 @@ function cerrarSeccion(seccion) {
 }
 function llenarSecciones() {
   var secciones = $("#selectSeccion" + contadorSelectsParametros);
-  var ruta = 'http://' + $('#guardarruta').val() + "/llenarSeccionExamenes";
+  var ruta = $('#guardarruta').val() + "/llenarSeccionExamenes";
   $.get(ruta, function (res) {
     secciones.empty();
     secciones.append("<option value='0' readonly='readonly'>[Seleccione sección]</option>");
@@ -45,7 +45,7 @@ function llenarSecciones() {
 }
 function llenarParametros() {
   var parametros = $("#selectParametrosExamenes" + contadorSelectsParametros);
-  var ruta = 'http://' + $('#guardarruta').val() + "/llenarParametrosExamenes";
+  var ruta = $('#guardarruta').val() + "/llenarParametrosExamenes";
   $.get(ruta, function (res) {
     parametros.empty();
     $(res).each(function (key, value) {
@@ -55,7 +55,7 @@ function llenarParametros() {
 }
 function llenarReactivos() {
   var reactivos = $("#selectReactivosExamenes" + contadorSelectsParametros);
-  var ruta = 'http://' + $('#guardarruta').val() + "/llenarReactivosExamenes";
+  var ruta = $('#guardarruta').val() + "/llenarReactivosExamenes";
   $.get(ruta, function (res) {
     reactivos.empty();
     $(res).each(function (key, value) {
@@ -166,7 +166,7 @@ function disminuiContadorSeccionesEnEditar(paso) {
 }
 function llenarSeccionesEditar() {
   var secciones = $("#selectSeccion" + contadorEnEditar);
-  var ruta = 'http://' + $('#guardarruta').val() + "/llenarSeccionExamenes";
+  var ruta = $('#guardarruta').val() + "/llenarSeccionExamenes";
   $.get(ruta, function (res) {
     secciones.empty();
     secciones.append("<option value='0' readonly='readonly'>[Seleccione sección]</option>");
@@ -177,7 +177,7 @@ function llenarSeccionesEditar() {
 }
 function llenarParametrosEditar() {
   var parametros = $("#selectParametrosExamenes" + contadorEnEditar);
-  var ruta = 'http://' + $('#guardarruta').val() + "/llenarParametrosExamenes";
+  var ruta = $('#guardarruta').val() + "/llenarParametrosExamenes";
   $.get(ruta, function (res) {
     parametros.empty();
     //parametros.append("<option value='-1' readonly='readonly'>[Seleccione parametros]</option>");

@@ -239,7 +239,7 @@
       }
       $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/cama/lista',
+        url: $('#guardarruta').val() + '/cama/lista',
         data:{
           id: habitacion
         },

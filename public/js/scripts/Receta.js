@@ -74,7 +74,7 @@ $(document).on('ready', function () {
     if (texto.length > 0) {
       await $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/consultas/datos_producto',
+        url: $('#guardarruta').val() + '/consultas/datos_producto',
         data: {
           valor: texto
         },
@@ -113,7 +113,7 @@ $(document).on('ready', function () {
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url: 'http://' + $('#guardarruta').val() + "/editar_alergia",
+          url: $('#guardarruta').val() + "/editar_alergia",
           type: "POST",
           data: {
             id: paciente,
@@ -250,7 +250,7 @@ $(document).on('ready', function () {
     var codigo = $("#codi-receta").val();
     await $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/receta/buscar_medicamento',
+      url: $('#guardarruta').val() + '/receta/buscar_medicamento',
       data: {
         codigo: codigo
       },

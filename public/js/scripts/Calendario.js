@@ -3,7 +3,7 @@ $(document).ready(function () {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
+    url: $('#guardarruta').val() + '/calendario/eventos',
     success: async function (r) {
       await $(r).each(function (key, value) {
         actividades.push({
@@ -60,7 +60,7 @@ $(document).ready(function () {
     events: function (start, end, timezone, callback) {
       $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
+        url: $('#guardarruta').val() + '/calendario/eventos',
         success: function (r) {
           var events = [];
           $(r).each(function (k, v) {
@@ -126,7 +126,7 @@ $(document).ready(function () {
     console.log(fecha_inicio + ' | ' + fecha_final);
     $.ajax({
       type: 'post',
-      url: 'http://' + $('#guardarruta').val() + '/calendarios',
+      url: $('#guardarruta').val() + '/calendarios',
       data: {
         fecha_inicio: fecha_inicio,
         fecha_final: fecha_final,
@@ -155,7 +155,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: 'put',
-      url: 'http://' + $('#guardarruta').val() + '/calendarios/' + id,
+      url: $('#guardarruta').val() + '/calendarios/' + id,
       data: {
         titulo: titulo,
         descripcion: descripcion
@@ -190,7 +190,7 @@ $(document).ready(function () {
     }).then(function () {
       $.ajax({
         type: 'delete',
-        url: 'http://' + $('#guardarruta').val() + '/calendarios/' + id,
+        url: $('#guardarruta').val() + '/calendarios/' + id,
         success: function (r) {
           if (r == 1) {
             localStorage.setItem('msg', 'yes');

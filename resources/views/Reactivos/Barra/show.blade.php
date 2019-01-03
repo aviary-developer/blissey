@@ -62,7 +62,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/activateReactivo/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateReactivo/'+id);
         $('#formulario').submit();
       }
     });
@@ -83,7 +83,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/destroyReactivo/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyReactivo/'+id);
         $('#formulario').submit();
       }
     });
@@ -103,7 +103,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/desactivateReactivo/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateReactivo/'+id);
         $('#formulario').submit();
       }
     });

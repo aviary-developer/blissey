@@ -23,7 +23,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: "GET",
-      url: 'http://' + $('#guardarruta').val() + "/municipios/" + v_departamento,
+      url: $('#guardarruta').val() + "/municipios/" + v_departamento,
       success: function (respuesta) {
         municipio_select.empty();
         $(respuesta).each(function (key, value) {
@@ -121,7 +121,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: "GET",
-      url: 'http://' + $('#guardarruta').val() + "/filtrarPaciente",
+      url: $('#guardarruta').val() + "/filtrarPaciente",
       data: {
         nombre: v_nombre,
         apellido: v_apellido,
@@ -220,7 +220,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/paciente/servicio_medico',
+      url: $('#guardarruta').val() + '/paciente/servicio_medico',
       data: {
         id: id,
         tipo: tipo
@@ -286,7 +286,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/servicio_paciente',
+      url: $('#guardarruta').val() + '/servicio_paciente',
       data: {
         id: id
       },
@@ -368,7 +368,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/paciente/datos_ev',
+      url: $('#guardarruta').val() + '/paciente/datos_ev',
       data: {
         id: solicitud
       },
@@ -392,7 +392,7 @@ $(document).on('ready', function () {
 
       $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/paciente/ver_examen',
+        url: $('#guardarruta').val() + '/paciente/ver_examen',
         data: {
           solicitud: solicitud,
           examen: examen
@@ -422,7 +422,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/paciente/ver_evaluacion',
+      url: $('#guardarruta').val() + '/paciente/ver_evaluacion',
       data: {
         solicitud: solicitud
       },
@@ -451,7 +451,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/paciente/filtro_evaluacion',
+      url: $('#guardarruta').val() + '/paciente/filtro_evaluacion',
       data: {
         id: id,
         tipo: tipo

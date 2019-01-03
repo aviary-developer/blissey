@@ -100,7 +100,7 @@ $(document).on('ready', function () {
 
           $.ajax({
             type: 'post',
-            url: 'http://' + $('#guardarruta').val() + '/cama/nueva',
+            url: $('#guardarruta').val() + '/cama/nueva',
             data: {
               id: id,
               precio: $("#precio").val(),
@@ -265,7 +265,7 @@ function cama_desactivar(id) {
     if (result.value) {
       $.ajax({
         type: 'post',
-        url: 'http://' + $('#guardarruta').val() + '/cama/desactivar',
+        url: $('#guardarruta').val() + '/cama/desactivar',
         data: {
           id: id
         },
@@ -297,7 +297,7 @@ function cama_activate(id) {
     if (result.value) {
       $.ajax({
         type: 'post',
-        url: 'http://' + $('#guardarruta').val() + '/cama/activar',
+        url: $('#guardarruta').val() + '/cama/activar',
         data: {
           id: id
         },
@@ -331,7 +331,7 @@ function editar_cama(id, precio_actual) {
     if (result.value) {
       await $.ajax({
         type: 'post',
-        url: 'http://' + $('#guardarruta').val() + '/cama/editar',
+        url: $('#guardarruta').val() + '/cama/editar',
         data: {
           id: id,
           precio: $("#precio").val(),

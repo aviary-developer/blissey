@@ -17,7 +17,7 @@ $(document).on("ready", function () {
       '</a ></center>';
     $.ajax({
       type: "GET",
-      url: 'http://' + $('#guardarruta').val() + "/aceptarSolicitudExamen/" + id,
+      url: $('#guardarruta').val() + "/aceptarSolicitudExamen/" + id,
       dataType: 'json',
       success: function (respuesta) {
         if (respuesta == 1) {
@@ -51,7 +51,7 @@ $(document).on("ready", function () {
       if (result.value) {
         $.ajax({
           type: "GET",
-          url: 'http://' + $('#guardarruta').val() + "/destroySolicitudExamen/" + id,
+          url: $('#guardarruta').val() + "/destroySolicitudExamen/" + id,
           dataType: 'json',
           success: function (respuesta) {
             fila.remove();
@@ -89,7 +89,7 @@ $(document).on("ready", function () {
     if (is_valid) {
       $.ajax({
         type: 'post',
-        url: 'http://' + $('#guardarruta').val() + '/paciente/guardar',
+        url: $('#guardarruta').val() + '/paciente/guardar',
         data: {
           nombre: nombre.val(),
           apellido: apellido.val(),
@@ -134,7 +134,7 @@ $(document).on("ready", function () {
     if (codigo.length > 0) {
       await $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/receta/buscar_solicitud',
+        url: $('#guardarruta').val() + '/receta/buscar_solicitud',
         data: {
           codigo: codigo
         },
@@ -295,7 +295,7 @@ async function solicitar(obj, tipo) {
     });
 
     await $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       type: "POST",
       data: {
         f_paciente: paciente,
@@ -326,7 +326,7 @@ async function solicitar(obj, tipo) {
 
     $(rayo).each(async function (key, value) {
       await $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+        url: $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,
@@ -357,7 +357,7 @@ async function solicitar(obj, tipo) {
 
     $(ultra).each(async function (key, value) {
       await $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+        url: $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,
@@ -387,7 +387,7 @@ async function solicitar(obj, tipo) {
 
     $(tac).each(async function (key, value) {
       await $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+        url: $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,

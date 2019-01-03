@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function CargaReactivos() {
   var tablaReactivos = $("#tablaReactivos");
-  var ruta = 'http://' + $('#guardarruta').val() + "/leerReactivos";
+  var ruta = $('#guardarruta').val() + "/leerReactivos";
   $("#tablaReactivos").empty();
   var correlativo = 1;
   $.get(ruta, function (res) {
@@ -15,7 +15,7 @@ function CargaReactivos() {
   });
 }
 function EliminarReactivos(btn) {
-  var ruta = 'http://' + $('#guardarruta').val() + "/reactivos/" + btn.value;
+  var ruta = $('#guardarruta').val() + "/reactivos/" + btn.value;
   var token = $('#tokenReactivos').val();
   swal({
     title: '¿Estas seguro?',
@@ -59,7 +59,7 @@ function EliminarReactivos(btn) {
 }
 function MostrarReactivos(btn) {
   console.log(btn.value);
-  var ruta = 'http://' + $('#guardarruta').val() + "/reactivos/" + btn.value + "/edit";
+  var ruta = $('#guardarruta').val() + "/reactivos/" + btn.value + "/edit";
   $.get(ruta, function (res) {
     $("#nombreReactivo").val(res.nombre);
     $("#descripcionReactivo").val(res.descripcion);
@@ -73,7 +73,7 @@ $("#actualizarReactivo").click(function () {
   var nombreReactivo = $("#nombreReactivo").val();
   var descripcionReactivo = $("#descripcionReactivo").val();
   var contenidoPorEnvaseReactivo = $("#contenidoPorEnvaseReactivo").val();
-  var ruta = 'http://' + $('#guardarruta').val() + "/reactivos/" + idReactivo;
+  var ruta = $('#guardarruta').val() + "/reactivos/" + idReactivo;
   var token = $('#tokenReactivos').val();
   $.ajax({
     url: ruta,

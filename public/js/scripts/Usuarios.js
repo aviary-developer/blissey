@@ -116,7 +116,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: "POST",
-      url: 'http://' + $('#guardarruta').val() + "/guardar_especialidad",
+      url: $('#guardarruta').val() + "/guardar_especialidad",
       data: {
         nombre: v_nombre.val()
       },
@@ -157,7 +157,7 @@ $(document).on('ready', function () {
       if (v_nueva == v_nueva_r) {
         $.ajax({
           type: "POST",
-          url: 'http://' + $('#guardarruta').val() + "/psw",
+          url: $('#guardarruta').val() + "/psw",
           data: {
             actual: v_actual,
             nueva: v_nueva,

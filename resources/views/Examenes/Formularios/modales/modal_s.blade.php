@@ -47,7 +47,7 @@
 
 		if(bandera){
 			await $.ajax({
-				url: 'http://' + $('#guardarruta').val() + "/ingresoSeccion",
+				url: $('#guardarruta').val() + "/ingresoSeccion",
 				type: 'POST',
 				data: {
 					nombre: v_nombre,
@@ -73,7 +73,7 @@
 
 	function rellenarSeccion() {
 		var secciones = $("#seccion_select");
-		var ruta = 'http://' + $('#guardarruta').val() + "/llenarSeccionExamenes";
+		var ruta = $('#guardarruta').val() + "/llenarSeccionExamenes";
 		$.get(ruta, function (res) {
 			secciones.empty();
 			$(res).each(function (key, value) {

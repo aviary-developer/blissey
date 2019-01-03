@@ -18,7 +18,7 @@ $(document).on('ready', function () {
       conteo = valor.length;
       if (conteo > 0) {
         if (confirmar == true || tipo == 0) { //Venta a clientes
-          var ruta = 'http://' + $('#guardarruta').val() + "/buscarProductoTransaccion/" + laboratorio + "/" + valor;
+          var ruta = $('#guardarruta').val() + "/buscarProductoTransaccion/" + laboratorio + "/" + valor;
           var tabla = $("#tablaBuscar");
           $.get(ruta, function (res) {
             tabla.empty();
@@ -81,7 +81,7 @@ $(document).on('ready', function () {
     }
     var conteo = 0;
     if (radio == '1' && valor.length > 0) {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -123,7 +123,7 @@ $(document).on('ready', function () {
       });
     }
     if (radio == '2' && valor.length > 0) {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarComponenteVenta/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarComponenteVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -169,7 +169,7 @@ $(document).on('ready', function () {
       });
     }
     if (radio == '3' && valor.length > 0) {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarServicios/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -200,12 +200,12 @@ $(document).on('ready', function () {
     codigo = $('#codigoBuscar').val();
     if (codigo != "") {
       conf = $('#tipo').val();
-      ruta = 'http://' + $('#guardarruta').val() + "/busquedaCodigo/" + codigo + "/" + conf;
+      ruta = $('#guardarruta').val() + "/busquedaCodigo/" + codigo + "/" + conf;
       $.get(ruta, function (res) {
         if (res != 0 && res != 1) {
-          var ruta3 = 'http://' + $('#guardarruta').val() + "/buscarNombreDivision/" + res.f_division;
+          var ruta3 = $('#guardarruta').val() + "/buscarNombreDivision/" + res.f_division;
           $.get(ruta3, function (res3) {
-            var ruta4 = 'http://' + $('#guardarruta').val() + "/buscarNombrePresentacion/" + res.f_producto + "/2";
+            var ruta4 = $('#guardarruta').val() + "/buscarNombrePresentacion/" + res.f_producto + "/2";
             $.get(ruta4, function (res4) {
               if (res.unidad == null) {
                 n_division = res3 + " " + res.cantidad + " " + res4.presentacion.nombre;
@@ -417,7 +417,7 @@ $(document).on('ready', function () {
     conteo = valor.length;
     var tabla = $("#tablaBuscarCliente");
     if (conteo > 0) {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarCliente/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarCliente/" + valor;
       $.get(ruta, function (res) {
         tabla.empty();
         html = "<thead><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>DUI</th><th style='width : 80px'>Acción</th></thead>";

@@ -120,7 +120,7 @@ function comprobacionTemporal(){
 
 }
 function guardarExistencias(total,cantidad){
-  var ruta='http://' + $('#guardarruta').val() + "/actualizarExistenciaReactivos";
+  var ruta=$('#guardarruta').val() + "/actualizarExistenciaReactivos";
   var id = $('#idReactivo').val();
   var descripcion = $('#descripcionExistencias').val();
   $.ajax({

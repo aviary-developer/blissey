@@ -23,7 +23,7 @@
 		var url="{{URL::to('/impresionExamenesPorPaciente')}}"+"/"+paciente+"/"+bandera;
 		window.open(url,'_blank');
 		$.ajax({
-			url: 'http://' + $('#guardarruta').val() + "/impresionExamenesPorPaciente/",
+			url: $('#guardarruta').val() + "/impresionExamenesPorPaciente/",
 			type: 'POST',
 			data: {
 				bandera:true,

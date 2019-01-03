@@ -13,7 +13,7 @@ function eliminar_ingreso(id) {
   }).then((result) => {
     if (result.value) {
       var dominio = window.location.host;
-      $('#formulario').attr('action', 'http://' + $('#guardarruta').val() + '/desactivateIngreso/' + id);
+      $('#formulario').attr('action', $('#guardarruta').val() + '/desactivateIngreso/' + id);
       localStorage.setItem('msg', 'yes');
       $('#formulario').submit();
     }
@@ -35,7 +35,7 @@ function confirmar_ingreso(id) {
   }).then((result) => {
     if (result.value) {
       var dominio = window.location.host;
-      $('#formulario').attr('action', 'http://' + $('#guardarruta').val() + '/activateIngreso/' + id);
+      $('#formulario').attr('action', $('#guardarruta').val() + '/activateIngreso/' + id);
       localStorage.setItem('msg', 'yes');
       $('#formulario').submit();
     }
@@ -107,7 +107,7 @@ function medicamento_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/lista_producto',
+    url: $('#guardarruta').val() + '/lista_producto',
     data: {
       id: id,
       fecha: fecha
@@ -159,7 +159,7 @@ function servicio_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/lista_servicio',
+    url: $('#guardarruta').val() + '/lista_servicio',
     data: {
       id: id,
       fecha: fecha
@@ -210,7 +210,7 @@ function rayos_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_rayos',
+    url: $('#guardarruta').val() + '/ingreso/lista_rayos',
     data: {
       id: id,
       fecha: fecha
@@ -263,7 +263,7 @@ function laboratorio_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_laboratorio',
+    url: $('#guardarruta').val() + '/ingreso/lista_laboratorio',
     data: {
       id: id,
       fecha: fecha
@@ -316,7 +316,7 @@ function ultra_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_ultra',
+    url: $('#guardarruta').val() + '/ingreso/lista_ultra',
     data: {
       id: id,
       fecha: fecha
@@ -369,7 +369,7 @@ function tac_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_tac',
+    url: $('#guardarruta').val() + '/ingreso/lista_tac',
     data: {
       id: id,
       fecha: fecha
@@ -422,7 +422,7 @@ function signos_fecha() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_signos',
+    url: $('#guardarruta').val() + '/ingreso/lista_signos',
     data: {
       id: id,
       fecha: fecha
@@ -467,7 +467,7 @@ function laboratorio_pendientes_ver() {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_laboratorio',
+    url: $('#guardarruta').val() + '/ingreso/lista_laboratorio',
     data: {
       id: id,
       fecha: fecha,
@@ -513,7 +513,7 @@ $("#guardar_cambio_habitacion").on("click", function (e) {
   console.log(cama);
   if (cama != null) {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/cambio_ingreso",
+      url: $('#guardarruta').val() + "/cambio_ingreso",
       type: "post",
       data: {
         f_cama: cama,
@@ -552,7 +552,7 @@ $("#cambio_hospitalizacion_").on("click", function (e) {
   id = $("#id").val();
   if (cama != null) {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/cambio_ingreso",
+      url: $('#guardarruta').val() + "/cambio_ingreso",
       type: "post",
       data: {
         tipo: activo,
@@ -590,7 +590,7 @@ function ultra_rayos(tipo) {
   var id = $("#id").val();
   if (tipo == 1) {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
@@ -609,7 +609,7 @@ function ultra_rayos(tipo) {
     });
   } else if (tipo == 2) {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
@@ -628,7 +628,7 @@ function ultra_rayos(tipo) {
     });
   } else {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       type: "POST",
       data: {
         f_paciente: paciente,
@@ -650,7 +650,7 @@ function ultra_rayos(tipo) {
 function carga_signos(id) {
   $.ajax({
     type: "get",
-    url: 'http://' + $('#guardarruta').val() + "/ver_signos",
+    url: $('#guardarruta').val() + "/ver_signos",
     data: {
       id: id
     },
@@ -832,7 +832,7 @@ function carga_signos(id) {
 function ver_medico(servicio) {
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/ingreso/lista_medico',
+    url: $('#guardarruta').val() + '/ingreso/lista_medico',
     data: {
       i_id: $("#id").val(),
       id: servicio

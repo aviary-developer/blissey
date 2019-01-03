@@ -65,7 +65,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/activateComponente/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateComponente/'+id);
         $('#formulario').submit();
       }
     });
@@ -86,7 +86,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/destroyComponente/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyComponente/'+id);
         $('#formulario').submit();
       }
     });
@@ -106,7 +106,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/desactivateComponente/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateComponente/'+id);
         $('#formulario').submit();
       }
     });

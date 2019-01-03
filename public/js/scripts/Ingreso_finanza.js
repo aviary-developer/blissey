@@ -2,7 +2,7 @@ function resumen(id, dia) {
   var super_body = $("#cuerpo");
   var mini_resumen = $("#mini_resumen");
   $.ajax({
-    url: 'http://' + $('#guardarruta').val() + "/total_resumen",
+    url: $('#guardarruta').val() + "/total_resumen",
     type: "get",
     data: {
       id: id,

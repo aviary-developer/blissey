@@ -62,7 +62,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/activateDivision/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateDivision/'+id);
         $('#formulario').submit();
       }
     });
@@ -83,7 +83,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/destroyDivision/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyDivision/'+id);
         $('#formulario').submit();
       }
     });
@@ -103,7 +103,7 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/desactivateDivision/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateDivision/'+id);
         submit();
       }
     });

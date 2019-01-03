@@ -3,7 +3,7 @@ $(document).ready(function () {
 
   $.ajax({
     type: 'get',
-    url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
+    url: $('#guardarruta').val() + '/calendario/eventos',
     success: async function (r) {
       await $(r).each(function (key, value) {
         actividades.push({
@@ -43,7 +43,7 @@ $(document).ready(function () {
     events: function (start, end, timezone, callback) {
       $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/calendario/eventos',
+        url: $('#guardarruta').val() + '/calendario/eventos',
         success: function (r) {
           var events = [];
           $(r).each(function (k, v) {

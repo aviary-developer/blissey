@@ -100,7 +100,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta='http://' + $('#guardarruta').val() + "/actualizarPrecioRayox";
+  var ruta=$('#guardarruta').val() + "/actualizarPrecioRayox";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,

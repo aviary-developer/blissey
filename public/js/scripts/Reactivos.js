@@ -2,7 +2,7 @@ $("#registroReactivo").click(function () {
   var nombreReactivo = $("#nombreReactivoCrear").val();
   var descripcionReactivo = $("#descripcionReactivoCrear").val();
   var contenidoPorEnvaseReactivo = $("#contenidoPorEnvaseReactivoCrear").val();
-  var ruta = 'http://' + $('#guardarruta').val() + "/reactivos";
+  var ruta = $('#guardarruta').val() + "/reactivos";
   var token = $('#tokenReactivos').val();
   $.ajax({
     url: ruta,
@@ -23,7 +23,7 @@ $("#registroReactivo").click(function () {
 });
 function CargaReactivos() {
   var tablaReactivos = $("#tablaReactivos");
-  var ruta = 'http://' + $('#guardarruta').val() + "/leerReactivos";
+  var ruta = $('#guardarruta').val() + "/leerReactivos";
   $("#tablaReactivos").empty();
   var correlativo = 1;
   $.get(ruta, function (res) {

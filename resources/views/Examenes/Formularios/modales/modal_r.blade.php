@@ -89,7 +89,7 @@
 
 		if(bandera){
 			await $.ajax({
-				url: 'http://' + $('#guardarruta').val() + "/ingresoReactivo",
+				url: $('#guardarruta').val() + "/ingresoReactivo",
 				type: 'POST',
 				data: {
 					nombre: v_nombre,
@@ -118,7 +118,7 @@
 
 function rellenarReactivo(){
   var reactivos = $("#reactivo_select");
-  var ruta='http://' + $('#guardarruta').val() + "/llenarReactivosExamenes";
+  var ruta=$('#guardarruta').val() + "/llenarReactivosExamenes";
   $.get(ruta,function(res){
     reactivos.empty();
     $(res).each(function(key,value){

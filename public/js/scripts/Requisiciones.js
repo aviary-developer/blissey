@@ -2,7 +2,7 @@ $(document).on('ready', function () {
   $("#resultadoRequisicion").keyup(function () {
     valor = $("#resultadoRequisicion").val();
     if (valor.length > 0) {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarProductoRequisicion/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarProductoRequisicion/" + valor;
       var tabla = $("#tablaRequisicion");
       $.get(ruta, function (res) {
         tabla.empty();

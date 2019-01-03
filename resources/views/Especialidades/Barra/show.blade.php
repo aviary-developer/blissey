@@ -60,7 +60,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/activateEspecialidad/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateEspecialidad/'+id);
         $('#formulario').submit();
       }
     });
@@ -82,7 +82,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/destroyEspecialidad/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyEspecialidad/'+id);
         $('#formulario').submit();
       }
     });
@@ -103,7 +103,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','http://'+$('#guardarruta').val()+'/desactivateEspecialidad/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateEspecialidad/'+id);
         $('#formulario').submit();
       }
     });

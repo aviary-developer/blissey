@@ -15,7 +15,7 @@ async function v_consulta(id, tipo, nivel = 0) {
 
     await $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/consultar',
+      url: $('#guardarruta').val() + '/consultar',
       data: {
         id: id
       },
@@ -38,7 +38,7 @@ async function v_consulta(id, tipo, nivel = 0) {
 
     await $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/consultar_ingresos',
+      url: $('#guardarruta').val() + '/consultar_ingresos',
       data: {
         id: id
       },

@@ -2,7 +2,7 @@ $(document).on('ready', function () {
   $("#guardarSignoModal").on("click", function (e) {
     $.ajax({
       type: 'post',
-      url: 'http://' + $('#guardarruta').val() + '/signos',
+      url: $('#guardarruta').val() + '/signos',
       headers: { 'X-CSRF-TOKEN': $("#token").val() },
       data: {
         temperatura: $("#temperatura").val(),
@@ -58,7 +58,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: 'http://' + $('#guardarruta').val() + '/signo_lista',
+      url: $('#guardarruta').val() + '/signo_lista',
       data: {
         id: id,
       },
@@ -335,7 +335,7 @@ $(document).on('ready', function () {
     if (tipo_u == "Recepción" && consulta == null) {
       await $.ajax({
         type: 'get',
-        url: 'http://' + $('#guardarruta').val() + '/chart_financiero',
+        url: $('#guardarruta').val() + '/chart_financiero',
         data: {
           id: id,
         },

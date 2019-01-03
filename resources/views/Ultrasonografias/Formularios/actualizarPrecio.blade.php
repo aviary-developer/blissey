@@ -100,7 +100,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta='http://' + $('#guardarruta').val() + "/actualizarPrecioUltra";
+  var ruta=$('#guardarruta').val() + "/actualizarPrecioUltra";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,
