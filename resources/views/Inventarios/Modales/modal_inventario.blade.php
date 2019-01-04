@@ -38,7 +38,7 @@
 <script type="text/javascript">
 function llenarmodal(id){
   var tabla = $("#inventario");
-  ruta="/blissey/public/inventarios/"+id;
+  ruta=$('#guardarruta').val() + "/inventarios/"+id;
   $.get(ruta,function(res){
     tabla.empty();
     head =

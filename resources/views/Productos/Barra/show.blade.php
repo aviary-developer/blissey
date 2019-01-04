@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$producto->estado)
     @php
@@ -18,7 +19,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-  {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
+
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/productos/'.$producto->id.'/edit') !!}>Editar</a>
@@ -31,15 +32,21 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$producto->id.");'"!!}>Activar</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$producto->id.");'" !!}>Eliminar</a>
-        </li>
+        @php
+          $cuenta=App\Transacion::foraneos($producto->id);
+        @endphp
+        @if (!$cuenta>0)
+          <li class="nav-item">
+            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$producto->id.");'" !!}>Eliminar</a>
+          </li>
+        @endif
       @endif
     </ul>
-    {!!Form::close()!!}
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
+
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -56,7 +63,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','activateProducto/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateProducto/'+id);
         $('#formulario').submit();
       }
     });
@@ -76,7 +84,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','destroyProducto/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyProducto/'+id);
         $('#formulario').submit();
       }
     });
@@ -95,7 +104,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','desactivateProducto/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateProducto/'+id);
         $('#formulario').submit();
       }
     });

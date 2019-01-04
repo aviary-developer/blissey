@@ -41,7 +41,7 @@ function alta(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      var dominio = $('#guardarruta').val();
+      localStorage.setItem('msg','yes');
       $('#formulario').attr('action','activateCategoriaProducto/'+id);
       $('#formulario').submit();
     }
@@ -61,7 +61,7 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      var dominio = $('#guardarruta').val();
+      localStorage.setItem('msg','yes');
       $('#formulario').attr('action','destroyCategoriaProducto/'+id);
       $('#formulario').submit();
     }

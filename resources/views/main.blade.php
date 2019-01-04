@@ -60,7 +60,7 @@
       function chart_home(){
         $.ajax({
           type: 'get',
-          url: '/blissey/public/graficar_examenes',
+          url: $('#guardarruta').val() + '/graficar_examenes',
           success: function(r){
             var datos = [];
             var tags = [];

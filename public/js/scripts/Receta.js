@@ -74,7 +74,7 @@ $(document).on('ready', function () {
     if (texto.length > 0) {
       await $.ajax({
         type: 'get',
-        url: '/blissey/public/consultas/datos_producto',
+        url: $('#guardarruta').val() + '/consultas/datos_producto',
         data: {
           valor: texto
         },
@@ -99,7 +99,7 @@ $(document).on('ready', function () {
     if (alergia == "Ninguna") {
       alergia = "";
     }
-    
+
     var html_ = '<input type="text" class="swal2-input" id="a_lergia" placeholder="Alergias del paciente" value="' + alergia + '" autofocus>';
 
     swal({
@@ -110,10 +110,10 @@ $(document).on('ready', function () {
       cancelButtonText: 'Cancelar',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-light'
-    }).then((result)=> {
-      if(result.value){
+    }).then((result) => {
+      if (result.value) {
         $.ajax({
-          url: "/blissey/public/editar_alergia",
+          url: $('#guardarruta').val() + "/editar_alergia",
           type: "POST",
           data: {
             id: paciente,
@@ -164,7 +164,7 @@ $(document).on('ready', function () {
     var presentacion = $("#presentacion-selecta").text();
 
     if (medicamento.length > 0) {
-      
+
       var html = '<div class="row">' +
         '<div class="row" style="margin: 0 10px 0 15px">' +
         '<p class="mb-1 h-auto" style="font-size: medium">' +
@@ -188,7 +188,7 @@ $(document).on('ready', function () {
         '<input type="hidden" name="observacion[]" id="i_observacion" value="' + observacion + '">' +
         '</div>' +
         '</div>';
-      
+
       $("#texto-medicamento").append(html);
     } else {
       swal({
@@ -250,7 +250,7 @@ $(document).on('ready', function () {
     var codigo = $("#codi-receta").val();
     await $.ajax({
       type: 'get',
-      url: '/blissey/public/receta/buscar_medicamento',
+      url: $('#guardarruta').val() + '/receta/buscar_medicamento',
       data: {
         codigo: codigo
       },
@@ -292,12 +292,12 @@ $(document).on('ready', function () {
               '<label>' +
               'División:' +
               '</label>' +
-							'<div class="input-group mb-2 mr-sm-2">' +
-							'<div class="input-group-prepend">'+
-								'<div class="input-group-text"><i class="fas fa-cubes"></i></div>'+
-							'</div>'+
+              '<div class="input-group mb-2 mr-sm-2">' +
+              '<div class="input-group-prepend">' +
+              '<div class="input-group-text"><i class="fas fa-cubes"></i></div>' +
+              '</div>' +
               '<select class="form-control form-control-sm" id="div_seleccion">';
-            
+
             var indice = key;
             var precio = [];
             var inventario = [];
@@ -307,7 +307,7 @@ $(document).on('ready', function () {
               html += '<option value="' + value.id + '">' +
                 ((value.contenido == 0) ? (value.nombre + ' ' + value.cantidad + ' ' + presentacion) : (value.nombre + ' ' + value.cantidad + ' ' + value.contenido)) +
                 '</option>';
-              
+
               precio.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio));
               inventario.push(value.inventario);
               estante.push(value.estante);
@@ -326,10 +326,10 @@ $(document).on('ready', function () {
               '<label>' +
               'Cantidad:' +
               '</label>' +
-							'<div class="input-group mb-2 mr-sm-2">' +
-							'<div class="input-group-prepend">' +
-							'<div class="input-group-text"><i class="fas fa-cubes"></i></div>' +
-							'</div>' +
+              '<div class="input-group mb-2 mr-sm-2">' +
+              '<div class="input-group-prepend">' +
+              '<div class="input-group-text"><i class="fas fa-cubes"></i></div>' +
+              '</div>' +
               '<input class="form-control form-control-sm" id="cant" value="1" type="number" min="1">' +
               '</div>' +
               '</div>' +
@@ -389,7 +389,7 @@ $(document).on('ready', function () {
               '</div>' +
               '</form>' +
               '</div>';
-            
+
             lista_paneles.append(html);
           });
         }
@@ -454,7 +454,7 @@ $(document).on('ready', function () {
         '</button>' +
         '</td>' +
         '</tr>';
-      
+
       tabla.append(html);
       componentes_agregados.push("" + id_division + "");
       notaInfo('Ha sido agregado en detalles');

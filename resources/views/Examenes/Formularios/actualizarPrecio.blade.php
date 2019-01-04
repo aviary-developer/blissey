@@ -90,7 +90,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta="/blissey/public/actualizarPrecioExamen";
+  var ruta=$('#guardarruta').val() + "/actualizarPrecioExamen";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,

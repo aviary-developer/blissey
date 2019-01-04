@@ -1,9 +1,8 @@
 $(document).on('ready', function () {
   var limite = $("#contador").val();
   var especialidad_agregada = [];
-  for(i=0;i<=limite;i++)
-  {
-    var especial = $('#especialidad'+i).val();
+  for (i = 0; i <= limite; i++) {
+    var especial = $('#especialidad' + i).val();
     especialidad_agregada.push(especial);
   }
   var wrapper = $('#tablaTelefono');
@@ -36,20 +35,20 @@ $(document).on('ready', function () {
     }
   });
 
-  $('#agregar_telefono').click(function(){
+  $('#agregar_telefono').click(function () {
     var contenido = $('#telefono_usuario').val();
-    var html_texto = "<tr>"+
-    "<td>"+
-    "<input type='hidden' name='telefono[]' value = '"+contenido+"'/>"+
-    contenido+
-    "</td>"+
-    "<td>"+
-      "<button type = 'button' name='button' class='btn btn-danger btn-sm' id='eliminar_telefono' data-toggle='tooltip' data-placement='top' title='Eliminar'>"+
-        "<i class='fa fa-times'></i>"+
-      "</button>"+
-    "</td>"+
-    "</tr>";
-    if(contenido != ""){
+    var html_texto = "<tr>" +
+      "<td>" +
+      "<input type='hidden' name='telefono[]' value = '" + contenido + "'/>" +
+      contenido +
+      "</td>" +
+      "<td>" +
+      "<button type = 'button' name='button' class='btn btn-danger btn-sm' id='eliminar_telefono' data-toggle='tooltip' data-placement='top' title='Eliminar'>" +
+      "<i class='fa fa-times'></i>" +
+      "</button>" +
+      "</td>" +
+      "</tr>";
+    if (contenido != "") {
       $(wrapper).append(html_texto);
       $('#telefono_usuario').val("");
       $('#eliminar_telefono').tooltip();
@@ -57,41 +56,40 @@ $(document).on('ready', function () {
 
   });
 
-  $('#agregar_especialidad').click(function(){
+  $('#agregar_especialidad').click(function () {
     var contenido = $('#especialidad').find('option:selected').text();
     var valor = $('#especialidad').find('option:selected').val();
-    var html_texto = "<tr>"+
-    "<td>"+
-    contenido+
-    "</td>"+
-    "<td>"+
-      "<input type='hidden' name='especialidad[]' value = '"+valor+"'/>"+
-      "<button type = 'button' name='button' class='btn btn-danger btn-sm' id='eliminar_especialidad'>"+
-        "<i class='fa fa-times'></i>"+
-      "</button>"+
-    "</td>"+
-    "</tr>";
-    if(especialidad_agregada.indexOf(valor)==-1)
-    {
+    var html_texto = "<tr>" +
+      "<td>" +
+      contenido +
+      "</td>" +
+      "<td>" +
+      "<input type='hidden' name='especialidad[]' value = '" + valor + "'/>" +
+      "<button type = 'button' name='button' class='btn btn-danger btn-sm' id='eliminar_especialidad'>" +
+      "<i class='fa fa-times'></i>" +
+      "</button>" +
+      "</td>" +
+      "</tr>";
+    if (especialidad_agregada.indexOf(valor) == -1) {
       especialidad_agregada.push(valor);
       $(wrapper2).append(html_texto);
       contador_especialidad++;
     }
   });
 
-  $(wrapper).on('click','#eliminar_telefono',function(e){
+  $(wrapper).on('click', '#eliminar_telefono', function (e) {
     e.preventDefault();
     $(this).parent('td').parent('tr').remove();
   });
 
-  $(wrapper).on('click','#eliminar_telefono_antiguo',function(e){
+  $(wrapper).on('click', '#eliminar_telefono_antiguo', function (e) {
     e.preventDefault();
     var valores = $(this).parents('tr').find('input').val();
     $("#telefono_hidden").append('<input type="hidden" name="deletes[]" value="' + valores + '">');
     $(this).parent('td').parent('tr').remove();
   });
 
-  $(wrapper2).on('click','#eliminar_especialidad',function(e){
+  $(wrapper2).on('click', '#eliminar_especialidad', function (e) {
     e.preventDefault();
     var elemento = $(this).parents('tr').find('input').val();
     var indice = especialidad_agregada.indexOf(elemento);
@@ -99,7 +97,7 @@ $(document).on('ready', function () {
     $(this).parent('td').parent('tr').remove();
   });
 
-  $(wrapper2).on('click','#eliminar_especialidad_antiguo',function(e){
+  $(wrapper2).on('click', '#eliminar_especialidad_antiguo', function (e) {
     e.preventDefault();
     var elemento = $(this).parents('tr').find('input:eq(0)').val();
     var indice = especialidad_agregada.indexOf(elemento);
@@ -118,7 +116,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: "POST",
-      url: "/blissey/public/guardar_especialidad",
+      url: $('#guardarruta').val() + "/guardar_especialidad",
       data: {
         nombre: v_nombre.val()
       },
@@ -159,7 +157,7 @@ $(document).on('ready', function () {
       if (v_nueva == v_nueva_r) {
         $.ajax({
           type: "POST",
-          url: "/blissey/public/psw",
+          url: $('#guardarruta').val() + "/psw",
           data: {
             actual: v_actual,
             nueva: v_nueva,
@@ -196,7 +194,7 @@ $(document).on('ready', function () {
         $('<button type="button"></button>').text('Guardar')
           .addClass('btn btn-primary btn-sm')
           .on('click', save_usuario),
-        $('<a href="/blissey/public/usuarios"></a>').text('Cancelar')
+        $('<a href="../usuarios?estado=1"></a>').text('Cancelar')
           .addClass('btn btn-light btn-sm')
       ]
     },
@@ -206,7 +204,7 @@ $(document).on('ready', function () {
   $(document).find('.btn-secondary').addClass('btn-sm');
 
   async function save_usuario() {
-    
+
     //Validación
     var is_valid = true;
 
@@ -231,7 +229,7 @@ $(document).on('ready', function () {
     valido.min(2);
     valido.max(30);
     is_valid = valido.value(is_valid);
-    
+
     //Validar apellido
     var valido = new Validated('apellido_usuario_field');
     valido.required();
@@ -277,7 +275,7 @@ $(document).on('ready', function () {
         is_valid = valido.value(is_valid);
       }
     }
-    
+
 
     if (is_valid) {
       $("#form").submit();

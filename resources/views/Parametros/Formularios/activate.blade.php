@@ -40,7 +40,6 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
         $('#formulario').attr('action','activateParametro/'+id);
         $('#formulario').submit();
       }
@@ -62,7 +61,6 @@
     }).then((result) => {
       if (result.value) {
         localStorage.setItem('msg','yes');
-        var dominio = window.location.host;
         $('#formulario').attr('action','destroyParametro/'+id);
       $('#formulario').submit();
       }

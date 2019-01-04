@@ -35,7 +35,7 @@ class TransaccionController extends Controller
       $tipo= $request->tipo;
       $buscar=$request->buscar;
       $transacciones=Transacion::buscar($buscar,$tipo);
-      return view('transacciones.index',compact('transacciones','tipo','buscar','pagina'));
+      return view('Transacciones.index',compact('transacciones','tipo','buscar','pagina'));
     }
 
     /**
@@ -144,9 +144,9 @@ class TransaccionController extends Controller
       DB::rollback();
       $tran= new Transacion;
       if($tipo==0){
-        return view('transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad','precio'))->withErrors($valida->errors());
+        return view('Transacciones.create',compact('tran','tipo','fecha','f_proveedor','f_producto','cantidad','precio'))->withErrors($valida->errors());
       }else{
-        return view('transacciones.create',compact('tran','tipo','fecha','f_clientea','f_cliente','f_producto','cantidad','precio','tipo_detalle'))->withErrors($valida->errors());
+        return view('Transacciones.create',compact('tran','tipo','fecha','f_clientea','f_cliente','f_producto','cantidad','precio','tipo_detalle'))->withErrors($valida->errors());
       }
     }
     }

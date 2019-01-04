@@ -139,10 +139,10 @@ class EstanteController extends Controller
         $estantes->delete();
         Bitacora::bitacora('destroy','estantes','estantes',$id);
         DB::commit();
-        return redirect('/estantes?estado=0')->with('mensaje','¡Eliminado!');
+        return redirect('/estantes?estado=0');
       } catch (\Exception $e) {
         DB::rollback();
-        return redirect('/estantes?estado=0')->with('error','¡No se puede eliminar!');
+        return redirect('/estantes?estado=0');
       }
     }
 
@@ -151,13 +151,13 @@ class EstanteController extends Controller
       $estantes->estado = false;
       $estantes->save();
       Bitacora::bitacora('desactivate','estantes','estantes',$id);
-      return Redirect::to('/estantes')->with('mensaje','¡Desactivado!');
+      return Redirect::to('/estantes');
     }
     public function activate($id){
       $estantes = Estante::find($id);
       $estantes->estado = true;
       $estantes->save();
       Bitacora::bitacora('activate','estantes','estantes',$id);
-      return Redirect::to('/estantes?estado=0')->with('mensaje','¡Restaurado!');
+      return Redirect::to('/estantes?estado=0');
     }
 }

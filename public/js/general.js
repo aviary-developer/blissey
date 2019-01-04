@@ -150,7 +150,7 @@ function validate(value, id, type = null, amount = 0, campo = null) {
     if (object.val().length > 0) {
       html = 'El campo <b class="text-uppercase">' + label + '</b> debe ser único.';
 
-      var result = $.get('/blissey/public/validate', { tabla: amount, campo: campo, valor: object.val() });
+      var result = $.get('http://' + $('#guardarruta').val() + '/validate', { tabla: amount, campo: campo, valor: object.val() });
 
       if (result != 0) {
         object.addClass('is-invalid');
@@ -222,10 +222,11 @@ function notaInfo(sms) {
 }
 function ruta() { //No tocar es para ver la ruta
   var dominio = window.location.host;
+  var protocolo = window.location.protocol;
   if (dominio == "localhost" || dominio == "127.0.0.1") {
-    $('#guardarruta').val("localhost/blissey/public");
+    $('#guardarruta').val(protocolo + "localhost/blissey/public");
   } else {
-    $('#guardarruta').val(dominio);
+    $('#guardarruta').val(protocolo + dominio);
   }
 }
 $(document).on('ready', function () {

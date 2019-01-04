@@ -236,10 +236,10 @@ class ProductoController extends Controller
         $productos->delete();
         Bitacora::bitacora('destroy','productos','productos',$id);
         DB::commit();
-        return redirect('/productos?estado=0')->with('mensaje','¡Eliminado!');
+        return redirect('/productos?estado=0');
       } catch (\Exception $e) {
         DB::rollback();
-        return redirect('/productos?estado=0')->with('error','¡No se puede eliminar!');
+        return redirect('/productos?estado=0');
       }
     }
 
@@ -248,7 +248,7 @@ class ProductoController extends Controller
       $productos->estado = false;
       $productos->save();
       Bitacora::bitacora('desactivate','productos','productos',$id);
-      return Redirect::to('/productos')->with('mensaje','¡Desactivado!');
+      return Redirect::to('/productos');
     }
 
     public function activate($id){
@@ -256,7 +256,7 @@ class ProductoController extends Controller
       $productos->estado = true;
       $productos->save();
       Bitacora::bitacora('activate','productos','productos',$id);
-      return Redirect::to('/productos?estado=0')->with('mensaje','¡Restaurado!');
+      return Redirect::to('/productos?estado=0');
     }
 
     public function buscarComponentes($texto){

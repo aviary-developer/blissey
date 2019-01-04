@@ -100,7 +100,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta="/blissey/public/actualizarPrecioUltra";
+  var ruta=$('#guardarruta').val() + "/actualizarPrecioUltra";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,

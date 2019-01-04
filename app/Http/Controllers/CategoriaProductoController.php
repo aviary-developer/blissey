@@ -136,10 +136,10 @@ class CategoriaProductoController extends Controller
       $categoria_productos->delete();
       Bitacora::bitacora('destroy','categoria_productos','categoria_productos',$id);
       DB::commit();
-      return redirect('/categoria_productos?estado=0')->with('mensaje','¡Eliminado!');
+      return redirect('/categoria_productos?estado=0');
     } catch (\Exception $e) {
       DB::rollback();
-      return redirect('/categoria_productos?estado=0')->with('error','¡No se puede eliminar!');
+      return redirect('/categoria_productos?estado=0');
     }
 
   }
@@ -148,7 +148,7 @@ class CategoriaProductoController extends Controller
     $categoria_productos->estado = false;
     $categoria_productos->save();
     Bitacora::bitacora('desactivate','categoria_productos','categoria_productos',$id);
-    return Redirect::to('/categoria_productos')->with('mensaje','¡Desactivado!');
+    return Redirect::to('/categoria_productos');
   }
 
   public function activate($id){
@@ -156,7 +156,7 @@ class CategoriaProductoController extends Controller
     $categoria_productos->estado = true;
     $categoria_productos->save();
     Bitacora::bitacora('activate','categoria_productos','categoria_productos',$id);
-    return Redirect::to('/categoria_productos?estado=0')->with('mensaje','¡Restaurado!');
+    return Redirect::to('/categoria_productos?estado=0');
   }
   public static function ingresoCategoria(CategoriaProductoRequest $request){
     $categoria=CategoriaProducto::create($request->All());

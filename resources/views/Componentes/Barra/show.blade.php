@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$componente->estado)
     @php
@@ -30,9 +31,14 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$componente->id.");'"!!}>Activar</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$componente->id.");'" !!}>Eliminar</a>
-        </li>
+        @php
+          $cuenta=App\Componente::foraneos($componente->id);
+        @endphp
+        @if (!$cuenta>0)
+          <li class="nav-item">
+            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$componente->id.");'" !!}>Eliminar</a>
+          </li>
+        @endif
 			@endif
 			<li class="nav-item">
         <a class="nav-link" href={!! asset('/ayuda/general?tipo=componentes') !!} target="_blank">Ayuda</a>
@@ -41,6 +47,7 @@
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -57,7 +64,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','activateComponente/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateComponente/'+id);
         $('#formulario').submit();
       }
     });
@@ -77,7 +85,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','destroyComponente/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyComponente/'+id);
         $('#formulario').submit();
       }
     });
@@ -96,8 +105,9 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','desactivateComponente/'+id);
-        submit();
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateComponente/'+id);
+        $('#formulario').submit();
       }
     });
   }

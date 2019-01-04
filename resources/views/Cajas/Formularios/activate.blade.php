@@ -35,6 +35,7 @@ function alta(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
+      localStorage.setItem('msg','yes');
       $('#formulario').attr('action','activateCaja/'+id);
       $('#formulario').submit();
     }
@@ -54,6 +55,7 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
+      localStorage.setItem('msg','yes');
       $('#formulario').attr('action','destroyCaja/'+id);
       $('#formulario').submit();
     }

@@ -117,10 +117,10 @@ class ComponenteController extends Controller
         $componente->delete();
         Bitacora::bitacora('destroy','componentes','componentes',$id);
         DB::commit();
-        return redirect('/componentes?estado=0')->with('mensaje','¡Eliminado!');
+        return redirect('/componentes?estado=0');
       } catch (\Exception $e) {
         DB::rollback();
-        return redirect('/componentes?estado=0')->with('error','¡No se puede eliminar!');
+        return redirect('/componentes?estado=0');
       }
     }
 
@@ -129,14 +129,14 @@ class ComponenteController extends Controller
       $componentes->estado = false;
       $componentes->save();
       Bitacora::bitacora('desactivate','componentes','componentes',$id);
-      return Redirect::to('/componentes')->with('mensaje','¡Desactivado!');
+      return Redirect::to('/componentes');
     }
     public function activate($id){
       $componentes = Componente::find($id);
       $componentes->estado = true;
       $componentes->save();
       Bitacora::bitacora('activate','componentes','componentes',$id);
-      return Redirect::to('/componentes?estado=0')->with('mensaje','¡Restaurado!');
+      return Redirect::to('/componentes?estado=0');
     }
     public static function ingresoComponente(ComponenteRequest $request){
       $c=Componente::create($request->All());

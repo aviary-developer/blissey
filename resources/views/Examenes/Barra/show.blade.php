@@ -126,7 +126,7 @@
         var monto = parseFloat($("#monto").val());
         if(!Number.isNaN(monto)){
           $.ajax({
-            url: "/blissey/public/actualizarPrecioExamen",
+            url: $('#guardarruta').val() + "/actualizarPrecioExamen",
             type: "POST",
             data: {
               idServicio: servicio,

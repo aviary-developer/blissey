@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$especialidad->estado)
     @php
@@ -23,9 +24,11 @@
         <a class="nav-link" href={!! asset('/especialidades/'.$especialidad->id.'/edit') !!}>Editar</a>
       </li>
       @if ($especialidad->estado)
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$especialidad->id.")"}}>Papelera</a>
-        </li>
+        @if (!App\Especialidad::contar_medicos($especialidad->id))
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick={{"baja(".$especialidad->id.")"}}>Papelera</a>
+          </li>
+        @endif
       @else
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$especialidad->id.");'"!!}>Activar</a>
@@ -38,6 +41,7 @@
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -56,7 +60,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','activateEspecialidad/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateEspecialidad/'+id);
         $('#formulario').submit();
       }
     });
@@ -78,7 +82,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','destroyEspecialidad/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyEspecialidad/'+id);
         $('#formulario').submit();
       }
     });
@@ -99,8 +103,8 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','desactivateEspecialidad/'+id);
-        submit();
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateEspecialidad/'+id);
+        $('#formulario').submit();
       }
     });
   }

@@ -39,7 +39,6 @@ function alta(id){
   }).then((result) => {
     if (result.value) {
       localStorage.setItem('msg','yes');
-      var dominio = window.location.host;
       $('#formulario').attr('action','activateEstante/'+id);
       $('#formulario').submit();
     }
@@ -60,7 +59,6 @@ function eliminar(id){
   }).then((result) => {
     if (result.value) {
       localStorage.setItem('msg','yes');
-      var dominio = window.location.host;
       $('#formulario').attr('action','destroyEstante/'+id);
       $('#formulario').submit();
     }

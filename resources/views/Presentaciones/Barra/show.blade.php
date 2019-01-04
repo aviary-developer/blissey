@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$presentacion->estado)
     @php
@@ -18,7 +19,6 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-  {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/presentaciones/'.$presentacion->id.'/edit') !!}>Editar</a>
@@ -31,18 +31,23 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$presentacion->id.");'"!!}>Activar</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$presentacion->id.");'" !!}>Eliminar</a>
-        </li>
+        @php
+          $cuenta=App\Presentacion::foraneos($presentacion->id);
+        @endphp
+        @if (!$cuenta>0)
+          <li class="nav-item">
+            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$presentacion->id.");'" !!}>Eliminar</a>
+          </li>
+        @endif
       @endif
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/ayuda/general?tipo=presentaciones') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
-  {!!Form::close()!!}
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -59,7 +64,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','activatePresentacion/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activatePresentacion/'+id);
         $('#formulario').submit();
       }
     });
@@ -79,7 +85,8 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','destroyPresentacion/'+id);
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyPresentacion/'+id);
         $('#formulario').submit();
       }
     });
@@ -98,8 +105,9 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        $('#formulario').attr('action','desactivatePresentacion/'+id);
-        submit();
+        localStorage.setItem('msg','yes');
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivatePresentacion/'+id);
+        $('#formulario').submit();
       }
     });
   }

@@ -10,13 +10,13 @@ function eliminar_ingreso(id) {
     confirmButtonClass: 'btn btn-danger',
     cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
-	}).then((result) => {
-		if (result.value) {
-			var dominio = window.location.host;
-			$('#formulario').attr('action', 'http://' + dominio + '/blissey/public/desactivateIngreso/' + id);
-			localStorage.setItem('msg', 'yes');
-			$('#formulario').submit();
-		}
+  }).then((result) => {
+    if (result.value) {
+      var dominio = window.location.host;
+      $('#formulario').attr('action', $('#guardarruta').val() + '/desactivateIngreso/' + id);
+      localStorage.setItem('msg', 'yes');
+      $('#formulario').submit();
+    }
   });
 }
 
@@ -32,13 +32,13 @@ function confirmar_ingreso(id) {
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-light',
     buttonsStyling: false
-	}).then((result) => {
-		if (result.value) {
-			var dominio = window.location.host;
-			$('#formulario').attr('action', 'http://' + dominio + '/blissey/public/activateIngreso/' + id);
-			localStorage.setItem('msg', 'yes');
-			$('#formulario').submit();
-		}
+  }).then((result) => {
+    if (result.value) {
+      var dominio = window.location.host;
+      $('#formulario').attr('action', $('#guardarruta').val() + '/activateIngreso/' + id);
+      localStorage.setItem('msg', 'yes');
+      $('#formulario').submit();
+    }
   });
 }
 
@@ -88,13 +88,13 @@ $("#btn_v_t").on('click', function (e) {
 $("#fecha_finanza").on("change", function () {
   var id = $("#id").val();
   var fecha = $("#fecha_finanza").val();
-  resumen(id,fecha);
+  resumen(id, fecha);
 });
 $("#btn_v_f").on('click', function (e) {
   e.preventDefault();
   var id = $("#id").val();
   var fecha = $("#fecha_finanza").val();
-  resumen(id,fecha);
+  resumen(id, fecha);
 });
 $("#fecha_signo").on("change", function () {
   signos_fecha();
@@ -102,12 +102,12 @@ $("#fecha_signo").on("change", function () {
 
 function medicamento_fecha() {
   var fecha = $("#fecha_producto").val();
-	var id = $("#id").val();
-	var tipo_usuario = $("#tipo_usuario").val();
-  
+  var id = $("#id").val();
+  var tipo_usuario = $("#tipo_usuario").val();
+
   $.ajax({
     type: 'get',
-    url: '/blissey/public/lista_producto',
+    url: $('#guardarruta').val() + '/lista_producto',
     data: {
       id: id,
       fecha: fecha
@@ -121,7 +121,7 @@ function medicamento_fecha() {
         html = '<div class="col-sm-12">' +
           '<table class="table table-hover table-striped table-sm" id="tabla_v_p">' +
           '<thead>' +
-          '<th>Hora</th>'+
+          '<th>Hora</th>' +
           '<th>Detalle</th>' +
           '<th class="w-25">Acción</th>'
         '</thead>' +
@@ -131,12 +131,12 @@ function medicamento_fecha() {
         tabla = $("#tabla_v_p");
         $(r.productos).each(function (key, value) {
           html = '<tr id="r' + value.id + '">' +
-            '<td>'+ value.hora +'</td>'+
+            '<td>' + value.hora + '</td>' +
             '<td>' +
-            value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>'+
+            value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 1 && tipo_usuario == "Recepción") {
-            html += '<td><center><button type="button" id = "'+ value.id +'" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
+            html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
           } else {
             html += '<td><center><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></center></td>';
           }
@@ -154,12 +154,12 @@ function medicamento_fecha() {
 
 function servicio_fecha() {
   var fecha = $("#fecha_servicio").val();
-	var id = $("#id").val();
-	var tipo_usuario = $("#tipo_usuario").val();
-  
+  var id = $("#id").val();
+  var tipo_usuario = $("#tipo_usuario").val();
+
   $.ajax({
     type: 'get',
-    url: '/blissey/public/lista_servicio',
+    url: $('#guardarruta').val() + '/lista_servicio',
     data: {
       id: id,
       fecha: fecha
@@ -182,7 +182,7 @@ function servicio_fecha() {
         panel.append(html);
         tabla = $("#tabla_v_s");
         $(r.servicios).each(function (key, value) {
-          html = '<tr id="r' + value.id +'">' +
+          html = '<tr id="r' + value.id + '">' +
             '<td>' + value.hora + '</td>' +
             '<td>' +
             value.cantidad + " " + ' <b class="">' + value.nombre + '</b>' +
@@ -207,10 +207,10 @@ function servicio_fecha() {
 function rayos_fecha() {
   var fecha = $("#fecha_rayo").val();
   var id = $("#id").val();
-  
+
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_rayos',
+    url: $('#guardarruta').val() + '/ingreso/lista_rayos',
     data: {
       id: id,
       fecha: fecha
@@ -240,7 +240,7 @@ function rayos_fecha() {
             '</td>';
           if (value.estado == 0) {
             html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
-          } else if(value.estado == 1) {
+          } else if (value.estado == 1) {
             html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
           } else {
             html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
@@ -263,7 +263,7 @@ function laboratorio_fecha() {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_laboratorio',
+    url: $('#guardarruta').val() + '/ingreso/lista_laboratorio',
     data: {
       id: id,
       fecha: fecha
@@ -316,7 +316,7 @@ function ultra_fecha() {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_ultra',
+    url: $('#guardarruta').val() + '/ingreso/lista_ultra',
     data: {
       id: id,
       fecha: fecha
@@ -369,7 +369,7 @@ function tac_fecha() {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_tac',
+    url: $('#guardarruta').val() + '/ingreso/lista_tac',
     data: {
       id: id,
       fecha: fecha
@@ -422,7 +422,7 @@ function signos_fecha() {
 
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_signos',
+    url: $('#guardarruta').val() + '/ingreso/lista_signos',
     data: {
       id: id,
       fecha: fecha
@@ -446,7 +446,7 @@ function signos_fecha() {
         $(r.signos).each(function (key, value) {
           html = '<tr>' +
             '<td>' +
-            value.hora + 
+            value.hora +
             '</td>';
           html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="carga_signos(' + value.id + ')"><i class="fa fa-eye"></i></button></center></td>';
           html += '</tr>';
@@ -464,10 +464,10 @@ function signos_fecha() {
 function laboratorio_pendientes_ver() {
   var fecha = $("#fecha_examen").val();
   var id = $("#id").val();
-  
+
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_laboratorio',
+    url: $('#guardarruta').val() + '/ingreso/lista_laboratorio',
     data: {
       id: id,
       fecha: fecha,
@@ -475,7 +475,7 @@ function laboratorio_pendientes_ver() {
     },
     success: function (r) {
       var panel = $("#mensaje_l");
-      
+
       if (r.indice > 0) {
         panel.empty();
         html = '<div class="col-sm-12">' +
@@ -483,7 +483,7 @@ function laboratorio_pendientes_ver() {
           '<thead>' +
           '<th style="width: 100px;">Fecha</th>' +
           '<th>Detalle</th>' +
-        '</thead>' +
+          '</thead>' +
           '</table>' +
           '</div>';
         panel.append(html);
@@ -506,14 +506,14 @@ function laboratorio_pendientes_ver() {
   });
 }
 
-$("#guardar_cambio_habitacion").on("click", function (e) { 
+$("#guardar_cambio_habitacion").on("click", function (e) {
   e.preventDefault();
   cama = $("#f_cama").val();
   id = $("#id").val();
   console.log(cama);
   if (cama != null) {
     $.ajax({
-      url: "/blissey/public/cambio_ingreso",
+      url: $('#guardarruta').val() + "/cambio_ingreso",
       type: "post",
       data: {
         f_cama: cama,
@@ -540,7 +540,7 @@ $("#guardar_cambio_habitacion").on("click", function (e) {
   }
 });
 
-$("#cambio_hospitalizacion_").on("click", function (e) { 
+$("#cambio_hospitalizacion_").on("click", function (e) {
   activo = $("#activo").val();
   if (activo == 0) {
     cama = $("#f_cama_i").val();
@@ -552,7 +552,7 @@ $("#cambio_hospitalizacion_").on("click", function (e) {
   id = $("#id").val();
   if (cama != null) {
     $.ajax({
-      url: "/blissey/public/cambio_ingreso",
+      url: $('#guardarruta').val() + "/cambio_ingreso",
       type: "post",
       data: {
         tipo: activo,
@@ -590,7 +590,7 @@ function ultra_rayos(tipo) {
   var id = $("#id").val();
   if (tipo == 1) {
     $.ajax({
-      url: "/blissey/public/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
@@ -607,9 +607,9 @@ function ultra_rayos(tipo) {
         }
       }
     });
-  } else if(tipo == 2) {
+  } else if (tipo == 2) {
     $.ajax({
-      url: "/blissey/public/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
@@ -628,7 +628,7 @@ function ultra_rayos(tipo) {
     });
   } else {
     $.ajax({
-      url: "/blissey/public/solicitudex",
+      url: $('#guardarruta').val() + "/solicitudex",
       type: "POST",
       data: {
         f_paciente: paciente,
@@ -650,7 +650,7 @@ function ultra_rayos(tipo) {
 function carga_signos(id) {
   $.ajax({
     type: "get",
-    url: "/blissey/public/ver_signos",
+    url: $('#guardarruta').val() + "/ver_signos",
     data: {
       id: id
     },
@@ -832,7 +832,7 @@ function carga_signos(id) {
 function ver_medico(servicio) {
   $.ajax({
     type: 'get',
-    url: '/blissey/public/ingreso/lista_medico',
+    url: $('#guardarruta').val() + '/ingreso/lista_medico',
     data: {
       i_id: $("#id").val(),
       id: servicio
@@ -841,9 +841,9 @@ function ver_medico(servicio) {
       $("#img-foto").attr('src', r.foto);
       $("#nombre").text(r.nombre);
       $("#especial").text((r.especialidad == "Ninguna") ? r.especialidad : r.especialidad.nombre);
-      
+
       var panel = $("#mensaje_v_m");
-      
+
       panel.empty();
       html = '<div class="col-sm-12">' +
         '<table class="table table-striped table-hover table-sm" id="tabla_v_m">' +

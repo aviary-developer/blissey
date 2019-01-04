@@ -44,7 +44,7 @@ class EspecialidadController extends Controller
      */
     public function create()
     {
-        return view('especialidades.create');
+        return view('Especialidades.create');
     }
 
     /**

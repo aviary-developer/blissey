@@ -104,7 +104,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
-        return view('pacientes.create');
+        return view('Pacientes.create');
     }
 
     /**
@@ -674,7 +674,7 @@ class PacienteController extends Controller
     }
     return $paciente->alergia;
   }
-  
+
   public function servicio_medico(Request $request){
     if($request->tipo != -1){
       $r = Ingreso::where('tipo',$request->tipo)->where('f_paciente',$request->id)->orderBy('fecha_ingreso','desc')->get();

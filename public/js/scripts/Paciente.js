@@ -1,4 +1,4 @@
-$(document).on('ready',function(){
+$(document).on('ready', function () {
   var minimo = $("#min").val();
   var maximo = $("#max").val();
   var desde = $("#from").val();
@@ -23,7 +23,7 @@ $(document).on('ready',function(){
 
     $.ajax({
       type: "GET",
-      url: "/blissey/public/municipios/"+v_departamento,
+      url: $('#guardarruta').val() + "/municipios/" + v_departamento,
       success: function (respuesta) {
         municipio_select.empty();
         $(respuesta).each(function (key, value) {
@@ -50,18 +50,18 @@ $(document).on('ready',function(){
     to: hasta,
     step: 1,
     postfix: " años",
-    onChange: function (){
+    onChange: function () {
       peticion();
     }
   });
 
   var slider = $("#range_paciente_edad").data("ionRangeSlider");
 
-  $("#limpiar_paciente_filtro").on("click",function(){
+  $("#limpiar_paciente_filtro").on("click", function () {
     $("#nombre").val("");
     $("#apellido").val("");
     $("#sexo1").parents('div').addClass("checked");
-    $("#sexo1").prop("checked",true);
+    $("#sexo1").prop("checked", true);
     $("#sexo2").parents('div').removeClass("checked");
     $("#sexo3").parents('div').removeClass("checked");
     $("#telefono").val("");
@@ -73,39 +73,39 @@ $(document).on('ready',function(){
     });
   });
 
-  $("#nombre").on("keyup",function(){
+  $("#nombre").on("keyup", function () {
     peticion();
   });
 
-  $("#apellido").on("keyup",function(){
+  $("#apellido").on("keyup", function () {
     peticion();
   });
 
-  $("#telefono").on("keyup",function(){
+  $("#telefono").on("keyup", function () {
     peticion();
   });
 
-  $("#dui").on("keyup",function(){
+  $("#dui").on("keyup", function () {
     peticion();
   });
 
-  $("#direccion").on("keyup",function(){
+  $("#direccion").on("keyup", function () {
     peticion();
   });
 
-  $("#sexo1").on("click",function(){
+  $("#sexo1").on("click", function () {
     peticion();
   });
 
-  $("#sexo2").on("click",function(){
+  $("#sexo2").on("click", function () {
     peticion();
   });
 
-  $("#sexo3").on("click",function(){
+  $("#sexo3").on("click", function () {
     peticion();
   });
 
-  $("#abrir_filtro").on("click",function(){
+  $("#abrir_filtro").on("click", function () {
     peticion();
   });
 
@@ -121,7 +121,7 @@ $(document).on('ready',function(){
 
     $.ajax({
       type: "GET",
-      url: "/blissey/public/filtrarPaciente",
+      url: $('#guardarruta').val() + "/filtrarPaciente",
       data: {
         nombre: v_nombre,
         apellido: v_apellido,
@@ -133,24 +133,24 @@ $(document).on('ready',function(){
         estado: v_estado
       },
       dataType: 'json',
-      success: function(respuesta){
+      success: function (respuesta) {
         console.log(respuesta);
         var p = $("#texto");
         p.empty();
-        if (respuesta > 0 && respuesta < 3){
+        if (respuesta > 0 && respuesta < 3) {
           var html =
-          "La búsqueda generará "+
-          "<b style = 'color: rgb(0,128,64);'>"+
+            "La búsqueda generará " +
+            "<b style = 'color: rgb(0,128,64);'>" +
             respuesta + " registros" +
-          "</b>" +
-          " es óptimo para reportes";
-        }else{
+            "</b>" +
+            " es óptimo para reportes";
+        } else {
           var html =
-          "La búsqueda generará "+
-          "<b style = 'color: rgb(255,60,60);'>"+
+            "La búsqueda generará " +
+            "<b style = 'color: rgb(255,60,60);'>" +
             respuesta + " registros" +
-          "</b>" +
-          " no podrá generar reportes";
+            "</b>" +
+            " no podrá generar reportes";
         }
         p.append(html);
       },
@@ -220,10 +220,10 @@ $(document).on('ready',function(){
 
     $.ajax({
       type: 'get',
-      url: '/blissey/public/paciente/servicio_medico',
+      url: $('#guardarruta').val() + '/paciente/servicio_medico',
       data: {
         id: id,
-        tipo : tipo
+        tipo: tipo
       },
       success: function (r) {
         var tabla = $("#body-table");
@@ -250,7 +250,7 @@ $(document).on('ready',function(){
           } else if (r.r[i].tipo == 2) {
             html += '<span class="badge border border-primary text-primary col-8">Observación</span>';
             tipo_txt = '<span class="badge border border-primary text-primary col-8">Observación</span>';
-          } else if (r.r[i].tipo == 3 ) {
+          } else if (r.r[i].tipo == 3) {
             html += '<span class="badge border border-pink text-pink col-8">Consulta</span>';
             tipo_txt = '<span class="badge border border-pink text-pink col-8">Consulta</span>';
           } else {
@@ -260,16 +260,16 @@ $(document).on('ready',function(){
           html += '</td>' +
             '<td>' +
             '<center>' +
-            '<button type="button" class="btn btn-info btn-sm datos_ingreso" data-value="' + r.r[i].id +'" data-toggle="modal" data-target="#ver_ingreso_pac" title="Ver"><i class="fas fa-info-circle"></i></button>' +
-            '</center>'+
+            '<button type="button" class="btn btn-info btn-sm datos_ingreso" data-value="' + r.r[i].id + '" data-toggle="modal" data-target="#ver_ingreso_pac" title="Ver"><i class="fas fa-info-circle"></i></button>' +
+            '</center>' +
             '</td>' +
             '</tr>';
           var bto = '<center>' +
-            '<button type="button" class="btn btn-info btn-sm datos_ingreso" data-value="' + r.r[i].id +'" data-toggle="modal" data-target="#ver_ingreso_pac" title="Ver"><i class="fas fa-info-circle" ></i></button>' +
+            '<button type="button" class="btn btn-info btn-sm datos_ingreso" data-value="' + r.r[i].id + '" data-toggle="modal" data-target="#ver_ingreso_pac" title="Ver"><i class="fas fa-info-circle" ></i></button>' +
             '</center>';
           tabla.append(html);
           ingreso_tabla.row.add([
-            (i+1),
+            (i + 1),
             fecha.format('DD [de] MMMM [del] YYYY'),
             tipo_txt,
             bto
@@ -280,13 +280,13 @@ $(document).on('ready',function(){
     });
   });
 
-  $("#ingreso-table").on('click','.datos_ingreso',function (e) {
+  $("#ingreso-table").on('click', '.datos_ingreso', function (e) {
     e.preventDefault();
     var id = $(this).data('value');
-    
+
     $.ajax({
       type: 'get',
-      url: '/blissey/public/paciente/servicio_paciente',
+      url: $('#guardarruta').val() + '/servicio_paciente',
       data: {
         id: id
       },
@@ -309,7 +309,7 @@ $(document).on('ready',function(){
         }
         $("#dias_t").text(r.dias);
         $("#tipo_t").empty();
-        
+
         if (r.ingreso.tipo == 0) {
           html = '<span class="badge border border-success text-success col-8">Ingreso</span>';
         } else if (r.ingreso.tipo == 1) {
@@ -336,16 +336,16 @@ $(document).on('ready',function(){
             (i + 1) +
             '</td>' +
             '<td>' +
-            fecha_consulta.format('DD [de] MMM [del] YYYY')+
+            fecha_consulta.format('DD [de] MMM [del] YYYY') +
             '</td>' +
             '<td>' +
-            r.medicos[i]+
+            r.medicos[i] +
             '</td>' +
             '<td>' +
-            val.diagnostico+
-            '</td>'+
+            val.diagnostico +
+            '</td>' +
             '</tr>';
-          
+
           $("#c-body-table").append(html);
           consulta_tabla.row.add([
             (i + 1),
@@ -368,7 +368,7 @@ $(document).on('ready',function(){
 
     $.ajax({
       type: 'get',
-      url: '/blissey/public/paciente/datos_ev',
+      url: $('#guardarruta').val() + '/paciente/datos_ev',
       data: {
         id: solicitud
       },
@@ -392,7 +392,7 @@ $(document).on('ready',function(){
 
       $.ajax({
         type: 'get',
-        url: '/blissey/public/paciente/ver_examen',
+        url: $('#guardarruta').val() + '/paciente/ver_examen',
         data: {
           solicitud: solicitud,
           examen: examen
@@ -419,19 +419,19 @@ $(document).on('ready',function(){
       $("#titulo-mo").text('Evaluación de TAC');
     }
 
-    
+
     $.ajax({
       type: 'get',
-      url: '/blissey/public/paciente/ver_evaluacion',
+      url: $('#guardarruta').val() + '/paciente/ver_evaluacion',
       data: {
         solicitud: solicitud
       },
       success: function (r) {
         var fecha = moment(r.solicitud.created_at);
-        
+
         $("#fecha_ev_2").text(fecha.format('DD [de] MMMM [del] YYYY'));
         $("#ev_2").text(r.nombre);
-        
+
         if (estado < 2) {
           $("#cargando_ex_m_2").show();
           $("#contenido_evaluacion_2").hide();
@@ -451,7 +451,7 @@ $(document).on('ready',function(){
 
     $.ajax({
       type: 'get',
-      url: '/blissey/public/paciente/filtro_evaluacion',
+      url: $('#guardarruta').val() + '/paciente/filtro_evaluacion',
       data: {
         id: id,
         tipo: tipo

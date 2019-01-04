@@ -103,8 +103,7 @@ $(document).on('ready', async function () {
   $("#componente").keyup(function () {
     var valor = $("#componente").val();
     if (valor.length > 0) {
-      var dominio = $('#guardarruta').val();
-      var ruta = 'http://' + dominio + "/buscarComponenteProducto/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarComponenteProducto/" + valor;
       var tabla = $("#tablaBuscarComponente");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -261,8 +260,7 @@ $(document).on('ready', async function () {
 async function validarCodigo() {
   var codigo = $("#codigo").val();
   if (codigo.trim() != "") {
-    var dominio = $('#guardarruta').val();
-    var ruta = 'http://' + dominio + "/existeCodigoProducto/" + codigo;
+    var ruta = $('#guardarruta').val() + "/existeCodigoProducto/" + codigo;
     $.get(ruta, await function (existe) {
       if (existe == 1) {
         notaError('¡Ya existe una división con el código ' + codigo + '!');
@@ -363,10 +361,9 @@ $("#guardarPresentacionModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombrePresentacionModal").val();
   var token = $("#tokenPresentacionModal").val();
-  var dominio = $('#guardarruta').val();
 
   await $.ajax({
-    url: "http://" + dominio + "/ingresoPresentacion",
+    url: $('#guardarruta').val() + "/ingresoPresentacion",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
     data: {
@@ -404,8 +401,7 @@ $("#guardarPresentacionModal").on('click', async function (e) {
 
 function rellenarPresentacion() {
   var presentacion = $("#f_presentacion");
-  var dominio = $('#guardarruta').val();
-  var ruta = 'http://' + dominio + "/llenarPresentacion";
+  var ruta = $('#guardarruta').val() + "/llenarPresentacion";
 
   $.get(ruta, function (res) {
     presentacion.empty();
@@ -419,10 +415,9 @@ $("#guardarCategoriaModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreCategoriaModal").val();
   var token = $("#tokenCategoriaModal").val();
-  var dominio = $('#guardarruta').val();
 
   await $.ajax({
-    url: "http://" + dominio + "/ingresoCategoria",
+    url: $('#guardarruta').val() + "/ingresoCategoria",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
     data: {
@@ -460,8 +455,7 @@ $("#guardarCategoriaModal").on('click', async function (e) {
 
 function rellenarCategoria() {
   var categoria = $("#f_categoria");
-  var dominio = $('#guardarruta').val();
-  var ruta = 'http://' + dominio + "/llenarCategoria";
+  var ruta = $('#guardarruta').val() + "/llenarCategoria";
 
   $.get(ruta, function (res) {
     categoria.empty();
@@ -475,10 +469,9 @@ $("#guardarDivisionModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreDivisionModal").val();
   var token = $("#tokenDivisionModal").val();
-  var dominio = $('#guardarruta').val();
 
   await $.ajax({
-    url: "http://" + dominio + "/ingresoDivision",
+    url: $('#guardarruta').val() + "/ingresoDivision",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
     data: {
@@ -516,8 +509,7 @@ $("#guardarDivisionModal").on('click', async function (e) {
 
 function rellenarDivision() {
   var division = $("#division");
-  var dominio = $('#guardarruta').val();
-  var ruta = 'http://' + dominio + "/llenarDivision";
+  var ruta = $('#guardarruta').val() + "/llenarDivision";
 
   $.get(ruta, function (res) {
     division.empty();
@@ -531,10 +523,9 @@ $("#guardarUnidadModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreUnidadModal").val();
   var token = $("#tokenUnidadModal").val();
-  var dominio = $('#guardarruta').val();
 
   await $.ajax({
-    url: "http://" + dominio + "/ingresoUnidad",
+    url: $('#guardarruta').val() + "/ingresoUnidad",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
     data: {
@@ -571,8 +562,7 @@ $("#guardarUnidadModal").on('click', async function (e) {
 });
 function rellenarUnidad() {
   var unidad = $("#v_valor");
-  var dominio = $('#guardarruta').val();
-  var ruta = 'http://' + dominio + "/llenarUnidad";
+  var ruta = $('#guardarruta').val() + "/llenarUnidad";
 
   $.get(ruta, function (res) {
     unidad.empty();
@@ -585,10 +575,9 @@ $("#guardarComponenteModal").on('click', async function (e) {
   e.preventDefault();
   var v_nombre = $("#nombreComponenteModal").val();
   var token = $("#tokenComponenteModal").val();
-  var dominio = $('#guardarruta').val();
 
   await $.ajax({
-    url: "http://" + dominio + "/ingresoComponente",
+    url: $('#guardarruta').val() + "/ingresoComponente",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
     data: {
@@ -628,10 +617,9 @@ $("#guardarProveedorModal").on('click', async function (e) {
   var v_correo = $("#correoProveedorModal").val();
   var v_telefono = $("#telefonoProveedorModal").val();
   var token = $("#tokenProveedorModal").val();
-  var dominio = $('#guardarruta').val();
 
   await $.ajax({
-    url: "http://" + dominio + "/ingresoProveedor",
+    url: $('#guardarruta').val() + "/ingresoProveedor",
     headers: { 'X-CSRF-TOKEN': token },
     type: 'POST',
     data: {
@@ -672,8 +660,7 @@ $("#guardarProveedorModal").on('click', async function (e) {
 });
 function rellenarProveedor() {
   var proveedor = $("#f_proveedor");
-  var dominio = $('#guardarruta').val();
-  var ruta = 'http://' + dominio + "/llenarProveedor";
+  var ruta = $('#guardarruta').val() + "/llenarProveedor";
 
   $.get(ruta, function (res) {
     proveedor.empty();

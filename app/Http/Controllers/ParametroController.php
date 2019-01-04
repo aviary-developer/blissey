@@ -124,10 +124,10 @@ class ParametroController extends Controller
       $parametro->delete();
       Bitacora::bitacora('destroy','parametros','parametros',$id);
       DB::commit();
-      return redirect('/parametros?estado=0')->with('mensaje','¡Eliminado!');
+      return redirect('/parametros?estado=0');
     } catch (\Exception $e) {
       DB::rollback();
-      return redirect('/parametros?estado=0')->with('error','¡No se puede eliminar!');
+      return redirect('/parametros?estado=0');
     }
   }
   public function desactivate($id){

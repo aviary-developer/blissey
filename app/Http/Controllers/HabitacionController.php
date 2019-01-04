@@ -55,7 +55,7 @@ class HabitacionController extends Controller
 
       $count_ci = $count_co = $count_cm = 1;
 
-      return view('habitaciones.create',compact(
+      return view('Habitaciones.create',compact(
         'count_hi',
         'count_ho',
         'count_hm',

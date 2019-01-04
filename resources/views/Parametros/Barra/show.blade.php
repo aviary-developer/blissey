@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$parametro->estado)
     @php
@@ -9,7 +10,7 @@
     @endphp
   @endif
   <a class="navbar-brand" href={!! asset('/parametros'.$regreso) !!}>
-    Parametro
+    Parámetro
     <span class="badge border-info border text-info">
       Información
     </span>  
@@ -30,14 +31,20 @@
         <li class="nav-item">
           <a class="nav-link" href="#" onclick={!! "'alta(".$parametro->id.");'"!!}>Activar</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$parametro->id.");'" !!}>Eliminar</a>
-        </li>
+        @php
+          $cuenta=App\Parametro::foraneos($parametro->id);
+        @endphp
+        @if (!$cuenta>0)
+          <li class="nav-item">
+            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$parametro->id.");'" !!}>Eliminar</a>
+          </li>
+        @endif
       @endif
     </ul>
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -56,7 +63,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','activateParametro/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateParametro/'+id);
         $('#formulario').submit();
       }
     });
@@ -78,7 +85,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','destroyParametro/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyParametro/'+id);
         $('#formulario').submit();
       }
     });
@@ -99,7 +106,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','desactivateParametro/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateParametro/'+id);
         submit();
       }
     });

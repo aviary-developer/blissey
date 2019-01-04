@@ -168,7 +168,7 @@
 		console.log(idEstante);
 		$('#nivel'+idp).empty();
 		if(idEstante!=""){
-			var ruta = "/blissey/public/niveles/"+idEstante;
+			var ruta = $('#guardarruta').val() + "/niveles/"+idEstante;
 			$.get(ruta,function(res){
 				cantidad=parseFloat(res);
 				for(i=1;i<=cantidad;i++){
@@ -203,7 +203,7 @@
 				var estante = $(this).parent('center').parent('td').parent('tr').find('#estante_h').val();
 				var nivel = $(this).parent('center').parent('td').parent('tr').find('#nivel_h').val();
 
-				var ruta = "/blissey/public/niveles/"+estante;
+				var ruta = $('#guardarruta').val() + "/niveles/"+estante;
 				$("select[name='niveles']").empty();
 				await $.get(ruta,function(res){
 					cantidad=parseFloat(res);

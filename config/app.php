@@ -185,6 +185,8 @@ return [
         BackupManager\Laravel\Laravel5ServiceProvider::class,
         //Para generar el codigo de barras
         Milon\Barcode\BarcodeServiceProvider::class,
+        //Google Cloud Storage
+        Superbalist\LaravelGoogleCloudStorage\GoogleCloudStorageServiceProvider::class,
     ],
 
     /*

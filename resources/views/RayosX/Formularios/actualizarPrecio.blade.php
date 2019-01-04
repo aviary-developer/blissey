@@ -100,7 +100,7 @@ function comprobacion(){
 }
 }
 function guardarPrecio(idServicio,precio){
-  var ruta="/blissey/public/actualizarPrecioRayox";
+  var ruta=$('#guardarruta').val() + "/actualizarPrecioRayox";
   var token = $('#tokenExistenciaModal').val();
   $.ajax({
     url:ruta,
