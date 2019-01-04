@@ -120,7 +120,7 @@
 </div>
 
 <div class="form-group col-sm-12">
-  <label class="" for="frecuencia_cardiaca">Fecuencia Cardiaca (lpm)</label>
+  <label class="" for="frecuencia_cardiaca">Frecuencia Cardiaca (lpm)</label>
   <div class="input-group mb-2 mr-sm-2">
     <div class="input-group-prepend">
       <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
@@ -129,7 +129,7 @@
       'frecuencia_cardiaca',
       null,
       ['class'=>'form-control form-control-sm',
-      'placeholder'=>'Fecuencia Cardiaca en latidos por minuto',
+      'placeholder'=>'Frecuencia Cardiaca en latidos por minuto',
       'min'=>'0',
       'step'=>'1',
       'id'=>'frecuencia_cardiaca']
@@ -138,7 +138,7 @@
 </div>
 
 <div class="form-group col-sm-12">
-  <label class="" for="frecuencia_respiratoria">Fecuencia Respiratoria (rpm)</label>
+  <label class="" for="frecuencia_respiratoria">Frecuencia Respiratoria (rpm)</label>
   <div class="input-group mb-2 mr-sm-2">
     <div class="input-group-prepend">
       <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
@@ -147,7 +147,7 @@
       'frecuencia_respiratoria',
       null,
       ['class'=>'form-control form-control-sm',
-      'placeholder'=>'Fecuencia Respiratoria en respiración por minuto',
+      'placeholder'=>'Frecuencia Respiratoria en respiración por minuto',
       'min'=>'0',
       'step'=>'1',
       'id'=>'frecuencia_respiratoria']
