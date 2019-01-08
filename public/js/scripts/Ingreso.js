@@ -34,39 +34,44 @@ $(document).on('ready', function () {
     var v_tipo = $("#seleccion").val();
     if (valor.length > 0) {
       var tabla = $("#tablaPaciente");
-      await $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/buscarPersonas",
-        type: "GET",
-        data: {
-          nombre: valor,
-          tipo: v_tipo
-        },
-        success: function (res) {
-          tabla.empty();
-          head =
-            "<thead>" +
-            "<th>Nombre</th>" +
-            "<th style='width : 80px'>Opción</th>" +
-            "</thead>";
-          tabla.append(head);
-          $(res).each(function (key, value) {
-            html =
-              "<tr>" +
-              "<td>" +
-              value.apellido + ', ' + value.nombre +
-              "</td>" +
-              "<td><center>" +
-              "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
-              "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
-              "<button type='button' class='btn btn-sm btn-primary' id='agregar_paciente'>" +
-              "<i class='fa fa-check'></i>" +
-              "</button>" +
-              "</center></td>" +
-              "</tr>";
-            tabla.append(html);
-          });
-        }
-      });
+      try {
+        await $.ajax({
+          url: 'http://' + $('#guardarruta').val() + "/buscarPersonas",
+          type: "GET",
+          data: {
+            nombre: valor,
+            tipo: v_tipo
+          },
+          success: function (res) {
+            tabla.empty();
+            head =
+              "<thead>" +
+              "<th>Nombre</th>" +
+              "<th style='width : 80px'>Opción</th>" +
+              "</thead>";
+            tabla.append(head);
+            $(res).each(function (key, value) {
+              html =
+                "<tr>" +
+                "<td>" +
+                value.apellido + ', ' + value.nombre +
+                "</td>" +
+                "<td><center>" +
+                "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
+                "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
+                "<button type='button' class='btn btn-sm btn-primary' id='agregar_paciente'>" +
+                "<i class='fa fa-check'></i>" +
+                "</button>" +
+                "</center></td>" +
+                "</tr>";
+              tabla.append(html);
+            });
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
     }
   });
 
