@@ -15,7 +15,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: "GET",
-      url: 'http://' + $('#guardarruta').val() + "/municipios/" + v_departamento,
+      url: $('#guardarruta').val() + "/municipios/" + v_departamento,
       success: function (respuesta) {
         municipio_select.empty();
         $(respuesta).each(function (key, value) {
@@ -35,7 +35,7 @@ $(document).on('ready', function () {
     if (valor.length > 0) {
       var tabla = $("#tablaPaciente");
       await $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/buscarPersonas",
+        url: $('#guardarruta').val() + "/buscarPersonas",
         type: "GET",
         data: {
           nombre: valor,
@@ -135,7 +135,7 @@ $(document).on('ready', function () {
 
       $.ajax({
         type: "POST",
-        url: 'http://' + $('#guardarruta').val() + "/guardar_paciente",
+        url: $('#guardarruta').val() + "/guardar_paciente",
         data: {
           nombre: v_nombre,
           apellido: v_apellido,
@@ -203,7 +203,7 @@ $(document).on('ready', function () {
     });
     if (union.length > 0) {
       $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/servicio_medicos",
+        url: $('#guardarruta').val() + "/servicio_medicos",
         type: "POST",
         data: {
           f_transaccion: transaccion_id,
@@ -235,7 +235,7 @@ $(document).on('ready', function () {
     });
     if (concat.length > 0) {
       $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/solicitudex",
+        url: $('#guardarruta').val() + "/solicitudex",
         type: "POST",
         data: {
           f_paciente: paciente,
@@ -259,7 +259,7 @@ $(document).on('ready', function () {
   $("#resultadoVenta_").keyup(function () {
     var valor = $("#resultadoVenta_").val();
     if (radio == '1') {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -296,7 +296,7 @@ $(document).on('ready', function () {
       });
     }
     if (radio == '2') {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarComponenteVenta/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarComponenteVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -341,7 +341,7 @@ $(document).on('ready', function () {
   $("#resultadoVentaS_").keyup(function () {
     var valor = $("#resultadoVentaS_").val();
     if (radio == '3') {
-      var ruta = 'http://' + $('#guardarruta').val() + "/buscarServicios/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
       var tabla = $("#tablaBuscarS");
       $.get(ruta, function (res) {
         tabla.empty();
@@ -386,7 +386,7 @@ $(document).on('ready', function () {
       console.log(result);
       if (result.value) {
         $.ajax({
-          url: 'http://' + $('#guardarruta').val() + "/abonar",
+          url: $('#guardarruta').val() + "/abonar",
           type: "POST",
           data: {
             transaccion: transaccion_id,
@@ -434,7 +434,7 @@ $(document).on('ready', function () {
       console.log(result.value);
       if (result.value) {
         $.ajax({
-          url: 'http://' + $('#guardarruta').val() + "/abonar",
+          url: $('#guardarruta').val() + "/abonar",
           type: "POST",
           data: {
             transaccion: transaccion_id,
@@ -473,7 +473,7 @@ $(document).on('ready', function () {
     value = ($("#c_responsable").is(':checked') == true) ? 1 : 0;
     $.ajax({
       type: 'post',
-      url: 'http://' + $('#guardarruta').val() + '/ingresos',
+      url: $('#guardarruta').val() + '/ingresos',
       data: {
         f_paciente: $("#f_paciente").val(),
         c_responsable: value,
@@ -520,7 +520,7 @@ $("#nuevo_abono").on('click', function (e) {
       console.log($("#monto").val())
       if ($("#monto").val() <= deuda) {
         $.ajax({
-          url: 'http://' + $('#guardarruta').val() + "/abonar",
+          url: $('#guardarruta').val() + "/abonar",
           type: "POST",
           data: {
             transaccion: transaccion_id,
@@ -578,7 +578,7 @@ function registrarventa_(id) {
       c4 = parseFloat($('#cc' + id).text()).toFixed(2);
 
       $.ajax({
-        url: 'http://' + $('#guardarruta').val() + "/tratamiento",
+        url: $('#guardarruta').val() + "/tratamiento",
         type: "POST",
         data: {
           transaccion: transaccion_id,
@@ -643,7 +643,7 @@ function registrarventa_(id) {
     c2 = parseFloat(c2).toFixed(2);
 
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/tratamiento",
+      url: $('#guardarruta').val() + "/tratamiento",
       type: "POST",
       data: {
         transaccion: transaccion_id,
@@ -727,7 +727,7 @@ function accion24(tipo, id, objeto = null) {
       if (result.value) {
         var cantidad = $("#edit_cantidad").val();
         $.ajax({
-          url: 'http://' + $('#guardarruta').val() + "/editar24",
+          url: $('#guardarruta').val() + "/editar24",
           type: "post",
           data: {
             id: id,
@@ -753,7 +753,7 @@ function accion24(tipo, id, objeto = null) {
     });
   } else if (tipo == 2) {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + '/cambiar_estado',
+      url: $('#guardarruta').val() + '/cambiar_estado',
       type: 'post',
       data: {
         id: id
@@ -769,7 +769,7 @@ function accion24(tipo, id, objeto = null) {
     });
   } else if (tipo == 3) {
     $.ajax({
-      url: 'http://' + $('#guardarruta').val() + "/eliminar24",
+      url: $('#guardarruta').val() + "/eliminar24",
       type: "post",
       data: {
         id: id
@@ -810,7 +810,7 @@ function accion24(tipo, id, objeto = null) {
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url: 'http://' + $('#guardarruta').val() + "/eliminar24",
+          url: $('#guardarruta').val() + "/eliminar24",
           type: "post",
           data: {
             id: id

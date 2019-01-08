@@ -67,8 +67,10 @@
                 <div class="input-group mb-2 mr-sm-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-cubes"></i></div>
-                  </div>
-                  {!! Form::text('valor',array_values($presentaciones)[0],['id'=>'valor','class'=>'form-control form-control-sm','readonly'=>'readonly']) !!}
+									</div>
+									@if ($presentaciones != null)	
+                  	{!! Form::text('valor',array_values($presentaciones)[0],['id'=>'valor','class'=>'form-control form-control-sm','readonly'=>'readonly']) !!}
+									@endif
                 </div>
               </div>
 
