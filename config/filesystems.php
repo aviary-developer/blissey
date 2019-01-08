@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'gcs'),
+    'default' => env('FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ return [
         'gcs' => [
           'driver' => 'gcs',
           'project_id' => env('GOOGLE_CLOUD_PROJECT_ID', 'blisseypromesa'),
-          'key_file' => env('GOOGLE_CLOUD_KEY_FILE', null), // optional: /path/to/service-account.json
+          'key_file' => env('GOOGLE_CLOUD_KEY_FILE','C:\xampp\htdocs\blissey\BlisseyPromesa-3af6606eb2d2.json'), // optional: /path/to/service-account.json
           'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET', 'blisseypromesa.appspot.com'),
           'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', null), // optional: /default/path/to/apply/in/bucket
           'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null), // see: Public URLs below

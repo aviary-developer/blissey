@@ -31,7 +31,7 @@
     
         <div class="ln_solid mb-1 mt-1"></div>
         <div class="flex-row">
-                @if($transaccion->tipo)
+                @if($transaccion->tipo!=1)
                 Cliente
               @else
                 Proveedor
@@ -39,7 +39,7 @@
         </div>
         <div class="flex-row">
             <h6 class="font-weight-bold">
-                    @if($transaccion->tipo)
+                    @if($transaccion->tipo!=1)
                     @if(count($transaccion->cliente)>0)
                       {{$transaccion->cliente->nombre." ".$transaccion->cliente->apellido}}
                     @else
