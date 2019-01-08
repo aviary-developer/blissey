@@ -298,7 +298,7 @@ class TransaccionController extends Controller
       $clientes=Paciente::where('nombre','like','%'.$valor.'%')
       ->orWhere('apellido', 'like','%'.$valor.'%')
       ->orWhere('telefono', 'like','%'.$valor.'%')
-      ->orWhere('dui', 'like','%'.$valor.'%')->orderBy('nombre')->get();
+      ->orWhere('dui', 'like','%'.$valor.'%')->orderBy('nombre')->take(10)->get();
       return $clientes;
     }
     public static function buscarVenta($texto){

@@ -10,7 +10,7 @@
     <input type="hidden" value="" id="nomoculto">
     <input type="hidden" value="" id="preoculto">
     <input type="hidden" value="" id="exioculto">
-    <input type="hidden" value="" id="f_cliente">
+    <input type="hidden" value="" name="f_cliente" id="f_cliente">
 
     @if($tipo==2)
       <input type="hidden" name="fecha" value="{{$fecha}}">

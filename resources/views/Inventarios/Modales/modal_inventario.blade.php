@@ -5,7 +5,7 @@
         <div class="x_panel m_panel text-danger">
           <center>
             <h4 class="mb-1">
-              <i class="fas fa-plus"></i>
+              <i class="fas fa-th-list"></i>
               Producto
             </h4>
           </center>
