@@ -4,7 +4,7 @@ $(document).on('ready', function () {
   transaccion_count_p = 0;
   transaccion_count_s = 0;
 
-  if (ubicacion.indexOf("/blissey/public/ingresos/create") > -1) {
+  if (ubicacion.indexOf("/ingresos/create") > -1) {
     cargar_municipio();
   }
 
@@ -95,7 +95,7 @@ $(document).on('ready', function () {
       "</thead>";
     tabla.append(head);
 
-    if (ubicacion.indexOf("/blissey/public/ingresos") > -1) {
+    if (ubicacion.indexOf("/ingresos") > -1) {
       $("#centro").removeClass('modal-lg');
       $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
       $("#derecha").hide();

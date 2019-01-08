@@ -58,7 +58,7 @@
                           @endphp
                           <td>$ {{number_format($detalle->precio,2,'.','.')}}</td>
                           <td>{{$detalle->descuento}}%</td>
-                          <td>{{number_format($detalle->cantidad*$descontado,2,'.','.')}}</td>
+                          <td>$ {{number_format($detalle->cantidad*$descontado,2,'.','.')}}</td>
                           @php
                           $total=$total+($detalle->cantidad*$descontado);
                           @endphp
