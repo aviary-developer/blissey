@@ -3,6 +3,7 @@ env: flex
 
 runtime_config:
   document_root: public
+  whitelist_functions: phpversion,proc_open,proc_close,shell_exec
 
 # Ensure we skip ".env", which is only for local development
 skip_files:
@@ -10,7 +11,6 @@ skip_files:
 
 env_variables:
   # Put production environment variables here.
-  whitelist_functions: phpversion,proc_open,proc_close,shell_exec
   APP_LOG: errorlog
   APP_KEY: base64:7jfZ0v47KbUkqWqSJcjZa5vI9AUQlHWwGw8Xoj+ZYrQ=
   STORAGE_DIR: /tmp
