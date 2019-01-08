@@ -5,7 +5,7 @@ $(document).on('ready', function () {
   var hasta = $("#to").val();
   var ubicacion = window.location.pathname;
 
-  if (ubicacion.indexOf("/blissey/public/pacientes/") > -1) {
+  if (ubicacion.indexOf("pacientes/") > -1) {
     if ($("#ubi").val() != "show") {
       cargar_municipio();
       cambio_residencia();

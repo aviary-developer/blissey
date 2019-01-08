@@ -16,7 +16,7 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      location.href =$("#guardarruta").val()+'/blissey/public/eliminarPedido/'+id+"/0";
+      location.href =$("#guardarruta").val()+'/eliminarPedido/'+id+"/0";
     }
   });
 }

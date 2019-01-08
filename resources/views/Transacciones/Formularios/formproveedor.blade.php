@@ -88,7 +88,7 @@
       <center>
         <div class="btn-group">
           {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
-          <a href="/blissey/public/transacciones?tipo={{$tipo}}" class="btn btn-light btn-sm">Cancelar</a>
+          <a href="../transacciones?tipo={{$tipo}}" class="btn btn-light btn-sm">Cancelar</a>
         </div>
       </center>
     </div>

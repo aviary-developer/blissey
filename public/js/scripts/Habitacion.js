@@ -11,7 +11,7 @@ $(document).on('ready', function () {
   var anterior = 1;
 
   var ubicacion = window.location.pathname;
-  if (ubicacion.indexOf("/blissey/public/habitaciones/create") > -1) {
+  if (ubicacion.indexOf("habitaciones/create") > -1) {
     $("#radioBtn a").on("click", function (e) {
       e.preventDefault();
       var tipo = $("#tipo").val();
