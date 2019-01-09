@@ -171,9 +171,6 @@
         <th style="width : 80px">Acción</th>
       </thead>
       @if(isset($f_producto))
-        @php
-          $conteo;
-        @endphp
         @for ($i=0; $i < count($f_producto); $i++)
           <tr>
             <td>{{$cantidad[$i]}}</td>
