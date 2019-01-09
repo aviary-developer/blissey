@@ -13,7 +13,7 @@
 <div class="flex-row">
   <table class="table table-striped table-sm">
     <tbody>
-      @if (count($primero)>0)
+      @if ($primero!=null)
         @foreach ($primero as $ingreso)
           <tr>
             <td class="w-50">{{
