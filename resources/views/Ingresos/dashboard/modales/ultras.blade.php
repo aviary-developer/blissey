@@ -24,7 +24,7 @@
                   <div class="input-group-text"><i class="fas fa-file-medical-alt"></i></div>
                 </div>
                 <select class="form-control form-control-sm" id="f_ultra">
-                  @if (count($ultras)==0)
+                  @if ($ultras==null)
                       <option value="0" disabled>No hay examenes de Ultrasonografía registrados</option>
                   @else
                     @foreach ($ultras as $rayox)

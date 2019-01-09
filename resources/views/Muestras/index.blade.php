@@ -24,7 +24,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($muestras)>0)
+					@if ($muestras!=null)
 						@php
 						$correlativo = 1;
 						@endphp

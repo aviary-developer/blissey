@@ -78,7 +78,7 @@
             <th style="width: 10%">DC</th>
           </thead>
           <tbody>
-            @if (count($espr)>0)
+            @if ($espr!=null)
               @foreach ($espr as $esp)
                 @if ($esp->f_seccion==$variable)
                   <tr>

@@ -21,7 +21,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($transacciones)>0)
+					@if ($transacciones!=null)
 						@php
 						$correlativo = 1;
 						@endphp

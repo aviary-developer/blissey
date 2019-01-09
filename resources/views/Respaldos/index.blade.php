@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        @if (count($respaldos)>0)
+        @if ($respaldos!=null)
           @php
           $correlativo = 1;
           @endphp

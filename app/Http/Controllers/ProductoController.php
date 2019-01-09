@@ -261,7 +261,7 @@ class ProductoController extends Controller
 
     public function buscarComponentes($texto){
       $componentes = Componente::where('nombre','like','%'.$texto.'%')->where('estado',true)->orderBy('nombre','asc')->take(3)->get();
-      if(count($componentes)>0){
+      if($componentes!=null){
         return Response::json($componentes);
       }else{
         return null;

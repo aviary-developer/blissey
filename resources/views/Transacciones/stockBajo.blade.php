@@ -33,7 +33,7 @@
                 </tr>
               </thead>
               <tbody>
-                @if (count($divisiones)>0)
+                @if ($divisiones!=null)
                 @php
                   $correlativo=1;
                 @endphp

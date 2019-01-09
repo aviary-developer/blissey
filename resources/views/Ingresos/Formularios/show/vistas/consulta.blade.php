@@ -11,7 +11,7 @@
   </div>
 </div>
 <br>
-@if (count($ingreso->consulta) > 0)
+@if ($ingreso->consulta!=null)
   <div class="row">
     @foreach ($ingreso->consulta as $consulta)
       <div class="row borde" style="border-radius: 3px; margin: 5px; padding: 5px;">

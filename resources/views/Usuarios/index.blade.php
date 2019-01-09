@@ -56,7 +56,7 @@
                 </td>
                 <td>
 
-                  @if (count($usuario->telephone)>0)
+                  @if ($usuario->telephone!=null)
                   <center>
                     {{$usuario->telephone->first()->telefono}}
                   </center>

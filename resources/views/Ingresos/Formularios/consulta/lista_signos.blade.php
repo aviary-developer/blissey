@@ -4,7 +4,7 @@
       <h4>Signos vitales del paciente</h4>
     </center>
   </div>
-  @if (count($signos_vital) > 0)
+  @if ($signos_vital!=null)
     <div style="overflow-y: scroll; height: 297px; width:97%">
     @foreach ($signos_vital as $sgn)
         <div class="row borde" style="border-radius: 3px; margin: 10px; padding: 5px;">

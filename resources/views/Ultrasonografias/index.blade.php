@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-          @if (count($ultrasonografias)>0)
+          @if ($ultrasonografias!=null)
             @php
             $correlativo = 1;
             @endphp

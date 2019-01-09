@@ -4,7 +4,7 @@
       <h4>Consultas del paciente</h4>
     </center>
   </div>
-  @if (count($consultas) > 0)
+  @if ($consultas!=null)
     <div style="overflow-y: scroll; height: 297px; width:97%">
     @foreach ($consultas as $cst)
         <div class="row borde" style="border-radius: 3px; margin: 10px; padding: 5px;">

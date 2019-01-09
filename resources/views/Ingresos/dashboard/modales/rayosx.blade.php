@@ -24,7 +24,7 @@
                   <div class="input-group-text"><i class="fas fa-x-ray"></i></div>
                 </div>
                 <select class="form-control form-control-sm" id="f_rayo">
-                  @if (count($rayosx)==0)
+                  @if ($rayosx==null)
                       <option value="0" disabled>No hay examenes de rayos X registrados</option>
                   @else
                     @foreach ($rayosx as $rayox)

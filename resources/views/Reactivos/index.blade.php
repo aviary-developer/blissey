@@ -27,7 +27,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($reactivos)>0)
+					@if ($reactivos!=null)
 						@php
 						$correlativo = 1;
 						@endphp

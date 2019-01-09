@@ -11,7 +11,7 @@
         <div class="input-group-text"><i class="fas fa-desktop"></i></div>
       </div>
       <select class="form-control form-control-sm" id="f_tac_receta">
-        @if (count($rayosx)==0)
+        @if ($rayosx==null)
             <option value="0" disabled>No hay examenes de tac registrados</option>
         @else
           @foreach ($tacs as $tac)

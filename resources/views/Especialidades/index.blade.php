@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          @if (count($especialidades)>0)
+          @if ($especialidades!=null)
             @php
             $correlativo = 1;
             @endphp

@@ -5,7 +5,7 @@
   @php
     $fecha = Carbon\Carbon::now();
     $ultimo=App\DetalleCaja::where('f_caja',$caja->id)->get()->last();
-    if(count($ultimo)==1){
+    if($ultimo!=null){
       if($ultimo->tipo==2){
       $valor=number_format($ultimo->total-$ultimo->importe,2,'.',',');
       }elseif($ultimo->tipo==1){

@@ -127,7 +127,7 @@ class Ingreso extends Model
           $total = 0;
         }
         //Gastos por examenes de laboratorio
-        if(count($ingreso->transaccion->solicitud)>0){
+        if($ingreso->transaccion->solicitud!=null){
           foreach($ingreso->transaccion->solicitud as $solicitud){
             if($solicitud->estado != 0 && ($solicitud->created_at->between($fecha, $fecha_mayor))){
               if($solicitud->examen != null){
@@ -166,7 +166,7 @@ class Ingreso extends Model
       $total = 0;
       if($dia == -1){
         if($ingreso->transaccion != null){
-          if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
+          if($ingreso->transaccion->detalleTransaccion->where('estado',true)!=null){
             foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
               if($detalle->f_servicio == null){
                 $total += $detalle->precio * $detalle->cantidad;
@@ -183,7 +183,7 @@ class Ingreso extends Model
           $fecha_mayor->subDay();
         }
         $fecha_mayor->addDay();
-        if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
+        if($ingreso->transaccion->detalleTransaccion->where('estado',true)!=null){
           foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
             if($detalle->f_servicio == null && ($detalle->created_at->between($fecha, $fecha_mayor))){
               $total += $detalle->precio * $detalle->cantidad;
@@ -209,7 +209,7 @@ class Ingreso extends Model
 
       if($dia == -1){
         if($ingreso->transaccion != null){
-          if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)) > 0){
+          if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)!=null){
             foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
               if($detalle->servicio->categoria->nombre == 'Honorarios'){
                 $total += $detalle->precio;
@@ -218,7 +218,7 @@ class Ingreso extends Model
           }
         }
       }else{
-        if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)) > 0){
+        if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)!=null){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
             if($detalle->servicio->categoria->nombre == 'Honorarios' && ($detalle->created_at->between($fecha, $fecha_mayor))){
               $total += $detalle->precio;
@@ -235,7 +235,7 @@ class Ingreso extends Model
       $total = 0;
       
       if($ingreso->transaccion != null){
-        if(count($ingreso->transaccion->abono)>0){
+        if($ingreso->transaccion->abono!=null){
           if($dia == -1){
             foreach($ingreso->transaccion->abono as $abono){
               $total += $abono->monto;

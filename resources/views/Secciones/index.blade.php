@@ -25,7 +25,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($secciones)>0)
+					@if ($secciones!=null)
 						@php
 						$correlativo = 1;
 						@endphp

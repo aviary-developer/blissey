@@ -11,7 +11,7 @@
   </div>
 </div>
 <br>
-@if (count($ingreso->transaccion->solicitud)>0)
+@if ($ingreso->transaccion->solicitud!=null)
   <div class="row">
     
     <div class="col-xs-12">

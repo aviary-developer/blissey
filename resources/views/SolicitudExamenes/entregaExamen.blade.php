@@ -37,7 +37,7 @@
 											<th>Unidades</th>
 										</thead>
 										<tbody>
-											@if (count($espr)>0)
+											@if ($espr!=null)
 												@foreach ($espr as $esp =>$valor)
 													@if ($valor->f_seccion==$variable)
 														<tr>

@@ -25,7 +25,7 @@
           <th>Tipo</th>
         </thead>
         <tbody>
-          @if (count($especialidad->usuario_especialidad)>0)
+          @if ($especialidad->usuario_especialidad!=null)
             @php
               $correlativo = 1;
             @endphp

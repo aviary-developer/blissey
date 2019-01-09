@@ -26,7 +26,7 @@
           <th>Opciones</th>
         </thead>
         <tbody>
-          @if (count($pacientes)>0)
+          @if ($pacientes!=null)
             @php
             $correlativo = 1;
             @endphp

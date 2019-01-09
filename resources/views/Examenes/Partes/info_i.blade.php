@@ -21,7 +21,7 @@
           <th>Reactivo</th>
         </thead>
         <tbody>
-          @if (count($e_s_p)>0)
+          @if ($e_s_p!=null)
             @foreach ($e_s_p as $esp)
               @if ($esp->f_seccion==$secciones[$i])
                 <tr>

@@ -132,7 +132,7 @@
             }
             $ultima_24->addDay();
           @endphp
-          @if (count($ingreso->transaccion->solicitud) > 0)
+          @if ($ingreso->transaccion->solicitud!=null)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_examen != null))
                 <tr>
@@ -174,7 +174,7 @@
             }
             $ultima_24->addDay();
           @endphp
-          @if (count($ingreso->transaccion->solicitud) > 0)
+          @if ($ingreso->transaccion->solicitud!=null)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_rayox != null))
                 <tr>
@@ -216,7 +216,7 @@
             }
             $ultima_24->addDay();
           @endphp
-          @if (count($ingreso->transaccion->solicitud) > 0)
+          @if ($ingreso->transaccion->solicitud!=null)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_ultrasonografia != null))
                 <tr>
@@ -258,7 +258,7 @@
             }
             $ultima_24->addDay();
           @endphp
-          @if (count($ingreso->transaccion->solicitud) > 0)
+          @if ($ingreso->transaccion->solicitud!=null)
             @foreach ($ingreso->transaccion->solicitud as $solicitud)
               @if ($solicitud->estado != 0 && ($solicitud->created_at->between($fecha_origen,$ultima_24) && $solicitud->f_tac != null))
                 <tr>

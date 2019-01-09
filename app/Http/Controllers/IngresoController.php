@@ -614,7 +614,7 @@ class IngresoController extends Controller
     public function buscarPaciente($nombre)
     {
       $pacientes = Paciente::where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
-      if(count($pacientes)>0){
+      if($pacientes!=null){
         return Response::json($pacientes);
       }else{
         return null;
@@ -683,7 +683,7 @@ class IngresoController extends Controller
       }else{
         $pacientes = Paciente::where('fechaNacimiento','<=',$fecha->format('Y-m-d'))->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }
-      if(count($pacientes)>0){
+      if($pacientes!=null){
         return Response::json($pacientes);
         
       }else{
@@ -784,7 +784,7 @@ class IngresoController extends Controller
       //Honorarios
       $total+= $honorarios = Ingreso::honorario_gastos($id, $dia);
       $medicos = [];
-      if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null))>0){
+      if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)!=null){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
           if($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($ultima24, $ultima48))){
@@ -811,7 +811,7 @@ class IngresoController extends Controller
       //Servicios
       $servicios = [];
       $total_servicios = 0;
-      if(count($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true))>0){
+      if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)!=null){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
           if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Ultrasonografía" &&$detalle->servicio->categoria->nombre != "TAC" &&($detalle->created_at->between($ultima24, $ultima48))){
@@ -836,7 +836,7 @@ class IngresoController extends Controller
       $rayos = [];
       $tacs = 0;
       $tac = [];
-      if(count($ingreso->transaccion->solicitud)>0){
+      if($ingreso->transaccion->solicitud!=null){
         $k = 0;
         $ku = 0;
         $kr = 0;
@@ -867,7 +867,7 @@ class IngresoController extends Controller
       //Valor de tratamiento
       $tratamiento = 0;
       $medicina = [];
-      if(count($ingreso->transaccion->detalleTransaccion->where('estado',true))>0){
+      if($ingreso->transaccion->detalleTransaccion->where('estado',true)!=null){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('estado',true) as $detalle){
           if($detalle->f_servicio == null && ($detalle->created_at->between($ultima24, $ultima48))){

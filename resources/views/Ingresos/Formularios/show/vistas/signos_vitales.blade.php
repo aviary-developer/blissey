@@ -12,7 +12,7 @@
 </div>
 <br>
 <input type="hidden" id="signos_count" value={{count($ingreso->signos)}}>
-@if (count($ingreso->signos) > 0)
+@if ($ingreso->signos!=null)
   @foreach ($ingreso->signos as $k => $signo)
     <div class="row borde" style="border-radius: 3px; margin: 5px; paddign: 5px;">
       <div class="row bg-blue" style="margin: 5px;">
@@ -229,14 +229,16 @@
           @endif
         </div>
       </div>
-      @if (count($ingreso->signos) > 1 && $k == 0)
-        <div class="row" style="margin: 10px;">
-          <center>
-            <button type="button" id="evaluar_signo" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal_signos_graficos">
-              <i class="fa-bar-chart fa"></i> Evolución
-            </button>
-          </center>
-        </div>
+      @if($ingreso->signos!=null)
+        @if (count($ingreso->signos) > 1 && $k == 0)
+          <div class="row" style="margin: 10px;">
+            <center>
+              <button type="button" id="evaluar_signo" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal_signos_graficos">
+                <i class="fa-bar-chart fa"></i> Evolución
+              </button>
+            </center>
+          </div>
+        @endif
       @endif
     </div>
   @endforeach
