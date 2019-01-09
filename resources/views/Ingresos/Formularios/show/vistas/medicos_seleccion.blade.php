@@ -1,5 +1,10 @@
 @php
+if($especialidades!=null){
   $total_especialidad = count($especialidades);
+
+}else{
+  $total_especialidad =0;
+}
 @endphp
 <div role="tabpanel">
   <div class="col-xs-2">

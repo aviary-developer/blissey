@@ -97,6 +97,7 @@ class TransaccionController extends Controller
           'localizacion'=>Transacion::tipoUsuario(),
         ]);
 
+        if($f_producto!=null){
         for ($i=0; $i < count($f_producto); $i++) {
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -104,6 +105,7 @@ class TransaccionController extends Controller
             'cantidad'=>$cantidad[$i],
           ]);
         }
+      }
       }else{
         $transaccion= new Transacion;
         $transaccion->fecha=$request->fecha;
@@ -116,14 +118,15 @@ class TransaccionController extends Controller
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
 
-        for ($i=0; $i < count($f_producto); $i++) {
-          if($tipo_detalle[$i]==1){
-          DetalleTransacion::create([
-            'f_transaccion'=>$transaccion->id,
-            'f_producto'=>$f_producto[$i],
-            'cantidad'=>$cantidad[$i],
-            'precio'=>$precio[$i],
-          ]);
+        if($_producto!=null){
+          for ($i=0; $i < count($f_producto); $i++) {
+            if($tipo_detalle[$i]==1){
+            DetalleTransacion::create([
+              'f_transaccion'=>$transaccion->id,
+              'f_producto'=>$f_producto[$i],
+              'cantidad'=>$cantidad[$i],
+              'precio'=>$precio[$i],
+            ]);
         }else{
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -133,6 +136,7 @@ class TransaccionController extends Controller
           ]);
         }
         }
+      }
       }
       }catch(\Exception $e){
         DB::rollback();
@@ -193,8 +197,16 @@ class TransaccionController extends Controller
         $transaccion->iva=$request->ivaincluido;
         $transaccion->save();
 
-        $contador = count($request->estado);
-        $cont_eliminados=count($request->eliminado);
+        if($request->estado==null){
+          $contador=0;
+        }else{
+          $contador = count($request->estado);
+        }
+        if($request->eliminado==null){
+          $cont_eliminados=0;
+        }else{
+          $cont_eliminados=count($request->eliminado);
+        }
         DB::beginTransaction();
         for($i=0;$i<$cont_eliminados;$i++){
           $bor=DetalleTransacion::findOrFail($request->eliminado[$i]);
