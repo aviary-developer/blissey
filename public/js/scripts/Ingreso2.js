@@ -3,7 +3,6 @@ $(document).on('ready', function () {
     $.ajax({
       type: 'post',
       url: $('#guardarruta').val() + '/signos',
-      headers: { 'X-CSRF-TOKEN': $("#token").val() },
       data: {
         temperatura: $("#temperatura").val(),
         pulso: $("#pulso").val(),

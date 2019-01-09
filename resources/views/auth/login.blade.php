@@ -9,16 +9,15 @@
 
     <title>Blissey</title>
 
-    <!-- Bootstrap -->
-    {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
-    <!-- Font Awesome -->
-    {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
-    <!-- NProgress -->
-    {!!Html::style('assets/nprogress/nprogress.css')!!}
-    <!-- Animate.css -->
-    {!!Html::style('assets/build/css/custom.min.css')!!}
-    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
-    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
+    <!-- Bootstrap 4 -->
+		{!! Html::style('library/Bootstrap4/css/bootstrap.css') !!}
+
+		<!-- FontAwesome -->
+		{!! Html::style('library/FontAwesome/css/all.css') !!}
+    <!-- Custom -->
+  	{!!Html::style('library/Gentelella/custom.css')!!}
+    {!!Html::style('library/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('library/pnotify/dist/pnotify.buttons.css')!!}
 
   </head>
 
@@ -61,9 +60,10 @@
         </div>
       </div>
     </div>
-    {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
-    {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
-    {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
+    <!-- jQuery -->
+  	{!!Html::script('library/Gentelella/app.js')!!}
+    {!!Html::script('library/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('library/pnotify/dist/pnotify.buttons.js')!!}
   </body>
 </html>
 @if(Session::has('error'))
