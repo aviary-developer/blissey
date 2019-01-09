@@ -71,7 +71,7 @@
 </div>
 <div class="flex-row">
   <h6 class="font-weight-bold">
-    @if (count($telefonos)>0)
+    @if ($telefonos!=null)
       @foreach ($telefonos as $telefono)
         <i class="fas fa-phone"></i>
         {{$telefono->telefono}}

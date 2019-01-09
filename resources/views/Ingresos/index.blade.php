@@ -34,7 +34,7 @@
               <th>Opciones</th>
             </thead>
             <tbody>
-              @if (count($ingresos)>0)
+              @if ($ingresos!=null)
                 @php
                   $correlativo = 1;
                 @endphp

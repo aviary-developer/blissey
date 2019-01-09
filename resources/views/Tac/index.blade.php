@@ -25,7 +25,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($tacs)>0)
+					@if ($tacs!=null)
 						@php
 						$correlativo = 1;
 						@endphp

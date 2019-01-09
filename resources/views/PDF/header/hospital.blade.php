@@ -49,20 +49,24 @@
           <span><i>{{"C.S.S.P. ".$empresa->codigo_hospital}}</i></span>
           <h4 class="vivaldi">{{"Dirección: ".$empresa->direccion_hospital}}</h4>
           <h4 class="vivaldi">
-            @if (count($telefonos)>1)
-              {{"Telefonos: "}}
-            @elseif (count($telefonos) == 1)
-              {{"Telefono: "}}
+            @if($telefonos!=null)
+              @if (count($telefonos)>1)
+                {{"Teléfonos: "}}
+              @elseif (count($telefonos) == 1)
+                {{"Teléfono: "}}
+              @endif
+              @if (count($telefonos)>0)
+                @foreach ($telefonos as $k => $telefono)
+                  {{$telefono->telefono}}
+                  @if ($k > 0)
+                    {{', '}}
+                  @endif
+                @endforeach
+              @endif
+            @else
+            {{"Teléfono: "}}
             @endif
-            @if (count($telefonos)>0)
-              @foreach ($telefonos as $k => $telefono)
-                {{$telefono->telefono}}
-                @if ($k > 0)
-                  {{', '}}
-                @endif
-              @endforeach
-            @endif
-          </h4>
+            </h4>
         </center>
       </div>
     </div>

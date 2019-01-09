@@ -233,7 +233,7 @@ class DivisionProducto extends Model
         $fecha_v=$ultimo->fecha_vencimiento;
         if(!($fecha_v>$fecha_a)){
           $cambio=CambioProducto::where('f_detalle_transaccion',$ultimo->id)->get()->last();
-          if(count($cambio)==0){
+          if($cambio==null){
             $cambio=new CambioProducto();
           }
           $cambio->fecha=$date;

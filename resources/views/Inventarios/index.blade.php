@@ -30,7 +30,7 @@
                 $presentacion=App\Presentacion::find($div->f_presentacion);
                 $invetario=App\DivisionProducto::inventario($div->id,1);
                 @endphp
-                @if (count($unidad)==0)
+                @if ($unidad==null)
                   {{$invetario."--".$division->nombre." ".$div->cantidad." ".$presentacion->nombre}}
                 @else
                   {{$invetario."--".$division->nombre." ".$div->cantidad." ".$unidad->nombre}}

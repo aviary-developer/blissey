@@ -40,7 +40,7 @@
         <div class="flex-row">
             <h6 class="font-weight-bold">
                     @if($transaccion->tipo!=1)
-                    @if(count($transaccion->cliente)>0)
+                    @if($transaccion->cliente!=null)
                       {{$transaccion->cliente->nombre." ".$transaccion->cliente->apellido}}
                     @else
                       Clientes varios

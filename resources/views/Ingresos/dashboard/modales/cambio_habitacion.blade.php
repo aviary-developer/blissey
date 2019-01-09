@@ -25,7 +25,7 @@
                     <div class="input-group-text"><i class="fas fa-bed"></i></div>
                   </div>
                   <select class="form-control form-control-sm" id="f_habitacion">
-                    @if (count($observaciones)==0)
+                    @if ($observaciones==null)
                         <option value="0" disabled>No hay habitaciones disponibles</option>
                     @else
                       @foreach ($observaciones as $habitacion)
@@ -55,7 +55,7 @@
                     <div class="input-group-text"><i class="fas fa-bed"></i></div>
                   </div>
                   <select class="form-control form-control-sm" id="f_habitacion">
-                    @if (count($mediingresos)==0)
+                    @if ($mediingresos==null)
                         <option value="0" disabled>No hay habitaciones disponibles</option>
                     @else
                       @foreach ($mediingresos as $habitacion)
@@ -85,7 +85,7 @@
                     <div class="input-group-text"><i class="fas fa-bed"></i></div>
                   </div>
                   <select class="form-control form-control-sm" id="f_habitacion">
-                    @if (count($habitaciones)==0)
+                    @if ($habitaciones==null)
                         <option value="0" disabled>No hay habitaciones disponibles</option>
                     @else
                       @foreach ($habitaciones as $habitacion)

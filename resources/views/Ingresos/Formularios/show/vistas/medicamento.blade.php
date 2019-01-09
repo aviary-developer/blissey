@@ -12,7 +12,7 @@
 </div>
 <br>
 <input type="hidden" id="transaccion_count_p" value={{count($ingreso->transaccion->detalleTransaccion->where('f_servicio','=',null))}}>
-@if (count($ingreso->transaccion->detalleTransaccion->where('f_servicio','=',null))>0)
+@if ($ingreso->transaccion->detalleTransaccion->where('f_servicio','=',null)!=null)
   <div class="row">
     <div class="col-xs-12">
       <table class="table" id="tablaDetalle">

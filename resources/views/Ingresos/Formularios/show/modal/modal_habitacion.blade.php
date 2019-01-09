@@ -105,7 +105,7 @@
               <label class="control-label col-md-3 col-xs-12">Habitación *</label>
               <div class="col-md-9 col-xs-12">
                 <select class="form-control" name="f_habitacion" id="h_hab">
-                  @if (count($habitaciones_o)==0)
+                  @if ($habitaciones_o==null)
                       <option value="0" disabled>No ha habitaciones disponibles</option>
                   @else
                     @foreach ($habitaciones_o as $habitacion)
@@ -140,7 +140,7 @@
               <label class="control-label col-md-3 col-xs-12">Habitación *</label>
               <div class="col-md-9 col-xs-12">
                 <select class="form-control" name="f_habitacion" id="h_hab_">
-                  @if (count($habitaciones_h)==0)
+                  @if ($habitaciones_h==null)
                       <option value="0" disabled>No ha habitaciones disponibles</option>
                   @else
                     @foreach ($habitaciones_h as $habitacion)

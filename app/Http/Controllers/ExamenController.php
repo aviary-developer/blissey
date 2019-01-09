@@ -138,7 +138,7 @@ class ExamenController extends Controller
     //echo $e_s_p;
     $contador=0;
     $contadorSecciones=0;
-    if(count($e_s_p)>0){
+    if($e_s_p!=null){
       foreach ($e_s_p as $esp) {
         if($contador==0){
           $secciones[$contadorSecciones]=$esp->f_seccion;

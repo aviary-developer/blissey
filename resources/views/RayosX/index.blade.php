@@ -25,7 +25,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($rayosx)>0)
+					@if ($rayosx!=null)
 						@php
 						$correlativo = 1;
 						@endphp

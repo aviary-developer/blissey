@@ -61,7 +61,7 @@
   <div class="ln_solid"></div>
   <div class="clearfix"></div>
   <div class="seccionesExamenes x_panel" id="seccionesExamenes">
-  @if(count($e_s_p)>0)
+  @if($e_s_p!=null)
     <input id="contadorEnEdit" name="contadorEnEdit" type="hidden" value={{count($secciones)}}>
     <input id="contadorTotal" name="contadorTotal" type="hidden" value={{count($secciones)}}>
     @for ($i=0; $i < count($secciones); $i++)

@@ -68,8 +68,10 @@
 						@if ($telefono->tipo == 'clinica')
 							<i class="fas fa-phone"></i>
 							{{$telefono->telefono}}
-							@if (count($telefonos)>1)
-								<br>
+							@if($telefono!=null)
+								@if (count($telefonos)>1)
+									<br>
+								@endif
 							@endif
 						@endif
 					@endforeach

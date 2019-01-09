@@ -17,7 +17,7 @@
 <div class="flex-row">
   <table class="table table-striped table-sm">
     <tbody>
-      @if (count($segundo)>0)
+      @if ($segundo!=null)
         @foreach ($segundo as $solicitud)
           <tr>
             <td class="w-50">{{$solicitud->nombrePaciente($solicitud->f_paciente)}}</td>

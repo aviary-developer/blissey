@@ -26,7 +26,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($parametros)>0)
+					@if ($parametros!=null)
 						@php
 						$correlativo = 1;
 						@endphp

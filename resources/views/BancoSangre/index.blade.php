@@ -26,7 +26,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($donaciones)>0)
+					@if ($donaciones!=null)
 						@php
 						$correlativo = 1;
 						@endphp

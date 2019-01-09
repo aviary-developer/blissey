@@ -44,9 +44,9 @@
               <td>
                 <center>
                   @if ($estadoOpuesto)
-                    @include('cajas.Formularios.activate')
+                    @include('Cajas.Formularios.activate')
                   @else
-                    @include('cajas.Formularios.desactivate')
+                    @include('Cajas.Formularios.desactivate')
                   @endif
                 </center>
               </td>

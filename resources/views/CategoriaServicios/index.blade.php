@@ -24,7 +24,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($categoria_servicios)>0)
+					@if ($categoria_servicios!=null)
 						@php
 						$correlativo = 1;
 						@endphp

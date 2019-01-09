@@ -234,7 +234,7 @@ class TransaccionController extends Controller
     }
     public function buscarProductos($id,$texto){
       $productos=Producto::where('nombre','like','%'.$texto.'%')->take(3)->get();
-      if(count($productos)>0){
+      if($productos!=null){
         foreach($productos as $producto){
           $producto->presentacion;
           $divisiones=$producto->divisionProducto;
@@ -250,7 +250,7 @@ class TransaccionController extends Controller
     }
     public function buscarDivisiones($id){
       $divisiones=DivisionProducto::where('f_producto','=',$id)->get();
-      if(count($divisiones)>0){
+      if($divisiones!=null){
         foreach($divisiones as $division){
             $division->division;
             $division->unidad;
@@ -283,7 +283,7 @@ class TransaccionController extends Controller
     }
     public function buscarDivision($codigo,$tipo){
       $division=DivisionProducto::where('codigo','=',$codigo)->first();
-      if(count($division)==1){
+      if($division!=null){
         $division->inventario=DivisionProducto::inventario($division->id,1);
         if($division->inventario<1 && $tipo=='2'){
           return 1;
@@ -298,7 +298,7 @@ class TransaccionController extends Controller
       $clientes=Paciente::where('nombre','like','%'.$valor.'%')
       ->orWhere('apellido', 'like','%'.$valor.'%')
       ->orWhere('telefono', 'like','%'.$valor.'%')
-      ->orWhere('dui', 'like','%'.$valor.'%')->orderBy('nombre')->get();
+      ->orWhere('dui', 'like','%'.$valor.'%')->orderBy('nombre')->take(10)->get();
       return $clientes;
     }
     public static function buscarVenta($texto){

@@ -36,7 +36,7 @@
                     <th>Unidades</th>
                   </thead>
                   <tbody>
-                    @if (count($espr[$key])>0)
+                    @if ($espr[$key]!=null)
                       @foreach ($espr[$key] as $esp =>$valor)
                         @if ($valor->f_seccion==$seccion)
                           <tr>

@@ -41,7 +41,7 @@ class SignoVitalController extends Controller
         try{
             $ultimo = SignoVital::where('f_ingreso',$request->f_ingreso)->first();
             $signos = SignoVital::create($request->All());
-            if(count($ultimo) > 0 && $signos->altura == null){
+            if($ultimo !=null && $signos->altura == null){
                 $signos->altura = $ultimo->altura;
                 $signos->save();
             }
