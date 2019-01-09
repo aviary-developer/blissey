@@ -54,13 +54,15 @@ class RequisicionController extends Controller
         'localizacion'=>Transacion::tipoUsuario(),
         'tipo'=>4,
       ]);
-      for ($i=0; $i <count($f_producto) ; $i++) {
-        DetalleTransacion::create([
-          'f_transaccion'=>$transaccion->id,
-          'cantidad'=>$cantidad[$i],
-          'f_producto'=>$f_producto[$i],
-        ]);
-        }
+      if($f_producto!=null){
+        for ($i=0; $i <count($f_producto) ; $i++) {
+          DetalleTransacion::create([
+            'f_transaccion'=>$transaccion->id,
+            'cantidad'=>$cantidad[$i],
+            'f_producto'=>$f_producto[$i],
+          ]);
+          }
+      }
        return redirect('requisiciones?tipo=4')->with('mensaje', '¡Requisición Enviada!');
     }
 
@@ -102,11 +104,13 @@ class RequisicionController extends Controller
         $transaccion->tipo=6;
         $transaccion->save();
 
-        for ($i=0; $i <count($request->detalle_id) ; $i++) {
-          $detalle=DetalleTransacion::find($request->detalle_id[$i]);
-          $detalle->f_estante=$request->f_estante[$i];
-          $detalle->nivel=$request->nivel[$i];
-          $detalle->save();
+        if($request->detalle_id!=null){
+          for ($i=0; $i <count($request->detalle_id) ; $i++) {
+            $detalle=DetalleTransacion::find($request->detalle_id[$i]);
+            $detalle->f_estante=$request->f_estante[$i];
+            $detalle->nivel=$request->nivel[$i];
+            $detalle->save();
+          }
         }
         DB::commit();
         return redirect('requisiciones?tipo=5')->with('mensaje', '¡Ubicaciones asignadas correctamente!');
