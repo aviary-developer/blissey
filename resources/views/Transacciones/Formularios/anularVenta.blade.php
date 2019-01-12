@@ -7,7 +7,7 @@ function anular(id){
   '<label style="color: red;">Debe comentar la razón para anular la factura</label>'+
   '<input class="swal2-input" id="comentario" placeholder="Razón">';
   return swal({
-    title: 'Eliminar Venta',
+    title: 'Anular Venta',
     html:aux,
     type: 'warning',
     showCancelButton: true,
@@ -20,7 +20,7 @@ function anular(id){
   }).then((result) => {
     if (result.value) {
       if($('#comentario').val().trim()==""){
-        anularVenta(id);
+        anular(id);
       }else{
         var dominio = window.location.host;
         location.href =$('#guardarruta').val() + '/anularVenta/'+id+'/'+$('#comentario').val();

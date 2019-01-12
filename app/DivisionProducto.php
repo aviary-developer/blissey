@@ -28,70 +28,52 @@ class DivisionProducto extends Model
   public static function inventario($id,$nor){//$nor se refiere a consulta 1 es normal dependiendo del ususario y 2 dos es consultar solo por farmacia
     $cc=0;
     $ts=DivisionProducto::busquedaTipo($nor);
-    $compras=Transacion::where('tipo',1)->where('localizacion',$ts)->get(); //compras
-    foreach ($compras as $compra) {
-      $dec=$compra->detalleTransaccion;
-      foreach($dec as $dc){
-        if($dc->f_producto==$id){
-          $restar=DetalleDevolucion::total($dc->id);
-          $aux=$dc->cantidad-$restar;
-          $cc=$cc+$aux;
-        }
+    $dec=DivisionProducto::filtroDetalles(1,$ts,$id);//Compras
+    foreach($dec as $dc){
+      if($dc->f_producto==$id){
+        $restar=DetalleDevolucion::total($dc->id);
+        $aux=$dc->cantidad-$restar;
+        $cc=$cc+$aux;
       }
     }
     $cv=0;
-    $ventas=Transacion::where('tipo',2)->where('localizacion',$ts)->get(); //ventas
-    foreach ($ventas as $venta) {
-      $dev=$venta->detalleTransaccion;
-      foreach($dev as $dv){
-        if($dv->f_producto==$id){
-          $restar=DetalleDevolucion::total($dv->id);
-          $aux=$dv->cantidad-$restar;
-          $cv=$cv+$aux;
-        }
+    $dev=DivisionProducto::filtroDetalles(2,$ts,$id);//Ventas    
+    foreach($dev as $dv){
+      if($dv->f_producto==$id){
+        $restar=DetalleDevolucion::total($dv->id);
+        $aux=$dv->cantidad-$restar;
+        $cv=$cv+$aux;
       }
     }
     $contrario=Transacion::contrario($ts);
     $ce=0;
-    $envios=transacion::where('tipo',5)->where('localizacion',$contrario)->get();
-    foreach ($envios as $envio) {
-      $dee=$envio->detalleTransaccion;
-      foreach($dee as $de){
-        if($de->f_producto==$id){
-          $ce=$ce+$de->cantidad;
-        }
+    $dee=DivisionProducto::filtroDetalles(5,$contrario,$id);//Envios al contrario no confirmados 
+    foreach($dee as $de){
+      if($de->f_producto==$id){
+        $ce=$ce+$de->cantidad;
       }
     }
     $cr=0;
-    $requisiciones=transacion::where('tipo',6)->where('localizacion',$ts)->get();
-    foreach ($requisiciones as $requisicion) {
-      $der=$requisicion->detalleTransaccion;
-      foreach($der as $dr){
-        if($dr->f_producto==$id){
-          $cr=$cr+$dr->cantidad;
-        }
+    $der=DivisionProducto::filtroDetalles(6,$ts,$id);//Recibidos del contrario asignados 
+    foreach($der as $dr){
+      if($dr->f_producto==$id){
+        $cr=$cr+$dr->cantidad;
       }
     }
     $crc=0;
-    $requisiciones=transacion::where('tipo',6)->where('localizacion',$contrario)->get(); //envios a recepción confirmados
-    foreach ($requisiciones as $requisicion) {
-      $derc=$requisicion->detalleTransaccion;
-      foreach($derc as $drc){
-        if($drc->f_producto==$id){
-          $crc=$crc+$drc->cantidad;
-        }
+    $derc=DivisionProducto::filtroDetalles(6,$contrario,$id);//envios el contrario confirmados 
+    foreach($derc as $drc){
+      if($drc->f_producto==$id){
+        $crc=$crc+$drc->cantidad;
       }
     }
     $cm=0;
-    $movidos=transacion::where('tipo',7)->where('localizacion',$ts)->get(); //movidos ya sea por vencimiento o próximos a vencer
-    foreach ($movidos as $movido) {
-      $dem=$movido->detalleTransaccion;
+    $dem=DivisionProducto::filtroDetalles(7,$ts,$id);//movidos ya sea por vencimiento o próximos a vencer
       foreach($dem as $dm){
         if($dm->f_producto==$id){
           $cm=$cm+$dm->cantidad;
         }
       }
-    }
     return $cc-$cv+$cr-$ce-$crc-$cm;
   }
   public static function buscar($estado){
@@ -277,4 +259,14 @@ class DivisionProducto extends Model
           return $ultimos;
 
   } 
+  public static function filtroDetalles($tipo,$localizacion,$idp){//Recibe tipo de transacción, localización, id producto
+    return DB::table('detalle_transacions')
+    ->select('detalle_transacions.*')
+    ->join('transacions','transacions.id','=','detalle_transacions.f_transaccion','left outer')
+    ->where('transacions.localizacion',$localizacion)
+    ->where('transacions.tipo',$tipo)
+    ->where('detalle_transacions.f_producto',$idp)
+    ->where('transacions.id','<>',null)
+    ->get();
+  }
 }

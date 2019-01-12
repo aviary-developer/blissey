@@ -118,7 +118,7 @@ class TransaccionController extends Controller
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
 
-        if($_producto!=null){
+        if($f_producto!=null){
           for ($i=0; $i < count($f_producto); $i++) {
             if($tipo_detalle[$i]==1){
             DetalleTransacion::create([
