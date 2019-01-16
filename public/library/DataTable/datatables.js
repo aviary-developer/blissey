@@ -11778,7 +11778,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No se encontró ningun registro"
+			"sZeroRecords": "No se encontró ningún registro"
 		},
 
 

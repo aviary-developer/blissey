@@ -40,7 +40,7 @@
       <h4 class="gray">Información</h4>
     </center>
     <center>
-      <span>No se ha registrado ningun médico al paciente al paciente en las últimas 24 horas</span>
+      <span>No se ha registrado ningún médico al paciente al paciente en las últimas 24 horas</span>
     </center>
   </div>
 @endif
