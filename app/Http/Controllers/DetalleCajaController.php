@@ -124,12 +124,59 @@ class DetalleCajaController extends Controller
       }else{
         $fecha=\Carbon\Carbon::now()->toDateString();
       }
+      $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
       $detalle=DetalleCaja::caja($fecha);
-      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,$fecha);
-      return view('DetalleCajas.arqueo',compact('detalle','movimientos'));
+      $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
+      $tipoArqueo=1;
+      return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo'));
     }
     public function cerrar($id){
       $caja=Caja::findOrFail($id);
       return view('DetalleCajas.cerrar',compact('caja'));
+    }
+    public function buscararqueo($f_apertura){
+      $detalle=DetalleCaja::find($f_apertura);
+      $tipoArqueo=2;
+      $cierre="";
+      $fecha=$detalle->created_at->formatLocalized('%Y-%m-%d');                            //Farmacia
+      if($detalle->user->tipoUsuario==1){//Recepción
+        $fechaaux=date("Y-m-d",strtotime($fecha."+ 1 days"));
+        $ha=DetalleCaja::whereBetween('created_at',[$detalle->created_at,$fechaaux." 07:00:00"])
+        ->where('id','<>',$detalle->id)
+        ->where('f_usuario',$detalle->f_usuario)
+        ->get()->first();
+        echo $ha;
+        $hasta=$fechaaux." 07:00:00";
+        if($ha!=""){
+          if($ha->tipo==2){
+            $hasta=$ha->created_at;
+            $tipoArqueo=3;
+            $cierre=$ha;
+          }
+          else if($ha->create_at<$asta){
+            $hasta=$ha->create_at;
+          }
+        }
+        
+      }else{ //Farmacia
+        $ha=DetalleCaja::whereBetween('created_at',[$detalle->created_at,$fecha." 23:59:59"])
+        ->where('id','<>',$detalle->id)
+        ->where('f_usuario',$detalle->f_usuario)
+        ->get()->first();
+        $hasta=""; 
+        if($ha!=""){
+          if($ha->tipo==2){
+            $hasta=$ha->created_at;
+            $tipoArqueo=3;
+            $cierre=$ha;
+          }//Farmacia
+          else if($ha->create_at<$asta){
+            $hasta=$ha->create_at;
+          }
+        }
+      }
+      $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
+      echo $tipoArqueo;
+      return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo','cierre'));
     }
 }

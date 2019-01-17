@@ -12,6 +12,9 @@ class DetalleCaja extends Model
     public function datosCaja(){
       return $this->belongsTo('App\Caja','f_caja');
     }
+    public function user(){
+      return $this->belongsTo('App\User','f_usuario');
+    }
 
     public static function cajaApertura(){
       $detalle=DetalleCaja::where('fecha',date('Y').'-'.date('m').'-'.date('d'))->where('f_usuario',Auth::user()->id)->get()->last();
@@ -67,7 +70,7 @@ class DetalleCaja extends Model
       $total=0;
       $detalle=DetalleCaja::caja($fecha);
       $total=$total+$detalle->importe;
-      $movimientos=Transacion::movimentosCaja($detalle->f_usuario,$detalle->updated_at,$fecha);
+      $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,\Carbon\Carbon::now()->toDateString()." 07:00:00");
       foreach ($movimientos as $movimiento) {
         $valor=$movimiento->valorTotal($movimiento->id);
         if($movimiento->tipo==2){

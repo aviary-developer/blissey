@@ -11,7 +11,7 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Estado</th>
+              <th>Localización</th>
               <th>Opciones</th>
             </tr>
           </thead>

@@ -17,9 +17,6 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href={!! asset('/cajas/create') !!}>Nuevo</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#">Reporte</a>
           </li>
         </ul>

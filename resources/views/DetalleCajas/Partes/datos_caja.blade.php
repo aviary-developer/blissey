@@ -60,12 +60,23 @@
         <div class="ln_solid mb-1 mt-1"></div>
         <div class="flex-row">
           <span class="font-weight-light text-monospace">
-            Valor actual
+            @if($tipoArqueo!=1)
+              Valor de cierre
+            @else
+              Valor actual
+            @endif
+            @php
+            if($tipoArqueo==3){
+              $restaCierre=$cierre->importe;
+            }else{
+              $restaCierre=0;
+            }
+            @endphp
           </span>
         </div>
         <div class="flex-row">
           <h6 class="font-weight-bold">
-                $ {{number_format(App\DetalleCaja::arqueo(\Carbon\Carbon::now()->toDateString()),2,'.',',')}}
+                $ {{number_format($_GET['total'],2,'.',',')}}
           </h6>
         </div>
       

@@ -2,7 +2,7 @@
     <a class="navbar-brand" href={!! asset('/arqueo') !!}>
       Arqueo
           <span class="badge border-success border text-success">
-                Movimentos de Caja {{$detalle->datosCaja->nombre}}
+                Caja {{$detalle->datosCaja->nombre}}
         </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
