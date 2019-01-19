@@ -27,8 +27,18 @@
     <li>
       <a href={{asset( '/transacciones/create?tipo=2')}}>Ventas</a>
 		</li>
-		<li>
-      <a href={{asset( '/verrequisiciones?tipo=4')}}>Requisiciones</a>
+    <li>
+      <a>Requisiciones
+        <span class="fas fa-chevron-down float-right"></span>
+      </a>
+      <ul class="nav child_menu submenu">
+        <li>
+          <a href={{asset( '/requisiciones?tipo=4')}}>Enviadas</a>
+        </li>
+        <li>
+          <a href={{asset( '/verrequisiciones?tipo=4')}}>Recibidas</a>
+        </li>
+      </ul>
     </li>
     <li>
       <a>Movimiento de caja

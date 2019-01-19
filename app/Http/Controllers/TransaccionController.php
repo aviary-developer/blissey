@@ -19,6 +19,7 @@ use App\Servicio;
 use App\Estante;
 use App\Devolucion;
 use App\DetalleDevolucion;
+use App\CambioProducto;
 
 class TransaccionController extends Controller
 {
@@ -127,6 +128,7 @@ class TransaccionController extends Controller
               'cantidad'=>$cantidad[$i],
               'precio'=>$precio[$i],
             ]);
+            CambioProducto::actualizarCambio($f_producto[$i]);
         }else{
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -229,6 +231,7 @@ class TransaccionController extends Controller
           $detalle->f_estante=$request->f_estante[$i];
           $detalle->nivel=$request->nivel[$i];
           $detalle->save();
+          CambioProducto::actualizarCambio($request->f_producto[$i]);          
         }
         DB::commit();
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
@@ -379,6 +382,13 @@ class TransaccionController extends Controller
         $t->tipo=3;
         $t->comentario=$comentario;
 
+        $detalles=$t->detalleTransaccion;
+
+        foreach($detalles as $detalle){
+          if($detalle->f_producto!=null && $detalle->f_producto!=""){
+             CambioProducto::actualizarCambio($detalle->f_producto);                          
+          }
+        }
       } catch (\Exception $e) {
         DB::rollback();
         return redirect('/transacciones?tipo=2')->with('error', '¡Algo salio mal!');
@@ -442,6 +452,13 @@ class TransaccionController extends Controller
         }
         $totdevr->devolucion=$total;
         $totdevr->save();
+        foreach ($detalles as $detalle) {
+          if(isset($request['cantidad'.$detalle->id])){
+            if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
+              CambioProducto::actualizarCambio($detalle->f_producto);              
+            }
+          }
+        }
         if($contador==0){
           DB::rollback();
           return redirect('transacciones/'.$id)->with('mensaje', '¡No hay cambios!');

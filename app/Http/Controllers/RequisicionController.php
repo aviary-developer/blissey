@@ -100,9 +100,18 @@ class RequisicionController extends Controller
     {
       DB::beginTransaction();
       try {
-        $transaccion=Transacion::find($id);
-        $transaccion->tipo=6;
-        $transaccion->save();
+        $transaccionr=Transacion::find($id);//Cambio a transacción recibida
+        $transaccionr->tipo=6;
+        $transaccionr->save();
+
+        $activo=false;
+        $transaccion=new Transacion();//Transacción por envío a próximos a vencer
+        $f = \Carbon\Carbon::now();
+        $f = $f->format('Y-m-d');
+        $transaccion->fecha=$f;
+        $transaccion->f_usuario=Auth::user()->id;
+        $transaccion->localizacion=DivisionProducto::busquedaTipo($tipo);
+        $transaccion->tipo=7;
 
         if($request->detalle_id!=null){
           for ($i=0; $i <count($request->detalle_id) ; $i++) {
@@ -110,6 +119,21 @@ class RequisicionController extends Controller
             $detalle->f_estante=$request->f_estante[$i];
             $detalle->nivel=$request->nivel[$i];
             $detalle->save();
+              //Si hay productos próximos
+              $cantidad= CambioProducto::mover($detalle->f_producto,1);
+              if($cantidad>0){
+                if(!$activo){
+                  $transaccion->save();
+                  $activo=true;
+                }
+                if($cantidad>0){//Transacción de envío
+                  $dtl=new DetalleTransacion();
+                  $dtl->cantidad=$cantidad;
+                  $dtl->f_transaccion=$transaccion->id;
+                  $dtl->f_producto=$detalle->f_producto;
+                  $dtl->save();
+                }
+              }
           }
         }
         DB::commit();
@@ -210,6 +234,7 @@ class RequisicionController extends Controller
                   'f_producto'=>$detalle->f_producto,
                 ]);
               $regresivo=$regresivo-$fila->cantidad;
+              CambioProducto::actualizarCambio($detalle->f_producto);
             }elseif($regresivo!=0){
               DetalleTransacion::create([
                 'cantidad'=>$regresivo,
@@ -219,6 +244,7 @@ class RequisicionController extends Controller
                 'f_producto'=>$detalle->f_producto,
               ]);
               $regresivo=0;
+              CambioProducto::actualizarCambio($detalle->f_producto);
             }
             }
         }
