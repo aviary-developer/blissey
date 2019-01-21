@@ -1,5 +1,8 @@
 {!!Form::open(['url'=>['desactivateCaja',$caja->id],'method'=>'POST'])!!}
 <div class="btn-group">
+    <a href={!! asset('/cajas/'.$caja->id)!!} class="btn btn-sm btn-info"  title="Ver">
+      <i class="fas fa-info-circle"></i>
+    </a>
   <button type="button" class="btn btn-danger btn-sm" title="Enviar a papelera" onclick="
     return swal({
       title: 'Enviar registro a papelera',

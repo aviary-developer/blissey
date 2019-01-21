@@ -145,7 +145,7 @@ function medicamento_fecha() {
         });
       } else {
         panel.empty();
-        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun medicamento al paciente en esta fecha</span></center>';
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningún medicamento al paciente en esta fecha</span></center>';
         panel.append(html);
       }
     }
@@ -197,7 +197,7 @@ function servicio_fecha() {
         });
       } else {
         panel.empty();
-        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun servicio al paciente en esta fecha</span></center>';
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningún servicio al paciente en esta fecha</span></center>';
         panel.append(html);
       }
     }
@@ -250,7 +250,7 @@ function rayos_fecha() {
         });
       } else {
         panel.empty();
-        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun examen de rayos X al paciente en esta fecha</span></center>';
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningún examen de rayos X al paciente en esta fecha</span></center>';
         panel.append(html);
       }
     }
@@ -303,7 +303,7 @@ function laboratorio_fecha() {
         });
       } else {
         panel.empty();
-        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun examen al paciente en esta fecha</span></center>';
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningún examen al paciente en esta fecha</span></center>';
         panel.append(html);
       }
     }
@@ -409,7 +409,7 @@ function tac_fecha() {
         });
       } else {
         panel.empty();
-        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningun tac al paciente en esta fecha</span></center>';
+        html = '<center style="margin-top: 30px"><i class="fa fa-info-circle gray" style="font-size: 800%"></i></center><center style="margin-top: 40px"><h5 class="gray big-text">Información<h5></center><center><span>No se ha registrado ningún tac al paciente en esta fecha</span></center>';
         panel.append(html);
       }
     }

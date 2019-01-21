@@ -49,7 +49,7 @@
       <h4 class="gray">Información</h4>
     </center>
     <center>
-      <span>No se ha registrado ningun examen de rayos X al paciente en las últimas 24 horas</span>
+      <span>No se ha registrado ningún examen de rayos X al paciente en las últimas 24 horas</span>
     </center>
   </div>
 @endif

@@ -19,6 +19,7 @@ use App\Servicio;
 use App\Estante;
 use App\Devolucion;
 use App\DetalleDevolucion;
+use App\CambioProducto;
 
 class TransaccionController extends Controller
 {
@@ -97,6 +98,7 @@ class TransaccionController extends Controller
           'localizacion'=>Transacion::tipoUsuario(),
         ]);
 
+        if($f_producto!=null){
         for ($i=0; $i < count($f_producto); $i++) {
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -104,6 +106,7 @@ class TransaccionController extends Controller
             'cantidad'=>$cantidad[$i],
           ]);
         }
+      }
       }else{
         $transaccion= new Transacion;
         $transaccion->fecha=$request->fecha;
@@ -116,14 +119,16 @@ class TransaccionController extends Controller
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
 
-        for ($i=0; $i < count($f_producto); $i++) {
-          if($tipo_detalle[$i]==1){
-          DetalleTransacion::create([
-            'f_transaccion'=>$transaccion->id,
-            'f_producto'=>$f_producto[$i],
-            'cantidad'=>$cantidad[$i],
-            'precio'=>$precio[$i],
-          ]);
+        if($f_producto!=null){
+          for ($i=0; $i < count($f_producto); $i++) {
+            if($tipo_detalle[$i]==1){
+            DetalleTransacion::create([
+              'f_transaccion'=>$transaccion->id,
+              'f_producto'=>$f_producto[$i],
+              'cantidad'=>$cantidad[$i],
+              'precio'=>$precio[$i],
+            ]);
+            CambioProducto::actualizarCambio($f_producto[$i]);
         }else{
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -133,6 +138,7 @@ class TransaccionController extends Controller
           ]);
         }
         }
+      }
       }
       }catch(\Exception $e){
         DB::rollback();
@@ -193,8 +199,16 @@ class TransaccionController extends Controller
         $transaccion->iva=$request->ivaincluido;
         $transaccion->save();
 
-        $contador = count($request->estado);
-        $cont_eliminados=count($request->eliminado);
+        if($request->estado==null){
+          $contador=0;
+        }else{
+          $contador = count($request->estado);
+        }
+        if($request->eliminado==null){
+          $cont_eliminados=0;
+        }else{
+          $cont_eliminados=count($request->eliminado);
+        }
         DB::beginTransaction();
         for($i=0;$i<$cont_eliminados;$i++){
           $bor=DetalleTransacion::findOrFail($request->eliminado[$i]);
@@ -217,6 +231,7 @@ class TransaccionController extends Controller
           $detalle->f_estante=$request->f_estante[$i];
           $detalle->nivel=$request->nivel[$i];
           $detalle->save();
+          CambioProducto::actualizarCambio($request->f_producto[$i]);          
         }
         DB::commit();
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
@@ -367,6 +382,13 @@ class TransaccionController extends Controller
         $t->tipo=3;
         $t->comentario=$comentario;
 
+        $detalles=$t->detalleTransaccion;
+
+        foreach($detalles as $detalle){
+          if($detalle->f_producto!=null && $detalle->f_producto!=""){
+             CambioProducto::actualizarCambio($detalle->f_producto);                          
+          }
+        }
       } catch (\Exception $e) {
         DB::rollback();
         return redirect('/transacciones?tipo=2')->with('error', '¡Algo salio mal!');
@@ -430,6 +452,13 @@ class TransaccionController extends Controller
         }
         $totdevr->devolucion=$total;
         $totdevr->save();
+        foreach ($detalles as $detalle) {
+          if(isset($request['cantidad'.$detalle->id])){
+            if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
+              CambioProducto::actualizarCambio($detalle->f_producto);              
+            }
+          }
+        }
         if($contador==0){
           DB::rollback();
           return redirect('transacciones/'.$id)->with('mensaje', '¡No hay cambios!');

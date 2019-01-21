@@ -129,15 +129,17 @@ class Transacion extends Model
           $d->stock=$stock;
           $d->save();
         }
-        public static function movimentosCaja($f_usuario,$apertura,$fecha){
-          if(Transacion::tipoUsuario()==0){
+        public static function movimientosCaja($f_usuario,$apertura,$fecha,$hasta){
+          $tipoU=User::find($f_usuario)->tipoUsuario;
+          if($tipoU==0){
             return Transacion::where('f_usuario',$f_usuario)->where('fecha',$fecha)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
           }else{
-            return Transacion::where('f_usuario',$f_usuario)->filtroFecha($fecha)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+            return Transacion::where('f_usuario',$f_usuario)->filtroFecha($fecha,$hasta)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
           }
         }
-        public function scopeFiltroFecha($query,$fecha){
-          $query->where('fecha',$fecha)->orWhere('updated_at',"<",\Carbon\Carbon::now()->toDateString()." 07:00:00");
+        public function scopeFiltroFecha($query,$fecha,$hasta){
+          $hasta=date("Y-m-d",strtotime($fecha."+ 1 days"));
+          $query->where('fecha',$fecha)->orWhere('updated_at',"<",$hasta);
         }
         public function scopefiltroTipo($query){
             $query->where('tipo',1)->orWhere('tipo',2)->orWhere('tipo',8)->orWhere('tipo',9);

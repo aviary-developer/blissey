@@ -88,4 +88,31 @@ class CambioProducto extends Model
   public static function total($id){
     return CambioProducto::where('f_detalle_transaccion',$id)->where('estado','<>',0)->sum('cantidad');
   }
+
+  public static function actualizarCambio($id){  
+    $cambios= CambioProducto::
+    select('cambio_productos.*')
+    ->join('detalle_transacions','cambio_productos.f_detalle_transaccion','=','detalle_transacions.id','left outer')
+    ->where('cambio_productos.localizacion',Transacion::tipoUsuario())
+    ->where('detalle_transacions.f_producto',$id)
+    ->where('detalle_transacions.id','<>',null)
+    ->get(); 
+  
+    $lotes= DivisionProducto::lotes($id);
+    foreach($cambios as $cambio){
+      $borrar=1;
+      foreach($lotes as $lote){
+        print_r($lote);
+        if($cambio->f_detalle_transaccion==$lote->id){
+          $borrar=0;     
+          $cambioAux=CambioProducto::find($cambio->id);
+          $cambioAux->cantidad=$lote->cantidad;
+          $cambioAux->save();
+        }
+      }
+      if($borrar==1){
+        CambioProducto::find($cambio->id)->delete();
+      }
+    }
+  }
 }

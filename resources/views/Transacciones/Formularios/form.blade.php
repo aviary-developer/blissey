@@ -171,17 +171,14 @@
         <th style="width : 80px">Acción</th>
       </thead>
       @if(isset($f_producto))
-        @php
-          $conteo;
-        @endphp
         @for ($i=0; $i < count($f_producto); $i++)
           <tr>
             <td>{{$cantidad[$i]}}</td>
             @php
               $division=App\DivisionProducto::find($f_producto[$i]);
-              $pmp=TransaccionController::nombrePresentacion($division->f_producto,2);//Retorna producto + presentación
+              $pmp=App\TransaccionController::nombrePresentacion($division->f_producto,2);//Retorna producto + presentación
             @endphp
-            <td>{{TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
+            <td>{{App\TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
             <td>{{$pmp->nombre}}</td>
             @if ($tipo==2)
               <td>$ {{number_format($precio[$i],2,'.','.')}}</td>

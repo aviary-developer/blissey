@@ -56,11 +56,10 @@
                 </td>
                 <td>
 
-                  @if ($usuario->telephone!=null)
+                  @if ($usuario->telephone->count()!=0)
                   <center>
                     {{$usuario->telephone->first()->telefono}}
                   </center>
-
                   @else
                     <span class="badge border border-danger text-danger col-12">Sin télefono</span>
                   @endif

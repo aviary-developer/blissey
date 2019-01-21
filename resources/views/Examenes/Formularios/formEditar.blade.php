@@ -64,7 +64,14 @@
   @if($e_s_p!=null)
     <input id="contadorEnEdit" name="contadorEnEdit" type="hidden" value={{count($secciones)}}>
     <input id="contadorTotal" name="contadorTotal" type="hidden" value={{count($secciones)}}>
-    @for ($i=0; $i < count($secciones); $i++)
+    @php
+    if($secciones!=null){
+      $conteoss=count($secciones);
+    }else{
+      $conteoss=0;
+    }
+    @endphp
+    @for ($i=0; $i <$conteoss; $i++)
       <div class='col-md-6 col-sm-6 col-xs-12'>
         <div class='x_panel'>
           <div class='x_title'>

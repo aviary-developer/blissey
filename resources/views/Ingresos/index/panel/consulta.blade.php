@@ -43,7 +43,7 @@
       <h4 class="gray">Información</h4>
     </center>
     <center>
-      <span>No hay ningun paciente en cola para consulta médica</span>
+      <span>No hay ningún paciente en cola para consulta médica</span>
     </center>
   </div>  
 @endif

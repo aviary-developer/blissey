@@ -54,13 +54,15 @@ class RequisicionController extends Controller
         'localizacion'=>Transacion::tipoUsuario(),
         'tipo'=>4,
       ]);
-      for ($i=0; $i <count($f_producto) ; $i++) {
-        DetalleTransacion::create([
-          'f_transaccion'=>$transaccion->id,
-          'cantidad'=>$cantidad[$i],
-          'f_producto'=>$f_producto[$i],
-        ]);
-        }
+      if($f_producto!=null){
+        for ($i=0; $i <count($f_producto) ; $i++) {
+          DetalleTransacion::create([
+            'f_transaccion'=>$transaccion->id,
+            'cantidad'=>$cantidad[$i],
+            'f_producto'=>$f_producto[$i],
+          ]);
+          }
+      }
        return redirect('requisiciones?tipo=4')->with('mensaje', '¡Requisición Enviada!');
     }
 
@@ -98,15 +100,41 @@ class RequisicionController extends Controller
     {
       DB::beginTransaction();
       try {
-        $transaccion=Transacion::find($id);
-        $transaccion->tipo=6;
-        $transaccion->save();
+        $transaccionr=Transacion::find($id);//Cambio a transacción recibida
+        $transaccionr->tipo=6;
+        $transaccionr->save();
 
-        for ($i=0; $i <count($request->detalle_id) ; $i++) {
-          $detalle=DetalleTransacion::find($request->detalle_id[$i]);
-          $detalle->f_estante=$request->f_estante[$i];
-          $detalle->nivel=$request->nivel[$i];
-          $detalle->save();
+        $activo=false;
+        $transaccion=new Transacion();//Transacción por envío a próximos a vencer
+        $f = \Carbon\Carbon::now();
+        $f = $f->format('Y-m-d');
+        $transaccion->fecha=$f;
+        $transaccion->f_usuario=Auth::user()->id;
+        $transaccion->localizacion=DivisionProducto::busquedaTipo($tipo);
+        $transaccion->tipo=7;
+
+        if($request->detalle_id!=null){
+          for ($i=0; $i <count($request->detalle_id) ; $i++) {
+            $detalle=DetalleTransacion::find($request->detalle_id[$i]);
+            $detalle->f_estante=$request->f_estante[$i];
+            $detalle->nivel=$request->nivel[$i];
+            $detalle->save();
+              //Si hay productos próximos
+              $cantidad= CambioProducto::mover($detalle->f_producto,1);
+              if($cantidad>0){
+                if(!$activo){
+                  $transaccion->save();
+                  $activo=true;
+                }
+                if($cantidad>0){//Transacción de envío
+                  $dtl=new DetalleTransacion();
+                  $dtl->cantidad=$cantidad;
+                  $dtl->f_transaccion=$transaccion->id;
+                  $dtl->f_producto=$detalle->f_producto;
+                  $dtl->save();
+                }
+              }
+          }
         }
         DB::commit();
         return redirect('requisiciones?tipo=5')->with('mensaje', '¡Ubicaciones asignadas correctamente!');
@@ -188,7 +216,7 @@ class RequisicionController extends Controller
               }
             }
             $diferencia=$cuenta-$inventario;
-            if($diferencia!=0 && count($ultimos)>0 && isset($ultimos[$i])){
+            if($diferencia!=0 && $ultimos!=null && isset($ultimos[$i])){
               $fila=$ultimos[$i];
               $fila->cantidad=$fila->cantidad-$diferencia;
               $ultimos[$i]=$fila;
@@ -206,6 +234,7 @@ class RequisicionController extends Controller
                   'f_producto'=>$detalle->f_producto,
                 ]);
               $regresivo=$regresivo-$fila->cantidad;
+              CambioProducto::actualizarCambio($detalle->f_producto);
             }elseif($regresivo!=0){
               DetalleTransacion::create([
                 'cantidad'=>$regresivo,
@@ -215,6 +244,7 @@ class RequisicionController extends Controller
                 'f_producto'=>$detalle->f_producto,
               ]);
               $regresivo=0;
+              CambioProducto::actualizarCambio($detalle->f_producto);
             }
             }
         }

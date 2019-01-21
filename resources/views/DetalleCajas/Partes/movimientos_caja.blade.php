@@ -1,7 +1,7 @@
 <div class="row mt-2">
         <div class="col">
           <center>
-            <h5 class="mt-1">Operaciones efectuadas este día
+            <h5 class="mt-1">Operaciones efectuadas
             </center>
         </div>
       </div>
@@ -28,7 +28,7 @@
                   <tr>
                     <td>{{$contador}}</td>
                     <td></td>
-                    <td>Importe inicial</td>
+                    <td>Inicio</td>
                     <td>{{date_format($detalle->updated_at,'g:i A')}}</td>
                     <td>$ {{number_format($detalle->importe,2,'.',',')}}</td>
                     <td></td>
@@ -83,8 +83,25 @@
                   $contador++;
                   @endphp
                   @endforeach
+                  @if($tipoArqueo==3)
+                  @php
+                      $total=$total-$cierre->importe;
+                  @endphp
+                  <tr>
+                    <td>{{$contador}}</td>
+                    <td></td>
+                    <td>Cierre</td>
+                    <td>{{date_format($cierre->updated_at,'g:i A')}}</td>
+                    <td></td>
+                    <td>$ {{number_format($cierre->importe,2,'.',',')}}</td>
+                    <td>$ {{number_format($total,2,'.',',')}}</td>
+                  </tr>
+                  @endif
                 </tbody>
               </table>
+              @php
+                  $_GET['total']=$total;
+              @endphp
         </div>
       </div>
       

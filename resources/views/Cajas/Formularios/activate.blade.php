@@ -1,8 +1,9 @@
 {!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 @if ($index)
   <div class="btn-group">
-  </div>
-  <div class="btn-group">
+  <a href={!! asset('/cajas/'.$caja->id)!!} class="btn btn-sm btn-info"  title="Ver">
+    <i class="fas fa-info-circle"></i>
+  </a>
   <button type="button" class="btn btn-success btn-sm" onclick={!! "'alta(".$caja->id.");'" !!}  title="Restaurar"/>
     <i class="fas fa-check"></i>
   </button>
