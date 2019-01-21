@@ -622,12 +622,12 @@ class IngresoController extends Controller
     }
 
     public function acta_pdf($id){
-      $ingreso = Ingreso::find($id);
+			$ingreso = Ingreso::find($id);
       $header = view('PDF.header.hospital');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('Ingresos.PDF.acta',compact('ingreso'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
-      return $pdf->stream('nombre.pdf');
+      return ($pdf->stream());
     }
 
     public function informe_pdf($id){

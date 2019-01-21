@@ -164,7 +164,6 @@ Route::group(['middleware'=>'general'], function(){
       "segundo",
       "tercero",
       "proximosReactivosVencer",
-			'examen',
 			'count_existencia_reactivo'
     ));
   });
