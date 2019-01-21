@@ -38,7 +38,6 @@ class ProductoController extends Controller
       return view('Productos.index',compact(
         'productos',
         'estado',
-        'nombre',
         'f_proveedor',
         'f_categoria',
         'activos',
