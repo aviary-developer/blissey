@@ -33,6 +33,7 @@ class SolicitudExamenController extends Controller
   */
   public function index(Request $request)
   {
+		$pacientes = null;
     if (Auth::user()->tipoUsuario == "TAC" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="tac")) {
       $vista = $request->get("vista");
       if($vista == "paciente"){
