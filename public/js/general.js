@@ -226,7 +226,7 @@ function ruta() { //No tocar es para ver la ruta
   if (dominio == "localhost" || dominio == "127.0.0.1") {
     $('#guardarruta').val(protocolo + "//" + "localhost/blissey/public");
   } else {
-    $('#guardarruta').val(protocolo + "//" + dominio);
+		$('#guardarruta').val(protocolo + "//" + dominio + "/blissey/public");
   }
   console.log($('#guardarruta').val());
 }
