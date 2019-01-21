@@ -922,6 +922,8 @@ class SolicitudExamenController extends Controller
   }*/
   }
   public function examenesEntregados(Request $request){
+		$examenes = null;
+		$pacientes = null;
     $vista = $request->get("vista");
     if (Auth::user()->tipoUsuario == "TAC") {
       if($vista == "paciente"){
