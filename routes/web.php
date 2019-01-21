@@ -147,7 +147,8 @@ Route::group(['middleware'=>'admin'], function()
 });
 Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {
-    $primero = $segundo = $tercero = $proximosReactivosVencer= "Nada";
+		$primero = $segundo = $tercero = $proximosReactivosVencer= "Nada";
+		$count_existencia_reactivo = 0;
     if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
