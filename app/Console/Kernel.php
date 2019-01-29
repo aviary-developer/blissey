@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
       /*$schedule->command(
          "db:backup --database=mysql --destination=local --destinationPath=blisseyRespaldo1.sql --compression=null"
          )->everyMinute();*/
-         $schedule->command('prueba:log')->everyMinute();
+         //$schedule->command('respaldo:backup')->everyMinute();
         // $schedule->command('inspire')
         //          ->hourly();
     }
