@@ -43,15 +43,16 @@ $(document).on('ready', function () {
             tipo: v_tipo
           },
           success: function (res) {
-            tabla.empty();
-            head =
+            if(res != 0){
+              tabla.empty();
+              head =
               "<thead>" +
               "<th>Nombre</th>" +
               "<th style='width : 80px'>Opción</th>" +
               "</thead>";
-            tabla.append(head);
-            $(res).each(function (key, value) {
-              html =
+              tabla.append(head);
+              $(res).each(function (key, value) {
+                html =
                 "<tr>" +
                 "<td>" +
                 value.apellido + ', ' + value.nombre +
@@ -64,8 +65,9 @@ $(document).on('ready', function () {
                 "</button>" +
                 "</center></td>" +
                 "</tr>";
-              tabla.append(html);
-            });
+                tabla.append(html);
+              });
+            }
           }
         });
       } catch (error) {
@@ -167,7 +169,7 @@ $(document).on('ready', function () {
       $("#pac_apellido").val("");
       $("#dui_paciente").val("");
 			$("#pac_telefono").val("");
-			
+
 			$("#centro").removeClass('modal-lg');
 			$("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
 			$("#derecha").hide();

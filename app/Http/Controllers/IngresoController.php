@@ -182,16 +182,16 @@ class IngresoController extends Controller
     {
       setlocale(LC_ALL,'es');
       $ingreso = Ingreso::find($id);
-      
+
       /**Notas a tener en cuenta para la elaboración de esta pantalla
-       * 
+       *
        * Tipos de ingreso:
        * 0 - Ingreso
        * 1 - Medi ingreso
        * 2 - Observación
        * 3 - Consulta médica
        * 4 - Cumplimiento
-       * 
+       *
        * Estados del registro
        * 0 - Pendiente
        * 1 - Ingresado
@@ -664,30 +664,41 @@ class IngresoController extends Controller
       $fecha = Carbon::now();
       $fecha = $fecha->subYears(18);
       if($tipo == "paciente"){
-        $pacientes = DB::table('pacientes')
-        ->whereNotExists(
-          function ($query){
-            $query->select(DB::raw(1))
-            ->from('ingresos')
-            ->where('ingresos.estado','<>',2)
-            ->whereRaw('ingresos.f_paciente = pacientes.id');
-          }
-        )->where(
-          function ($query) use ($nombre){
-            $query->where('nombre','like','%'.$nombre.'%')
-            ->orWhere('apellido','like','%'.$nombre.'%');
-          }
-        )->where('estado',true)->orderBy('apellido')->take(7)->get();
+        $ingresos = Ingreso::count();
+        if($ingresos > 0){
+          $pacientes = DB::table('pacientes')
+          ->whereNotExists(
+            function ($query){
+              $query->select(DB::raw(1))
+              ->from('ingresos')
+              ->where('ingresos.estado','<>',2)
+              ->whereRaw('ingresos.f_paciente = pacientes.id');
+            }
+            )->where(
+              function ($query) use ($nombre){
+                $query->where('nombre','like','%'.$nombre.'%')
+                ->orWhere('apellido','like','%'.$nombre.'%');
+              }
+              )->where('estado',true)->orderBy('apellido')->take(7)->get();
+        }else{
+          $pacientes = DB::table('pacientes')
+          ->where(
+              function ($query) use ($nombre){
+                $query->where('nombre','like','%'.$nombre.'%')
+                ->orWhere('apellido','like','%'.$nombre.'%');
+              }
+            )->where('estado',true)->orderBy('apellido')->take(7)->get();
+        }
       }else if($tipo == "solicitud"){
         $pacientes = Paciente::where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }else{
         $pacientes = Paciente::where('fechaNacimiento','<=',$fecha->format('Y-m-d'))->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%')->where('estado',true)->orderBy('apellido')->take(7)->get();
       }
       if($pacientes!=null){
-        return Response::json($pacientes);
-        
+        return $pacientes;
+
       }else{
-        return null;
+        return 0;
       }
     }
 
@@ -716,7 +727,7 @@ class IngresoController extends Controller
         if(Auth::user()->tipoUsuario == 'Enfermería'){
           $detalle->estado = false;
         }
-        $detalle->save();       
+        $detalle->save();
         DB::commit();
         return $detalle->id;
       }catch(Exception $e){
@@ -755,7 +766,7 @@ class IngresoController extends Controller
     public function resumen(Request $request){
       $id = $request->id;
       $fecha_x = $request->fecha;
-      
+
       $fecha_xf = Carbon::parse($fecha_x)->hour(7);
       $ahora = Carbon::now();
       if($ahora->lt($fecha_xf)){
@@ -769,11 +780,11 @@ class IngresoController extends Controller
       $dia = $dia_ingreso->diffInDays($fecha_xf);
 
       $fecha = $dia_ingreso->addDays($dia);
-      
+
       setlocale(LC_ALL,'es');
       $ultima24 = $fecha_xf;
       $ultima48 = Carbon::parse($fecha_x)->hour(7)->addDay();
-      
+
       $fecha = $fecha->formatLocalized('%d de %B de %Y');
       $medico = (($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido;
 
@@ -807,7 +818,7 @@ class IngresoController extends Controller
         $habitacion = 0;
         $habitacion_nombre = "Habitación 0";
       }
-      
+
       //Servicios
       $servicios = [];
       $total_servicios = 0;
@@ -826,7 +837,7 @@ class IngresoController extends Controller
           }
         }
       }
-      
+
       //Valor de laboratorio
       $laboratorio = 0;
       $examenes = [];
@@ -914,14 +925,14 @@ class IngresoController extends Controller
         'iva'
       ));
     }
-  
+
   public function servicio_medicos(Request $request){
     DB::beginTransaction();
     try{
       if(isset($request->f_medico)){
         foreach($request->f_medico as $medico){
           $servicio = Servicio::find($medico);
-  
+
           $detalle = new DetalleTransacion;
           $detalle->cantidad = 1;
           $detalle->f_transaccion = $request->f_transaccion;
