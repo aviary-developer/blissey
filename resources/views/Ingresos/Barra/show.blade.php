@@ -62,7 +62,7 @@
             <a class="dropdown-item" href="#" data-target="#cambio_habitacion" data-toggle="modal">
               Cambiar de habitación
             </a>  
-            @if ($horas <= 6 || $ingreso->tipo != 0)
+            @if (($horas <= 6 && $ingreso->tipo == 0) || $ingreso->tipo != 0)
               <a class="dropdown-item" href="#" data-target="#cambio_hospitalizacion" data-toggle="modal">
                 Cambiar tipo de hospitalización
               </a>

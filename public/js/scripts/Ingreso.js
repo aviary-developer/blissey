@@ -113,17 +113,11 @@ $(document).on('ready', function () {
   $("#guardarPaciente").on('click', function (e) {
     e.preventDefault();
 
-    var v_nombre = $("#nombre_paciente").val();
-    var v_apellido = $("#apellido_paciente").val();
-    var v_sexo = $("#sexo").val();
-    var v_fecha = $("#fecha_paciente").val();
-    var v_dui = $("#dui_paciente_campo").val();
-    var v_alergia = $("#alergia_paciente").val();
-    var v_telefono = $("#telefono_paciente").val();
-    var v_pais = $("#pais_paciente").val();
-    var v_departamento = $("#departamento_select").val();
-    var v_municipio = $("#municipio_select").val();
-    var v_direccion = $("#direccion_paciente").val();
+    var v_nombre = $("#pac_nombre").val();
+    var v_apellido = $("#pac_apellido").val();
+    var v_sexo = $("#pac_sexo").val();
+    var v_fecha = $("#pac_fecha").val();
+    var v_telefono = $("#pac_telefono").val();
 
     if (v_nombre == "" || v_apellido == "") {
       swal('¡Error!', 'El nombre y apellido son obligatorios, intentelo de nuevo', 'error');
@@ -145,13 +139,7 @@ $(document).on('ready', function () {
           apellido: v_apellido,
           sexo: v_sexo,
           fechaNacimiento: v_fecha,
-          dui: v_dui,
-          telefono: v_telefono,
-          pais: v_pais,
-          departamento: v_departamento,
-          municipio: v_municipio,
-          direccion: v_direccion,
-          alergia: v_alergia
+          telefono: v_telefono
         },
         success: function (respuesta) {
           if (respuesta != false) {
@@ -175,17 +163,17 @@ $(document).on('ready', function () {
 
       });
 
-      $("#nombre_paciente").val("");
-      $("#apellido_paciente").val("");
+      $("#pac_nombre").val("");
+      $("#pac_apellido").val("");
       $("#dui_paciente").val("");
-      $("#telefono_paciente").val("");
-      $("#pais_paciente").val("");
-      $("#departamento_select").val("San Vicente");
-      cargar_municipio();
-      $("#direccion_paciente").val("");
-      $("#modal_persona").modal("hide");
+			$("#pac_telefono").val("");
+			
+			$("#centro").removeClass('modal-lg');
+			$("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
+			$("#derecha").hide();
+			$("#derecha_nuevo").hide();
+			$("#izq_interno").attr('style', 'height:auto');
     }
-
 
   });
 
@@ -840,11 +828,17 @@ function accion24(tipo, id, objeto = null) {
   }
 }
 
-function input_seleccion(e = null) {
+function input_seleccion(e = null, btn = 0) {
   document.getElementById('seleccion').value = e;
 
-  var principal = $("#centro");
-  var derecha = $("#derecha");
+	var principal = $("#centro");
+	if (btn == 0) {
+		var derecha = $("#derecha");
+		$("#derecha_nuevo").hide();
+	} else {
+		var derecha = $("#derecha_nuevo");
+		$("#derecha").hide();
+	}
   var izquierda = $("#izquierda");
   var interno = $("#izq_interno");
 
