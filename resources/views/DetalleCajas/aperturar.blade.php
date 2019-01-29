@@ -9,7 +9,7 @@
       if($ultimo->tipo==2){
       $valor=number_format($ultimo->total-$ultimo->importe,2,'.',',');
       }elseif($ultimo->tipo==1){
-        $valor=number_format(App\DetalleCaja::arqueo($ultimo->fecha),2,'.',',');
+      $valor=App\DetalleCaja::arqueo($ultimo->fecha);
       }
     }else{
       $valor="";
@@ -29,6 +29,8 @@
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-dollar-sign"></i></div>
               </div>
+              @php
+              @endphp
               {!! Form::number('importe',$valor,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad']) !!}
             </div>
           <input type="hidden" name="tipo" value="1">
