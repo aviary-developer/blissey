@@ -18,6 +18,9 @@
       </div>
       <div class="col-sm-6" id="derecha" style="display: none">
         @include('Ingresos.index.modal.i_der')
+			</div>
+			<div class="col-sm-6" id="derecha_nuevo" style="display: none">
+				@include('Pacientes.Formularios.form_mini')
       </div>
     </div>
     <div class="m_panel x_panel bg-transparent" style="border:0px !important">

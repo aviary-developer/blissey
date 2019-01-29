@@ -63,7 +63,7 @@ class DetalleCaja extends Model
       return $detalle;
     }
     public static function caja($fecha){
-      $caja=DetalleCaja::where('fecha',$fecha)->where('tipo',1)->where('f_usuario',Auth::user()->id)->get()->last();
+      $caja=DetalleCaja::where('fecha',$fecha)->where('tipo',1)->get()->last();
       return $caja;
     }
     public static function arqueo($fecha){

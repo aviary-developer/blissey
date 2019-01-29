@@ -24,7 +24,7 @@
                 <button type="button" name="button"  class="btn btn-primary btn-sm" onclick="input_seleccion('paciente');">
                   <i class="fa fa-search"></i>
                 </button>
-                <button type="button" name="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_persona" id="nueva_especialidad"  title="Nuevo paciente" onclick="input_seleccion('paciente');">
+                <button type="button" name="button" class="btn btn-success btn-sm" id="nueva_paciente"  title="Nuevo paciente" onclick="input_seleccion('paciente',1);">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>
