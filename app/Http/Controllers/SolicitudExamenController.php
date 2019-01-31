@@ -510,6 +510,7 @@ class SolicitudExamenController extends Controller
         $resultado= new Resultado();
         $resultado->f_solicitud=$idSolicitud;
         $resultado->observacion=$observacion;
+        $resultado->f_laboratorista=Auth::user()->id;
         $resultado->save();
         $resultados=Resultado::all();
         $idResultado=$resultados->last()->id;
@@ -537,6 +538,7 @@ class SolicitudExamenController extends Controller
         $resultado= new Resultado();
         $resultado->f_solicitud=$idSolicitud;
         $resultado->observacion=$observacion;
+        $resultado->f_laboratorista=Auth::user()->id;
         $resultado->save();
         $resultados=Resultado::all();
         $idResultado=$resultados->last()->id;
@@ -565,6 +567,7 @@ class SolicitudExamenController extends Controller
         $resultado= new Resultado();
         $resultado->f_solicitud=$idSolicitud;
         $resultado->observacion=$observacion;
+        $resultado->f_laboratorista=Auth::user()->id;
         $resultado->save();
         $resultados=Resultado::all();
         $idResultado=$resultados->last()->id;
@@ -596,6 +599,7 @@ class SolicitudExamenController extends Controller
         $resultado= new Resultado();
         $resultado->f_solicitud=$idSolicitud;
         $resultado->observacion=$observacion;
+        $resultado->f_laboratorista=Auth::user()->id;
         if($request->hasfile('imagenExamen')){
         $resultado->imagen = $request->file('imagenExamen')->store('public/examenes');
         }
@@ -641,6 +645,7 @@ class SolicitudExamenController extends Controller
       try{
         $resultado=Resultado::where('f_solicitud','=',$idSolicitud)->first();
         $resultado->observacion=$observacion;
+        $resultado->f_laboratorista=Auth::user()->id;
         if($request->hasfile('imagenExamen')){
         $resultado->imagen = $request->file('imagenExamen')->store('public/examenes');
         }

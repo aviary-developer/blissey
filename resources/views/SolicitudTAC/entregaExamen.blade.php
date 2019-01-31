@@ -20,10 +20,10 @@
 					</center>
 			<div class="col-md-12 col-sm-12 col-12">
 				<center>
-				<div><span> Realizó: <strong><i>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</i></strong></span> &nbsp
-					<span> Sello:<img src={{asset(Storage::url(Auth::user()->sello))}} class="logo-pdf"> Firma:<img src={{asset(Storage::url(Auth::user()->firma))}} width="150" height="110"></span>
-					<span> Fecha: <strong><i>{{$resultado->created_at->format('d/m/Y')}}</i></strong></span>
-				</div>
+					<div><span> Realizó: <strong><i>{{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}</i></strong></span> &nbsp
+						<span> Sello:<img src={{asset(Storage::url($resultado->laboratorista->sello))}} class="logo-pdf"> Firma:<img src={{asset(Storage::url($resultado->laboratorista->firma))}} width="150" height="110"></span>
+						<span> Fecha: <strong><i>{{$resultado->created_at->format('d/m/Y')}}</i></strong></span>
+					</div>
 			</center>
 			</div>
 		</div>

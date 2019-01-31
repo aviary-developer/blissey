@@ -17,7 +17,7 @@
           {{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}
           @if ($solicitud->paciente->sexo)
             <span class="badge badge-pill badge-primary">
-          @else  
+          @else
             <span class="badge badge-pill badge-pink">
           @endif
             {{$solicitud->paciente->fechaNacimiento->age.' años' }}
@@ -52,7 +52,7 @@
         <div class="flex-row">
           <center>
             <h5>
-              <i class="fa fa-flask"></i> 
+              <i class="fa fa-flask"></i>
               {{$espr->first()->nombreSeccion($variable)}}
             </h5>
           </center>
@@ -144,6 +144,20 @@
         </div>
       </div>
     @endif
+    <div class="x_panel">
+      <div class="flex-row">
+        <center>
+          <h5>Evaluó:</h5>
+        </center>
+      </div>
+      <div class="flex-row">
+        <center>
+          <span>
+            Lic. {{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}
+          </span>
+        </center>
+      </div>
+    </div>
     <div class="x_panel">
       <center>
         @if ($solicitud->estado == 2)

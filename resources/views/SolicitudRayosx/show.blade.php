@@ -67,6 +67,20 @@
     						echo $resultado->observacion;
     						@endphp
               </div>
+              <div class="x_panel">
+                <div class="flex-row">
+                  <center>
+                    <h5>Evaluó:</h5>
+                  </center>
+                </div>
+                <div class="flex-row">
+                  <center>
+                    <span>
+                      Lic. {{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}
+                    </span>
+                  </center>
+                </div>
+            </div>
             </div>
             </div>
           </div>

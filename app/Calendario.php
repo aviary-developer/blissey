@@ -17,6 +17,6 @@ class Calendario extends Model
     ];
 
     public function usuario(){
-        return $this->belongsTo('App\User', 'f_usuario');;
+        return $this->belongsTo('App\User', 'f_usuario');
     }
 }
