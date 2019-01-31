@@ -34,7 +34,7 @@
 		<div class="x_panel m_panel">
 			<div class="flex-row">
 				<center>
-					<h5>Resultado de la Busqueda</h5>
+					<h5>Resultado de la Búsqueda</h5>
 				</center>
 			</div>
 			<table class="table table-sm table-hover table-striped" id="tablaRequisicion">

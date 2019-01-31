@@ -2,7 +2,7 @@
   <div class="x_panel m_panel">
     <div class="flex-row">
       <center>
-        <h5>Busqueda</h5>
+        <h5>Búsqueda</h5>
       </center>
     </div>
     <div class="form-group col-sm-12">
@@ -26,7 +26,7 @@
     <div class="flex-row">
       <center>
         <h5>
-          Resultado de la busqueda
+          Resultado de la búsqueda
         </h5>
       </center>
     </div>

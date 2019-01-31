@@ -194,7 +194,7 @@ $(document).on('ready', async function () {
 
     var valores = $(this).parents('tr').find('input:eq(1)').val();
     $("#division_eliminada").val(valores);
-    $(this).parent('td').parent('tr').remove();
+    $(this).parent('div').parent('td').parent('tr').remove();
   });
 
   $("#tablaComponente").on('click', '#eliminar_componente_antiguo', function (e) {
@@ -561,13 +561,16 @@ $("#guardarUnidadModal").on('click', async function (e) {
   $("#nombreUnidadModal").val("");
 });
 function rellenarUnidad() {
-  var unidad = $("#v_valor");
+  var unidad = $("#v_valor");//Unidad de división
+  var unidadc = $("#unidad");//Unidad de componente
   var ruta = $('#guardarruta').val() + "/llenarUnidad";
 
   $.get(ruta, function (res) {
     unidad.empty();
+    unidadc.empty();
     $(res).each(function (key, value) {
       unidad.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+      unidadc.append("<option value='" + value.id + "'>" + value.nombre + "</option>");
     });
   });
 }

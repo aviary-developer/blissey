@@ -8,7 +8,7 @@
             <h4 class="mb-1">
               <i class="fas fa-heartbeat"></i>
               Signos Vitales
-              <button type="button" class="btn btn-sm btn-light float-right" id="s-earch" title="Busqueda">
+              <button type="button" class="btn btn-sm btn-light float-right" id="s-earch" title="Búsqueda">
                 <i class="fas fa-search"></i>
               </button>
             </h4>
@@ -22,7 +22,7 @@
         <div class="x_panel m_panel">
           <div class="flex-row">
             <center>
-              <h5>Busqueda</h5>
+              <h5>Búsqueda</h5>
             </center>
           </div>
           <div class="row">

@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="form-group col-sm-12">
-      <h6>Resultado de busqueda</h6>
+      <h6>Resultado de búsqueda</h6>
       <table class="table table-sm" id="tablaBuscarComponente">
         <thead>
           <th>Componente</th>

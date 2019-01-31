@@ -15,7 +15,7 @@
           <div class="x_panel m_panel">
             <div class="flex-row">
               <center>
-                <h5>Busqueda</h5>
+                <h5>Búsqueda</h5>
               </center>
             </div>
             <div class="row">

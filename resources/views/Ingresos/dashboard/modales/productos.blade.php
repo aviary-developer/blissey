@@ -18,7 +18,7 @@
         <div class="x_panel m_panel">
           <div class="flex-row">
             <center>
-              <h5>Busqueda</h5>
+              <h5>Búsqueda</h5>
             </center>
           </div>
           <div class="form-group" id="radios">
@@ -72,7 +72,7 @@
         <div class="x_panel m_panel" style="height: 291px">
           <div class="flex-row">
             <center>
-              <h5>Resultado de la busqueda</h5>
+              <h5>Resultado de la búsqueda</h5>
             </center>
           </div>
           <div class="row">

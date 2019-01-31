@@ -6,7 +6,7 @@
           <h4 class="mb-1">
             <i class="fas fa-x-ray"></i>
             Rayos X
-            <button type="button" class="btn btn-sm btn-light float-right" id="s-earch-rx" title="Busqueda">
+            <button type="button" class="btn btn-sm btn-light float-right" id="s-earch-rx" title="Búsqueda">
               <i class="fas fa-search"></i>
             </button>
           </h4>
@@ -18,7 +18,7 @@
       <div class="x_panel m_panel" id="div-h-rx" style="display:none;">
         <div class="flex-row">
           <center>
-            <h5>Busqueda</h5>
+            <h5>Búsqueda</h5>
           </center>
         </div>
         <div class="form-group col-sm-12">

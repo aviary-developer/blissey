@@ -39,7 +39,7 @@
             <div class="clearfix"></div>
             <div class="ln_solid"></div>
             <center>
-              <h4 class="StepTitle">Resultado de busqueda</h4>
+              <h4 class="StepTitle">Resultado de búsqueda</h4>
             </center>
             <table class="table" id="tablaBuscar">
               <thead>
