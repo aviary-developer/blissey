@@ -32,7 +32,6 @@
   <div class="ln_solid mb-1 mt-1"></div>
   <div class="flex-row">
     <span class="font-weight-light text-monospace">
-      Proveedor
     </span>
   </div>
   <div class="flex-row">

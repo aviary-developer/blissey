@@ -6,7 +6,6 @@
           <center>
             <h4 class="mb-1">
               <i class="fas fa-plus"></i>
-              Proveedor nuevo
             </h4>
           </center>
         </div>
@@ -24,7 +23,6 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
                 </div>
-                {!! Form::text('nombrepr',null,['id'=>'nombreProveedorModal','class'=>'form-control form-control-sm','placeholder'=>'Nombre del proveedor']) !!}
               </div>
             </div>
 
@@ -34,7 +32,6 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
                 </div>
-                {!! Form::text('correo',null,['id'=>'correoProveedorModal','class'=>'form-control form-control-sm','placeholder'=>'Correo del proveedor']) !!}
               </div>
             </div>
 

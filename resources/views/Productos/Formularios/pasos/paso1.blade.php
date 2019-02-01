@@ -52,7 +52,6 @@ $presentaciones=App\Producto::arrayPresentaciones();
         </div>
 
         <div class="form-group col-sm-6">
-          <label class="" for="f_proveedor">Proveedor *</label>
           <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="fas fa-cube"></i></div>
