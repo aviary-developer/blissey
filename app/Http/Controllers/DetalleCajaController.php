@@ -125,7 +125,15 @@ class DetalleCajaController extends Controller
         $fecha=\Carbon\Carbon::now()->toDateString();
       }
       $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
-      $detalle=DetalleCaja::caja($fecha);
+      $cajas=Caja::All();
+      foreach($cajas as $caja){
+        if (DetalleCaja::verificacionCaja($caja->id)){
+          if (DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id){
+              $uso=$caja->id;
+          }
+        }
+      }
+      $detalle=DetalleCaja::caja($fecha,$uso);
       $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
       $tipoArqueo=1;
       return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo'));
@@ -186,7 +194,15 @@ class DetalleCajaController extends Controller
         $fecha=\Carbon\Carbon::now()->toDateString();
       }
       $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
-      $detalle=DetalleCaja::caja($fecha);
+      $cajas=Caja::All();
+      foreach($cajas as $caja){
+        if (DetalleCaja::verificacionCaja($caja->id)){
+          if (DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id){
+              $uso=$caja->id;
+          }
+        }
+      }
+      $detalle=DetalleCaja::caja($fecha,$uso);
       $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
       $tipoArqueo=1;
       if($detalle->datosCaja->localizacion){
