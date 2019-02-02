@@ -64,7 +64,6 @@ $detalles=$transaccion->detalleTransaccion;
 						$cuenta=0;
 						$i=0;
 						$ultimos=[];
-						echo "Hola";
 						foreach ($compras as $compra) {
 							$devoluciones=App\DetalleDevolucion::total($compra->id);
 							$retirados=App\CambioProducto::total($compra->id);
