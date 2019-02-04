@@ -46,7 +46,7 @@ class DetalleCajaController extends Controller
     public function store(DetalleCajaRequest $request)
     {
       if($request->tipo==2){
-        $total=DetalleCaja::arqueo(date('Y').'-'.date('m').'-'.date('d'));
+        $total=DetalleCaja::arqueo(date('Y').'-'.date('m').'-'.date('d'),$request['f_caja']);
       }else{
         $total=null;
       }
@@ -62,7 +62,7 @@ class DetalleCajaController extends Controller
         ]);
       }catch(\Exception $e){
         DB::rollback();
-        return redirect('/detalleCajas/create')->with('mensaje', 'Algo salio mal');
+        return redirect('/detalleCajas/create')->with('error', 'Algo salio mal');
       }
       Bitacora::bitacora('store','detalle_cajas','detalleCajas',$detalle->id);
       DB::commit();

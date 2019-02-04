@@ -9,7 +9,7 @@
       if($ultimo->tipo==2){
       $valor=number_format($ultimo->total-$ultimo->importe,2,'.',',');
       }elseif($ultimo->tipo==1){
-      $valor=App\DetalleCaja::arqueo($ultimo->fecha);
+      $valor=App\DetalleCaja::arqueo($ultimo->fecha,$ultimo->f_caja);
       }
     }else{
       $valor="";
