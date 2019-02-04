@@ -33,13 +33,17 @@
                         @foreach ($detalles as $detalle)
                         @php
                         if($transaccion->tipo==1){
-                            $resta=App\divisionProducto::buscarLote($detalle->f_producto);
+                            $resta=App\divisionProducto::buscarLote($detalle->f_producto,$detalle->id);
                         }else{
                             $restar=App\DetalleDevolucion::total($detalle->id);
                             $resta=$detalle->cantidad-$restar;
                         }
+                        $contador=0;
                         @endphp
                         @if ($resta!=0)
+                        @php
+                            $contador++;
+                        @endphp
                         <tr>
                             <td style="width:25%;">
                                 {!! Form::number('cantidad'.$detalle->id,0,['id'=>'cantidad'.$detalle->id,'class'=>'form-control','onKeyPress' => 'return cantidadDev( this, event,this.value,'.$detalle->id.');','placeholder'=>'Cantidad','min'=>'0']) !!}
@@ -54,17 +58,26 @@
                                 {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
                             @endif
                             </td>
-                            <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                        <td>{{$detalle->divisionProducto->producto->nombre}}</td>
                         </tr>
                         @endif
                         @endforeach
                     </tbody>
                 </table>
+                @if($contador==0)
+                <div class="alert alert-danger" id="mout">
+                    <center>
+                        <p class="mb-1">No hay unidades disponibles</b>.</p>
+                    </center>
+                </div>
+                @endif
             </div>
             <div class="x_panel">
                     <center>
-                 {!! Form::button('Confirmar',['class'=>'btn btn-primary','onclick'=>'justificar();']) !!}
-                      <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+                    @if($contador!=0)
+                        {!! Form::button('Confirmar',['class'=>'btn btn-primary','onclick'=>'justificar();']) !!}
+                        <button type="reset" name="button" class="btn btn-light btn-sm">Limpiar</button>
+                    @endif
                       <a href={!! asset('/proveedores') !!} class="btn btn-light btn-sm">Cancelar</a>
                     </center>
                   </div>

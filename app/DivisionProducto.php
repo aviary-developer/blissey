@@ -102,7 +102,7 @@ class DivisionProducto extends Model
     })
     ->where('detalle_transacions.f_producto',$id)
     ->where('transacions.localizacion',$ts)
-    ->orderBy('transacions.fecha','DESC')
+    ->orderBy('detalle_transacions.created_at','DESC')
     ->get();
   }
 
@@ -276,10 +276,10 @@ class DivisionProducto extends Model
     ->where('transacions.id','<>',null)
     ->get();
   }
-  public static function buscarLote($idDetalle){
-    $lotes=DivisionProducto::lotes($idDetalle);
+  public static function buscarLote($idProducto,$idDetalle){
+    $lotes=DivisionProducto::lotes($idProducto);
     foreach($lotes as $lote){
-      if($lote->id=$idDetalle){
+      if($lote->id==$idDetalle){
         return $lote->cantidad;
       }
     }

@@ -24,7 +24,6 @@ class RequisicionController extends Controller
       $tipo= $request->tipo;
       $buscar=$request->buscar;
         $transacciones=Transacion::buscar($buscar,$tipo);
-        //Transacion::llenar();
         return view('Requisiciones.index',compact('transacciones','tipo','buscar'));//index recepción
     }
 
@@ -216,10 +215,12 @@ class RequisicionController extends Controller
               }
             }
             $diferencia=$cuenta-$inventario;
-            if($diferencia!=0 && $ultimos!=null && isset($ultimos[$i])){
-              $fila=$ultimos[$i];
-              $fila->cantidad=$fila->cantidad-$diferencia;
-              $ultimos[$i]=$fila;
+            if($diferencia!=0 && isset($ultimos[$i])){
+              if($ultimos!=null){
+                $fila=$ultimos[$i];
+                $fila->cantidad=$fila->cantidad-$diferencia;
+                $ultimos[$i]=$fila;
+              }
             }
             $regresivo=$detalle->cantidad;
             for ($b=$i; $b>=0 ; $b--) {

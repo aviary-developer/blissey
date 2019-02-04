@@ -2,7 +2,7 @@
   <meta http-equiv="refresh" content="0;URL=../detalleCajas/create">
 @endif
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href={!! asset('/transacciones?tipo=0') !!}>
+    <a class="navbar-brand" href={!! asset('/transacciones/'.$transaccion->id) !!}>
           Devoluciones
       <span class="badge border-primary border text-primary">
         @if ($transaccion->tipo==1)

@@ -64,6 +64,7 @@ $detalles=$transaccion->detalleTransaccion;
 						$cuenta=0;
 						$i=0;
 						$ultimos=[];
+						echo "Hola";
 						foreach ($compras as $compra) {
 							$devoluciones=App\DetalleDevolucion::total($compra->id);
 							$retirados=App\CambioProducto::total($compra->id);
@@ -78,10 +79,12 @@ $detalles=$transaccion->detalleTransaccion;
 							}
 						}
 						$diferencia=$cuenta-$inventario;
-						if($diferencia!=0 $ultimos!=null && isset($ultimos[$i])){
-							$fila=$ultimos[$i];
-							$fila->cantidad=$fila->cantidad-$diferencia;
-							$ultimos[$i]=$fila;
+						if($diferencia!=0  && isset($ultimos[$i])){
+							if($ultimos!=null){
+								$fila=$ultimos[$i];
+								$fila->cantidad=$fila->cantidad-$diferencia;
+								$ultimos[$i]=$fila;
+							}
 						}
 						$regresivo=$detalle->cantidad;
 						for ($b=$i; $b>=0 ; $b--) {

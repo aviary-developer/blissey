@@ -21,13 +21,13 @@
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={!! asset('/requisiciones?tipo='.$estadoOpuesto) !!}>
+          <a class="dropdown-item" href={!! asset('/verrequisiciones?tipo='.$estadoOpuesto) !!}>
             @if ($estadoOpuesto==5)
 							Atendidas
-							<span class="badge badge-success float-right">{{ App\Transacion::whereIn('tipo',[5,6])->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+							<span class="badge badge-success float-right">{{ App\Transacion::whereIn('tipo',[5,6])->where('localizacion',App\Transacion::contrario(App\Transacion::tipoUsuario()))->count() }}</span>
 						@else
 							Pendientes
-							<span class="badge badge-warning float-right">{{ App\Transacion::where('tipo',4)->where('localizacion',App\Transacion::tipoUsuario())->count() }}</span>
+							<span class="badge badge-warning float-right">{{ App\Transacion::where('tipo',4)->where('localizacion',App\Transacion::contrario(App\Transacion::tipoUsuario()))->count() }}</span>
 						@endif
           </a>  
         </div>
