@@ -179,4 +179,24 @@ class DetalleCajaController extends Controller
       echo $tipoArqueo;
       return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo','cierre'));
     }
+    public static function arqueo_pdf(){
+      if(Transacion::tipoUsuario()==1 && date('G')<7){
+        $fecha=\Carbon\Carbon::now()->subDay()->toDateString();
+      }else{
+        $fecha=\Carbon\Carbon::now()->toDateString();
+      }
+      $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
+      $detalle=DetalleCaja::caja($fecha);
+      $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
+      $tipoArqueo=1;
+      if($detalle->datosCaja->localizacion){
+        $header = view('PDF.header.hospital');
+      }else{
+        $header = view('PDF.header.farmacia');
+      }
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('DetalleCajas.PDF.arqueo',compact('detalle','movimientos','tipoArqueo'));
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+      return $pdf->stream('nombre.pdf');
+    }
 }

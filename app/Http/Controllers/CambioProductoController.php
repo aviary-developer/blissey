@@ -37,7 +37,7 @@ class CambioProductoController extends Controller
      */
     public function create()
     {
-        //
+      return view('Entradas.entrada');
     }
 
     /**
@@ -47,8 +47,31 @@ class CambioProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {  
+      DB::beginTransaction();
+      $transaccion= new Transacion();
+      $transaccion->fecha=$request->fecha;
+      $transaccion->f_proveedor=$request->f_proveedor;
+      $transaccion->f_usuario=Auth::user()->id;
+      $transaccion->localizacion=Transacion::tipoUsuario();
+      $transaccion->tipo=10;
+      $transaccion->comentario=$request->comentario;
+      $transaccion->save();
+
+      for($i=0;$i<count($request->f_producto);$i++){
+        $detalle= new DetalleTransacion;
+        $detalle->cantidad = $request->cantidad[$i];
+        $detalle->fecha_vencimiento = $request->fecha_vencimiento[$i];
+        $detalle->f_transaccion=$transaccion->id;
+        $detalle->lote = $request->lote[$i];
+        $detalle->f_producto=$request->f_producto[$i];
+        $detalle->f_estante=$request->f_estante[$i];
+        $detalle->nivel=$request->nivel[$i];
+        $detalle->save();
+        CambioProducto::actualizarCambio($request->f_producto[$i]);          
+      }
+      DB::commit();
+      Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
     }
 
     /**
@@ -136,5 +159,14 @@ class CambioProductoController extends Controller
       $lote->estado=1;
       $lote->save();
       return redirect('cambio_productos')->with('mensaje','¡Confirmado!');
+    }
+    public static function entradas(Request $request){
+      $tipo=10;
+      $transacciones=Transacion::where('tipo',$tipo)->where('localizacion',Transacion::tipoUsuario())->orderBy('fecha','DESC')->paginate(10);
+      return view('Entradas.index',compact('tipo','transacciones'));
+    }
+    public static function ver($id){
+      $transaccion=Transacion::find($id);
+      return view('Entradas.show',compact('transaccion'));
     }
 }

@@ -210,6 +210,8 @@ Route::group(['middleware'=>'general'], function(){
     Route::match(['get'],'/arqueo','DetalleCajaController@arqueo');
     Route::match(['get'],'/cerrar/{id}','DetalleCajaController@cerrar');
     Route::match(['get'],'/buscararqueo/{caja}','DetalleCajaController@buscararqueo');
+  Route::get('/informe_arqueo','DetalleCajaController@arqueo_pdf');
+
   //Rutas de estantes
   Route::resource('estantes','EstanteController');
   Route::match(['get','post'],'/desactivateEstante/{id}','EstanteController@desactivate');
@@ -293,6 +295,8 @@ Route::group(['middleware'=>'general'], function(){
   //Fechas de vencimiento
   Route::resource('cambio_productos','CambioProductoController');
   Route::get('/descartarVencidos','CambioProductoController@descartar');
+  Route::get('/entradas','CambioProductoController@entradas');
+  Route::get('/entradasver/{id}','CambioProductoController@ver');
   Route::post('/confirmarRetiroVencidos','CambioProductoController@confirmarRetiro');
   Route::post('/confirmarRetiroIndividual/{id}','CambioProductoController@confirmarIndividual');
 

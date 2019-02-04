@@ -74,7 +74,14 @@ class DivisionProducto extends Model
           $cm=$cm+$dm->cantidad;
         }
       }
-    return $cc-$cv+$cr-$ce-$crc-$cm;
+    $ci=0;
+    $dei=DivisionProducto::filtroDetalles(10,$ts,$id);//Entradas por cambio o reingreso
+    foreach($dei as $di){
+      if($di->f_producto==$id){
+        $ci=$ci+$di->cantidad;
+      }
+    }
+    return $cc-$cv+$cr-$ce-$crc-$cm+$ci;
   }
   public static function buscar($estado){
     $bitacora = DB::table('division_productos')
@@ -91,7 +98,7 @@ class DivisionProducto extends Model
     ->select('detalle_transacions.*')
     ->join('transacions','detalle_transacions.f_transaccion','=','transacions.id','left outer')
     ->where(function ($query){
-      $query->where('tipo',1)->orWhere('tipo',6);
+      $query->where('tipo',1)->orWhere('tipo',6)->orWhere('tipo',10);
     })
     ->where('detalle_transacions.f_producto',$id)
     ->where('transacions.localizacion',$ts)
@@ -268,5 +275,14 @@ class DivisionProducto extends Model
     ->where('detalle_transacions.f_producto',$idp)
     ->where('transacions.id','<>',null)
     ->get();
+  }
+  public static function buscarLote($idDetalle){
+    $lotes=DivisionProducto::lotes($idDetalle);
+    foreach($lotes as $lote){
+      if($lote->id=$idDetalle){
+        return $lote->cantidad;
+      }
+    }
+    return 0;
   }
 }

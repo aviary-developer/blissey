@@ -32,8 +32,12 @@
                     <tbody>
                         @foreach ($detalles as $detalle)
                         @php
+                        if($transaccion->tipo==1){
+                            $resta=App\divisionProducto::buscarLote($detalle->f_producto);
+                        }else{
                             $restar=App\DetalleDevolucion::total($detalle->id);
                             $resta=$detalle->cantidad-$restar;
+                        }
                         @endphp
                         @if ($resta!=0)
                         <tr>
