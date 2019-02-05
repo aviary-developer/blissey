@@ -286,7 +286,7 @@ $(document).on('ready', function () {
 
     $.ajax({
       type: 'get',
-      url: $('#guardarruta').val() + '/servicio_paciente',
+      url: $('#guardarruta').val() + '/paciente/servicio_paciente',
       data: {
         id: id
       },
