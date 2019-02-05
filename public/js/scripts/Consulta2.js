@@ -88,7 +88,7 @@ async function v_consulta(id, tipo, nivel = 0) {
             '<button type="button" class="mb-2 btn btn-sm btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',3,1)">' +
             '<i class="fa fa-eye"></i>' +
             '</button>' +
-            '<a href="' + ruta + '/blissey/public/recetas/' + value.id + '" target="_blank" class="btn btn-sm btn-primary mb-2">' +
+						'<a href="' + $('#guardarruta').val() + '/recetas/' + value.id + '" target="_blank" class="btn btn-sm btn-primary mb-2">' +
             '<i class="fas fa-prescription"></i>' +
             '</a>' +
             '</div>' +
