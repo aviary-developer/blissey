@@ -49,12 +49,16 @@ class RecetaController extends Controller
      */
     public function show($id)
     {
-        $consulta = Consulta::find($id);
-        $header = view('PDF.header.hospital');
-        $footer = view('PDF.footer.numero_pagina');
-        $main = view('Recetas.PDF.contenido',compact('consulta'));
-        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
-        return $pdf->stream('nombre.pdf');
+				$consulta = Consulta::find($id);
+				if($consulta->recetas != null){
+					$header = view('PDF.header.hospital');
+					$footer = view('PDF.footer.numero_pagina');
+					$main = view('Recetas.PDF.contenido',compact('consulta'));
+					$pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+					return $pdf->stream('nombre.pdf');
+				}else{
+					return "No existe receta";
+				}
     }
 
     /**
