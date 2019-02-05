@@ -12,14 +12,14 @@
     @endphp
     <div class="col-xs-12 text-justify">
       <p class="col-xs-12">
-        @if ($ingreso->paciente->fechaNacimiento->age < 18)  
+        @if ($ingreso->f_paciente != $ingreso->f_responsable)  
           Yo, <b>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</b> con Documento Único de Identidad personal número:&nbsp;
           @if ($ingreso->responsable->dui != null)
             <b>{{$ingreso->responsable->dui}}</b>    
           @else
             <b><i class="red">Falta DUI</i></b>
           @endif
-          en mi carácter como Representante Legal de mi menor {{($ingreso->paciente->sexo)?"hijo":"hija"}}, <b>{{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b> , <b><i>doy mi consentimiento</i></b>, al Personal Médico, Cirujano y de Enfermería de este Centro Hospitalario, para que traten la enfermedad de mi Representado, en la forma Técnica que ellos crean convenientes, a fin de recuperar la salud de mi Representado.
+          en mi carácter como Representante Legal de mi pariente, <b>{{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b> , <b><i>doy mi consentimiento</i></b>, al Personal Médico, Cirujano y de Enfermería de este Centro Hospitalario, para que traten la enfermedad de mi Representado, en la forma Técnica que ellos crean convenientes, a fin de recuperar la salud de mi Representado.
         @else
           Yo, <b>{{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b>&nbsp;  con Documento Único de Identidad personal número &nbsp;
           @if ($ingreso->paciente->dui != null)

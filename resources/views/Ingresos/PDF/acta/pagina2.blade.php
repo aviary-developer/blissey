@@ -15,12 +15,12 @@
       San Vicente, {{$hoy->formatLocalized('%d de %B del %Y')}}
     </p>
     <p class="col-xs-12">
-      Por US $ <span class="red">999.99</span>
+      Por US $ <span class="">_____________</span>
     </p>
   </div>
   <div class="col-xs-12 text-justify">
     <p class="col-xs-12">
-      Por este <b><i>Pagaré sin protesto</i></b> , me obligo a pagar incondicionalmente a <b><i>Mauricio Enrique Durán Rodríguez</i></b>, propietario de la empresa salvadoreña y de este domicilio, la suma de <b class="subrayar red"> $ 999.99</b>, a más tardar <b class="subrayar red">01 / 01 / 2000</b>, en <b><i>Clínica Hospital Divino Niño</i></b>. si el monto de este <b><i>Pagaré</i></b> no fuera cancelados al vencimiento de este reconoceré en caso de mora el interés del 5% diario sobre la suma adeudada a partir del momento en se inicie la mora y por el tiempo que transcurra hasta el pago total de este <b><i>Pagaré</i></b>. cualquier deducción, compensación o retención que debiere aplicarse al monto del presente pagaré, impuesto por cualquier autoridad con jurisdicción, será a mi cuenta y cargo, de tal forma que <b><i>Mauricio Enrique Durán Rodríguez</i></b>, recibirá íntegramente el monto e interés pactados en este <b><i>Pagaré</b></i>.
+      Por este <b><i>Pagaré sin protesto</i></b> , me obligo a pagar incondicionalmente a <b><i>Mauricio Enrique Durán Rodríguez</i></b>, propietario de la empresa salvadoreña y de este domicilio, la suma de <b class=""> $ __________</b>, a más tardar <b class="">____________________</b>, en <b><i>Clínica Hospital Divino Niño</i></b>. si el monto de este <b><i>Pagaré</i></b> no fuera cancelados al vencimiento de este reconoceré en caso de mora el interés del 5% diario sobre la suma adeudada a partir del momento en se inicie la mora y por el tiempo que transcurra hasta el pago total de este <b><i>Pagaré</i></b>. cualquier deducción, compensación o retención que debiere aplicarse al monto del presente pagaré, impuesto por cualquier autoridad con jurisdicción, será a mi cuenta y cargo, de tal forma que <b><i>Mauricio Enrique Durán Rodríguez</i></b>, recibirá íntegramente el monto e interés pactados en este <b><i>Pagaré</b></i>.
     </p>
     <br>
     <p class="col-xs-12">

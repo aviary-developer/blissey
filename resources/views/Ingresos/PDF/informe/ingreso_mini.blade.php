@@ -412,15 +412,17 @@
         $var_servicio = number_format($total_servicio,2,'.','');
         $total_servicio_hospitalario = 0;
         $total_servicio_hospitalario += floatval($total_habitacion);
-        $total_servicio_hospitalario += floatval($total_laboratorio) + floatval($total_servicio) + floatval($total_rayos_x) + floatval($total_ultras) + floatval($total_tac);
+				$total_servicio_hospitalario += floatval($total_laboratorio) + floatval($total_servicio) + floatval($total_rayos_x) + floatval($total_ultras) + floatval($total_tac);
+				$total_evaluaciones = 0;
+				$total_evaluaciones += floatval($total_laboratorio) + floatval($total_rayos_x) + floatval($total_ultras) + floatval($total_tac);
       @endphp
       <tr>
         <td>Habitación</td>
         <td class="text-right">{{'$ '.$var_habitacion}}</td>
       </tr>
       <tr>
-        <td>Laboratorio Clínico</td>
-        <td class="text-right">{{'$ '.$var_laboratorio}}</td>
+        <td>Evaluaciones</td>
+        <td class="text-right">{{'$ '.number_format($total_evaluaciones,2,'.',',')}}</td>
       </tr>
       <tr>
         <td>Servicios</td>

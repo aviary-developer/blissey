@@ -134,8 +134,9 @@
     <p class="col-xs-12">
       Yo, <b class="subrayar">{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido.', '}}</b>&nbsp; mayor de edad con Documento Único de Identidad, número &nbsp;<b class="subrayar">{{$ingreso->responsable->dui}}</b>, &nbsp;actuando en calidad de responsable del paciente de generales antes expresadas, estoy conforme y enterado de los costos hospitalarios que implica el tratamiento y la enfermedad por lo cual esta {{($ingreso->paciente->sexo)?"ingresado":"ingresada"}} y acepto que diariamente se me informe el estado de cuenta al que me comprometo cancelar.
     </p>
-    <br>
-    <div class="col-xs-12">
+		<br>
+		<!--
+    	<div class="col-xs-12">
       <table class="">
         <thead>
           <th style="width: 120px;">FECHA</th>
@@ -188,6 +189,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+		</div>
+		-->
   </div>
 </div>
