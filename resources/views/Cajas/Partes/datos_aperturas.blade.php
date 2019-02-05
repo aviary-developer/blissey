@@ -9,7 +9,7 @@
         <div class="col-sm-12">
           <table class="table table-hover table-sm table-striped index-table">
             @php
-            $aperturas=App\DetalleCaja::where([['f_caja',$caja->id],['tipo',1]])->get();
+            $aperturas=App\DetalleCaja::where([['f_caja',$caja->id],['tipo',1]])->orderBy('created_at','ASC')->get();
             $contador=1;
             @endphp
             <thead>

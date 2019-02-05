@@ -177,7 +177,7 @@ class Transacion extends Model
           if(!$iva){
             $total=$total*1.13;
           }
-          return $total;
+          return number_format($total,2,'.','');
         }
         public static function contrario($tipo){
           if($tipo==0){

@@ -62,14 +62,15 @@ class DetalleCaja extends Model
       $detalle=DetalleCaja::where('f_caja',$id)->get()->last();
       return $detalle;
     }
-    public static function caja($fecha){
-      $caja=DetalleCaja::where('fecha',$fecha)->where('tipo',1)->get()->last();
+    public static function caja($fecha,$f_caja){
+      $caja=DetalleCaja::where('fecha',$fecha)->where('f_caja',$f_caja)->where('tipo',1)->get()->last();
       return $caja;
     }
-    public static function arqueo($fecha){
+    public static function arqueo($fecha,$f_caja){
       $total=0;
-      $detalle=DetalleCaja::caja($fecha);
+      $detalle=DetalleCaja::caja($fecha,$f_caja);
       $total=$total+$detalle->importe;
+      echo $total."<br><br>";
       $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,\Carbon\Carbon::now()->toDateString()." 07:00:00");
       foreach ($movimientos as $movimiento) {
         $valor=$movimiento->valorTotal($movimiento->id);
@@ -77,7 +78,7 @@ class DetalleCaja extends Model
           $total=$total+$valor;
         }
         if($movimiento->tipo==8){
-          $total=$total+$movimiento->devolucion;
+          $total=$total+number_format($movimiento->devolucion,2,'.','');
         }
         if($movimiento->tipo==1){
           $total=$total-$valor;
@@ -85,6 +86,7 @@ class DetalleCaja extends Model
         if($movimiento->tipo==9){
           $total=$total-$movimiento->devolucion;
         }
+        echo $total."<br><br>";
       }
       return $total;
     }

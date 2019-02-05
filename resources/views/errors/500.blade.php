@@ -45,9 +45,9 @@
         <div class="flex-center position-ref full-height">
 
             <div class="content">
-            <H1>{{$sms}}</H1>
+                <H1>HA OCURRIDO UN ERROR EN EL SERVIDOR</H1>
+
             </div>
         </div>
     </body>
 </html>
-
