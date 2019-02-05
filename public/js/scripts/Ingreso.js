@@ -500,7 +500,7 @@ $("#nuevo_abono").on('click', function (e) {
   var transaccion_id = $("#id_t").val();
   var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar" autofocus aria-autocomplete="false">';
 	var deuda = $("#deuda_para_alta").val();
-	deuda = deuda.parseFloat();
+	deuda = parseFloat(deuda);
   swal({
     title: 'Nuevo abono',
     type: 'info',
@@ -514,7 +514,7 @@ $("#nuevo_abono").on('click', function (e) {
     if (result.value) {
 			console.log($("#monto").val())
 			var monto_a = $("#monto").val();
-			if (monto_a.parseFloat() <= deuda) {
+			if (parseFloat(monto_a) <= deuda) {
         $.ajax({
           url: $('#guardarruta').val() + "/abonar",
           type: "POST",
