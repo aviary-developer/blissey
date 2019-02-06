@@ -6,7 +6,7 @@
   @endphp
   @include('Transacciones.Barra.stockBajo')
    <div class="col-12">
-      <div class="x_panel">
+      {{-- <div class="x_panel">
           {!!Form::open(['url'=>'stockTodos','method'=>'GET','role'=>'search','class'=>'form-inline','id'=>'formstockbajo'])!!}
           <div class="form-group col-sm-12">
               <div class="input-group mb-2 mr-sm-2">
@@ -19,7 +19,7 @@
               </div>
             </div>
           {!! Form::close() !!}
-      </div>
+      </div> --}}
       <div class="x_panel">
           <table class="table table-striped table-sm">
               <thead>

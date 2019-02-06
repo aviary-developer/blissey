@@ -31,7 +31,11 @@
               </div>
               @php
               @endphp
-              {!! Form::number('importe',$valor,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad']) !!}
+              @if($valor=="")
+                {!! Form::number('importe',$valor,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad']) !!}
+              @else
+                {!! Form::number('importe',$valor,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad','readonly'=>'readonly']) !!}
+              @endif
             </div>
           <input type="hidden" name="tipo" value="1">
           </div>

@@ -70,7 +70,6 @@ class DetalleCaja extends Model
       $total=0;
       $detalle=DetalleCaja::caja($fecha,$f_caja);
       $total=$total+$detalle->importe;
-      echo $total."<br><br>";
       $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,\Carbon\Carbon::now()->toDateString()." 07:00:00");
       foreach ($movimientos as $movimiento) {
         $valor=$movimiento->valorTotal($movimiento->id);
@@ -86,7 +85,6 @@ class DetalleCaja extends Model
         if($movimiento->tipo==9){
           $total=$total-$movimiento->devolucion;
         }
-        echo $total."<br><br>";
       }
       return $total;
     }
