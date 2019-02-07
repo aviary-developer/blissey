@@ -15,3 +15,4 @@ composer.lock
 *.jpeg
 composer.lock
 config/filesystems.php
+*.png
