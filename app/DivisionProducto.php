@@ -153,7 +153,7 @@ class DivisionProducto extends Model
   }
   public static function productos($id){
     return DB::table('division_productos')
-    ->select('division_productos.*','productos.*')
+    ->select('division_productos.*','productos.nombre')
     ->join('productos','division_productos.f_producto','=','productos.id','left outer')
     ->where('division_productos.f_division',$id)
     ->where('productos.estado',true)
@@ -284,5 +284,13 @@ class DivisionProducto extends Model
       }
     }
     return 0;
+  }
+  public static function nombreCompleto($id){
+    $division=DivisionProducto::find($id);
+    if($division->unidad==null){
+      return $division->division->nombre." ".$division->cantidad." ".$division->producto->presentacion->nombre;
+    }else{
+      return $division->division->nombre." ".$division->cantidad." ".$division->unidad->nombre;
+    }
   }
 }
