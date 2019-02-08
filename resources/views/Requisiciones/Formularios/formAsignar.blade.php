@@ -2,10 +2,9 @@
 setlocale(LC_ALL,'es');
 $detalles=$transaccion->detalleTransaccion;
 @endphp
-<div class="x_content">
-  <div class="row">
-    <div class="col-md-12 col-sm-12 col-12">
-      <table class="table table-striped">
+<div class="x_panel">
+    <div class="col-sm-12">
+		<table class="table table-striped table-hover table-sm">
         <thead>
           <th>Cantidad</th>
           <th>Fecha de vencimiento</th>
@@ -22,25 +21,30 @@ $detalles=$transaccion->detalleTransaccion;
               <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>
               <td>
                 @if($detalle->divisionProducto->unidad==null)
-                  {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
+                  {{$detalle->divisionProducto->producto->nombre." ".$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
                 @else
-                  {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                  {{$detalle->divisionProducto->producto->nombre." ".$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
                 @endif
               </td>
               <td>{{$detalle->lote}}</td>
               <td style="width:20%">{!!Form::select('f_estante[]',
                 App\Estante::arrayEstante()
-                ,null, ['placeholder' => 'Seleccione un estante','class'=>'form-control vals','id'=>'f_estante'.$detalle->id,'onChange'=>'cambioEstante('.$detalle->id.')'])!!}
+                ,null, ['placeholder' => 'Seleccione un estante','class'=>'form-control form-control-sm vals','id'=>'f_estante'.$detalle->id,'onChange'=>'cambioEstante('.$detalle->id.')'])!!}
             </td>
               <td style="width:15%">{!!Form::select('nivel[]',[]
-                ,null, ['placeholder' => 'Nivel','class'=>'form-control','id'=>'nivel'.$detalle->id])!!}
+                ,null, ['placeholder' => 'Nivel','class'=>'form-control form-control-sm','id'=>'nivel'.$detalle->id])!!}
               </td>
             </tr>
       @endforeach
     </tbody>
   </table>
-      {!!Form::button('Confirmar',['class'=>'btn btn-primary','id'=>'confirmarAsignacion'])!!}
     </div>
+</div>
+<div class="x_panel">
+  <div class="col-sm-12">
+    <center>
+      {!!Form::button('Confirmar',['class'=>'btn btn-primary btn-sm','id'=>'confirmarAsignacion'])!!}
+    </center>
   </div>
 </div>
 <script type="text/javascript">

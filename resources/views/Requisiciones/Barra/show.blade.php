@@ -1,5 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/requisiciones?tipo='.$transaccion->tipo) !!}>
+  @php
+      if($transaccion->tipo==6){
+        $r=5;
+      }else{
+        $r=$transaccion->tipo;
+      }
+  @endphp 
+  <a class="navbar-brand" href={!! asset('/requisiciones?tipo='.$r) !!}>
     Requisición
     <span class="badge border-info border text-info">
       Información

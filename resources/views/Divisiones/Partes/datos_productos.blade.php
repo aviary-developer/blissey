@@ -16,7 +16,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Productos</th>
+          <th colspan="2">Productos</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +24,7 @@
           <tr>
             <td>{{$contador}}</td>
             <td>{{$producto->nombre}}</td>
+            <td>{{App\DivisionProducto::nombreCompleto($producto->id)}}</td>
           </tr>
           @php
           $contador++;

@@ -22,9 +22,9 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="modal" data-target="#modal_busqueda">Buscar</a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" href="#">Reporte</a>
-      </li>
+      </li> --}}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver

@@ -109,7 +109,7 @@ class RequisicionController extends Controller
         $f = $f->format('Y-m-d');
         $transaccion->fecha=$f;
         $transaccion->f_usuario=Auth::user()->id;
-        $transaccion->localizacion=DivisionProducto::busquedaTipo($tipo);
+        $transaccion->localizacion=DivisionProducto::busquedaTipo(1);
         $transaccion->tipo=7;
 
         if($request->detalle_id!=null){
