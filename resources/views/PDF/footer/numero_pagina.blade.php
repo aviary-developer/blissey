@@ -35,9 +35,20 @@
   </head>
   <body onload="subst()">
     <div class="numero-pagina">
-      <p class="right">
-        Página <span class="page"></span> de <spa class="topage"></spa>
-      </p>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="col-xs-6">
+						<p style="text-align: left !important">
+								Fecha de impresión: {{date('d/m/Y h:i a')}}
+						</p>
+					</div>
+					<div class="col-xs-6">
+						<p class="right">
+							Página <span class="page"></span> de <spa class="topage"></spa>
+						</p>
+					</div>
+				</div>
+			</div>
     </div>
   </body>
 </html>

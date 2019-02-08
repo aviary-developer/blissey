@@ -1,10 +1,13 @@
 *{
   font-family: sans-serif;
-  font-size: 11pt;
+  font-size: 13pt;
   color: black;
 }
 .vivaldi{
   font-family: "Vivaldi";
+}
+.font-plus{
+	font-size: 120%;
 }
 .logo-pdf{
   width: 120px;

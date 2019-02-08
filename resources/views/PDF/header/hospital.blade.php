@@ -47,8 +47,8 @@
         <center>
           <h1 class="vivaldi">{{$empresa->nombre_hospital}}</h1>
           <span><i>{{"C.S.S.P. ".$empresa->codigo_hospital}}</i></span>
-          <h4 class="vivaldi">{{"Dirección: ".$empresa->direccion_hospital}}</h4>
-          <h4 class="vivaldi">
+          <h4 class="vivaldi font-plus">{{"Dirección: ".$empresa->direccion_hospital}}</h4>
+          <h4 class="vivaldi font-plus">
             @if($telefonos!=null)
               @if (count($telefonos)>1)
                 {{"Teléfonos: "}}

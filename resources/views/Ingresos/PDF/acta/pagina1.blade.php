@@ -55,22 +55,12 @@
   </div>
   <div>
     <div class="col-xs-7">
-      <div class="col-xs-5 row">
-        <div class="col-xs-5">
+      <div class="col-xs-8 row">
+        <div class="col-xs-4">
           FECHA:
         </div>
-        <div class="col-xs-7 subrayar">
-          <b>{{' '.$ingreso->fecha_ingreso->format('d / m / Y')}}</b>
-        </div>
-      </div>
-      <div class="col-xs-4 row">
-        <div class="col-xs-5">
-          <span>
-            HORA:
-          </span>
-        </div>
-        <div class="col-xs-7 subrayar">
-          <b>{{' '.$ingreso->fecha_ingreso->format('g:i a')}}</b>
+        <div class="col-xs-8 subrayar">
+          <b>{{' '.$ingreso->fecha_ingreso->format('d / m / Y g:i a')}}</b>
         </div>
       </div>
       <div class="col-xs-4 row">
@@ -85,24 +75,24 @@
       </div>
     </div>
     <div class="col-xs-5">
-      <div class="col-xs-5">
+      <div class="col-xs-6">
         <span>
           EXPEDIENTE NO.:
         </span>
       </div>
-      <div class="col-xs-7 subrayar">
+      <div class="col-xs-6 subrayar">
         <b>{{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}</b>
       </div>
     </div>
   </div>
   <div>
     <div class="col-xs-12">
-      <div class="col-xs-4">
+      <div class="col-xs-5">
         <span>
           MÉDICO QUE AUTORIZA EL INGRESO:
         </span>
       </div>
-      <div class="col-xs-8  subrayar">
+      <div class="col-xs-7  subrayar">
         <b>
           @if ($ingreso->medico->sexo)
             {{" Dr. "}}

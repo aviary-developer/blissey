@@ -27,7 +27,7 @@
           @endphp 
           @if ($i != 0)
             <tr>
-              <td class="text-center" colspan="2"><b>{{$fecha_anterior->formatLocalized('Total del %d de %B de %Y')}}</b></td>
+              <td class="text-center" colspan="2"><b>{{$fecha_anterior->formatLocalized('Total acumulado al %d de %B de %Y')}}</b></td>
               <td class="text-right blue"><b>{{'$ '.number_format(($total_med),2,'.',',')}}</b></td>
             </tr>
           @endif
@@ -50,7 +50,7 @@
           @endforeach
         @endfor
         <tr>
-          <td class="text-center" colspan="2"><b>{{$fecha_origen->formatLocalized('Total del %d de %B de %Y')}}</b></td>
+          <td class="text-center" colspan="2"><b>{{$fecha_origen->formatLocalized('Total acumulado al %d de %B de %Y')}}</b></td>
           <td class="text-right blue"><b>{{'$ '.number_format(($total_med),2,'.',',')}}</b></td>
         </tr>
       </tbody>

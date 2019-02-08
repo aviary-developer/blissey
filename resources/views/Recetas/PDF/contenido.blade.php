@@ -13,7 +13,7 @@
     <div class="col-xs-3"></div>
     <div class="col-xs-6">
       <center>
-        <h2>Tratamiento médico</h2>
+        <h2>Tratamiento Médico</h2>
       </center>
     </div>
     <div class="col-xs-3">
@@ -30,27 +30,30 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6">
-      <div class="col-xs-3" >
+    <div class="col-xs-8">
+      <div class="col-xs-4" >
         Paciente:
       </div>
-      <div class="col-xs-9">
+      <div class="col-xs-8">
         <b class="">
           {{$consulta->ingreso->paciente->nombre.' '.$consulta->ingreso->paciente->apellido}}
         </b>
       </div>
     </div>
-    <div class="col-xs-6">
-      <div class="col-xs-2">
-        Fecha:
+    
+	</div>
+	<div class="row">
+		<div class="col-xs-8">
+      <div class="col-xs-4">
+        Fecha de consulta:
       </div>
-      <div class="col-xs-10">
+      <div class="col-xs-6">
         <b>
           {{$consulta->created_at->formatLocalized('%d de %B de %Y')}}
         </b>
       </div>
     </div>
-  </div>
+	</div>
   @if ($consulta->recetas->where('nombre_producto','!=',null)->count() > 0)
     <br>
     <div class="row">
@@ -190,11 +193,11 @@
     </div>
   @endif
   <div class="row">
-    <div class="col-xs-7"></div>
-    <div class="col-xs-5">
+    <div class="col-xs-5"></div>
+    <div class="col-xs-7">
       <div class="alignright">
-        <img src={{asset(Storage::url($consulta->medico->firma))}} style="width:150px;">
-        <img src={{asset(Storage::url($consulta->medico->sello))}} style="width:150px;">
+        <img src={{asset(Storage::url($consulta->medico->firma))}} style="width:180px;">
+        <img src={{asset(Storage::url($consulta->medico->sello))}} style="width:180px;">
       </div>
       <div class="alignright">
         <i class="fa fa-stethoscope"></i> 
