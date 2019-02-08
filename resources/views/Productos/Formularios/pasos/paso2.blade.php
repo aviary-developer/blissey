@@ -1,6 +1,6 @@
 <div class="flex-row">
   <center>
-    <h5>Componentes del producto</h5>
+    <h5>Componentes del Producto</h5>
   </center>
 </div>
 <div class="row">

@@ -5,7 +5,7 @@
 </div>
 <div class="x_panel">
   <center>
-    <h5 class="mb-1">Datos personales</h5>
+    <h5 class="mb-1">Datos Personales</h5>
   </center>
   <div class="ln_solid mb-1 mt-1"></div>
   <div class="form-group col-sm-6">

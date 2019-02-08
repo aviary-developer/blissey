@@ -3,7 +3,7 @@ $presentaciones=App\Producto::arrayPresentaciones();
 @endphp
 <div class="flex-row">
   <center>
-    <h5>Datos Personales</h5>
+    <h5>Datos del Producto</h5>
   </center>
 </div>
 <div class="row">
