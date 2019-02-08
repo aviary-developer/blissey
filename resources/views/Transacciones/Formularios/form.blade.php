@@ -156,7 +156,11 @@
   <div class="x_panel">
     <center>
       <h5 class="mb-1">
+        @if ($tipo == 2)
           Detalles de venta *
+        @else
+          Detalles de compra *
+        @endif
       </h5>
     </center>
     <div class="ln_solid mb-1 mt-1"></div>

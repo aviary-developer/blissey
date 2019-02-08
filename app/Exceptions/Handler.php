@@ -59,7 +59,10 @@ class Handler extends ExceptionHandler
       }
         if ($exception instanceof \Illuminate\Database\QueryException) {
             // return response()->view('errors.error',['msm'=>'No hay conexión con la base de datos']);
-            return response()->view('errors.error',['msm'=>'EXISTE UN ERROR EN LA SENTENCIA A EJECUTAR']);
+            // $msm=;
+            $mesaje=$exception->getMessage();
+            return response()->view('errors.error',compact('mensaje'));
+            dd(); 
 
         }
         return parent::render($request, $exception);

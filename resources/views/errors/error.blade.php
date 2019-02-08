@@ -45,7 +45,8 @@
         <div class="flex-center position-ref full-height">
 
             <div class="content">
-            <H1>{{$sms}}</H1>
+            <H1>EXISTE UN ERROR EN LA SENTENCIA A EJECUTAR</H1>
+            {{$mensaje}}
             </div>
         </div>
     </body>
