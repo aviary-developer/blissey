@@ -271,6 +271,7 @@ class ProductoController extends Controller
     }
     function editarDivision(DivisionProductoRequest $request){
       $division=DivisionProducto::find($request->idDiv);
+      $division->codigo=$request->codigo;
       $division->precio=$request->pre;
       $division->stock=$request->stock;
       $division->n_meses=$request->mes;

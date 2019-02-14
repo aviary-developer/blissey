@@ -15,12 +15,15 @@ class DivisionProductoRequest extends FormRequest
     public function rules()
     {
         return [
-            'pre'=>'required|',
+            'codigo'=>'required|max:50',
+            'pre'=>'required',
             'stock'=>'required',
         ];
     }
     public function messages(){
        return [
+            'codigo.required'=>'El campo código de venta es requerido',
+            'codigo.required'=>'El campo código debe tener máximo 50 caracteres',
             'pre.required'=>'El campo precio de venta es requerido',
             'stock.required'=>'El campo stock mínimo es requerido',
 

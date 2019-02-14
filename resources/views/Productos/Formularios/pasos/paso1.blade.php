@@ -144,6 +144,7 @@ $presentaciones=App\Producto::arrayPresentaciones();
           $('#pre').val(precio);
           $('#stock').val(stock);
           $('#cod').text(codigo);
+          $('#codi').val(codigo);
           $('#mes').val(meses);
         }
         </script>
