@@ -3,7 +3,11 @@
     <p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
   </center>
 </div>
+{{-- @if($create)
 <div id="smartwizard">
+@else --}}
+<div id="smartwizarde">
+{{-- @endif --}}
   {{-- Encabezado del wizard --}}
   <ul>
     <li>

@@ -246,6 +246,26 @@ $(document).on('ready', async function () {
     },
     keyNavigation: false,
   });
+  $("#smartwizarde").smartWizard({
+    lang: {
+      next: 'Siguiente',
+      previous: 'Anterior'
+    },
+    toolbarSettings: {
+      toolbarPosition: 'bottom', // none, top, bottom, both
+      toolbarButtonPosition: 'right', // left, right
+      showNextButton: true, // show/hide a Next button
+      showPreviousButton: true, // show/hide a Previous button
+      toolbarExtraButtons: [
+        $('<button type="button"></button>').text('Guardar')
+          .addClass('btn btn-primary btn-sm')
+          .on('click', save_producto),
+        $('<a href="../../productos?estado=1"></a>').text('Cancelar')
+          .addClass('btn btn-light btn-sm')
+      ]
+    },
+    keyNavigation: false,
+  });
   function save_producto() {
     n = vnombre();
     p = vpresentacion();
