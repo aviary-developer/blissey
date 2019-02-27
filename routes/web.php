@@ -382,6 +382,9 @@ Route::get('/validate',function(Illuminate\Http\Request $request){
 Route::get('/ayuda/componentes',function(){
 	return view('Ayuda.Contenido.componentes');
 });
+Route::get('/ayuda/basedatos',function(){
+	return view('Ayuda.Contenido.basedatos');
+});
 Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$tipo = $request->tipo;
 	$arreglo = App\Ayuda::mensaje($tipo);

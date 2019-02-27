@@ -28,7 +28,7 @@
 			</div>
 			<div class="flex-row">
 				<center>
-					<p>Elementos asiciados a los productos los cuales sirven para detallar los ingredientes de los mismos</p>
+					<p>Elementos asociados a los productos los cuales sirven para detallar los ingredientes de los mismos</p>
 				</center>
 			</div>
 			<div class="ln_solid"></div>
