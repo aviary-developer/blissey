@@ -3,7 +3,7 @@
 	{{-- Barra de menu --}}
 	<nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
 		<a class="navbar-brand" href={!! asset('/componentes') !!}>
-			Respaldos
+			Agenda
 			<span class="badge border-info border text-info">
 				Ayuda
 			</span>
@@ -23,12 +23,12 @@
 		<div class="x_panel">
 			<div class="flex-row">
 				<center>
-					<h4>Respaldos</h4>
+					<h4>Eventos en agenda</h4>
 				</center>
 			</div>
 			<div class="flex-row">
 				<center>
-					<p>Son copias de seguridad que contienen información con la que trabaja en sistema</p>
+					<p>Actividades ingresadas en la agenda de uno o varios usuarios.</p>
 				</center>
 			</div>
 			<div class="ln_solid"></div>
@@ -39,11 +39,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Crear nuevo respaldo
+								Crear nuevo evento
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/RespaldoNuevo/RespaldoNuevo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/agenda/NuevoEvento/NuevoEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
@@ -51,11 +51,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Restaurar un respaldo
+								Ver eventos
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/Restaurar/Restaurar.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/agenda/VerEvento/VerEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
@@ -63,11 +63,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Descargar un respaldo
+								Editar un evento
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/DescargarRespaldo/DescargarRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/agenda/EditarEvento/EditarEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
@@ -75,23 +75,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Subir un respaldo
+								Eliminar un evento
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/SubirRespaldo/SubirRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
-				</div>
-
-				<div class="tab-pane fade" id="five" role="tabpanel" aria-labelledby="five-tab">
-					<div class="flex-row">
-						<center>
-							<h5 class="text-info">
-								<i class="fas fa-film"></i>
-								Eliminar un respaldo
-							</h5>
-						</center>
-					</div>
-					<iframe src={{asset('help/bd/EliminarRespaldo/EliminarRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/agenda/EliminarEvento/EliminarEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 			</div>
@@ -112,21 +100,16 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
-						Restaurar
+						Ver
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
-						Descargar
+						Editar
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="four" aria-selected="false">
-						Subir
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="five-tab" data-toggle="tab" href="#five" role="tab" aria-controls="five" aria-selected="false">
 						Eliminar
 					</a>
 				</li>

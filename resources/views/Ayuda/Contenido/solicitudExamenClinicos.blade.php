@@ -1,9 +1,10 @@
+{{-- Ayuda para la pantalla de solicitud de exámenes clínicos --}}
 @extends('ayuda')
 @section('layout')
 	{{-- Barra de menu --}}
 	<nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
 		<a class="navbar-brand" href={!! asset('/componentes') !!}>
-			Respaldos
+			Solicitud de Exámenes Clínicos
 			<span class="badge border-info border text-info">
 				Ayuda
 			</span>
@@ -23,12 +24,12 @@
 		<div class="x_panel">
 			<div class="flex-row">
 				<center>
-					<h4>Respaldos</h4>
+					<h4>Solicitudes de Exámenes Clínicos</h4>
 				</center>
 			</div>
 			<div class="flex-row">
 				<center>
-					<p>Son copias de seguridad que contienen información con la que trabaja en sistema</p>
+					<p>Peticiones que se realizan cada vez que un paciente necesita un exámen clínico.</p>
 				</center>
 			</div>
 			<div class="ln_solid"></div>
@@ -39,11 +40,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Crear nuevo respaldo
+								Crear una solicitud
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/RespaldoNuevo/RespaldoNuevo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/solicitudesExamen/CrearSolicitud/CrearSolicitud.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
@@ -51,11 +52,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Restaurar un respaldo
+								Buscar por receta
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/Restaurar/Restaurar.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/solicitudesExamen/BuscarSolicitud/BuscarSolicitudExamen.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
@@ -63,35 +64,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Descargar un respaldo
+								Crear un paciente
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/DescargarRespaldo/DescargarRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
-				</div>
-
-				<div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
-					<div class="flex-row">
-						<center>
-							<h5 class="text-info">
-								<i class="fas fa-film"></i>
-								Subir un respaldo
-							</h5>
-						</center>
-					</div>
-					<iframe src={{asset('help/bd/SubirRespaldo/SubirRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
-				</div>
-
-				<div class="tab-pane fade" id="five" role="tabpanel" aria-labelledby="five-tab">
-					<div class="flex-row">
-						<center>
-							<h5 class="text-info">
-								<i class="fas fa-film"></i>
-								Eliminar un respaldo
-							</h5>
-						</center>
-					</div>
-					<iframe src={{asset('help/bd/EliminarRespaldo/EliminarRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/solicitudesExamen/PacienteParaExamen/SolicitudParaExamen.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 			</div>
@@ -107,29 +84,20 @@
 			<ul class="nav flex-column nav-pills" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
-						Nuevo
+						Nueva
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
-						Restaurar
+						Nuevo paciente
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
-						Descargar
+						Buscar receta
 					</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="four" aria-selected="false">
-						Subir
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="five-tab" data-toggle="tab" href="#five" role="tab" aria-controls="five" aria-selected="false">
-						Eliminar
-					</a>
-				</li>
+
 			</ul>
 		</div>
 	</div>
