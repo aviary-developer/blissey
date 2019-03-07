@@ -42,6 +42,9 @@
           </a>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href={!! asset('/ayuda/general?tipo=cajas') !!} target="_blank">Ayuda</a>            
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

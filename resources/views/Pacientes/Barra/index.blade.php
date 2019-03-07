@@ -49,6 +49,13 @@
           </a>  
         </div>
       </li>
+      <li class="nav-item">
+        @if (Auth::user()->tipoUsuario == "Farmacia")
+          <a class="nav-link" href={!! asset('/ayuda/general?tipo=clientes') !!} target="_blank">Ayuda</a>            
+        @else
+          <a class="nav-link" href={!! asset('/ayuda/general?tipo=pacientes') !!} target="_blank">Ayuda</a>
+        @endif
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

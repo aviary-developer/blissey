@@ -248,7 +248,7 @@ class TransaccionController extends Controller
         //
     }
     public function buscarProductos($id,$texto){
-      $productos=Producto::where('nombre','like','%'.$texto.'%')->take(3)->get();
+      $productos=Producto::where('nombre','like','%'.$texto.'%')->orderBy('nombre','ASC')->take(3)->get();
       if($productos!=null){
         foreach($productos as $producto){
           $producto->presentacion;
@@ -333,7 +333,7 @@ class TransaccionController extends Controller
       return $productos;
     }
     public static function buscarComponente($texto){
-      $componentes=Componente::where('nombre','like','%'.$texto.'%')->get(['id','nombre']);
+      $componentes=Componente::where('nombre','like','%'.$texto.'%')->orderBy('nombre')->get(['id','nombre']);
       foreach ($componentes as $c) {
         foreach ($c->componenteProducto as $cp) {
           $cp->producto;
