@@ -394,6 +394,12 @@ Route::get('/ayuda/grupoPromesa',function(){
 Route::get('/ayuda/agenda',function(){
 	return view('Ayuda.Contenido.agenda');
 });
+Route::get('/ayuda/examenesclinicos',function(){
+	return view('Ayuda.Contenido.examenesClinicos');
+});
+Route::get('/ayuda/reactivos',function(){
+	return view('Ayuda.Contenido.reactivos');
+});
 Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$tipo = $request->tipo;
 	$arreglo = App\Ayuda::mensaje($tipo);

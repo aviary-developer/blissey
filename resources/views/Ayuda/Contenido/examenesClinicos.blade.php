@@ -3,7 +3,7 @@
 	{{-- Barra de menu --}}
 	<nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
 		<a class="navbar-brand" href={!! asset('/componentes') !!}>
-			Componentes
+			Exámenes clínicos
 			<span class="badge border-info border text-info">
 				Ayuda
 			</span>
@@ -23,12 +23,12 @@
 		<div class="x_panel">
 			<div class="flex-row">
 				<center>
-					<h4>Componentes</h4>
+					<h4>Exámenes clínicos</h4>
 				</center>
 			</div>
 			<div class="flex-row">
 				<center>
-					<p>Elementos asociados a los productos los cuales sirven para detallar los ingredientes de los mismos</p>
+					<p>Son pruebas de laboratorio, realizadas a pacientes.</p>
 				</center>
 			</div>
 			<div class="ln_solid"></div>
@@ -42,11 +42,30 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/componentes/Guardar/Guardar_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
+					<iframe src={{asset('help/examenesClinicos/crearExamen/crearExamen.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 
 				</div>
 				<div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
-					Mundo
+					<div class="flex-row">
+						<center>
+							<h5 class="text-info">
+								<i class="fas fa-film"></i>
+								Editar precio de examen
+							</h5>
+						</center>
+					</div>
+					<iframe src={{asset('help/examenesClinicos/editarPrecio/editarPrecio.html')}} frameborder="0" scrolling="no" width="100%" height="428px"></iframe>
+				</div>
+				<div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
+					<div class="flex-row">
+						<center>
+							<h5 class="text-info">
+								<i class="fas fa-film"></i>
+								Crear un nuevo elemento
+							</h5>
+						</center>
+					</div>
+					<iframe src={{asset('help/examenesClinicos/crearElemento/crearElemento.html')}} frameborder="0" scrolling="no" width="100%" height="428px"></iframe>
 				</div>
 			</div>
 		</div>
@@ -61,12 +80,17 @@
 			<ul class="nav flex-column nav-pills" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
-						Nuevo
+						Nuevo examen
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
-						Editar
+						Editar precio
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
+						Nuevo elemento
 					</a>
 				</li>
 			</ul>
