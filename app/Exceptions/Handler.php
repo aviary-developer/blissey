@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Response;
 
 class Handler extends ExceptionHandler
 {
@@ -58,12 +59,11 @@ class Handler extends ExceptionHandler
           }
       }
         if ($exception instanceof \Illuminate\Database\QueryException) {
-            // return response()->view('errors.error',['msm'=>'No hay conexión con la base de datos']);
-            // $msm=;
-            $mesaje=$exception->getMessage();
-            return response()->view('errors.error',compact('mensaje'));
-            dd(); 
-
+            // $mesaje=$exception->getMessage();
+            return response()->view('errors.error');
+        }
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return redirect('login');
         }
         return parent::render($request, $exception);
     }

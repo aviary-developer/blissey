@@ -50,7 +50,7 @@ class Transacion extends Model
     }
   }
   public static function arrayClientes(){ //Retorna los pacientes activos usando la función buscar
-    $pacientes=Paciente::where('estado','=',true)->get();
+    $pacientes=Paciente::where('estado','=',true)->orderBy('nombre')->get();
     $arrayP = [];
     foreach($pacientes as $paciente){
       $arrayP[$paciente->id]=$paciente->apellido.", ".$paciente->nombre;
@@ -58,7 +58,7 @@ class Transacion extends Model
     return $arrayP;
   }
   public static function arrayProveedores(){ //Retorna los pacientes activos usando la función buscar
-    $proveedores=Proveedor::where('estado','=',true)->get();
+    $proveedores=Proveedor::where('estado','=',true)->orderBy('nombre')->get();
     $arrayP = [];
     foreach($proveedores as $proveedor){
       $arrayP[$proveedor->id]=$proveedor->nombre;

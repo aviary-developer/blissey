@@ -23,6 +23,16 @@
             <input type="hidden" name='idDiv' value="" id='idDiv'>
 
             <div class="form-group col-sm-12">
+              <label class="" for="nombre">Código</label>
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-dollar"></i></div>
+                </div>
+                {!! Form::text('codigo',null,['class'=>'form-control form-control-sm','placeholder'=>'Código','id'=>'codi']) !!}
+              </div>
+            </div>
+
+            <div class="form-group col-sm-12">
               <label class="" for="nombre">Precio de venta</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">

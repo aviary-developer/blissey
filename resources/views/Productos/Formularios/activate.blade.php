@@ -9,7 +9,7 @@
   </a>
 </div>
 <div class="btn-group">
-  <button type="button" class="btn btn-success btn-sm"  title="Restaurar" onclick={!! "'alta(".$producto->id.");'" !!}/>
+  <button type="button" class="btn btn-success btn-sm"  title="Restaurar" onclick={!! "'alta(".$producto->id.");'" !!}>
     <i class="fas fa-check"></i>
   </button>
   @php
@@ -20,7 +20,7 @@
       <i class="fas fa-ban"></i>
     </button>
   @else
-  <button type="button" class="btn btn-danger btn-sm"  title="Eliminar" onclick={!! "'eliminar(".$producto->id.");'" !!}/>
+  <button type="button" class="btn btn-danger btn-sm"  title="Eliminar" onclick={!! "'eliminar(".$producto->id.");'" !!}>
     <i class="fas fa-times"></i>
   </button>
   @endif

@@ -1,5 +1,6 @@
 var radio = 1;
 var componentes_agregados = [];
+var contadorcp = 0;
 $(document).on('ready', function () {
   var contador = $("#contador").val();
   $("#codigoBuscar").val("");
@@ -73,7 +74,7 @@ $(document).on('ready', function () {
       }).catch(swal.noop);
     }
   });
-  $("#resultadoVenta").keyup(function () {
+  $("#resultadoVenta").keyup(async function () {
     var valor = $("#resultadoVenta").val();
     if (valor.length < 1) {
       var tabla = $("#tablaBuscar");
@@ -83,8 +84,8 @@ $(document).on('ready', function () {
     if (radio == '1' && valor.length > 0) {
       var ruta = $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
       var tabla = $("#tablaBuscar");
-      $.get(ruta, function (res) {
-        tabla.empty();
+      $.get(ruta, await async function (res) {
+        await tabla.empty();
         cab = "<thead>" +
           "<th colspan='2'>Resultado</th>" +
           "<th>Estante|Nivel</th>" +
@@ -93,8 +94,8 @@ $(document).on('ready', function () {
           "<th style='width : 80px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
-        $(res).each(function (key, value) {
-          $(value.division_producto).each(function (key2, value2) {
+        await $(res).each(async function (key, value) {
+          await $(value.division_producto).each(await function (key2, value2) {
             if (parseFloat(value2.inventario) > 0) {
               if (value2.contenido != null) {
                 var aux = value2.unidad.nombre;
@@ -352,7 +353,7 @@ $(document).on('ready', function () {
       if ($("#confirmar").val() == false) {
         if (parseFloat($("#exioculto").val()) >= cantidad || $("#tipo").val() != '2') {
           gd = true;
-          html = "<tr>" +
+          html = "<tr id='itr" + contadorcp + "'>" +
             "<td>" + cantidad + "</td>" +
             "<td>" + $("#divoculto").val() + "</td>" +
             "<td>" + $("#nomoculto").val() + "</td>";
@@ -365,7 +366,10 @@ $(document).on('ready', function () {
             "<input type='hidden' name='cantidad[]' value ='" + cantidad + "'>";
           if ($('#tipo').val() == '2') {
             html = html + "<input type='hidden' name='precio[]' value ='" + $("#preoculto").val() + "'>" +
-              "<input type='hidden' name='tipo_detalle[]' value ='1'>";
+              "<input type='hidden' name='tipo_detalle[]' value ='1'>" +
+              "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ")'>" +
+              "<i class='fas fa-dollar-sign'></i>" +
+              "</button>";
           }
           html = html + "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
             "<i class='fas fa-times'></i>" +
@@ -411,6 +415,7 @@ $(document).on('ready', function () {
     } else if (v2) {
       notaError('El producto ya se encuentra incluido');
     }
+    contadorcp++;
   });
   $("#resultadoCliente").keyup(function () {
     var valor = $("#resultadoCliente").val();
@@ -423,6 +428,10 @@ $(document).on('ready', function () {
         html = "<thead><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>DUI</th><th style='width : 80px'>Acción</th></thead>";
         tabla.append(html);
         $(res).each(function (key, value) {
+          if (value.telefono == null)
+            value.telefono = "";
+          if (value.dui == null)
+            value.dui = "";
           cadena = "<tr>" +
             "<td id='tbcn" + value.id + "'>" + value.nombre + "</td>" +
             "<td id='tbca" + value.id + "'>" + value.apellido + "</td>" +
@@ -518,7 +527,7 @@ function registrarventa(id) {
     } else {
       c4 = parseFloat($('#cc' + id).text()).toFixed(2);
       tabla = $('#tablaDetalle');
-      html = "<tr>" +
+      html = "<tr id='itr" + contadorcp + "'>" +
         "<td>" + cantidad + "</td>" +
         "<td>" + c2 + "</td>" +
         "<td>" + c1 + "</td>" +
@@ -529,6 +538,9 @@ function registrarventa(id) {
         "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
         "<input type='hidden' name='precio[]' value='" + c4 + "'>" +
         "<input type='hidden' name='tipo_detalle[]' value='1'>" +
+        "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ")'>" +
+        "<i class='fas fa-dollar-sign'></i>" +
+        "</button>" +
         "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
         "<i class='fas fa-times'></i>" +
         "</button>" +
@@ -541,7 +553,7 @@ function registrarventa(id) {
   } else {
     c2 = parseFloat(c2).toFixed(2);
     tabla = $('#tablaDetalle');
-    html = "<tr>" +
+    html = "<tr id='itr" + contadorcp + "'>" +
       "<td>" + cantidad + "</td>" +
       "<td>" + c1 + "</td>" +
       "<td></td>" +
@@ -552,6 +564,9 @@ function registrarventa(id) {
       "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
       "<input type='hidden' name='precio[]' value='" + c2 + "'>" +
       "<input type='hidden' name='tipo_detalle[]' value='2'>" +
+      "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ")'>" +
+      "<i class='fas fa-dollar-sign'></i>" +
+      "</button>" +
       "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
       "<i class='fas fa-times'></i>" +
       "</button>" +
@@ -560,6 +575,7 @@ function registrarventa(id) {
     tabla.append(html);
     notaInfo('Ha sido agregado en detalles');
   }
+  contadorcp++;
 }
 function validarFechaMenorActual(date) {
   actual = $('#fechaM').val();
@@ -573,4 +589,24 @@ function validarFechaMenorActual(date) {
 function limpiarCliente() {
   $('#f_cliente').val("");
   $('#f_clientea').val("");
+}
+function cambiarPrecio(ntr) {
+  $('#cpoculto').val(ntr);
+  var pa = $("#itr" + ntr).find('input:eq(2)').val();//precio actual el casilla
+  $('#cambioPrecioModal').val(pa);
+}
+function guardarcp() {
+  var indice = $('#cpoculto').val();
+  var precio = parseFloat($('#cambioPrecioModal').val());
+  if (precio > 0) {
+    var cantidad = parseFloat($("#itr" + indice).find('input:eq(1)').val());
+    var total = cantidad * precio;
+    $("#itr" + indice).find('input:eq(2)').val(precio.toFixed(2));
+    $("#itr" + indice).find('td:eq(3)').text("$" + precio.toFixed(2));
+    $("#itr" + indice).find('td:eq(4)').text("$" + total.toFixed(2));
+    notaNotice('El precio ha sido cambiado');
+  } else {
+    notaError('No es un precio válido');
+  }
+
 }

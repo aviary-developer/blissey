@@ -18,13 +18,22 @@
             <div class="ln_solid mb-1 mt-1"></div>
             <div class="row">
 
-              <div class="form-group col-sm-12">
+              <div class="form-group col-sm-11">
                 <label class="" for="codigo">Código *</label>
                 <div class="input-group mb-2 mr-sm-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-user"></i></div>
                   </div>
                   {!! Form::text('codigo',null,['id'=>'codigo','class'=>'form-control form-control-sm','placeholder'=>'Código del nuevo producto']) !!}
+                  <div class="input-group-append">
+                      <div class="input-group-btn">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-primary btn-sm" title="Generar código" onclick="generarCodigo()">
+                            <i class="fas fa-random"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </div>
 
@@ -162,4 +171,11 @@
         $('#hchange').val("o");
       });
     });
+
+    function generarCodigo(){
+      var ruta = $('#guardarruta').val() + "/generarCodigo";
+      $.get(ruta, function (res) {
+        $('#codigo').val(res);
+      });
+    }
     </script>

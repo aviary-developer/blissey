@@ -13,6 +13,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-respaldo">Subir</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href={!! asset('/ayuda/basedatos') !!} target="_blank">Ayuda</a>
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

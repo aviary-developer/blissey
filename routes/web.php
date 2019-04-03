@@ -110,6 +110,7 @@ Route::group(['middleware'=>'farmacia'], function(){
   Route::match(['get','post'],'/buscarComponenteProducto/{id}','ProductoController@buscarComponentes');
   Route::match(['get','post'],'/existeCodigoProducto/{codigo}','ProductoController@existeCodigo');
   Route::match(['get','post'],'/editarDivisionProducto','ProductoController@editarDivision');
+  Route::match(['get','post'],'/generarCodigo','ProductoController@generarCodigo');
   //Rutas de visitadores
   Route::resource('visitadores','DependienteController');
   Route::match(['get','post'],'/desactivateVisitador/{id}','DependienteController@desactivate');
@@ -378,8 +379,26 @@ Route::get('/validate',function(Illuminate\Http\Request $request){
 });
 
 //Rutas de ayuda
-Route::get('/ayuda/componentes',function(){
-	return view('Ayuda.Contenido.componentes');
+// Route::get('/ayuda/componentes',function(){
+// 	return view('Ayuda.Contenido.componentes');
+// });
+Route::get('/ayuda/basedatos',function(){
+	return view('Ayuda.Contenido.basedatos');
+});
+Route::get('/ayuda/solicitudExamenes',function(){
+	return view('Ayuda.Contenido.solicitudExamenClinicos');
+});
+Route::get('/ayuda/grupoPromesa',function(){
+	return view('Ayuda.Contenido.grupoPromesa');
+});
+Route::get('/ayuda/agenda',function(){
+	return view('Ayuda.Contenido.agenda');
+});
+Route::get('/ayuda/examenesclinicos',function(){
+	return view('Ayuda.Contenido.examenesClinicos');
+});
+Route::get('/ayuda/reactivos',function(){
+	return view('Ayuda.Contenido.reactivos');
 });
 Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$tipo = $request->tipo;

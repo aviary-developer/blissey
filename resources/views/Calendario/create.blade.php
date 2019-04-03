@@ -40,7 +40,7 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text"><i class="fas fa-list-alt"></i></div>
 						</div>
-						{!! Form::text('titulo-ev',null,['id'=>'titulo-ev','class'=>'form-control form-control-sm','placeholder'=>'Nombre del evento']) !!}
+						{!! Form::text('titulo-ev',null,['id'=>'titulo-ev','class'=>'form-control form-control-sm','placeholder'=>'Nombre del evento','autocomplete'=>'off']) !!}
 					</div>
 				</div>
 

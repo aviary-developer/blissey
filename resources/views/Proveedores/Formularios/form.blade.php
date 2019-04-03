@@ -59,10 +59,10 @@
     </div>
 
   </div>
+</div>
   @if ($bandera==1)
     @include('Proveedores.Formularios.form2')
   @endif
-</div>
 
 <div class="x_panel">
   <center>

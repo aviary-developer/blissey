@@ -213,6 +213,7 @@
 @if ($tipo==2)
   @include('Transacciones.Formularios.modalBuscarVenta')
   @include('Recetas.modal.medicamento')
+  @include('Transacciones.Formularios.modalCambiarPrecio')
 @endif
 @if($tipo==0)
   @include('Transacciones.Formularios.modalBuscarProducto')

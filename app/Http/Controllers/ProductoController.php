@@ -271,10 +271,26 @@ class ProductoController extends Controller
     }
     function editarDivision(DivisionProductoRequest $request){
       $division=DivisionProducto::find($request->idDiv);
+      $division->codigo=$request->codigo;
       $division->precio=$request->pre;
       $division->stock=$request->stock;
       $division->n_meses=$request->mes;
       $division->save();
       return redirect('/productos/'.$division->f_producto.'/edit')->with('mensaje', '¡Editado!');
+    }
+    public static function generarCodigo(){
+      $inicio='0000';
+      $ultimo=DivisionProducto::where('codigo', 'like',$inicio.'%')->orderBy('created_at','ASC')->get()->last();
+     if($ultimo!=null){ 
+      $ultimo=$ultimo->codigo;
+      $correlativo=intval(explode($inicio,$ultimo)[1]);
+    }else{
+      $correlativo=0;
+    }
+      do{
+        $correlativo++;
+        $existe=DivisionProducto::where('codigo',$inicio.$correlativo)->count();
+      }while($existe!=0);
+      return $inicio.$correlativo;
     }
 }

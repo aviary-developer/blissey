@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   <a class="navbar-brand" href={!! asset('/examenes') !!}>
-    Examenes
+    Exámenes
     @if ($estadoOpuesto)
       <span class="badge border-danger border text-danger">
         Papelera
@@ -38,6 +38,9 @@
             @endif
           </a>  
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href={!! asset('/ayuda/examenesclinicos') !!} target="_blank">Ayuda</a>            
       </li>
     </ul>
     @include('Dashboard.boton_salir')

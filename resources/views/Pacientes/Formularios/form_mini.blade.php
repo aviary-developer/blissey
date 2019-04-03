@@ -84,9 +84,9 @@
     </div>
 	</div>
 	
-	<div class="flex-row">
+	{{-- <div class="flex-row">
 		<center>
 			<button type="button" class="btn btn-sm btn-success col-4" id="guardarPaciente">Guardar</button>
 		</center>
-	</div>
+	</div> --}}
 </div>
