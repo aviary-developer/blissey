@@ -1400,5 +1400,16 @@ class IngresoController extends Controller
       'especialidad',
       'consultas'
     ));
-  }
+	}
+	
+	//Funciones de la calculadora
+	public function c_habitacion (Request $request){
+		$habitacion = Habitacion::where('tipo',$request->tipo)->where('estado',true)->orderBy('numero')->get();
+		return $habitacion;
+	}
+
+	public function c_cama (Request $request){
+		$cama = Cama::where('f_habitacion',$request->id)->where('estado',false)->where('activo',true)->orderBy('numero')->get();
+		return $cama;
+	}
 }

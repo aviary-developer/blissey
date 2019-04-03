@@ -1,27 +1,88 @@
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="calculadora" data-backdrop="static">
   <div class="modal-dialog modal-lg">
-    <div class="flex-row">
-      <div class="col-12">
-        <div class="x_panel m_panel text-danger">
-          <center>
-            <h4 class="mb-1">
-              <i class="fas fa-calculator"></i>
-              Calculadora
-            </h4>
-          </center>
-        </div>
-      </div>
-    </div>
-    <div class="flex-row">
-      <div class="col-12">
-				
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="x_panel m_panel text-danger">
+					<center>
+						<h4 class="mb-1">
+							<i class="fas fa-calculator"></i>
+							Calculadora
+						</h4>
+					</center>
+				</div>
 			</div>
-    </div>
-    <div class="m_panel x_panel bg-transparent" style="border:0px !important">
-      <center>
-        <button type="submit" class="btn btn-primary btn-sm col-2" id="guardar_i">Guardar</button>
-        <button type="button" class="btn btn-light btn-sm col-2" onclick="location.reload()">Cerrar</button>
-      </center>
-    </div>
+		</div>
+		<div class="row" id="primary_panel">
+			<div class="col-sm-4">
+				<div class="m_panel x_panel bg-primary text-light h-25" onclick="change()" style="cursor: pointer">
+					<center>
+						<span class="text-monospace">
+							Precio
+						</span>
+						<h2 id="amount">9999.99</h2>
+					</center>
+				</div>
+				<div class="x_panel m_panel">
+					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						<a class="nav-link active" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Ingreso</a>
+						<a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Médicos</a>
+						<a class="nav-link" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">Médicamentos</a>
+						<a class="nav-link" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="false">Servicios</a>
+						<a class="nav-link" id="v-pills-5-tab" data-toggle="pill" href="#v-pills-5" role="tab" aria-controls="v-pills-5" aria-selected="false">Laboratorio</a>
+						<a class="nav-link" id="v-pills-6-tab" data-toggle="pill" href="#v-pills-6" role="tab" aria-controls="v-pills-6" aria-selected="false">Ultrasonografía</a>
+						<a class="nav-link" id="v-pills-7-tab" data-toggle="pill" href="#v-pills-7" role="tab" aria-controls="v-pills-7" aria-selected="false">TAC</a>
+						<a class="nav-link" id="v-pills-8-tab" data-toggle="pill" href="#v-pills-8" role="tab" aria-controls="v-pills-8" aria-selected="false">Rayos X</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<div class="x_panel m_panel h-100">
+					<div class="tab-content" id="v-pills-tabContent">
+						<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
+							@include('Ingresos.index.modal.partes.c_ingreso')
+						</div>
+						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">Honorarios</div>
+						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">Medicamentos</div>
+						<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">Servicios</div>
+						<div class="tab-pane fade" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">Laboratorio clinico</div>
+						<div class="tab-pane fade" id="v-pills-6" role="tabpanel" aria-labelledby="v-pills-6-tab">Ultrasonografia</div>
+						<div class="tab-pane fade" id="v-pills-7" role="tabpanel" aria-labelledby="v-pills-7-tab">TAC</div>
+						<div class="tab-pane fade" id="v-pills-8" role="tabpanel" aria-labelledby="v-pills-8-tab">Rayos X</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="secondary_panel" style="display: none">
+			<div class="col-sm-12">
+				<div class="x_panel m_panel" style="height: 419px">
+					<div class="row">
+						<div class="col-2">
+							<button type="button" class="btn btn-sm btn-light" onclick="change()">
+								<i class="fas fa-arrow-left"></i> Atras
+							</button>
+						</div>
+						<div class="col-8">
+							<center>
+								<h4>Resumen</h4>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="m_panel x_panel bg-transparent" style="border:0px !important">
+			<center>
+				<button type="button" class="btn btn-light btn-sm col-2" onclick="location.reload()">Cerrar</button>
+			</center>
+		</div>
   </div>
 </div>
+
+<script>
+	function change(){
+		$("#primary_panel").toggle();
+		$("#secondary_panel").toggle();
+	}
+</script>
+
+{!!Html::script('js/scripts/Calculadora.js')!!}

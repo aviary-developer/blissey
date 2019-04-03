@@ -276,7 +276,10 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/ingreso/lista_tac','IngresoController@lista_tac')->name('ingresos.lista_tac');
   Route::get('/ingreso/lista_ultra','IngresoController@lista_ultra')->name('ingresos.lista_ultra');
   Route::get('/ingreso/lista_signos','IngresoController@lista_signos')->name('ingresos.lista_signos');
-  Route::get('/ingreso/lista_medico','IngresoController@lista_medico')->name('ingresos.lista_medico');
+	Route::get('/ingreso/lista_medico','IngresoController@lista_medico')->name('ingresos.lista_medico');
+	//Rutas de la calculadora
+	Route::get('/ingreso/calculadora/habitacion','IngresoController@c_habitacion')->name('ingreso.calculadora.habitacion');
+	Route::get('/ingreso/calculadora/cama','IngresoController@c_cama')->name('ingreso.calculadora.cama');
   //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

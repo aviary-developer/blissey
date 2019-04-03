@@ -17,3 +17,4 @@
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+@include('Ingresos.index.modal.calculadora')
