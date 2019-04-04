@@ -1,13 +1,27 @@
 $(document).ready(async function () { 
+	var vector = [];
+	/*Elementos de vector
+	* 0: Habitacion
+	*/
 	await load_habitacion();
-	load_cama();
+	await load_cama();
+	v_habitacion();
 
 	$("#radioBtn > a").on('click', async function () {
 		await load_habitacion();
 		load_cama();
+		if ($("#tipo").val() == 1) {
+			$("#c_tiempo").text('Día');
+		} else {
+			$("#c_tiempo").text("Hora");
+		}
+		v_habitacion();
 	});
 
 	$("#c_habitacion").on('change', load_cama);
+
+	$("#c_cama").on('change', v_habitacion);
+	$("#c_cantidad").on('change keyup', v_habitacion);
 	
 	async function load_habitacion() {
 		var valor = $("#tipo").val();
@@ -58,7 +72,37 @@ $(document).ready(async function () {
 				} else {
 					$("#c_cama").append('<option value="0" disabled>No hay camas disponibles</option>');
 				}
+				v_habitacion();
 			}
 		});
+	}
+
+	function v_habitacion() {
+		var cantidad = $("#c_cantidad").val();
+		var cama = $("#c_cama").val();
+		if (cama == 0) {
+			vector[0] = parseInt(cantidad) * parseFloat(0);
+			amount();
+		} else {
+			$.ajax({
+				type: 'get',
+				url: $("#guardarruta").val() + '/ingreso/calculadora/precio/habitacion',
+				data: {
+					id : cama
+				},
+				success: function (r) {
+					vector[0] = parseInt(cantidad) * parseFloat(r);
+					amount();
+				}
+			});
+		}
+	}
+
+	function amount() {
+		var acumulaldor = 0;
+		$(vector).each(function (k, v) {
+			acumulaldor += v;
+		});
+		$("#c_amount").text('$ ' + acumulaldor);
 	}
 });

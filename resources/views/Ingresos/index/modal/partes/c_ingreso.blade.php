@@ -62,21 +62,14 @@
 			<div class="input-group-prepend">
 				<div class="input-group-text"><i class="fas fa-cubes"></i></div>
 			</div>
-			<input type="number" name="c_cantidad" id="c_cantidad" class="form-control form-control-sm" min="1" step="1">
+			<input type="number" name="c_cantidad" id="c_cantidad" class="form-control form-control-sm" min="1" step="1" value="1">
 		</div>
 	</div>
 
 	<div class="form-group col-6">
 		<label class="" for="cantidad_resultado">Tiempo</label>
 		<div class="input-group mb-2 mr-sm-2">
-			<div class="input-group-prepend">
-				<div class="input-group-text"><i class="fas fa-cubes"></i></div>
-			</div>
-			<select name="tiempo" id="c_tiempo" class="form-control form-control-sm">
-				<option value="0">Hora</option>
-				<option value="1">Día</option>
-				<option value="2">Semana</option>
-			</select>
+			<h5 id="c_tiempo">Día</h5>
 		</div>
 	</div>
 </div>

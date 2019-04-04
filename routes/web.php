@@ -280,6 +280,7 @@ Route::group(['middleware'=>'general'], function(){
 	//Rutas de la calculadora
 	Route::get('/ingreso/calculadora/habitacion','IngresoController@c_habitacion')->name('ingreso.calculadora.habitacion');
 	Route::get('/ingreso/calculadora/cama','IngresoController@c_cama')->name('ingreso.calculadora.cama');
+	Route::get('/ingreso/calculadora/precio/habitacion','IngresoController@v_habitacion')->name('ingreso.calculadora.precio.habitacion');
   //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

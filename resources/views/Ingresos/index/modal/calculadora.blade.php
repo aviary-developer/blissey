@@ -19,7 +19,7 @@
 						<span class="text-monospace">
 							Precio
 						</span>
-						<h2 id="amount">9999.99</h2>
+						<h2 id="c_amount">9999.99</h2>
 					</center>
 				</div>
 				<div class="x_panel m_panel">

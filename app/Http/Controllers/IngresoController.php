@@ -1412,4 +1412,9 @@ class IngresoController extends Controller
 		$cama = Cama::where('f_habitacion',$request->id)->where('estado',false)->where('activo',true)->orderBy('numero')->get();
 		return $cama;
 	}
+
+	public function v_habitacion (Request $request){
+		$servicio = Servicio::where('f_cama',$request->id)->first();
+		return $servicio->precio;
+	}
 }
