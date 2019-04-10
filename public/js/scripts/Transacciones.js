@@ -9,6 +9,7 @@ $(document).on('ready', function () {
   for (i = 0; i <= contador; i++) {
     var prod_tmp = $("#f_prod" + i).val();
     componentes_agregados.push(prod_tmp);
+    contadorcp++;
   }
   $("#resultado").keyup(function () {
     var valor = $("#resultado").val();
@@ -466,7 +467,7 @@ $(document).on('ready', function () {
     if (bandera) {
       $('#formVender').submit();
     } else {
-      notaError('Debe confirmar todos los productos');
+      notaError('Debe completar todos los campos');
     }
   });
   $('#confirmarAsignacion').on('click', function (e) {
@@ -604,6 +605,7 @@ function guardarcp() {
     $("#itr" + indice).find('input:eq(2)').val(precio.toFixed(2));
     $("#itr" + indice).find('td:eq(3)').text("$" + precio.toFixed(2));
     $("#itr" + indice).find('td:eq(4)').text("$" + total.toFixed(2));
+    $("#cerrarCP").click();
     notaNotice('El precio ha sido cambiado');
   } else {
     notaError('No es un precio válido');

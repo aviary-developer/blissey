@@ -404,6 +404,12 @@ Route::get('/ayuda/examenesclinicos',function(){
 Route::get('/ayuda/reactivos',function(){
 	return view('Ayuda.Contenido.reactivos');
 });
+Route::get('/ayuda/compras',function(){
+	return view('Ayuda.Contenido.compras');
+});
+Route::get('/ayuda/productos',function(){
+	return view('Ayuda.Contenido.productos');
+});
 Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$tipo = $request->tipo;
 	$arreglo = App\Ayuda::mensaje($tipo);

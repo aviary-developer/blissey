@@ -1,9 +1,10 @@
+{{-- Ayuda para la pantalla de compras --}}
 @extends('ayuda')
 @section('layout')
 	{{-- Barra de menu --}}
 	<nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-		<a class="navbar-brand" href={!! asset('/calendarios') !!}>
-			Agenda
+		<a class="navbar-brand" href={!! asset('/transacciones?tipo=0') !!}>
+			Grupo Promesa
 			<span class="badge border-info border text-info">
 				Ayuda
 			</span>
@@ -23,12 +24,12 @@
 		<div class="x_panel">
 			<div class="flex-row">
 				<center>
-					<h4>Eventos en agenda</h4>
+					<h4>Compras</h4>
 				</center>
 			</div>
 			<div class="flex-row">
 				<center>
-					<p>Actividades ingresadas en la agenda de uno o varios usuarios.</p>
+					<p>Hace referencia al pedido de producto a los proveedores y al ingreso de productos al inventario.</p>
 				</center>
 			</div>
 			<div class="ln_solid"></div>
@@ -39,11 +40,11 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Crear nuevo evento
+								Nuevo pedido
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/agenda/NuevoEvento/NuevoEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/compra/NuevoPedido/NuevoPedido.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
@@ -51,36 +52,12 @@
 						<center>
 							<h5 class="text-info">
 								<i class="fas fa-film"></i>
-								Ver eventos
+								Confirmar pedido (compra)
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/agenda/VerEvento/VerEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
-				</div>
-
-				<div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
-					<div class="flex-row">
-						<center>
-							<h5 class="text-info">
-								<i class="fas fa-film"></i>
-								Editar un evento
-							</h5>
-						</center>
-					</div>
-					<iframe src={{asset('help/agenda/EditarEvento/EditarEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
-				</div>
-
-				<div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
-					<div class="flex-row">
-						<center>
-							<h5 class="text-info">
-								<i class="fas fa-film"></i>
-								Eliminar un evento
-							</h5>
-						</center>
-					</div>
-					<iframe src={{asset('help/agenda/EliminarEvento/EliminarEvento.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
-				</div>
+					<iframe src={{asset('help/compra/ConfirmarPedido/ConfirmarPedido.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+				</div>				
 
 			</div>
 		</div>
@@ -95,22 +72,13 @@
 			<ul class="nav flex-column nav-pills" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
-						Nuevo
+						Nuevo pedido
 					</a>
 				</li>
+
 				<li class="nav-item">
 					<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
-						Ver
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
-						Editar
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="four" aria-selected="false">
-						Eliminar
+						Confirmar pedido
 					</a>
 				</li>
 			</ul>
