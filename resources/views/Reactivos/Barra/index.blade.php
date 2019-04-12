@@ -38,6 +38,9 @@
             @endif
           </a>  
         </div>
+        <li class="nav-item">
+          <a class="nav-link" href={!! asset('/ayuda/reactivos') !!} target="_blank">Ayuda</a>            
+        </li>
       </li>
     </ul>
     @include('Dashboard.boton_salir')
