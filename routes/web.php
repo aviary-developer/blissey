@@ -212,6 +212,7 @@ Route::group(['middleware'=>'general'], function(){
     Route::match(['get'],'/cerrar/{id}','DetalleCajaController@cerrar');
     Route::match(['get'],'/buscararqueo/{caja}','DetalleCajaController@buscararqueo');
   Route::get('/informe_arqueo','DetalleCajaController@arqueo_pdf');
+  Route::post('/efectivo','DetalleCajaController@efectivo');
 
   //Rutas de estantes
   Route::resource('estantes','EstanteController');

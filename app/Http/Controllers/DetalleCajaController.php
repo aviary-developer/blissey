@@ -153,7 +153,6 @@ class DetalleCajaController extends Controller
         ->where('id','<>',$detalle->id)
         ->where('f_usuario',$detalle->f_usuario)
         ->get()->first();
-        echo $ha;
         $hasta=$fechaaux." 07:00:00";
         if($ha!=""){
           if($ha->tipo==2){
@@ -184,7 +183,6 @@ class DetalleCajaController extends Controller
         }
       }
       $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
-      echo $tipoArqueo;
       return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo','cierre'));
     }
     public static function arqueo_pdf(){
@@ -214,5 +212,19 @@ class DetalleCajaController extends Controller
       $main = view('DetalleCajas.PDF.arqueo',compact('detalle','movimientos','tipoArqueo'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
       return $pdf->stream('nombre.pdf');
+    }
+    public static function efectivo(Request $request){
+      $tipo=($request->tipo == 1) ? 12 : 13;
+      $transaccion= new Transacion();
+      $transaccion->fecha=date("Y").date("m").date("d");
+      $transaccion->f_usuario=Auth::user()->id;
+      $transaccion->localizacion=Transacion::tipoUsuario();
+      $transaccion->tipo=$tipo;
+      $transaccion->comentario=$request->justificar;
+      $transaccion->devolucion=$request->cantidad;
+      $transaccion->save();
+
+      return redirect('/arqueo')->with('mensaje', '!Acción exitosa¡');
+
     }
 }

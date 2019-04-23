@@ -17,7 +17,7 @@
       <i class="fas fa-ban"></i>
     </button>
   @else
-    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$estante->id.");'" !!}  title="Eliminar"/>
+    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$estante->id.");'" !!}  title="Eliminar">
       <i class="fas fa-times"></i>
     </button>
   @endif

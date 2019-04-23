@@ -5,23 +5,15 @@
     setlocale(LC_ALL,'es');
   @endphp
   @include('DetalleCajas.Barra.arqueo')
-<div class="col-sm-8">
-  <div class="x_panel">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-          Movimientos
-        </a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
+  <div class="col-sm-8">
+    <div class="x_panel">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         @include('DetalleCajas.Partes.movimientos_caja')
       </div>
     </div>
   </div>
-</div>
 <div class="col-sm-4">
   @include('DetalleCajas.Partes.datos_caja')
 </div>
+@include('DetalleCajas.Partes.modal_efectivo')
 @endsection

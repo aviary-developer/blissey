@@ -142,13 +142,13 @@ class Transacion extends Model
           $query->where('fecha',$fecha)->orWhere('updated_at',"<",$hasta);
         }
         public function scopefiltroTipo($query){
-            $query->where('tipo',1)->orWhere('tipo',2)->orWhere('tipo',8)->orWhere('tipo',9);
+            $query->where('tipo',1)->orWhere('tipo',2)->orWhere('tipo',8)->orWhere('tipo',9)->orWhere('tipo',12)->orWhere('tipo',13);
         }
         public function scopefiltroHora($query,$apertura){
           $query->where('updated_at','>',$apertura);
         }
         public static function tipo($t){
-          $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido',8=>'Devoluciones/Compras',9=>'Devoluciones/Ventas');
+          $tipos= array(0 =>'Pedido',1=>'Compra',2=>'Venta',3=>'Venta anulada',4=>'Requisición de farmacia',5=>'Requisición atendida',6=>'Requisición recibida',7=>'Removido',8=>'Devoluciones/Compras',9=>'Devoluciones/Ventas',12=>'Entrada de efectivo',13=>'Salida de efectivo');
           return $tipos[$t];
         }
         public static function foraneos($id){
