@@ -260,6 +260,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/paciente/guardar','PacienteController@save_mini');
   //Inventarios
   Route::resource('inventarios','InventarioController');
+  Route::post('/salida','InventarioController@salida');
   //Ingresos
   Route::resource('ingresos','IngresoController');
   Route::get('/total_resumen','IngresoController@resumen');

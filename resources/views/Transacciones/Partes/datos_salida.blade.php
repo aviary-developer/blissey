@@ -1,7 +1,7 @@
 <div class="row mt-2">
     <div class="col">
       <center>
-        <h5 class="mt-1">Detalles</h5>
+        <h5 class="mt-1">Salidas</h5>
       </center>
     </div>
   </div>
@@ -19,7 +19,7 @@
               @endphp
                 @foreach($detalles as $detalle)
                     @php
-                        $conteo=App\DetalleDevolucion::total_filtro($detalle->id,0);
+                        $conteo=App\DetalleDevolucion::total_filtro($detalle->id,1);
                     @endphp
                     @if ($conteo!=0)
                       <tr>
@@ -40,25 +40,6 @@
                       @endphp 
                     @endif
                 @endforeach
-                @if($total>0)
-                  @php
-                    $des=App\DetalleTransacion::descuento($transaccion->id);
-                            if($des>0){
-                              $total=$total-($total*($des/100));
-                            }
-                            $iva=App\Transacion::find($transaccion->id)->iva;
-                            if(!$iva){
-                              $total=$total*1.13;
-                            }
-                  @endphp
-                  <tr>
-                    <td colspan="3">
-                      <div style="text-align:right;">
-                        Total: $ {{number_format($total,2,'.','')}}
-                      </div>
-                    </td>
-                  </tr>
-                @endif
             </tbody>
       </table>
     </div>

@@ -20,6 +20,11 @@
               Devoluciones
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#next" role="tab" aria-controls="profile" aria-selected="false">
+              Salidas
+            </a>
+          </li>
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -28,6 +33,9 @@
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               @include('Transacciones.Partes.datos_devoluciones')
           </div>
+          <div class="tab-pane fade" id="next" role="tabpanel" aria-labelledby="profile-tab">
+            @include('Transacciones.Partes.datos_salida')
+        </div>
         </div>
     </div>   
 </div>

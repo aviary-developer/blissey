@@ -85,6 +85,12 @@ class DetalleCaja extends Model
         if($movimiento->tipo==9){
           $total=$total-$movimiento->devolucion;
         }
+        if($movimiento->tipo==12){
+          $total=$total+$movimiento->devolucion;
+        }
+        if($movimiento->tipo==13){
+          $total=$total-$movimiento->devolucion;
+        }
       }
       return $total;
     }

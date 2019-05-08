@@ -216,7 +216,7 @@ class DetalleCajaController extends Controller
     public static function efectivo(Request $request){
       $tipo=($request->tipo == 1) ? 12 : 13;
       $transaccion= new Transacion();
-      $transaccion->fecha=date("Y").date("m").date("d");
+      $transaccion->fecha=\Carbon\Carbon::now();
       $transaccion->f_usuario=Auth::user()->id;
       $transaccion->localizacion=Transacion::tipoUsuario();
       $transaccion->tipo=$tipo;
