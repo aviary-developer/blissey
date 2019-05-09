@@ -103,7 +103,7 @@ class User extends Authenticatable
     }
 
     public function union(){
-      return $this->hasMany('App\EspecialidadUsuario','f_usuario');
+      return $this->hasMany('App\EspecialidadUsuario','f_usuario')->orderBy('principal','desc');
     }
 
     public function servicio(){

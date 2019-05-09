@@ -22,6 +22,10 @@ $(document).ready(async function () {
 
 	$("#c_cama").on('change', v_habitacion);
 	$("#c_cantidad").on('change keyup', v_habitacion);
+
+	$("#body-m").on('change keyup', '#c_cantidad_m', function () {
+		v_medico();
+	});
 	
 	async function load_habitacion() {
 		var valor = $("#tipo").val();
@@ -54,7 +58,6 @@ $(document).ready(async function () {
 		} else {
 			t_tipo = 'M';
 		}
-		console.log(valor);
 
 		await $.ajax({
 			type: 'get',
@@ -80,7 +83,7 @@ $(document).ready(async function () {
 	function v_habitacion() {
 		var cantidad = $("#c_cantidad").val();
 		var cama = $("#c_cama").val();
-		if (cama == 0) {
+		if (cama == 0 || cama == null) {
 			vector[0] = parseInt(cantidad) * parseFloat(0);
 			amount();
 		} else {
@@ -91,11 +94,35 @@ $(document).ready(async function () {
 					id : cama
 				},
 				success: function (r) {
-					vector[0] = parseInt(cantidad) * parseFloat(r);
+					if ($("#tipo").val() == 1) {
+						vector[0] = parseInt(cantidad) * parseFloat(r);
+					} else {
+						vector[0] = parseFloat(r);
+					}
 					amount();
 				}
 			});
 		}
+	}
+
+	function v_medico() {
+		var acumulaldor = 0;
+		$("#body-m > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+
+			var txt_cantidad = $(v).find('#c_cantidad_m').val();
+			txt_cantidad = txt_cantidad.trim();
+			var cantidad = parseInt(txt_cantidad);
+
+			acumulaldor += (precio * cantidad);
+		});
+
+		vector[1] = acumulaldor;
+		amount();
 	}
 
 	function amount() {
@@ -103,6 +130,7 @@ $(document).ready(async function () {
 		$(vector).each(function (k, v) {
 			acumulaldor += v;
 		});
-		$("#c_amount").text('$ ' + acumulaldor);
+		var numero = new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(acumulaldor);
+		$("#c_amount").text('$ ' + numero);
 	}
 });

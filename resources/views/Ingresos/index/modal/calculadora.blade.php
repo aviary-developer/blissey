@@ -41,7 +41,9 @@
 						<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
 							@include('Ingresos.index.modal.partes.c_ingreso')
 						</div>
-						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">Honorarios</div>
+						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
+							@include('Ingresos.index.modal.partes.c_medico')
+						</div>
 						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">Medicamentos</div>
 						<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">Servicios</div>
 						<div class="tab-pane fade" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">Laboratorio clinico</div>
