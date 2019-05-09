@@ -16,8 +16,21 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="#">Reporte</a>
+          </li> --}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Ir a...
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href={!! asset('/transacciones?tipo=0') !!}>
+                Pedidos por confirmar
+              </a>
+              <a class="dropdown-item" href={!! asset('/transacciones/create?tipo=2') !!}>
+                Realizar venta
+              </a>
+            </div>
           </li>
         </ul>
         @include('Dashboard.boton_salir')

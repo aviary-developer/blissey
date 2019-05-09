@@ -40,6 +40,7 @@
                           @endphp
                           <tbody>
                               @foreach ($lotes as $lote)
+                              <tr>
                                 <input type="hidden" name="idv[]" value='{{$lote->id}}'>
                               @php
                                   $niveles=App\Estante::nivel($lote->f_estante);
@@ -53,6 +54,7 @@
                                         $niveles
                                         ,$lote->nivel, ['class'=>'form-control form-control-sm','id'=>'nivel'.$lote->id])!!}</td>
                           <td>{{Carbon\Carbon::parse($lote->fecha_vencimiento)->format('d / m / Y')}}</td>
+                              </tr>
                               @endforeach
                           </tbody>
                       </table>

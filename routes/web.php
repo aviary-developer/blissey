@@ -212,6 +212,7 @@ Route::group(['middleware'=>'general'], function(){
     Route::match(['get'],'/cerrar/{id}','DetalleCajaController@cerrar');
     Route::match(['get'],'/buscararqueo/{caja}','DetalleCajaController@buscararqueo');
   Route::get('/informe_arqueo','DetalleCajaController@arqueo_pdf');
+  Route::post('/efectivo','DetalleCajaController@efectivo');
 
   //Rutas de estantes
   Route::resource('estantes','EstanteController');
@@ -259,6 +260,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/paciente/guardar','PacienteController@save_mini');
   //Inventarios
   Route::resource('inventarios','InventarioController');
+  Route::post('/salida','InventarioController@salida');
   //Ingresos
   Route::resource('ingresos','IngresoController');
   Route::get('/total_resumen','IngresoController@resumen');
@@ -403,6 +405,12 @@ Route::get('/ayuda/examenesclinicos',function(){
 });
 Route::get('/ayuda/reactivos',function(){
 	return view('Ayuda.Contenido.reactivos');
+});
+Route::get('/ayuda/compras',function(){
+	return view('Ayuda.Contenido.compras');
+});
+Route::get('/ayuda/productos',function(){
+	return view('Ayuda.Contenido.productos');
 });
 Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$tipo = $request->tipo;

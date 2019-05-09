@@ -62,4 +62,5 @@
     </div>
   </div>
   @include('Inventarios.Modales.modal_inventario')
+  @include('Inventarios.Modales.modal_salida')
 @endsection

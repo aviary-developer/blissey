@@ -1,7 +1,7 @@
 <div class="row mt-2">
         <div class="col">
           <center>
-            <h5 class="mt-1">Operaciones efectuadas
+            <h5 class="mt-1">Movimentos de caja
             </center>
         </div>
       </div>
@@ -60,6 +60,13 @@
                           @endphp
                           $ {{$suma}}
                         @endif
+                        @if($movimiento->tipo==12)
+                          @php
+                          $suma=number_format($movimiento->devolucion,2,'.',',');
+                          $total=$total+$suma;
+                          @endphp
+                          $ {{$suma}}
+                        @endif
                       </td>
                       <td>
                         @if($movimiento->tipo==1)
@@ -70,6 +77,13 @@
                           $ {{number_format($resta,2,'.',',')}}
                         @endif
                         @if($movimiento->tipo==9)
+                          @php
+                          $resta=number_format($movimiento->devolucion,2,'.',',');
+                          $total=$total-$resta;
+                          @endphp
+                          $ {{$resta}}
+                        @endif
+                        @if($movimiento->tipo==13)
                           @php
                           $resta=number_format($movimiento->devolucion,2,'.',',');
                           $total=$total-$resta;

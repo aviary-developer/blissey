@@ -9,6 +9,7 @@ use App\DetalleDevolucion;
 use App\CambioProducto;
 use App\Estante;
 use App\DetalleTransacion;
+use App\Devolucion;
 
 class InventarioController extends Controller
 {
@@ -101,5 +102,22 @@ class InventarioController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public static function salida(Request $request){
+        $salida=new Devolucion();
+        $salida->fecha=\Carbon\Carbon::now();
+        $salida->justificacion=$request->justificar;
+        $salida->tipo=1;
+        $salida->save();
+
+        $detalle= new DetalleDevolucion();
+        $detalle->f_devolucion=$salida->id;
+        $detalle->f_detalle_transaccion=$request->idTr;
+        $detalle->cantidad=$request->cantidad;
+        $detalle->tipo=1;
+        $detalle->save();
+
+        return redirect('/inventarios')->with('mensaje', '!Acción exitosa¡');
+
     }
 }

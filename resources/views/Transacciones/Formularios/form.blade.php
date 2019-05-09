@@ -176,13 +176,13 @@
       </thead>
       @if(isset($f_producto))
         @for ($i=0; $i < count($f_producto); $i++)
-          <tr>
+          <tr  id="itr{{$i}}">
             <td>{{$cantidad[$i]}}</td>
             @php
               $division=App\DivisionProducto::find($f_producto[$i]);
-              $pmp=App\TransaccionController::nombrePresentacion($division->f_producto,2);//Retorna producto + presentación
+              $pmp=App\Http\Controllers\TransaccionController::nombrePresentacion($division->f_producto,2);//Retorna producto + presentación
             @endphp
-            <td>{{App\TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
+            <td>{{App\Http\Controllers\TransaccionController::nombreDivision($division->f_division)." ".$division->cantidad." ".$pmp->presentacion->nombre}}</td>
             <td>{{$pmp->nombre}}</td>
             @if ($tipo==2)
               <td>$ {{number_format($precio[$i],2,'.','.')}}</td>
@@ -194,9 +194,12 @@
               @if ($tipo==2)
               <input type='hidden' name='precio[]' value ={{$precio[$i]}}>
               <input type='hidden' name='tipo_detalle[]' value ={{$tipo_detalle[$i]}}>
+              <button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio("{{$i}}")'>
+                <i class='fas fa-dollar-sign'></i>
+              </button>
               @endif
-              <button type='button' class='btn btn-xs btn-danger' id='eliminar_detalle'>
-              <i class='fa fa-remove'></i>
+              <button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>
+              <i class='fas fa-times'></i>
               </button>
             </td>
           </tr>

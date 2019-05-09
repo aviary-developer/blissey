@@ -37,7 +37,7 @@
           <div class="m_panel x_panel bg-transparent" style="border:0px !important">
             <center>
               <button type="button" class="btn btn-sm  col-2 btn-primary" onclick='guardarcp()'>Cambiar</button>
-              <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal" id="cerrarCP">Cerrar</button>
             </center>
           </div>
         </div>

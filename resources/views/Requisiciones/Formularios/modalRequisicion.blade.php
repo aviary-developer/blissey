@@ -17,7 +17,7 @@
 					<div class="input-group-prepend">
 						<div class="input-group-text"><i class="fas fa-search"></i></div>
 					</div>
-					{!! Form::text('resultadoRequisicion',null,['id'=>'resultadoRequisicion','class'=>'form-control form-control-sm','placeholder'=>'Buscar']) !!}
+					{!! Form::text('resultadoRequisicion',null,['id'=>'resultadoRequisicion','class'=>'form-control form-control-sm','placeholder'=>'Buscar','autocomplete'=>'off']) !!}
 				</div>
 			</div>
 			<div class="form-group col-sm-4">

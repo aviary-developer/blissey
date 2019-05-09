@@ -1,7 +1,7 @@
 <div class="left_col scroll-view" style="background: #3498DB   !important;">
 
   <div class="navbar nav_title sticky-top" style="border: 0; background: #2471A3 !important;">
-    <a href={{asset( '/ayuda')}}>
+    <a href={{asset( '/ayuda/general')}}>
       <center>
         <img src={{asset('img/blisseyh.svg')}} alt="" style="width: 55%;">
       </center>
