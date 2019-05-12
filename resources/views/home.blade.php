@@ -38,7 +38,7 @@
                     Tu contraseña fue restablecida.
                   </div>
               </div>
-              <a class="reset_pass" href={{asset( '/')}}>Ir a nicio</a>
+              <a class="reset_pass" href={{asset( '/')}}>Ir a inicio</a>
 
               <div class="separator">
 
