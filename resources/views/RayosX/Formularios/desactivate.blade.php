@@ -1,9 +1,6 @@
 {!!Form::open(['url'=>['desactivateRayosx',$rayox->id],'method'=>'POST'])!!}
 <div class="btn-group">
 
-	<a href={!! asset('/rayosx/'.$rayox->id)!!} class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Ver">
-		<i class="fa fa-info-circle"></i>
-	</a>
 	<a href={!! asset('/rayosx/'.$rayox->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
 		<i class="fa fa-edit"></i>
 	</a>
