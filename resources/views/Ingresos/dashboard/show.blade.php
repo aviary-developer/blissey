@@ -102,8 +102,10 @@
       @include('Ingresos.dashboard.usuarios.recepcion_consulta')
     @elseif(Auth::user()->tipoUsuario == "Médico")
 			@include('Ingresos.dashboard.usuarios.medico')
-		@elseif(Auth::user()->tipoUsuario == "Enfermería")
+		@elseif(Auth::user()->tipoUsuario == "Enfermería" && $ingreso->tipo < 3)
 			@include('Ingresos.dashboard.usuarios.enfermeria')
+		@elseif(Auth::user()->tipoUsuario == "Enfermería" && $ingreso->tipo == 3)
+			@include('Ingresos.dashboard.usuarios.enfermeria_consulta')
     @endif
 
   </div>
