@@ -47,7 +47,7 @@
         <div class="x_panel m_panel" style="height: 414px">
           <div class="flex-row">
             <center>
-              <h5>Examenes pendientes</h5>
+              <h5>Exámenes pendientes</h5>
             </center>
           </div>
           <div class="row">
@@ -61,7 +61,7 @@
         <div class="x_panel m_panel" style="height: 553px">
           <div class="flex-row">
             <center>
-              <h5>Examenes</h5>
+              <h5>Exámenes</h5>
             </center>
           </div>
           <div class="flex-row">

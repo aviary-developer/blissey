@@ -99,7 +99,7 @@ function comprobacionTemporal(){
 		}else if(total==0){
 			swal({
 				title: 'Existencias igual a cero',
-				text: '¿Está seguro? ¡No se realizarán examenes con este reactivo!',
+				text: '¿Está seguro? ¡No se realizarán exámenes con este reactivo!',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#DD6B55',

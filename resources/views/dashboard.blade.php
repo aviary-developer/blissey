@@ -720,7 +720,7 @@
                               <li>
                               <a href="{{asset('/stockTodos')}}">
                                 <span>
-                                  <span><strong>Invetario bajo</strong></span>
+                                  <span><strong>Inventario bajo</strong></span>
                                   <span class="time">Cantidad: <strong>{{$conteostock}}</strong></span>
                                 </span>
                                 <span class="message">

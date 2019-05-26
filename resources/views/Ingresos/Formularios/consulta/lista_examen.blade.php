@@ -1,7 +1,7 @@
 <div class="row" style="display:none" id="examenes__">
   <div class="row">
     <center>
-      <h4>Examenes del paciente</h4>
+      <h4>Exámenes del paciente</h4>
     </center>
   </div>
   @if ($examenes_paciente != null)
