@@ -93,7 +93,7 @@
           <footer style="background-color: #DADADA">
 
             <div class="footer-copyright text-center py-3">
-              UES - FMP 2018
+              UES - FMP {{date('Y')}}
             </div>
 
           </footer>

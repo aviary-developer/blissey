@@ -14,10 +14,10 @@
 		</div>
 		<div class="row" id="primary_panel">
 			<div class="col-sm-4">
-				<div class="m_panel x_panel bg-primary text-light h-25" onclick="change()" style="cursor: pointer">
+				<div class="m_panel x_panel bg-primary text-light h-25">
 					<center>
 						<span class="text-monospace">
-							Precio
+							Total
 						</span>
 						<h2 id="c_amount">9999.99</h2>
 					</center>
@@ -44,30 +44,16 @@
 						<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
 							@include('Ingresos.index.modal.partes.c_medico')
 						</div>
-						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">Medicamentos</div>
-						<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">Servicios</div>
+						<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
+							@include('Ingresos.index.modal.partes.c_medicamento')
+						</div>
+						<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
+							@include('Ingresos.index.modal.partes.c_servicio')
+						</div>
 						<div class="tab-pane fade" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">Laboratorio clinico</div>
 						<div class="tab-pane fade" id="v-pills-6" role="tabpanel" aria-labelledby="v-pills-6-tab">Ultrasonografia</div>
 						<div class="tab-pane fade" id="v-pills-7" role="tabpanel" aria-labelledby="v-pills-7-tab">TAC</div>
 						<div class="tab-pane fade" id="v-pills-8" role="tabpanel" aria-labelledby="v-pills-8-tab">Rayos X</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row" id="secondary_panel" style="display: none">
-			<div class="col-sm-12">
-				<div class="x_panel m_panel" style="height: 419px">
-					<div class="row">
-						<div class="col-2">
-							<button type="button" class="btn btn-sm btn-light" onclick="change()">
-								<i class="fas fa-arrow-left"></i> Atras
-							</button>
-						</div>
-						<div class="col-8">
-							<center>
-								<h4>Resumen</h4>
-							</center>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -79,12 +65,5 @@
 		</div>
   </div>
 </div>
-
-<script>
-	function change(){
-		$("#primary_panel").toggle();
-		$("#secondary_panel").toggle();
-	}
-</script>
 
 {!!Html::script('js/scripts/Calculadora.js')!!}

@@ -6,6 +6,8 @@ $(document).ready(async function () {
 	await load_habitacion();
 	await load_cama();
 	v_habitacion();
+	v_medico();
+	v_medicamento();
 
 	$("#radioBtn > a").on('click', async function () {
 		await load_habitacion();
@@ -18,6 +20,166 @@ $(document).ready(async function () {
 		v_habitacion();
 	});
 
+	$("#c_nombre_medicamento").on('keyup',function(){
+		var obj = $(this);
+		if (obj.val().length == 0) {
+			$("#panel_ver_medicamentos").show();
+			$("#panel_buscar_medicamentos").hide();
+		} else {
+			$("#panel_ver_medicamentos").hide();
+			$("#panel_buscar_medicamentos").show();
+
+			var valor = obj.val();
+			var ruta = $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
+			var tabla = $("#table_buscar_medicamentos");
+			$.get(ruta, function (res) {
+				tabla.empty();
+				cab = "<thead>" +
+					"<th colspan='2'>Resultado</th>" +
+					"<th>Precio</th>" +
+					"<th style='width : 50px'>Acción</th>" +
+					"</thead><tbody id='tbody_table_buscar_medicamentos'><tbody/>";
+				tabla.append(cab);
+				$(res).each(function (key, value) {
+					$(value.division_producto).each(function (key2, value2) {
+						if (parseFloat(value2.inventario) > 0) {
+							if (value2.contenido != null) {
+								var aux = value2.unidad.nombre;
+							} else {
+								var aux = value.presentacion.nombre;
+							}
+							html = "<tr>" +
+								"<td id='cu" + value2.id + "'>" + value.nombre + "</td>" +
+								"<td id='cd" + value2.id + "'>" + " " + value2.division.nombre + " " + value2.cantidad + " " + aux + "</td>" +
+								"<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
+								"<td>" +
+								"<center><button type='button' class='btn btn-sm btn-primary' id='add_buscar_medicamentos'>" +
+								"<i class='fa fa-check'></i>" +
+								"</button></center>" +
+								"</td>" +
+								"</tr>";
+							tabla.append(html);
+						}
+					});
+				});
+			});
+		}
+	});
+
+	$("#table_buscar_medicamentos").on('click', '#add_buscar_medicamentos', function (e) {
+		e.preventDefault();
+		var nombre = $(this).parents('tr').find('td:eq(0)').text();
+		var presentacion = $(this).parents('tr').find('td:eq(1)').text();
+		var precio = $(this).parents('tr').find('td:eq(2)').find('label').text();
+		var cantidad = $("#c_cantidad_medicamento").val();
+
+		var subpanel = $("#subpanel_ver_medicamentos");
+
+		if ($("#subpanel_ver_medicamentos > div.row").length == 0) {
+			subpanel.empty();
+		} else {
+			subpanel.append('<hr>');
+		}
+
+		var html = '<div class="row">' +//Primer div row
+			'<div class="col-10">' + //Primer div col-10
+			'<h6>' + nombre +
+			' <span class="badge border border-success text-success badge-pill badge-light" id="price_m">$ ' + precio + '</span>' +
+			'</h6>' + 
+			'<div class="row ml-1">' + //Segundo div row
+			'<span class="badge badge-primary">'+presentacion+'</span>'+
+			'</div>'+
+			'</div>' + //Primer divl col-10
+			'<div class="col-2">' + //Primer div col-2
+			'<div class="form-group">' + //Primer div form-group
+			'<div class="input-group mb-2 mr-sm-2">' + //Primer div --
+			'<input type="number" name="c_cantidad_medicamento" id="c_cantidad_medicamento" class="form-control form-control-sm" min="0" step="1" value="'+cantidad+'">'+
+			'</div>' + //Primer div --
+			'</div>'+ //Primer div form-group
+			'</div>'+ //Primer div col-2
+			'</div>'; //Primer div row
+		
+		subpanel.append(html);
+		$("#c_nombre_medicamento").val("");
+		$("#panel_ver_medicamentos").show();
+		$("#panel_buscar_medicamentos").hide();
+
+		v_medicamento();
+	});
+
+	$("#c_nombre_servicio").on('keyup', function () {
+		var obj = $(this);
+		if (obj.val().length == 0) {
+			$("#panel_ver_servicios").show();
+			$("#panel_buscar_servicios").hide();
+		} else {
+			$("#panel_ver_servicios").hide();
+			$("#panel_buscar_servicios").show();
+
+			var valor = obj.val();
+			var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
+			var tabla = $("#table_buscar_servicios");
+			$.get(ruta, function (res) {
+				tabla.empty();
+				cab = "<thead>" +
+					"<th>Resultado</th>" +
+					"<th>Precio</th>" +
+					"<th style='width : 50px'>Acción</th>" +
+					"</thead><tbody id='tbody_table_buscar_servicios'><tbody/>";
+				tabla.append(cab);
+				$(res).each(function (key, value) {
+					html = "<tr>" +
+						"<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
+						"<td>$ <label id='cd" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
+						"<td>" +
+						"<center><button type='button' class='btn btn-sm btn-primary' id='add_buscar_servicios'>" +
+						"<i class='fa fa-check'></i>" +
+						"</button></center>" +
+						"</td>" +
+						"</tr>";
+					tabla.append(html);
+				});
+			});
+		}
+	});
+
+	$("#table_buscar_servicios").on('click', '#add_buscar_servicios', function (e) {
+		e.preventDefault();
+		var nombre = $(this).parents('tr').find('td:eq(0)').text();
+		var precio = $(this).parents('tr').find('td:eq(1)').find('label').text();
+		var cantidad = $("#c_cantidad_servicio").val();
+
+		var subpanel = $("#subpanel_ver_servicios");
+
+		if ($("#subpanel_ver_servicios > div.row").length == 0) {
+			subpanel.empty();
+		} else {
+			subpanel.append('<hr>');
+		}
+
+		var html = '<div class="row">' +//Primer div row
+			'<div class="col-10">' + //Primer div col-10
+			'<h6>' + nombre +
+			' <span class="badge border border-success text-success badge-pill badge-light" id="price_m">$ ' + precio + '</span>' +
+			'</h6>' +
+			'</div>' + //Primer divl col-10
+			'<div class="col-2">' + //Primer div col-2
+			'<div class="form-group">' + //Primer div form-group
+			'<div class="input-group mb-2 mr-sm-2">' + //Primer div --
+			'<input type="number" name="c_cantidad_servicio" id="c_cantidad_servicio" class="form-control form-control-sm" min="0" step="1" value="' + cantidad + '">' +
+			'</div>' + //Primer div --
+			'</div>' + //Primer div form-group
+			'</div>' + //Primer div col-2
+			'</div>'; //Primer div row
+
+		subpanel.append(html);
+		$("#c_nombre_servicio").val("");
+		$("#panel_ver_servicios").show();
+		$("#panel_buscar_servicios").hide();
+
+		v_servicio();
+	});
+
 	$("#c_habitacion").on('change', load_cama);
 
 	$("#c_cama").on('change', v_habitacion);
@@ -25,6 +187,14 @@ $(document).ready(async function () {
 
 	$("#body-m").on('change keyup', '#c_cantidad_m', function () {
 		v_medico();
+	});
+
+	$("#subpanel_ver_medicamentos").on('change keyup', '#c_cantidad_medicamento', function () {
+		v_medicamento();
+	});
+
+	$("#subpanel_ver_servicios").on('change keyup', '#c_cantidad_servicio', function () {
+		v_servicio();
 	});
 	
 	async function load_habitacion() {
@@ -115,13 +285,65 @@ $(document).ready(async function () {
 			precio = parseFloat(precio);
 
 			var txt_cantidad = $(v).find('#c_cantidad_m').val();
-			txt_cantidad = txt_cantidad.trim();
-			var cantidad = parseInt(txt_cantidad);
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
 
 			acumulaldor += (precio * cantidad);
 		});
 
 		vector[1] = acumulaldor;
+		amount();
+	}
+
+	function v_medicamento() {
+		var acumulaldor = 0;
+		$("#subpanel_ver_medicamentos > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+
+			var txt_cantidad = $(v).find('#c_cantidad_medicamento').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			acumulaldor += (precio * cantidad);
+		});
+
+		vector[2] = acumulaldor;
+		amount();
+	}
+
+	function v_servicio() {
+		var acumulaldor = 0;
+		$("#subpanel_ver_servicios > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+
+			var txt_cantidad = $(v).find('#c_cantidad_servicio').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			acumulaldor += (precio * cantidad);
+		});
+
+		vector[3] = acumulaldor;
 		amount();
 	}
 
