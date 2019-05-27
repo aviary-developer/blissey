@@ -68,7 +68,7 @@
         <div class="x_panel m_panel">
           <center>
             <h4 class="red">
-              ¡Upps! Esta receta no tiene examenes asociados
+              ¡Upps! Esta receta no tiene exámenes asociados
             </h4>
           </center>
         </div>

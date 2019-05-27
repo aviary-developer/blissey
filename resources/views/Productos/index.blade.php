@@ -20,7 +20,7 @@
           <tr>
             <th>#</th>
             <th>Nombre</th>
-            <th>Proveedor</th>
+            <th>Fabricante</th>
             <th>Categoría</th>
             <th>Opciones</th>
           </tr>

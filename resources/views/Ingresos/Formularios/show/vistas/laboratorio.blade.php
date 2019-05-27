@@ -48,6 +48,6 @@
   </div>
 @else
   <div class="row">
-    <p>No hay examenes seleccionados para este paciente</p>
+    <p>No hay exámenes seleccionados para este paciente</p>
   </div>
 @endif

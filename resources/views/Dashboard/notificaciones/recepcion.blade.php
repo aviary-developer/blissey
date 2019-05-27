@@ -29,7 +29,7 @@
           <a class="dropdown-item" href="{{asset('/stockTodos')}}">
             <div class="flex-row">
               <center>
-                <span class="text-uppercase text-monospace font-weight-light">Invetario bajo</span>
+                <span class="text-uppercase text-monospace font-weight-light">Inventario bajo</span>
                 <span class="badge badge-danger">
                   {{$conteostock}}
                 </span>
