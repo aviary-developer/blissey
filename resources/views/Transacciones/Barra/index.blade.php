@@ -22,9 +22,9 @@
   <li class="nav-item">
     <a class="nav-link" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
-  </li>
+  </li> --}}
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
@@ -41,9 +41,9 @@
 @endif
 
 @if($tipo==1)
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
-  </li>
+  </li> --}}
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
@@ -63,9 +63,9 @@
   <li class="nav-item">
     <a class="nav-link" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
-  </li>
+  </li> --}}
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
@@ -82,9 +82,9 @@
 @endif
 
 @if($tipo==3)
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
-  </li>
+  </li> --}}
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver

@@ -1,3 +1,4 @@
+{!!Form::open(['method'=>'POST','id'=>'formulario'])!!}
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if (!$habitacion->estado)
     @php
@@ -38,6 +39,7 @@
     @include('Dashboard.boton_salir')
   </div>
 </nav>
+{!!Form::close()!!}
 <input type="hidden" name="u" id="ubi" value="show">
 
 <script type="text/javascript">
@@ -56,7 +58,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','activateHabitacion/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/activateHabitacion/'+id);
         $('#formulario').submit();
       }
     });
@@ -78,7 +80,7 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','destroyHabitacion/'+id);
+        $('#formulario').attr('action',$('#guardarruta').val()+'/destroyHabitacion/'+id);
         $('#formulario').submit();
       }
     });
@@ -99,8 +101,8 @@
       if (result.value) {
         localStorage.setItem('msg','yes');
         var dominio = window.location.host;
-        $('#formulario').attr('action','desactivateHabitacion/'+id);
-        submit();
+        $('#formulario').attr('action',$('#guardarruta').val()+'/desactivateHabitacion/'+id);
+        $('#formulario').submit();
       }
     });
   }
