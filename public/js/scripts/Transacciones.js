@@ -458,6 +458,7 @@ $(document).on('ready', function () {
     valido.required();
     bandera = valido.value(bandera);
 
+
     $("input[name='state-of[]']").each(function (k, v) {
       if ($(v).val() == "false") {
         bandera = false;
@@ -465,7 +466,31 @@ $(document).on('ready', function () {
     });
 
     if (bandera) {
-      $('#formVender').submit();
+      var cantidades = document.getElementsByName("cantidad[]");
+      var descuentos = document.getElementsByName("descuento[]");
+      var precios = document.getElementsByName("precio[]");
+      var arqueo = parseFloat($('#arqueo').val());
+      acumulado = 0;
+      for (i = 0; i < cantidades.length; i++) {
+        cantidad = parseFloat(cantidades[i].value);
+        descuento = parseFloat(descuentos[i].value);
+        precio = parseFloat(precios[i].value);
+        subtotal = cantidad * precio;
+        total = subtotal - (subtotal * (descuento / 100));
+        acumulado += total;
+        console.log("acumulado" + acumulado);
+      }
+      acumulado = acumulado - (acumulado * (parseFloat($('#descuentog').val()) / 100));
+      console.log("dg" + acumulado);
+      if ($('#ivaincluido').val() == '0') {
+        acumulado = acumulado + (acumulado * 0.13);
+      }
+      console.log("iva" + acumulado);
+      if (arqueo >= acumulado) {
+        $('#formVender').submit();
+      } else {
+        notaError('El costo supera el valor en caja');
+      }
     } else {
       notaError('Debe completar todos los campos');
     }

@@ -10,6 +10,10 @@
 		<input type="hidden" value="" id="divoculto">
 		<input type="hidden" value="" id="nomoculto">
 		<input type="hidden" id="tipo" name="tipo" value="{{$tipo}}">
+		@php
+			$aq=App\DetalleCaja::arqueo(Carbon\Carbon::now()->format('Y-m-d'),App\DetalleCaja::caja_en_uso());
+		@endphp
+	<input type="hidden" id="arqueo" value="{{$aq}}">
 		{{-- Llenar el select de estantes --}}
 		@php
 			$estantes=App\Estante::arrayEstante();
@@ -59,7 +63,7 @@
 				<div class="input-group-prepend">
 					<div class="input-group-text"><i class="fas fa-percent"></i></div>
 				</div>
-				{!! Form::number('descuentog',0,['class'=>'form-control form-control-sm']) !!}
+				{!! Form::number('descuentog',0,['class'=>'form-control form-control-sm','id'=>'descuentog']) !!}
 			</div>
 		</div>
 

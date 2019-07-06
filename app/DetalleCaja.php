@@ -94,4 +94,14 @@ class DetalleCaja extends Model
       }
       return $total;
     }
+    public static function caja_en_uso(){
+      $cajas=Caja::where('estado',true)->where('localizacion',Transacion::tipoUsuario())->orderBy('nombre','ASC')->get();
+      foreach($cajas as $caja){
+        if (DetalleCaja::verificacionCaja($caja->id)){
+          if (DetalleCaja::usuario($caja->id)->f_usuario==Auth::user()->id){
+            return $caja->id;
+          }
+        }
+      }
+    }
 }
