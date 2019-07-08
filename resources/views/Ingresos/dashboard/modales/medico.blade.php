@@ -20,7 +20,7 @@
         <div role="tabpanel" data-example-id="togglable-tabs">
           <div class="col-sm-3">
             <div class="x_panel m_panel" style="height: 447px; overflow-x:hidden; overflow-y:scroll">
-              
+
               <div class="nav flex-column nav-pills" id="tab_med" role="tablist" aria-orientation="vertical">
                 @for ($i = 0; $i <= $total_especialidad; $i++)
                   @if ($i == 0)
@@ -30,12 +30,12 @@
                   @endif
                 @endfor
               </div>
-  
+
             </div>
           </div>
           <div class="col-sm-9">
             <div class="x_panel m_panel" style="height: 447px;">
-              
+
               <div id="tab_medContent" class="tab-content">
                 @for ($i = 0; $i <= $total_especialidad; $i++)
                   @if ($i == 0)
@@ -75,12 +75,12 @@
                               <h5 class="text-primary">Especialidad principal</h5>
                             </center>
                           </div>
-  
+
                           <div class="flex-row">
                             <div class="col-sm-12">
                               @if ($especialidades[($i-1)]->usuario_especialidad->where('principal',true)->count() > 0 )
                                 @foreach ($especialidades[($i-1)]->usuario_especialidad as $medico)
-                                  @if ($medico->principal)
+                                  @if ($medico->principal && $medico->usuario->tipoUsuario == "Médico")
                                     <div class="col-sm-3">
                                       <center>
                                         <div class="checkbox-img" id="check-img" onclick="contar_m(this)">
@@ -139,7 +139,7 @@
                   </div>
                 @endfor
               </div>
-  
+
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ var solicitudes=0;
     var nombre = $(boton).parent('center').find('span');
         if (hijo) {
           solicitudes=solicitudes+1;
-        
+
           swal({
             type: 'success',
             html: '<strong>'+nombre.text()+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
