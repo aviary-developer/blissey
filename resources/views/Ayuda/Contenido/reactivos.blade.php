@@ -42,7 +42,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/reactivos/editarExistencias/editarExistencias.html')}} frameborder="0" scrolling="no" width="100%" height="428px"></iframe>
+					<iframe src={{asset('help/reactivos/editarExistencias/editarExistencias_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 
 				</div>
 			</div>

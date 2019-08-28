@@ -43,7 +43,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/RespaldoNuevo/RespaldoNuevo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/bd/RespaldoNuevo/RespaldoNuevo_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
@@ -55,7 +55,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/Restaurar/Restaurar.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/bd/Restaurar/Restaurar_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
@@ -67,7 +67,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/DescargarRespaldo/DescargarRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/bd/DescargarRespaldo/DescargarRespaldo_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
@@ -79,7 +79,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/SubirRespaldo/SubirRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/bd/SubirRespaldo/SubirRespaldo_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="five" role="tabpanel" aria-labelledby="five-tab">
@@ -91,7 +91,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/bd/EliminarRespaldo/EliminarRespaldo.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/bd/EliminarRespaldo/EliminarRespaldo_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 			</div>

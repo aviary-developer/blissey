@@ -44,7 +44,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/compra/NuevoPedido/NuevoPedido.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/compra/NuevoPedido/NuevoPedido_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 				<div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
@@ -56,7 +56,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/compra/ConfirmarPedido/ConfirmarPedido.html')}} frameborder="0" scrolling="no" width="100%" height="419px"></iframe>
+					<iframe src={{asset('help/compra/ConfirmarPedido/ConfirmarPedido_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>				
 
 			</div>
