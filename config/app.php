@@ -179,8 +179,8 @@ return [
 
         //Nuevos
         Collective\Html\HtmlServiceProvider::class,
-        //Barryvdh\DomPDF\ServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        //Barryvdh\Snappy\ServiceProvider::class,
         //Para respaldos y Restore
         BackupManager\Laravel\Laravel5ServiceProvider::class,
         //Para generar el codigo de barras
@@ -239,8 +239,8 @@ return [
         //Nuevos
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        //'PDF' => Barryvdh\DomPDF\Facade::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
         //Barcode
