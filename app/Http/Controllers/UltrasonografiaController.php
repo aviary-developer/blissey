@@ -6,7 +6,6 @@ use App\Bitacora;
 use Redirect;
 use DB;
 use Response;
-use Carbon\Carbon;
 use App\CategoriaServicio;
 use App\Servicio;
 use App\ultrasonografia;

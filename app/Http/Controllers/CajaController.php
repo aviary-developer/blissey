@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Caja;
-use App\Http\Requests\CajaRequest;
 use Redirect;
 use App\Bitacora;
 use DB;

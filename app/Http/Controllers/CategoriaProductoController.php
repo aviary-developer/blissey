@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CategoriaProducto;
-use App\Transacion;
 use App\Bitacora;
 use Redirect;
 use Response;

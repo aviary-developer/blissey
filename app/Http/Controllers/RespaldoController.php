@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use Alert;
 use Artisan;
 use Log;
-use App\Unidad;
 use Illuminate\Http\Request;
 
 class RespaldoController extends Controller

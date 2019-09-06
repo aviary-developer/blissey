@@ -9,7 +9,6 @@ use App\Reactivo;
 use App\DescripcionReactivo;
 use Redirect;
 use Response;
-use Carbon\Carbon;
 
 class ReactivoController extends Controller
 {

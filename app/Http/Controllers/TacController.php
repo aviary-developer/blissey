@@ -6,12 +6,10 @@ use App\Bitacora;
 use Redirect;
 use DB;
 use Response;
-use Carbon\Carbon;
 use App\CategoriaServicio;
 use App\Servicio;
 use App\Tac;
 use Illuminate\Http\Request;
-use App\Http\Requests\TacRequest;
 
 class TacController extends Controller
 {

@@ -17,8 +17,6 @@ use App\Reactivo;
 use App\Tac;
 use App\Transacion;
 use App\DetalleTransacion;
-use Response;
-use App\Paciente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;

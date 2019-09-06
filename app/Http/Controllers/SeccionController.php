@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SeccionRequest;
 use Redirect;
 use Response;
-use Carbon\Carbon;
 use DB;
 use App\Bitacora;
 

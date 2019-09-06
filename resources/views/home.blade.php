@@ -13,8 +13,6 @@
     {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
     <!-- Font Awesome -->
     {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
-    <!-- NProgress -->
-    {!!Html::style('assets/nprogress/nprogress.css')!!}
     <!-- Animate.css -->
     {!!Html::style('assets/build/css/custom.min.css')!!}
   </head>

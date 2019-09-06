@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Consulta;
-use App\Ingreso;
-use App\Paciente;
 use App\Producto;
 use App\Bitacora;
 use App\Receta;

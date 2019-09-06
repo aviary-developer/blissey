@@ -13,9 +13,6 @@ use App\Bitacora;
 use App\Servicio;
 use App\CategoriaServicio;
 use Redirect;
-use Carbon\Carbon;
-use App\Http\Controllers;
-use Validator;
 use DB;
 
 class UserController extends Controller

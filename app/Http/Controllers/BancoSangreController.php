@@ -6,8 +6,6 @@ use App\BancoSangre;
 use App\Bitacora;
 use Redirect;
 use DB;
-use Response;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BancoSangreController extends Controller

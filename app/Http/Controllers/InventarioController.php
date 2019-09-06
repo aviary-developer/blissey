@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
 use App\DivisionProducto;
 use App\DetalleDevolucion;
-use App\CambioProducto;
-use App\Estante;
 use App\DetalleTransacion;
 use App\Devolucion;
 
