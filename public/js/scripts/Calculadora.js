@@ -10,6 +10,9 @@ $(document).ready(async function () {
 	v_medicamento();
 	v_servicio();
 	v_laboratorio();
+	v_ultra();
+	v_rayo();
+	v_tac();
 
 	$("#radioBtn > a").on('click', async function () {
 		await load_habitacion();
@@ -199,6 +202,18 @@ $(document).ready(async function () {
 		v_servicio();
 	});
 
+	$("#body-ultra").on('change keyup', "#c_cantidad_ultra", function () { 
+		v_ultra();
+	});
+
+	$("#body-tac").on('change keyup', "#c_cantidad_tac", function () {
+		v_tac();
+	});
+
+	$("#body-rayo").on('change keyup', "#c_cantidad_rayo", function () {
+		v_rayo();
+	});
+
 	$("#panel_ver_examenes").on('change keyup', '#c_cantidad_examen', function () {
 		v_laboratorio();
 
@@ -207,7 +222,6 @@ $(document).ready(async function () {
 
 		var contador = 0;
 		$('#' + id_grupo + ' > div.row').each(function (k, v) { 
-			console.log(v);
 			var txt_cantidad = $(v).find('#c_cantidad_examen').val();
 			if (txt_cantidad != "") {
 				txt_cantidad = txt_cantidad.trim();
@@ -407,6 +421,78 @@ $(document).ready(async function () {
 			acumulador += (precio * cantidad);
 		});
 		vector[4] = acumulador;
+		amount();
+	}
+
+	function v_ultra() {
+		var acumulador = 0;
+		$("#body-ultra > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+
+			var txt_cantidad = $(v).find('#c_cantidad_ultra').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			acumulador += (precio * cantidad);
+		});
+
+		vector[5] = acumulador;
+		amount();
+	}
+
+	function v_tac() {
+		var acumulador = 0;
+		$("#body-tac > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+
+			var txt_cantidad = $(v).find('#c_cantidad_tac').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			acumulador += (precio * cantidad);
+		});
+
+		vector[6] = acumulador;
+		amount();
+	}
+
+	function v_rayo() {
+		var acumulador = 0;
+		$("#body-rayo > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+
+			var txt_cantidad = $(v).find('#c_cantidad_rayo').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			acumulador += (precio * cantidad);
+		});
+
+		vector[7] = acumulador;
 		amount();
 	}
 

@@ -51,6 +51,9 @@ class IngresoController extends Controller
 			$medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
 			//Petición de todos los exámenes médicos para la calculadora
 			$examenes = Examen::where('estado', true)->orderBy('area')->orderBy('nombreExamen')->get();
+			$rayosx = Rayosx::where('estado', true)->orderBy('nombre')->get();
+			$ultras = ultrasonografia::where('estado', true)->orderBy('nombre')->get();
+			$tacs = Tac::where('estado', true)->orderBy('nombre')->get();
 
       $habitaciones_ingreso = Habitacion::where('tipo',1)->where('estado',true)->orderBy('numero','asc')->get();
       $habitaciones_observacion = Habitacion::where('tipo',0)->where('estado',true)->orderBy('numero','asc')->get();
@@ -77,7 +80,10 @@ class IngresoController extends Controller
         'medicos',
         'fecha',
 				'cola_consulta',
-				'examenes'
+				'examenes',
+				'ultras',
+				'rayosx',
+				'tacs'
       ));
     }
 
