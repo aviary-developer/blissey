@@ -50,7 +50,9 @@
 						<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
 							@include('Ingresos.index.modal.partes.c_servicio')
 						</div>
-						<div class="tab-pane fade" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">Laboratorio clinico</div>
+						<div class="tab-pane fade" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">
+							@include('Ingresos.index.modal.partes.c_laboratorio')
+						</div>
 						<div class="tab-pane fade" id="v-pills-6" role="tabpanel" aria-labelledby="v-pills-6-tab">Ultrasonografia</div>
 						<div class="tab-pane fade" id="v-pills-7" role="tabpanel" aria-labelledby="v-pills-7-tab">TAC</div>
 						<div class="tab-pane fade" id="v-pills-8" role="tabpanel" aria-labelledby="v-pills-8-tab">Rayos X</div>

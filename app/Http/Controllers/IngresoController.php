@@ -16,17 +16,13 @@ use App\Tac;
 use App\ultrasonografia;
 use App\Abono;
 use App\Especialidad;
-use App\SolicitudExamen;
-use App\CategoriaServicio;
 use Illuminate\Http\Request;
 use App\Transacion;
 use App\DetalleTransacion;
 use DB;
-use Redirect;
 use Response;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\IngresoRequest;
 
 class IngresoController extends Controller
 {
@@ -50,8 +46,11 @@ class IngresoController extends Controller
       }
       $ingresos = Ingreso::buscar($estado, $tipo,$usuario);
       $activos = Ingreso::where('estado','<>',2)->where('tipo', $tipo)->count();
-
-      $medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
+			
+			//Petición de todos los médicos para la calculadora
+			$medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
+			//Petición de todos los exámenes médicos para la calculadora
+			$examenes = Examen::where('estado', true)->orderBy('area')->orderBy('nombreExamen')->get();
 
       $habitaciones_ingreso = Habitacion::where('tipo',1)->where('estado',true)->orderBy('numero','asc')->get();
       $habitaciones_observacion = Habitacion::where('tipo',0)->where('estado',true)->orderBy('numero','asc')->get();
@@ -77,7 +76,8 @@ class IngresoController extends Controller
         'habitaciones_mediingreso',
         'medicos',
         'fecha',
-        'cola_consulta'
+				'cola_consulta',
+				'examenes'
       ));
     }
 

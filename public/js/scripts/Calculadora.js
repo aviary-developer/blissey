@@ -8,6 +8,8 @@ $(document).ready(async function () {
 	v_habitacion();
 	v_medico();
 	v_medicamento();
+	v_servicio();
+	v_laboratorio();
 
 	$("#radioBtn > a").on('click', async function () {
 		await load_habitacion();
@@ -196,6 +198,44 @@ $(document).ready(async function () {
 	$("#subpanel_ver_servicios").on('change keyup', '#c_cantidad_servicio', function () {
 		v_servicio();
 	});
+
+	$("#panel_ver_examenes").on('change keyup', '#c_cantidad_examen', function () {
+		v_laboratorio();
+
+		var grupo = $(this).parents('.div_area');
+		var id_grupo = $(grupo).attr('id');
+
+		var contador = 0;
+		$('#' + id_grupo + ' > div.row').each(function (k, v) { 
+			console.log(v);
+			var txt_cantidad = $(v).find('#c_cantidad_examen').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			contador += cantidad;
+		});
+
+		$("#c_" + id_grupo).text(contador);
+	});
+
+	$("#c_area").on('change', function () {
+		var valor = $("#c_area").val();
+
+		$("#panel_ver_examenes > div.div_area").each(function (k, v) {
+			$(v).hide();
+		});
+		$("#count_column > span.contadores").each(function (k, v) { 
+			$(v).removeClass('badge-dark').addClass('badge-primary');
+		});
+		
+		var id_div = valor.replace(/ /g, '_');
+		$("#" + id_div).show();
+		$("#c_" + id_div).removeClass('badge-primary').addClass('badge-dark');
+	});
 	
 	async function load_habitacion() {
 		var valor = $("#tipo").val();
@@ -276,7 +316,7 @@ $(document).ready(async function () {
 	}
 
 	function v_medico() {
-		var acumulaldor = 0;
+		var acumulador = 0;
 		$("#body-m > div.row").each(function (k, v) {
 			var txt_precio = $(v).find('#price_m').text();
 			txt_precio = txt_precio.trim();
@@ -292,15 +332,15 @@ $(document).ready(async function () {
 				var cantidad = 0;
 			}
 
-			acumulaldor += (precio * cantidad);
+			acumulador += (precio * cantidad);
 		});
 
-		vector[1] = acumulaldor;
+		vector[1] = acumulador;
 		amount();
 	}
 
 	function v_medicamento() {
-		var acumulaldor = 0;
+		var acumulador = 0;
 		$("#subpanel_ver_medicamentos > div.row").each(function (k, v) {
 			var txt_precio = $(v).find('#price_m').text();
 			txt_precio = txt_precio.trim();
@@ -316,15 +356,15 @@ $(document).ready(async function () {
 				var cantidad = 0;
 			}
 
-			acumulaldor += (precio * cantidad);
+			acumulador += (precio * cantidad);
 		});
 
-		vector[2] = acumulaldor;
+		vector[2] = acumulador;
 		amount();
 	}
 
 	function v_servicio() {
-		var acumulaldor = 0;
+		var acumulador = 0;
 		$("#subpanel_ver_servicios > div.row").each(function (k, v) {
 			var txt_precio = $(v).find('#price_m').text();
 			txt_precio = txt_precio.trim();
@@ -340,19 +380,42 @@ $(document).ready(async function () {
 				var cantidad = 0;
 			}
 
-			acumulaldor += (precio * cantidad);
+			acumulador += (precio * cantidad);
 		});
 
-		vector[3] = acumulaldor;
+		vector[3] = acumulador;
+		amount();
+	}
+
+	function v_laboratorio() {
+		var acumulador = 0;
+		$("#panel_ver_examenes > .div_area > div.row").each(function (k, v) {
+			var txt_precio = $(v).find('#price_m').text();
+			txt_precio = txt_precio.trim();
+			var aux = txt_precio.split(" ");
+			var precio = aux[1];
+			precio = parseFloat(precio);
+			
+			var txt_cantidad = $(v).find('#c_cantidad_examen').val();
+			if (txt_cantidad != "") {
+				txt_cantidad = txt_cantidad.trim();
+				var cantidad = parseInt(txt_cantidad);
+			} else {
+				var cantidad = 0;
+			}
+
+			acumulador += (precio * cantidad);
+		});
+		vector[4] = acumulador;
 		amount();
 	}
 
 	function amount() {
-		var acumulaldor = 0;
+		var acumulador = 0;
 		$(vector).each(function (k, v) {
-			acumulaldor += v;
+			acumulador += v;
 		});
-		var numero = new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(acumulaldor);
+		var numero = new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(acumulador);
 		$("#c_amount").text('$ ' + numero);
 	}
 });
