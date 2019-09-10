@@ -27,7 +27,8 @@ class AgregarEncargadoExamen extends Migration
     public function down()
     {
         Schema::table('resultados', function (Blueprint $table) {
-              $table->dropColumn('f_laboratorista');
+              $table->dropForeign('f_laboratorista');
+              $table->dropIndex('f_laboratorista');
         });
     }
 }
