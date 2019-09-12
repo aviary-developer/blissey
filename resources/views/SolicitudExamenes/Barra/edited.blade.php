@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/examenesEvaluados?vista=paciente&tipo=examenes') !!}>
+  <a class="navbar-brand" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
     Laboratorio Clínico
     <span class="badge badge-warning">
       Editar

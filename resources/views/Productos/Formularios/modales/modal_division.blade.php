@@ -175,11 +175,7 @@
     function generarCodigo(){
       var ruta = $('#guardarruta').val() + "/generarCodigo";
       $.get(ruta, function (res) {
-        if (codigos_agregados.includes(codigo)) {
-
-      }else{
         $('#codigo').val(res);
-      }   
       });
     }
     </script>
