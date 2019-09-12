@@ -38,32 +38,32 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           @if ($est == "solicitudes")
-            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.$vista.'&tipo=tac') !!}>
               Evaluados
             </a>
-            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista=paciente') !!}>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.$vista.'&tipo=tac') !!}>
               Entregados
             </a>
           @elseif($est == "entregados")
-            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
+            <a class="dropdown-item" href={!! asset('/solicitudex?vista='.$vista.'&tipo=tac') !!}>
               Solicitudes
             </a>
-            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.$vista.'&tipo=tac') !!}>
               Evaluados
             </a>
           @else
-            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes') !!}>
+            <a class="dropdown-item" href={!! asset('/solicitudex?vista='.$vista.'&tipo=tac') !!}>
               Solicitudes
             </a>
-            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista=paciente') !!}>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.$vista.'&tipo=tac') !!}>
               Entregados
             </a>
           @endif  
           <div class="dropdown-divider"></div>
           @if ($est == "evaluados")
-            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?tipo=tac&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @elseif($est == "entregados")
-            <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.(($vista!="paciente")?"paciente":"")) !!}>
+            <a class="dropdown-item" href={!! asset('/examenesEntregados?tipo=tac&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @else
             <a class="dropdown-item" href={!! asset('/solicitudex?tipo=tac&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @endif
