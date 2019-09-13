@@ -278,7 +278,8 @@ class ProductoController extends Controller
       $division->save();
       return redirect('/productos/'.$division->f_producto.'/edit')->with('mensaje', '¡Editado!');
     }
-    public static function generarCodigo(){
+    public static function generarCodigo(Request $r){
+      $codigos = json_decode($r->codigos);
       $inicio='0000';
       $ultimo=DivisionProducto::where('codigo', 'like',$inicio.'%')->orderBy('created_at','ASC')->get()->last();
      if($ultimo!=null){ 
@@ -289,8 +290,15 @@ class ProductoController extends Controller
     }
       do{
         $correlativo++;
-        $existe=DivisionProducto::where('codigo',$inicio.$correlativo)->count();
+        $completo=$inicio.$correlativo;
+        $existe=DivisionProducto::where('codigo',$completo)->count();
+        $cuenta= count($codigos);
+        for($i=0; $i<$cuenta; $i++){
+          if($completo==$codigos[$i]){
+            $existe=1;
+          }
+        }
       }while($existe!=0);
-      return $inicio.$correlativo;
+      return $completo;
     }
 }

@@ -146,6 +146,7 @@
         </div>
       </div>
     </div>
+    <input type="hidden" id="tokenCod" name="tokenUnidadModal" value="<?php echo csrf_token(); ?>">
 
     <script type="text/javascript">
     $(document).on('ready',function(){
@@ -172,10 +173,21 @@
       });
     });
 
-    function generarCodigo(){
-      var ruta = $('#guardarruta').val() + "/generarCodigo";
-      $.get(ruta, function (res) {
-        $('#codigo').val(res);  
+     function generarCodigo(){
+      var codigos = [];
+       $("input[name='codigos[]']").each(function(indice, elemento) {
+        codigos.push($(elemento).val());
+      });
+      var token = $("#tokenCod").val();
+      $.ajax({
+        type: 'get',
+        headers: { 'X-CSRF-TOKEN': token},
+        url: $('#guardarruta').val() + '/generarCodigo',
+        data: {'codigos': JSON.stringify(codigos),
+      },
+        success: function (r) {
+          $('#codigo').val(r);
+        }
       });
     }
     </script>
