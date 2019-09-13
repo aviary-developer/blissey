@@ -6,7 +6,7 @@
 <div class="row">
     <div>
       <center>
-        <h3>ARQUEO</h3>
+        <h3>ARQUEO DE CAJA</h3>
       </center>
     </div>
     <div>
@@ -35,10 +35,18 @@
     <div>
             <div class="col-xs-6">
                 <div class="col-xs-5">
+                    @if($tipoArqueo==1)
                     <span>Fecha y hora del informe:</span>
+                    @else
+                    <span>Fecha y hora del apertura:</span>
+                    @endif
                 </div>
                 <div class="col-xs-7 subrayar">
-                    <b>{{ \Carbon\Carbon::now()->format('d/m/Y h:i:s A')}}</b>
+                        @if($tipoArqueo==1)
+                            <b>{{ \Carbon\Carbon::now()->format('d/m/Y h:i:s A')}}</b>
+                        @else
+                            <b>{{ $detalle->created_at->formatLocalized('%d/%m/%Y a las %H:%M:%S') }}</b>
+                        @endif
                 </div>
             </div>
         </div>

@@ -15,7 +15,11 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" target='_blank' href={!! asset('/informe_arqueo') !!}>Reporte</a>
+              @if($tipoArqueo==1)
+              <a class="nav-link" target='_blank' href={!! asset('/informe_arqueo') !!}>Reporte</a>
+            @else
+              <a class="nav-link" target='_blank' href={!! asset('/buscararqueo/'.$f_apertura.'/2') !!}>Reporte</a>
+            @endif
           </li>
       </ul>
       @include('Dashboard.boton_salir')

@@ -142,7 +142,7 @@ class DetalleCajaController extends Controller
       $caja=Caja::findOrFail($id);
       return view('DetalleCajas.cerrar',compact('caja'));
     }
-    public function buscararqueo($f_apertura){
+    public function buscararqueo($f_apertura,$ver){ //tipo->1:Generar en pantalla 2:Generar en pdf
       $detalle=DetalleCaja::find($f_apertura);
       $tipoArqueo=2;
       $cierre="";
@@ -183,7 +183,19 @@ class DetalleCajaController extends Controller
         }
       }
       $movimientos=Transacion::movimientosCaja($detalle->f_usuario,$detalle->updated_at,$fecha,$hasta);
-      return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo','cierre'));
+      if($ver=='1'){
+        return view('DetalleCajas.arqueo',compact('detalle','movimientos','tipoArqueo','cierre','f_apertura'));
+      }else{
+        if($detalle->datosCaja->localizacion){
+          $header = view('PDF.header.hospital');
+        }else{
+          $header = view('PDF.header.farmacia');
+        }
+        $footer = view('PDF.footer.numero_pagina');
+        $main = view('DetalleCajas.PDF.arqueo',compact('detalle','movimientos','tipoArqueo'));
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream('nombre.pdf');
+      }
     }
     public static function arqueo_pdf(){
       if(Transacion::tipoUsuario()==1 && date('G')<7){

@@ -28,7 +28,7 @@
                 <td>{{$apertura->user->name}}</td>
                 <td>
                     <div class="btn-group">
-                        <a href={!! asset('/buscararqueo/'.$apertura->id)!!} class="btn btn-sm btn-info"  title="Ver">
+                        <a href={!! asset('/buscararqueo/'.$apertura->id.'/1')!!} class="btn btn-sm btn-info"  title="Ver">
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </div>

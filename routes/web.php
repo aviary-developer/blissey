@@ -210,7 +210,7 @@ Route::group(['middleware'=>'general'], function(){
     Route::match(['get'],'/aperturar/{id}','DetalleCajaController@aperturar');
     Route::match(['get'],'/arqueo','DetalleCajaController@arqueo');
     Route::match(['get'],'/cerrar/{id}','DetalleCajaController@cerrar');
-    Route::match(['get'],'/buscararqueo/{caja}','DetalleCajaController@buscararqueo');
+    Route::match(['get'],'/buscararqueo/{caja}/{tipo}','DetalleCajaController@buscararqueo');
   Route::get('/informe_arqueo','DetalleCajaController@arqueo_pdf');
   Route::post('/efectivo','DetalleCajaController@efectivo');
 
