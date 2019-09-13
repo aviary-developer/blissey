@@ -19,6 +19,10 @@ class UsuarioFarmacia
       {
         return $next($request);
       }
+      if(auth()->check() && auth()->user()->tipoUsuario == 'Recepción')
+      {
+        return $next($request);
+      }
       return redirect("/");
     }
 }

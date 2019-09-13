@@ -113,7 +113,25 @@
       </a>
       <ul class="nav child_menu submenu">
         <li>
+          <a href={{asset( '/productos')}}>Productos</a>
+        </li>
+        <li>
+          <a href={{asset( '/categoria_productos')}}>Categorías de productos</a>
+        </li>
+        <li>
+          <a href={{asset( '/presentaciones')}}>Presentaciones</a>
+        </li>
+        <li>
+          <a href={{asset( '/componentes')}}>Componentes</a>
+        </li>
+        <li>
+          <a href={{asset( '/divisiones')}}>Divisiones</a>
+        </li>
+        <li>
           <a href={{asset( '/estantes')}}>Estantes</a>
+        </li>
+        <li>
+          <a href={{asset( '/unidades')}}>Unidades de medida</a>
         </li>
         <li>
           <a href={{asset( '/cajas')}}>Cajas</a>
