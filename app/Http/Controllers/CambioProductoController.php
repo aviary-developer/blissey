@@ -9,6 +9,7 @@ use App\CambioProducto;
 use App\Transacion;
 use Auth;
 use App\DetalleTransacion;
+use DB;
 class CambioProductoController extends Controller
 {
     /**
