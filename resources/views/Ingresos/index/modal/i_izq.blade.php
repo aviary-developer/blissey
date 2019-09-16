@@ -60,7 +60,7 @@
                 <button type="button" name="button"  class="btn btn-primary btn-sm" onclick="input_seleccion('responsable');">
                   <i class="fa fa-search"></i>
                 </button>
-                <button type="button" name="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_persona" id="nueva_especialidad"  title="Nuevo responsable" onclick="input_seleccion('responsable');">
+                <button type="button" name="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_persona" id="nueva"  title="Nuevo responsable" onclick="input_seleccion('responsable',1);">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>

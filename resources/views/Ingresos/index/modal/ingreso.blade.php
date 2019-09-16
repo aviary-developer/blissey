@@ -6,7 +6,7 @@
           <center>
             <h4 class="mb-1">
               <i class="fas fa-search"></i>
-              Buscar Paciente
+              Asignar Paciente
             </h4>
           </center>
         </div>
@@ -16,17 +16,23 @@
       <div class="col-sm-12" id="izquierda">
         @include('Ingresos.index.modal.i_izq')
       </div>
-      <div class="col-sm-6" id="derecha" style="display: none">
+      <div class="col-sm-12" id="derecha" style="display: none">
         @include('Ingresos.index.modal.i_der')
 			</div>
-			<div class="col-sm-6" id="derecha_nuevo" style="display: none">
+			<div class="col-sm-12" id="derecha_nuevo" style="display: none">
 				@include('Pacientes.Formularios.form_mini')
       </div>
     </div>
-    <div class="m_panel x_panel bg-transparent" style="border:0px !important">
+    <div class="m_panel x_panel bg-transparent" style="border:0px !important" id="btn_izquierda">
       <center>
         <button type="submit" class="btn btn-primary btn-sm col-2" id="guardar_i">Guardar</button>
         <button type="button" class="btn btn-light btn-sm col-2" onclick="location.reload()">Cerrar</button>
+      </center>
+		</div>
+		<div class="m_panel x_panel bg-transparent" style="border:0px !important; display:none" id="btn_derecha">
+      <center>
+        <button type="submit" class="btn btn-primary btn-sm col-2" id="guardar_paciente_nuevo">Guardar</button>
+        <button type="button" class="btn btn-light btn-sm col-2" id="cancelar_derecha">Cancelar</button>
       </center>
     </div>
   </div>

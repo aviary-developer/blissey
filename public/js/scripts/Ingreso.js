@@ -102,17 +102,23 @@ $(document).on('ready', function () {
     tabla.append(head);
 
     if (ubicacion.indexOf("/ingresos") > -1) {
-      $("#centro").removeClass('modal-lg');
-      $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
-      $("#derecha").hide();
-      $("#izq_interno").attr('style', 'height:auto');
+      // $("#centro").removeClass('modal-lg');
+      // $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
+      // $("#derecha").hide();
+			// $("#izq_interno").attr('style', 'height:auto');
+			//Mostrar el panel de la izquierda y ocultar el de la derecha
+			$("#izquierda").show();
+			$("#derecha").hide();
+			$("#derecha_nuevo").hide();
+			$("#btn_derecha").hide();
+			$("#btn_izquierda").show();
     } else {
       $("#modal_").modal('hide');
     }
 
   });
 
-  $("#guardarPaciente").on('click', function (e) {
+  $("#guardar_paciente_nuevo").on('click', function (e) {
     e.preventDefault();
 
     var v_nombre = $("#pac_nombre").val();
@@ -170,11 +176,17 @@ $(document).on('ready', function () {
       $("#dui_paciente").val("");
 			$("#pac_telefono").val("");
 
-			$("#centro").removeClass('modal-lg');
-			$("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
+			// $("#centro").removeClass('modal-lg');
+			// $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
+			// $("#derecha").hide();
+			// $("#derecha_nuevo").hide();
+			// $("#izq_interno").attr('style', 'height:auto');
+
+			$("#izquierda").show();
 			$("#derecha").hide();
 			$("#derecha_nuevo").hide();
-			$("#izq_interno").attr('style', 'height:auto');
+			$("#btn_derecha").hide();
+			$("#btn_izquierda").show();
     }
 
   });
@@ -493,6 +505,16 @@ $(document).on('ready', function () {
       }
     });
   });
+});
+
+$("#cancelar_derecha").click(function (e) {
+	e.preventDefault();
+	$("#izquierda").show();
+	$("#derecha").hide();
+	$("#derecha_nuevo").hide();
+
+	$("#btn_derecha").hide();
+	$("#btn_izquierda").show();
 });
 
 $("#nuevo_abono").on('click', function (e) {
@@ -839,17 +861,24 @@ function input_seleccion(e = null, btn = 0) {
 	if (btn == 0) {
 		var derecha = $("#derecha");
 		$("#derecha_nuevo").hide();
+		$("#guardar_paciente_nuevo").hide();
 	} else {
 		var derecha = $("#derecha_nuevo");
 		$("#derecha").hide();
+		$("#guardar_paciente_nuevo").show();
 	}
   var izquierda = $("#izquierda");
   var interno = $("#izq_interno");
 
-  principal.addClass('modal-lg');
-  izquierda.removeClass('col-sm-12').addClass('col-sm-6');
-  derecha.show();
-  interno.attr('style', 'height:auto');
+  // principal.addClass('modal-lg');
+  // izquierda.removeClass('col-sm-12').addClass('col-sm-6');
+  // derecha.show();
+	// interno.attr('style', 'height:auto');
+	
+	izquierda.hide();
+	derecha.show();
+	$("#btn_derecha").show();
+	$("#btn_izquierda").hide();
 
   $("#busqueda").focus();
 }
