@@ -1,6 +1,6 @@
 <div class="flex-row">
   <center>
-    <h5 class="text-purple">Medi ingreso</h5>
+    <h5 class="text-purple">Medio ingreso</h5>
   </center>
 </div>
 <div class="flex-row border border-purple mb-1"></div>

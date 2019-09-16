@@ -3,7 +3,7 @@
     @if ($ingreso->tipo == 0)
       <span class="badge badge-success">Ingreso</span>
     @elseif($ingreso->tipo == 1)
-      <span class="badge badge-purple">Medi ingreso</span>
+      <span class="badge badge-purple">Medio ingreso</span>
     @elseif($ingreso->tipo == 2)
       <span class="badge badge-primary">Observación</span>
     @elseif($ingreso->tipo == 3)

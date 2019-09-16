@@ -31,7 +31,7 @@
           @elseif($ingreso->tipo == 1)
             Observación
           @elseif($ingreso->tipo == 2)
-            Medi Ingreso
+            Medio Ingreso
           @elseif($ingreso->tipo == 3)
             Consulta Médica
           @else
@@ -192,7 +192,7 @@
                       @if ($ingreso->tipo==0)
                         <span class="label label-lg label-default col-xs-4">Ingreso</span>
                       @elseif($ingreso->tipo == 1)
-                        <span class="label label-lg label-primary col-xs-4">Medi Ingreso</span>
+                        <span class="label label-lg label-primary col-xs-4">Medio Ingreso</span>
                       @elseif($ingreso->tipo == 3)
                         <span class="label label-lg label-purple col-xs-4">Consulta Médica</span>
                       @elseif($ingreso->tipo == 4)

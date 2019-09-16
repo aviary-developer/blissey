@@ -245,8 +245,8 @@ $(document).on('ready', function () {
             html += '<span class="badge border border-success text-success col-8">Ingreso</span>';
             tipo_txt = '<span class="badge border border-success text-success col-8">Ingreso</span>';
           } else if (r.r[i].tipo == 1) {
-            html += '<span class="badge border border-purple text-purple col-8">Medi ingreso</span>';
-            tipo_txt = '<span class="badge border border-purple text-purple col-8">Medi ingreso</span>';
+            html += '<span class="badge border border-purple text-purple col-8">Medio ingreso</span>';
+            tipo_txt = '<span class="badge border border-purple text-purple col-8">Medio ingreso</span>';
           } else if (r.r[i].tipo == 2) {
             html += '<span class="badge border border-primary text-primary col-8">Observación</span>';
             tipo_txt = '<span class="badge border border-primary text-primary col-8">Observación</span>';
@@ -313,7 +313,7 @@ $(document).on('ready', function () {
         if (r.ingreso.tipo == 0) {
           html = '<span class="badge border border-success text-success col-8">Ingreso</span>';
         } else if (r.ingreso.tipo == 1) {
-          html = '<span class="badge border border-purple text-purple col-8">Medi ingreso</span>';
+          html = '<span class="badge border border-purple text-purple col-8">Medio ingreso</span>';
         } else if (r.ingreso.tipo == 2) {
           html = '<span class="badge border border-primary text-primary col-8">Observación</span>';
         } else if (r.ingreso.tipo == 3) {

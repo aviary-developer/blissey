@@ -126,7 +126,7 @@
         <div class="x_panel" id="vista_3" style="display: none; min-height: 200px;">
           <div class="row bg-green">
             <center>
-              <h3 id="h_">Cambio a Medi ingreso</h3>
+              <h3 id="h_">Cambio a Medio ingreso</h3>
             </center>
           </div>
           <br>

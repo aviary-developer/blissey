@@ -8,7 +8,7 @@
     <select name="filtro_h" id="filtro_h" class="form-control form-control-sm">
       <option value="-1">Todos</option>
       <option value="0">Ingresos</option>
-      <option value="1">Medi ingresos</option>
+      <option value="1">Medio ingresos</option>
       <option value="2">Observaciones</option>
       <option value="3">Consultas médicas</option>
       <option value="4">Curaciones</option>
@@ -37,7 +37,7 @@
               @if ($ingreso->tipo == 0)
                 <span class="badge border border-success text-success col-8">Ingreso</span>
               @elseif($ingreso->tipo == 1)
-                <span class="badge border border-purple text-purple col-8">Medi ingreso</span>
+                <span class="badge border border-purple text-purple col-8">Medio ingreso</span>
               @elseif($ingreso->tipo == 2)
                 <span class="badge border border-primary text-primary col-8">Observación</span>
               @elseif($ingreso->tipo == 3)

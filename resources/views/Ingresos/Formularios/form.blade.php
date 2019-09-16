@@ -60,7 +60,7 @@
         <option value="3">Consulta médica</option>
         <option value="0">Ingreso</option>
         <option value="1">Observación</option>
-        <option value="2">Medi ingreso</option>
+        <option value="2">Medio ingreso</option>
         <option value="4">Cumplimiento</option>
       </select>
     </div>

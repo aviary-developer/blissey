@@ -17,7 +17,7 @@ class TipoIngreso extends Migration
             $table->integer('tipo')->default(0);
             /**
              * 0: Ingreso
-             * 1: Medi ingreso
+             * 1: Medio ingreso
              * 2: Observación
              * 3: Consulta
              */

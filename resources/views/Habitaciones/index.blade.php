@@ -42,7 +42,7 @@
 								@if ($habitacion->tipo == 1)
 									<span class="badge font-sm border border-success text-success col-10">Ingreso</span>
 								@elseif($habitacion->tipo == 2)
-									<span class="badge font-sm border border-purple text-purple col-10">Medi ingreso</span>
+									<span class="badge font-sm border border-purple text-purple col-10">Medio ingreso</span>
 								@else
 									<span class="badge font-sm border border-primary text-primary col-10">Observación</span>
 								@endif

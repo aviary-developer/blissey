@@ -37,7 +37,7 @@
                   @else
                     <a href="#tab_cb2" id="tab_cb_2" role="tab" data-toggle="tab" aria-selected="false" class="nav-link" aria-controls="tab_cb2" onclick="cambio_tipo_activo(1)">
                   @endif
-                      Medi ingreso
+                      Medio ingreso
                     </a>
                 @endif
   

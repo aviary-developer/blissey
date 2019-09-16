@@ -13,7 +13,7 @@
 	<div id="radioBtn" class="btn-group col-12">
 		<a class="btn btn-primary btn-sm active col-4" data-toggle="tipo" data-title="1">Hospitalización</a>
 		<a class="btn btn-primary btn-sm notActive col-4" data-toggle="tipo" data-title="0">Observación</a>
-		<a class="btn btn-primary btn-sm notActive col-4" data-toggle="tipo" data-title="2">Medi Ingreso</a>
+		<a class="btn btn-primary btn-sm notActive col-4" data-toggle="tipo" data-title="2">Medio Ingreso</a>
 	</div>
 	<input type="hidden" name="tipo" id="tipo" value="1">
 </div>

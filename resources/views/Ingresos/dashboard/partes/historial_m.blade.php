@@ -50,7 +50,7 @@
                 @if ($ingreso->tipo == 0)
                   <span class="col-6 badge font-sm mb-2 badge-success">Hospitalización</span>
                 @elseif($ingreso->tipo == 1)
-                  <span class="col-6 badge font-sm mb-2 badge-purple">Medi Ingreso</span>
+                  <span class="col-6 badge font-sm mb-2 badge-purple">Medio Ingreso</span>
                 @elseif($ingreso->tipo == 2)
                   <span class="col-6 badge font-sm mb-2 badge-primary">Observación</span>
                 @elseif($ingreso->tipo == 3)

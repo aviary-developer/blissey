@@ -193,7 +193,7 @@ class IngresoController extends Controller
        *
        * Tipos de ingreso:
        * 0 - Ingreso
-       * 1 - Medi ingreso
+       * 1 - Medio ingreso
        * 2 - Observación
        * 3 - Consulta médica
        * 4 - Cumplimiento

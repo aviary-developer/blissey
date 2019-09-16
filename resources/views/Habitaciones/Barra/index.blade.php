@@ -29,7 +29,7 @@
 					@endif
 					<a href={!! asset('/habitaciones?estado='.(!$estadoOpuesto).'&tipo=1') !!} class="dropdown-item">Ingreso</a>
 					<a href={!! asset('/habitaciones?estado='.(!$estadoOpuesto).'&tipo=0') !!} class="dropdown-item">Observación</a>
-					<a href={!! asset('/habitaciones?estado='.(!$estadoOpuesto).'&tipo=2') !!} class="dropdown-item">Medi ingreso</a>
+					<a href={!! asset('/habitaciones?estado='.(!$estadoOpuesto).'&tipo=2') !!} class="dropdown-item">Medio ingreso</a>
 					<div class="dropdown-divider"></div>
           <a class="dropdown-item" href={!! asset('/habitaciones?estado='.$estadoOpuesto) !!}>
             @if ($estadoOpuesto)
