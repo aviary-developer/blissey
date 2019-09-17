@@ -57,7 +57,7 @@
         <div class="col-sm-12">
           <div class="m_panel x_panel bg-transparent" style="border:0px !important">
             <center>
-              <button type="button" class="btn btn-light btn-sm col-2" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-light btn-sm col-2" onclick="$('#resultado').val('')" data-dismiss="modal">Cerrar</button>
             </center>
           </div>
         </div>

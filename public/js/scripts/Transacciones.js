@@ -14,7 +14,7 @@ $(document).on('ready', function () {
   $("#resultado").keyup(function () {
     var valor = $("#resultado").val();
     var tipo = $("#tipo").val();
-    var laboratorio = $("#f_proveedor").val();
+    var laboratorio = "1";
     var confirmar = $("#confirmar").val();
     if (laboratorio != "") {
       conteo = valor.length;
@@ -231,10 +231,11 @@ $(document).on('ready', function () {
   $("#tablaBuscar").on('click', "#agregar_resultado", function (e) {
     var v = validarCantidad();
     var f_producto = $(this).parents('tr').find('input:eq(2)').val();
-    if (componentes_agregados.includes(f_producto)) {
-      notaError('Ya fue agregado');
-    }
-    if (v == true && !componentes_agregados.includes(f_producto)) {
+    // if (componentes_agregados.includes(f_producto)) {
+    //   notaError('Ya fue agregado');
+    // }
+    // if (v == true && !componentes_agregados.includes(f_producto)) {
+    if (v == true) {
       var division = $(this).parents('tr').find('input:eq(0)').val();
       var nombre = $(this).parents('tr').find('input:eq(1)').val();
       var tabla = $("#tablaDetalle");

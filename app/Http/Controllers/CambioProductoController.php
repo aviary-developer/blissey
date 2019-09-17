@@ -72,7 +72,7 @@ class CambioProductoController extends Controller
         CambioProducto::actualizarCambio($request->f_producto[$i]);          
       }
       DB::commit();
-      Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
+      Return redirect('/entradas')->with('mensaje', '¡Pedido Confirmado!');
     }
 
     /**

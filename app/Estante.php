@@ -53,4 +53,9 @@ class Estante extends Model
     }
     return $arrayN;
   }
+  public static function idEstante($codigo){
+    $estantes=Estante::where('codigo',$codigo)->where('localizacion',Transacion::tipoUsuario())->get()->first();
+    return $estantes->id;
+
+  }
 }
