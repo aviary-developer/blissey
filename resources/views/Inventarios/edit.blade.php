@@ -47,9 +47,12 @@
                               @endphp
                                 <td>{{$lote->cantidad}}</td>
                                 <td>{{$lote->lote}}</td>
+                                @php
+                                    $est=App\Estante::idEstante($lote->estante);
+                                @endphp
                                 <td>{!!Form::select('f_estante[]',
                                         $estantes
-                                        ,$lote->estante, ['class'=>'form-control form-control-sm','id'=>'f_estante'.$lote->id,'onchange'=>'cambioEstante('.$lote->id.');'])!!}</td>
+                                        ,$est, ['class'=>'form-control form-control-sm','id'=>'f_estante'.$lote->id,'onchange'=>'cambioEstante('.$lote->id.');'])!!}</td>
                                 <td>{!!Form::select('nivel[]',
                                         $niveles
                                         ,$lote->nivel, ['class'=>'form-control form-control-sm','id'=>'nivel'.$lote->id])!!}</td>

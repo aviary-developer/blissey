@@ -23,7 +23,7 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text"><i class="far fa-calendar"></i></div>
                 </div>
-                {!! Form::date('fecha_',$fecha->addMonths(3),['id'=>'fecha_vencimiento_i','class'=>'form-control form-control-sm','placeholder'=>'Fecha']) !!}
+                {!! Form::date('fecha_',$fecha->addYears(2),['id'=>'fecha_vencimiento_i','class'=>'form-control form-control-sm','placeholder'=>'Fecha']) !!}
               </div>
 						</div>
 						
