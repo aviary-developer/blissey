@@ -48,7 +48,7 @@
           <strong><h3 class="vivaldi">{{$empresa->nombre_laboratorio}}</h3>
           <span><i>{{"C.S.S.P. ".$empresa->codigo_laboratorio}}</i></span></strong>
           <h6 class="vivaldi font-plus">{{$empresa->direccion_laboratorio}}</h6>
-          <h6 class="vivaldi font-plus">{{"Correo: ".$empresa->correo_laboratorio}}</h6>
+          <h6 class="vivaldi font-plus">{{$empresa->correo_laboratorio}}</h6>
           <h6 class="vivaldi font-plus">
             @if($telefonos!=null)
               @if (count($telefonos)>1)
