@@ -45,11 +45,11 @@
       </div>
       <div class="col-xs-6">
         <center>
-          <strong><h2 class="vivaldi">{{$empresa->nombre_laboratorio}}</h2>
+          <strong><h3 class="vivaldi">{{$empresa->nombre_laboratorio}}</h3>
           <span><i>{{"C.S.S.P. ".$empresa->codigo_laboratorio}}</i></span></strong>
-          <h5 class="vivaldi font-plus">{{"Dirección: ".$empresa->direccion_laboratorio}}</h5>
-          <h5 class="vivaldi font-plus">{{"Dirección: ".$empresa->correo_laboratorio}}</h5>
-          <h5 class="vivaldi font-plus">
+          <h6 class="vivaldi font-plus">{{$empresa->direccion_laboratorio}}</h6>
+          <h6 class="vivaldi font-plus">{{"Correo: ".$empresa->correo_laboratorio}}</h6>
+          <h6 class="vivaldi font-plus">
             @if($telefonos!=null)
               @if (count($telefonos)>1)
                 {{"Teléfonos: "}}
@@ -67,7 +67,7 @@
             @else
             {{"Teléfono: "}}
             @endif
-          </h5>
+          </h6>
         </center>
       </div>
       <div class="col-xs-2">

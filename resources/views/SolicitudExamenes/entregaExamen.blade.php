@@ -6,7 +6,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="">
 		<center>
-			<strong><h2>{{$solicitud->examen->nombreExamen}}</h2></strong>
+			<strong><h3>{{$solicitud->examen->nombreExamen}}</h3></strong>
 		</center>
 		<div>
 			<span style="float:right"> Edad: <strong><u>{{$solicitud->paciente->fechaNacimiento->age}} años</u></strong></span>
