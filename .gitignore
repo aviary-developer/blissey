@@ -17,3 +17,4 @@ composer.lock
 config/filesystems.php
 *.png
 config/snappy.php
+config/snappy.php
