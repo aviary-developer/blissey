@@ -81,8 +81,10 @@ class InventarioController extends Controller
         $idv=$request->idv;
         $f_estante=$request->f_estante;
         $nivel=$request->nivel;
+        $cantidad=$request->cantidad;
         foreach($idv as $k => $valor){
             $detalle=DetalleTransacion::find($valor);
+            $detalle->cantidad=$cantidad[$k]+($request->cl[$k]-$request->ca[$k]);
             $detalle->f_estante=$f_estante[$k];
             $detalle->nivel=$nivel[$k];
             $detalle->save();

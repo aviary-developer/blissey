@@ -45,7 +45,11 @@
                               @php
                                   $niveles=App\Estante::nivel($lote->f_estante);
                               @endphp
-                                <td>{{$lote->cantidad}}</td>
+                                <td>
+                                <input type="hidden" name="cl[]" value='{{App\DetalleTransacion::find($lote->id)->cantidad}}'>
+                                <input type="hidden" name="ca[]" value='{{$lote->cantidad}}'>
+                                {!! Form::text('cantidad[]',$lote->cantidad,['class'=>'form-control form-control-sm','required'=>''])!!}
+                                </td>
                                 <td>{{$lote->lote}}</td>
                                 @php
                                     $est=App\Estante::idEstante($lote->estante);
