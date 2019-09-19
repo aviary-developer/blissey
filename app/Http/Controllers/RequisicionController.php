@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\DivisionProducto;
-use App\transacion;
+use App\Transacion;
 use Auth;
 use App\DetalleTransacion;
 use DB;
