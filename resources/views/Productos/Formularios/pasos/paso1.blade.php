@@ -64,7 +64,11 @@ $presentaciones=App\Producto::arrayPresentaciones();
           </div>
 
           <div class="x_panel">
+            @if($bandera==1)
             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_agregar">
+            @else
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" onclick="$('#valor').val($('#f_presentacion').find('option:selected').text())" data-target="#modal_agregar">
+            @endif
               <i class="fas fa-plus"></i>
               Agregar División
             </button>
@@ -113,7 +117,7 @@ $presentaciones=App\Producto::arrayPresentaciones();
                             </button>
                           @endif
                           <a data-toggle="tooltip" data-placement="top" title="Editar">
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}})">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}},{{$division->f_division}})">
                               <i class="fas fa-edit"></i>
                             </button>
                           </a>
@@ -139,12 +143,13 @@ $presentaciones=App\Producto::arrayPresentaciones();
         @include('Productos.Formularios.modales.modal_co')
         @include('Productos.Formularios.modales.modal_pr')
         <script type="text/javascript">
-        function llenarDivision(id,codigo,precio,stock,meses){
+        function llenarDivision(id,codigo,precio,stock,meses,idd){
           $('#idDiv').val(id);
           $('#pre').val(precio);
           $('#stock').val(stock);
           $('#cod').text(codigo);
           $('#codi').val(codigo);
           $('#mes').val(meses);
+          $('#div').val(idd);
         }
         </script>
