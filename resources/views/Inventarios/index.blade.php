@@ -1,7 +1,7 @@
 @extends('principal')
 @section('layout')
   @include('Inventarios.Barra.index')
-  <div class="col-8">
+  <div class="col-10">
     <div class="x_panel">
       <table class="table table-hover table-sm table-striped index-table">
         <thead>

@@ -57,22 +57,12 @@ class ProveedorController extends Controller
     {
         $valida= Validator::make($request->all(),[
           'nombre'=>'required| min:5 |max:50 |unique:proveedors',
-          'correo'=>'required| email |unique:proveedors',
-          'telefono'=>'required| size:9 |unique:proveedors',
           'nombrev'=>'required',
         ],[
           'nombre.required'=>'El campo proveedor es obligatorio',
           'nombre.min'=>'El campo proveedor necesita 3 caracteres mínimos',
           'nombre.max'=>'El campo proveedor necesita 50 caracteres máximo',
           'nombre.unique'=>'El campo proveedor ya ha sido registrado',
-
-          'correo.required'=>'El campo correo es obligatorio',
-          'correo.email'=>'Ingrese un correo válido',
-          'correo.unique'=>'El campo correo ya ha sido registrado',
-
-          'telefono.required'=>'El campo teléfono es obligatorio',
-          'telefono.size'=>'El teléfono necesita 9 caracteres incluyendo el guión',
-          'telefono.unique'=>'El campo teléfono ya ha sido registrado',
 
           'nombrev.required'=>'No se ha ingresado ningún visitador',
         ]
@@ -143,6 +133,8 @@ class ProveedorController extends Controller
     public function update(Request $request, $id)
     {   $v1=$v2=$v3=0;
         $proveedor=Proveedor::find($id);
+        $validar=array();
+        $men=array();
         if($request->nombre==$proveedor->nombre){
           $v1=1;
         }else{
@@ -155,18 +147,21 @@ class ProveedorController extends Controller
         if($request->correo==$proveedor->correo){
           $v2=1;
         }else{
-          $validar['correo']="required| email |unique:proveedors";
-          $men['correo.required']="El campo correo es requerido";
-          $men['correo.email']="El texto ingresado no es un correo electrónico";
-          $men['correo.unique']="Correo registrado, ingrese otro";
+          if(trim($request->correo)!=""){
+            $validar['correo']="email |unique:proveedors";
+            $men['correo.email']="El texto ingresado no es un correo electrónico";
+            $men['correo.unique']="Correo registrado, ingrese otro";
+          }
         }
         if($request->telefono==$proveedor->telefono){
           $v3=1;
         }else{
-          $validar['telefono']="required| size:9 |unique:proveedors";
-          $men['telefono.required']="El campo teléfono es requerido";
-          $men['telefono.size']="El campo teléfono debe contener 9 caracteres";
-          $men['telefono.unique']="Teléfono registrado, ingrese otro";
+          echo $request->telefono;
+          if(trim($request->telefono)!=""){
+            $validar['telefono']="size:9 |unique:proveedors";
+            $men['telefono.size']="El campo teléfono debe contener 9 caracteres";
+            $men['telefono.unique']="Teléfono registrado, ingrese otro";
+          }
         }
         if($v1==1 && $v2==1 && $v3==1){
           return redirect('/proveedores')->with('info','¡No hay cambios!');

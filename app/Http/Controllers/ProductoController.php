@@ -259,7 +259,7 @@ class ProductoController extends Controller
     }
 
     public function buscarComponentes($texto){
-      $componentes = Componente::where('nombre','like','%'.$texto.'%')->where('estado',true)->orderBy('nombre','asc')->take(3)->get();
+      $componentes = Componente::where('nombre','like','%'.$texto.'%')->where('estado',true)->orderBy('nombre','asc')->take(7)->get();
       if($componentes!=null){
         return Response::json($componentes);
       }else{
@@ -275,6 +275,7 @@ class ProductoController extends Controller
       $division->precio=$request->pre;
       $division->stock=$request->stock;
       $division->n_meses=$request->mes;
+      $division->f_division=$request->div;
       $division->save();
       return redirect('/productos/'.$division->f_producto.'/edit')->with('mensaje', '¡Editado!');
     }
