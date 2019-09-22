@@ -27,16 +27,17 @@
 			{!! Form::date('fechaVencimiento',$fecha,['min'=>$ahora->addDay(1)->format('Y-m-d'),'class'=>'form-control form-control-sm','id'=>'campo2']) !!}
 		</div>
 	</div>
-
+@if ($create)
 	<div class="form-group col-sm-12">
-		<label class="" for="seccion_select">Contenido por envase *</label>
+		<label class="" for="seccion_select">Existencias *</label>
 		<div class="input-group mb-2 mr-sm-2">
 			<div class="input-group-prepend">
 				<div class="input-group-text"><i class="fas fa-cubes"></i></div>
 			</div>
-			{!! Form::number('contenidoPorEnvase',null,['min'=>0,'class'=>'form-control form-control-sm','placeholder'=>'Contenido en unidades','id'=>'campo3']) !!}
+			{!! Form::number('contenidoPorEnvase',0,['min'=>0,'class'=>'form-control form-control-sm','placeholder'=>'Existencias en unidades','id'=>'campo3']) !!}
 		</div>
 	</div>
+@endif
 </div>
 
 <div class="x_panel">
@@ -57,10 +58,6 @@
     valido.required();
 		is_valid = valido.value(is_valid);
 		
-		var valido = new Validated('campo3');
-    valido.required();
-    is_valid = valido.value(is_valid);
-
     if(is_valid){
       $('#form').submit();
     }
