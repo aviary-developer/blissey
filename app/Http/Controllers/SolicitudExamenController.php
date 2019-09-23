@@ -295,10 +295,12 @@ class SolicitudExamenController extends Controller
 
         foreach ($request->examen as $examen) {
           // Generar codigo de la muestra
-          $cantidad_examenes = SolicitudExamen::where('f_examen',$examen)->where('created_at','>',$año.'-01-01')->where('created_at','<=',$año.'-12-31')->count();
-          $año_corto = date('y');
+          $hoy = Carbon::today()->startOfDay();
+          $hoy2 = Carbon::today()->endOfDay();
+          $cantidad_examenes = SolicitudExamen::where('created_at','>',$hoy)->where('created_at','<',$hoy2)->count();
           $cantidad_examenes++;
-          $codigo_muestra = $examen.'-'.$cantidad_examenes.'-'.$año_corto;
+          //$codigo_muestra = $examen.'-'.$cantidad_examenes.'-'.$año_corto;
+          $codigo_muestra =$cantidad_examenes;
           //Inicio
           $solicitud = new SolicitudExamen;
           $solicitud->f_paciente = $request->f_paciente;

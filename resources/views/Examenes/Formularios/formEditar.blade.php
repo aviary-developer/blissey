@@ -12,8 +12,8 @@
           <select class="form-control has-feedback-left" name="area" id="" required>
             <option value={{$areaSeleccionada}} selected disabled>{{$areaSeleccionada}}</option>
           <option value="HEMATOLOGIA">HEMATOLOGIA</option>
-          <option value="EXAMENES DE ORINA">EXAMENES DE ORINA</option>
-          <option value="EXAMENES DE HECES">EXAMENES DE HECES</option>
+          <option value="EXAMENES DE ORINA">UROANALISIS</option>
+          <option value="EXAMENES DE HECES">COPROLOGIA</option>
           <option value="BACTERIOLOGIA">BACTERIOLOGIA</option>
           <option value="QUIMICA SANGUINEA">QUIMICA SANGUINEA</option>
           <option value="INMUNOLOGIA">INMUNOLOGIA</option>

@@ -993,9 +993,9 @@ class PacienteController extends Controller
     if($ex_area == "HEMATOLOGIA"){
       $area = '<span class="badge border border-pink text-pink col-8">Hematología</span>';
     }else if($ex_area == "EXAMENES DE ORINA"){
-      $area = '<span class="badge border border-warning text-warning col-8">Exámenes de orina</span>';
+      $area = '<span class="badge border border-warning text-warning col-8">Uroanális</span>';
     }else if($ex_area == "EXAMENES DE HECES"){
-      $area = '<span class="badge border border-dark col-8">Exámenes de heces</span>';
+      $area = '<span class="badge border border-dark col-8">Coprología</span>';
     }else if($ex_area == "BACTERIOLOGIA"){
       $area = '<span class="badge border border-success text-success col-8">Bacteriología</span>';
     }else if($ex_area == "QUIMICA SANGUINEA"){

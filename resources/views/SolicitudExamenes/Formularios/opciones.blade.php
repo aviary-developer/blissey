@@ -4,11 +4,11 @@
   </a>
   
   <a href="#tab_content2" id="tab2" role="tab" data-toggle="pill" class="nav-link" aria-controls="tab_content2" aria-selected="false">
-    Exámenes de heces
+    Coprología
   </a>
 
   <a href="#tab_content3" id="tab3" role="tab" data-toggle="pill" class="nav-link" aria-controls="tab_content3" aria-selected="false">
-    Exámenes de orina
+    Uroanálisis
   </a>
 
   <a href="#tab_content4" id="tab4" role="tab" data-toggle="pill" class="nav-link" aria-controls="tab_content4" aria-selected="false">

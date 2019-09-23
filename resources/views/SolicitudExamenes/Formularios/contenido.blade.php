@@ -26,7 +26,7 @@
     <div>
       <div class="flex-row">
         <center>
-          <h5>Área de Exámenes de heces</h5>
+          <h5>Área de Coprología</h5>
         </center>
       </div>
       <br>
@@ -49,7 +49,7 @@
     <div>
       <div class="flex-row">
         <center>
-          <h5>Área de Exámenes de orina</h5>
+          <h5>Área de Uroanálisis</h5>
         </center>
       </div>
       <br>

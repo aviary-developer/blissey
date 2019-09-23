@@ -42,9 +42,9 @@
                   @if ($examen->area == "HEMATOLOGIA")
                     <span class="badge font-sm border border-pink text-pink col-10">Hematológia</span>
                   @elseif($examen->area == "EXAMENES DE ORINA")
-                    <span class="badge font-sm border border-warning text-warning col-10">Exámenes de orina</span>
+                    <span class="badge font-sm border border-warning text-warning col-10">Uroanálisis</span>
                   @elseif($examen->area == "EXAMENES DE HECES")
-                    <span class="badge font-sm border border-dark text-dark col-10">Exámenes de heces</span>
+                    <span class="badge font-sm border border-dark text-dark col-10">Coprología</span>
                   @elseif($examen->area == "BACTERIOLOGIA")
                     <span class="badge font-sm border border-success text-success col-10">Bactereología</span>
                   @elseif($examen->area == "QUIMICA SANGUINEA")

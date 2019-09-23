@@ -28,8 +28,8 @@
       </div>
       <select class="form-control form-control-sm" name="area" id="area_select">
         <option value="HEMATOLOGIA">Hematología</option>
-        <option value="EXAMENES DE ORINA">Exámenes de orina</option>
-        <option value="EXAMENES DE HECES">Exámenes de heces</option>
+        <option value="EXAMENES DE ORINA">Uroanálisis</option>
+        <option value="EXAMENES DE HECES">Coprología</option>
         <option value="BACTERIOLOGIA">Bacteriología</option>
         <option value="QUIMICA SANGUINEA">Química sanguínea</option>
         <option value="INMUNOLOGIA">Inmunología</option>
