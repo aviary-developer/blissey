@@ -306,6 +306,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/entradasver/{id}','CambioProductoController@ver');
   Route::post('/confirmarRetiroVencidos','CambioProductoController@confirmarRetiro');
   Route::post('/confirmarRetiroIndividual/{id}','CambioProductoController@confirmarIndividual');
+  Route::get('/lotes_pdf/{tipo}','CambioProductoController@vencimiento');
 
   //Rutas medicas
   Route::get('/consultar','ConsultaController@consulta');

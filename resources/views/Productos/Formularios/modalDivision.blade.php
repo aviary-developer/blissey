@@ -46,6 +46,17 @@
                 </div>
               </div>
 
+              <div class="form-group col-sm-12">
+                <label class="" for="div" id="auxC"></label>
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                  </div>
+                {!! Form::number('cante',null,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad','id'=>'cante','min'=>'1.00','step'=>'0']) !!}
+                {!! Form::text('auxN',null,['class'=>'form-control form-control-sm','id'=>'auxN','readonly'=>'readonly']) !!}
+                </div> 
+              </div>
+
             <div class="form-group col-sm-12">
               <label class="" for="nombre">Precio de venta</label>
               <div class="input-group mb-2 mr-sm-2">
