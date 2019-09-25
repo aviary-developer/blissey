@@ -323,83 +323,83 @@ $(document).on('ready', function () {
   });
 
   /**Invocación del grafico financiero */
-  chart_fin();
+  // chart_fin();
 
   /**Función para dibujar el grafico financiero */
-  async function chart_fin() {
-    var tipo_u = $("#tipo_usuario").val();
-    var id = $("#id").val();
-    var consulta = $("#precio_consulta").val();
-    console.log("Hola Mary");
-    if (tipo_u == "Recepción" && consulta == null) {
-      await $.ajax({
-        type: 'get',
-        url: $('#guardarruta').val() + '/chart_financiero',
-        data: {
-          id: id,
-        },
-        success: function (r) {
-          var monto = [];
-          var abono = [];
-          var fecha_format = [];
-          $(r.monto).each(function (key, value) {
-            monto.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value));
-            abono.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(r.abonos[key]));
-            fecha = new Date(r.fecha[key]);
-            fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
-          });
+  // async function chart_fin() {
+  //   var tipo_u = $("#tipo_usuario").val();
+  //   var id = $("#id").val();
+  //   var consulta = $("#precio_consulta").val();
+  //   console.log("Hola Mary");
+  //   if (tipo_u == "Recepción" && consulta == null) {
+  //     await $.ajax({
+  //       type: 'get',
+  //       url: $('#guardarruta').val() + '/chart_financiero',
+  //       data: {
+  //         id: id,
+  //       },
+  //       success: function (r) {
+  //         var monto = [];
+  //         var abono = [];
+  //         var fecha_format = [];
+  //         $(r.monto).each(function (key, value) {
+  //           monto.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value));
+  //           abono.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(r.abonos[key]));
+  //           fecha = new Date(r.fecha[key]);
+  //           fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
+  //         });
 
-          var canva = $("#chart_financiero");
-          console.log("Antes de graficar");
-          var chart = new Chart(canva, {
-            type: 'line',
-            data: {
-              labels: fecha_format,
-              datasets: [
-                {
-                  data: monto,
-                  label: 'Gastos',
-                  lineTension: 0.1,
-                  borderColor: 'rgba(236,112,99)',
-                },
-                {
-                  data: abono,
-                  label: 'Abono',
-                  lineTension: 0.1,
-                  borderColor: 'rgba(88,214,141)',
-                }
-              ]
-            },
-            options: {
-              scales: {
-                yAxes: [{
-                  display: true,
-                  ticks: {
-                    beginAtZero: false,
-                  },
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Dolares'
-                  },
-                  ticks: {
-                    beginAtZero: true
-                  }
-                }],
-                xAxes: [{
-                  display: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Fecha'
-                  }
-                }]
-              }
-            }
-          });
-          console.log("despues");
-        }
-      });
-    }
-  }
+  //         var canva = $("#chart_financiero");
+  //         console.log("Antes de graficar");
+  //         var chart = new Chart(canva, {
+  //           type: 'line',
+  //           data: {
+  //             labels: fecha_format,
+  //             datasets: [
+  //               {
+  //                 data: monto,
+  //                 label: 'Gastos',
+  //                 lineTension: 0.1,
+  //                 borderColor: 'rgba(236,112,99)',
+  //               },
+  //               {
+  //                 data: abono,
+  //                 label: 'Abono',
+  //                 lineTension: 0.1,
+  //                 borderColor: 'rgba(88,214,141)',
+  //               }
+  //             ]
+  //           },
+  //           options: {
+  //             scales: {
+  //               yAxes: [{
+  //                 display: true,
+  //                 ticks: {
+  //                   beginAtZero: false,
+  //                 },
+  //                 scaleLabel: {
+  //                   display: true,
+  //                   labelString: 'Dolares'
+  //                 },
+  //                 ticks: {
+  //                   beginAtZero: true
+  //                 }
+  //               }],
+  //               xAxes: [{
+  //                 display: true,
+  //                 scaleLabel: {
+  //                   display: true,
+  //                   labelString: 'Fecha'
+  //                 }
+  //               }]
+  //             }
+  //           }
+  //         });
+  //         console.log("despues");
+  //       }
+  //     });
+  //   }
+  // }
 
   function mes(x) {
     if (x == 0) {

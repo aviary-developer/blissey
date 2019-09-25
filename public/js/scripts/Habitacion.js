@@ -69,7 +69,7 @@ $(document).on('ready', function () {
     e.preventDefault();
     var tipo = $("#tipo").val();
 
-    var html_ = '<p>Ingrese el precio diario en dólares por utilizar esta cama</p><input type="number" class="swal2-input" step="0.01" id="precio" min="0.00" placeholder="Precio" autofocus>';
+    var html_ = '<p>Ingrese el precio diario en dólares que será adicional al servicio médico por utilizar esta cama</p><input type="number" class="swal2-input" step="0.01" id="precio" min="0.00" placeholder="Precio" autofocus value="0">';
 
     await swal({
       title: 'Nueva cama',
@@ -316,7 +316,7 @@ function cama_activate(id) {
 
 function editar_cama(id, precio_actual) {
 
-  var html_ = '<p>Ingrese el nuevo precio diario en dólares por utilizar esta cama</p><input type="number" class="swal2-input" step="0.01" id="precio" min="0.00" placeholder="Precio" autofocus value="' + precio_actual + '">';
+	var html_ = '<p>Ingrese el precio diario en dólares que será adicional al servicio médico por utilizar esta cama</p><input type="number" class="swal2-input" step="0.01" id="precio" min="0.00" placeholder="Precio" autofocus value="' + precio_actual + '">';
 
   swal({
     title: 'Editar cama',

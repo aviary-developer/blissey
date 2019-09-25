@@ -57,9 +57,18 @@
                       $dias = $dia_ingreso->diffInDays($hoy);
                       $dias++;
                     @endphp
-                    <span class="badge border border-primary text-primary col-12">
+                    <span class="badge border border-primary text-primary col-7">
                       {{($dias).(($dias > 1)?' días':' día')}}
-                    </span>
+										</span>
+										@if ($ingreso->tipo == 0)
+											<span class="badge badge-success col-4" title="Ingreso">
+												IN
+											</span>
+										@else
+											<span class="badge badge-purple col-4" title="Medio ingreso">
+												MI
+											</span>
+										@endif
                   </td>
                   <td>
                     @include('Ingresos.Formularios.desactivate')

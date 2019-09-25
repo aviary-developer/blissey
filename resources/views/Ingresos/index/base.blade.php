@@ -16,9 +16,9 @@
           <div class="x_panel rounded border border-primary">
             @include('Ingresos.index.panel.observacion')
           </div>
-          <div class="x_panel rounded border border-purple">
+          {{--  <div class="x_panel rounded border border-purple">
             @include('Ingresos.index.panel.mediingreso')
-          </div>
+          </div>  --}}
         </div>
       </div>
     </div>

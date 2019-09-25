@@ -36,9 +36,9 @@
   <div class="flex-row">
 		@if (!isset($habitaciones))   
 			<div id="radioBtn" class="btn-group col-12">
-				<a class="btn btn-primary btn-sm active col-4" data-toggle="tipo" data-title="1">Hospital</a>
-				<a class="btn btn-primary btn-sm notActive col-4" data-toggle="tipo" data-title="0">Observación</a>
-				<a class="btn btn-primary btn-sm notActive col-4" data-toggle="tipo" data-title="2">Medio Ingreso</a>
+				<a class="btn btn-primary btn-sm active col-6" data-toggle="tipo" data-title="1">Hospital</a>
+				<a class="btn btn-primary btn-sm notActive col-6" data-toggle="tipo" data-title="0">Observación</a>
+				{{--  <a class="btn btn-primary btn-sm notActive col-4" data-toggle="tipo" data-title="2">Medio Ingreso</a>  --}}
 			</div>
 			<input type="hidden" name="tipo" id="tipo" value="1">
 		@else

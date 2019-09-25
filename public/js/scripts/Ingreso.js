@@ -885,5 +885,10 @@ function input_seleccion(e = null, btn = 0) {
 
 function i_activo(cama, tipo) {
   $("#cama").val(cama);
-  $("#tipo").val(tipo);
+	$("#tipo").val(tipo);
+	if (tipo == 0) {
+		$("#tipo_ingreso_div").show();
+	} else {
+		$("#tipo_ingreso_div").hide();
+	}
 }
