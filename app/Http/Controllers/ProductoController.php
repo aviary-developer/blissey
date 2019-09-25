@@ -276,6 +276,7 @@ class ProductoController extends Controller
       $division->stock=$request->stock;
       $division->n_meses=$request->mes;
       $division->f_division=$request->div;
+      $division->cantidad=$request->cante;
       $division->save();
       return redirect('/productos/'.$division->f_producto.'/edit')->with('mensaje', '¡Editado!');
     }

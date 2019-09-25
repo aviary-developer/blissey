@@ -26,6 +26,7 @@ $(document).on('ready', function () {
             tabla.empty();
             head =
               "<thead>" +
+              "<th>Código</th>" +
               "<th colspan='2'>Resultado</th>" +
               "<th style='width : 80px'>Acción</th>" +
               "</thead>";
@@ -40,6 +41,9 @@ $(document).on('ready', function () {
                 }
                 html =
                   "<tr>" +
+                  "<td>" +
+                  value2.codigo +
+                  "</td>" +
                   "<td>" +
                   value.nombre +
                   "</td>" +

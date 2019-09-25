@@ -5,6 +5,16 @@
     <li class="nav-item">
       <a class="nav-link"href="#" onclick={!! "'retirar();'" !!}>Retirar lotes vencidos</a>
     </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Reporte
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href={!! asset('/lotes_pdf/1') !!}>
+            Próximos a vencer
+        </a>
+      </div>
+    </li>
   @endif
 <script type="text/javascript">
 function retirar(id){
@@ -23,6 +33,7 @@ function retirar(id){
     if (result.value) {
     $('#formulario').attr('action','confirmarRetiroVencidos');
     $('#formulario').submit();
+    }
   });
 }
 function individual(id){
@@ -41,6 +52,7 @@ function individual(id){
     if (result.value) {
     $('#formulario').attr('action','confirmarRetiroIndividual/'+id);
     $('#formulario').submit();
+    }
   });
 }
 </script>

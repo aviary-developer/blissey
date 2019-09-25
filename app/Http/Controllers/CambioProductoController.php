@@ -170,4 +170,20 @@ class CambioProductoController extends Controller
       $transaccion=Transacion::find($id);
       return view('Entradas.show',compact('transaccion'));
     }
+    public static function vencimiento($tipo){
+      if($tipo==1){
+        $retirados=CambioProducto::where('estado',0)->orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->get();
+        // return view('CambioProductos.PDF.vencimiento',compact('lotes'));
+
+        if(Transacion::tipoUsuario()==1){
+          $header = view('PDF.header.hospital');
+        }else{
+          $header = view('PDF.header.farmacia');
+        }
+        $footer = view('PDF.footer.numero_pagina');
+        $main = view('CambioProductos.PDF.vencimiento',compact('retirados'));
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream('lotes.pdf');
+      }
+    }
 }

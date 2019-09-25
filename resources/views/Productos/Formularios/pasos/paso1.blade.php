@@ -97,8 +97,16 @@ $presentaciones=App\Producto::arrayPresentaciones();
                     <td>{{$division->nombreDivision($division->f_division)}}</td>
                     <td>@if ($division->contenido!=null)
                       {{$division->cantidad.' '.$division->unidad->nombre}}
+                      @php
+                          $auxC='Contenido';
+                          $auxN=$division->unidad->nombre;
+                      @endphp
                     @else
                       {{$division->cantidad.' '.$productos->nombrePresentacion($productos->f_presentacion)}}
+                      @php
+                          $auxC='Cantidad';
+                          $auxN=$productos->nombrePresentacion($productos->f_presentacion);
+                      @endphp
                     @endif</td>
                     <td>{{'$ '.number_format($division->precio,2,'.',',')}}</td>
                     <td>{{$division->stock}}</td>
@@ -117,7 +125,7 @@ $presentaciones=App\Producto::arrayPresentaciones();
                             </button>
                           @endif
                           <a data-toggle="tooltip" data-placement="top" title="Editar">
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}},{{$division->f_division}})">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}},{{$division->f_division}},{{$division->cantidad}},'{{$auxC}}','{{$auxN}}')">
                               <i class="fas fa-edit"></i>
                             </button>
                           </a>
@@ -143,7 +151,7 @@ $presentaciones=App\Producto::arrayPresentaciones();
         @include('Productos.Formularios.modales.modal_co')
         @include('Productos.Formularios.modales.modal_pr')
         <script type="text/javascript">
-        function llenarDivision(id,codigo,precio,stock,meses,idd){
+        function llenarDivision(id,codigo,precio,stock,meses,idd,cantidad,c,n){
           $('#idDiv').val(id);
           $('#pre').val(precio);
           $('#stock').val(stock);
@@ -151,5 +159,8 @@ $presentaciones=App\Producto::arrayPresentaciones();
           $('#codi').val(codigo);
           $('#mes').val(meses);
           $('#div').val(idd);
+          $('#cante').val(cantidad);
+          $('#auxC').text(c);
+          $('#auxN').val(n);
         }
         </script>
