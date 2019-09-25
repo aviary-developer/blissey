@@ -633,12 +633,12 @@ class SolicitudExamenController extends Controller
             $idResultado=$resultados->last()->id;
             $contadorControlados=0;
             if($request->espr){
-            foreach ($request->espr as $key =>$valor) {
+            //foreach ($request->espr as $key =>$valor) {
               $detallesResultado= new DetalleResultado();
               $detallesResultado->f_resultado=$idResultado;
-              $detallesResultado->f_espr=$valor;
+              $detallesResultado->f_espr=$request->espr[$key];
               $detallesResultado->resultado=$resultadosGuardar[$key];
-              $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+              $espr_evaluar_controlado=ExamenSeccionParametro::find($request->espr[$key]);
               if($espr_evaluar_controlado->f_reactivo){
                 $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
                 $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
@@ -649,7 +649,7 @@ class SolicitudExamenController extends Controller
                 $finalReactivo->save();
               }
               $detallesResultado->save();
-            }
+            //}
           }
             $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
             $cambioEstadoSolicitud->estado=2;
