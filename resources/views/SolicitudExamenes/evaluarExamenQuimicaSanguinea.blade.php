@@ -3,7 +3,7 @@
   {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
-    $quimicaSanguinea=false;
+    $quimicaSanguinea=true;
   @endphp
   @include('SolicitudExamenes.Barra.evaluated')
   <div class="col-md-10">
@@ -26,11 +26,13 @@
         </h6>
       </div>
     </div>
-
-    <input type="hidden" name="solicitud" value={{$solicitud->id}}>
     <input type="hidden" name="evaluar" value=true>
-    <input type="hidden" name="idExamen" value={{$solicitud->f_examen}}>
-    @foreach ($espr as $esp)
+    <input type="hidden" name="quimica" value=true>
+    @foreach ($solicitudes as $so)
+    <input type="hidden" name="solicitud[]" value={{$so->id}}>
+    <input type="hidden" name="idExamen[]" value={{$so->f_examen}}>
+    @endforeach
+    @foreach ($esprQuimicaSanguinea as $esp)
       <input type="hidden" name="espr[]" value={{$esp->id}}>
     @endforeach
     @if ($solicitud->examen->imagen)
@@ -55,7 +57,6 @@
         </div>
       </div>
     @endif
-    @foreach ($secciones as $variable)
       <div class="x_panel">
         @php
         $contadorParametros = 1;
@@ -64,7 +65,7 @@
           <center>
             <h5>
               <i class="fa fa-flask"></i> 
-              {{$espr->first()->nombreSeccion($variable)}}
+              Química Sanguinea
             </h5>
           </center>
         </div>
@@ -79,9 +80,8 @@
             <th style="width: 10%">DC</th>
           </thead>
           <tbody>
-            @if ($espr!=null)
-              @foreach ($espr as $esp)
-                @if ($esp->f_seccion==$variable)
+            @if ($esprQuimicaSanguinea!=null)
+            @foreach ($esprQuimicaSanguinea as $esp)
                   <tr>
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
@@ -128,7 +128,6 @@
                       </td>
                     @endif
                   </tr>
-                @endif
                 @php
                   $contadorParametros++;
                 @endphp
@@ -156,7 +155,6 @@
           @endif
         </div>
       </div>
-    @endforeach
 
     <div class="x_panel">
       <center>

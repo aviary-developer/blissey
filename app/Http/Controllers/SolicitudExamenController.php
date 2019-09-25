@@ -292,8 +292,9 @@ class SolicitudExamenController extends Controller
         }else{
           $transaccion_id = $request->transaccion;
         }
-
+        $banderaQS=false;
         foreach ($request->examen as $examen) {
+          $area= Examen::find($examen);
           // Generar codigo de la muestra
           $hoy = Carbon::today()->startOfDay();
           $hoy2 = Carbon::today()->endOfDay();
@@ -301,11 +302,21 @@ class SolicitudExamenController extends Controller
           $cantidad_examenes++;
           //$codigo_muestra = $examen.'-'.$cantidad_examenes.'-'.$año_corto;
           $codigo_muestra =$cantidad_examenes;
+          if($banderaQS==false){
+          if($area->area=='QUIMICA SANGUINEA'){
+            $muestraQuimicaSanguinea=$codigo_muestra;
+            $banderaQS=true;
+          }
+        }
           //Inicio
           $solicitud = new SolicitudExamen;
           $solicitud->f_paciente = $request->f_paciente;
           $solicitud->f_examen = $examen;
+          if($area->area=='QUIMICA SANGUINEA'){
+            $solicitud->codigo_muestra = $muestraQuimicaSanguinea;  
+          }else{
           $solicitud->codigo_muestra = $codigo_muestra;
+          }
           $solicitud->estado = 0;
           $solicitud->f_transaccion = $transaccion_id;
           $solicitud->save();
@@ -477,7 +488,19 @@ class SolicitudExamenController extends Controller
       return view('SolicitudUltras.evaluarUltrasonografia',compact('solicitud'));
     }
     else {
-    $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
+      $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
+      $areaExamen=Examen::find($idExamen);
+      if($areaExamen->area=='QUIMICA SANGUINEA'){
+          $hoy = $solicitud->created_at->startOfDay();
+          $hoy2 = $solicitud->created_at->endOfDay();
+          $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
+          $solicitudes=SolicitudExamen::where('estado','=',1)->where('codigo_muestra','=',$solicitud->codigo_muestra)->where('created_at','>',$hoy)->where('created_at','<',$hoy2)->get();
+          foreach ($solicitudes as $i => $soli) {
+            $espr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->where('estado','=',true)->first();
+            $esprQuimicaSanguinea[]=$espr;      
+          }
+          return view('SolicitudExamenes.evaluarExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea'));
+      }
     $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',true)->distinct()->get(['f_seccion']);;
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',true)->get();
     $contador=0;
@@ -592,8 +615,53 @@ class SolicitudExamenController extends Controller
     if($request->evaluar){
       $resultadosGuardar=$request->resultados;
       $datosControlados=$request->datoControlado;
-      $idSolicitud=$request->solicitud;
       $observacion=$request->observacion;
+      if($request->quimica){//INICIO GUARDAR RESULTADOS DE QUIMICA SANGUINEA
+            $idsSolicitudes=$request->solicitud;
+            foreach ($idsSolicitudes as $key => $idSolicitud) {
+          DB::beginTransaction();
+          try{
+            $resultado= new Resultado();
+            $resultado->f_solicitud=$idSolicitud;
+            $resultado->observacion=$observacion;
+            $resultado->f_laboratorista=Auth::user()->id;
+            if($request->hasfile('imagenExamen')){
+            $resultado->imagen = $request->file('imagenExamen')->store('public/examenes');
+            }
+            $resultado->save();
+            $resultados=Resultado::all();
+            $idResultado=$resultados->last()->id;
+            $contadorControlados=0;
+            if($request->espr){
+            foreach ($request->espr as $key =>$valor) {
+              $detallesResultado= new DetalleResultado();
+              $detallesResultado->f_resultado=$idResultado;
+              $detallesResultado->f_espr=$valor;
+              $detallesResultado->resultado=$resultadosGuardar[$key];
+              $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+              if($espr_evaluar_controlado->f_reactivo){
+                $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+                $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+                $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
+                $contadorControlados++;
+                $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+                $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+                $finalReactivo->save();
+              }
+              $detallesResultado->save();
+            }
+          }
+            $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
+            $cambioEstadoSolicitud->estado=2;
+            $cambioEstadoSolicitud->save();
+            DB::commit();
+          }catch(Exception $e){
+            DB::rollback();
+            return redirect('/solicitudex?tipo=examenes&vista=paciente')->with('mensaje','Algo salio mal');
+          }
+        }
+      }else{//FIN GUARDAR RESULTADOS DE QUIMICA SANGUINEA
+      $idSolicitud=$request->solicitud;
       DB::beginTransaction();
       try{
         $resultado= new Resultado();
@@ -629,13 +697,14 @@ class SolicitudExamenController extends Controller
         $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
         $cambioEstadoSolicitud->estado=2;
         $cambioEstadoSolicitud->save();
+        DB::commit();
       }catch(Exception $e){
         DB::rollback();
         return redirect('/solicitudex')->with('mensaje','Algo salio mal');
       }
-      DB::commit();
+    }
       Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
-      return redirect('/solicitudex')->with('mensaje', '¡Guardado!');
+      return redirect('/solicitudex?tipo=examenes&vista=paciente')->with('mensaje', '¡Guardado!');
     }else {///EDICION DE RESULTADOS DE EXAMENES
       $idSolicitud=$request->solicitud;
       $resultadosGuardar=$request->resultados;

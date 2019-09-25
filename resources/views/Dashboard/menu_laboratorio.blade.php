@@ -5,7 +5,7 @@
   </a>
   <ul class="nav child_menu">
     <li>
-      <a href={{asset( '/solicitudex')}}>Evaluación de exámenes</a>
+      <a href={{asset( '/solicitudex?tipo=examenes&vista=paciente')}}>Evaluación de exámenes</a>
     </li>
     <li>
       <a href={{asset( '/bancosangre')}}>Banco de sangre</a>
