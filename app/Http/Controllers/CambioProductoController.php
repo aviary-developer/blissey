@@ -163,7 +163,7 @@ class CambioProductoController extends Controller
     }
     public static function entradas(Request $request){
       $tipo=10;
-      $transacciones=Transacion::where('tipo',$tipo)->where('localizacion',Transacion::tipoUsuario())->orderBy('fecha','DESC')->paginate(10);
+      $transacciones=Transacion::where('tipo',$tipo)->where('localizacion',Transacion::tipoUsuario())->orderBy('fecha','DESC')->get();
       return view('Entradas.index',compact('tipo','transacciones'));
     }
     public static function ver($id){

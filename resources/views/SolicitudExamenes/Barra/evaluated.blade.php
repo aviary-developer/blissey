@@ -5,7 +5,11 @@
       Evaluación
     </span>
     <span class="badge border-dark border text-dark">
-      {{$solicitud->examen->nombreExamen}}
+      @if($quimicaSanguinea)
+      Química Sanguinea
+      @else 
+      {{$solicitud->examen->nombreExamen}}         
+      @endif
     </span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

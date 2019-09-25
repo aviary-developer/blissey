@@ -10,7 +10,7 @@
         Reporte
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <a class="dropdown-item" href={!! asset('/lotes_pdf/1') !!}>
+        <a class="dropdown-item" target="_blank"href={!! asset('/lotes_pdf/1') !!}>
             Próximos a vencer
         </a>
       </div>
