@@ -57,14 +57,11 @@ class ProveedorController extends Controller
     {
         $valida= Validator::make($request->all(),[
           'nombre'=>'required| min:5 |max:50 |unique:proveedors',
-          'nombrev'=>'required',
         ],[
           'nombre.required'=>'El campo proveedor es obligatorio',
           'nombre.min'=>'El campo proveedor necesita 3 caracteres mínimos',
           'nombre.max'=>'El campo proveedor necesita 50 caracteres máximo',
           'nombre.unique'=>'El campo proveedor ya ha sido registrado',
-
-          'nombrev.required'=>'No se ha ingresado ningún visitador',
         ]
       );
         if($valida->fails()){
@@ -76,13 +73,12 @@ class ProveedorController extends Controller
           $telefonov=$request->telefonov;
         return view('Proveedores.create',compact('nombre','correo','telefono','nombrev','apellidov','telefonov'))->withErrors($valida->errors());
       }else{
-        Proveedor::create([
+        $proveedor=Proveedor::create([
             'nombre'=>$request['nombre'],
             'correo'=>$request['correo'],
             'telefono'=>$request['telefono'],
         ]);
-        $id_proveedor=Proveedor::buscarId($request['nombre']);
-
+          $id_proveedor=$proveedor->id;
           $contador=count($request['nombrev']);
           $nombrev=$request['nombrev'];
           $apellidov=$request['apellidov'];
