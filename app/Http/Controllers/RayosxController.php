@@ -6,6 +6,7 @@ use App\Bitacora;
 use Redirect;
 use DB;
 use Response;
+use App\Http\Requests\RayoxRequest;
 use App\CategoriaServicio;
 use App\Servicio;
 use App\Rayosx;
@@ -58,9 +59,13 @@ class RayosxController extends Controller
     {
       DB::beginTransaction();
       try{
-        $rayoxNuevo = new Rayosx;
-        $rayoxNuevo->nombre=$request->nombre;
-        $rayoxNuevo->save();
+        $rayoIngresado=Rayosx::where('nombre','=',$request->nombre)->count();
+        if($rayoIngresado>0){
+          return redirect('/rayosx')->with('error',"ERROR");
+        }else{
+        $rayoxNuevo = Rayosx::create([
+          "nombre"=>$request->nombre
+        ]);
         //Crear una categoria de servicio asociada a los examen
         $categoria_existe = CategoriaServicio::where('nombre','Rayos X')->first();
 
@@ -76,6 +81,7 @@ class RayosxController extends Controller
         $servicio->precio = $request->precio;
         $servicio->f_rayox = $rayoxNuevo->id;
         $servicio->save();
+      }
       }catch(\Exception $e){
         DB::rollback();
         return $e;
