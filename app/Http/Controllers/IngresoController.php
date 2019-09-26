@@ -141,14 +141,18 @@ class IngresoController extends Controller
           $ingresos->fecha_ingreso  = $fecha.':00';
           $ingresos->expediente = $correlativo+1;
           $ingresos->f_recepcion = Auth::user()->id;
-          $ingresos->tipo = $request->tipo;
+					$ingresos->tipo = $request->tipo;
+					if($request->tipo == 2){
+						$ingresos->estado = 1;
+					}
           $ingresos->save();
 
           if($request->tipo < 3){
             $cama = Cama::find($request->f_cama);
             $cama->estado = true;
             $cama->save();
-          }else{
+					}
+					if($request->tipo > 1){
             $ultima_factura = Transacion::where('tipo',2)->latest()->first();
 
             if($ultima_factura == null){
@@ -286,22 +290,23 @@ class IngresoController extends Controller
             $fecha_aux = $dia_ingreso->addDays($i);
             /**Comprobar si existe el detalle este día */
             $exist_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
-            /**Si no existe se crea la transaccion */
-            if($exist_detalle == 0){
-              DB::beginTransaction();
-              try{
-                $detalle_new = new DetalleTransacion;
-                $detalle_new->f_servicio = $ingreso->habitacion->servicio->id;
-                $detalle_new->f_transaccion = $ingreso->transaccion->id;
-                $detalle_new->cantidad = 1;
-                $detalle_new->precio = $ingreso->habitacion->servicio->precio;
-                $detalle_new->created_at = $fecha_aux;
-                $detalle_new->save();
-                DB::commit();
-              }catch(Exception $e){
-                DB::rollbalk();
-              }
-            }
+						/**Si no existe se crea la transaccion */
+						/**Se va a detener la creación automática del registro de habitaciones */
+            // if($exist_detalle == 0){
+            //   DB::beginTransaction();
+            //   try{
+            //     $detalle_new = new DetalleTransacion;
+            //     $detalle_new->f_servicio = $ingreso->habitacion->servicio->id;
+            //     $detalle_new->f_transaccion = $ingreso->transaccion->id;
+            //     $detalle_new->cantidad = 1;
+            //     $detalle_new->precio = $ingreso->habitacion->servicio->precio;
+            //     $detalle_new->created_at = $fecha_aux;
+            //     $detalle_new->save();
+            //     DB::commit();
+            //   }catch(Exception $e){
+            //     DB::rollbalk();
+            //   }
+            // }
           }
         }
       }else if($ingreso->estado == 2){
@@ -1055,7 +1060,7 @@ class IngresoController extends Controller
     $monto = [];
     $fecha = [];
     $abonos = [];
-    for($i=0; $i<$dias+1; $i++){
+    for($i=0,$l=0; $l<$dias+1; $i++){
       $monto[$i]=Ingreso::servicio_gastos($id,$i);
       $monto[$i]+=Ingreso::honorario_gastos($id,$i);
       $monto[$i]+=Ingreso::tratamiento_gastos($id,$i);
@@ -1063,7 +1068,12 @@ class IngresoController extends Controller
 			$iva = $monto[$i]*0.13;
 			$iva = number_format($iva,2);
       $monto[$i]+=$iva;
-      $fecha[$i]=$ingreso->fecha_ingreso->addDays($i)->format('m-d-Y');
+			$fecha[$i]=$ingreso->fecha_ingreso->addDays($i)->format('m-d-Y');
+			if($dias > 10 && $dias < 20){
+				$l += 2;
+			}else{
+				$l += 7;
+			}
     }
 
     return (compact('monto','fecha','dias','abonos'));

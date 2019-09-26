@@ -90,7 +90,23 @@
           </div>
           <input type="datetime-local" name="fecha_ingreso" id="fecha_ingreso" class="form-control form-control-sm" value={{$fecha->format('Y-m-d').'T'.$fecha->format('H:i')}} max={{$fecha->format('Y-m-d').'T'.$fecha->format('H:i')}}>
         </div>
-      </div>
+			</div>
+			<div class="form-group col-sm-12" id="tipo_ingreso_div" style="display:none">
+				<label class="" for="nombre">Tipo de ingreso *</label>
+				<div class="input-group mb-2 mr-sm-2">
+					<div id="radioBtn" class="btn-group col-sm-12">
+						<a class="btn btn-primary btn-sm active col-sm-6" data-toggle="tipo_ingreso_i" data-title="1" onclick="tipo_ingreso(0)">Ingreso</a>
+						<a class="btn btn-primary btn-sm notActive col-sm-6" data-toggle="tipo_ingreso_i" data-title="0" onclick="tipo_ingreso(1)">Medio ingreso</a>
+					</div>
+					<input type="hidden" name="tipo_ingreso_i" id="tipo_ingreso_i" value="1">
+				</div>
+			</div>
     </div>
   </div>
 </form>
+
+<script>
+	function tipo_ingreso(valor){
+		$("#tipo").val(valor);
+	}
+</script>

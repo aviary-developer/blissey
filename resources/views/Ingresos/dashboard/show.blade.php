@@ -5,7 +5,7 @@
   @php
     setlocale(LC_ALL,'es');
   @endphp
-  @include('Ingresos.Barra.show')
+	@include('Ingresos.Barra.show')
 	{{-- Determinar si es permitido que este en observacion o en medi ingreso --}}
     @if ($ingreso->tipo == 1 && $horas > 6 && $ingreso->estado != 2)
       <script>
@@ -109,7 +109,6 @@
     @endif
 
   </div>
-
   {{-- Token a utilizar por cualquier elemento en esta pantalla --}}
   <input type="hidden" id="token" value="<?php echo csrf_token(); ?>">
   {{-- Id del ingreso --}}
