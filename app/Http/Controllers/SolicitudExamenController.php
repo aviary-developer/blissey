@@ -341,7 +341,7 @@ class SolicitudExamenController extends Controller
     }
     if($request->f_ingreso == null){
       if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
-      return redirect('/solicitudex?tipo=examenes')->with('mensaje', '¡Guardado!');
+      return redirect('/solicitudex?tipo=examenes&vista=paciente')->with('mensaje', '¡Guardado!');
     }elseif (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="rayosx")) {
         return redirect('/solicitudex?tipo=rayosx')->with('mensaje', '¡Guardado!');
       } elseif (Auth::user()->tipoUsuario == "Ultrasonografía" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="ultras")) {
@@ -633,7 +633,6 @@ class SolicitudExamenController extends Controller
             $idResultado=$resultados->last()->id;
             $contadorControlados=0;
             if($request->espr){
-            //foreach ($request->espr as $key =>$valor) {
               $detallesResultado= new DetalleResultado();
               $detallesResultado->f_resultado=$idResultado;
               $detallesResultado->f_espr=$request->espr[$key];
@@ -649,7 +648,6 @@ class SolicitudExamenController extends Controller
                 $finalReactivo->save();
               }
               $detallesResultado->save();
-            //}
           }
             $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
             $cambioEstadoSolicitud->estado=2;
@@ -747,11 +745,11 @@ class SolicitudExamenController extends Controller
       }
       }catch(Exception $e){
         DB::rollback();
-        return redirect('/examenesEvaluados')->with('mensaje','Algo salio mal');
+        return redirect('/examenesEvaluados?tipo=examenes&vista=paciente')->with('mensaje','Algo salio mal');
       }
       DB::commit();
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
-      return redirect('/examenesEvaluados')->with('mensaje', '¡Editado!');
+      return redirect('/examenesEvaluados?tipo=examenes&vista=paciente')->with('mensaje', '¡Editado!');
     }
   }
   }
@@ -795,6 +793,35 @@ class SolicitudExamenController extends Controller
       return $pdf->stream('Ultrasonografia_con_solicitud_'.$solicitud->id.'.pdf');
     }
       else{
+        $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
+        $areaExamen=Examen::find($idExamen);        
+        if($areaExamen->area=='QUIMICA SANGUINEA'){//INICIO ENTREGA Q.S.
+          $hoy = $solicitud->created_at->startOfDay();
+          $hoy2 = $solicitud->created_at->endOfDay();
+          $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
+          $solicitudes=SolicitudExamen::where('codigo_muestra','=',$solicitud->codigo_muestra)->where('created_at','>',$hoy)->where('created_at','<',$hoy2)->get();
+          foreach ($solicitudes as $i => $soli) {
+            $espr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->where('estado','=',true)->first();
+            $esprQuimicaSanguinea[]=$espr;      
+            $resultado=Resultado::where('f_solicitud','=',$soli->id)->first();
+            $resultadosQuimicaSanguinea[]=$resultado;
+            $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->first();
+            $detallesResultadosQuimicaSanguinea[]=$detallesResultado;
+              if($detallesResultado->dato_controlado!=null){
+                $tieneDatoControlado[]=1;
+              }else{
+                $tieneDatoControlado[]=0;
+              }
+          $cambioEstadoSolicitud=SolicitudExamen::find($soli->id);
+          $cambioEstadoSolicitud->estado=3;
+          $cambioEstadoSolicitud->save();
+        }
+        $header = view('PDF.header.laboratorio');
+        $footer = view('PDF.footer.numero_pagina');
+        $main = view('SolicitudExamenes.entregaExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado'));
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
+        return $pdf->stream('ExamenQuimicaSanguinea_'.$solicitud->id.'.pdf');
+      }//FIN ENTREGA Q.S.
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
