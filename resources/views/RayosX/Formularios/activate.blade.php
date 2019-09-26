@@ -7,9 +7,18 @@
 		<button type="button" class="btn btn-success btn-sm" title="Restaurar" onclick={!! "'alta(".$rayox->id.");'" !!}/>
 			<i class="fa fa-check"></i>
 		</button>
-		<button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick={!! "'eliminar(".$rayox->id.");'" !!}/>
-			<i class="fa fa-remove"></i>
-		</button>
+		@php
+    $cuenta=App\Rayosx::foraneos($rayox->id);
+  @endphp
+  @if ($cuenta>0)
+    <button type="button" class="btn btn-sm btn-danger disabled" title="No se puede eliminar">
+      <i class="fas fa-ban"></i>
+    </button>
+  @else
+    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$rayox->id.");'" !!} title="Eliminar"/>
+      <i class="fas fa-times"></i>
+    </button>
+  @endif
 	</div>
 @endif
 {!!Form::close()!!}
@@ -49,7 +58,6 @@
       buttonsStyling: false
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('msg','yes');
         var dominio = window.location.host;
         $('#formulario').attr('action','destroyRayosx/'+id);
       $('#formulario').submit();

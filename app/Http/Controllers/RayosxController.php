@@ -145,9 +145,18 @@ class RayosxController extends Controller
      */
     public function destroy($id)
     {
+      DB::beginTransaction();
+      try{
+      $servicio =Servicio::where('f_rayox',$id)->first();
+      $servicio->delete();
       $rayosx = Rayosx::findOrFail($id);
       $rayosx->delete();
-      return redirect('/rayosx?estado=0');
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/rayosx?estado=0')->with('error', " ");
+      }
+      DB::commit();
+      return redirect('/rayosx?estado=0')->with('mensaje',' ');
     }
     public function desactivate($id){
       $rayosx = Rayosx::find($id);
