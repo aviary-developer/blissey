@@ -142,9 +142,18 @@ class UltrasonografiaController extends Controller
      */
     public function destroy($id)
     {
-        $ultrasonografias = ultrasonografia::findOrFail($id);
-        $ultrasonografias->delete();
-        return redirect('/ultrasonografias?estado=0');
+      DB::beginTransaction();
+      try{
+      $servicio =Servicio::where('f_ultrasonografia',$id)->first();
+      $servicio->delete();
+      $ultrasonografia = ultrasonografia::findOrFail($id);
+      $ultrasonografia->delete();
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/ultrasonografias?estado=0')->with('error', " ");
+      }
+      DB::commit();
+      return redirect('/ultrasonografias?estado=0')->with('mensaje',' ');
     }
 
     public function desactivate($id){

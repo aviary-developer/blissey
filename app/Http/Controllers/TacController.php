@@ -145,9 +145,18 @@ class TacController extends Controller
      */
     public function destroy($id)
     {
+      DB::beginTransaction();
+      try{
+      $servicio =Servicio::where('f_tac',$id)->first();
+      $servicio->delete();
       $tac = Tac::findOrFail($id);
       $tac->delete();
-      return redirect('/tacs?estado=0');
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/tacs?estado=0')->with('error', " ");
+      }
+      DB::commit();
+      return redirect('/tacs?estado=0')->with('mensaje',' ');
     }
     public function desactivate($id){
       $tac = Tac::find($id);
