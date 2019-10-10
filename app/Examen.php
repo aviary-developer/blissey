@@ -47,4 +47,9 @@ class Examen extends Model
   public function servicio(){
     return $this->hasOne('App\Servicio','f_examen');
   }
+
+  public static function foraneos($id){
+    $servicio= Servicio::where('f_examen','=',$id)->first();
+    return DetalleTransacion::where('f_servicio',$servicio->id)->count();
+  }
 }

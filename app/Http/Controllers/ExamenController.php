@@ -258,9 +258,22 @@ class ExamenController extends Controller
   */
   public function destroy($id)
   {
-    $examenes = Examen::findOrFail($id);
-    $examenes->delete();
-    return redirect('/examenes?estado=0');
+    DB::beginTransaction();
+      try{
+        $espr =ExamenSeccionParametro::where('f_examen',$id)->get();
+        foreach ($espr as $key => $value) {
+          $value->delete();
+        }
+        $servicio =Servicio::where('f_examen',$id)->first();
+        $servicio->delete();
+        $examen = Examen::findOrFail($id);
+        $examen->delete();
+      }catch(\Exception $e){
+        DB::rollback();
+        return redirect('/examenes?estado=0')->with('error', " ");
+      }
+      DB::commit();
+      return redirect('/examenes?estado=0')->with('mensaje',' ');
   }
 
   public function desactivate($id){

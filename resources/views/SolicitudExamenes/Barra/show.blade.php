@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
   @if ($solicitud->estado == 2)  
-    <a class="navbar-brand" href={!! asset('/examenesEvaluados?vista=paciente') !!}>
+    <a class="navbar-brand" href={!! asset('/examenesEvaluados?tipo=examenes&vista=paciente') !!}>
   @else
     <a class="navbar-brand" href={!! asset('/examenesEntregados?vista=paciente') !!}>
   @endif

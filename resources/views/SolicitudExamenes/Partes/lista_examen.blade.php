@@ -9,7 +9,7 @@
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target={{"#collapse".$k}} aria-expanded="true" aria-controls={{"collapse".$k}}>
           
-        Q.S. {{$examen->nombreExamen($examen->f_examen)}}
+        {{$examen->nombreExamen($examen->f_examen)}}
           
         </button>
       </h5>
@@ -20,7 +20,7 @@
         
         <table class="table table-hover table-striped table-sm">
           <thead>
-            <th>Código</th>
+            <th>Muestra</th>
             <th>Fecha</th>
             <th>Evaluación</th>
             <th>Opciones</th>

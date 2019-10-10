@@ -327,6 +327,9 @@ class TransaccionController extends Controller
             $dp->unidad;
           }
           $dp->inventario=DivisionProducto::inventario($dp->id,1);
+          if($dp->inventario>0){
+            $lotes=DivisionProducto::lotes($dp->id);
+            $dp->lote=$lotes[(count($lotes))-1]->lote;}
           $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
         }
       }

@@ -27,4 +27,8 @@ class ultrasonografia extends Model
   public function servicio(){
     return $this->hasOne('App\Servicio','f_ultrasonografia');
   }
+  public static function foraneos($id){
+    $servicio= Servicio::where('f_ultrasonografia','=',$id)->first();
+    return DetalleTransacion::where('f_servicio',$servicio->id)->count();
+  }
 }

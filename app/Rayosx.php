@@ -27,4 +27,8 @@ class Rayosx extends Model
   public function servicio(){
     return $this->hasOne('App\Servicio','f_rayox');
   }
+  public static function foraneos($id){
+    $servicio= Servicio::where('f_rayox','=',$id)->first();
+    return DetalleTransacion::where('f_servicio',$servicio->id)->count();
+  }
 }

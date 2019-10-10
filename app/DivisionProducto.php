@@ -102,7 +102,8 @@ class DivisionProducto extends Model
     })
     ->where('detalle_transacions.f_producto',$id)
     ->where('transacions.localizacion',$ts)
-    ->orderBy('detalle_transacions.created_at','DESC')
+    // ->orderBy('detalle_transacions.created_at','DESC')
+    ->orderBy('detalle_transacions.fecha_vencimiento','DESC')
     ->get();
   }
 

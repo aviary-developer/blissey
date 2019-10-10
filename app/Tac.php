@@ -27,4 +27,8 @@ class Tac extends Model
   public function servicio(){
     return $this->hasOne('App\Servicio','f_tac');
   }
+  public static function foraneos($id){
+    $servicio= Servicio::where('f_tac','=',$id)->first();
+    return DetalleTransacion::where('f_servicio',$servicio->id)->count();
+  }
 }

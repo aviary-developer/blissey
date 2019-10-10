@@ -96,6 +96,7 @@ $(document).on('ready', function () {
           "<th>Estante|Nivel</th>" +
           "<th>Existencias</th>" +
           "<th style='width : 80px'>Precio</th>" +
+          "<th style='width : 80px'>Lote próximo</th>" +
           "<th style='width : 80px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
@@ -113,6 +114,7 @@ $(document).on('ready', function () {
                 "<td>" + value2.ubicacion + "</td>" +
                 "<td id='ct" + value2.id + "'>" + value2.inventario + "</td>" +
                 "<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
+                "<td>" + value2.lote + "</td>" +
                 "<td>" +
                 "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value2.id + ");'>" +
                 "<i class='fas fa-arrow-right'></i>" +
