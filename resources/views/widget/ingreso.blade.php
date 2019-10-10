@@ -17,7 +17,7 @@
         @foreach ($primero as $ingreso)
           <tr>
             <td class="w-50">{{
-              $ingreso->paciente->apellido.', '.$ingreso->paciente->nombre
+              $ingreso->hospitalizacion->paciente->apellido.', '.$ingreso->hospitalizacion->paciente->nombre
             }}</td>
             @php
               $hoy = Carbon\Carbon::now();

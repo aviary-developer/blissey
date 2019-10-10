@@ -32,7 +32,7 @@
                 <tr>
                   <td>
                     <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
-                        {{$ingreso->paciente->apellido.', '.$ingreso->paciente->nombre}}
+                        {{$ingreso->hospitalizacion->paciente->apellido.', '.$ingreso->hospitalizacion->paciente->nombre}}
                       </a>
                   </td>
                   <td>

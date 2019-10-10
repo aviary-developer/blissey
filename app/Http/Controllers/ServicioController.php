@@ -17,12 +17,10 @@ class ServicioController extends Controller
      */
     public function index(Request $request)
     {
-      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
-      $pagina--;
-      $pagina *= 10;
-      $estado = $request->get('estado');
-      $nombre = $request->get('nombre');
-      $servicios = Servicio::buscar($nombre,$estado);
+			$estado = $request->get('estado');
+			$tipo = $request->get('tipo');
+			
+			$servicios = Servicio::buscar($estado, $tipo);
       $activos = Servicio::where('estado',true)->count();
       $inactivos = Servicio::where('estado',false)->count();
       return view('Servicios.index',compact(
@@ -30,8 +28,8 @@ class ServicioController extends Controller
         'estado',
         'nombre',
         'activos',
-        'inactivos',
-        'pagina'
+				'inactivos',
+				'tipo'
       ));
     }
 
@@ -134,5 +132,13 @@ class ServicioController extends Controller
       $servicios->save();
       Bitacora::bitacora('activate','servicios','servicios',$id);
       return Redirect::to('/servicios?estado=0');
-    }
+		}
+		
+		//SEP16: Funciones de busqueda en ingresos para buscar el paquete hositalario
+		public function precio_paquete(Request $request){
+			$paquete = Servicio::find($request->id);
+			$precio = $paquete->precio;
+			$id = $paquete->id;
+			return compact('precio','id');
+		}
 }

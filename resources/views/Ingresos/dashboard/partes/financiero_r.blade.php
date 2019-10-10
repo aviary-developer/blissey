@@ -1,6 +1,17 @@
 <div class="row">
   <div class="col-sm-8">
-    <h5 class="text-success">Notificaciones</h5>
+		<h5 class="text-success">
+			Notificaciones
+			@if (count($lista_paquetes) != 0)
+				<span class="badge badge-pill badge-danger font-sm" id="count_notificaciones">
+					{{count($lista_paquetes)}}
+				</span>
+			@else
+				<span class="badge badge-pill badge-success font-sm" id="count_notificaciones">
+					{{count($lista_paquetes)}}
+				</span>
+			@endif
+		</h5>
   </div>
   <div class="col-sm-4">
     <div class="btn-group alignright">
@@ -13,7 +24,13 @@
   </div>
 </div>
 <div class="row">
-	<div class="col-8"></div>
+	<div class="col-8">
+		<div class="row">
+			<div style="height:368px; overflow-x:none; overflow-y:scroll; width:100%">
+				@include('Ingresos.dashboard.partes.noticias_r')
+			</div>
+		</div>
+	</div>
 	<div class="col-4">
 		<hr class="my-1">
 		<div class="flex-row text-monospace">
@@ -22,7 +39,11 @@
 		<div class="flex-row">
 			<center>
 				<h4 class="text-secondary">
-					{{($dias+1).(($dias > 1)?' días':' día')}}
+					@if ($ingreso->tipo != 0)
+						{{($horas).(($horas > 1)?' horas':' hora')}}
+					@else
+						{{($dias).(($dias > 1)?' días':' día')}}
+					@endif
 				</h4>
 			</center>
 		</div>
@@ -32,9 +53,10 @@
 		</div>
 		<div class="flex-row">
 			<center>
-				<h4 class="text-secondary">
+				<h4 class="text-secondary" id="total_gastos_label">
 					{{'$ '.number_format($total_gastos,2,'.',',')}}
 				</h4>
+				<input type="hidden" id="total_gastos" value="{{number_format($total_gastos,2,'.','')}}">
 			</center>
 		</div>
 		<hr class="my-1">
@@ -54,9 +76,10 @@
 		</div>
 		<div class="flex-row">
 			<center>
-				<h4 class="text-danger">
+				<h4 class="text-danger" id="total_deuda_label">
 					{{'$ '.number_format($total_deuda,2,'.',',')}}
 				</h4>
+				<input type="hidden" id="total_deuda" value="{{number_format($total_deuda,2,'.','')}}">
 			</center>
 		</div>
 		<hr class="my-1">
@@ -64,3 +87,4 @@
 </div>
 @include('Ingresos.dashboard.modales.ver_finanzas')
 @include('Ingresos.dashboard.modales.informe_fin')
+@include('Ingresos.dashboard.modales.paquete');

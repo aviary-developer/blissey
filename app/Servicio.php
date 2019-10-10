@@ -10,22 +10,37 @@ class Servicio extends Model
       'nombre', 'precio', 'f_categoria'
     ];
 
-    public static function buscar($nombre, $estado){
-      return Servicio::nombre($nombre)->estado($estado)->orderBy('nombre')->get();
-    }
-
-    public function scopeNombre($query, $nombre){
-      if(trim($nombre)!=""){
-        $query->where('nombre', 'like','%'.$nombre.'%');
-      }
+    public static function buscar($estado,$tipo){
+			return Servicio::join('categoria_servicios','categoria_servicios.id','servicios.f_categoria')->estado($estado)->where(
+				function($query) use ($tipo){
+				$query->paquete($tipo)->cirugia($tipo);
+			})->select('servicios.*')->orderBy('servicios.nombre')->get();
     }
 
     public function scopeEstado($query, $estado){
       if($estado == null){
         $estado = 1;
       }
-      $query->where('estado',$estado);
-    }
+      $query->where('servicios.estado',$estado);
+		}
+
+		public function scopePaquete($query, $tipo){
+			if($tipo == null){
+				$signo = '<>';
+			}else{
+				$signo = '=';
+			}
+			$query->where('categoria_servicios.nombre',$signo,'Paquetes hospitalarios');
+		}
+
+	public function scopeCirugia($query, $tipo)
+	{
+		if ($tipo == null) {
+			$query->where('categoria_servicios.nombre', '<>', 'Cirugías');
+		} else {
+			$query->orWhere('categoria_servicios.nombre', '=', 'Cirugías');
+		}
+	}
 
     public function nombreCategoria($id){
       $nombre = CategoriaServicio::find($id);

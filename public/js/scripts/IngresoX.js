@@ -135,11 +135,8 @@ function medicamento_fecha() {
             '<td>' +
             value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
-          if (value.estado == 1 && tipo_usuario == "Recepción") {
-            html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
-          } else {
-            html += '<td><center><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></center></td>';
-          }
+					html += '<td></center><div class="btn-group"><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(1,' + value.id + ',' + value.cantidad + ')"><i class="fa fa-edit"></i></button></center>';
+					html += '</center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           html += '</tr>';
           tabla.append(html);
         });
@@ -187,11 +184,8 @@ function servicio_fecha() {
             '<td>' +
             value.cantidad + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
-          if (value.estado == 1 && tipo_usuario == "Recepción") {
-            html += '<td></center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
-          } else {
-            html += '<td><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></td>';
-          }
+            html += '<td></center><div class="btn-group"><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(1,' + value.id + ','+value.cantidad+')"><i class="fa fa-edit"></i></button></center>';
+						html += '</center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           html += '</tr>';
           tabla.append(html);
         });
@@ -849,7 +843,8 @@ function ver_medico(servicio) {
         '<table class="table table-striped table-hover table-sm" id="tabla_v_m">' +
         '<thead>' +
         '<th>Fecha</th>' +
-        '<th>Hora</th>' +
+				'<th>Hora</th>' +
+				'<th>Precio</th>' +
         '<th class="w-25">Acción</th>'
       '</thead>' +
         '</table>' +
@@ -858,8 +853,9 @@ function ver_medico(servicio) {
       tabla = $("#tabla_v_m");
       $(r.consultas).each(function (key, value) {
         html = '<tr id="r' + value.id + '">' +
-          '<td>' + value.fecha + '</td>' +
-          '<td>' + value.hora + '</td>';
+					'<td>' + value.fecha + '</td>' +
+					'<td>' + value.hora + '</td>'+
+					'<td>' + "$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) + '</td>';
         if (value.estado == 1) {
           html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
         } else {

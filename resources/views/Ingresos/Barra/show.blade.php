@@ -12,7 +12,7 @@
 
     @if ($ingreso->tipo < 3)
       @if ($ingreso->estado==1)
-        <span class="badge border border-primary text-primary">{{($ingreso->paciente->sexo)?"Hospitalizado":"Hospitalizada"}}</span>
+        <span class="badge border border-primary text-primary">{{($ingreso->hospitalizacion->paciente->sexo)?"Hospitalizado":"Hospitalizada"}}</span>
       @elseif($ingreso->estado == 0)
         <span class="badge border border-warning text-warning">Pendiente de acta</span>
       @else

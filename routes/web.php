@@ -159,7 +159,54 @@ Route::group(['middleware'=>'general'], function(){
 			$count_existencia_reactivo = App\Reactivo::where('contenidoPorEnvase','<',20)->count();
     }
     $empresa = App\Empresa::latest()->first();
-    // App\Transacion::llenar();
+		//Crear los servicios de paquetes hospitalarios
+		$categoria = App\CategoriaServicio::where('nombre','Paquetes hospitalarios')->count();
+		if($categoria == 0){
+			DB::beginTransaction();
+
+			try{
+				$cat = new App\CategoriaServicio;
+				$cat->nombre = 'Paquetes hospitalarios';
+				$cat->save();
+	
+				$cat = new App\CategoriaServicio;
+				$cat->nombre = "Cirugías";
+				$cat->save();
+				DB::commit();
+			}catch(Exception $e){
+				DB::rollback();
+			}
+		}
+
+		$paquete = App\Servicio::where('nombre','Ingreso')->count();
+		if($paquete == 0){
+			DB::beginTransaction();
+
+			try{
+				$categoria_f = App\CategoriaServicio::where('nombre','Paquetes hospitalarios')->first();
+				$paq = new App\Servicio;
+				$paq->nombre = "Ingreso";
+				$paq->precio = 0;
+				$paq->f_categoria = $categoria_f->id;
+				$paq->save();
+	
+				$paq = new App\Servicio;
+				$paq->nombre = "Observación";
+				$paq->precio = 0;
+				$paq->f_categoria = $categoria_f->id;
+				$paq->save();
+	
+				$paq = new App\Servicio;
+				$paq->nombre = "Medio Ingreso";
+				$paq->precio = 0;
+				$paq->f_categoria = $categoria_f->id;
+				$paq->save();
+
+				DB::commit();
+			}catch(Exception $e){
+				DB::rollback();
+			}
+		}
     return view('main', compact(
       "empresa",
       "primero",
@@ -373,6 +420,10 @@ Route::resource('calendarios', 'CalendarioController');
 Route::get('calendario/eventos','CalendarioController@eventos');
 
 Route::get('/graficar_examenes','SolicitudExamenController@graficar_examenes');
+
+//Rutas para los paquetes hospitalarios
+Route::get('servicio/precio_paquete','ServicioController@precio_paquete');
+Route::post('servicio/guardar_paquete','IngresoController@guardar_paquete');
 
 //Ruta de validación 
 Route::get('/validate',function(Illuminate\Http\Request $request){

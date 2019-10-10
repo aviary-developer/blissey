@@ -45,22 +45,14 @@ class Ingreso extends Model
       }
     }
 
-    public function paciente(){
-      return $this->belongsTo('App\Paciente', 'f_paciente');
-    }
-
-    public function responsable(){
-      return $this->belongsTo('App\Paciente', 'f_responsable');
-    }
-
     /**La relación propiamente no es con habitaciones es con camas pero se deja así por facilidad de uso */
     public function habitacion(){
       return $this->belongsTo('App\Cama', 'f_cama');
     }
 
-    public function medico(){
-      return $this->belongsTo('App\User', 'f_medico');
-    }
+    public function hospitalizacion(){
+			return $this->belongsTo('App\Hospitalizacion','f_hospitalizacion');
+		}
 
     public function recepcion(){
       return $this->belongsTo('App\User', 'f_recepcion');

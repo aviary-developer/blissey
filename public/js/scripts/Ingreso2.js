@@ -1,4 +1,5 @@
 $(document).on('ready', function () {
+	var notificacion_item = null;
   $("#guardarSignoModal").on("click", function (e) {
     $.ajax({
       type: 'post',
@@ -320,7 +321,100 @@ $(document).on('ready', function () {
         });
       }
     });
-  });
+	});
+	
+	$("#contenido_noticias").on("click", '#carga_paquete_modal', function (e) { 
+		precio_paquete();
+		notificacion_item = $(this).parents('.alert');
+	});
+
+	$("#tipo_paquete").on('change', function () { 
+		precio_paquete();
+	});
+
+	$("#paquete_save").click(function (e) { 
+		e.preventDefault();
+		var fecha = moment(notificacion_item.find("#fecha_paquete_noticias").val(), "DD/MM/YYYY");
+		var contador = $("#count_notificaciones").text().trim();
+		var precio = parseFloat($("#precio_paquete").val());
+		$.ajax({
+			type: 'post',
+			url: $('#guardarruta').val() + '/servicio/guardar_paquete',
+			data: {
+				id_servicio: $("#id_paquete").val(),
+				id_transaccion: $("#id_t").val(),
+				precio: precio,
+				fecha: fecha.format('YYYY-MM-DD')
+			},
+			success: function (r) {
+				if (r) {
+					$("#paquete_m").modal("hide");
+					notificacion_item.remove();
+					$("#count_notificaciones").text(--contador);
+					console.log(contador);
+					if (contador == 0) {
+						$("#count_notificaciones").removeClass('badge-danger').addClass('badge-success');
+						var html = '<div class="row">' +
+							'<div class="alert alert-secondary m-1 p-1 w-100">' +
+							'<div class="row">' +
+							'<div class="col-1">' +
+							'<i class="fas fa-check text-success"></i>' +
+							'</div>' +
+							'<div class="col-10">' +
+							'<span>¡No hay notificaciones pendientes!</span>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>';
+						$("#contenido_noticias").append(html);
+					}
+					var gasto = parseFloat($("#total_gastos").val());
+					console.log("Gasto antes de sumar el precio " + gasto);
+					gasto += precio;
+					console.log("Gasto con el precio sumado " + gasto);
+					var deuda = parseFloat($("#total_deuda").val());
+					deuda += precio;
+					$("#total_gastos").val(gasto);
+					$("#total_deuda").val(deuda);
+					$("#total_gastos_label").empty().text("$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(gasto));
+					$("#total_deuda_label").empty().text("$ " + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(deuda));
+					swal({
+						type: 'success',
+						toast: true,
+						title: '¡Acción exitosa!',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4000
+					});
+				} else {
+					swal({
+						type: 'error',
+						toast: true,
+						title: '¡Algo salio mal!',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4000
+					});
+				}
+			}
+		});
+	});
+
+	function precio_paquete() {
+		var tipo = $("#tipo_paquete").val();
+		var precio = $("#precio_paquete");
+		var id = $("#id_paquete");
+
+		$.ajax({
+			type: 'get',
+			url: $('#guardarruta').val() + '/servicio/precio_paquete',
+			data: { id: tipo },
+			success: function (r) {
+				precio.val(r.precio);
+				id.val(r.id);
+			}
+		});
+	}
 
   /**Invocación del grafico financiero */
   // chart_fin();
@@ -343,8 +437,8 @@ $(document).on('ready', function () {
   //         var abono = [];
   //         var fecha_format = [];
   //         $(r.monto).each(function (key, value) {
-  //           monto.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(value));
-  //           abono.push(new Intl.NumberFormat('mx-MX', { style: "decimal", minimumFractionDigits: 2 }).format(r.abonos[key]));
+  //           monto.push(new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value));
+  //           abono.push(new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(r.abonos[key]));
   //           fecha = new Date(r.fecha[key]);
   //           fecha_format.push((fecha.getDate() + " " + mes(fecha.getMonth())));
   //         });
@@ -428,4 +522,11 @@ $(document).on('ready', function () {
       return "Diciembre";
     }
   }
+});
+
+$("#ver_servicios").on('shown.bs.modal', function () {
+	$(document).off('focusin.modal');
+});
+$("#ver_productos").on('shown.bs.modal', function () {
+	$(document).off('focusin.modal');
 });

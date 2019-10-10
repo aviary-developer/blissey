@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/servicios') !!}>
-    Servicios
+	<a class="navbar-brand" href={!! asset('/servicios') !!}>
+		@if ($tipo == null)
+			Servicios
+		@else
+			Paquetes 
+		@endif
     @if ($estadoOpuesto)
       <span class="badge border-danger border text-danger">
         Papelera
@@ -24,7 +28,7 @@
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href={!! asset('/servicios?estado='.$estadoOpuesto) !!}>
+          <a class="dropdown-item" href={!! asset('/servicios?estado='.$estadoOpuesto.'&tipo='.$tipo) !!}>
             @if ($estadoOpuesto)
               Activos
               <span class="badge badge-primary float-right">
@@ -36,7 +40,17 @@
                 {{$inactivos}}
               </span>
             @endif
-          </a>  
+					</a>  
+					<div class="dropdown-divider"></div>
+					@if ($tipo == null)	
+						<a class="dropdown-item" href={!! asset('/servicios?tipo=paquete') !!}>
+							Paquetes hospitalarios
+						</a>
+					@else
+						<a class="dropdown-item" href={!! asset('/servicios') !!}>
+							Servicios
+						</a>
+					@endif
         </div>
       </li>
     </ul>

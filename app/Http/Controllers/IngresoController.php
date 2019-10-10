@@ -15,6 +15,7 @@ use App\Cama;
 use App\Tac;
 use App\ultrasonografia;
 use App\Abono;
+use App\Hospitalizacion;
 use App\Especialidad;
 use Illuminate\Http\Request;
 use App\Transacion;
@@ -33,19 +34,14 @@ class IngresoController extends Controller
      */
     public function index(Request $request)
     {
-      $pagina = ($request->get('page')!=null)?$request->get('page'):1;
-      $pagina--;
-      $pagina *= 10;
-      $estado = $request->get('estado');
-      $tipo = $request->get('tipo');
-      $usuario = null;
-      if(Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Gerencía"){
-        if($tipo == 3){
-          $usuario = Auth::user()->id;
-        }
-      }
-      $ingresos = Ingreso::buscar($estado, $tipo,$usuario);
-      $activos = Ingreso::where('estado','<>',2)->where('tipo', $tipo)->count();
+      // $pagina = ($request->get('page')!=null)?$request->get('page'):1;
+      // $pagina--;
+      // $pagina *= 10;
+      // $estado = $request->get('estado');
+			// $usuario = null;
+			
+      // $ingresos = Hospitalizacion::buscar($estado, $usuario);
+      // $activos = Ingreso::where('estado','<>',2)->where('tipo', 1)->count();
 			
 			//Petición de todos los médicos para la calculadora
 			$medicos = User::where('tipoUsuario','Médico')->where('estado',true)->orderBy('apellido')->get();
@@ -63,17 +59,17 @@ class IngresoController extends Controller
       $cola_consulta = Ingreso::where('estado','<>',2)->where('tipo',3)->orderBy('created_at','asc')->get();
 
       //Variables utiles en la vista
-      $estadoOpuesto = ($estado != 2 || $estado == null)?2:0;
+      // $estadoOpuesto = ($estado != 2 || $estado == null)?2:0;
       $index = true;
       $fecha = Carbon::now();
       return view('Ingresos.index.base',compact(
-        'ingresos',
+        // 'ingresos',
         'estado',
-        'activos',
+        // 'activos',
         'pagina',
         'tipo',
         'index',
-        'estadoOpuesto',
+        // 'estadoOpuesto',
         'habitaciones_ingreso',
         'habitaciones_observacion',
         'habitaciones_mediingreso',
@@ -114,37 +110,44 @@ class IngresoController extends Controller
     {
         DB::beginTransaction();
         try {
-          $correlativo = 0;
-          if($request->tipo != 3){
-            $ultimo_registro = Ingreso::where('fecha_ingreso','>=',date('Y').'-1-1')->where('fecha_ingreso','<=',date('Y').'-12-31')->where('tipo','<>',3)->where('tipo','<>',4)->get()->last();
-            if($ultimo_registro == null){
-              $correlativo = 0;
-            }else if($ultimo_registro->expediente == null){
-              $correlativo = 0;
-            }else{
-              $correlativo = $ultimo_registro->expediente;
-            }
-          }
-          $ingresos = new Ingreso;
-          $ingresos->f_paciente = $request->f_paciente;
+					$correlativo = 0;
+					//Asignación del numero de expediente
+					$ultimo_registro = Hospitalizacion::where('fecha_entrada','>=',date('Y').'-1-1')->where('fecha_entrada','<=',date('Y').'-12-31')->get()->last();
+					if($ultimo_registro == null){
+						$correlativo = 0;
+					}else if($ultimo_registro->expediente == null){
+						$correlativo = 0;
+					}else{
+						$correlativo = $ultimo_registro->expediente;
+					}
+					//Creando el registro en hospitalizacion
+					$aux = explode('T',$request->fecha_ingreso);
+					$fecha = $aux[0].' '.$aux[1];
+					
+					$hospitalizacion = new Hospitalizacion;
+					$hospitalizacion->fecha_entrada = $fecha.':00';
+          $hospitalizacion->f_paciente = $request->f_paciente;
           if($request->c_responsable == 1){
-            $ingresos->f_responsable = $request->f_responsable;
+						$hospitalizacion->f_responsable = $request->f_responsable;
           }else{
-            $ingresos->f_responsable = $request->f_paciente;
+						$hospitalizacion->f_responsable = $request->f_paciente;
           }
+					$hospitalizacion->f_medico = $request->f_medico;
+					$hospitalizacion->expediente = $correlativo+1;
+					$hospitalizacion->save();
+					
+					//Creando el registro en ingresos
+          $ingresos = new Ingreso;
           if($request->tipo == 2 || $request->tipo == 0 || $request->tipo == 1){
             $ingresos->f_cama = $request->f_cama;
           }
-          $ingresos->f_medico = $request->f_medico;
-          $aux = explode('T',$request->fecha_ingreso);
-          $fecha = $aux[0].' '.$aux[1];
           $ingresos->fecha_ingreso  = $fecha.':00';
-          $ingresos->expediente = $correlativo+1;
           $ingresos->f_recepcion = Auth::user()->id;
 					$ingresos->tipo = $request->tipo;
 					if($request->tipo == 2){
 						$ingresos->estado = 1;
 					}
+					$ingresos->f_hospitalizacion = $hospitalizacion->id;
           $ingresos->save();
 
           if($request->tipo < 3){
@@ -208,10 +211,10 @@ class IngresoController extends Controller
        * 2 - Alta
        */
       /**Extracción de los datos del paciente */
-      $paciente = $ingreso->paciente;
+      $paciente = $ingreso->hospitalizacion->paciente;
       $responsable = null;
       if($ingreso->f_responsable != $ingreso->f_paciente){
-        $responsable = $ingreso->responsable;
+        $responsable = $ingreso->hospitalizacion->responsable;
       }
       /**Calculo de días que ha estado ingresado el paciente */
       $hoy = Carbon::today()->hour(7);
@@ -251,10 +254,10 @@ class IngresoController extends Controller
         )->where('estado',true)->orderBy('apellido')->get();
       $total_especialidad = $especialidades->count();
       /**Calculo de dia efectivo en que fue ingresado el paciente */
-      $dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+			$dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
       $dias_i = $ingreso->fecha_ingreso->hour(7)->minute(0);
       if($ingreso->fecha_ingreso->lt($dia_ingreso)){
-        $dia_ingreso->subDay();
+				$dia_ingreso->subDay();
         $dias_i->subDay();
         $cambio = true;
       }
@@ -274,20 +277,34 @@ class IngresoController extends Controller
 					$horas = $ingreso->fecha_ingreso->diffInHours($ahora);
 				}
         $horas_f = $hoy->diff($ingreso->fecha_ingreso)->format('%dd  %hh : %im');
-        /**Generador automatico de transacciones por uso de la habitación */
-        $habitacion_dia_guardado_count = 0;
+				/**Generador automatico de transacciones por uso de la habitación */
+				/**SEP16: El costo de estar ingresado es llevado por un 'Servicio' especial ya no por las habitaciones
+				 * la lógica de la corrección es la siguiente: El servicio de 'Paquete hospitalario' será añadido diariamente
+				 * la 'Cama' ya no determina el costo que debe pagar el paciente por el servicio, sin embargo si puede añadir un
+				 * costo extra a la hospitalización, el servicio debe ser añadido a diario y puede ser modificado en cualquier 
+				 * momento por un servicio diferente.
+				 */
+				$habitacion_dia_guardado_count = 0;
+				/**SEP16: Contador de días en los que se ha agregado un servicio de tipo paquete hospitalario */
+				$paquete_dia_guardado_count = 0;
         /**Contar cuantos dias se ha guardado el gasto por habitación del paciente */
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
           if($detalle->servicio->categoria->nombre == "Cama"){
             $habitacion_dia_guardado_count++;
-          }
+					}
+					/**SEP16: aunmenta el contador para indicar los días que hace falta añadir el servicio por paquete hospitalario */
+					if($detalle->servicio->categoria->nombre == "Paquetes hospitalarios"){
+						$paquete_dia_guardado_count++;
+					}
         }
         /**Diferencia entre los días guardados hasta el día de hoy */
-        $habitacion_dia_no_guardado_count = $dias - $habitacion_dia_guardado_count;
+				$habitacion_dia_no_guardado_count = $dias - $habitacion_dia_guardado_count;
+				/**SEP16: Diferencia para determinar cuantos días hacen falta añadir el paquete hospitalario */
+				$paquete_dia_no_guardado_count = $dias - $paquete_dia_guardado_count;
         /**Si la diferencia no es 0 recorrer en un for desde el dia de ingreso hasta la fecha de hoy para revisar  el día que no se ha registrado y crearlo*/
         if($habitacion_dia_no_guardado_count > 0){
+					$fecha_aux = new Carbon($dia_ingreso->format('Y-m-d'));
           for($i=0; $i<$dias; $i++){
-            $fecha_aux = $dia_ingreso->addDays($i);
             /**Comprobar si existe el detalle este día */
             $exist_detalle = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('created_at',$fecha_aux)->count();
 						/**Si no existe se crea la transaccion */
@@ -308,7 +325,23 @@ class IngresoController extends Controller
             //   }
             // }
           }
-        }
+				}
+			
+				/**SEP16: Si el valor de la diferencia no es cero entonces que guarde en un arreglo las fechas para que el usuario se encargue de añadir el valor de forma manual al estado financiero del paciente */
+				$lista_paquetes = [];
+				if($paquete_dia_no_guardado_count > 0){
+					for($i=0,$ii=0;$i<$dias; $i++){
+						$fecha_aux = new Carbon($dia_ingreso->format('Y-m-d'));
+						$fecha_aux->addDays($i);
+						/**Determinar si existe el detalle de la transacción correspondiente al paquete hospitalario */
+						$existe_detalle_paquete = DetalleTransacion::join('servicios','detalle_transacions.f_servicio','servicios.id')->join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('categoria_servicios.nombre','Paquetes hospitalarios')->where('detalle_transacions.f_transaccion',$ingreso->transaccion->id)->whereDate('detalle_transacions.created_at',$fecha_aux)->count();
+						/**Si nos devuelve cero significa que no se ha añadido el servicio correspondiente al paquete hospitalario en dicha fecha */
+						if($existe_detalle_paquete == 0){
+							$lista_paquetes[$ii]["fecha"] = $fecha_aux;
+							$ii++;
+						}
+					}
+				}
       }else if($ingreso->estado == 2){
         $dia_alta = $ingreso->fecha_alta->hour(7)->minute(0);
         $dias_a = $ingreso->fecha_alta->hour(7)->minute(0);
@@ -328,7 +361,7 @@ class IngresoController extends Controller
       if($ingreso->tipo == 3){
         $ultima24 = $ingreso->fecha_ingreso->subDays(1);
         $ultima48 = $hoy->addDays(1);
-      }
+			}
       /**Determinar si el estado del ingreso es mayor que 1, en ese caso sacaremos el listado de productos aplicados al paciente */
       if(($ingreso->estado > 0 && $ingreso->tipo < 3) || $ingreso->tipo == 3){
         $detalle_p = []; //Detalle producto
@@ -493,9 +526,11 @@ class IngresoController extends Controller
       $historial = null;
       $lista_medicamentos = null;
       if(Auth::user()->tipoUsuario == "Médico"){
-        $historial = $ingreso->paciente->ingreso;
+        $historial = $ingreso->hospitalizacion->paciente->ingreso;
         $lista_medicamentos = Producto::orderBy('nombre','asc')->get();
 			}
+			/**Listado de paquetes hospitalarios para la parte de los paquetes */
+			$paquetes_hospitalarios = Servicio::join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('categoria_servicios.nombre','Paquetes hospitalarios')->orderBy('servicios.nombre')->select('servicios.*')->get();
       return view('Ingresos.dashboard.show',compact(
         'ingreso',
         'paciente',
@@ -543,7 +578,9 @@ class IngresoController extends Controller
         'dias_a',
         'dias_x',
         'historial',
-        'lista_medicamentos'
+				'lista_medicamentos',
+				'lista_paquetes',
+				'paquetes_hospitalarios'
       ));
     }
 
@@ -681,9 +718,9 @@ class IngresoController extends Controller
           ->whereNotExists(
             function ($query){
               $query->select(DB::raw(1))
-              ->from('ingresos')
-              ->where('ingresos.estado','<>',2)
-              ->whereRaw('ingresos.f_paciente = pacientes.id');
+              ->from('hospitalizacions')
+              ->where('hospitalizacions.estado','<>',0)
+              ->whereRaw('hospitalizacions.f_paciente = pacientes.id');
             }
             )->where(
               function ($query) use ($nombre){
@@ -797,7 +834,7 @@ class IngresoController extends Controller
       $ultima48 = Carbon::parse($fecha_x)->hour(7)->addDay();
 
       $fecha = $fecha->formatLocalized('%d de %B de %Y');
-      $medico = (($ingreso->medico->sexo)?'Dr. ':'Dra. ').$ingreso->medico->nombre.' '.$ingreso->medico->apellido;
+      $medico = (($ingreso->hospitalizacion->medico->sexo)?'Dr. ':'Dra. ').$ingreso->hospitalizacion->medico->nombre.' '.$ingreso->hospitalizacion->medico->apellido;
 
       //Total gastos
       $honorarios = 0;
@@ -1099,9 +1136,9 @@ class IngresoController extends Controller
         $ultima48->subDay();
       }
     }
-    $lista = $ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+		$lista = DetalleTransacion::where('f_producto',null)->whereDate('created_at',$fecha->format('Y-m-d'))->get();
     $servicios = [];
-    $indice = 0;
+		$indice = 0;
     foreach($lista as $detalle){
       if($detalle->servicio->categoria->nombre != "Honorarios" && $detalle->servicio->categoria->nombre != "Cama" && $detalle->servicio->categoria->nombre != "Rayos X" && $detalle->servicio->categoria->nombre != "Laboratorio Clínico" && $detalle->servicio->categoria->nombre != "Ultrasonografía" && $detalle->servicio->categoria->nombre != "TAC"){
         $servicios[$indice]['id'] = $detalle->id;
@@ -1142,7 +1179,7 @@ class IngresoController extends Controller
         $ultima48->subDay();
       }
     }
-    $lista = $ingreso->transaccion->detalleTransaccion->where('f_servicio',null)->where('created_at','>',$fecha)->where('created_at','<',$fecha24);
+		$lista = DetalleTransacion::where('f_servicio', null)->whereDate('created_at', $fecha->format('Y-m-d'))->get();
     $productos = [];
     $indice = 0;
     foreach($lista as $detalle){
@@ -1390,7 +1427,8 @@ class IngresoController extends Controller
     $consultas = [];
     foreach($detalles as $k => $detalle){
       $consultas[$k]['fecha'] = $detalle->created_at->format('d / m / Y');
-      $consultas[$k]['hora'] = $detalle->created_at->format('h:i:s a');
+			$consultas[$k]['hora'] = $detalle->created_at->format('h:i:s a');
+			$consultas[$k]['precio'] = $detalle->precio;
       $consultas[$k]['id'] = $detalle->id;
       if($ingreso->estado == "1"){
         $ahora = Carbon::now();
@@ -1432,5 +1470,29 @@ class IngresoController extends Controller
 	public function v_habitacion (Request $request){
 		$servicio = Servicio::where('f_cama',$request->id)->first();
 		return $servicio->precio;
+	}
+
+	//SEP16:Nuevas funciones para trabajar con ingresos
+	public function guardar_paquete(Request $request){
+		$id_servicio = $request->id_servicio;
+		$id_transaccion = $request->id_transaccion;
+		$precio = $request->precio;
+		$fecha = $request->fecha;
+		
+		DB::beginTransaction();
+		try{
+			$detalle = new DetalleTransacion;
+			$detalle->f_servicio = $id_servicio;
+      $detalle->f_transaccion = $id_transaccion;
+      $detalle->cantidad = 1;
+      $detalle->precio = $precio;
+      $detalle->created_at = $fecha;
+      $detalle->save();
+			DB::commit();
+			return 1;
+		}catch(Exception $e){
+			DB::rollback();
+			return 0;
+		}
 	}
 }

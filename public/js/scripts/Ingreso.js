@@ -488,7 +488,8 @@ $(document).on('ready', function () {
         fecha_ingreso: $("#fecha_ingreso").val(),
         tipo: $("#tipo").val(),
         f_cama: $("#cama").val()
-      }, success: function (r) {
+			}, success: function (r) {
+				console.log(r);
         if (r == 1) {
           localStorage.setItem('msg', 'yes');
           location.reload();
@@ -731,8 +732,7 @@ var aux;
 function accion24(tipo, id, objeto = null) {
   //0: Eliminar, 1: Editar y 2: Cambiar estado
   if (tipo == 1) {
-    var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad">';
-
+    var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad" value="'+objeto+'">';
     swal({
       title: "Editar",
       html: html_,

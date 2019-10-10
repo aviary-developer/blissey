@@ -32,7 +32,7 @@
 						@endphp
 						@foreach ($servicios as $servicio)
 							<tr>
-								<td>{{ $correlativo + $pagina }}</td>
+								<td>{{ $correlativo}}</td>
 								<td>
 									{{ $servicio->nombre }}
 								</td>

@@ -34,13 +34,13 @@
                   <td>
                     <center>
                       <span class="badge border border-dark text-dark col-12">
-                        {{$ingreso->expediente.'-'.$ingreso->fecha_ingreso->format('Y')}}
+                        {{$ingreso->hospitalizacion->expediente.'-'.$ingreso->fecha_ingreso->format('Y')}}
                       </span>
                     </center>
                   </td>
                   <td>
-                    <a href={{asset('/pacientes/'.$ingreso->f_paciente)}}>
-                        {{$ingreso->paciente->apellido.', '.$ingreso->paciente->nombre}}
+                    <a href={{asset('/pacientes/'.$ingreso->hospitalizacion->f_paciente)}}>
+                        {{$ingreso->hospitalizacion->paciente->apellido.', '.$ingreso->hospitalizacion->paciente->nombre}}
                       </a>
                   </td>
                   <td>
@@ -55,7 +55,6 @@
                         $dia_ingreso->subDay();
                       }
                       $dias = $dia_ingreso->diffInDays($hoy);
-                      $dias++;
                     @endphp
                     <span class="badge border border-primary text-primary col-7">
                       {{($dias).(($dias > 1)?' días':' día')}}

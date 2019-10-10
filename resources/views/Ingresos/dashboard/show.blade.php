@@ -31,7 +31,7 @@
           <div class="col-sm-7">
             <div class="row">
               <span class="font-weight-bold text-monospace">
-                {{ $ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y') }}
+                {{ $ingreso->hospitalizacion->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y') }}
               </span>
             </div>
             <div class="row">

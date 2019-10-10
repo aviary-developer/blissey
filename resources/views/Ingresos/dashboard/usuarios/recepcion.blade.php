@@ -27,7 +27,7 @@
     {{-- Paneles izquierdos --}}
     <div class="col-sm-8">
       {{-- Panel principal --}}
-      <div class="x_panel border border-success rounded">
+      <div class="x_panel border border-success rounded" style="height: 424px">
         @include('Ingresos.dashboard.partes.financiero_r')
       </div>
     </div>

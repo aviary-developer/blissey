@@ -58,13 +58,13 @@ class Handler extends ExceptionHandler
               break;
           }
       }
-        if ($exception instanceof \Illuminate\Database\QueryException) {
-            // $mesaje=$exception->getMessage();
-            return response()->view('errors.error');
-        }
-        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
-            return redirect('login');
-        }
+        // if ($exception instanceof \Illuminate\Database\QueryException) {
+        //     // $mesaje=$exception->getMessage();
+        //     return response()->view('errors.error');
+        // }
+        // if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+        //     return redirect('login');
+        // }
         return parent::render($request, $exception);
     }
 
