@@ -26,7 +26,7 @@
               </a>
             <td>{{$medico['nombre']}}</td>
             <td>
-              <span class="badge badge-info badge-pill"><i>
+              <span class="badge badge-info badge-pill"><i id="med_frec">
                 {{'x'.$medico['frec']}}</td>
               </i></span>
           </tr>

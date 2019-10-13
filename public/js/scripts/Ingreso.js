@@ -815,7 +815,45 @@ function accion24(tipo, id, objeto = null) {
         }
       }
     });
-  } else {
+	} else if (tipo == 5) {
+		var html_ = '<p>Ingrese el nuevo precio correcto</p><input class="swal2-input" type="number" step="0.01" min="0" id="edit_precio" value="' + objeto + '">';
+		swal({
+			title: "Editar",
+			html: html_,
+			showCancelButton: true,
+			confirmButtonText: '¡Guardar!',
+			cancelButtonText: 'Cancelar',
+			confirmButtonClass: 'btn btn-primary',
+			cancelButtonClass: 'btn btn-light'
+		}).then((result) => {
+			if (result.value) {
+				var precio = $("#edit_precio").val();
+				$.ajax({
+					url: $('#guardarruta').val() + "/editarx24",
+					type: "post",
+					data: {
+						id: id,
+						precio: precio
+					},
+					success: function (res) {
+						if (res) {
+							localStorage.setItem('msg', 'yes');
+							location.reload();
+						} else {
+							swal({
+								type: 'error',
+								toast: true,
+								title: '¡Algo salio mal!',
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 4000
+							});
+						}
+					}
+				});
+			}
+		});
+	 }else {
     swal({
       title: 'Eliminar registro',
       text: '¿Está seguro? ¡El registro no podrá ser recuperado!',

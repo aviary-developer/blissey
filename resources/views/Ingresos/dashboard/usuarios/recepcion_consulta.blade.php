@@ -24,7 +24,7 @@
         <div class="flex-row">
           <div style="height: 106px">
             <center style="margin-top: 20px">
-              <input type="hidden" id="precio_consulta" value={{floatval($ingreso->medico->servicio->precio)}}>
+              <input type="hidden" id="precio_consulta" value={{floatval($ingreso->hospitalizacion->medico->servicio->precio)}}>
               <button type="button" class="btn-lg btn btn-success" id="fin_consulta">
                 <i class="fa fa-arrow-right"></i> Finalizar consulta
               </button>

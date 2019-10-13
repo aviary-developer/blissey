@@ -315,7 +315,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/abonar','IngresoController@abonar');
   Route::post('/servicio_medicos','IngresoController@servicio_medicos');
   Route::post('/cambio_ingreso','IngresoController@cambio_ingreso');
-  Route::post('/editar24','IngresoController@editar24');
+	Route::post('/editar24','IngresoController@editar24');
+	Route::post('/editarx24', 'IngresoController@editarx24');
   Route::post('/eliminar24','IngresoController@eliminar24');
   Route::post('/cambiar_estado','IngresoController@cambiar_estado');
   Route::get('/lista_producto','IngresoController@lista_producto');
@@ -424,6 +425,7 @@ Route::get('/graficar_examenes','SolicitudExamenController@graficar_examenes');
 //Rutas para los paquetes hospitalarios
 Route::get('servicio/precio_paquete','ServicioController@precio_paquete');
 Route::post('servicio/guardar_paquete','IngresoController@guardar_paquete');
+Route::post('servicio/guardar_honorario', 'IngresoController@guardar_honorario');
 
 //Ruta de validación 
 Route::get('/validate',function(Illuminate\Http\Request $request){

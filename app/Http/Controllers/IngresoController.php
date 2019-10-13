@@ -212,7 +212,9 @@ class IngresoController extends Controller
        */
       /**Extracción de los datos del paciente */
       $paciente = $ingreso->hospitalizacion->paciente;
-      $responsable = null;
+			$responsable = null;
+			$lista_paquetes = [];
+			$lista_honorarios = [];
       if($ingreso->f_responsable != $ingreso->f_paciente){
         $responsable = $ingreso->hospitalizacion->responsable;
       }
@@ -283,24 +285,30 @@ class IngresoController extends Controller
 				 * la 'Cama' ya no determina el costo que debe pagar el paciente por el servicio, sin embargo si puede añadir un
 				 * costo extra a la hospitalización, el servicio debe ser añadido a diario y puede ser modificado en cualquier 
 				 * momento por un servicio diferente.
+				 * 
+				 * Se añade además un segmento donde muestra una notificación sobre los honorarios médicos pendientes. 
+				 * Para ello busca en la transacción aquellos detalles en los que se haya aplicado el serivicio hospitalario
+				 * brindado por el médico que probó su ingreso.
 				 */
 				$habitacion_dia_guardado_count = 0;
-				/**SEP16: Contador de días en los que se ha agregado un servicio de tipo paquete hospitalario */
+				/**SEP16: Contador de días en los que se ha agregado un servicio de tipo paquete hospitalario 
+				 * Contador de días en los que se ha agregado el servicio por honorarios médicos
+				*/
 				$paquete_dia_guardado_count = 0;
-        /**Contar cuantos dias se ha guardado el gasto por habitación del paciente */
-        foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-          if($detalle->servicio->categoria->nombre == "Cama"){
-            $habitacion_dia_guardado_count++;
-					}
-					/**SEP16: aunmenta el contador para indicar los días que hace falta añadir el servicio por paquete hospitalario */
-					if($detalle->servicio->categoria->nombre == "Paquetes hospitalarios"){
-						$paquete_dia_guardado_count++;
-					}
-        }
+				$honorario_dia_guardado_count = 0;
+				/**SEP16: Buscar el total de días en los que se ha registrado el honorario del médico que ha aprobado el ingreso
+				 * Se cambio el proceso de obtención de los contadores, en lugar de usar un foreach como en la versión anterior se
+				 * usan consultas directas a la base de datos a través de JOINS
+				 */
+				$habitacion_dia_guardado_count = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('categoria_servicios.nombre', 'Cama')->count();
+				$paquete_dia_guardado_count = DetalleTransacion::join('servicios','detalle_transacions.f_servicio','servicios.id')->join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('categoria_servicios.nombre','Paquetes hospitalarios')->count();
+
+				$honorario_dia_guardado_count = DetalleTransacion::where('f_servicio',$ingreso->hospitalizacion->medico->servicio->id)->count();
         /**Diferencia entre los días guardados hasta el día de hoy */
 				$habitacion_dia_no_guardado_count = $dias - $habitacion_dia_guardado_count;
 				/**SEP16: Diferencia para determinar cuantos días hacen falta añadir el paquete hospitalario */
 				$paquete_dia_no_guardado_count = $dias - $paquete_dia_guardado_count;
+				$honorario_dia_no_guardado_count = $dias - $honorario_dia_guardado_count;
         /**Si la diferencia no es 0 recorrer en un for desde el dia de ingreso hasta la fecha de hoy para revisar  el día que no se ha registrado y crearlo*/
         if($habitacion_dia_no_guardado_count > 0){
 					$fecha_aux = new Carbon($dia_ingreso->format('Y-m-d'));
@@ -328,7 +336,7 @@ class IngresoController extends Controller
 				}
 			
 				/**SEP16: Si el valor de la diferencia no es cero entonces que guarde en un arreglo las fechas para que el usuario se encargue de añadir el valor de forma manual al estado financiero del paciente */
-				$lista_paquetes = [];
+				
 				if($paquete_dia_no_guardado_count > 0){
 					for($i=0,$ii=0;$i<$dias; $i++){
 						$fecha_aux = new Carbon($dia_ingreso->format('Y-m-d'));
@@ -338,6 +346,20 @@ class IngresoController extends Controller
 						/**Si nos devuelve cero significa que no se ha añadido el servicio correspondiente al paquete hospitalario en dicha fecha */
 						if($existe_detalle_paquete == 0){
 							$lista_paquetes[$ii]["fecha"] = $fecha_aux;
+							$ii++;
+						}
+					}
+				}
+				
+				if ($honorario_dia_no_guardado_count > 0) {
+					for ($i = 0, $ii = 0; $i < $dias; $i++) {
+						$fecha_aux = new Carbon($dia_ingreso->format('Y-m-d'));
+						$fecha_aux->addDays($i);
+						/**Determinar si existe el detalle de la transacción correspondiente al honorario médico */
+						$existe_detalle_honorario = DetalleTransacion::where('f_servicio', $ingreso->hospitalizacion->medico->servicio->id)->where('f_transaccion', $ingreso->transaccion->id)->whereDate('created_at', $fecha_aux)->count();
+						/**Si nos devuelve cero significa que no se ha añadido el servicio correspondiente al honorario médico en dicha fecha */
+						if ($existe_detalle_honorario == 0) {
+							$lista_honorarios[$ii]["fecha"] = $fecha_aux;
 							$ii++;
 						}
 					}
@@ -580,7 +602,8 @@ class IngresoController extends Controller
         'historial',
 				'lista_medicamentos',
 				'lista_paquetes',
-				'paquetes_hospitalarios'
+				'paquetes_hospitalarios',
+				'lista_honorarios'
       ));
     }
 
@@ -1039,7 +1062,24 @@ class IngresoController extends Controller
       DB::rollback();
       return 0;
     }
-  }
+	}
+
+	public function editarx24(Request $request)
+	{
+		$id = $request->id;
+		$precio = $request->precio;
+		DB::beginTransaction();
+		try {
+			$detalle = DetalleTransacion::find($id);
+			$detalle->precio = $precio;
+			$detalle->save();
+			DB::commit();
+			return 1;
+		} catch (Exception $e) {
+			DB::rollback();
+			return 0;
+		}
+	}
 
   public function eliminar24 (Request $request){
     $id = $request->id;
@@ -1423,7 +1463,7 @@ class IngresoController extends Controller
     }
     $especialidad = User::especialidad_principal($servicio->medico->id);
     $especialidad = ($especialidad == 0)?"Ninguna":DB::table('especialidads')->where('id',$especialidad)->first(['nombre']);
-    $detalles = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('f_servicio',$id)->get();
+    $detalles = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('f_servicio',$id)->orderBy('created_at')->get();
     $consultas = [];
     foreach($detalles as $k => $detalle){
       $consultas[$k]['fecha'] = $detalle->created_at->format('d / m / Y');
@@ -1491,6 +1531,30 @@ class IngresoController extends Controller
 			DB::commit();
 			return 1;
 		}catch(Exception $e){
+			DB::rollback();
+			return 0;
+		}
+	}
+
+	public function guardar_honorario(Request $request)
+	{
+		$id_servicio = $request->id_servicio;
+		$id_transaccion = $request->id_transaccion;
+		$precio = $request->precio;
+		$fecha = $request->fecha;
+
+		DB::beginTransaction();
+		try {
+			$detalle = new DetalleTransacion;
+			$detalle->f_servicio = $id_servicio;
+			$detalle->f_transaccion = $id_transaccion;
+			$detalle->cantidad = 1;
+			$detalle->precio = $precio;
+			$detalle->created_at = $fecha;
+			$detalle->save();
+			DB::commit();
+			return 1;
+		} catch (Exception $e) {
 			DB::rollback();
 			return 0;
 		}

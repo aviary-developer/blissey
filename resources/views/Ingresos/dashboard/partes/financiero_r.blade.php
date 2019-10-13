@@ -2,13 +2,13 @@
   <div class="col-sm-8">
 		<h5 class="text-success">
 			Notificaciones
-			@if (count($lista_paquetes) != 0)
+			@if ($lista_paquetes != null && $lista_honorarios != null)
 				<span class="badge badge-pill badge-danger font-sm" id="count_notificaciones">
-					{{count($lista_paquetes)}}
+					{{count($lista_paquetes) + count($lista_honorarios)}}
 				</span>
 			@else
 				<span class="badge badge-pill badge-success font-sm" id="count_notificaciones">
-					{{count($lista_paquetes)}}
+					0
 				</span>
 			@endif
 		</h5>
@@ -88,3 +88,4 @@
 @include('Ingresos.dashboard.modales.ver_finanzas')
 @include('Ingresos.dashboard.modales.informe_fin')
 @include('Ingresos.dashboard.modales.paquete');
+@include('Ingresos.dashboard.modales.honorario');

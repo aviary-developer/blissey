@@ -857,9 +857,15 @@ function ver_medico(servicio) {
 					'<td>' + value.hora + '</td>'+
 					'<td>' + "$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) + '</td>';
         if (value.estado == 1) {
-          html += '<td><center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></center></td>';
+					html += '<td><center><div class="btn-group">';
+					html += '<button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(5,' + value.id + ','+value.precio+')"><i class="fa fa-edit"></i></button>';
+					html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button>';
+					html += '</div></center></td>';
         } else {
-          html += '<td><center><button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button></center></td>';
+					html += '<td><center><div class="btn-group">';
+					html += '<button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(5,' + value.id + ','+value.precio+')"><i class="fa fa-edit"></i></button>';
+					html+='<button type="button" class="btn btn-light btn-sm" disabled><i class="fa fa-ban"></i></button>';
+					html += '</div></center></td>';
         }
         html += '</tr>';
         tabla.append(html);

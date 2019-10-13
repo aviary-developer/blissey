@@ -23,7 +23,7 @@
         @foreach ($cola_consulta as $consulta)
           <tr>
             <td>
-              {{$consulta->paciente->nombre.' '.$consulta->paciente->apellido}}
+              {{$consulta->hospitalizacion->paciente->nombre.' '.$consulta->hospitalizacion->paciente->apellido}}
             </td>
             <td>
               <center>

@@ -328,6 +328,10 @@ $(document).on('ready', function () {
 		notificacion_item = $(this).parents('.alert');
 	});
 
+	$("#contenido_noticias").on("click", '#carga_honorario_modal', function (e) {
+		notificacion_item = $(this).parents('.alert');
+	});
+
 	$("#tipo_paquete").on('change', function () { 
 		precio_paquete();
 	});
@@ -369,11 +373,82 @@ $(document).on('ready', function () {
 						$("#contenido_noticias").append(html);
 					}
 					var gasto = parseFloat($("#total_gastos").val());
-					console.log("Gasto antes de sumar el precio " + gasto);
 					gasto += precio;
-					console.log("Gasto con el precio sumado " + gasto);
+					gasto += (gastoprecio * 0.13);
 					var deuda = parseFloat($("#total_deuda").val());
 					deuda += precio;
+					deuda += (precio * 0.13);
+					$("#total_gastos").val(gasto);
+					$("#total_deuda").val(deuda);
+					$("#total_gastos_label").empty().text("$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(gasto));
+					$("#total_deuda_label").empty().text("$ " + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(deuda));
+					swal({
+						type: 'success',
+						toast: true,
+						title: '¡Acción exitosa!',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4000
+					});
+				} else {
+					swal({
+						type: 'error',
+						toast: true,
+						title: '¡Algo salio mal!',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4000
+					});
+				}
+			}
+		});
+	});
+
+	$("#honorario_save").click(function (e) {
+		e.preventDefault();
+		var fecha = moment(notificacion_item.find("#fecha_honorario_noticias").val(), "DD/MM/YYYY");
+		var contador = $("#count_notificaciones").text().trim();
+		var precio = parseFloat($("#precio_honorario").val());
+		$.ajax({
+			type: 'post',
+			url: $('#guardarruta').val() + '/servicio/guardar_honorario',
+			data: {
+				id_servicio: $("#id_honorario").val(),
+				id_transaccion: $("#id_t").val(),
+				precio: precio,
+				fecha: fecha.format('YYYY-MM-DD')
+			},
+			success: function (r) {
+				if (r) {
+					$("#honorario_m").modal("hide");
+					notificacion_item.remove();
+					$("#count_notificaciones").text(--contador);
+					var frec_text = $("#med_frec").text().trim();
+					frec_text = frec_text.replace('x', ' ');
+					var frec = parseInt(frec_text.trim()) + 1;
+					$("#med_frec").text('x'+frec);
+					if (contador == 0) {
+						$("#count_notificaciones").removeClass('badge-danger').addClass('badge-success');
+						var html = '<div class="row">' +
+							'<div class="alert alert-secondary m-1 p-1 w-100">' +
+							'<div class="row">' +
+							'<div class="col-1">' +
+							'<i class="fas fa-check text-success"></i>' +
+							'</div>' +
+							'<div class="col-10">' +
+							'<span>¡No hay notificaciones pendientes!</span>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>';
+						$("#contenido_noticias").append(html);
+					}
+					var gasto = parseFloat($("#total_gastos").val());
+					gasto += precio;
+					gasto += (precio * 0.13);
+					var deuda = parseFloat($("#total_deuda").val());
+					deuda += precio;
+					deuda += (precio * 0.13);
 					$("#total_gastos").val(gasto);
 					$("#total_deuda").val(deuda);
 					$("#total_gastos_label").empty().text("$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(gasto));
@@ -528,5 +603,8 @@ $("#ver_servicios").on('shown.bs.modal', function () {
 	$(document).off('focusin.modal');
 });
 $("#ver_productos").on('shown.bs.modal', function () {
+	$(document).off('focusin.modal');
+});
+$("#ver_medico").on('shown.bs.modal', function () {
 	$(document).off('focusin.modal');
 });
