@@ -15,7 +15,7 @@
         <span>PACIENTE:</span>
       </div>
       <div class="col-xs-10 subrayar">
-        <b>{{' '.$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b>
+        <b>{{' '.$ingreso->hospitalizacion->paciente->nombre.' '.$ingreso->hospitalizacion->paciente->apellido}}</b>
       </div>
     </div>
     <div class="col-xs-3">
@@ -24,7 +24,7 @@
       </div>
       <div class="col-xs-6 subrayar">
         <b>
-          {{' '.$ingreso->paciente->fechaNacimiento->age.' años'}}
+          {{' '.$ingreso->hospitalizacion->paciente->fechaNacimiento->age.' años'}}
         </b>
       </div>
     </div>
@@ -35,8 +35,8 @@
         <span>DIRECCIÓN:</span>
       </div>
       <div class="col-xs-10 subrayar">
-        @if ($ingreso->paciente->direccion != null)
-          <b>{{$ingreso->paciente->direccion}}</b>
+        @if ($ingreso->hospitalizacion->paciente->direccion != null)
+          <b>{{$ingreso->hospitalizacion->paciente->direccion}}</b>
         @else
           <i><b class="red">Falta la dirección</b></i>
         @endif
@@ -47,8 +47,8 @@
         <span>TELÉFONO:</span>
       </div>
       <div class="col-xs-6 subrayar">
-        @if ($ingreso->paciente->telefono != null)  
-          <b>{{' '.$ingreso->paciente->telefono}}</b>
+        @if ($ingreso->hospitalizacion->paciente->telefono != null)  
+          <b>{{' '.$ingreso->hospitalizacion->paciente->telefono}}</b>
         @else
           <i><b class="red">Falta el tel.</b></i>
         @endif
@@ -83,7 +83,7 @@
         </span>
       </div>
       <div class="col-xs-6 subrayar">
-        <b>{{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}</b>
+        <b>{{$ingreso->hospitalizacion->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}</b>
       </div>
     </div>
   </div>
@@ -96,12 +96,12 @@
       </div>
       <div class="col-xs-8  subrayar">
         <b>
-          @if ($ingreso->medico->sexo)
+          @if ($ingreso->hospitalizacion->medico->sexo)
             {{" Dr. "}}
           @else
             {{" Dra. "}}
           @endif
-          {{$ingreso->medico->nombre.' '.$ingreso->medico->apellido}}
+          {{$ingreso->hospitalizacion->medico->nombre.' '.$ingreso->hospitalizacion->medico->apellido}}
         </b>
       </div>
     </div>

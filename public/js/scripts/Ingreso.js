@@ -815,6 +815,36 @@ function accion24(tipo, id, objeto = null) {
         }
       }
     });
+	} else if (tipo == 4) {
+		$.ajax({
+			url: $('#guardarruta').val() + "/eliminarDS",
+			type: "post",
+			data: {
+				id: id
+			},
+			success: function (res) {
+				if (res) {
+					$("#r" + objeto.id).remove();
+					swal({
+						type: 'success',
+						toast: true,
+						title: '¡Acción exitosa!',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4000
+					});
+				} else {
+					swal({
+						type: 'error',
+						toast: true,
+						title: '¡Algo salio mal!',
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4000
+					});
+				}
+			}
+		});
 	} else if (tipo == 5) {
 		var html_ = '<p>Ingrese el nuevo precio correcto</p><input class="swal2-input" type="number" step="0.01" min="0" id="edit_precio" value="' + objeto + '">';
 		swal({

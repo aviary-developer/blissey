@@ -235,7 +235,8 @@ function rayos_fecha() {
           if (value.estado == 0) {
             html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+						html += '<td><center><div class="btn-group"><button type="button" class="btn btn-primary btn-sm disabled" title="Evaluando"><i class="fas fa-cog"></i></button>';
+						html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(4,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           } else {
             html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
@@ -288,7 +289,8 @@ function laboratorio_fecha() {
           if (value.estado == 0) {
             html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+						html += '<td><center><div class="btn-group"><button type="button" class="btn btn-primary btn-sm disabled" title="Evaluando"><i class="fas fa-cog"></i></button>';
+						html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(4,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           } else {
             html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
@@ -339,9 +341,11 @@ function ultra_fecha() {
             ' <b class="">' + value.nombre + '</b>' +
             '</td>';
           if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+						html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span>';
+						html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+						html += '<td><center><div class="btn-group"><button type="button" class="btn btn-primary btn-sm disabled" title="Evaluando"><i class="fas fa-cog"></i></button>';
+						html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(4,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           } else {
             html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
@@ -394,7 +398,8 @@ function tac_fecha() {
           if (value.estado == 0) {
             html += '<td><span class="badge font-sm mb-1 badge-secondary col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
           } else if (value.estado == 1) {
-            html += '<td><span class="badge font-sm mb-1 badge-primary col-sm-10" data-toggle="tooltip" data-placement="top" title="Evaluando"><i class="fa fa-cog"></i></span></td>';
+						html += '<td><center><div class="btn-group"><button type="button" class="btn btn-primary btn-sm disabled" title="Evaluando"><i class="fas fa-cog"></i></button>';
+						html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(4,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           } else {
             html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
           }
@@ -578,14 +583,12 @@ function ultra_rayos(tipo) {
   var rayo = $("#f_rayo").val();
   var ultra = $("#f_ultra").val();
   var tac = $("#f_tac").val();
-  var token = $("#token").val();
   var paciente = $("#id_p").val();
   var transaccion_id = $("#id_t").val();
   var id = $("#id").val();
   if (tipo == 1) {
     $.ajax({
       url: $('#guardarruta').val() + "/solicitudex",
-      headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
         f_paciente: paciente,
@@ -604,7 +607,6 @@ function ultra_rayos(tipo) {
   } else if (tipo == 2) {
     $.ajax({
       url: $('#guardarruta').val() + "/solicitudex",
-      headers: { 'X-CSRF-TOKEN': token },
       type: "POST",
       data: {
         f_paciente: paciente,

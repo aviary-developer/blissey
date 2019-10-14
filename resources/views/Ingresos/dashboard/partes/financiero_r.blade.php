@@ -26,7 +26,7 @@
 <div class="row">
 	<div class="col-8">
 		<div class="row">
-			<div style="height:368px; overflow-x:none; overflow-y:scroll; width:100%">
+			<div style="height:244px; overflow-x:none; overflow-y:scroll; width:100%">
 				@include('Ingresos.dashboard.partes.noticias_r')
 			</div>
 		</div>

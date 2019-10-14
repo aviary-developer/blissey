@@ -317,7 +317,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/cambio_ingreso','IngresoController@cambio_ingreso');
 	Route::post('/editar24','IngresoController@editar24');
 	Route::post('/editarx24', 'IngresoController@editarx24');
-  Route::post('/eliminar24','IngresoController@eliminar24');
+	Route::post('/eliminar24','IngresoController@eliminar24');
+	Route::post('/eliminarDS', 'IngresoController@eliminarDS');
   Route::post('/cambiar_estado','IngresoController@cambiar_estado');
   Route::get('/lista_producto','IngresoController@lista_producto');
   Route::get('/lista_servicio','IngresoController@lista_servicio');

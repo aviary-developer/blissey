@@ -14,6 +14,7 @@ use App\Rayosx;
 use App\Cama;
 use App\Tac;
 use App\ultrasonografia;
+use App\SolicitudExamen;
 use App\Abono;
 use App\Hospitalizacion;
 use App\Especialidad;
@@ -300,16 +301,16 @@ class IngresoController extends Controller
 				 * Se cambio el proceso de obtención de los contadores, en lugar de usar un foreach como en la versión anterior se
 				 * usan consultas directas a la base de datos a través de JOINS
 				 */
-				$habitacion_dia_guardado_count = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('categoria_servicios.nombre', 'Cama')->count();
-				$paquete_dia_guardado_count = DetalleTransacion::join('servicios','detalle_transacions.f_servicio','servicios.id')->join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('categoria_servicios.nombre','Paquetes hospitalarios')->count();
+				$habitacion_dia_guardado_count = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('categoria_servicios.nombre', 'Cama')->where('detalle_transacions.f_transaccion',$ingreso->transaccion->id)->count();
+				$paquete_dia_guardado_count = DetalleTransacion::join('servicios','detalle_transacions.f_servicio','servicios.id')->join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('categoria_servicios.nombre','Paquetes hospitalarios')->where('detalle_transacions.f_transaccion',$ingreso->transaccion->id)->count();
 
-				$honorario_dia_guardado_count = DetalleTransacion::where('f_servicio',$ingreso->hospitalizacion->medico->servicio->id)->count();
+				$honorario_dia_guardado_count = DetalleTransacion::where('f_servicio',$ingreso->hospitalizacion->medico->servicio->id)->where('f_transaccion',$ingreso->transaccion->id)->count();
         /**Diferencia entre los días guardados hasta el día de hoy */
 				$habitacion_dia_no_guardado_count = $dias - $habitacion_dia_guardado_count;
 				/**SEP16: Diferencia para determinar cuantos días hacen falta añadir el paquete hospitalario */
 				$paquete_dia_no_guardado_count = $dias - $paquete_dia_guardado_count;
 				$honorario_dia_no_guardado_count = $dias - $honorario_dia_guardado_count;
-        /**Si la diferencia no es 0 recorrer en un for desde el dia de ingreso hasta la fecha de hoy para revisar  el día que no se ha registrado y crearlo*/
+				/**Si la diferencia no es 0 recorrer en un for desde el dia de ingreso hasta la fecha de hoy para revisar  el día que no se ha registrado y crearlo*/
         if($habitacion_dia_no_guardado_count > 0){
 					$fecha_aux = new Carbon($dia_ingreso->format('Y-m-d'));
           for($i=0; $i<$dias; $i++){
@@ -1552,6 +1553,22 @@ class IngresoController extends Controller
 			$detalle->precio = $precio;
 			$detalle->created_at = $fecha;
 			$detalle->save();
+			DB::commit();
+			return 1;
+		} catch (Exception $e) {
+			DB::rollback();
+			return 0;
+		}
+	}
+
+	public function eliminarDS (Request $request){
+		$id = $request->id;
+		DB::beginTransaction();
+		try {
+			$solicitud = SolicitudExamen::find($id);
+			$detalle = DetalleTransacion::where('f_transaccion',$solicitud->f_transaccion)->where('created_at',$solicitud->created_at)->first();
+			$solicitud->delete();
+			$detalle->delete();
 			DB::commit();
 			return 1;
 		} catch (Exception $e) {

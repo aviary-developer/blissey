@@ -121,5 +121,5 @@
     <input type="hidden" id="id_t" value={{$ingreso->transaccion->id}}>
   @endif
   {{-- Id del paciente --}}
-  <input type="hidden" id="id_p" value={{$ingreso->f_paciente}}>
+  <input type="hidden" id="id_p" value={{$ingreso->hospitalizacion->f_paciente}}>
 @endsection

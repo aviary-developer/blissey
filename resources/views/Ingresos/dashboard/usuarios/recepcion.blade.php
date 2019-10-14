@@ -27,15 +27,12 @@
     {{-- Paneles izquierdos --}}
     <div class="col-sm-8">
       {{-- Panel principal --}}
-      <div class="x_panel border border-success rounded" style="height: 424px">
+      <div class="x_panel border border-success rounded" style="height: 300px">
         @include('Ingresos.dashboard.partes.financiero_r')
       </div>
     </div>
     <div class="col-sm-4">
-      <div class="x_panel border border-danger rounded">
-        @include('Ingresos.dashboard.partes.signos_r')
-      </div>
-      <div class="x_panel border border-primary rounded">
+      <div class="x_panel border border-primary rounded" style="height: 300px">
         @include('Ingresos.dashboard.partes.producto_r')
       </div>
     </div>
