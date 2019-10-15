@@ -9,6 +9,8 @@ use App\DetalleRayox;
 use App\DetalleTac;
 use App\ultrasonografia;
 use App\Rayosx;
+use App\CategoriaServicio;
+use App\Servicio;
 use App\DetalleResultado;
 use App\Resultado;
 use App\ExamenSeccionParametro;
@@ -95,8 +97,10 @@ class SolicitudExamenController extends Controller
       $ultras = ultrasonografia::where('estado',true)->orderBy('nombre')->get();
       return view('SolicitudUltras.create',compact('ultras'));
     } else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
+      $categoria= CategoriaServicio::where('nombre','Laboratorio Clínico')->first();
+      $servicios=Servicio::where('f_categoria',$categoria->id)->get();
       $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-      return view('SolicitudExamenes.create',compact('examenes'));
+      return view('SolicitudExamenes.create',compact('examenes','servicios'));
     }
   }
 

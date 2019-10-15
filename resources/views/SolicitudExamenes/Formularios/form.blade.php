@@ -5,7 +5,7 @@
 </div>
 <div class="x_panel">
   <div class="flex-row">
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
     <input type="hidden" id="seleccion">
     <div class="form-group col-sm-6">
       <label class="" for="n_paciente">Paciente *</label>
@@ -35,6 +35,13 @@
       </div>
     </div>
     <input type="hidden" name="f_paciente" id="f_paciente">
+    <div class="form-group col-sm-4">
+        <label class="" for="n_paciente">Total</label>
+        <div class="input-group mb-2 mr-sm-2 ">
+            <div class="card text-white bg-success mb-3">
+                <strong><span style="font-size: x-large">$ </span><span style="font-size: x-large" id="totalPrecio">0</span></strong>
+        </div>
+    </div>
   </div>
 </div>
 
@@ -74,8 +81,12 @@ var solicitudes=0;
     document.getElementById('seleccion').value = e;
   }
   async function agregarExamenEnSolicitud(boton){
+    var totalPrecio=parseFloat($("#totalPrecio").text());
+    var precioExamen=parseFloat(boton.value);
         if (boton.className==="btn col-12 btn-sm btn-defualt") {
           solicitudes=solicitudes+1;
+          var total=(totalPrecio+precioExamen);
+          $("#totalPrecio").text(total.toFixed(2));
           $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
           swal({
             type: 'success',
@@ -87,6 +98,8 @@ var solicitudes=0;
           });
         } else if(boton.className==="btn col-12 btn-sm btn-success") {
           solicitudes=solicitudes-1;
+          totalPrecio=totalPrecio-precioExamen;
+          $("#totalPrecio").text(totalPrecio.toFixed(2));
           swal({
             type: 'warning',
             html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
