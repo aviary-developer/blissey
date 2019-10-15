@@ -104,6 +104,7 @@ class TransaccionController extends Controller
             'f_transaccion'=>$transaccion->id,
             'f_producto'=>$request->f_producto[$i],
             'cantidad'=>$cantidad[$i],
+            'f_usuario'=>Auth::user()->id,
           ]);
         }
       }
@@ -127,6 +128,7 @@ class TransaccionController extends Controller
               'f_producto'=>$f_producto[$i],
               'cantidad'=>$cantidad[$i],
               'precio'=>$precio[$i],
+              'f_usuario'=>Auth::user()->id,
             ]);
             CambioProducto::actualizarCambio($f_producto[$i]);
         }else{
@@ -135,6 +137,7 @@ class TransaccionController extends Controller
             'f_servicio'=>$f_producto[$i],
             'cantidad'=>$cantidad[$i],
             'precio'=>$precio[$i],
+            'f_usuario'=>Auth::user()->id,
           ]);
         }
         }
@@ -197,6 +200,7 @@ class TransaccionController extends Controller
         $transaccion->descuento=$request->descuentog;
         $transaccion->tipo=1;
         $transaccion->iva=$request->ivaincluido;
+        $transaccion->f_usuario=Auth::user()->id;
         $transaccion->save();
 
         if($request->estado==null){
@@ -220,6 +224,7 @@ class TransaccionController extends Controller
             $detalle=DetalleTransacion::findOrFail($request->estado[$i]);
           }else{
             $detalle= new DetalleTransacion;
+            $detalle->f_usuario=Auth::user()->id;
           }
           $detalle->descuento = $request->descuento[$i];
           $detalle->cantidad = $request->cantidad[$i];
