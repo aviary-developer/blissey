@@ -796,6 +796,7 @@ class IngresoController extends Controller
         $detalle->f_transaccion = $request->transaccion;
         $detalle->cantidad = $request->cantidad;
         $detalle->precio = $request->precio;
+        $detalle->f_usuario=Auth::user()->id;
         if(Auth::user()->tipoUsuario == 'Enfermería'){
           $detalle->estado = false;
         }
@@ -1010,6 +1011,7 @@ class IngresoController extends Controller
           $detalle->f_transaccion = $request->f_transaccion;
           $detalle->precio = $servicio->precio + $servicio->retencion;
           $detalle->f_servicio = $servicio->id;
+          $detalle->f_usuario=Auth::user()->id;
           $detalle->save();
         }
         DB::commit();
@@ -1528,6 +1530,7 @@ class IngresoController extends Controller
       $detalle->cantidad = 1;
       $detalle->precio = $precio;
       $detalle->created_at = $fecha;
+      $detalle->f_usuario=Auth::user()->id;
       $detalle->save();
 			DB::commit();
 			return 1;

@@ -149,6 +149,7 @@ class SolicitudExamenController extends Controller
             $detalle->precio = $solicitud->tac->servicio->precio;
             $detalle->cantidad = 1;
             $detalle->f_transaccion = $transaccion_id;
+            $detalle->f_usuario=Auth::user()->id;
             $detalle->save();
 
             DB::commit();
@@ -201,6 +202,7 @@ class SolicitudExamenController extends Controller
             $detalle->precio = $solicitud->rayox->servicio->precio;
             $detalle->cantidad = 1;
             $detalle->f_transaccion = $transaccion_id;
+            $detalle->f_usuario=Auth::user()->id;
             $detalle->save();
 
             DB::commit();
@@ -253,6 +255,7 @@ class SolicitudExamenController extends Controller
             $detalle->precio = $solicitud->ultrasonografia->servicio->precio;
             $detalle->cantidad = 1;
             $detalle->f_transaccion = $transaccion_id;
+            $detalle->f_usuario=Auth::user()->id;
             $detalle->save();
 
             DB::commit();
@@ -327,6 +330,7 @@ class SolicitudExamenController extends Controller
           $detalle->precio = $solicitud->examen->servicio->precio;
           $detalle->cantidad = 1;
           $detalle->f_transaccion = $transaccion_id;
+          $detalle->f_usuario=Auth::user()->id;
           $detalle->save();
 
           DB::commit();
