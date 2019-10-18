@@ -85,7 +85,7 @@
 				<div class="x_panel m_panel" style="height:295px; width: 100%">
 					<div class="flex-row">
 						<center>
-							<h5>Parametros agragados</h5>
+							<h5>Parametros agregados</h5>
 						</center>
 					</div>
 					<div style="overflow-x:hidden; overflow-y:scroll; height:225px; width:100%">

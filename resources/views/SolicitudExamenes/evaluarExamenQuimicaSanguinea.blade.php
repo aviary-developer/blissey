@@ -1,6 +1,6 @@
 @extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
+  {!!Form::open(['id'=>'guardarResultadosExamenQS','class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
     $quimicaSanguinea=true;
@@ -84,15 +84,18 @@
             @foreach ($esprQuimicaSanguinea as $esp)
                   <tr>
                     <td>{{$contadorParametros}}</td>
-                    <td>{{$esp->nombreParametro($esp->f_parametro)}}</th>
+                    <td>{{$esp->nombreParametro($esp->f_parametro)}}
+                        <input type="hidden" name="nombresParametros[]" value="{{$esp->nombreParametro($esp->f_parametro)}}"></th>
                     <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
                     @if($esp->parametro->valorMinimo!=null)
                       <td>
                         <span class="badge border border-primary text-primary col-12">
                           @if ($solicitud->paciente->sexo==0)
                             {{number_format($esp->parametro->valorMinimoFemenino, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimoFemenino}}">
                           @else
                             {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimo}}">
                           @endif
                         </span>
                       </td>
@@ -100,17 +103,21 @@
                         <span class="badge border border-danger text-danger col-12">
                           @if ($solicitud->paciente->sexo==0)
                             {{number_format($esp->parametro->valorMaximoFemenino, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximoFemenino}}">
                           @else
                             {{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximo}}">
                           @endif
                         </span>
                       </td>
                     @else
                       <td>
                         <span class="badge border border-secondary text-secondary">Ninguno</span>
+                        <input type="hidden" name="valoresMinimos[]" value="No">
                       </td>
                       <td>
                         <span class="badge border border-secondary text-secondary">Ninguno</span>
+                        <input type="hidden" name="valoresMaximos[]" value="No">
                       </td>
                     @endif
                     <td>
@@ -182,7 +189,7 @@
 
     <div class="x_panel">
       <center>
-        {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
+        {!! Form::button('Guardar',['id'=>'guardarLaEvaluacionQS','class'=>'btn btn-primary btn-sm']) !!}
         <button type="reset" name="button" class="btn  btn-light btn-sm">Limpiar</button>
         <a href={!! asset('/solicitudex') !!} class="btn btn-light btn-sm">Cancelar</a>
       </center>
@@ -212,4 +219,52 @@
   }
   document.getElementById('imagenExamen').addEventListener('change', imagenExamenFuncion, false);
 </script>
+<script>
+    $("#guardarLaEvaluacionQS").on("click", function (e) {
+      var parametros=[];
+      var resultados=[];
+      var valoresMinimos=[];
+      var valoresMaximos=[];
+      $("input[name='nombresParametros[]']").each(function( key, value ) {
+      parametros[key]=$(value).val();
+      });
+      $("input[name='resultados[]']").each(function( key, value ) {
+      resultados[key]=$(value).val();
+      });
+      $("input[name='valoresMinimos[]']").each(function( key, value ) {
+      valoresMinimos[key]=$(value).val();
+      });
+      $("input[name='valoresMaximos[]']").each(function( key, value ) {
+      valoresMaximos[key]=$(value).val();
+      });
+      var i;
+      var html="<hr>"
+    for (i = 0; i < parametros.length; i++) {
+      //console.log('Parametro: '+parametros[i]+' Mínimo: '+valoresMinimos[i]+' Resultado: '+resultados[i]+' Máximo: '+valoresMaximos[i]);
+      if(valoresMinimos[i]!='No'){
+      if(resultados[i]<valoresMinimos[i]){
+        html=html+"<br><br>El parametro "+(i+1)+" "+parametros[i]+" con resultado "+resultados[i]+" está por debajo del valor normal mínimo "+valoresMinimos[i];
+      }
+      if(resultados[i]>valoresMaximos[i]){
+        html=html+"<br><br>El parametro "+(i+1)+" "+parametros[i]+" con resultado "+resultados[i]+" está por encima del valor normal máximo "+valoresMaximos[i];
+      }
+    }
+    }
+    html=html+"<hr><h4 class='red'>¡Importante!<h4>"+
+        '<span>¿Está seguro que desea guardar?<br><small>Verifique los resultados</small></span>';
+      swal({
+          title: 'Valores fuera de rangos normales',
+          html: html,
+          showCancelButton: true,
+          confirmButtonText: 'Si, ¡Guardar!',
+          cancelButtonText: 'No, ¡Seguir trabajando!',
+          confirmButtonClass: 'btn btn-primary',
+          cancelButtonClass: 'btn btn-light'
+        }).then((result) => {
+          if (result.value) {
+            $("#guardarResultadosExamenQS").submit();
+          }
+        });
+    });
+    </script>
 @endsection

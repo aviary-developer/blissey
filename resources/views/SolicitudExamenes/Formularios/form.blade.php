@@ -39,7 +39,7 @@
         <label class="" for="n_paciente">Total</label>
         <div class="input-group mb-2 mr-sm-2 ">
             <div class="card text-white bg-success mb-3">
-                <strong><span style="font-size: x-large">$ </span><span style="font-size: x-large" id="totalPrecio">0</span></strong>
+                <strong><span style="font-size: x-large">$ </span><span style="font-size: x-large" id="totalPrecio">0.00</span></strong>
         </div>
     </div>
   </div>

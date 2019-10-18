@@ -533,6 +533,7 @@ class SolicitudExamenController extends Controller
 }
   public function guardarResultadosExamen(Request $request)
   {
+    dd("oLA k aSe?");
     if (Auth::user()->tipoUsuario == "TAC") {
       $idSolicitud=$request->solicitud;
       $observacion=$request->observacion;
