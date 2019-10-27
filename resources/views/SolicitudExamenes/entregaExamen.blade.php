@@ -33,7 +33,7 @@
 
 				<div class="col-xs-6">
 					<center>
-						<table class="table-simple">
+						<table  class="table-simple">
 							<div class="x_title">
 								<span><big>{{$espr->first()->nombreSeccion($variable)}}</big></span>
 								<div class="clearfix"></div>

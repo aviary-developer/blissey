@@ -245,10 +245,10 @@ for (i = 0; i < parametros.length; i++) {
   //console.log('Parametro: '+parametros[i]+' Mínimo: '+valoresMinimos[i]+' Resultado: '+resultados[i]+' Máximo: '+valoresMaximos[i]);
   if(valoresMinimos[i]!='No'){
   if(resultados[i]<valoresMinimos[i]){
-    html=html+"<br><br>El parametro "+(i+1)+" "+parametros[i]+" con resultado "+resultados[i]+" está por debajo del valor normal mínimo "+valoresMinimos[i];
+    html=html+"<br><h4><span class='badge badge-warning'>"+(i+1)+" <span class='badge badge-danger'>"+parametros[i]+" = "+resultados[i]+"</span> por <span class='badge badge-danger'>debajo</span> del valor normal mínimo <span class='badge badge-danger'>"+valoresMinimos[i]+"</span></span></h4>";
   }
   if(resultados[i]>valoresMaximos[i]){
-    html=html+"<br><br>El parametro "+(i+1)+" "+parametros[i]+" con resultado "+resultados[i]+" está por encima del valor normal máximo "+valoresMaximos[i];
+    html=html+"<br><h4><span class='badge badge-warning'>"+(i+1)+" <span class='badge badge-danger'>"+parametros[i]+" = "+resultados[i]+"</span> por <span class='badge badge-danger'>encima</span> del valor normal máximo <span class='badge badge-danger'>"+valoresMaximos[i]+"</span></span></h4>";
   }
 }
 }
