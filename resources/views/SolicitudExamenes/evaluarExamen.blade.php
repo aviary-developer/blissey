@@ -240,19 +240,22 @@ $("#guardarLaEvaluacion").on("click", function (e) {
   valoresMaximos[key]=$(value).val();
   });
   var i;
-  var html="<hr>"
-for (i = 0; i < parametros.length; i++) {
-  //console.log('Parametro: '+parametros[i]+' Mínimo: '+valoresMinimos[i]+' Resultado: '+resultados[i]+' Máximo: '+valoresMaximos[i]);
-  if(valoresMinimos[i]!='No'){
-  if(resultados[i]<valoresMinimos[i]){
-    html=html+"<br><h4><span class='badge badge-warning'>"+(i+1)+" <span class='badge badge-danger'>"+parametros[i]+" = "+resultados[i]+"</span> por <span class='badge badge-danger'>debajo</span> del valor normal mínimo <span class='badge badge-danger'>"+valoresMinimos[i]+"</span></span></h4>";
-  }
-  if(resultados[i]>valoresMaximos[i]){
-    html=html+"<br><h4><span class='badge badge-warning'>"+(i+1)+" <span class='badge badge-danger'>"+parametros[i]+" = "+resultados[i]+"</span> por <span class='badge badge-danger'>encima</span> del valor normal máximo <span class='badge badge-danger'>"+valoresMaximos[i]+"</span></span></h4>";
-  }
-}
-}
-html=html+"<hr><h4 class='red'>¡Importante!<h4>"+
+  var html="<center><span class='text-warning' style='font-size: 300%'><i class='fas fa-exclamation-triangle'></i></span></center>";
+      html+="<center><h2 class='text-warning'>¡Advertencia!</h2></center>";
+      html+="<hr>"
+    for (i = 0; i < parametros.length; i++) {
+      //console.log('Parametro: '+parametros[i]+' Mínimo: '+valoresMinimos[i]+' Resultado: '+resultados[i]+' Máximo: '+valoresMaximos[i]);
+      if(valoresMinimos[i]!='No'){
+      if(resultados[i]<valoresMinimos[i]){
+        html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>debajo</span> del valor normal mínimo <span class='text-success font-weight-bold'>"+valoresMinimos[i]+"</span>";
+      }
+      if(resultados[i]>valoresMaximos[i]){
+        html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>encima</span> del valor normal máximo <span class='text-success font-weight-bold'>"+valoresMaximos[i]+"</span>";
+      }
+      html+="<hr class='my-1'>"
+    }
+    }
+    html=html+"<hr><h4 class='red'>¡Importante!<h4>"+
     '<span>¿Está seguro que desea guardar?<br><small>Verifique los resultados</small></span>';
   swal({
       title: 'Valores fuera de rangos normales',
