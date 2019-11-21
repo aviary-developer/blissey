@@ -7,7 +7,7 @@
     $ultimo=App\DetalleCaja::where('f_caja',$caja->id)->get()->last();
     if($ultimo!=null){
       if($ultimo->tipo==2){
-      $valor=number_format($ultimo->total-$ultimo->importe,2,'.',',');
+      $valor=number_format($ultimo->total-$ultimo->importe,2,'.','');
       }elseif($ultimo->tipo==1){
       $valor=App\DetalleCaja::arqueo($ultimo->fecha,$ultimo->f_caja);
       }
@@ -31,11 +31,7 @@
               </div>
               @php
               @endphp
-              @if($valor=="")
                 {!! Form::number('importe',$valor,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad']) !!}
-              @else
-                {!! Form::number('importe',$valor,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad','readonly'=>'readonly']) !!}
-              @endif
             </div>
           <input type="hidden" name="tipo" value="1">
           </div>
