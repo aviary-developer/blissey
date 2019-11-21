@@ -211,6 +211,11 @@
         <input type='hidden' id='contador' value ={{$conteo}}>
       @endif
     </table>
+    @if ($tipo==2)
+    <h5 class="mb-1">
+      Total: $ <label id="total_venta">0.00</label>
+    </h5>
+    @endif
   </div>
 </div>
 @if ($tipo==2)
