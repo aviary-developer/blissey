@@ -474,3 +474,4 @@ Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$desc = $arreglo[1];
 	return view('Ayuda.Contenido.general',compact('tipo','titulo','desc'));
 });
+Route::get('/borrar/{tipo}','BorrarController@borrar');

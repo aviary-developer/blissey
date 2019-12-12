@@ -43,7 +43,13 @@
               <select class="form-control form-control-sm" name="usuario">
                 <option value="0">Todos</option>
                 @foreach ($usuarios as $usuario)
+                  @if(Auth::user()->administrador==1)
                   <option value={{$usuario->id}}>{{$usuario->nombre.' '.$usuario->apellido}}</option>
+                  @else
+                  @if(Auth::user()->id==$usuario->id)
+                  <option value={{$usuario->id}}>{{$usuario->nombre.' '.$usuario->apellido}}</option>
+                  @endif
+                  @endif
                 @endforeach
               </select>
             </div>
