@@ -174,11 +174,15 @@
         @endif
         <th style="width : 80px">Acción</th>
       </thead>
+      @php
+          $auxSumaTotal=0;
+      @endphp
       @if(isset($f_producto))
         @for ($i=0; $i < count($f_producto); $i++)
           <tr  id="itr{{$i}}">
             <td>{{$cantidad[$i]}}</td>
             @php
+            $auxSumaTotal=$auxSumaTotal+($cantidad[$i]*$precio[$i]);
               $division=App\DivisionProducto::find($f_producto[$i]);
               $pmp=App\Http\Controllers\TransaccionController::nombrePresentacion($division->f_producto,2);//Retorna producto + presentación
             @endphp
@@ -213,7 +217,11 @@
     </table>
     @if ($tipo==2)
     <h5 class="mb-1">
-      Total: $ <label id="total_venta">0.00</label>
+        @if(isset($f_producto))
+          Total: $ <label id="total_venta">{{$auxSumaTotal}}</label>
+        @else
+          Total: $ <label id="total_venta">0.00</label>
+        @endif
     </h5>
     @endif
   </div>

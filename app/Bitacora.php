@@ -43,8 +43,12 @@ class Bitacora extends Model
     }
 
     public static function scopeUsuario($query, $usuario){
-      if($usuario != null){
-        $query->where('f_usuario',$usuario);
+      if(Auth::user()->administrador==1){
+        if($usuario != null){
+          $query->where('f_usuario',$usuario);
+        }
+      }else{
+        $query->where('f_usuario',Auth::user()->id);
       }
     }
 
