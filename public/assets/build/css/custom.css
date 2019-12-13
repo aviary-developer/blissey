@@ -45,6 +45,12 @@ thead tr :last-child{
 .table-basic th{
     background-color: #ddd;
 }
+.table-min{
+	width: 100%;
+}
+.table-min th, .table-min td{
+	padding: 2px 5px 2px 5px;
+}
 .table-basic th,.table-basic td{
   border-bottom: 1px #bbb solid;
   padding: 2px 5px 2px 5px;

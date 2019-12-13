@@ -151,6 +151,12 @@ thead tr :first-child {
 thead tr :last-child{
     border-radius: 0 5px 0 0;
 }
+.table-min{
+	width: 100%;
+}
+.table-min th, .table-min td{
+	padding: 2px 5px 2px 5px;
+}
 .table-basic{
     width: 100%;
 }
