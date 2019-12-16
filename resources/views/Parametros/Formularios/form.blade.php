@@ -16,7 +16,7 @@
 				null,
 				['id'=>'nombreParametro',
 				'class'=>'form-control form-control-sm',
-				'placeholder'=>'Nombre del parametro']) !!}
+				'placeholder'=>'Nombre del parámetro']) !!}
 		</div>
 	</div>
 

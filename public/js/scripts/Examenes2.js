@@ -21,26 +21,26 @@ $('#agregar_parametro_x').on('click', function (e) {
   var tabla = $("#tabla_parametros");
 
   var fila = "<tr>" +
-  "<td>" +
-  n_parametro.trim() +
-  "</td>" +
-  "<td>" +
-  n_reactivo.trim() +
-  "</td>" +
-  "<td>" +
-  "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
-  "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
-  "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
-  "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
-  "<button id='eliminar_fila' class='btn btn-sm btn-danger'>" +
-  "<i class='fa fa-times'></i>"
-  "<button>"+
-  "</td>" +
-  "</tr>";
+    "<td>" +
+    n_parametro.trim() +
+    "</td>" +
+    "<td>" +
+    n_reactivo.trim() +
+    "</td>" +
+    "<td>" +
+    "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
+    "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
+    "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
+    "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
+    "<button id='eliminar_fila' class='btn btn-sm btn-danger'>" +
+    "<i class='fa fa-times'></i>"
+  "<button>" +
+    "</td>" +
+    "</tr>";
 
   var tabla_verificar = $("#tabla_parametros tbody tr");
 
-  if (verificarParametroEnTabla(tabla_verificar, n_parametro.trim()+n_reactivo.trim())) {
+  if (verificarParametroEnTabla(tabla_verificar, n_parametro.trim() + n_reactivo.trim())) {
     tabla.append(fila);
   } else {
     swal({
@@ -69,24 +69,24 @@ $("#listo_x").on("click", function (e) {
 
       var panel = $("#panel_seccion");
       html = '<div class="btn-light col-sm-3 border border-primary rounded" style="height: 130px; margin: 0px" id="x_seccion_x' + x + '">' +
-      '<input type="hidden" name="seccion_a_ver" value="seccion_x'+ x+'">' +
-      '<center>' +
-      '<i class="fa fa-flask text-primary" style="font-size: 300%; margin: 15px 15px 10px 15px;"></i>' +
-      '<br>' +
-      '<div style="margin-bottom: 4px;">' +
-      '<span class="badge font-sm badge-primary" >' + n_seccion + '</span>' +
-      '</div>' +
-      '<div id="seccion_x' + x + '">' +
-      '<input type="hidden" id="y_seccion" name="y_seccion[]" value="'+ v_seccion+'">'+
-      '<button class="btn btn-sm btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
-      '<i class="fa fa-search"></i>' +
-      '</button>' +
-      '<button class="btn btn-sm btn-danger" id="eliminar_ficha">' +
-      '<i class="fa fa-times"></i>' +
-      '</button>' +
-      '</div>' +
-      '</center>' +
-      '</div>';
+        '<input type="hidden" name="seccion_a_ver" value="seccion_x' + x + '">' +
+        '<center>' +
+        '<i class="fa fa-flask text-primary" style="font-size: 300%; margin: 15px 15px 10px 15px;"></i>' +
+        '<br>' +
+        '<div style="margin-bottom: 4px;">' +
+        '<span class="badge font-sm badge-primary" >' + n_seccion + '</span>' +
+        '</div>' +
+        '<div id="seccion_x' + x + '">' +
+        '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
+        '<button class="btn btn-sm btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+        '<i class="fa fa-search"></i>' +
+        '</button>' +
+        '<button class="btn btn-sm btn-danger" id="eliminar_ficha">' +
+        '<i class="fa fa-times"></i>' +
+        '</button>' +
+        '</div>' +
+        '</center>' +
+        '</div>';
       panel.append(html);
 
       var seccion = $("#seccion_x" + x);
@@ -126,25 +126,25 @@ $("#listo_x").on("click", function (e) {
       $('#x_' + seccion_vista).empty();
       var ficha = $("#x_" + seccion_vista);
       var html = '<input type="hidden" name="seccion_a_ver" value="' + seccion_vista + '">' +
-      '<center>' +
-      '<i class="fa fa-flask text-primary" style="font-size: 300%; margin: 15px 15px 10px 15px;"></i>' +
-      '<br>' +
-      '<div style="margin-bottom: 4px;">' +
-      '<span class="badge font-sm badge-primary" >' + n_seccion + '</span>' +
-      '</div>' +
-      '<div id="' + seccion_vista + '">' +
-      '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
-      '<button class="btn btn-sm btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
-      '<i class="fa fa-search"></i>' +
-      '</button>' +
-      '<button class="btn btn-sm btn-danger" id="eliminar_ficha">' +
-      '<i class="fa fa-times"></i>' +
-      '</button>' +
-      '</div>' +
-      '</center>';
+        '<center>' +
+        '<i class="fa fa-flask text-primary" style="font-size: 300%; margin: 15px 15px 10px 15px;"></i>' +
+        '<br>' +
+        '<div style="margin-bottom: 4px;">' +
+        '<span class="badge font-sm badge-primary" >' + n_seccion + '</span>' +
+        '</div>' +
+        '<div id="' + seccion_vista + '">' +
+        '<input type="hidden" id="y_seccion" name="y_seccion[]" value="' + v_seccion + '">' +
+        '<button class="btn btn-sm btn-primary" id="ver_seccion" data-toggle="modal" data-target="#modal1">' +
+        '<i class="fa fa-search"></i>' +
+        '</button>' +
+        '<button class="btn btn-sm btn-danger" id="eliminar_ficha">' +
+        '<i class="fa fa-times"></i>' +
+        '</button>' +
+        '</div>' +
+        '</center>';
       ficha.append(html);
 
-      var seccion = $('#'+seccion_vista);
+      var seccion = $('#' + seccion_vista);
 
       var input = $("#tabla_parametros").find("input");
 
@@ -185,7 +185,7 @@ $('#agregar_seccion_x').on('click', function (e) {
   reset_modal();
 });
 
-$("#panel_seccion").on('click','#eliminar_ficha',function(e){
+$("#panel_seccion").on('click', '#eliminar_ficha', function (e) {
   e.preventDefault();
   seccion_vista = $(this).parent('div').parent('center').parent('div').find('input[name="seccion_a_ver"]').val();
   $('#x_' + seccion_vista).remove();
@@ -193,7 +193,7 @@ $("#panel_seccion").on('click','#eliminar_ficha',function(e){
   total_seccion--;
 });
 
-$('#panel_seccion').on('click','#ver_seccion', function (e) {
+$('#panel_seccion').on('click', '#ver_seccion', function (e) {
   e.preventDefault();
 
   reset_modal();
@@ -220,22 +220,22 @@ $('#panel_seccion').on('click','#ver_seccion', function (e) {
     var tabla = $("#tabla_parametros");
 
     var fila = "<tr>" +
-    "<td>" +
-    n_parametro +
-    "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
-    "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
-    "</td>" +
-    "<td>" +
-    n_reactivo +
-    "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
-    "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
-    "</td>" +
-    "<td>" +
-    "<button id='eliminar_fila' class='btn btn-sm btn-danger'>" +
-    "<i class='fa fa-times'></i>"
+      "<td>" +
+      n_parametro +
+      "<input type='hidden' name='n_parametro' value='" + n_parametro + "'>" +
+      "<input type='hidden' name='v_parametro' value='" + v_parametro + "'>" +
+      "</td>" +
+      "<td>" +
+      n_reactivo +
+      "<input type='hidden' name='n_reactivo' value='" + n_reactivo + "'>" +
+      "<input type='hidden' name='v_reactivo' value='" + v_reactivo + "'>" +
+      "</td>" +
+      "<td>" +
+      "<button id='eliminar_fila' class='btn btn-sm btn-danger'>" +
+      "<i class='fa fa-times'></i>"
     "<button>" +
-    "</td>" +
-    "</tr>";
+      "</td>" +
+      "</tr>";
 
     tabla.append(fila);
     parametros++;
@@ -260,57 +260,57 @@ function bloqueo_listo() {
 
 $("#guardar_examen").on("click", function (e) {
   e.preventDefault();
-    var imagens;
-    if(imagen=$("#checkImagenExamen:checked").val()!=null){
-			imagen=imagen;
-		}else{
-			imagen=imagen;
-		}
+  var imagens;
+  if (imagen = $("#checkImagenExamen:checked").val() != null) {
+    imagen = imagen;
+  } else {
+    imagen = imagen;
+  }
   var nombre = $("#nombre_examen").val();
   var precio = $("#precio_campo").val();
   var bandera = true;
-  if ((total_seccion < 1) && (imagen==false)) {
-		swal({
-			type: 'error',
-			title: '¡Error!',
-			text: 'Se necesita al menos una sección o una imagen',
-			toast: true,
-			timer: 5000,
-			showConfirmButton: false,
-		});
+  if ((total_seccion < 1) && (imagen == false)) {
+    swal({
+      type: 'error',
+      title: '¡Error!',
+      text: 'Se necesita al menos una sección o una imagen',
+      toast: true,
+      timer: 5000,
+      showConfirmButton: false,
+    });
     bandera = false;
   }
-	var valido = new Validated('nombre_examen');
-	valido.required();
-	valido.min(4);
-	valido.max(30);
-	bandera = valido.value(bandera);
+  var valido = new Validated('nombre_examen');
+  valido.required();
+  valido.min(4);
+  valido.max(30);
+  bandera = valido.value(bandera);
 
-	var valido = new Validated('precio_campo');
-	valido.required();
-	bandera = valido.value(bandera);
+  var valido = new Validated('precio_campo');
+  valido.required();
+  bandera = valido.value(bandera);
 
   if (bandera) {
     if (imagen) {
-      imagen="Si";
-    }else{
-      imagen="No";
+      imagen = "Si";
+    } else {
+      imagen = "No";
     }
     var seccion_agregadas = $("#panel_seccion").find('input[name="seccion_a_ver"]');
     var titulo = $('#nombre_examen').val();
     var tipo_muestra = $("#tipo_muestra_select option:selected").text();
     var area = $("#area_select option:selected").text();
 
-    var html_ = "<h3 class='blue'>" + titulo + "</h3>"+
-    "<div class='ln_solid'></div>"+
-    "<span class='left'>Tipo de muestra: " +
-    "<b class='blue'>" + tipo_muestra + "</b></span>" +
-    "<br><span class='left'>Área del examen: " +
-    "<b class='blue'>" + area + "</b></span>" +
-    "<br><span class='left'>Se agregará imagen: " +
-    "<b class='blue'>" + imagen + "</b></span>" +
-    "<br><div class='ln_solid'></div>";
-    var html_2="";
+    var html_ = "<h3 class='blue'>" + titulo + "</h3>" +
+      "<div class='ln_solid'></div>" +
+      "<span class='left'>Tipo de muestra: " +
+      "<b class='blue'>" + tipo_muestra + "</b></span>" +
+      "<br><span class='left'>Área del examen: " +
+      "<b class='blue'>" + area + "</b></span>" +
+      "<br><span class='left'>Se agregará imagen: " +
+      "<b class='blue'>" + imagen + "</b></span>" +
+      "<br><div class='ln_solid'></div>";
+    var html_2 = "";
     $(seccion_agregadas).each(function (key, value) {
       var n_seccion = $("#" + value.value).find("input[name='n_seccion[]']").val();
       html_2 += "<h3 class='left'><i class='fa fa-flask'></i> " + n_seccion + "</h3><div class='clearfix'></div>";
@@ -320,15 +320,15 @@ $("#guardar_examen").on("click", function (e) {
 
       $(n_parametro).each(function (key, value) {
         html_2 += "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-sliders blue'></i> " + value.value.trim() + "</span>" +
-        "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-tint green'></i> " + n_reactivo[key].value.trim() + "</span>" +
-        "<br>";
+          "<span class='left' style='width: 50%; text-align: left;'><i class='fa fa-tint green'></i> " + n_reactivo[key].value.trim() + "</span>" +
+          "<br>";
       });
 
       html_2 += "<div class='clearfix'></div><div class='ln_solid'></div>";
     });
 
-    var html_3 = "<h4 class='red'>¡Importante!<h4>"+
-    '<span>¿Está seguro que desea guardar?<br><small> Si guarda los cambios, estos no podrán ser modificados después</small></span>';
+    var html_3 = "<h4 class='red'>¡Importante!<h4>" +
+      '<span>¿Está seguro que desea guardar?<br><small> Si guarda los cambios, estos no podrán ser modificados después</small></span>';
 
     swal({
       title: 'Resumen',
@@ -338,28 +338,28 @@ $("#guardar_examen").on("click", function (e) {
       cancelButtonText: 'No, ¡Seguir trabajando!',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn btn-light'
-		}).then((result) => {
-			if (result.value) {
-				$("#examen_form").submit();
-			}
+    }).then((result) => {
+      if (result.value) {
+        $("#examen_form").submit();
+      }
     });
   }
 });
 
-  function reset_modal() {
-    parametros = 0;
-    bloqueo_listo();
+function reset_modal() {
+  parametros = 0;
+  bloqueo_listo();
 
-    var tabla = $("#tabla_parametros");
-    tabla.empty();
+  var tabla = $("#tabla_parametros");
+  tabla.empty();
 
-    var head = '<thead>' +
-    '<th>Parametro</th>' +
+  var head = '<thead>' +
+    '<th>Parámetro</th>' +
     '<th>Reactivo</th>' +
     '<th style="width: 80px">Acción</th>' +
     '</thead>' +
     '<tbody>' +
     '</tbody>';
 
-    tabla.append(head);
-  }
+  tabla.append(head);
+}

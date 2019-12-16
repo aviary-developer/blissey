@@ -136,6 +136,9 @@
         <li>
           <a href={{asset( '/cajas')}}>Cajas</a>
         </li>
+        <li>
+          <a href={{asset( '/proveedores')}}>Proveedores</a>
+        </li>
       </ul>
     </li>
   </ul>
