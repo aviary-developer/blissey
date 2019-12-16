@@ -553,7 +553,7 @@ class IngresoController extends Controller
       $historial = null;
       $lista_medicamentos = null;
       if(Auth::user()->tipoUsuario == "Médico"){
-        $historial = $ingreso->hospitalizacion->paciente->ingreso;
+        $historial = $ingreso->hospitalizacion->ingreso;
         $lista_medicamentos = Producto::orderBy('nombre','asc')->get();
 			}
 			/**Listado de paquetes hospitalarios para la parte de los paquetes */
