@@ -165,20 +165,22 @@
   {!!Html::script('library/Gentelella/custom.js')!!}
 </body>
 </html>
-@foreach ($errors->all() as $error)
-  @php
-    echo '
-    <script language="javascript">
-      swal({
-        toast: true,
-        type: "error",
-        title: "¡Error!",
-        html: "'.$error.'",
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 4000
-      });
-    </script>
-    ';
-  @endphp
-@endforeach
+@if(isset($errors))
+  @foreach ($errors->all() as $error)
+    @php
+      echo '
+      <script language="javascript">
+        swal({
+          toast: true,
+          type: "error",
+          title: "¡Error!",
+          html: "'.$error.'",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 4000
+        });
+      </script>
+      ';
+    @endphp
+  @endforeach
+@endif
