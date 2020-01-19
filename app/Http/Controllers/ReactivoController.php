@@ -9,6 +9,7 @@ use App\Reactivo;
 use App\DescripcionReactivo;
 use Redirect;
 use Response;
+use App\Bitacora;
 
 class ReactivoController extends Controller
 {
@@ -45,7 +46,8 @@ class ReactivoController extends Controller
   */
   public function store(ReactivoRequest $request)
   {
-    Reactivo::create($request->All());
+    $r=Reactivo::create($request->All());
+    Bitacora::bitacora('store','reactivos','reactivos',$r->id);
     return redirect('/reactivos')->with('mensaje', '¡Guardado!');
   }
 
@@ -86,6 +88,7 @@ class ReactivoController extends Controller
     $reactivos = Reactivo::find($id);
     $reactivos->fill($request->all());
     $reactivos->save();
+    Bitacora::bitacora('update','reactivos','reactivos',$id);
     if($reactivos->estado)
     {
       return redirect('/reactivos')->with('mensaje', '¡Editado!');
@@ -105,12 +108,14 @@ class ReactivoController extends Controller
   {
     $reactivos = Reactivo::findOrFail($id);
     $reactivos->delete();
+    Bitacora::bitacora('destroy','reactivos','reactivos',$id);
     return redirect('/reactivos?estado=0');
   }
   public function desactivate($id){
     $reactivos = Reactivo::find($id);
     $reactivos->estado = false;
     $reactivos->save();
+    Bitacora::bitacora('desactivate','reactivos','reactivos',$id);
     return Redirect::to('/reactivos');
   }
 
@@ -118,6 +123,7 @@ class ReactivoController extends Controller
     $reactivos = Reactivo::find($id);
     $reactivos->estado = true;
     $reactivos->save();
+    Bitacora::bitacora('activate','reactivos','reactivos',$id);
     return Redirect::to('/reactivos?estado=0');
   }
   public function llenarReactivosExamenes(){
@@ -125,7 +131,8 @@ class ReactivoController extends Controller
     return Response::json($reactivos);
   }
   public function ingresoReactivo(ReactivoRequest $request){
-    Reactivo::create($request->All());
+    $r=Reactivo::create($request->All());
+    Bitacora::bitacora('store','reactivos','reactivos',$r->id);
     return Response::json('success');
   }
   public function actualizarExistenciaReactivos(Request $request){

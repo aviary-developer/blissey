@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Artisan;
 use Log;
 use Illuminate\Http\Request;
+use App\Bitacora;
 
 class RespaldoController extends Controller
 {
@@ -44,6 +45,7 @@ class RespaldoController extends Controller
           Log::info("Se inició un respaldo desde la aplicación \r\n" . $output);
           Log::info("Respaldo completado con exito");
           // return the results as a response to the ajax call
+          Bitacora::bitacora('store','respaldos','respaldos',0);
           return redirect()->back()->with('mensaje', '¡Respaldo creado!');
       } catch (Exception $e) {
           Flash::error($e->getMessage());
@@ -67,6 +69,7 @@ class RespaldoController extends Controller
           Log::info("Se inició una restauración desde la aplicación \r\n" . $output);
           Log::info("Restauración completado con exito");
           // return the results as a response to the ajax call
+          Bitacora::bitacora('update','respaldos','respaldos',0);
           return redirect()->back()->with('mensaje', '¡Restauración completada!');
       } catch (Exception $e) {
           Flash::error($e->getMessage());
@@ -79,6 +82,7 @@ class RespaldoController extends Controller
       $file = $request->file('subirRespaldo');
       $nombre = $file->getClientOriginalName();
       Storage::disk('local')->put('/Respaldos/'.$nombre,\File::get($file));
+      Bitacora::bitacora('store','respaldos','respaldos',0);
       return redirect()->back()->with('mensaje', '¡Respaldo agregado!');
     }
 
@@ -108,6 +112,7 @@ class RespaldoController extends Controller
         $disk = Storage::disk('local');
         if ($disk->exists('/Respaldos/' . $file_name)) {
             $disk->delete('/Respaldos/' . $file_name);
+            Bitacora::bitacora('destroy','respaldos','respaldos',0);
             return redirect()->back()->with('mensaje', '¡Respaldo eliminado!');
         } else {
             abort(404, "El Respaldo no existe!");

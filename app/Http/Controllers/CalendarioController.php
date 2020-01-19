@@ -8,6 +8,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Bitacora;
 
 class CalendarioController extends Controller
 {
@@ -65,7 +66,7 @@ class CalendarioController extends Controller
             $evento->titulo = $request->titulo;
             $evento->descripcion = $request->descripcion;
             $evento->save();
-
+            Bitacora::bitacora('store','calendarios','calendarios',$evento->id);
             DB::commit();
             return 1;
         }catch(Exception $e){
@@ -113,6 +114,7 @@ class CalendarioController extends Controller
             $evento->descripcion = $request->descripcion;
             $evento->save();
 
+            Bitacora::bitacora('update','calendarios','calendarios',$id);
             DB::commit();
             return 1;
         }catch(Exception $e){
@@ -134,7 +136,7 @@ class CalendarioController extends Controller
         
         try{
             $evento->delete();
-
+            Bitacora::bitacora('destroy','calendarios','calendarios',$id);
             DB::commit();
             return 1;
         }catch(Exception $e){

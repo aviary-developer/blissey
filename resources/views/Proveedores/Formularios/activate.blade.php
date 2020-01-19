@@ -99,7 +99,6 @@ function eliminar(id){
     buttonsStyling: false
   }).then((result) => {
     if (result.value) {
-      localStorage.setItem('msg','yes');
       var dominio = window.location.host;
       $('#formulario').attr('action','destroyProveedor/'+id);
       $('#formulario').submit();

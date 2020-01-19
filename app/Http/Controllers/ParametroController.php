@@ -59,7 +59,8 @@ class ParametroController extends Controller
   */
   public function store(ParametroRequest $request)
   {
-    Parametro::create($request->All());
+    $p=Parametro::create($request->All());
+    Bitacora::bitacora('store','parametros','parametros',$p->id);
     return redirect('/parametros')->with('mensaje', '¡Guardado!');
   }
 
@@ -100,6 +101,7 @@ class ParametroController extends Controller
     $parametros = Parametro::find($id);
     $parametros->fill($request->all());
     $parametros->save();
+    Bitacora::bitacora('update','parametros','parametros',$id);
     if($parametros->estado)
     {
       return redirect('/parametros')->with('mensaje', '¡Editado!');
@@ -133,6 +135,7 @@ class ParametroController extends Controller
     $parametros = Parametro::find($id);
     $parametros->estado = false;
     $parametros->save();
+    Bitacora::bitacora('desactivate','parametros','parametros',$id);
     return Redirect::to('/parametros');
   }
 
@@ -140,6 +143,7 @@ class ParametroController extends Controller
     $parametros = Parametro::find($id);
     $parametros->estado = true;
     $parametros->save();
+    Bitacora::bitacora('activate','parametros','parametros',$id);
     return Redirect::to('/parametros?estado=0');
   }
 
@@ -148,7 +152,8 @@ class ParametroController extends Controller
     return Response::json($parametros);
   }
   public function ingresoParametro(ParametroRequest $request){
-    Parametro::create($request->All());
+    $p=Parametro::create($request->All());
+    Bitacora::bitacora('store','parametros','parametros',$p->id);
     return Response::json('success');
   }
 }

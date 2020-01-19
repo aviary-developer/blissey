@@ -8,6 +8,7 @@ use App\CategoriaServicio;
 use App\Habitacion;
 use Illuminate\Http\Request;
 use DB;
+use App\Bitacora;
 
 class CamaController extends Controller
 {
@@ -98,7 +99,7 @@ class CamaController extends Controller
             
             $servicio->estado = false;
             $servicio->save();
-
+            Bitacora::bitacora('desactivate','camas','camas',$id);
             DB::commit();
             return 1;
         }catch(Exception $e)
@@ -119,7 +120,7 @@ class CamaController extends Controller
             
             $servicio->estado = true;
             $servicio->save();
-
+            Bitacora::bitacora('activate','camas','camas',$id);
             DB::commit();
             return 1;
         }catch(Exception $e)
@@ -141,7 +142,7 @@ class CamaController extends Controller
             
             $servicio->precio = $precio;
             $servicio->save();
-
+            Bitacora::bitacora('update','camas','camas',$id);
             DB::commit();
             return 1;
         }catch(Exception $e)
@@ -165,13 +166,14 @@ class CamaController extends Controller
             $categoria_existe->save();
             }
 
-            $cama_ = new Cama;
+            $cama_ = new Cama();
             $cama_->numero = $request->numero;
             $cama_->precio = $request->precio;
             $cama_->f_habitacion = $habitacion->id;
             $cama_->save();
+            Bitacora::bitacora('store','camas','camas',$cama_->id);
 
-            $servicio = new Servicio;
+            $servicio = new Servicio();
             if($request->tipo == 0){
             $servicio->nombre = 'Cama H'.$habitacion->numero.'O'.$cama_->numero;
             }else if($request->tipo == 1){
@@ -183,6 +185,7 @@ class CamaController extends Controller
             $servicio->f_categoria = $categoria_existe->id;
             $servicio->f_cama = $cama_->id;
             $servicio->save();
+            Bitacora::bitacora('store','servicios','servicios',$servicio->id);
 
         } catch (Exception $e) {
             DB::rollback();

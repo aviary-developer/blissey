@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
 use Response;
+use App\Bitacora;
 
 class MuestraExamenController extends Controller
 {
@@ -54,7 +55,8 @@ class MuestraExamenController extends Controller
       */
      public function store(MuestraRequest $request)
      {
-       MuestraExamen::create($request->All());
+       $m=MuestraExamen::create($request->All());
+       Bitacora::bitacora('store','muestra_examens','muestras',$m->id);
        return redirect('/muestras')->with('mensaje', '¡Guardado!');
      }
 
@@ -94,6 +96,7 @@ class MuestraExamenController extends Controller
        $muestras = MuestraExamen::find($id);
        $muestras->fill($request->all());
        $muestras->save();
+       Bitacora::bitacora('update','muestra_examens','muestras',$id);
        if($muestras->estado)
        {
          return redirect('/muestras')->with('mensaje', '¡Editado!');
@@ -113,6 +116,7 @@ class MuestraExamenController extends Controller
      {
        $muestras = MuestraExamen::findOrFail($id);
        $muestras->delete();
+       Bitacora::bitacora('destroy','muestra_examens','muestras',$id);
        return redirect('/muestras?estado=0');
      }
 
@@ -120,6 +124,7 @@ class MuestraExamenController extends Controller
        $muestras = MuestraExamen::find($id);
        $muestras->estado = false;
        $muestras->save();
+       Bitacora::bitacora('desactivate','muestra_examens','muestras',$id);
        return Redirect::to('/muestras');
      }
 
@@ -127,6 +132,7 @@ class MuestraExamenController extends Controller
        $muestras = MuestraExamen::find($id);
        $muestras->estado = true;
        $muestras->save();
+       Bitacora::bitacora('activate','muestra_examens','muestras',$id);
        return Redirect::to('/muestras?estado=0');
      }
 
@@ -135,7 +141,8 @@ class MuestraExamenController extends Controller
       return Response::json($muestras);
     }
     public function ingresoMuestra(MuestraRequest $request){
-      MuestraExamen::create($request->All());
+      $m=MuestraExamen::create($request->All());
+      Bitacora::bitacora('store','muestra_examens','muestras',$m->id);
       return Response::json('success');
     }
 }

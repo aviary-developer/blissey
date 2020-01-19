@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Dependiente;
 use Illuminate\Http\Request;
 use App\Http\Requests\DependienteRequest;
+use App\Bitacora;
 
 class DependienteController extends Controller
 {
@@ -53,7 +54,8 @@ class DependienteController extends Controller
      */
     public function store(DependienteRequest $request)
     {
-        Dependiente::create($request->all());
+        $dp=Dependiente::create($request->all());
+        Bitacora::bitacora('store','dependientes','visitadores',$dp->id);
         return redirect('/visitadores?id='.$request->f_proveedor)->with('mensaje','¡Guardado!');
 
     }
@@ -110,6 +112,7 @@ class DependienteController extends Controller
           $this->validate($request,$validar);
           $visitador->fill($request->all());
           $visitador->save();
+          Bitacora::bitacora('update','dependientes','visitadores',$visitador->id);
           return redirect('/visitadores?estado='.$visitador->estado.'&id='.$visitador->f_proveedor)->with('mensaje','¡Editado!');
         }
     }
@@ -126,12 +129,14 @@ class DependienteController extends Controller
         $p=$dependiente->f_proveedor;
         $e=$dependiente->estado;
         Dependiente::destroy($id);
+        Bitacora::bitacora('destroy','dependientes','visitadores',$id);
         return redirect('/visitadores?estado=0&id='.$p);
     }
     public function desactivate($id){
       $dependiente= Dependiente::find($id);
       $dependiente->estado = false;
       $dependiente->save();
+      Bitacora::bitacora('desactivate','dependientes','visitadores',$id);
       return redirect('/visitadores?estado=1&id='.$dependiente->f_proveedor);
     }
 
@@ -139,6 +144,7 @@ class DependienteController extends Controller
       $dependiente = Dependiente::find($id);
       $dependiente->estado = true;
       $dependiente->save();
+      Bitacora::bitacora('activate','dependientes','visitadores',$id);
       return redirect('/visitadores?estado=0&id='.$dependiente->f_proveedor);
     }
 }
