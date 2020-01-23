@@ -13,7 +13,7 @@ class Transacion extends Model
   protected $dates = ['fecha'];
 
   public static function buscar($buscar,$tipo){
-    return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('fecha','DESC')->paginate(10);
+    return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('fecha','DESC')->where('f_ingreso',null)->paginate(10);
   }
   public static function pendientes($buscar,$tipo){
     $contrario=Transacion::contrario(Transacion::tipoUsuario());
@@ -132,7 +132,7 @@ class Transacion extends Model
         public static function movimientosCaja($f_usuario,$apertura,$fecha,$hasta){
           $tipoU=User::find($f_usuario)->tipoUsuario;
           if($tipoU==0){
-            return Transacion::where('f_usuario',$f_usuario)->where('fecha',$fecha)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+            return Transacion::where('f_usuario',$f_usuario)->where('fecha',$fecha)->Where('updated_at',"<",$hasta)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
           }else{
             return Transacion::where('f_usuario',$f_usuario)->filtroFecha($fecha,$hasta)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
           }

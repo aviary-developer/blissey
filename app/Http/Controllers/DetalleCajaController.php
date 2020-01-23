@@ -150,7 +150,7 @@ class DetalleCajaController extends Controller
       if($detalle->user->tipoUsuario==1){//Recepción
         $fechaaux=date("Y-m-d",strtotime($fecha."+ 1 days"));
         $ha=DetalleCaja::whereBetween('created_at',[$detalle->created_at,$fechaaux." 07:00:00"])
-        ->where('id','<>',$detalle->id)
+        ->where('id','>',$detalle->id)
         ->where('f_usuario',$detalle->f_usuario)
         ->get()->first();
         $hasta=$fechaaux." 07:00:00";
@@ -160,24 +160,24 @@ class DetalleCajaController extends Controller
             $tipoArqueo=3;
             $cierre=$ha;
           }
-          else if($ha->create_at<$asta){
+          else if($ha->create_at<$hasta){
             $hasta=$ha->create_at;
           }
         }
         
       }else{ //Farmacia
         $ha=DetalleCaja::whereBetween('created_at',[$detalle->created_at,$fecha." 23:59:59"])
-        ->where('id','<>',$detalle->id)
+        ->where('id','>',$detalle->id)
         ->where('f_usuario',$detalle->f_usuario)
         ->get()->first();
-        $hasta=""; 
+        $hasta=$fecha." 23:59:59"; 
         if($ha!=""){
           if($ha->tipo==2){
             $hasta=$ha->created_at;
             $tipoArqueo=3;
             $cierre=$ha;
           }//Farmacia
-          else if($ha->create_at<$asta){
+          else if($ha->create_at<$hasta){
             $hasta=$ha->create_at;
           }
         }

@@ -36,7 +36,7 @@
       </div>
       <div class="col-xs-8">
         <b class="">
-          {{$consulta->ingreso->paciente->nombre.' '.$consulta->ingreso->paciente->apellido}}
+          {{$consulta->ingreso->hospitalizacion->paciente->nombre.' '.$consulta->ingreso->hospitalizacion->paciente->apellido}}
         </b>
       </div>
     </div>

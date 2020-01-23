@@ -19,7 +19,7 @@
         <button type="button" class="btn btn-sm btn-success" id="nuevo_abono" title="Nuevo Abono"><i class="far fa-money-bill-alt"></i></button>
       @endif
       <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#informe_fin" title="Informe financiero"><i class="fa fa-file"></i></button>
-      <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_finanzas" id="btn_v_f" title="Ver"><i class="fa fa-eye"></i></button>
+      <button type="button" class="btn-sm btn btn-dark" data-toggle="modal" data-target="#ver_finanzas" id="btn_v_f" title="Ver"><i class="fa fa-search"></i></button>
     </div>
   </div>
 </div>

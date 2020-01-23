@@ -20,6 +20,7 @@ use App\Estante;
 use App\Devolucion;
 use App\DetalleDevolucion;
 use App\CambioProducto;
+use App\Bitacora;
 
 class TransaccionController extends Controller
 {
@@ -147,6 +148,7 @@ class TransaccionController extends Controller
         DB::rollback();
         return redirect('/')->with('error', '¡Algo salio mal!');
       }
+      Bitacora::bitacora('store','transacions','transacciones',$transaccion->id);
       DB::commit();
       return redirect('/transacciones?tipo='.$tipo."&estado=".$estado)->with('mensaje', '¡Guardado!');
     }else{
@@ -238,6 +240,7 @@ class TransaccionController extends Controller
           $detalle->save();
           CambioProducto::actualizarCambio($request->f_producto[$i]);          
         }
+        Bitacora::bitacora('update','transacions','transacciones',$transaccion->id);
         DB::commit();
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
     }

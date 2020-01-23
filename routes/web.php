@@ -152,7 +152,7 @@ Route::group(['middleware'=>'general'], function(){
 		$count_existencia_reactivo = 0;
     if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
-      $segundo = App\SolicitudExamen::where('estado','<>',3)->distinct()->get(['f_paciente']);
+      $segundo = App\SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
       $tercero = App\Reactivo::where('contenidoPorEnvase','<',20)->get();
 			$proximosReactivosVencer = App\Reactivo::where('estado',1)->get();
 			
@@ -474,3 +474,4 @@ Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$desc = $arreglo[1];
 	return view('Ayuda.Contenido.general',compact('tipo','titulo','desc'));
 });
+Route::get('/borrar/{tipo}','BorrarController@borrar');

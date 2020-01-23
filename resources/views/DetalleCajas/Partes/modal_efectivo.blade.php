@@ -37,7 +37,7 @@
                 </div>
               </div>
                 <input type="hidden" id="tipoModal" name="tipo" value="">
-                <input type="hidden" id="actualModal" name="actual" value="{{number_format($_GET['total'],2,'.',',')}}">
+                <input type="hidden" id="actualModal" name="actual" value="{{$_GET['total']}}">
                 <input type="hidden" id="tokenEfectivonModal" name="tokenEfectivoModal" value="<?php echo csrf_token(); ?>">  
             </div>
           </div>
@@ -58,6 +58,7 @@
 </div>
 <script>
 function validarEfectivo(){
+      console.log($("#actualModal").val());
       actual=parseFloat($("#actualModal").val());
       cantidad=parseFloat($("#cantidadModal").val());
       justificar=$("#justificarModal").val();

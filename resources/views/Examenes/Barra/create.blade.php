@@ -22,7 +22,7 @@
 						Tipo de sección
 					</a>
 					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal2">
-						Parametro
+						Parámetro
 					</a>
 					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal3">
 						Reactivo

@@ -94,24 +94,24 @@
                         <td>
                             @if($movimiento->tipo==2)
                                 @php
-                                    $suma=number_format($movimiento->valorTotal($movimiento->id),2,'.',',');
+                                    $suma=$movimiento->valorTotal($movimiento->id);
                                     $total=$total+$suma;
                                 @endphp
-                                $ {{$suma}}
+                                $ {{number_format($suma,2,'.',',')}}
                             @endif
                             @if($movimiento->tipo==8)
                                 @php
-                                    $suma=number_format($movimiento->devolucion,2,'.',',');
+                                    $suma=$movimiento->devolucion;
                                     $total=$total+$suma;
                                 @endphp
-                                $ {{$suma}}
+                                $ {{number_format($suma,2,'.',',')}}
                             @endif
                             @if($movimiento->tipo==12)
                                 @php
-                                    $suma=number_format($movimiento->devolucion,2,'.',',');
-                                    $total=$total+$suma;
+                                    $suma=$movimiento->devolucion;
+                                    $total=$total+$movimiento->devolucion;
                                 @endphp
-                                $ {{$suma}}
+                                $ {{number_format($suma,2,'.',',')}}
                             @endif
                         </td>
                         <td>
@@ -124,17 +124,17 @@
                             @endif
                             @if($movimiento->tipo==9)
                                 @php
-                                    $resta=number_format($movimiento->devolucion,2,'.',',');
+                                    $resta=$movimiento->devolucion;
                                     $total=$total-$resta;
                                 @endphp
-                                $ {{$resta}}
+                                $ {{number_format($resta,2,'.',',')}}
                             @endif
                             @if($movimiento->tipo==13)
                                 @php
-                                    $resta=number_format($movimiento->devolucion,2,'.',',');
+                                    $resta=$movimiento->devolucion;
                                     $total=$total-$resta;
                                 @endphp
-                                $ {{$resta}}
+                                $ {{number_format($resta,2,'.',',')}}
                             @endif
                         </td>
                         <td>$ {{number_format($total,2,'.',',')}}</td>

@@ -437,6 +437,8 @@ $(document).on('ready', function () {
         notaError('El producto ya se encuentra incluido');
       }
     } else {
+      total_c = parseFloat(cantidad * precio);
+      cambiarTotal(total_c, 1);
       var tabla = $("#tablaDetalle");
       var html = '<tr>' +
         '<td>' + cantidad + '</td>' +

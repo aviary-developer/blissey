@@ -128,6 +128,8 @@ class TacController extends Controller
       $tac = Tac::find($id);
       $tac->fill($request->all());
       $tac->save();
+      Bitacora::bitacora('update','tacs','tacs',$id);
+
       if($tac->estado)
       {
         return redirect('/tacs')->with('mensaje', '¡Editado!');
@@ -155,6 +157,7 @@ class TacController extends Controller
         DB::rollback();
         return redirect('/tacs?estado=0')->with('error', " ");
       }
+      Bitacora::bitacora('destroy','tacs','tacs',$id);
       DB::commit();
       return redirect('/tacs?estado=0')->with('mensaje',' ');
     }
@@ -162,6 +165,7 @@ class TacController extends Controller
       $tac = Tac::find($id);
       $tac->estado = false;
       $tac->save();
+      Bitacora::bitacora('desactivate','tacs','tacs',$id);
       return Redirect::to('/tacs');
     }
 
@@ -169,6 +173,7 @@ class TacController extends Controller
       $tac = Tac::find($id);
       $tac->estado = true;
       $tac->save();
+      Bitacora::bitacora('activate','tacs','tacs',$id);
       return Redirect::to('/tacs?estado=0');
     }
     public function actualizarPrecioTac(Request $request){

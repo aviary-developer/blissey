@@ -50,4 +50,8 @@ class Hospitalizacion extends Model
 	{
 		return $this->belongsTo('App\User', 'f_medico');
 	}
+	public function ingreso()
+	{
+		return $this->hasMany('App\Ingreso', 'f_hospitalizacion')->orderBy('created_at','desc');
+	}
 }

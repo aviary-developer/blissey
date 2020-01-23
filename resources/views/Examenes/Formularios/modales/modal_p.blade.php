@@ -3,7 +3,7 @@
 		<div class="x_panel m_panel text-danger">
 			<center>
 				<h4 class="mb-1">
-					Parametro
+					Parámetro
 					<span class="badge badge-danger">Nuevo</span>
 				</h4>
 			</center>
@@ -21,7 +21,7 @@
 						null,
 						['id'=>'nombreParametro',
 						'class'=>'form-control form-control-sm',
-						'placeholder'=>'Nombre del parametro']) !!}
+						'placeholder'=>'Nombre del parámetro']) !!}
 				</div>
 			</div>
 

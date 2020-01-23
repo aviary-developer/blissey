@@ -21,6 +21,7 @@ use App\Especialidad;
 use Illuminate\Http\Request;
 use App\Transacion;
 use App\DetalleTransacion;
+use App\CategoriaServicio;
 use DB;
 use Response;
 use Carbon\Carbon;
@@ -513,11 +514,14 @@ class IngresoController extends Controller
         $total_abono = Ingreso::abonos($id);
         /**Total adeudado a la cuenta */
         $total_deuda = $total_gastos - $total_abono;
-
-        /**Examenes que se puede realizar el paciente */
-        $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
-      }
-      if($ingreso->tipo == 3){
+			}
+			/**DIC06: Los exámenes que se puede realizar un usuario en sí no dependen del tipo */
+      if($ingreso->tipo <= 3){
+				$categoria = CategoriaServicio::where('nombre', 'Laboratorio Clínico')->first();
+				if ($categoria == null) {
+					return view('errors.001');
+				}
+				$servicios = Servicio::where('f_categoria', $categoria->id)->get();
         /**Examenes que se puede realizar el paciente */
         $examenes = Examen::where('estado',true)->orderBy('area')->orderBy('nombreExamen')->get();
       }
@@ -549,7 +553,7 @@ class IngresoController extends Controller
       $historial = null;
       $lista_medicamentos = null;
       if(Auth::user()->tipoUsuario == "Médico"){
-        $historial = $ingreso->hospitalizacion->paciente->ingreso;
+        $historial = $ingreso->hospitalizacion->ingreso;
         $lista_medicamentos = Producto::orderBy('nombre','asc')->get();
 			}
 			/**Listado de paquetes hospitalarios para la parte de los paquetes */
@@ -581,7 +585,8 @@ class IngresoController extends Controller
         'count_tac24',
         'count_m',
         'hoy',
-        'examenes',
+				'examenes',
+				'servicios',
         'habitaciones',
         'observaciones',
         'mediingresos',

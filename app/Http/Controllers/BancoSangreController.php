@@ -112,6 +112,7 @@ class BancoSangreController extends Controller
         $donacion->pruebaCruzada=$donacionAnterior->pruebaCruzada;
       }
       $donacion->save();
+      Bitacora::bitacora('update','banco_sangres','bancosangre',$donacion->id);
       if($donacion->estado)
       {
         return redirect('/bancosangre')->with('mensaje', '¡Editado!');
@@ -131,6 +132,7 @@ class BancoSangreController extends Controller
     {
       $donacion = BancoSangre::findOrFail($id);
       $donacion->delete();
+      Bitacora::bitacora('destroy','banco_sangres','bancosangre',$id);
       return redirect('/bancosangre?estado=0');
     }
 
@@ -138,6 +140,7 @@ class BancoSangreController extends Controller
       $donacion = BancoSangre::find($id);
       $donacion->estado = false;
       $donacion->save();
+      Bitacora::bitacora('desactivate','banco_sangres','bancosangre',$id);
       return Redirect::to('/bancosangre');
     }
 
@@ -145,6 +148,7 @@ class BancoSangreController extends Controller
       $donacion = BancoSangre::find($id);
       $donacion->estado = true;
       $donacion->save();
+      Bitacora::bitacora('activate','banco_sangres','bancosangre',$id);
       return Redirect::to('/bancosangre?estado=0');
     }
 }

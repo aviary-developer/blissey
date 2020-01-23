@@ -10,6 +10,7 @@ use App\Transacion;
 use Auth;
 use App\DetalleTransacion;
 use DB;
+use App\Bitacora;
 class CambioProductoController extends Controller
 {
     /**
@@ -71,6 +72,7 @@ class CambioProductoController extends Controller
         $detalle->save();
         CambioProducto::actualizarCambio($request->f_producto[$i]);          
       }
+      Bitacora::bitacora('store','transacions','entradas',$transaccion->id);
       DB::commit();
       Return redirect('/entradas')->with('mensaje', '¡Pedido Confirmado!');
     }
@@ -153,12 +155,14 @@ class CambioProductoController extends Controller
     }
     public static function confirmarRetiro(){
       CambioProducto::where('estado',0)->update(['estado'=>1]);
+      Bitacora::bitacora('update','cambio_productos','cambio_productos',0);
       return redirect('cambio_productos')->with('mensaje','¡Todos los lotes fueron confirmado!');
     }
     public static function confirmarIndividual($id){
       $lote=CambioProducto::find($id);
       $lote->estado=1;
       $lote->save();
+      Bitacora::bitacora('update','cambio_productos','cambio_productos',$lote->id);
       return redirect('cambio_productos')->with('mensaje','¡Confirmado!');
     }
     public static function entradas(Request $request){

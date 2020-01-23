@@ -134,6 +134,7 @@ class RayosxController extends Controller
       $rayosx = Rayosx::find($id);
       $rayosx->fill($request->all());
       $rayosx->save();
+      Bitacora::bitacora('update','rayosxes','rayosx',$id);
       if($rayosx->estado)
       {
         return redirect('/rayosx')->with('mensaje', '¡Editado!');
@@ -161,6 +162,7 @@ class RayosxController extends Controller
         DB::rollback();
         return redirect('/rayosx?estado=0')->with('error', " ");
       }
+      Bitacora::bitacora('destroy','rayosxes','rayosx',$id);
       DB::commit();
       return redirect('/rayosx?estado=0')->with('mensaje',' ');
     }
@@ -168,19 +170,22 @@ class RayosxController extends Controller
       $rayosx = Rayosx::find($id);
       $rayosx->estado = false;
       $rayosx->save();
-      return Redirect::to('/rayosx');
+      Bitacora::bitacora('desactivate','rayosxes','rayosx',$id);
+      return Redirect::to('/rayosx')->with('mensaje','¡Desactivado!');
     }
 
     public function activate($id){
       $rayosx = Rayosx::find($id);
       $rayosx->estado = true;
       $rayosx->save();
-      return Redirect::to('/rayosx?estado=0');
+      Bitacora::bitacora('activate','rayosxes','rayosx',$id);
+      return Redirect::to('/rayosx?estado=0')->with('mensaje','¡Restaurado!');
     }
     public function actualizarPrecioRayox(Request $request){
       $servicio = Servicio::find($request->idServicio);
       $servicio->precio=$request->precio;
       $servicio->save();
+      Bitacora::bitacora('store','rayosxes','rayosx',$request->idServicio);
       return Response::json('sucess');
     }
 }

@@ -11,6 +11,7 @@ use App\DetalleTransacion;
 use DB;
 use App\DetalleDevolucion;
 use App\CambioProducto;
+use App\Bitacora;
 
 class RequisicionController extends Controller
 {
@@ -47,7 +48,7 @@ class RequisicionController extends Controller
     {
       $f_producto=$request->f_producto;
       $cantidad=$request->cantidad;
-      $transaccion= Transacion::create([
+      $t=$transaccion= Transacion::create([
         'fecha'=>$request->fecha,
         'f_usuario'=>Auth::user()->id,
         'localizacion'=>Transacion::tipoUsuario(),
@@ -62,6 +63,7 @@ class RequisicionController extends Controller
           ]);
           }
       }
+      Bitacora::bitacora('store','transacions','requisiciones',$t->id);
        return redirect('requisiciones?tipo=4')->with('mensaje', '¡Requisición Enviada!');
     }
 
@@ -135,6 +137,7 @@ class RequisicionController extends Controller
               }
           }
         }
+        Bitacora::bitacora('update','transacions','requisiciones',$id);
         DB::commit();
         return redirect('requisiciones?tipo=5')->with('mensaje', '¡Ubicaciones asignadas correctamente!');
       } catch (\Exception $e) {
@@ -249,6 +252,8 @@ class RequisicionController extends Controller
             }
             }
         }
+        Bitacora::bitacora('update','transacions','requisiciones',$id);
+
         DB::commit();
         return redirect('verrequisiciones?tipo=4')->with('mensaje', '¡Requisición atendida correctamente!');
       } catch (\Exception $e) {

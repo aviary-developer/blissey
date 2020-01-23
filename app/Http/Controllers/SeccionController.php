@@ -55,7 +55,8 @@ class SeccionController extends Controller
      */
     public function store(SeccionRequest $request)
     {
-      Seccion::create($request->All());
+      $s=Seccion::create($request->All());
+      Bitacora::bitacora('store','seccions','secciones',$s->id);
       return redirect('/secciones')->with('mensaje', '¡Guardado!');
     }
 
@@ -128,6 +129,7 @@ class SeccionController extends Controller
       $secciones = Seccion::find($id);
       $secciones->estado = false;
       $secciones->save();
+      Bitacora::bitacora('desactivate','seccions','secciones',$id);
       return Redirect::to('/secciones');
     }
 
@@ -135,6 +137,7 @@ class SeccionController extends Controller
       $secciones = Seccion::find($id);
       $secciones->estado = true;
       $secciones->save();
+      Bitacora::bitacora('activate','seccions','secciones',$id);
       return Redirect::to('/secciones?estado=0');
     }
     public function llenarSeccionExamenes(){
@@ -143,7 +146,8 @@ class SeccionController extends Controller
     }
 
     public function ingresoSeccion(SeccionRequest $request){
-      Seccion::create($request->All());
+      $s=Seccion::create($request->All());
+      Bitacora::bitacora('store','seccions','secciones',$s->id);
       return Response::json('success');
     }
 }

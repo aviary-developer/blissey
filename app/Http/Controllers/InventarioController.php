@@ -7,6 +7,7 @@ use App\DivisionProducto;
 use App\DetalleDevolucion;
 use App\DetalleTransacion;
 use App\Devolucion;
+use App\Bitacora;
 
 class InventarioController extends Controller
 {
@@ -89,6 +90,7 @@ class InventarioController extends Controller
             $detalle->nivel=$nivel[$k];
             $detalle->save();
         }
+        Bitacora::bitacora('update','detalle_transacions','inventarios',$id);
         Return redirect('/inventarios')->with('mensaje', '¡Editado!');
     }
 
@@ -115,7 +117,7 @@ class InventarioController extends Controller
         $detalle->cantidad=$request->cantidad;
         $detalle->tipo=1;
         $detalle->save();
-
+        Bitacora::bitacora('update','salidas','inventarios',$request->idTr);
         return redirect('/inventarios')->with('mensaje', '!Acción exitosa¡');
 
     }

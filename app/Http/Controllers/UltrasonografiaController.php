@@ -125,6 +125,7 @@ class UltrasonografiaController extends Controller
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->fill($request->all());
       $ultrasonografias->save();
+      Bitacora::bitacora('update','ultrasonografias','ultrasonografias',$id);
       if($ultrasonografias->estado)
       {
         return redirect('/ultrasonografias')->with('mensaje', '¡Editado!');
@@ -152,6 +153,7 @@ class UltrasonografiaController extends Controller
         DB::rollback();
         return redirect('/ultrasonografias?estado=0')->with('error', " ");
       }
+      Bitacora::bitacora('destroy','ultrasonografias','ultrasonografias',$id);
       DB::commit();
       return redirect('/ultrasonografias?estado=0')->with('mensaje',' ');
     }
@@ -160,6 +162,7 @@ class UltrasonografiaController extends Controller
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->estado = false;
       $ultrasonografias->save();
+      Bitacora::bitacora('desactivate','ultrasonografias','ultrasonografias',$id);
       return Redirect::to('/ultrasonografias');
     }
 
@@ -167,6 +170,7 @@ class UltrasonografiaController extends Controller
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->estado = true;
       $ultrasonografias->save();
+      Bitacora::bitacora('activate','ultrasonografias','ultrasonografias',$id);
       return Redirect::to('/ultrasonografias?estado=0');
     }
 

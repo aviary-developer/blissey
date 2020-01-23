@@ -30,36 +30,40 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $contador=0;
+                        @endphp
                         @foreach ($detalles as $detalle)
-                        @php
-                        if($transaccion->tipo==1){
-                            $resta=App\divisionProducto::buscarLote($detalle->f_producto,$detalle->id);
-                        }else{
-                            $restar=App\DetalleDevolucion::total($detalle->id);
-                            $resta=$detalle->cantidad-$restar;
-                        }
-                        $contador=0;
-                        @endphp
-                        @if ($resta!=0)
-                        @php
-                            $contador++;
-                        @endphp
-                        <tr>
-                            <td style="width:25%;">
-                                {!! Form::number('cantidad'.$detalle->id,0,['id'=>'cantidad'.$detalle->id,'class'=>'form-control','onKeyPress' => 'return cantidadDev( this, event,this.value,'.$detalle->id.');','placeholder'=>'Cantidad','min'=>'0']) !!}
-                            </td>
-                            <td>{{$resta}}
-                            <input type="hidden" id="existencia{{$detalle->id}}" value="{{$resta}}">
-                            </td>
-                            <td>
-                            @if($detalle->divisionProducto->unidad==null)
-                                {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
-                            @else
-                                {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                        @if($detalle->f_producto!=null)
+                            @php
+                            if($transaccion->tipo==1){
+                                $resta=App\divisionProducto::buscarLote($detalle->f_producto,$detalle->id);
+                            }else{
+                                $restar=App\DetalleDevolucion::total($detalle->id);
+                                $resta=$detalle->cantidad-$restar;
+                            }
+                            @endphp
+                            @if ($resta!=0)
+                            @php
+                                $contador++;
+                            @endphp
+                            <tr>
+                                <td style="width:25%;">
+                                    {!! Form::number('cantidad'.$detalle->id,0,['id'=>'cantidad'.$detalle->id,'class'=>'form-control','onKeyPress' => 'return cantidadDev( this, event,this.value,'.$detalle->id.');','placeholder'=>'Cantidad','min'=>'0']) !!}
+                                </td>
+                                <td>{{$resta}}
+                                <input type="hidden" id="existencia{{$detalle->id}}" value="{{$resta}}">
+                                </td>
+                                <td>
+                                @if($detalle->divisionProducto->unidad==null)
+                                    {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
+                                @else
+                                    {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre}}
+                                @endif
+                                </td>
+                            <td>{{$detalle->divisionProducto->producto->nombre}}</td>
+                            </tr>
                             @endif
-                            </td>
-                        <td>{{$detalle->divisionProducto->producto->nombre}}</td>
-                        </tr>
                         @endif
                         @endforeach
                     </tbody>

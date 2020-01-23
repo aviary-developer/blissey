@@ -292,6 +292,10 @@ $(document).on('ready', function () {
   });
   $("#tablaDetalle").on('click', '#eliminar_detalle', function (e) {
     var elemento = $(this).parents('tr').find('input:eq(0)').val();
+    var cantidad = $(this).parents('tr').find('input:eq(1)').val();
+    var precio = $(this).parents('tr').find('input:eq(2)').val();
+    total_c = parseFloat(cantidad) * parseFloat(precio);
+    cambiarTotal(total_c, 0);
     var indice = componentes_agregados.indexOf(elemento);
     componentes_agregados.splice(indice, 1);
     $(this).parents('tr').remove();
@@ -361,13 +365,15 @@ $(document).on('ready', function () {
       if ($("#confirmar").val() == false) {
         if (parseFloat($("#exioculto").val()) >= cantidad || $("#tipo").val() != '2') {
           gd = true;
+          total_c = (cantidad * parseFloat($("#preoculto").val())).toFixed(2);
+          cambiarTotal(total_c, 1);
           html = "<tr id='itr" + contadorcp + "'>" +
             "<td>" + cantidad + "</td>" +
             "<td>" + $("#divoculto").val() + "</td>" +
             "<td>" + $("#nomoculto").val() + "</td>";
           if ($('#tipo').val() == '2') {
             html = html + "<td>$ " + parseFloat($("#preoculto").val()).toFixed(2) + "</td>" +
-              "<td>$ " + (cantidad * parseFloat($("#preoculto").val())).toFixed(2) + "</td>";
+              "<td>$ " + total_c + "</td>";
           }
           html = html + "<td>" +
             "<input type='hidden' name='f_producto[]' value ='" + f_producto + "'>" +
@@ -560,12 +566,14 @@ function registrarventa(id) {
     } else {
       c4 = parseFloat($('#cc' + id).text()).toFixed(2);
       tabla = $('#tablaDetalle');
+      total_c = parseFloat(cantidad * c4).toFixed(2);
+      cambiarTotal(total_c, 1);
       html = "<tr id='itr" + contadorcp + "'>" +
         "<td>" + cantidad + "</td>" +
         "<td>" + c2 + "</td>" +
         "<td>" + c1 + "</td>" +
         "<td>$ " + c4 + "</td>" +
-        "<td>$ " + parseFloat(cantidad * c4).toFixed(2) + "</td>" +
+        "<td>$ " + total_c + "</td>" +
         "<td>" +
         "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
         "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
@@ -584,14 +592,17 @@ function registrarventa(id) {
       notaInfo('Ha sido agregado en detalles');
     }
   } else {
+    console.log('Servicio');
     c2 = parseFloat(c2).toFixed(2);
     tabla = $('#tablaDetalle');
+    total_c = parseFloat(cantidad * c2).toFixed(2);
+    cambiarTotal(total_c, 1);
     html = "<tr id='itr" + contadorcp + "'>" +
       "<td>" + cantidad + "</td>" +
       "<td>" + c1 + "</td>" +
       "<td></td>" +
       "<td>$ " + c2 + "</td>" +
-      "<td>$ " + parseFloat(cantidad * c2).toFixed(2) + "</td>" +
+      "<td>$ " + total_c + "</td>" +
       "<td>" +
       "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
       "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
@@ -609,6 +620,15 @@ function registrarventa(id) {
     notaInfo('Ha sido agregado en detalles');
   }
   contadorcp++;
+}
+function cambiarTotal(cantidad, tipo) { //cantidad que recibe y si la cantidad se suma o resta
+  total = parseFloat($('#total_venta').text());
+  if (tipo == 1) {
+    total = parseFloat(total) + parseFloat(cantidad);
+  } else {
+    total = parseFloat(total) - parseFloat(cantidad);
+  }
+  $('#total_venta').text(parseFloat(total).toFixed(2));
 }
 function validarFechaMenorActual(date) {
   actual = $('#fechaM').val();
@@ -633,7 +653,11 @@ function guardarcp() {
   var precio = parseFloat($('#cambioPrecioModal').val());
   if (precio > 0) {
     var cantidad = parseFloat($("#itr" + indice).find('input:eq(1)').val());
+    var precio_anterior = parseFloat($("#itr" + indice).find('input:eq(2)').val());
+    var total_anterior = precio_anterior * cantidad;
+    cambiarTotal(total_anterior, 0);
     var total = cantidad * precio;
+    cambiarTotal(total, 1);
     $("#itr" + indice).find('input:eq(2)').val(precio.toFixed(2));
     $("#itr" + indice).find('td:eq(3)').text("$" + precio.toFixed(2));
     $("#itr" + indice).find('td:eq(4)').text("$" + total.toFixed(2));

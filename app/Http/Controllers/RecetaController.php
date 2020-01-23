@@ -228,8 +228,8 @@ class RecetaController extends Controller
             }
 
             $consulta = $recetas[0]->consulta;
-            $paciente = $consulta->ingreso->paciente->nombre.' '.$consulta->ingreso->paciente->apellido;
-            $id_p = $consulta->ingreso->f_paciente;
+            $paciente = $consulta->ingreso->hospitalizacion->paciente->nombre.' '.$consulta->ingreso->hospitalizacion->paciente->apellido;
+            $id_p = $consulta->ingreso->hospitalizacion->f_paciente;
             $fecha = $consulta->created_at->format('d/m/Y');
             return (compact(
                 'cero',

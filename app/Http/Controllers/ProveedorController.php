@@ -84,13 +84,15 @@ class ProveedorController extends Controller
           $apellidov=$request['apellidov'];
           $telefonov=$request['telefonov'];
           for($a=0;$a<$contador;$a++){
-            Dependiente::create([
+            $dp=Dependiente::create([
               'f_proveedor'=>$id_proveedor,
               'nombre'=>$nombrev[$a],
               'apellido'=>$apellidov[$a],
               'telefono'=>$telefonov[$a],
             ]);
+            Bitacora::bitacora('store','dependientes','visitadores',$dp->id);
           }
+          Bitacora::bitacora('store','proveedors','proveedores',$proveedor->id);
           return redirect('/proveedores')->with('mensaje','¡Guardado!');
           }
     }
@@ -165,6 +167,7 @@ class ProveedorController extends Controller
           $this->validate($request,$validar,$men);
           $proveedor->fill($request->all());
           $proveedor->save();
+          Bitacora::bitacora('update','proveedors','proveedores',$id);
           return redirect('/proveedores')->with('mensaje','¡Editado!');
         }
     }
@@ -178,9 +181,14 @@ class ProveedorController extends Controller
     public function destroy($id)
     {
       try {
+        DB::beginTransaction();
+        $dependientes=Dependiente::where('f_proveedor',$id)->get();
+        foreach($dependientes as $d){
+          $d->delete();
+          Bitacora::bitacora('destroy','dependientes','visitadores',$d->id);
+        }
         $proveedores = Proveedor::findOrFail($id);
         $proveedores->delete();
-        return redirect('/proveedores?estado=0');
         Bitacora::bitacora('destroy','proveedors','proveedores',$id);
         DB::commit();
         return redirect('/proveedores?estado=0')->with('mensaje','¡Eliminado!');
