@@ -9,20 +9,31 @@
 <div class="col-sm-6">
 	<div class="x_panel">
 		<div class="form-group">
-			<label class="" for="nombre">Tipo de sangre *</label>
+		<label class="" for="nombre">Tipo de sangre *</label>
 			<div class="input-group mb-2 mr-sm-2">
 				<div class="input-group-prepend">
 					<div class="input-group-text"><i class="fas fa-tint"></i></div>
 				</div>
 				<select class="form-control form-control-sm" name="tipoSangre" id="campo1">
+					@if ($create)
 					<option value="A+">A+</option>
-					<option value="A-">A-</option>
-					<option value="B+">B+</option>
-					<option value="B-">B-</option>
-					<option value="AB+">AB+</option>
-					<option value="AB-">AB-</option>
-					<option value="O+">O+</option>
-					<option value="O-">O-</option>
+						<option value="A-">A-</option>
+						<option value="B+">B+</option>
+						<option value="B-">B-</option>
+						<option value="AB+">AB+</option>
+						<option value="AB-">AB-</option>
+						<option value="O+">O+</option>
+						<option value="O-">O-</option>
+					@else
+						<option value="A+" {{($tipeo ==='A+') ? 'selected' : ''}}>A+</option>
+						<option value="A-" {{($tipeo ==='A-') ? 'selected' : ''}}>A-</option>
+						<option value="B+" {{($tipeo ==='B+') ? 'selected' : ''}}>B+</option>
+						<option value="B-" {{($tipeo ==='B-') ? 'selected' : ''}}>B-</option>
+						<option value="AB+" {{($tipeo ==='AB+') ? 'selected' : ''}}>AB+</option>
+						<option value="AB-" {{($tipeo ==='AB-') ? 'selected' : ''}}>AB-</option>
+						<option value="O+" {{($tipeo ==='O+') ? 'selected' : ''}}>O+</option>
+						<option value="O-" {{($tipeo ==='O-') ? 'selected' : ''}}>O-</option>
+					@endif
 				</select>
 			</div>
 		</div>
@@ -82,6 +93,10 @@
     var valido = new Validated('campo1');
     valido.required();
 		is_valid = valido.value(true);
+
+		var valido = new Validated('pruebaCruzada');
+    valido.required();
+    is_valid = valido.value(is_valid);
 
 		var valido = new Validated('campo3');
     valido.required();

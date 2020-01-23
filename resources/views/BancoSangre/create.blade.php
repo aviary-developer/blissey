@@ -2,6 +2,7 @@
 @section('layout')
 	@php
 		$fecha = Carbon\Carbon::now()->addMonths(1);
+		$tipeo= null;
 		$create = true;
 	@endphp
 	@include('BancoSangre.Barra.create')

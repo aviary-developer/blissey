@@ -2,6 +2,7 @@
 @section('layout')
 	@php
 		$fecha = $donacion->fechaVencimiento;
+		$tipeo= $donacion->tipoSangre;
 		$create = false;
 	@endphp
 	@include('BancoSangre.Barra.create')
