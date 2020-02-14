@@ -49,27 +49,29 @@
 	</div>
 </div>
 
-<div class="flex-row">
-	<center>
-		<h6>Tiempo de Hospitalización</h6>
-	</center>
-</div>
-
-<div class="row">
-	<div class="form-group col-6">
-		<label class="" for="cantidad_resultado">Cantidad</label>
-		<div class="input-group mb-2 mr-sm-2">
-			<div class="input-group-prepend">
-				<div class="input-group-text"><i class="fas fa-cubes"></i></div>
-			</div>
-			<input type="number" name="c_cantidad" id="c_cantidad" class="form-control form-control-sm" min="1" step="1" value="1">
-		</div>
+<div id="tiempo_de_hospitalizacion">
+	<div class="flex-row">
+		<center>
+			<h6>Tiempo de Hospitalización</h6>
+		</center>
 	</div>
-
-	<div class="form-group col-6">
-		<label class="" for="cantidad_resultado">Tiempo</label>
-		<div class="input-group mb-2 mr-sm-2">
-			<h5 id="c_tiempo">Día</h5>
+	
+	<div class="row">
+		<div class="form-group col-6">
+			<label class="" for="cantidad_resultado">Cantidad</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<div class="input-group-prepend">
+					<div class="input-group-text"><i class="fas fa-cubes"></i></div>
+				</div>
+				<input type="number" name="c_cantidad" id="c_cantidad" class="form-control form-control-sm" min="1" step="1" value="1">
+			</div>
+		</div>
+	
+		<div class="form-group col-6">
+			<label class="" for="cantidad_resultado">Tiempo</label>
+			<div class="input-group mb-2 mr-sm-2">
+				<h5 id="c_tiempo">Día</h5>
+			</div>
 		</div>
 	</div>
 </div>

@@ -19,8 +19,10 @@ $(document).ready(async function () {
 		load_cama();
 		if ($("#tipo").val() == 1) {
 			$("#c_tiempo").text('Día');
+			$("#tiempo_de_hospitalizacion").show();
 		} else {
 			$("#c_tiempo").text("Hora");
+			$("#tiempo_de_hospitalizacion").hide();
 		}
 		v_habitacion();
 	});
@@ -280,14 +282,15 @@ $(document).ready(async function () {
 		} else if (tipo == 0) {
 			t_tipo = 'O';
 		} else {
-			t_tipo = 'M';
+			t_tipo = 'I';
 		}
 
 		await $.ajax({
 			type: 'get',
 			url: $("#guardarruta").val() + '/ingreso/calculadora/cama',
 			data: {
-				id: valor
+				id: valor,
+				tipo: tipo
 			},
 			success: function (r) {
 				$("#c_cama").empty();
@@ -315,7 +318,8 @@ $(document).ready(async function () {
 				type: 'get',
 				url: $("#guardarruta").val() + '/ingreso/calculadora/precio/habitacion',
 				data: {
-					id : cama
+					id: cama,
+					tipo: $("#tipo").val()
 				},
 				success: function (r) {
 					if ($("#tipo").val() == 1) {

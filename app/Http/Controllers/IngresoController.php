@@ -1506,18 +1506,40 @@ class IngresoController extends Controller
 	
 	//Funciones de la calculadora
 	public function c_habitacion (Request $request){
-		$habitacion = Habitacion::where('tipo',$request->tipo)->where('estado',true)->orderBy('numero')->get();
+		if($request->tipo != 0){
+			$tipo = 1;
+		}else{
+			$tipo = 0;
+		}
+		$habitacion = Habitacion::where('tipo',$tipo)->where('estado',true)->orderBy('numero')->get();
 		return $habitacion;
 	}
 
 	public function c_cama (Request $request){
 		$cama = Cama::where('f_habitacion',$request->id)->where('estado',false)->where('activo',true)->orderBy('numero')->get();
+		if($request->tipo == 1){
+			$servicio = Servicio::where('nombre','Ingreso')->first();
+		}else if($request->tipo == 0){
+			$servicio = Servicio::where('nombre', 'Observación')->first();
+		}else{
+			$servicio = Servicio::where('nombre', 'Medio Ingreso')->first();
+		}
+		foreach($cama as $c){
+			$c->precio = $c->precio + $servicio->precio;
+		}
 		return $cama;
 	}
 
 	public function v_habitacion (Request $request){
-		$servicio = Servicio::where('f_cama',$request->id)->first();
-		return $servicio->precio;
+		$cama = Servicio::where('f_cama',$request->id)->first();
+		if ($request->tipo == 1) {
+			$servicio = Servicio::where('nombre', 'Ingreso')->first();
+		} else if ($request->tipo == 0) {
+			$servicio = Servicio::where('nombre', 'Observación')->first();
+		} else {
+			$servicio = Servicio::where('nombre', 'Medio Ingreso')->first();
+		}
+		return $servicio->precio + $cama->precio;
 	}
 
 	//SEP16:Nuevas funciones para trabajar con ingresos

@@ -374,7 +374,7 @@ $(document).on('ready', function () {
 					}
 					var gasto = parseFloat($("#total_gastos").val());
 					gasto += precio;
-					gasto += (gastoprecio * 0.13);
+					gasto += (precio * 0.13);
 					var deuda = parseFloat($("#total_deuda").val());
 					deuda += precio;
 					deuda += (precio * 0.13);
@@ -426,7 +426,7 @@ $(document).on('ready', function () {
 					var frec_text = $("#med_frec").text().trim();
 					frec_text = frec_text.replace('x', ' ');
 					var frec = parseInt(frec_text.trim()) + 1;
-					$("#med_frec").text('x'+frec);
+					$("#med_frec").text(frec);
 					if (contador == 0) {
 						$("#count_notificaciones").removeClass('badge-danger').addClass('badge-success');
 						var html = '<div class="row">' +

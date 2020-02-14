@@ -141,11 +141,11 @@ class PacienteController extends Controller
     public function show($id)
     {
         $paciente = Paciente::find($id);
-        $ingresos = $paciente->ingreso;
+				$hospitalizaciones = $paciente->hospitalizaciones;
         $solicitudes = $paciente->solicitudes;
         return view('Pacientes.show',compact(
           'paciente',
-          'ingresos',
+          'hospitalizaciones',
           'solicitudes'
         ));
     }
@@ -803,7 +803,7 @@ class PacienteController extends Controller
       $total += Ingreso::honorario_gastos($request->id);
       $total += Ingreso::tratamiento_gastos($request->id);
     }elseif($ingreso->tipo == 3){
-      $total = $ingreso->medico->servicio->precio;
+      $total = $ingreso->hospitalizacion->medico->servicio->precio;
       $total = ($total / 1.13);
     }
 

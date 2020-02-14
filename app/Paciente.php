@@ -92,7 +92,13 @@ class Paciente extends Model
 
     public function solicitudes(){
       return $this->hasMany('App\SolicitudExamen', 'f_paciente')->orderBy('created_at','desc');
-    }
+		}
+
+		public function hospitalizaciones()
+		{
+			return $this->hasMany('App\Hospitalizacion', 'f_paciente')->orderBy('created_at', 'desc');
+		}
+
     public static function foraneos($id){
       $ingresos= Ingreso::where('f_paciente',$id)->orWhere('f_responsable',$id)->count();
       $transacciones=Transacion::where('f_cliente',$id)->count();

@@ -29,32 +29,34 @@
         @php
           $correlativo = 1;
         @endphp
-        @foreach ($ingresos as $ingreso)
-          <tr>
-            <td>{{$correlativo}}</td>
-            <td>{{$ingreso->fecha_ingreso->formatLocalized('%d de %B del %Y')}}</td>
-            <td>
-              @if ($ingreso->tipo == 0)
-                <span class="badge border border-success text-success col-8">Ingreso</span>
-              @elseif($ingreso->tipo == 1)
-                <span class="badge border border-purple text-purple col-8">Medio ingreso</span>
-              @elseif($ingreso->tipo == 2)
-                <span class="badge border border-primary text-primary col-8">Observación</span>
-              @elseif($ingreso->tipo == 3)
-                <span class="badge border border-pink text-pink col-8">Consulta</span>
-              @else
-                <span class="badge border border-info text-info col-8">Curación</span>
-              @endif
-            </td>
-            <td>
-              <center>
-                <button type="button" class="btn btn-info btn-sm datos_ingreso" title="Ver" data-toggle="modal" data-target="#ver_ingreso_pac" data-value={{$ingreso->id}}><i class="fas fa-info-circle"></i></button>
-              </center>
-            </td>
-          </tr>
-          @php
-            $correlativo++;
-          @endphp
+				@foreach ($hospitalizaciones as $hospitalizacion)
+					@foreach ($hospitalizacion->ingreso as $ingreso)
+							<tr>
+							<td>{{$correlativo}}</td>
+							<td>{{$ingreso->fecha_ingreso->formatLocalized('%d de %B del %Y')}}</td>
+							<td>
+								@if ($ingreso->tipo == 0)
+									<span class="badge border border-success text-success col-8">Ingreso</span>
+								@elseif($ingreso->tipo == 1)
+									<span class="badge border border-purple text-purple col-8">Medio ingreso</span>
+								@elseif($ingreso->tipo == 2)
+									<span class="badge border border-primary text-primary col-8">Observación</span>
+								@elseif($ingreso->tipo == 3)
+									<span class="badge border border-pink text-pink col-8">Consulta</span>
+								@else
+									<span class="badge border border-info text-info col-8">Curación</span>
+								@endif
+							</td>
+							<td>
+								<center>
+									<button type="button" class="btn btn-info btn-sm datos_ingreso" title="Ver" data-toggle="modal" data-target="#ver_ingreso_pac" data-value={{$ingreso->id}}><i class="fas fa-info-circle"></i></button>
+								</center>
+							</td>
+						</tr>
+						@php
+							$correlativo++;
+						@endphp
+					@endforeach
         @endforeach
       </tbody>
     </table>

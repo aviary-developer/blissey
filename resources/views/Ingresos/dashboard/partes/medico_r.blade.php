@@ -34,7 +34,7 @@
 					</div>
 				</div>
 				<div class="flex-row">
-					<span class="badge badge-primary float-right" id="med_frec">{{'Frecuencia: '.$medico['frec']}}</span>
+					<span class="badge badge-primary float-right">{{'Frecuencia: '}} <span id="med_frec">{{$medico['frec']}}</span> </span>
 				</div>
 			</div>
 		@endforeach
