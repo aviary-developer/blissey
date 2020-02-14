@@ -18,6 +18,10 @@ class UsuarioGeneral
     {
       if(auth()->check())
       {
+        if(auth()->user()->cambio==1 && $request->method() != 'POST' )
+        {
+          return redirect('usuarios/'.auth()->user()->id);
+        }
 				$contador_empresa = Empresa::count();
 				if($contador_empresa > 0 || $request->path() == 'grupo_promesa/create' || $request->method() == 'POST'){
 					return $next($request);

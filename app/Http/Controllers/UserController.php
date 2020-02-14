@@ -74,6 +74,7 @@ class UserController extends Controller
         if($request->hasfile('foto')){
           $user->foto = $request->file('foto')->store('public/foto');
         }
+        $user->cambio=1;
         $user->save();
         if (isset($request->telefono)) {
           foreach ($request->telefono as $k => $val) {
@@ -335,9 +336,10 @@ class UserController extends Controller
         $nueva = bcrypt($request['nueva']);
         $usuario = User::find($id);
         $usuario->password = $nueva;
+        $usuario->cambio=0;
         $usuario->save();
         Bitacora::bitacora('update','users','usuarios',$id);
-        return "exito";
+        return redirect('/logout');
       }else{
         return "error";
       }

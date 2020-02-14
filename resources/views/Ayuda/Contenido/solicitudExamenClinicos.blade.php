@@ -84,7 +84,7 @@
 			<ul class="nav flex-column nav-pills" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
-						Nueva
+						Nueva solicitud
 					</a>
 				</li>
 				<li class="nav-item">

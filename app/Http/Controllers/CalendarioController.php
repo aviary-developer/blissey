@@ -19,6 +19,10 @@ class CalendarioController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->cambio)
+        {
+            return redirect('usuarios/'.Auth::user()->id);
+        }
         $usuarios = User::where('estado',true)->orderBy('apellido')->get();
 
         $hora_i = Carbon::createFromTime(null, 0, 0);

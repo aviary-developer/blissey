@@ -68,4 +68,9 @@
   </div>
   @include('Usuarios.Partes.modal_contra')
   {!!Html::script('js/scripts/Usuarios.js')!!}
+  @if($usuario->cambio==1)
+  <script type="text/javascript">
+    $('#modal-c').modal('show');
+  </script>
+  @endif
 @endsection

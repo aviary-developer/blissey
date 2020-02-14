@@ -455,7 +455,7 @@ Route::get('/ayuda/grupoPromesa',function(){
 Route::get('/ayuda/agenda',function(){
 	return view('Ayuda.Contenido.agenda');
 });
-Route::get('/ayuda/examenesclinicos',function(){
+Route::get('/ayuda/examenesClinicos',function(){
 	return view('Ayuda.Contenido.examenesClinicos');
 });
 Route::get('/ayuda/reactivos',function(){
@@ -466,6 +466,12 @@ Route::get('/ayuda/compras',function(){
 });
 Route::get('/ayuda/productos',function(){
 	return view('Ayuda.Contenido.productos');
+});
+Route::get('/ayuda/historial',function(){
+	return view('Ayuda.Contenido.historial');
+});
+Route::get('/ayuda/transacciones',function(){
+	return view('Ayuda.Contenido.transacciones');
 });
 Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	$tipo = $request->tipo;
