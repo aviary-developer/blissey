@@ -3,8 +3,12 @@
   font-size: 13pt;
   color: black;
 }
+@font-face{
+	font-family: "Vivaldo";
+	src: url("../font/VIVALDII.TTF");
+}
 .vivaldi{
-  font-family: "Vivaldi";
+  font-family: "Vivaldo";
 }
 .font-plus{
 	font-size: 120%;
