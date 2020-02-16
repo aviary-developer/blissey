@@ -8,20 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Blissey</title>
-    <!-- Bootstrap -->
-    {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
-    <!-- Font Awesome -->
-    {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
-    <!-- NProgress -->
-    {!!Html::style('assets/nprogress/nprogress.css')!!}
-    <!-- Animate.css -->
-    {!!Html::style('assets/iCheck/skins/flat/green.css')!!}
+    <!-- Bootstrap 4 -->
+		{!! Html::style('library/Bootstrap4/css/bootstrap.css') !!}
 
-    {!!Html::style('assets/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}
-
-    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
-    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
-    {!!Html::style('assets/build/css/custom.min.css')!!}
+		<!-- FontAwesome -->
+		{!! Html::style('library/FontAwesome/css/all.css') !!}
+    <!-- Custom -->
+  	{!!Html::style('library/Gentelella/custom.css')!!}
+    {!!Html::style('library/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('library/pnotify/dist/pnotify.buttons.css')!!}
     {{--  --}}
   </head>
 
@@ -33,19 +28,20 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            {!!Form::open(['route'=>'password.request','method'=>'POST','autocomplete'=>'off'])!!}
+            <input type="hidden" value="" id="guardarruta">
+            {!!Form::open(['route'=>'password.request','method'=>'POST','autocomplete'=>'off','id'=>'formulario'])!!}
               {{ csrf_field()}}
               <input type="hidden" name="token" value="{{ $token }}">
               <h1>Recuperar contraseña</h1>
               <div>
-                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" placeholder="Correo electrónico" required autofocus>
+                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" placeholder="Correo electrónico" autofocus>
 
-                <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña">
 
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña" required>
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña">
               </div>
               <div>
-                {!! Form::submit('Restablecer',['class'=>'btn btn-primary']) !!}
+                {!! Form::button('Restablecer',['class'=>'btn btn-primary','onclick'=>'aceptar();']) !!}
                 <a class="reset_pass" href={{asset( '/')}}>Inicio</a>
               </div>
 
@@ -66,19 +62,66 @@
         </div>
       </div>
     </div>
+        <!-- jQuery -->
+  	{!!Html::script('library/Gentelella/app.js')!!}
+    {!!Html::script('library/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('library/pnotify/dist/pnotify.buttons.js')!!}
+    {!!Html::script('library/DataTable/datatables.js')!!}
+    {{-- {!!Html::script('js/general.js')!!} --}}
   </body>
-  {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
-  {!!Html::script('assets/bootstrap/dist/js/bootstrap.min.js')!!}
-  {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
-  {!!Html::script('assets/nprogress/nprogress.js')!!}
-  {!!Html::script('assets/bootstrap-progressbar/bootstrap-progressbar.min.js')!!}
-  {!!Html::script('assets/iCheck/icheck.min.js')!!}
-
-  {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
-  {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
-
-{!!Html::script('assets/build/js/custom.js')!!}
-
+  <script type="text/javascript">
+  function aceptar(){
+    r_email= $("#email").val();
+    r_password= $("#password").val();
+    r_password_c= $("#password-confirm").val();
+    if(r_email!="" && r_password!="" && r_password_c!=""){
+      var dominio = window.location.host;
+      var protocolo = window.location.protocol;
+      if (dominio == "localhost" || dominio == "127.0.0.1") {
+        $('#guardarruta').val(protocolo + "//" + "localhost/blissey/public");
+      } else {
+        $('#guardarruta').val(protocolo + "//" + dominio + "/blissey/public");
+      }
+    // $.ajax({
+    //       type: "POST",
+    //       url: $('#guardarruta').val() + "/cpsw",//Comparar password con usuario
+    //       data: {
+    //         email: r_email,
+    //         password: r_password,
+    //       },
+    //       success: function (respuesta) {
+    //         console.log(respuesta);
+    //         if (respuesta != "1") {
+    //           new PNotify({
+    //             title: '¡Error!',
+    //             text: 'La contraseña no debe contener al nombre de usuario o correo',
+    //             type: 'error',
+    //             styling: 'bootstrap3'
+    //           });
+    //         }else {
+    //           $("#formulario").submit();
+    //         }
+    //       }
+    //     });
+        console.log($('#guardarruta').val());
+        var ruta = $('#guardarruta').val() + "/cpsw/" + r_email+'/'+r_password;
+        $.get(ruta, function (res) {
+          if(res=="error"){
+            new PNotify({
+              title: '¡Error!',
+              text: 'La contraseña no debe contener al nombre de usuario o correo',
+              type: 'error',
+              styling: 'bootstrap3'
+            });
+          }else{
+            $("#formulario").submit();
+          }
+        });
+      }else{
+        $("#formulario").submit();
+      }
+  }
+  </script>
 </html>
 @foreach ($errors->all() as $error)
   <?php echo("<script language='javascript' >

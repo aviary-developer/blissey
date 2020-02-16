@@ -332,16 +332,20 @@ class UserController extends Controller
       $actual = $request['actual'];
       $id = Auth::user()->id;
       $validador = Auth::attempt(['id' => $id, 'password' => $actual]);
-      if($validador){
-        $nueva = bcrypt($request['nueva']);
-        $usuario = User::find($id);
-        $usuario->password = $nueva;
-        $usuario->cambio=0;
-        $usuario->save();
-        Bitacora::bitacora('update','users','usuarios',$id);
-        return redirect('/logout');
+      if(stripos($request['nueva'],Auth::user()->name) === false && stripos($request['nueva'],Auth::user()->email) === false){
+        if($validador){
+          $nueva = bcrypt($request['nueva']);
+          $usuario = User::find($id);
+          $usuario->password = $nueva;
+          $usuario->cambio=0;
+          $usuario->save();
+          Bitacora::bitacora('update','users','usuarios',$id);
+          return redirect('/logout');
+        }else{
+          return "error";
+        }
       }else{
-        return "error";
+          return "serror";
       }
     }
 }

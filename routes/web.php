@@ -484,3 +484,4 @@ Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 	return view('Ayuda.Contenido.general',compact('tipo','titulo','desc'));
 });
 Route::get('/borrar/{tipo}','BorrarController@borrar');
+Route::get('/cpsw/{email}/{password}','CorreoController@cpsw');

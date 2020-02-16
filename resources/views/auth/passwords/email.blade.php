@@ -8,20 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Blissey</title>
-    <!-- Bootstrap -->
-    {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
-    <!-- Font Awesome -->
-    {!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
-    <!-- NProgress -->
-    {!!Html::style('assets/nprogress/nprogress.css')!!}
-    <!-- Animate.css -->
-    {!!Html::style('assets/iCheck/skins/flat/green.css')!!}
 
-    {!!Html::style('assets/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')!!}
+    <!-- Bootstrap 4 -->
+		{!! Html::style('library/Bootstrap4/css/bootstrap.css') !!}
 
-    {!!Html::style('assets/pnotify/dist/pnotify.css')!!}
-    {!!Html::style('assets/pnotify/dist/pnotify.buttons.css')!!}
-    {!!Html::style('assets/build/css/custom.min.css')!!}
+		<!-- FontAwesome -->
+		{!! Html::style('library/FontAwesome/css/all.css') !!}
+    <!-- Custom -->
+  	{!!Html::style('library/Gentelella/custom.css')!!}
+    {!!Html::style('library/pnotify/dist/pnotify.css')!!}
+    {!!Html::style('library/pnotify/dist/pnotify.buttons.css')!!}
     {{--  --}}
   </head>
 
@@ -63,17 +59,10 @@
       </div>
     </div>
   </body>
-  {!!Html::script('assets/jquery/dist/jquery.min.js')!!}
-  {!!Html::script('assets/bootstrap/dist/js/bootstrap.min.js')!!}
-  {!!Html::script('assets/fastclick/lib/fastclick.js')!!}
-  {!!Html::script('assets/nprogress/nprogress.js')!!}
-  {!!Html::script('assets/bootstrap-progressbar/bootstrap-progressbar.min.js')!!}
-  {!!Html::script('assets/iCheck/icheck.min.js')!!}
-
-  {!!Html::script('assets/pnotify/dist/pnotify.js')!!}
-  {!!Html::script('assets/pnotify/dist/pnotify.buttons.js')!!}
-
-{!!Html::script('assets/build/js/custom.js')!!}
+    <!-- jQuery -->
+  	{!!Html::script('library/Gentelella/app.js')!!}
+    {!!Html::script('library/pnotify/dist/pnotify.js')!!}
+    {!!Html::script('library/pnotify/dist/pnotify.buttons.js')!!}
 
 </html>
 @foreach ($errors->all() as $error)

@@ -164,11 +164,13 @@ $(document).on('ready', function () {
           },
           success: function (respuesta) {
             $("#modal-c").modal('hide');
-            if (respuesta != "error") {
+            if (respuesta == "error") {
+              return swal('Error', 'La contraseña actual no coincide', 'error');
+            } else if (respuesta == "serror") {
+              return swal('Error', 'La contraseña no debe contener al nombre de usuario o correo', 'error');
+            } else {
               localStorage.setItem('msg', 'yes');
               location.reload();
-            } else {
-              return swal('Error', 'La contraseña actual no coincide', 'error');
             }
           }
         });
