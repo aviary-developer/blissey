@@ -154,7 +154,9 @@
             @endif
           </select>
         </div>
-      </div>
+			</div>
+		@else
+			<input type="hidden" name="" id="tipoUsuario" value="{{$usuarios->tipoUsuario}}">
     @endif
     <div class="form-group">
       <label class="" for="rol">Rol *</label>

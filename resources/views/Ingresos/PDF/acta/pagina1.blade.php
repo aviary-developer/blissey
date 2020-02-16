@@ -6,114 +6,88 @@
       <br>
       <h4>GENERALES DEL CLIENTE</h4>
     </center>
-  </div>
-  <div>
-    <div class="col-xs-9">
-      <div class="col-xs-2">
-        <span>PACIENTE:</span>
-      </div>
-      <div class="col-xs-10 subrayar">
-        <b>{{' '.$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b>
-      </div>
-    </div>
-    <div class="col-xs-3">
-      <div class="col-xs-6">
-        <span>EDAD:</span>
-      </div>
-      <div class="col-xs-6 subrayar">
-        <b>
-          {{' '.$ingreso->paciente->fechaNacimiento->age.' años'}}
-        </b>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="col-xs-9">
-      <div class="col-xs-2">
-        <span>DIRECCIÓN:</span>
-      </div>
-      <div class="col-xs-10 subrayar">
-        @if ($ingreso->paciente->direccion != null)
-          <b>{{$ingreso->paciente->direccion}}</b>
-        @else
-          <i><b class="red">Falta la dirección</b></i>
-        @endif
-      </div>
-    </div>
-    <div class="col-xs-3">
-      <div class="col-xs-6">
-        <span>TELÉFONO:</span>
-      </div>
-      <div class="col-xs-6 subrayar">
-        @if ($ingreso->paciente->telefono != null)  
-          <b>{{' '.$ingreso->paciente->telefono}}</b>
-        @else
-          <i><b class="red">Falta el tel.</b></i>
-        @endif
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="col-xs-7">
-      <div class="col-xs-8 row">
-        <div class="col-xs-4">
-          FECHA:
-        </div>
-        <div class="col-xs-8 subrayar">
-          <b>{{' '.$ingreso->fecha_ingreso->format('d / m / Y g:i a')}}</b>
-        </div>
-      </div>
-      <div class="col-xs-4 row">
-        <div class="col-xs-8">
-          <span>
-            HABITACIÓN:
-          </span>
-        </div>
-        <div class="col-xs-3 subrayar">
-          <b>{{' '.$ingreso->habitacion->numero}}</b>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-5">
-      <div class="col-xs-6">
-        <span>
-          EXPEDIENTE NO.:
-        </span>
-      </div>
-      <div class="col-xs-6 subrayar">
-        <b>{{$ingreso->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}</b>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div class="col-xs-12">
-      <div class="col-xs-5">
-        <span>
-          MÉDICO QUE AUTORIZA EL INGRESO:
-        </span>
-      </div>
-      <div class="col-xs-7  subrayar">
-        <b>
-          @if ($ingreso->medico->sexo)
+	</div>
+	<div class="row px">
+		{{-- Datos del paciente --}}
+		<div class="col-xs-7">
+			<div class="row">
+				<span class="text-monospace">Paciente:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->hospitalizacion->paciente->nombre.' '.$ingreso->hospitalizacion->paciente->apellido}}</b> 
+				<span class="label label-default">
+					{{' '.$ingreso->hospitalizacion->paciente->fechaNacimiento->age.' años'}}
+				</span>
+			</div>
+			<hr class="my">
+
+			<div class="row">
+				<span class="text-monospace">Dirección:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->hospitalizacion->paciente->direccion}}</b>
+			</div>
+			<hr class="my">
+
+			<div class="row">
+				<span class="text-monospace">Teléfono:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->hospitalizacion->paciente->telefono}}</b>
+			</div>
+			<hr class="my">
+
+			<div class="row">
+				<span class="text-monospace">Recepcionista:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->recepcion->nombre.' '.$ingreso->recepcion->apellido}}</b>
+			</div>
+			<hr class="my">
+		</div>
+
+		<div class="col-xs-5">
+			<div class="row">
+				<span class="text-monospace">Expediente:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->hospitalizacion->expediente.'-PTEHDN-'.$ingreso->fecha_ingreso->format('Y')}}</b>
+			</div>
+			<hr class="my">
+
+			<div class="row">
+				<span class="text-monospace">Fecha de ingreso:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->fecha_ingreso->format('d / m / Y g:i a')}}</b>
+			</div>
+			<hr class="my">
+
+			<div class="row">
+				<span class="text-monospace">Habitación:</span>
+			</div>
+			<div class="row">
+				<b>{{$ingreso->habitacion->servicio->nombre}}</b>
+			</div>
+			<hr class="my">
+
+			<div class="row">
+				<span class="text-monospace">Médico que autoriza el ingreso:</span>
+			</div>
+			<div class="row">
+				<b>
+          @if ($ingreso->hospitalizacion->medico->sexo)
             {{" Dr. "}}
           @else
             {{" Dra. "}}
           @endif
-          {{$ingreso->medico->nombre.' '.$ingreso->medico->apellido}}
+          {{$ingreso->hospitalizacion->medico->nombre.' '.$ingreso->hospitalizacion->medico->apellido}}
         </b>
-      </div>
-    </div>
-    <div class="col-xs-12">
-      <div class="col-xs-2">
-        <span>
-          RECEPCIONISTA:
-        </span>
-      </div>
-      <div class="col-xs-10 subrayar">
-        <b>{{$ingreso->recepcion->nombre.' '.$ingreso->recepcion->apellido}}</b>
-      </div>
-    </div>
-  </div>
+			</div>
+			<hr class="my">
+		</div>
+	</div>
+
   <div class="col-xs-12">
     <br>
     <center>
@@ -122,7 +96,7 @@
   </div>
   <div class="col-xs-12 text-justify">
     <p class="col-xs-12">
-      Yo, <b class="subrayar">{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido.', '}}</b>&nbsp; mayor de edad con Documento Único de Identidad, número &nbsp;<b class="subrayar">{{$ingreso->responsable->dui}}</b>, &nbsp;actuando en calidad de responsable del paciente de generales antes expresadas, estoy conforme y enterado de los costos hospitalarios que implica el tratamiento y la enfermedad por lo cual esta {{($ingreso->paciente->sexo)?"ingresado":"ingresada"}} y acepto que diariamente se me informe el estado de cuenta al que me comprometo cancelar.
+      Yo, <b class="">{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido.', '}}</b>&nbsp; mayor de edad con Documento Único de Identidad, número &nbsp;<b class="">{{$ingreso->hospitalizacion->responsable->dui}}</b>, &nbsp;actuando en calidad de responsable del paciente de generales antes expresadas, estoy conforme y enterado de los costos hospitalarios que implica el tratamiento y la enfermedad por lo cual esta {{($ingreso->hospitalizacion->paciente->sexo)?"ingresado":"ingresada"}} y acepto que diariamente se me informe el estado de cuenta al que me comprometo cancelar.
     </p>
 		<br>
 		<!--
@@ -142,7 +116,7 @@
             <td>12:00 pm</td>
             <td>$ 999.99</td>
             <td>Contenido</td>
-            <td>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</td>
+            <td>{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}</td>
             <td>Firma</td>
           </tr>
           <tr>
@@ -150,7 +124,7 @@
             <td>12:00 pm</td>
             <td>$ 999.99</td>
             <td>Contenido</td>
-            <td>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</td>
+            <td>{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}</td>
             <td>Firma</td>
           </tr>
           <tr>
@@ -158,7 +132,7 @@
             <td>12:00 pm</td>
             <td>$ 999.99</td>
             <td>Contenido</td>
-            <td>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</td>
+            <td>{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}</td>
             <td>Firma</td>
           </tr>
           <tr>
@@ -166,7 +140,7 @@
             <td>12:00 pm</td>
             <td>$ 999.99</td>
             <td>Contenido</td>
-            <td>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</td>
+            <td>{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}</td>
             <td>Firma</td>
           </tr>
           <tr>
@@ -174,7 +148,7 @@
             <td>12:00 pm</td>
             <td>$ 999.99</td>
             <td>Contenido</td>
-            <td>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</td>
+            <td>{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}</td>
             <td>Firma</td>
           </tr>
         </tbody>

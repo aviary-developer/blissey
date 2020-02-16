@@ -32,17 +32,17 @@
     </p>
     <p class="col-xs-12">
       <br><br>
-      <span class="col-xs-3">NOMBRE DEL CLIENTE:</span>
+      <span class="col-xs-3 text-monospace">Nombre del cliente:</span>
       <b class="col-xs-9 subrayar">
-        {{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}
+        {{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}
       </b>
     </p>
     <br>
     <p class="col-xs-12">
-      <span class="col-xs-3">DUI DEL CLIENTE:</span>
+      <span class="col-xs-3 text-monospace">DUI del cliente:</span>
       <b class="col-xs-9 subrayar">
-        @if ($ingreso->responsable->dui != null)
-          {{$ingreso->responsable->dui}}
+        @if ($ingreso->hospitalizacion->responsable->dui != null)
+          {{$ingreso->hospitalizacion->responsable->dui}}
         @else
           <i class="red">Falta DUI</i>
         @endif
@@ -50,10 +50,10 @@
     </p>
     <br>
     <p class="col-xs-12">
-      <span class="col-xs-3">DIRECCIÓN DEL CLIENTE:</span>
+      <span class="col-xs-3 text-monospace">Direccion del cliente:</span>
       <b class="col-xs-9 subrayar">
-        @if ($ingreso->responsable->direccion != null)
-          {{$ingreso->responsable->direccion}}  
+        @if ($ingreso->hospitalizacion->responsable->direccion != null)
+          {{$ingreso->hospitalizacion->responsable->direccion}}  
         @else
           <i class="red">Falta la dirección</i>
         @endif
@@ -61,7 +61,7 @@
     </p>
     <br>
     <p class="col-xs-12">
-      <span class="col-xs-3">FIRMA DEL CLIENTE:</span>
+      <span class="col-xs-3 text-monospace">Firma del cliente:</span>
       <b class="col-xs-9 subrayar">F.</b>
     </p>
   </div>

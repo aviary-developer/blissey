@@ -1031,5 +1031,38 @@ class PacienteController extends Controller
       $nombre = $pacientes->nombre.' '.$pacientes->apellido;
 
       return compact('nombre','id');
-  }
+	}
+	
+	public function acta_datos(Request $request){
+		
+		DB::beginTransaction();		
+		try{
+			$paciente = Paciente::find($request->paciente_id);
+			$paciente->nombre = $request->nombre;
+			$paciente->apellido = $request->apellido;
+			$paciente->fechaNacimiento = $request->fecha;
+			$paciente->dui = $request->dui;
+			$paciente->direccion = $request->direccion;
+			$paciente->telefono = $request->telefono;
+
+			$paciente->save();
+
+			if($request->paciente_id != $request->responsable_id){
+				$responsable = Paciente::find($request->responsable_id);
+
+				$responsable->nombre = $request->r_nombre;
+				$responsable->apellido = $request->r_apellido;
+				$responsable->dui = $request->r_dui;
+
+				$responsable->save();
+			}
+
+			DB::commit();
+			return 1;
+		}catch(Exception $e){
+			
+			DB::rollback();
+			return 0;
+		}
+	}
 }

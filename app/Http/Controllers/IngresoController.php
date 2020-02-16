@@ -1606,4 +1606,14 @@ class IngresoController extends Controller
 			return 0;
 		}
 	}
+
+	//FEB15.20 Actualización del acta de consentimiento, solicita la información antes de generár el acta
+	public function acta_datos(Request $request){
+		$hospitalizacion = Hospitalizacion::find($request->id);
+		$paciente = $hospitalizacion->paciente;
+		$paciente->edad = $paciente->fechaNacimiento->age;
+		$responsable = $hospitalizacion->responsable;
+		$responsable->edad = $responsable->fechaNacimiento->age;
+		return compact('paciente','responsable');
+	}
 }

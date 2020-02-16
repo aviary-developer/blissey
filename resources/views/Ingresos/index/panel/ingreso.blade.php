@@ -6,7 +6,7 @@
 <div class="flex-row border border-success mb-1"></div>
 <div class="flex-row">
   @if ($habitaciones_ingreso != null)
-    <table class="table table-hover table-sm">
+    <table class="table table-hover table-sm" id="tabla-ingreso-index">
       <thead>
         <th style="width: 87px">Exp.</th>
         <th>Paciente</th>
@@ -116,3 +116,4 @@
   @endif
 </div>
 @include('Ingresos.index.modal.ingreso')
+@include('Ingresos.index.modal.acta_modal')

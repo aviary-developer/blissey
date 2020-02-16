@@ -1,10 +1,15 @@
 {!!Form::open(['id' => 'formulario' ,'method'=>'POST'])!!}
 @if ($index)
   <div class="btn-group alignright">
-    @if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)    
+		@if (Auth::user()->tipoUsuario == "Recepción" && $ingreso->tipo < 3)  
+		  <button type="button" data-toggle="modal" data-target="#acta" class="btn btn-sm btn-dark" title="Acta de consentimiento" data-id="{{$ingreso->hospitalizacion->id}}" data-ingreso="{{$ingreso->id}}" id="generated_acta">
+				<i class="fas fa-print"></i>
+			</button>
+			<!--
       <a href={!! asset('/acta/'.$ingreso->id)!!} class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="Acta de consentimiento" target="_blank">
         <i class="fa fa-print"></i>
-      </a>
+			</a>
+		-->
     @endif
     <a href={!! asset('/ingresos/'.$ingreso->id)!!} class="btn btn-sm btn-info " data-toggle="tooltip" data-placement="top" title="Ver">
       <i class="fa fa-info-circle"></i>
@@ -45,6 +50,7 @@
     @endif
   </div>
 @endif
+
 {!!Form::close()!!}
 
 <script type="text/javascript">

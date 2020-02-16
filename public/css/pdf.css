@@ -7,8 +7,15 @@
 	font-family: "Vivaldo";
 	src: url("../font/VIVALDII.TTF");
 }
+@font-face{
+	font-family: "Consola";
+	src: url("../font/consola.ttf");
+}
 .vivaldi{
   font-family: "Vivaldo";
+}
+.text-monospace{
+	font-family: "Consola";
 }
 .font-plus{
 	font-size: 120%;
@@ -54,4 +61,10 @@
 }
 h4 center{
   font-size: 14pt;
+}
+.px{
+	padding: 0px 0px 0px 25px;
+}
+.my{
+	margin: 3px 0px 3px 0px;
 }

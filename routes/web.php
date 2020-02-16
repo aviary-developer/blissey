@@ -332,6 +332,9 @@ Route::group(['middleware'=>'general'], function(){
 	Route::get('/ingreso/calculadora/habitacion','IngresoController@c_habitacion')->name('ingreso.calculadora.habitacion');
 	Route::get('/ingreso/calculadora/cama','IngresoController@c_cama')->name('ingreso.calculadora.cama');
 	Route::get('/ingreso/calculadora/precio/habitacion','IngresoController@v_habitacion')->name('ingreso.calculadora.precio.habitacion');
+	//Rutas para el acta de consentimiento
+	Route::get('/ingreso/acta/datos','IngresoController@acta_datos')->name('ingreso.acta.datos');
+	Route::post('/paciente/acta/datos','PacienteController@acta_datos')->name('paciente.acta.datos');
   //Requisiciones farmacia
   Route::resource('requisiciones','RequisicionController');
   //Categoria $productos

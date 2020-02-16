@@ -12,18 +12,18 @@
     @endphp
     <div class="col-xs-12 text-justify">
       <p class="col-xs-12">
-        @if ($ingreso->f_paciente != $ingreso->f_responsable)  
-          Yo, <b>{{$ingreso->responsable->nombre.' '.$ingreso->responsable->apellido}}</b> con Documento Único de Identidad personal número:&nbsp;
-          @if ($ingreso->responsable->dui != null)
-            <b>{{$ingreso->responsable->dui}}</b>    
+        @if ($ingreso->hospitalizacion->f_paciente != $ingreso->hospitalizacion->f_responsable)  
+          Yo, <b>{{$ingreso->hospitalizacion->responsable->nombre.' '.$ingreso->hospitalizacion->responsable->apellido}}</b> con Documento Único de Identidad personal número:&nbsp;
+          @if ($ingreso->hospitalizacion->responsable->dui != null)
+            <b>{{$ingreso->hospitalizacion->responsable->dui}}</b>    
           @else
             <b><i class="red">Falta DUI</i></b>
           @endif
-          en mi carácter como Representante Legal de mi pariente, <b>{{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b> , <b><i>doy mi consentimiento</i></b>, al Personal Médico, Cirujano y de Enfermería de este Centro Hospitalario, para que traten la enfermedad de mi Representado, en la forma Técnica que ellos crean convenientes, a fin de recuperar la salud de mi Representado.
+          en mi carácter como Representante Legal de mi pariente, <b>{{$ingreso->hospitalizacion->paciente->nombre.' '.$ingreso->hospitalizacion->paciente->apellido}}</b> , <b><i>doy mi consentimiento</i></b>, al Personal Médico, Cirujano y de Enfermería de este Centro Hospitalario, para que traten la enfermedad de mi Representado, en la forma Técnica que ellos crean convenientes, a fin de recuperar la salud de mi Representado.
         @else
-          Yo, <b>{{$ingreso->paciente->nombre.' '.$ingreso->paciente->apellido}}</b>&nbsp;  con Documento Único de Identidad personal número &nbsp;
-          @if ($ingreso->paciente->dui != null)
-            <b>{{$ingreso->paciente->dui}}</b>    
+          Yo, <b>{{$ingreso->hospitalizacion->paciente->nombre.' '.$ingreso->hospitalizacion->paciente->apellido}}</b>&nbsp;  con Documento Único de Identidad personal número &nbsp;
+          @if ($ingreso->hospitalizacion->paciente->dui != null)
+            <b>{{$ingreso->hospitalizacion->paciente->dui}}</b>    
           @else
             <b><i class="red">Falta DUI</i></b>
           @endif
@@ -44,7 +44,7 @@
         <br><br><br>
       </p>
       <p class="col-xs-6 subrayar">F.</p>
-      <p class="col-xs-12">Firma o Huella del {{($ingreso->paciente->fechaNacimiento->age < 18)?"Representante Legal":"Paciente"}}</p>
+      <p class="col-xs-12">Firma o Huella del {{($ingreso->hospitalizacion->paciente->fechaNacimiento->age < 18)?"Representante Legal":"Paciente"}}</p>
       <p class="col-xs-6 subrayar">F.</p>
       <p class="col-xs-12">Nombre y firma del tesitigo, del acompañante o del que firma a ruego</p>
       <p class="col-xs-6 subrayar">DUI No.</p>
