@@ -25,7 +25,7 @@
                     <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
                   </div>
                   <input type="hidden" id="cpoculto" value="">
-                  {!! Form::number('cambioPrecio',null,['id'=>'cambioPrecioModal','class'=>'form-control form-control-sm','placeholder'=>'Precio']) !!}
+                  {!! Form::number('cambioPrecio',0,['id'=>'cambioPrecioModal','class'=>'form-control form-control-sm','placeholder'=>'Precio']) !!}
                 </div>
               </div>  
             </div>

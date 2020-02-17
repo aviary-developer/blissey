@@ -381,7 +381,7 @@ $(document).on('ready', function () {
           if ($('#tipo').val() == '2') {
             html = html + "<input type='hidden' name='precio[]' value ='" + $("#preoculto").val() + "'>" +
               "<input type='hidden' name='tipo_detalle[]' value ='1'>" +
-              "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ")'>" +
+              "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
               "<i class='fas fa-dollar-sign'></i>" +
               "</button>";
           }
@@ -579,7 +579,7 @@ function registrarventa(id) {
         "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
         "<input type='hidden' name='precio[]' value='" + c4 + "'>" +
         "<input type='hidden' name='tipo_detalle[]' value='1'>" +
-        "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ")'>" +
+        "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
         "<i class='fas fa-dollar-sign'></i>" +
         "</button>" +
         "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
@@ -608,7 +608,7 @@ function registrarventa(id) {
       "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
       "<input type='hidden' name='precio[]' value='" + c2 + "'>" +
       "<input type='hidden' name='tipo_detalle[]' value='2'>" +
-      "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ")'>" +
+      "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
       "<i class='fas fa-dollar-sign'></i>" +
       "</button>" +
       "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
@@ -645,7 +645,7 @@ function limpiarCliente() {
 }
 function cambiarPrecio(ntr) {
   $('#cpoculto').val(ntr);
-  var pa = $("#itr" + ntr).find('input:eq(2)').val();//precio actual el casilla
+  var pa = $("#itr" + ntr).find('input:eq(2)').val();//precio actual de casilla
   $('#cambioPrecioModal').val(pa);
 }
 function guardarcp() {
@@ -662,6 +662,7 @@ function guardarcp() {
     $("#itr" + indice).find('td:eq(3)').text("$" + precio.toFixed(2));
     $("#itr" + indice).find('td:eq(4)').text("$" + total.toFixed(2));
     $("#cerrarCP").click();
+    $('#cambioPrecioModal').val('100');
     notaNotice('El precio ha sido cambiado');
   } else {
     notaError('No es un precio válido');
