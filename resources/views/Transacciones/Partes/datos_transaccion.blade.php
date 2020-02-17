@@ -78,4 +78,19 @@
                 </h6>
             </div>
         @endif
+        @if ($transaccion->tipo==2)
+        <div class="ln_solid mb-1 mt-1"></div>
+            <div class="flex-row">
+                <span class="font-weight-light text-monospace">
+                        Archivo generado
+                </span>
+            </div>
+            <div class="flex-row">
+                <h6 class="font-weight-bold">
+                    <a href={!! asset('/factura/'.$transaccion->id)!!} target="_blank" class="btn btn-sm btn-success" title="Ver">
+                        <i class="fas fa-archive"></i>
+                      </a>
+                </h6>
+            </div>
+        @endif
     </div>

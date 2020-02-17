@@ -1,0 +1,57 @@
+*{
+  font-family: sans-serif;
+  font-size: 8pt;
+  color: black;
+}
+@font-face{
+	font-family: "Vivaldo";
+	src: url("../font/VIVALDII.TTF");
+}
+.vivaldi{
+  font-family: "Vivaldo";
+}
+.font-plus{
+	font-size: 120%;
+}
+.logo-pdf{
+  width: 120px;
+  height: 120px;
+}
+.corte-abajo{
+  padding-bottom: 2px;
+  border-bottom-color: orangered;
+  border-bottom-style: double;
+}
+.numero-pagina{
+  text-align: right;
+  padding-bottom: 15px;
+}
+.subrayar {
+  padding-bottom: 0.5px;
+  border-bottom-color: white;
+  border-bottom-style: ridge;
+}
+.justificar{
+  text-align: justify;
+  text-indent: 1rem;
+}
+.table-simple{
+  width: 100%;
+}
+
+.table-simple th{
+  background-color: silver;
+  text-align: center;
+}
+
+.table-simple thead{
+    background: silver;
+}
+
+.table-simple th,.table-simple td{
+  border: 1px white solid;
+  padding: 2px 5px 2px 5px;
+}
+h4 center{
+  font-size: 14pt;
+}

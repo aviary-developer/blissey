@@ -117,6 +117,7 @@ class TransaccionController extends Controller
         }
         $transaccion->factura=$request->factura;
         $transaccion->tipo=2;
+        $transaccion->mostrar_factura=1;
         $transaccion->f_usuario=Auth::user()->id;
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->save();
@@ -481,5 +482,16 @@ class TransaccionController extends Controller
         DB::rollback();
         return redirect('transacciones/'.$id)->with('error', '¡Algo salio mal!');
       }
+    }
+    Public static function factura(Request $request){
+      $transaccion=Transacion::find($request->id);
+      $header = view('Transacciones.PDF.header');
+
+      $footer = view('Transacciones.PDF.footer');
+
+      $main = view('Transacciones.PDF.factura',compact('transaccion'));
+
+      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+      return $pdf->stream('nombre.pdf');
     }
 }

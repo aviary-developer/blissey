@@ -13,7 +13,7 @@ class Transacion extends Model
   protected $dates = ['fecha'];
 
   public static function buscar($buscar,$tipo){
-    return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('fecha','DESC')->where('f_ingreso',null)->paginate(10);
+    return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('id','DESC')->where('f_ingreso',null)->paginate(10);
   }
   public static function pendientes($buscar,$tipo){
     $contrario=Transacion::contrario(Transacion::tipoUsuario());

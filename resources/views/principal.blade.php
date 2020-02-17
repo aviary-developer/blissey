@@ -184,3 +184,14 @@
     @endphp
   @endforeach
 @endif
+@if (isset($mostrar))
+@php
+echo '<script>
+  url = $("#guardarruta").val()+"factura/'.$mostrar.'";
+  window.open(url, "_blank");
+  </script>';
+  $t=App\Transacion::find($mostrar);
+  $t->mostrar_factura=0;
+  $t->save();
+@endphp
+@endif

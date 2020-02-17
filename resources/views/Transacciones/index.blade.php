@@ -26,6 +26,11 @@
           $correlativo = 1;
           @endphp
           @foreach ($transacciones as $transaccion)
+          @if($transaccion->mostrar_factura)
+          @php
+              $mostrar=$transaccion->id;
+          @endphp
+          @endif
             <tr>
               <td>{{ $correlativo + $pagina}}</td>
               <td>{{$transaccion->fecha->formatLocalized('%d de %B de %Y')}}</td>
@@ -78,3 +83,4 @@
 </div>
 <!-- /page content -->
 @endsection
+

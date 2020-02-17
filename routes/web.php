@@ -248,6 +248,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/niveles/{id}','TransaccionController@niveles');
   Route::match(['get','post'],'/devoluciones/{id}','TransaccionController@devoluciones');
   Route::post('/guardarDevoluciones/{id}','TransaccionController@guardarDevoluciones');
+  Route::get('/factura/{id}','TransaccionController@factura');
   //Rutas apertura y cierre de cajas
     Route::resource('cajas','CajaController');
     Route::match(['get','post'],'/desactivateCaja/{id}','CajaController@desactivate');
