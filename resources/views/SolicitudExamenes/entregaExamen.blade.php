@@ -15,7 +15,7 @@
 
 
     {!!Html::style('assets/build/css/custom.css')!!}
-    {!!Html::style('css/pdffactura.css')!!}
+    {!!Html::style('css/pdfexamenes.css')!!}
 
     <style type="text/css">
       div.page
