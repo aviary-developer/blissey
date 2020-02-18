@@ -71,7 +71,7 @@
         <table class="table table-sm table-hover table-stripped">
           <thead>
             <th style="width: 5%">#</th>
-            <th style="width: 25%">Parametro</th>
+            <th style="width: 25%">Parámetro</th>
             <th style="width: 20%">Resultado</th>
             <th style="width: 10%" title="Valor Normal mínimo">VNm</th>
             <th style="width: 10%" title="Valor Normal Máximo">VNM</th>

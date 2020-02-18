@@ -33,7 +33,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <thead>
-                    <th>Parametro</th>
+                    <th>Parámetro</th>
                     <th>Resultado</th>
                     <th>Valores normales</th>
                     <th>Unidades</th>

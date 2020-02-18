@@ -128,7 +128,7 @@
                               @endif
                               <tr>
                                     <td style="width: 15%;"></td>
-                                  <td colspan="3">{{App\Caja::convertir((int)$total)}} {{number_format($total-((int)$total),2,'.','.')*100}}/100 US DOLARES</td>
+                                  <td colspan="3">{{App\Caja::convertir((int)$total)}} y {{number_format($total-((int)$total),2,'.','.')*100}}/100 US DOLARES</td>
                               </tr>
                         </tbody>
                     </table>
@@ -137,10 +137,10 @@
                     <div style="text-align:right;">
                         $ {{number_format($total,2,'.','.')}}
                     </div>
-                    <div style="height: 50px;">
-                    </div>
+                    {{-- <div style="height: 50px;">
+                    </div> --}}
                     <div style="text-align:right;">
-                        $ {{number_format($total,2,'.','.')}}
+                        VENTA TOTAL $ {{number_format($total,2,'.','.')}}
                     </div>
     </div>
   </div>
