@@ -100,11 +100,7 @@
   </li>
 @endif
 <li class="nav-item">
-  @if($tipo==0 || $tipo==1)
-    <a class="nav-link" href={!! asset('/ayuda/compras') !!} target="_blank">Ayuda</a> 
-  @else
-    <a class="nav-link" href={!! asset('/ayuda/ventas') !!} target="_blank">Ayuda</a> 
-  @endif           
+    <a class="nav-link" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
 </li>
 </ul>
 @include('Dashboard.boton_salir')

@@ -63,6 +63,21 @@ class Ayuda extends Model
 		}else if($tipo == "muestras"){
 			$titulo = "Muestras clínicas";
 			$desc = "Tipos de muestras que se reciben para realizar exámenes clínicos.";
+		}else if($tipo == "banco"){
+			$titulo = "Banco de sangre";
+			$desc = "Registro de unidades sanguíneas con las que cuenta.";
+		}else if($tipo == "parametros"){
+			$titulo = "Parámetros";
+			$desc = "Valores a evaluar dentro de los exámenes clínicos.";
+		}else if($tipo == "servicios"){
+			$titulo = "Servicios";
+			$desc = "Funciones brindadas a los pacientes dentro del hospital";
+		}else if($tipo == "categoriass"){
+			$titulo = "Categoría de Servicios";
+			$desc = "Las distintas categorías donde puede ser registrado un servicio";
+		}else if($tipo == "habitaciones"){
+			$titulo = "Habitaciones";
+			$desc = "Conjunto formado por el espacio, el mobiliario y el material que utiliza el paciente durante su estancia en el hospital.";
 		}else{
 			$titulo = "General";
 			$desc = "La mayoría de los elementos del sistema Blissey hacen uso de esta lógica, puedes usar estos ejemplos para guiarte, si no te ayudan en tu problema, consulta la ayuda específica.";

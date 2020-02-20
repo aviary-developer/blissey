@@ -16,6 +16,9 @@
       {{-- <li class="nav-item">
         <a class="nav-link" href="#">Reporte</a>
       </li> --}}
+      <li class="nav-item">
+        <a class="nav-link" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
+    </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

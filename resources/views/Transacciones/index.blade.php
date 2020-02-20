@@ -27,9 +27,10 @@
           @endphp
           @foreach ($transacciones as $transaccion)
           @if($transaccion->mostrar_factura)
-          @php
-              $mostrar=$transaccion->id;
-          @endphp
+            @php
+                $mostrar=$transaccion->id;
+            @endphp
+            <a href="#" target="_blank" class="hidden" id="launch"></a>
           @endif
             <tr>
               <td>{{ $correlativo + $pagina}}</td>

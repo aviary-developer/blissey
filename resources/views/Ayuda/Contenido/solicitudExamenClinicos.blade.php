@@ -24,12 +24,12 @@
 		<div class="x_panel">
 			<div class="flex-row">
 				<center>
-					<h4>Solicitudes de Exámenes Clínicos</h4>
+					<h4>Solicitudes de Exámenes Clínicos, Ultrasonografía, Rayos X y TAC.</h4>
 				</center>
 			</div>
 			<div class="flex-row">
 				<center>
-					<p>Peticiones que se realizan cada vez que un paciente necesita un exámen clínico.</p>
+					<p>Peticiones que se realizan cada vez que un paciente necesita un realizarse un examen.</p>
 				</center>
 			</div>
 			<div class="ln_solid"></div>
@@ -68,7 +68,7 @@
 							</h5>
 						</center>
 					</div>
-					<iframe src={{asset('help/solicitudesExamen/PacienteParaExamen/PacienteParaExamen_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
+					<iframe src={{asset('help/solicitudesExamen/PacienteParaExamen/SolicitudParaExamen_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>
 
 			</div>
@@ -89,12 +89,12 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
-						Nuevo paciente
+						Buscar receta
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
-						Buscar receta
+						Nuevo paciente
 					</a>
 				</li>
 

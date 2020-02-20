@@ -45,6 +45,29 @@
 						</center>
 					</div>
 					<iframe src={{asset('help/transacciones/inventario/inventario_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
+				</div>
+				<div class="tab-pane fade show active" id="two" role="tabpanel" aria-labelledby="one-tab">
+					<div class="flex-row">
+						<center>
+							<h5 class="text-info">
+								<i class="fas fa-film"></i>
+								Nuevo pedido
+							</h5>
+						</center>
+					</div>
+					<iframe src={{asset('help/transacciones/NuevoPedido/NuevoPedido_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
+				</div>
+
+				<div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="two-tab">
+					<div class="flex-row">
+						<center>
+							<h5 class="text-info">
+								<i class="fas fa-film"></i>
+								Confirmar pedido (compra)
+							</h5>
+						</center>
+					</div>
+					<iframe src={{asset('help/transacciones/ConfirmarPedido/ConfirmarPedido_player.html')}} frameborder="0" scrolling="no" width="100%" height="430px"></iframe>
 				</div>	
 
 			</div>
@@ -61,6 +84,18 @@
 				<li class="nav-item">
 					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
 						Inventario
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" id="one-tab" data-toggle="tab" href="#two" role="tab" aria-controls="one" aria-selected="true">
+						Nuevo pedido
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" id="two-tab" data-toggle="tab" href="#three" role="tab" aria-controls="two" aria-selected="false">
+						Confirmar pedido
 					</a>
 				</li>
 

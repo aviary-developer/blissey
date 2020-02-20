@@ -26,7 +26,7 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form>
-              <h1>Status</h1>
+              <h1>Estado</h1>
 
               <div class="clearfix"></div>
               <div class="panel-body">

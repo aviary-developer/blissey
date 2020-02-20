@@ -54,7 +54,7 @@
 
                 <div>
                   <h1><i class="fa fa-medkit"></i>&nbsp;Blissey</h1>
-                  <p>©2017 Universidad de El Salvador - Facultad Multidisciplinaria Paracentral</p>
+                  <p>©{{date('Y')}} Universidad de El Salvador - Facultad Multidisciplinaria Paracentral</p>
                 </div>
               </div>
               {!! Form::close() !!}

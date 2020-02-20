@@ -10,6 +10,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-bitacora">Buscar</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href={!! asset('/ayuda/historial') !!} target="_blank">Ayuda</a>
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>
