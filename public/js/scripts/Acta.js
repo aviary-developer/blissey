@@ -29,20 +29,23 @@ $(document).ready(function () {
 					$("#acta-p-dui").prop("disabled", true);
 				} else {
 					$("#acta-p-dui").prop("disabled", false);
-					if (r.paciente.dui.length == 0) {
-						$("#acta-p-dui").addClass("border border-danger");
-						b_dui = false;
-					} else {
-						$("#acta-p-dui").val(r.paciente.dui);
+					if (r.paciente.dui != null) {
+						if (r.paciente.dui.length == 0) {
+							$("#acta-p-dui").addClass("border border-danger");
+							b_dui = false;
+						} else {
+							$("#acta-p-dui").val(r.paciente.dui);
+						}
 					}
 				}
 
-				
-				if (r.paciente.telefono.length == 0) {
-					$("#acta-p-telefono").addClass("border border-danger");
-					b_telefono = false;
-				} else {
-					$("#acta-p-telefono").val(r.paciente.telefono);
+				if (r.paciente.telefono != null) {
+					if (r.paciente.telefono.length == 0) {
+						$("#acta-p-telefono").addClass("border border-danger");
+						b_telefono = false;
+					} else {
+						$("#acta-p-telefono").val(r.paciente.telefono);
+					}
 				}
 
 				
