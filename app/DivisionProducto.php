@@ -57,7 +57,9 @@ class DivisionProducto extends Model
     $der=DivisionProducto::filtroDetalles(6,$ts,$id);//Recibidos del contrario asignados 
     foreach($der as $dr){
       if($dr->f_producto==$id){
-        $cr=$cr+$dr->cantidad;
+        $restar=DetalleDevolucion::total($dr->id);
+        $aux=$dr->cantidad-$restar;
+        $cr=$cr+$aux;
       }
     }
     $crc=0;
@@ -78,7 +80,9 @@ class DivisionProducto extends Model
     $dei=DivisionProducto::filtroDetalles(10,$ts,$id);//Entradas por cambio o reingreso
     foreach($dei as $di){
       if($di->f_producto==$id){
-        $ci=$ci+$di->cantidad;
+        $restar=DetalleDevolucion::total($di->id);
+        $aux=$di->cantidad-$restar;
+        $ci=$ci+$aux;
       }
     }
     return $cc-$cv+$cr-$ce-$crc-$cm+$ci;

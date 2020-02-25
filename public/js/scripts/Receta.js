@@ -440,7 +440,7 @@ $(document).on('ready', function () {
       total_c = parseFloat(cantidad * precio);
       cambiarTotal(total_c, 1);
       var tabla = $("#tablaDetalle");
-      var html = '<tr>' +
+      var html = "<tr id='itr" + contadorcp + "'>" +
         '<td>' + cantidad + '</td>' +
         '<td>' + n_division + '</td>' +
         '<td>' + n_producto + '</td>' +
@@ -451,6 +451,9 @@ $(document).on('ready', function () {
         '<input type="hidden" name="cantidad[]" value="' + cantidad + '">' +
         '<input type="hidden" name="precio[]" value="' + precio + '">' +
         '<input type="hidden" name="tipo_detalle[]" value="1">' +
+        "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
+        "<i class='fas fa-dollar-sign'></i>" +
+        "</button>" +
         '<button type="button" class="btn btn-sm btn-danger" id="eliminar_detalle">' +
         '<i class="fa fa-times"></i>' +
         '</button>' +
@@ -459,6 +462,7 @@ $(document).on('ready', function () {
 
       tabla.append(html);
       componentes_agregados.push("" + id_division + "");
+      contadorcp++;
       notaInfo('Ha sido agregado en detalles');
     }
   });

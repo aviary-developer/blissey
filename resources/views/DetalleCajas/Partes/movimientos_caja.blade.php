@@ -24,6 +24,7 @@
                     <th>Total</th>
                   </tr>
                 </thead>
+                <tbody>
                 @if ($detalle->importe>0)
                   <tr>
                     <td>{{$contador}}</td>
@@ -38,7 +39,7 @@
                     $contador++;
                   @endphp
                 @endif
-                <tbody>
+                
                   @foreach ($movimientos as $movimiento)
                     <tr>
                       <td>{{$contador}}</td>

@@ -20,11 +20,13 @@
               Devoluciones
             </a>
           </li>
+          @if($transaccion->tipo!=2)
           <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#next" role="tab" aria-controls="profile" aria-selected="false">
               Salidas
             </a>
           </li>
+          @endif
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

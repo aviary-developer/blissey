@@ -121,10 +121,11 @@ class DetalleCajaController extends Controller
     public function arqueo(){
       if(Transacion::tipoUsuario()==1 && date('G')<7){
         $fecha=\Carbon\Carbon::now()->subDay()->toDateString();
+        $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
       }else{
         $fecha=\Carbon\Carbon::now()->toDateString();
+        $hasta=\Carbon\Carbon::now()->addDay()->toDateString()." 07:00:00";
       }
-      $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
       $cajas=Caja::All();
       foreach($cajas as $caja){
         if (DetalleCaja::verificacionCaja($caja->id)){
@@ -200,10 +201,11 @@ class DetalleCajaController extends Controller
     public static function arqueo_pdf(){
       if(Transacion::tipoUsuario()==1 && date('G')<7){
         $fecha=\Carbon\Carbon::now()->subDay()->toDateString();
+        $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
       }else{
         $fecha=\Carbon\Carbon::now()->toDateString();
+        $hasta=\Carbon\Carbon::now()->addDay()->toDateString()." 07:00:00";
       }
-      $hasta=\Carbon\Carbon::now()->toDateString()." 07:00:00";
       $cajas=Caja::All();
       foreach($cajas as $caja){
         if (DetalleCaja::verificacionCaja($caja->id)){

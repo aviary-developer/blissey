@@ -19,6 +19,13 @@
     <div class="x_panel border border-success rounded">
       @include('widget.solicitudes')
     </div>
+    @elseif(Auth::user()->tipoUsuario == "Farmacia")
+    <div class="x_panel border border-purple rounded">
+      @include('widget.pedidos')
+    </div>
+    {{-- <div class="x_panel border border-success rounded">
+      @include('widget.solicitudes')
+    </div> --}}
   @endif
 </div>
 
