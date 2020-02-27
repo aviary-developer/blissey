@@ -54,7 +54,7 @@
                             @endphp
                           @endif
                           @php
-                            $descontado=number_format($detalle->precio-($detalle->precio*($detalle->descuento/100)),2,'.','.');
+                            $descontado=$detalle->precio-($detalle->precio*($detalle->descuento/100));
                           @endphp
                           <td>$ {{number_format($detalle->precio,2,'.','.')}}</td>
                           <td>{{$detalle->descuento}}%</td>
