@@ -5,7 +5,7 @@ use App\Especialidad;
 use App\User;
 use App\Habitacions;
 use App\Paciente;
-require 'C:\xampp\htdocs\blissey\vendor\autoload.php';
+// require 'C:\xampp\htdocs\blissey\vendor\autoload.php';
 
 class LlenarUsuarioSeeder extends Seeder
 {
