@@ -7,7 +7,7 @@ $(document).ready(function () {
 	var res_i; //Id del resposable
 	var ing_i; //Id del ingreso
 
-	$("#tabla-ingreso-index").on("click","#generated_acta",function (e) { 
+	$("#tabla-ingreso-index").on("click", "#generated_acta", function (e) {
 		e.preventDefault();
 
 		let id = $(this).data("id");
@@ -17,14 +17,14 @@ $(document).ready(function () {
 			type: 'get',
 			url: $('#guardarruta').val() + "/ingreso/acta/datos",
 			data: {
-				id : id
+				id: id
 			},
 			success: function (r) {
 				$("#acta-p-nombre").val(r.paciente.nombre);
 				$("#acta-p-apellido").val(r.paciente.apellido);
 				let fecha = moment(r.paciente.fechaNacimiento);
 				$("#acta-p-fecha").val(fecha.format("YYYY-MM-DD"));
-				
+
 				if (r.paciente.edad < 18) {
 					$("#acta-p-dui").prop("disabled", true);
 				} else {
@@ -48,11 +48,12 @@ $(document).ready(function () {
 					}
 				}
 
-				
-				if (r.paciente.direccion.length == 0) {
-					$("#acta-p-direccion").addClass("border border-danger");
-				} else {
-					$("#acta-p-direccion").val(r.paciente.direccion);
+				if (r.paciente.direccion != null) {
+					if (r.paciente.direccion.length == 0) {
+						$("#acta-p-direccion").addClass("border border-danger");
+					} else {
+						$("#acta-p-direccion").val(r.paciente.direccion);
+					}
 				}
 
 				pac_i = r.paciente.id;
@@ -67,7 +68,7 @@ $(document).ready(function () {
 
 					if (r.responsable.dui.length == 0 && r.responsable.edad > 17) {
 						$("#acta-r-dui").addClass("border border-danger");
-					} else {						
+					} else {
 						$("#acta-r-dui").val(r.responsable.dui);
 					}
 				}
@@ -76,7 +77,7 @@ $(document).ready(function () {
 					paciente: r.paciente.id,
 					responsable: r.responsable.id
 				});
-				
+
 				bloqueo();
 			}
 		});
@@ -131,7 +132,7 @@ $(document).ready(function () {
 			success: function (r) {
 				if (r == 1) {
 					$("#launch").prop('href', $('#guardarruta').val() + "/acta/" + ing_i);
-					
+
 					document.getElementById("launch").click();
 
 					location.reload();
