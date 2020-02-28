@@ -48,6 +48,7 @@ $(document).ready(function () {
 					}
 				}
 
+				//Línea faltante
 				if (r.paciente.direccion != null) {
 					if (r.paciente.direccion.length == 0) {
 						$("#acta-p-direccion").addClass("border border-danger");
