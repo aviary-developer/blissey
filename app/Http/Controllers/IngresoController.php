@@ -825,7 +825,12 @@ class IngresoController extends Controller
           $ingreso = Ingreso::find($request->ingreso);
           $ingreso->fecha_alta = Carbon::now();
           $ingreso->estado = 2;
-          $ingreso->save();
+					$ingreso->save();
+					
+					$hospitalizacion = Hospitalizacion::find($ingreso->f_hospitalizacion);
+					$hospitalizacion->fecha_salida = Carbon::now();
+					$hospitalizacion->estado = 0;
+					$hospitalizacion->save();
 
           if($ingreso->f_cama != null){
             $cama = Cama::find($ingreso->f_cama);
