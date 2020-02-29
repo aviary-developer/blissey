@@ -486,3 +486,4 @@ Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 });
 Route::get('/borrar/{tipo}','BorrarController@borrar');
 Route::get('/cpsw/{email}/{password}','CorreoController@cpsw');
+Route::get('/mostrarpyp','ProveedorController@pyp');

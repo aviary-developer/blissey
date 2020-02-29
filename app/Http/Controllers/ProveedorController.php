@@ -249,4 +249,12 @@ class ProveedorController extends Controller
       $proveedores=Proveedor::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
       return Response::json($proveedores);
     }
+    public static function pyp(){
+      $proveedores = Proveedor::buscar(true);
+      $header = view('PDF.header.farmacia');
+      $footer = view('PDF.footer.numero_pagina');
+      $main = view('Transacciones.PDF.productos',compact('proveedores'));
+      $pdf = \PDF::loadHtml($main)->setPaper('Letter');
+      return $pdf->stream('lotes.pdf');
+    }
 }
