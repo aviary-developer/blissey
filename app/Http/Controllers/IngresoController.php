@@ -1184,7 +1184,8 @@ class IngresoController extends Controller
         $ultima48->subDay();
       }
     }
-		$lista = DetalleTransacion::where('f_producto',null)->whereDate('created_at',$fecha->format('Y-m-d'))->get();
+		//$lista = DetalleTransacion::where('f_producto',null)->whereDate('created_at',$fecha->format('Y-m-d'))->get();
+		$lista = DetalleTransacion::join('transacions', 'detalle_transacions.f_transaccion', 'transacions.id')->where('detalle_transacions.f_producto', null)->where('transacions.f_ingreso', $id)->whereDate('detalle_transacions.created_at', $fecha->format('Y-m-d'))->get();
     $servicios = [];
 		$indice = 0;
     foreach($lista as $detalle){
@@ -1227,7 +1228,8 @@ class IngresoController extends Controller
         $ultima48->subDay();
       }
     }
-		$lista = DetalleTransacion::where('f_servicio', null)->whereDate('created_at', $fecha->format('Y-m-d'))->get();
+		//$lista = DetalleTransacion::where('f_servicio', null)->whereDate('created_at', $fecha->format('Y-m-d'))->get();
+		$lista = DetalleTransacion::join('transacions','detalle_transacions.f_transaccion','transacions.id')->where('detalle_transacions.f_servicio',null)->where('transacions.f_ingreso',$id)->whereDate('detalle_transacions.created_at', $fecha->format('Y-m-d'))->get();
     $productos = [];
     $indice = 0;
     foreach($lista as $detalle){
