@@ -629,6 +629,7 @@ class SolicitudExamenController extends Controller
       $observacion=$request->observacion;
       if($request->quimica){//INICIO GUARDAR RESULTADOS DE QUIMICA SANGUINEA
             $idsSolicitudes=$request->solicitud;
+            $contadorControlados=0;
             foreach ($idsSolicitudes as $key => $idSolicitud) {
           DB::beginTransaction();
           try{
@@ -642,7 +643,6 @@ class SolicitudExamenController extends Controller
             $resultado->save();
             $resultados=Resultado::all();
             $idResultado=$resultados->last()->id;
-            $contadorControlados=0;
             if($request->espr){
               $detallesResultado= new DetalleResultado();
               $detallesResultado->f_resultado=$idResultado;
