@@ -80,7 +80,7 @@
 														<th>-</th><th>-</th>
 													@endif
 													@if ($detallesResultadosQuimicaSanguinea[$esp]->dato_controlado!=null)
-														<td><center>D.C.={{$detallesResultado[$esp]->dato_controlado}}</center></td>
+														<td><center>D.C.={{$detallesResultadosQuimicaSanguinea[$esp]->dato_controlado}}</center></td>
 													@endif
 												</tr>
 										@endforeach
