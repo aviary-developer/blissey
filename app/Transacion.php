@@ -131,11 +131,22 @@ class Transacion extends Model
         }
         public static function movimientosCaja($f_usuario,$apertura,$fecha,$hasta){
           $tipoU=User::find($f_usuario)->tipoUsuario;
-          if($tipoU==0){
+          if($tipoU=='Farmacia'){
             return Transacion::where('f_usuario',$f_usuario)->where('f_ingreso',null)->where('fecha',$fecha)->Where('updated_at',"<",$hasta)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
           }else{
-            return Transacion::where('f_usuario',$f_usuario)->where('f_ingreso',null)->filtroFecha($fecha,$hasta)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
+            return Transacion::usuariox($f_usuario)->where('f_ingreso',null)->filtroFecha($fecha,$hasta)->filtroTipo()->filtroHora($apertura)->orderBy('updated_at','asc')->get();
           }
+        }
+        public static function scopeusuariox($query,$f_usuario){
+            $query->whereExists(function ($query) use ($f_usuario) {
+                                   $query->from('users')
+                                      ->where('users.tipoUsuario','Ultrasonografía')
+                                      ->orWhere('users.tipoUsuario','Laboratorio')
+                                      ->orWhere('users.tipoUsuario','Rayos X')
+                                      ->orWhere('users.tipoUsuario','Laboratorio')
+                                      ->orWhere('users.tipoUsuario','TAC')
+                                      ->orwhere('users.id',$f_usuario);
+                                  });
         }
         public function scopeFiltroFecha($query,$fecha,$hasta){
           $hasta=date("Y-m-d",strtotime($fecha."+ 1 days"));
