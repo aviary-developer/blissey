@@ -249,9 +249,11 @@ $("#guardarLaEvaluacion").on("click", function (e) {
       if(valoresMinimos[i]!='No'){
       if(parseFloat(resultados[i])<parseFloat(valoresMinimos[i])){
         html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>debajo</span> del valor normal mínimo <span class='text-success font-weight-bold'>"+valoresMinimos[i]+"</span>";
+        bandera=1;
       }
       if(parseFloat(resultados[i])>parseFloat(valoresMaximos[i])){
         html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>encima</span> del valor normal máximo <span class='text-success font-weight-bold'>"+valoresMaximos[i]+"</span>";
+        bandera=1;
       }
       html+="<hr class='my-1'>"
     }
