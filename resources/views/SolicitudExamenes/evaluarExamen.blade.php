@@ -275,7 +275,7 @@ $("#guardarLaEvaluacion").on("click", function (e) {
 			}
     });}
         else{
-          $("#guardarResultadosExamenQS").submit();
+          $("#guardarResultadosExamen").submit();
         }
 });
 </script>
