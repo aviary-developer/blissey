@@ -158,6 +158,8 @@ class InventarioController extends Controller
 		$l_honorarios = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'Honorarios')->select('detalle_transacions.*')->get();
 		//Listado por paquetes hospitalarios
 		$l_paquetes = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'Paquetes hospitalarios')->select('detalle_transacions.*')->get();
+		//Listado por servicios
+		$l_servicios = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', '<>', 'Paquetes hospitalarios')->where('categoria_servicios.nombre', '<>', 'Honorarios')->where('categoria_servicios.nombre', '<>', 'TAC')->where('categoria_servicios.nombre', '<>', 'Rayos X')->where('categoria_servicios.nombre', '<>', 'Ultrasonografía')->where('categoria_servicios.nombre', '<>', 'Laboratorio Clínico')->select('detalle_transacions.*')->get();
 
 		$header = view('PDF.header.hospital');
 		$footer = view('PDF.footer.numero_pagina');
@@ -169,6 +171,7 @@ class InventarioController extends Controller
 			'l_tacs',
 			'l_honorarios',
 			'l_paquetes',
+			'l_servicios',
 			'fecha_min',
 			'fecha_max',
 			'user'

@@ -68,3 +68,6 @@ h4 center{
 .my{
 	margin: 3px 0px 3px 0px;
 }
+.bordered{
+	border-right: 1px #999 solid;
+}
