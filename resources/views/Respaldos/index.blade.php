@@ -7,7 +7,7 @@
   @include('Respaldos.barra')
   <div class="col-sm-11">
     <div class="x_panel">
-      
+      <div class="loaderCargando" id="loaderCargando" style="display:none;"></div>
       {!! Form::open(['id'=>'formCrearRespaldo', 'url'=>'/crearRespaldo', 'method' => 'GET']) !!}
       {!! Form::close() !!}
       
@@ -57,7 +57,7 @@
                       <i class="fas fa-cloud-download-alt"></i> 
                       Descargar
                     </a>
-                    <a class="btn btn-sm btn-primary" href="{{ url('/restaurarRespaldo/'.$res['nombre']) }}">
+                    <a class="btn btn-sm btn-primary" href="{{ url('/restaurarRespaldo/'.$res['nombre']) }}" onclick="cargarRestaurar()">
                       <i class="fas fa-cloud-upload-alt"></i> 
                       Restaurar
                     </a>
@@ -79,7 +79,18 @@
   </div>
 </div>
 @endsection
-
+<style>
+  .loaderCargando {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('img/cargando.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+  </style>
 <script>
   function confirmarRespaldo(){
     swal({
@@ -95,9 +106,13 @@
       buttonsStyling: false
     }).then((result) => {
       if(result.value){
+        $("#loaderCargando").show("fast");
         $("#formCrearRespaldo").submit();
       }
     });
+  }
+  function cargarRestaurar(){
+    $("#loaderCargando").show("fast");
   }
 </script>
 

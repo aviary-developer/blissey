@@ -13,12 +13,12 @@
             <li class="nav-item">
         <a class="nav-link" href={!! asset('/entradas') !!}>Entradas</a>
       </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="#">Reporte</a>
-      </li> --}}
+      <li class="nav-item">
+        <a class="nav-link" href={!! asset('/inventario_pdf') !!} target="_blank">Reporte</a>            
+      </li>
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
-    </li>
+      </li>
     </ul>
     @include('Dashboard.boton_salir')
   </div>

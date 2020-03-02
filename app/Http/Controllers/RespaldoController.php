@@ -31,7 +31,7 @@ class RespaldoController extends Controller
 
     public function crear()
     {
-      $string="respaldo_".Carbon::now()->format('d-m-y_h_i_s_a').".sql";
+      $string="respaldo_".Carbon::now()->format('Y-m-d_h_i_s_a').".sql";
       try {
           // start the backup process
           Artisan::call("db:backup", [
