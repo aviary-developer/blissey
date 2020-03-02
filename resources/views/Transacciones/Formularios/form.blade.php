@@ -93,6 +93,15 @@
     <div class="ln_solid mb-1 mt-1"></div>
     <div class="row">
       <div class="form-group col-sm-12">
+        <label class="" for="producto">Cantidad *</label>
+        <div class="input-group mb-2 mr-sm-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-cubes"></i></div>
+          </div>
+          {!! Form::number('cantidadp',1,['id'=>'cantidadp','class'=>'form-control form-control-sm','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
+        </div>
+      </div>
+      <div class="form-group col-sm-12">
         <label class="" for="codigo">Código *</label>
         <div class="input-group mb-2 mr-sm-2">
           <div class="input-group-prepend">
@@ -108,15 +117,6 @@
             <div class="input-group-text"><i class="fas fa-shopping-cart"></i></div>
           </div>
           {!! Form::text('producto',null,['readonly' => 'readonly','id'=>'producto','class'=>'form-control form-control-sm','placeholder'=>'Producto']) !!}
-        </div>
-      </div>
-      <div class="form-group col-sm-12">
-        <label class="" for="producto">Cantidad *</label>
-        <div class="input-group mb-2 mr-sm-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fas fa-cubes"></i></div>
-          </div>
-          {!! Form::number('cantidadp',1,['id'=>'cantidadp','class'=>'form-control form-control-sm','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
         </div>
       </div>
     </div>
@@ -216,11 +216,26 @@
       @endif
     </table>
     @if ($tipo==2)
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-2">
+      <label class="" for="descuento">Descuento </label>
+    </div>
+    <div class="form-group col-sm-4">
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-cubes"></i></div>
+        </div>
+        {!! Form::number('descuento',0,['id'=>'descuento','class'=>'form-control form-control-sm','onKeyUp' => 'return descontar();','placeholder'=>'Cantidad','min'=>'0']) !!}
+      </div>
+    </div>
+  </div>
     <h5 class="mb-1">
         @if(isset($f_producto))
           Total: $ <label id="total_venta">{{$auxSumaTotal}}</label>
+          <input type="hidden" id="total_venta_aux" value={{$auxSumaTotal}}>
         @else
           Total: $ <label id="total_venta">0.00</label>
+          <input type="hidden" id="total_venta_aux" value='0'>
         @endif
     </h5>
     @endif
@@ -230,6 +245,29 @@
   @include('Transacciones.Formularios.modalBuscarVenta')
   @include('Recetas.modal.medicamento')
   @include('Transacciones.Formularios.modalCambiarPrecio')
+  <script type="text/javascript">
+    function descontar(){
+      descuento=$('#descuento').val();
+      if(descuento==""){
+        descuento=0;
+      }else{
+        descuento=parseFloat(descuento);
+      }
+      totd=parseFloat($('#total_venta_aux').val());
+      $('#total_venta').text((totd-(totd*(descuento/100))).toFixed(2));
+
+    }
+    $(document).ready(function(){
+      descuento=$('#descuento').val();
+      if(descuento==""){
+        descuento=0;
+      }else{
+        descuento=parseFloat(descuento);
+      }
+      totar=parseFloat($('#total_venta_aux').val());//Total de aux al recargar
+      $('#total_venta').text((totar-(totar*(descuento/100))).toFixed(2));
+    });
+  </script>
 @endif
 @if($tipo==0)
   @include('Transacciones.Formularios.modalBuscarProducto')
