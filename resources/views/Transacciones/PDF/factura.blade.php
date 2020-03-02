@@ -62,7 +62,7 @@
                       <tr>
                         <td style="width: 12%;text-align:center;">{{$detalle->cantidad}}</td>
                         @if($detalle->f_servicio==null)
-                        <td style="width: 54%">
+                        <td style="width: 56%">
                           @if($detalle->divisionProducto->unidad==null)
                             {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
                           @else
@@ -75,7 +75,7 @@
                           @endif
                     </td>
                       @else
-                        <td style="width: 59%">{{$detalle->servicio->nombre}}</td>
+                        <td style="width: 56%">{{$detalle->servicio->nombre}}</td>
                       @endif
                         @if($transaccion->tipo==1)
                         <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>

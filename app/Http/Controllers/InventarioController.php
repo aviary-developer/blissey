@@ -8,6 +8,8 @@ use App\DetalleDevolucion;
 use App\DetalleTransacion;
 use App\Devolucion;
 use App\Bitacora;
+use App\Inventario;
+use App\Transacion;
 
 class InventarioController extends Controller
 {
@@ -85,10 +87,17 @@ class InventarioController extends Controller
         $cantidad=$request->cantidad;
         foreach($idv as $k => $valor){
             $detalle=DetalleTransacion::find($valor);
-            $detalle->cantidad=$cantidad[$k]+($request->cl[$k]-$request->ca[$k]);
+            $anterior=$detalle->cantidad;
+            $nuevo=$cantidad[$k]+($request->cl[$k]-$request->ca[$k]);
+            $detalle->cantidad=$nuevo;
             $detalle->f_estante=$f_estante[$k];
             $detalle->nivel=$nivel[$k];
             $detalle->save();
+            $diferencia=$nuevo-$anterior;
+            $ultimo=Inventario::where('f_divisionproducto',$detalle->f_producto)->where('localizacion',Transacion::tipoUsuario())->get()->last()->existencia_nueva;
+            $ahora=$ultimo+$diferencia;
+        Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,$ultimo);  
+        Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$ahora);          
         }
         Bitacora::bitacora('update','detalle_transacions','inventarios',$id);
         Return redirect('/inventarios')->with('mensaje', '¡Editado!');

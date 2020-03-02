@@ -26,6 +26,7 @@ use DB;
 use Response;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Inventario;
 
 class IngresoController extends Controller
 {
@@ -804,6 +805,8 @@ class IngresoController extends Controller
         $detalle->f_usuario=Auth::user()->id;
         if(Auth::user()->tipoUsuario == 'Enfermería'){
           $detalle->estado = false;
+        }elseif(Auth::user()->tipoUsuario == 'Recepción' && $request->tipo_detalle == 1 ){
+        $inve=Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),2,$request->cantidad);          
         }
         $detalle->save();
         DB::commit();
@@ -1067,8 +1070,11 @@ class IngresoController extends Controller
     DB::beginTransaction();
     try{
       $detalle = DetalleTransacion::find($id);
+      $anterior=$detalle->cantidad;
       $detalle->cantidad = $cantidad;
       $detalle->save();
+      Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,$anterior); 
+      Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$cantidad);            
       DB::commit();
       return 1;
     }catch(Exception $e){
@@ -1099,6 +1105,7 @@ class IngresoController extends Controller
     DB::beginTransaction();
     try{
       $detalle = DetalleTransacion::find($id);
+      Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$detalle->cantidad);   
       $detalle->delete();
       DB::commit();
       return 1;
@@ -1115,6 +1122,7 @@ class IngresoController extends Controller
       $detalle = DetalleTransacion::find($id);
       $detalle->estado = true;
       $detalle->save();
+      Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),2,$detalle->cantidad);          
       DB::commit();
       return 1;
     }catch(Exception $e){

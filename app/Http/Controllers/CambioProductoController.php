@@ -11,6 +11,8 @@ use Auth;
 use App\DetalleTransacion;
 use DB;
 use App\Bitacora;
+use App\Inventario;
+
 class CambioProductoController extends Controller
 {
     /**
@@ -70,7 +72,8 @@ class CambioProductoController extends Controller
         $detalle->f_estante=$request->f_estante[$i];
         $detalle->nivel=$request->nivel[$i];
         $detalle->save();
-        CambioProducto::actualizarCambio($request->f_producto[$i]);          
+        CambioProducto::actualizarCambio($request->f_producto[$i]);
+        Inventario::Actualizar($request->f_producto[$i],Transacion::tipoUsuario(),10,$request->cantidad[$i]);          
       }
       Bitacora::bitacora('store','transacions','entradas',$transaccion->id);
       DB::commit();
@@ -154,7 +157,16 @@ class CambioProductoController extends Controller
       }
     }
     public static function confirmarRetiro(){
-      CambioProducto::where('estado',0)->update(['estado'=>1]);
+      $cambios=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
+      $date = \Carbon\Carbon::now();
+      $date = $date->format('Y-m-d');
+      foreach($cambios as $cambio){
+        if($cambio->transaccion->fecha_vencimiento<=$date){
+          $cambio->estado=true;
+          $cambio->save();
+          Inventario::Actualizar($cambio->transaccion->f_producto,Transacion::tipoUsuario(),7,$cambio->cantidad);        
+        }
+      }
       Bitacora::bitacora('update','cambio_productos','cambio_productos',0);
       return redirect('cambio_productos')->with('mensaje','¡Todos los lotes fueron confirmado!');
     }
@@ -162,6 +174,7 @@ class CambioProductoController extends Controller
       $lote=CambioProducto::find($id);
       $lote->estado=1;
       $lote->save();
+      Inventario::Actualizar($lote->transaccion->f_producto,Transacion::tipoUsuario(),7,$lote->cantidad);        
       Bitacora::bitacora('update','cambio_productos','cambio_productos',$lote->id);
       return redirect('cambio_productos')->with('mensaje','¡Confirmado!');
     }

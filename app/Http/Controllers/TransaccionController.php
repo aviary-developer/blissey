@@ -21,6 +21,7 @@ use App\Devolucion;
 use App\DetalleDevolucion;
 use App\CambioProducto;
 use App\Bitacora;
+use App\Inventario;
 
 class TransaccionController extends Controller
 {
@@ -133,6 +134,7 @@ class TransaccionController extends Controller
               'f_usuario'=>Auth::user()->id,
             ]);
             CambioProducto::actualizarCambio($f_producto[$i]);
+            Inventario::Actualizar($f_producto[$i],Transacion::tipoUsuario(),2,$cantidad[$i]);
         }else{
           DetalleTransacion::create([
             'f_transaccion'=>$transaccion->id,
@@ -239,7 +241,8 @@ class TransaccionController extends Controller
           $detalle->f_estante=$request->f_estante[$i];
           $detalle->nivel=$request->nivel[$i];
           $detalle->save();
-          CambioProducto::actualizarCambio($request->f_producto[$i]);          
+          CambioProducto::actualizarCambio($request->f_producto[$i]);
+          Inventario::Actualizar($request->f_producto[$i],Transacion::tipoUsuario(),1,$request->cantidad[$i]);
         }
         Bitacora::bitacora('update','transacions','transacciones',$transaccion->id);
         DB::commit();
@@ -398,7 +401,8 @@ class TransaccionController extends Controller
 
         foreach($detalles as $detalle){
           if($detalle->f_producto!=null && $detalle->f_producto!=""){
-             CambioProducto::actualizarCambio($detalle->f_producto);                          
+            CambioProducto::actualizarCambio($detalle->f_producto);
+            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),3,$detalle->cantidad);        
           }
         }
       } catch (\Exception $e) {
@@ -467,7 +471,8 @@ class TransaccionController extends Controller
         foreach ($detalles as $detalle) {
           if(isset($request['cantidad'.$detalle->id])){
             if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
-              CambioProducto::actualizarCambio($detalle->f_producto);              
+              CambioProducto::actualizarCambio($detalle->f_producto); 
+            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),$totdevr->tipo,$request['cantidad'.$detalle->id]);        
             }
           }
         }

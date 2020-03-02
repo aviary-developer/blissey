@@ -12,6 +12,7 @@ use DB;
 use App\DetalleDevolucion;
 use App\CambioProducto;
 use App\Bitacora;
+use App\Inventario;
 
 class RequisicionController extends Controller
 {
@@ -120,6 +121,7 @@ class RequisicionController extends Controller
             $detalle->f_estante=$request->f_estante[$i];
             $detalle->nivel=$request->nivel[$i];
             $detalle->save();
+            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),6,$detalle->cantidad);        
               //Si hay productos próximos
               $cantidad= CambioProducto::mover($detalle->f_producto,1);
               if($cantidad>0){
@@ -239,6 +241,7 @@ class RequisicionController extends Controller
                 ]);
               $regresivo=$regresivo-$fila->cantidad;
               CambioProducto::actualizarCambio($detalle->f_producto);
+            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$fila->cantidad);        
             }elseif($regresivo!=0){
               DetalleTransacion::create([
                 'cantidad'=>$regresivo,
@@ -249,6 +252,7 @@ class RequisicionController extends Controller
               ]);
               $regresivo=0;
               CambioProducto::actualizarCambio($detalle->f_producto);
+            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$regresivo);        
             }
             }
         }

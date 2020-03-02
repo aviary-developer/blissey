@@ -61,7 +61,7 @@
           <a class="dropdown-item"href="{{asset('/verrequisiciones?tipo=4')}}">
             <div class="flex-row">
               <center>
-                <span class="text-uppercase text-monospace font-weight-light">Requisiciones del hospital</span>
+                <span class="text-uppercase text-monospace font-weight-light">Requisiciones de farmacia</span>
                 <span class="badge badge-danger">{{$requisiciones}}</span>
               </center>
             </div>

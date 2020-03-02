@@ -26,8 +26,13 @@ class DivisionProducto extends Model
     return $this->belongsTo('App\Unidad','contenido')->select(['id','nombre']);
   }
   public static function inventario($id,$nor){//$nor se refiere a consulta 1 es normal dependiendo del ususario y 2 dos es consultar solo por farmacia
-    $cc=0;
     $ts=DivisionProducto::busquedaTipo($nor);
+    $ultimo=Inventario::where('f_divisionproducto',$id)->where('localizacion',$ts)->get()->last();
+    if($ultimo!=null){
+      return $ultimo->existencia_nueva;
+  }
+    $cc=0;
+    
     $dec=DivisionProducto::filtroDetalles(1,$ts,$id);//Compras
     foreach($dec as $dc){
       if($dc->f_producto==$id){
