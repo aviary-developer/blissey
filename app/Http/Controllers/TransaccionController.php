@@ -80,6 +80,10 @@ class TransaccionController extends Controller
         }else{
           $f_clientea="";
         }
+        $descuento=$request->descuento;
+        if($descuento==null || $descuento==""){
+          $descuento=0;
+        }
       }
       $mensaje['fecha.required']="El campo fecha es obligatorio";
       $mensaje['f_producto.required']="No agregó nungún detalle";
@@ -121,6 +125,7 @@ class TransaccionController extends Controller
         $transaccion->mostrar_factura=1;
         $transaccion->f_usuario=Auth::user()->id;
         $transaccion->localizacion=Transacion::tipoUsuario();
+        $transaccion->descuento=$descuento;
         $transaccion->save();
 
         if($f_producto!=null){

@@ -622,13 +622,21 @@ function registrarventa(id) {
   contadorcp++;
 }
 function cambiarTotal(cantidad, tipo) { //cantidad que recibe y si la cantidad se suma o resta
-  total = parseFloat($('#total_venta').text());
+  descuento = $('#descuento').val();
+  if (descuento == "") {
+    descuento = 0;
+  } else {
+    descuento = parseFloat(descuento);
+  }
+  total = parseFloat($('#total_venta_aux').val());
   if (tipo == 1) {
     total = parseFloat(total) + parseFloat(cantidad);
   } else {
     total = parseFloat(total) - parseFloat(cantidad);
   }
-  $('#total_venta').text(parseFloat(total).toFixed(2));
+
+  $('#total_venta').text((total - (total * (descuento / 100))).toFixed(2));
+  $('#total_venta_aux').val(parseFloat(total).toFixed(2));
 }
 function validarFechaMenorActual(date) {
   actual = $('#fechaM').val();
