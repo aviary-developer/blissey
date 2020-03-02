@@ -1072,9 +1072,15 @@ class IngresoController extends Controller
       $detalle = DetalleTransacion::find($id);
       $anterior=$detalle->cantidad;
       $detalle->cantidad = $cantidad;
-      $detalle->save();
-      Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,$anterior); 
-      Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$cantidad);            
+			$detalle->save();
+			if($detalle->estado){
+				$movimiento = $anterior - $cantidad;
+				if($movimiento > 0){
+					Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,abs($movimiento));            
+				}else{
+					Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,abs($movimiento)); 
+				}
+			}
       DB::commit();
       return 1;
     }catch(Exception $e){
@@ -1120,7 +1126,8 @@ class IngresoController extends Controller
     DB::beginTransaction();
     try{
       $detalle = DetalleTransacion::find($id);
-      $detalle->estado = true;
+			$detalle->estado = true;
+			$detalle->f_usuario = Auth::user()->id;
       $detalle->save();
       Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),2,$detalle->cantidad);          
       DB::commit();
@@ -1198,7 +1205,7 @@ class IngresoController extends Controller
       }
     }
 		//$lista = DetalleTransacion::where('f_producto',null)->whereDate('created_at',$fecha->format('Y-m-d'))->get();
-		$lista = DetalleTransacion::join('transacions', 'detalle_transacions.f_transaccion', 'transacions.id')->where('detalle_transacions.f_producto', null)->where('transacions.f_ingreso', $id)->whereDate('detalle_transacions.created_at', $fecha->format('Y-m-d'))->get();
+		$lista = DetalleTransacion::join('transacions', 'detalle_transacions.f_transaccion', 'transacions.id')->where('detalle_transacions.f_producto', null)->where('transacions.f_ingreso', $id)->whereDate('detalle_transacions.created_at', $fecha->format('Y-m-d'))->select('detalle_transacions.*')->get();
     $servicios = [];
 		$indice = 0;
     foreach($lista as $detalle){
@@ -1242,12 +1249,12 @@ class IngresoController extends Controller
       }
     }
 		//$lista = DetalleTransacion::where('f_servicio', null)->whereDate('created_at', $fecha->format('Y-m-d'))->get();
-		$lista = DetalleTransacion::join('transacions','detalle_transacions.f_transaccion','transacions.id')->where('detalle_transacions.f_servicio',null)->where('transacions.f_ingreso',$id)->whereDate('detalle_transacions.created_at', $fecha->format('Y-m-d'))->get();
+		$lista = DetalleTransacion::join('transacions','detalle_transacions.f_transaccion','transacions.id')->where('detalle_transacions.f_servicio',null)->where('transacions.f_ingreso',$id)->whereDate('detalle_transacions.created_at', $fecha->format('Y-m-d'))->select('detalle_transacions.*')->get();
     $productos = [];
-    $indice = 0;
+		$indice = 0;
     foreach($lista as $detalle){
       $productos[$indice]['id']=$detalle->id;
-      $productos[$indice]['hora']=$detalle->created_at->format('h:i.s a');
+      $productos[$indice]['hora']=$detalle->created_at->format('h:i:s a');
       $productos[$indice]['cantidad'] = $detalle->cantidad;
       if($detalle->divisionProducto->unidad == null){
         $productos[$indice]['division'] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre;
@@ -1255,11 +1262,12 @@ class IngresoController extends Controller
         $productos[$indice]['division'] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre;
       }
       $productos[$indice]['nombre'] = $detalle->divisionProducto->producto->nombre;
-      if($dias != -1 && $detalle->created_at->between($ultima24,$ultima48)){
-        $productos[$indice]['estado'] = 1;
-      }else{
-        $productos[$indice]['estado'] = 0;
-      }
+      // if($dias != -1 && $detalle->created_at->between($ultima24,$ultima48)){
+      //   $productos[$indice]['estado'] = 1;
+      // }else{
+      //   $productos[$indice]['estado'] = 0;
+			// }
+			$productos[$indice]['estado'] = $detalle->estado;
       $indice++;
     }
     $productos = array_reverse($productos);

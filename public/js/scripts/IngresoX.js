@@ -113,6 +113,7 @@ function medicamento_fecha() {
       fecha: fecha
     },
     success: function (r) {
+			console.log(r);
       var panel = $("#mensaje_v_p");
       fecha_title = $("#date_");
       fecha_title.text(r.fecha_f);
@@ -136,6 +137,9 @@ function medicamento_fecha() {
             value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
 					html += '<td></center><div class="btn-group"><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(1,' + value.id + ',' + value.cantidad + ')"><i class="fa fa-edit"></i></button></center>';
+					if (!value.estado) {
+						html += '</center><button type="button" id = "' + value.id + '" class="btn btn-success btn-sm" onclick="accion24(2,' + value.id + ',this)"><i class="fa fa-check"></i></button>';
+					}
 					html += '</center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           html += '</tr>';
           tabla.append(html);

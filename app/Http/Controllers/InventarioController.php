@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Abono;
 use Illuminate\Http\Request;
 use App\DivisionProducto;
 use App\DetalleDevolucion;
@@ -10,6 +11,8 @@ use App\Devolucion;
 use App\Bitacora;
 use App\Inventario;
 use App\Transacion;
+use App\User;
+use Carbon\Carbon;
 
 class InventarioController extends Controller
 {
@@ -129,5 +132,48 @@ class InventarioController extends Controller
         Bitacora::bitacora('update','salidas','inventarios',$request->idTr);
         return redirect('/inventarios')->with('mensaje', '!Acción exitosa¡');
 
-    }
+		}
+		
+
+	public function turno(Request $request){
+		$r_fecha = $request->fecha;
+		$usuario = $request->id;
+		$fecha_min = Carbon::createFromFormat('Y-m-d',$r_fecha)->hour(7)->minute(0)->second(0);
+		$fecha_max = Carbon::createFromFormat('Y-m-d', $r_fecha)->addDay()->hour(7)->minute(0)->second(0);
+
+		$user = User::find($usuario);
+		//Lista de abonos realizados
+		$abonos = Abono::where('created_at', '>=', $fecha_min)->where('created_at', '<=', $fecha_max)->get();
+		//Lista de productos
+		$l_productos = DetalleTransacion::join('transacions','detalle_transacions.f_transaccion','transacions.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('detalle_transacions.f_servicio',null)->where('transacions.tipo',2)->select('detalle_transacions.*')->get();
+		//Listado de examenes de laboratorio clinico
+		$l_laboratorios = DetalleTransacion::join('servicios','detalle_transacions.f_servicio','servicios.id')->join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre','Laboratorio Clínico')->select('detalle_transacions.*')->get();
+		//Listado de Ultrasonografía
+		$l_ultras = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'Ultrasonografía')->select('detalle_transacions.*')->get();
+		//Listado de Rayos X
+		$l_rayos = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'Rayos X')->select('detalle_transacions.*')->get();
+		//Listado de TACs
+		$l_tacs = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'TAC')->select('detalle_transacions.*')->get();
+		//Listado de honorarios
+		$l_honorarios = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'Honorarios')->select('detalle_transacions.*')->get();
+		//Listado por paquetes hospitalarios
+		$l_paquetes = DetalleTransacion::join('servicios', 'detalle_transacions.f_servicio', 'servicios.id')->join('categoria_servicios', 'servicios.f_categoria', 'categoria_servicios.id')->where('detalle_transacions.created_at', '>=', $fecha_min)->where('detalle_transacions.created_at', '<=', $fecha_max)->where('detalle_transacions.f_usuario', $usuario)->where('categoria_servicios.nombre', 'Paquetes hospitalarios')->select('detalle_transacions.*')->get();
+
+		$header = view('PDF.header.hospital');
+		$footer = view('PDF.footer.numero_pagina');
+		$main = view('Ingresos.PDF.informe.turno', compact(
+			'l_productos',
+			'l_laboratorios',
+			'l_ultras',
+			'l_rayos',
+			'l_tacs',
+			'l_honorarios',
+			'l_paquetes',
+			'fecha_min',
+			'fecha_max',
+			'user'
+		));
+		$pdf = \PDF::loadHtml($main)->setOption('footer-html', $footer)->setOption('header-html', $header)->setPaper('Letter')->setOrientation('landscape');
+		return ($pdf->stream());
+	}
 }

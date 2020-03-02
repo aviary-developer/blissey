@@ -36,7 +36,11 @@
 							<b class="font-md">{{$detalle->divisionProducto->producto->nombre}}</b>
 						</div>
 						<div class="flex-row">
+							@if ($detalle->estado == 1)	
 								<small class="badge badge-primary float-right">{{$detalle->created_at->diffForHumans()}}</small>
+							@else
+								<small class="badge badge-warning float-right">Pendiente</small>
+							@endif
 						</div>
 					</div>
 				</div>
