@@ -178,5 +178,17 @@ class InventarioController extends Controller
 		));
 		$pdf = \PDF::loadHtml($main)->setOption('footer-html', $footer)->setOption('header-html', $header)->setPaper('Letter')->setOrientation('landscape');
 		return ($pdf->stream());
-	}
+    }
+    public function inventario_pdf(){
+        $dp = DivisionProducto::buscar(true);
+        if(Transacion::tipoUsuario()==1){
+            $header = view('PDF.header.hospital');
+        }else{
+            $header = view('PDF.header.farmacia');
+        }
+          $footer = view('PDF.footer.numero_pagina');
+          $main = view('Inventarios.PDF.inventario',compact('dp'));
+          $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+          return $pdf->stream('inventario.pdf');
+    }
 }
