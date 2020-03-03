@@ -381,12 +381,24 @@ class TransaccionController extends Controller
     }
 
     public static function buscarServicio($texto){
-      $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
+      // $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
+      $servicios=DB::table('servicios')
+      ->select('servicios.*')
+      ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
+      ->where('servicios.estado',true)
+      // ->where('servicios.nombre', 'like','%'.$texto.'%')
+      ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
+      ->orderBy('servicios.nombre','ASC')
+      ->get();
       $service = [];
       $i = 0;
       if($servicios != null){
         foreach($servicios as $servicio){
-          if($servicio->categoria->nombre != "Honorarios" && $servicio->categoria->nombre != "Habitación" && $servicio->categoria->nombre != "Laboratorio Clínico" &&$servicio->categoria->nombre != "Rayos X" && $servicio->categoria->nombre != "Ultrasonografía" && $servicio->categoria->nombre != "Cama" && $servicio->categoria->nombre != "TAC"){
+          $categoria=Servicio::find($servicio->id)->categoria->nombre;
+          if($categoria != "Honorarios" && $categoria != "Habitación"  && $categoria != "Cama"){
+            if($categoria == "Ultrasonografía" || $categoria == "TAC" || $categoria == "Rayos X"){
+              $servicio->nombre= $categoria." ".$servicio->nombre;
+            }
             $service[$i] = $servicio;
             $i++;
           }

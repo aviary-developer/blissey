@@ -130,16 +130,16 @@ class SolicitudExamenController extends Controller
               $factura++;
             }
 
-            $transaccion = new Transacion;
-            $transaccion->fecha = Carbon::now();
-            $transaccion->f_cliente = $request->f_paciente;
-            $transaccion->f_ingreso = $request->f_ingreso;
-            $transaccion->tipo = 2;
-            $transaccion->factura = $factura;
-            $transaccion->f_usuario = Auth::user()->id;
-            $transaccion->localizacion = 1;
-            $transaccion->save();
-            $transaccion_id = $transaccion->id;
+            // $transaccion = new Transacion;
+            // $transaccion->fecha = Carbon::now();
+            // $transaccion->f_cliente = $request->f_paciente;
+            // $transaccion->f_ingreso = $request->f_ingreso;
+            // $transaccion->tipo = 2;
+            // $transaccion->factura = $factura;
+            // $transaccion->f_usuario = Auth::user()->id;
+            // $transaccion->localizacion = 1;
+            // $transaccion->save();
+            // $transaccion_id = $transaccion->id;
           }else{
             $transaccion_id = $request->transaccion;
           }
@@ -147,10 +147,12 @@ class SolicitudExamenController extends Controller
             $solicitud->f_paciente = $request->f_paciente;
             $solicitud->f_tac= $request->tac;
             $solicitud->estado = 1;
-            $solicitud->f_transaccion = $transaccion_id;
+            // $solicitud->f_transaccion = $transaccion_id;
             $solicitud->save();
 
             //Detalle de transaccion
+            if($request->f_ingreso != null){
+
             $detalle = new DetalleTransacion;
             $detalle->f_servicio = $solicitud->tac->servicio->id;
             $detalle->precio = $solicitud->tac->servicio->precio;
@@ -158,10 +160,13 @@ class SolicitudExamenController extends Controller
             $detalle->f_transaccion = $transaccion_id;
             $detalle->f_usuario=Auth::user()->id;
             $detalle->save();
+          }
 
             DB::commit();
             Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
+            if($request->f_ingreso != null){
             Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
+            }
 
         }
       }catch(Exception $e){
@@ -183,16 +188,16 @@ class SolicitudExamenController extends Controller
               $factura++;
             }
 
-            $transaccion = new Transacion;
-            $transaccion->fecha = Carbon::now();
-            $transaccion->f_cliente = $request->f_paciente;
-            $transaccion->f_ingreso = $request->f_ingreso;
-            $transaccion->tipo = 2;
-            $transaccion->factura = $factura;
-            $transaccion->f_usuario = Auth::user()->id;
-            $transaccion->localizacion = 1;
-            $transaccion->save();
-            $transaccion_id = $transaccion->id;
+            // $transaccion = new Transacion;
+            // $transaccion->fecha = Carbon::now();
+            // $transaccion->f_cliente = $request->f_paciente;
+            // $transaccion->f_ingreso = $request->f_ingreso;
+            // $transaccion->tipo = 2;
+            // $transaccion->factura = $factura;
+            // $transaccion->f_usuario = Auth::user()->id;
+            // $transaccion->localizacion = 1;
+            // $transaccion->save();
+            // $transaccion_id = $transaccion->id;
           }else{
             $transaccion_id = $request->transaccion;
           }
@@ -200,10 +205,11 @@ class SolicitudExamenController extends Controller
             $solicitud->f_paciente = $request->f_paciente;
             $solicitud->f_rayox = $request->rayox;
             $solicitud->estado = 1;
-            $solicitud->f_transaccion = $transaccion_id;
+            // $solicitud->f_transaccion = $transaccion_id;
             $solicitud->save();
 
             //Detalle de transaccion
+            if($request->f_ingreso != null){
             $detalle = new DetalleTransacion;
             $detalle->f_servicio = $solicitud->rayox->servicio->id;
             $detalle->precio = $solicitud->rayox->servicio->precio;
@@ -211,10 +217,13 @@ class SolicitudExamenController extends Controller
             $detalle->f_transaccion = $transaccion_id;
             $detalle->f_usuario=Auth::user()->id;
             $detalle->save();
+            }
 
             DB::commit();
             Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
+            if($request->f_ingreso != null){
             Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
+            }
 
         }
       }catch(Exception $e){
@@ -236,16 +245,16 @@ class SolicitudExamenController extends Controller
               $factura++;
             }
 
-            $transaccion = new Transacion;
-            $transaccion->fecha = Carbon::now();
-            $transaccion->f_cliente = $request->f_paciente;
-            $transaccion->f_ingreso = $request->f_ingreso;
-            $transaccion->tipo = 2;
-            $transaccion->factura = $factura;
-            $transaccion->f_usuario = Auth::user()->id;
-            $transaccion->localizacion = 1;
-            $transaccion->save();
-            $transaccion_id = $transaccion->id;
+            // $transaccion = new Transacion;
+            // $transaccion->fecha = Carbon::now();
+            // $transaccion->f_cliente = $request->f_paciente;
+            // $transaccion->f_ingreso = $request->f_ingreso;
+            // $transaccion->tipo = 2;
+            // $transaccion->factura = $factura;
+            // $transaccion->f_usuario = Auth::user()->id;
+            // $transaccion->localizacion = 1;
+            // $transaccion->save();
+            // $transaccion_id = $transaccion->id;
           }else{
             $transaccion_id = $request->transaccion;
           }
@@ -253,10 +262,11 @@ class SolicitudExamenController extends Controller
             $solicitud->f_paciente = $request->f_paciente;
             $solicitud->f_ultrasonografia = $request->ultrasonografia;
             $solicitud->estado = 1;
-            $solicitud->f_transaccion = $transaccion_id;
+            // $solicitud->f_transaccion = $transaccion_id;
             $solicitud->save();
 
             //Detalle de transaccion
+            if($request->f_ingreso != null){
             $detalle = new DetalleTransacion;
             $detalle->f_servicio = $solicitud->ultrasonografia->servicio->id;
             $detalle->precio = $solicitud->ultrasonografia->servicio->precio;
@@ -264,10 +274,13 @@ class SolicitudExamenController extends Controller
             $detalle->f_transaccion = $transaccion_id;
             $detalle->f_usuario=Auth::user()->id;
             $detalle->save();
+            }
 
             DB::commit();
             Bitacora::bitacora('store','solicitud_examens','ultrasonografias',$solicitud->id);
+            if($request->f_ingreso != null){
             Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
+            }
 
         }
       }catch(Exception $e){
@@ -289,16 +302,16 @@ class SolicitudExamenController extends Controller
             $factura++;
           }
 
-          $transaccion = new Transacion;
-          $transaccion->fecha = Carbon::now();
-          $transaccion->f_cliente = $request->f_paciente;
-          $transaccion->f_ingreso = $request->f_ingreso;
-          $transaccion->tipo = 2;
-          $transaccion->factura = $factura;
-          $transaccion->f_usuario = Auth::user()->id;
-          $transaccion->localizacion = 1;
-          $transaccion->save();
-          $transaccion_id = $transaccion->id;
+          // $transaccion = new Transacion;
+          // $transaccion->fecha = Carbon::now();
+          // $transaccion->f_cliente = $request->f_paciente;
+          // $transaccion->f_ingreso = $request->f_ingreso;
+          // $transaccion->tipo = 2;
+          // $transaccion->factura = $factura;
+          // $transaccion->f_usuario = Auth::user()->id;
+          // $transaccion->localizacion = 1;
+          // $transaccion->save();
+          // $transaccion_id = $transaccion->id;
         }else{
           $transaccion_id = $request->transaccion;
         }
@@ -328,10 +341,11 @@ class SolicitudExamenController extends Controller
           $solicitud->codigo_muestra = $codigo_muestra;
           }
           $solicitud->estado = 0;
-          $solicitud->f_transaccion = $transaccion_id;
+          // $solicitud->f_transaccion = $transaccion_id;
           $solicitud->save();
 
           //Detalle de transaccion
+          if($request->f_ingreso != null){
           $detalle = new DetalleTransacion;
           $detalle->f_servicio = $solicitud->examen->servicio->id;
           $detalle->precio = $solicitud->examen->servicio->precio;
@@ -339,10 +353,13 @@ class SolicitudExamenController extends Controller
           $detalle->f_transaccion = $transaccion_id;
           $detalle->f_usuario=Auth::user()->id;
           $detalle->save();
+          }
 
           DB::commit();
           Bitacora::bitacora('store','solicitud_examens','solicitudex',$solicitud->id);
+          if($request->f_ingreso != null){
           Bitacora::bitacora('store','transacions','transacciones',$transaccion_id);
+          }
         }
       }
     }catch(Exception $e){
