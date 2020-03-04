@@ -75,7 +75,12 @@
                           @endif
                     </td>
                       @else
-                        <td style="width: 56%">{{$detalle->servicio->nombre}}</td>
+                        <td style="width: 56%">
+                          @if($detalle->servicio->categoria->nombre=="Ultrasonografía" || $detalle->servicio->categoria->nombre=="TAC" || $detalle->servicio->categoria->nombre=="Rayos X")
+                            {{$detalle->servicio->categoria->nombre." "}}
+                          @endif
+                          {{$detalle->servicio->nombre}}
+                        </td>
                       @endif
                         @if($transaccion->tipo==1)
                         <td>{{$detalle->fecha_vencimiento->formatLocalized('%d de %B de %Y')}}</td>

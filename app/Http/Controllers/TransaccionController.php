@@ -507,13 +507,24 @@ class TransaccionController extends Controller
     }
     Public static function factura(Request $request){
       $transaccion=Transacion::find($request->id);
-      $header = view('Transacciones.PDF.header');
-
-      $footer = view('Transacciones.PDF.footer');
-
-      $main = view('Transacciones.PDF.factura',compact('transaccion'));
-
-      $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
-      return $pdf->stream('nombre.pdf');
+      if($transaccion->detalleTransaccion->count()>8){
+        $header = view('Transacciones.PDF.header');
+  
+        $footer = view('Transacciones.PDF.footer');
+  
+        $main = view('Transacciones.PDF.factura2',compact('transaccion'));
+  
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream('factura2.pdf');
+      }else{
+        $header = view('Transacciones.PDF.header');
+  
+        $footer = view('Transacciones.PDF.footer');
+  
+        $main = view('Transacciones.PDF.factura',compact('transaccion'));
+  
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream('factura1.pdf');
+      }
     }
 }
