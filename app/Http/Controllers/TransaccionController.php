@@ -334,21 +334,45 @@ class TransaccionController extends Controller
       return $clientes;
     }
     public static function buscarVenta($texto){
-      $productos=Producto::where('nombre','like','%'.$texto.'%')->orderBy('nombre','ASC')->where('estado',1)->get(['id','nombre','f_presentacion']);
-      foreach ($productos as $p) {
-        $p->presentacion;
-        $p->divisionProducto;
-        foreach ($p->divisionProducto as $dp) {
-          $dp->division;
-          if($dp->contenido!=null){
-            $dp->unidad;
+      // $productos=Producto::where('nombre','like','%'.$texto.'%')->orderBy('nombre','ASC')->where('estado',1)->get(['id','nombre','f_presentacion']);
+      // foreach ($productos as $p) {
+      //   $p->presentacion;
+      //   $p->divisionProducto;
+      //   foreach ($p->divisionProducto as $dp) {
+      //     $dp->division;
+      //     if($dp->contenido!=null){
+      //       $dp->unidad;
+      //     }
+      //     $dp->inventario=DivisionProducto::inventario($dp->id,1);
+      //     if($dp->inventario>0){
+      //       $lotes=DivisionProducto::lotes($dp->id);
+      //       $dp->lote=$lotes[(count($lotes))-1]->lote;}
+      //     $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
+      //   }
+      // }
+      $productos=DB::table('division_productos')
+      ->select('productos.nombre','division_productos.id','division_productos.precio','division_productos.cantidad','division_productos.codigo','presentacions.nombre as p_nombre','divisions.nombre as d_nombre','unidads.nombre as u_nombre')
+      ->join('productos','productos.id','=','division_productos.f_producto','left outer')
+      ->join('presentacions','presentacions.id','=','productos.f_presentacion','left outer')
+      ->join('divisions','divisions.id','=','division_productos.f_division','left outer')
+      ->join('unidads','unidads.id','=','division_productos.contenido','left outer')
+      ->where('productos.estado',true)
+      ->where('productos.nombre','like','%'.$texto.'%')
+      ->orwhere('division_productos.codigo','like','%'.$texto.'%')
+      ->orderBy('productos.nombre','ASC')
+      ->whereExists(function ($query){
+        $query->from('inventarios')
+          ->whereRaw('division_productos.id = inventarios.f_divisionproducto');
+        })
+      ->take(10)
+      ->get();
+      foreach($productos as $key => $producto){
+        $producto->inventario=DivisionProducto::inventario($producto->id,1);
+            if($producto->inventario>0){
+              $lotes=DivisionProducto::lotes($producto->id);
+              $producto->lote=$lotes[(count($lotes))-1]->lote;
+            $producto->ubicacion=DivisionProducto::ubicacion($producto->id,$producto->inventario);
           }
-          $dp->inventario=DivisionProducto::inventario($dp->id,1);
-          if($dp->inventario>0){
-            $lotes=DivisionProducto::lotes($dp->id);
-            $dp->lote=$lotes[(count($lotes))-1]->lote;}
-          $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
-        }
       }
       return $productos;
     }
@@ -381,30 +405,17 @@ class TransaccionController extends Controller
     }
 
     public static function buscarServicio($texto){
-      // $servicios=Servicio::where('estado',true)->where('nombre', 'like','%'.$texto.'%')->orderBy('nombre')->get();
       $servicios=DB::table('servicios')
-      ->select('servicios.*')
+      ->select('servicios.id','servicios.precio',DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre) as nombre'))
       ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
       ->where('servicios.estado',true)
-      // ->where('servicios.nombre', 'like','%'.$texto.'%')
+      ->where('categoria_servicios.nombre','<>','Honorarios')
+      ->where('categoria_servicios.nombre','<>','Habitación')
+      ->where('categoria_servicios.nombre','<>','Cama')
       ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
       ->orderBy('servicios.nombre','ASC')
       ->get();
-      $service = [];
-      $i = 0;
-      if($servicios != null){
-        foreach($servicios as $servicio){
-          $categoria=Servicio::find($servicio->id)->categoria->nombre;
-          if($categoria != "Honorarios" && $categoria != "Habitación"  && $categoria != "Cama"){
-            if($categoria == "Ultrasonografía" || $categoria == "TAC" || $categoria == "Rayos X"){
-              $servicio->nombre= $categoria." ".$servicio->nombre;
-            }
-            $service[$i] = $servicio;
-            $i++;
-          }
-        }
-      }
-      return $service;
+      return $servicios;
     }
     public static function anularVenta($id,$comentario){
       echo $id;

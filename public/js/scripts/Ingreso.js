@@ -43,28 +43,28 @@ $(document).on('ready', function () {
             tipo: v_tipo
           },
           success: function (res) {
-            if(res != 0){
+            if (res != 0) {
               tabla.empty();
               head =
-              "<thead>" +
-              "<th>Nombre</th>" +
-              "<th style='width : 80px'>Opción</th>" +
-              "</thead>";
+                "<thead>" +
+                "<th>Nombre</th>" +
+                "<th style='width : 80px'>Opción</th>" +
+                "</thead>";
               tabla.append(head);
               $(res).each(function (key, value) {
                 html =
-                "<tr>" +
-                "<td>" +
-                value.apellido + ', ' + value.nombre +
-                "</td>" +
-                "<td><center>" +
-                "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
-                "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
-                "<button type='button' class='btn btn-sm btn-primary' id='agregar_paciente'>" +
-                "<i class='fa fa-check'></i>" +
-                "</button>" +
-                "</center></td>" +
-                "</tr>";
+                  "<tr>" +
+                  "<td>" +
+                  value.apellido + ', ' + value.nombre +
+                  "</td>" +
+                  "<td><center>" +
+                  "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
+                  "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +
+                  "<button type='button' class='btn btn-sm btn-primary' id='agregar_paciente'>" +
+                  "<i class='fa fa-check'></i>" +
+                  "</button>" +
+                  "</center></td>" +
+                  "</tr>";
                 tabla.append(html);
               });
             }
@@ -105,13 +105,13 @@ $(document).on('ready', function () {
       // $("#centro").removeClass('modal-lg');
       // $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
       // $("#derecha").hide();
-			// $("#izq_interno").attr('style', 'height:auto');
-			//Mostrar el panel de la izquierda y ocultar el de la derecha
-			$("#izquierda").show();
-			$("#derecha").hide();
-			$("#derecha_nuevo").hide();
-			$("#btn_derecha").hide();
-			$("#btn_izquierda").show();
+      // $("#izq_interno").attr('style', 'height:auto');
+      //Mostrar el panel de la izquierda y ocultar el de la derecha
+      $("#izquierda").show();
+      $("#derecha").hide();
+      $("#derecha_nuevo").hide();
+      $("#btn_derecha").hide();
+      $("#btn_izquierda").show();
     } else {
       $("#modal_").modal('hide');
     }
@@ -174,19 +174,19 @@ $(document).on('ready', function () {
       $("#pac_nombre").val("");
       $("#pac_apellido").val("");
       $("#dui_paciente").val("");
-			$("#pac_telefono").val("");
+      $("#pac_telefono").val("");
 
-			// $("#centro").removeClass('modal-lg');
-			// $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
-			// $("#derecha").hide();
-			// $("#derecha_nuevo").hide();
-			// $("#izq_interno").attr('style', 'height:auto');
+      // $("#centro").removeClass('modal-lg');
+      // $("#izquierda").removeClass('col-sm-6').addClass('col-sm-12');
+      // $("#derecha").hide();
+      // $("#derecha_nuevo").hide();
+      // $("#izq_interno").attr('style', 'height:auto');
 
-			$("#izquierda").show();
-			$("#derecha").hide();
-			$("#derecha_nuevo").hide();
-			$("#btn_derecha").hide();
-			$("#btn_izquierda").show();
+      $("#izquierda").show();
+      $("#derecha").hide();
+      $("#derecha_nuevo").hide();
+      $("#btn_derecha").hide();
+      $("#btn_izquierda").show();
     }
 
   });
@@ -277,27 +277,25 @@ $(document).on('ready', function () {
           "</thead>";
         tabla.append(cab);
         $(res).each(function (key, value) {
-          $(value.division_producto).each(function (key2, value2) {
-            if (parseFloat(value2.inventario) > 0) {
-              if (value2.contenido != null) {
-                var aux = value2.unidad.nombre;
-              } else {
-                var aux = value.presentacion.nombre;
-              }
-              html = "<tr>" +
-                "<td id='cu" + value2.id + "'>" + value.nombre + "</td>" +
-                "<td id='cd" + value2.id + "'>" + " " + value2.division.nombre + " " + value2.cantidad + " " + aux + "</td>" +
-                "<td id='ct" + value2.id + "'>" + value2.inventario + "</td>" +
-                "<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
-                "<td>" +
-                "<center><button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value2.id + ");'>" +
-                "<i class='fa fa-check'></i>" +
-                "</button></center>" +
-                "</td>" +
-                "</tr>";
-              tabla.append(html);
+          if (parseFloat(value.inventario) > 0) {
+            if (value.u_nombre != null) {
+              var aux = value.u_nombre;
+            } else {
+              var aux = value.p_nombre;
             }
-          });
+            html = "<tr>" +
+              "<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
+              "<td id='cd" + value.id + "'>" + " " + value.d_nombre + " " + value.cantidad + " " + aux + "</td>" +
+              "<td id='ct" + value.id + "'>" + value.inventario + "</td>" +
+              "<td>$ <label id='cc" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
+              "<td>" +
+              "<center><button type='button' class='btn btn-sm btn-primary' onclick='registrarventa_(" + value.id + ");'>" +
+              "<i class='fa fa-check'></i>" +
+              "</button></center>" +
+              "</td>" +
+              "</tr>";
+            tabla.append(html);
+          }
         });
       });
     }
@@ -488,8 +486,8 @@ $(document).on('ready', function () {
         fecha_ingreso: $("#fecha_ingreso").val(),
         tipo: $("#tipo").val(),
         f_cama: $("#cama").val()
-			}, success: function (r) {
-				console.log(r);
+      }, success: function (r) {
+        console.log(r);
         if (r == 1) {
           localStorage.setItem('msg', 'yes');
           location.reload();
@@ -509,21 +507,21 @@ $(document).on('ready', function () {
 });
 
 $("#cancelar_derecha").click(function (e) {
-	e.preventDefault();
-	$("#izquierda").show();
-	$("#derecha").hide();
-	$("#derecha_nuevo").hide();
+  e.preventDefault();
+  $("#izquierda").show();
+  $("#derecha").hide();
+  $("#derecha_nuevo").hide();
 
-	$("#btn_derecha").hide();
-	$("#btn_izquierda").show();
+  $("#btn_derecha").hide();
+  $("#btn_izquierda").show();
 });
 
 $("#nuevo_abono").on('click', function (e) {
   e.preventDefault();
   var transaccion_id = $("#id_t").val();
   var html_ = '<p>Ingrese la cantidad en dólares que desea abonar</p><input type="number" class="swal2-input" step="0.01" id="monto" min="0.00" placeholder="Monto a abonar" autofocus aria-autocomplete="false">';
-	var deuda = $("#deuda_para_alta").val();
-	deuda = parseFloat(deuda);
+  var deuda = $("#deuda_para_alta").val();
+  deuda = parseFloat(deuda);
   swal({
     title: 'Nuevo abono',
     type: 'info',
@@ -535,9 +533,9 @@ $("#nuevo_abono").on('click', function (e) {
     cancelButtonClass: 'btn btn-light'
   }).then((result) => {
     if (result.value) {
-			console.log($("#monto").val())
-			var monto_a = $("#monto").val();
-			if (parseFloat(monto_a) <= deuda) {
+      console.log($("#monto").val())
+      var monto_a = $("#monto").val();
+      if (parseFloat(monto_a) <= deuda) {
         $.ajax({
           url: $('#guardarruta').val() + "/abonar",
           type: "POST",
@@ -732,7 +730,7 @@ var aux;
 function accion24(tipo, id, objeto = null) {
   //0: Eliminar, 1: Editar y 2: Cambiar estado
   if (tipo == 1) {
-    var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad" value="'+objeto+'">';
+    var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad" value="' + objeto + '">';
     swal({
       title: "Editar",
       html: html_,
@@ -815,75 +813,75 @@ function accion24(tipo, id, objeto = null) {
         }
       }
     });
-	} else if (tipo == 4) {
-		$.ajax({
-			url: $('#guardarruta').val() + "/eliminarDS",
-			type: "post",
-			data: {
-				id: id
-			},
-			success: function (res) {
-				if (res) {
-					$("#r" + objeto.id).remove();
-					swal({
-						type: 'success',
-						toast: true,
-						title: '¡Acción exitosa!',
-						position: 'top-end',
-						showConfirmButton: false,
-						timer: 4000
-					});
-				} else {
-					swal({
-						type: 'error',
-						toast: true,
-						title: '¡Algo salio mal!',
-						position: 'top-end',
-						showConfirmButton: false,
-						timer: 4000
-					});
-				}
-			}
-		});
-	} else if (tipo == 5) {
-		var html_ = '<p>Ingrese el nuevo precio correcto</p><input class="swal2-input" type="number" step="0.01" min="0" id="edit_precio" value="' + objeto + '">';
-		swal({
-			title: "Editar",
-			html: html_,
-			showCancelButton: true,
-			confirmButtonText: '¡Guardar!',
-			cancelButtonText: 'Cancelar',
-			confirmButtonClass: 'btn btn-primary',
-			cancelButtonClass: 'btn btn-light'
-		}).then((result) => {
-			if (result.value) {
-				var precio = $("#edit_precio").val();
-				$.ajax({
-					url: $('#guardarruta').val() + "/editarx24",
-					type: "post",
-					data: {
-						id: id,
-						precio: precio
-					},
-					success: function (res) {
-						if (res) {
-							localStorage.setItem('msg', 'yes');
-							location.reload();
-						} else {
-							swal({
-								type: 'error',
-								toast: true,
-								title: '¡Algo salio mal!',
-								position: 'top-end',
-								showConfirmButton: false,
-								timer: 4000
-							});
-						}
-					}
-				});
-			}
-		});
-	 }else {
+  } else if (tipo == 4) {
+    $.ajax({
+      url: $('#guardarruta').val() + "/eliminarDS",
+      type: "post",
+      data: {
+        id: id
+      },
+      success: function (res) {
+        if (res) {
+          $("#r" + objeto.id).remove();
+          swal({
+            type: 'success',
+            toast: true,
+            title: '¡Acción exitosa!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
+        } else {
+          swal({
+            type: 'error',
+            toast: true,
+            title: '¡Algo salio mal!',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000
+          });
+        }
+      }
+    });
+  } else if (tipo == 5) {
+    var html_ = '<p>Ingrese el nuevo precio correcto</p><input class="swal2-input" type="number" step="0.01" min="0" id="edit_precio" value="' + objeto + '">';
+    swal({
+      title: "Editar",
+      html: html_,
+      showCancelButton: true,
+      confirmButtonText: '¡Guardar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-light'
+    }).then((result) => {
+      if (result.value) {
+        var precio = $("#edit_precio").val();
+        $.ajax({
+          url: $('#guardarruta').val() + "/editarx24",
+          type: "post",
+          data: {
+            id: id,
+            precio: precio
+          },
+          success: function (res) {
+            if (res) {
+              localStorage.setItem('msg', 'yes');
+              location.reload();
+            } else {
+              swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
+            }
+          }
+        });
+      }
+    });
+  } else {
     swal({
       title: 'Eliminar registro',
       text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
@@ -925,38 +923,38 @@ function accion24(tipo, id, objeto = null) {
 function input_seleccion(e = null, btn = 0) {
   document.getElementById('seleccion').value = e;
 
-	var principal = $("#centro");
-	if (btn == 0) {
-		var derecha = $("#derecha");
-		$("#derecha_nuevo").hide();
-		$("#guardar_paciente_nuevo").hide();
-	} else {
-		var derecha = $("#derecha_nuevo");
-		$("#derecha").hide();
-		$("#guardar_paciente_nuevo").show();
-	}
+  var principal = $("#centro");
+  if (btn == 0) {
+    var derecha = $("#derecha");
+    $("#derecha_nuevo").hide();
+    $("#guardar_paciente_nuevo").hide();
+  } else {
+    var derecha = $("#derecha_nuevo");
+    $("#derecha").hide();
+    $("#guardar_paciente_nuevo").show();
+  }
   var izquierda = $("#izquierda");
   var interno = $("#izq_interno");
 
   // principal.addClass('modal-lg');
   // izquierda.removeClass('col-sm-12').addClass('col-sm-6');
   // derecha.show();
-	// interno.attr('style', 'height:auto');
-	
-	izquierda.hide();
-	derecha.show();
-	$("#btn_derecha").show();
-	$("#btn_izquierda").hide();
+  // interno.attr('style', 'height:auto');
+
+  izquierda.hide();
+  derecha.show();
+  $("#btn_derecha").show();
+  $("#btn_izquierda").hide();
 
   $("#busqueda").focus();
 }
 
 function i_activo(cama, tipo) {
   $("#cama").val(cama);
-	$("#tipo").val(tipo);
-	if (tipo == 0) {
-		$("#tipo_ingreso_div").show();
-	} else {
-		$("#tipo_ingreso_div").hide();
-	}
+  $("#tipo").val(tipo);
+  if (tipo == 0) {
+    $("#tipo_ingreso_div").show();
+  } else {
+    $("#tipo_ingreso_div").hide();
+  }
 }

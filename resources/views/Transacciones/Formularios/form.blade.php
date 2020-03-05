@@ -253,6 +253,14 @@
       }else{
         descuento=parseFloat(descuento);
       }
+      if(descuento>100){
+        $('#descuento').val("100");
+        descuento=100;
+        
+      }else if(descuento<0){
+        $('#descuento').val("0");
+        descuento=0;
+      }
       totd=parseFloat($('#total_venta_aux').val());
       $('#total_venta').text((totd-(totd*(descuento/100))).toFixed(2));
 
@@ -264,8 +272,8 @@
       }else{
         descuento=parseFloat(descuento);
       }
-      totar=parseFloat($('#total_venta_aux').val());//Total de aux al recargar
-      $('#total_venta').text((totar-(totar*(descuento/100))).toFixed(2));
+        totar=parseFloat($('#total_venta_aux').val());//Total de aux al recargar
+        $('#total_venta').text((totar-(totar*(descuento/100))).toFixed(2));
     });
   </script>
 @endif

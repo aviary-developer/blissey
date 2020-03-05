@@ -81,15 +81,16 @@ $(document).on('ready', function () {
   });
   $("#resultadoVenta").keyup(async function () {
     var valor = $("#resultadoVenta").val();
-    if (valor.length < 1) {
+    if (valor.length < 2) {
       var tabla = $("#tablaBuscar");
       tabla.empty();
     }
     var conteo = 0;
-    if (radio == '1' && valor.length > 0) {
+    if (radio == '1' && valor.length > 1) {
       var ruta = $('#guardarruta').val() + "/buscarProductoVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, await async function (res) {
+
         await tabla.empty();
         cab = "<thead>" +
           "<th colspan='2'>Resultado</th>" +
@@ -101,32 +102,30 @@ $(document).on('ready', function () {
           "</thead>";
         tabla.append(cab);
         await $(res).each(async function (key, value) {
-          await $(value.division_producto).each(await function (key2, value2) {
-            if (parseFloat(value2.inventario) > 0) {
-              if (value2.contenido != null) {
-                var aux = value2.unidad.nombre;
-              } else {
-                var aux = value.presentacion.nombre;
-              }
-              html = "<tr>" +
-                "<td id='cu" + value2.id + "'>" + value.nombre + "</td>" +
-                "<td id='cd" + value2.id + "'>" + " " + value2.division.nombre + " " + value2.cantidad + " " + aux + "</td>" +
-                "<td>" + value2.ubicacion + "</td>" +
-                "<td id='ct" + value2.id + "'>" + value2.inventario + "</td>" +
-                "<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
-                "<td>" + value2.lote + "</td>" +
-                "<td>" +
-                "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value2.id + ");'>" +
-                "<i class='fas fa-arrow-right'></i>" +
-                "</button>" +
-                "</td>" +
-                "</tr>";
-              if (conteo < 4) {
-                tabla.append(html);
-              }
-              conteo++;
+          if (value.inventario != 0) {
+            if (value.u_nombre != null) {
+              var aux = value.u_nombre;
+            } else {
+              var aux = value.p_nombre;
             }
-          });
+            html = "<tr>" +
+              "<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
+              "<td id='cd" + value.id + "'>" + " " + value.d_nombre + " " + value.cantidad + " " + aux + "</td>" +
+              "<td>" + value.ubicacion + "</td>" +
+              "<td id='ct" + value.id + "'>" + value.inventario + "</td>" +
+              "<td>$ <label id='cc" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
+              "<td>" + value.lote + "</td>" +
+              "<td>" +
+              "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value.id + ");'>" +
+              "<i class='fas fa-arrow-right'></i>" +
+              "</button>" +
+              "</td>" +
+              "</tr>";
+            if (conteo < 4) {
+              tabla.append(html);
+            }
+            conteo++;
+          }
         });
       });
     }

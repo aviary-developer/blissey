@@ -1,4 +1,4 @@
-$(document).ready(async function () { 
+$(document).ready(async function () {
 	var vector = [];
 	/*Elementos de vector
 	* 0: Habitacion
@@ -27,9 +27,9 @@ $(document).ready(async function () {
 		v_habitacion();
 	});
 
-	$("#c_nombre_medicamento").on('keyup',function(){
+	$("#c_nombre_medicamento").on('keyup', function () {
 		var obj = $(this);
-		if (obj.val().length == 0) {
+		if (obj.val().length < 2) {
 			$("#panel_ver_medicamentos").show();
 			$("#panel_buscar_medicamentos").hide();
 		} else {
@@ -48,26 +48,24 @@ $(document).ready(async function () {
 					"</thead><tbody id='tbody_table_buscar_medicamentos'><tbody/>";
 				tabla.append(cab);
 				$(res).each(function (key, value) {
-					$(value.division_producto).each(function (key2, value2) {
-						if (parseFloat(value2.inventario) > 0) {
-							if (value2.contenido != null) {
-								var aux = value2.unidad.nombre;
-							} else {
-								var aux = value.presentacion.nombre;
-							}
-							html = "<tr>" +
-								"<td id='cu" + value2.id + "'>" + value.nombre + "</td>" +
-								"<td id='cd" + value2.id + "'>" + " " + value2.division.nombre + " " + value2.cantidad + " " + aux + "</td>" +
-								"<td>$ <label id='cc" + value2.id + "'>" + parseFloat(value2.precio).toFixed(2) + "</label></td>" +
-								"<td>" +
-								"<center><button type='button' class='btn btn-sm btn-primary' id='add_buscar_medicamentos'>" +
-								"<i class='fa fa-check'></i>" +
-								"</button></center>" +
-								"</td>" +
-								"</tr>";
-							tabla.append(html);
+					if (parseFloat(value.inventario) > 0) {
+						if (value.u_nombre != null) {
+							var aux = value.u_nombre;
+						} else {
+							var aux = value.p_nombre;
 						}
-					});
+						html = "<tr>" +
+							"<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
+							"<td id='cd" + value.id + "'>" + " " + value.d_nombre + " " + value.cantidad + " " + aux + "</td>" +
+							"<td>$ <label id='cc" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
+							"<td>" +
+							"<center><button type='button' class='btn btn-sm btn-primary' id='add_buscar_medicamentos'>" +
+							"<i class='fa fa-check'></i>" +
+							"</button></center>" +
+							"</td>" +
+							"</tr>";
+						tabla.append(html);
+					}
 				});
 			});
 		}
@@ -92,20 +90,20 @@ $(document).ready(async function () {
 			'<div class="col-10">' + //Primer div col-10
 			'<h6>' + nombre +
 			' <span class="badge border border-success text-success badge-pill badge-light" id="price_m">$ ' + precio + '</span>' +
-			'</h6>' + 
+			'</h6>' +
 			'<div class="row ml-1">' + //Segundo div row
-			'<span class="badge badge-primary">'+presentacion+'</span>'+
-			'</div>'+
+			'<span class="badge badge-primary">' + presentacion + '</span>' +
+			'</div>' +
 			'</div>' + //Primer divl col-10
 			'<div class="col-2">' + //Primer div col-2
 			'<div class="form-group">' + //Primer div form-group
 			'<div class="input-group mb-2 mr-sm-2">' + //Primer div --
-			'<input type="number" name="c_cantidad_medicamento" id="c_cantidad_medicamento" class="form-control form-control-sm" min="0" step="1" value="'+cantidad+'">'+
+			'<input type="number" name="c_cantidad_medicamento" id="c_cantidad_medicamento" class="form-control form-control-sm" min="0" step="1" value="' + cantidad + '">' +
 			'</div>' + //Primer div --
-			'</div>'+ //Primer div form-group
-			'</div>'+ //Primer div col-2
+			'</div>' + //Primer div form-group
+			'</div>' + //Primer div col-2
 			'</div>'; //Primer div row
-		
+
 		subpanel.append(html);
 		$("#c_nombre_medicamento").val("");
 		$("#panel_ver_medicamentos").show();
@@ -204,7 +202,7 @@ $(document).ready(async function () {
 		v_servicio();
 	});
 
-	$("#body-ultra").on('change keyup', "#c_cantidad_ultra", function () { 
+	$("#body-ultra").on('change keyup', "#c_cantidad_ultra", function () {
 		v_ultra();
 	});
 
@@ -223,7 +221,7 @@ $(document).ready(async function () {
 		var id_grupo = $(grupo).attr('id');
 
 		var contador = 0;
-		$('#' + id_grupo + ' > div.row').each(function (k, v) { 
+		$('#' + id_grupo + ' > div.row').each(function (k, v) {
 			var txt_cantidad = $(v).find('#c_cantidad_examen').val();
 			if (txt_cantidad != "") {
 				txt_cantidad = txt_cantidad.trim();
@@ -244,15 +242,15 @@ $(document).ready(async function () {
 		$("#panel_ver_examenes > div.div_area").each(function (k, v) {
 			$(v).hide();
 		});
-		$("#count_column > span.contadores").each(function (k, v) { 
+		$("#count_column > span.contadores").each(function (k, v) {
 			$(v).removeClass('badge-dark').addClass('badge-primary');
 		});
-		
+
 		var id_div = valor.replace(/ /g, '_');
 		$("#" + id_div).show();
 		$("#c_" + id_div).removeClass('badge-primary').addClass('badge-dark');
 	});
-	
+
 	async function load_habitacion() {
 		var valor = $("#tipo").val();
 
@@ -413,7 +411,7 @@ $(document).ready(async function () {
 			var aux = txt_precio.split(" ");
 			var precio = aux[1];
 			precio = parseFloat(precio);
-			
+
 			var txt_cantidad = $(v).find('#c_cantidad_examen').val();
 			if (txt_cantidad != "") {
 				txt_cantidad = txt_cantidad.trim();

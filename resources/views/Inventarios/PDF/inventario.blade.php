@@ -33,6 +33,9 @@
         $contador=1;
 
         @endphp
+        <center>
+        <h3>INVENTARIO</h3>
+      </center>
         @foreach ($dp as $div)
         @if(($contador-1)%22==0)
         <div class="page">
