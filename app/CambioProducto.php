@@ -102,7 +102,6 @@ class CambioProducto extends Model
     foreach($cambios as $cambio){
       $borrar=1;
       foreach($lotes as $lote){
-        print_r($lote);
         if($cambio->f_detalle_transaccion==$lote->id){
           $borrar=0;     
           $cambioAux=CambioProducto::find($cambio->id);
