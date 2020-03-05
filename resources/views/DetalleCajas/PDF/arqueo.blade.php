@@ -6,59 +6,65 @@
 <div class="row">
     <div>
       <center>
-        <h3>ARQUEO DE CAJA</h3>
+        <h3>ARQUEO DE CAJA {{ $detalle->datosCaja->nombre}}</h3>
       </center>
     </div>
-    <div>
-        <div class="col-xs-6">
-            <div class="col-xs-2">
-                <span>Caja:</span>
-            </div>
-            <div class="col-xs-10 subrayar">
-                <b>{{ $detalle->datosCaja->nombre}}</b>
-            </div>
+<div>
+    <div class="col-xs-6">
+        <div class="col-xs-2">
+            <span>Caja:</span>
         </div>
-        <div class="col-xs-6">
-            <div class="col-xs-3">
-                <span>Localización:</span>
-            </div>
-            <div class="col-xs-9 subrayar">
-                <b>@if($detalle->datosCaja->localizacion)
-                        Recepción
-                    @else
-                        Farmacia
-                    @endif
-                </b>
-            </div>
+        <div class="col-xs-10 subrayar">
+            <b>{{ $detalle->datosCaja->nombre}}</b>
         </div>
     </div>
-    <div>
-            <div class="col-xs-6">
-                <div class="col-xs-5">
+    <div class="col-xs-6">
+        <div class="col-xs-3">
+            <span>Localización:</span>
+        </div>
+        <div class="col-xs-9 subrayar">
+            <b>@if($detalle->datosCaja->localizacion)
+                    Recepción
+                @else
+                    Farmacia
+                @endif
+            </b>
+        </div>
+    </div>
+</div>
+<div>
+        <div class="col-xs-6">
+            <div class="col-xs-5">
+                @if($tipoArqueo==1)
+                <span>Fecha y hora del informe:</span>
+                @else
+                <span>Fecha y hora del apertura:</span>
+                @endif
+            </div>
+            <div class="col-xs-7 subrayar">
                     @if($tipoArqueo==1)
-                    <span>Fecha y hora del informe:</span>
+                        <b>{{ \Carbon\Carbon::now()->format('d/m/Y h:i:s A')}}</b>
                     @else
-                    <span>Fecha y hora del apertura:</span>
+                        <b>{{ $detalle->created_at->formatLocalized('%d/%m/%Y a las %H:%M:%S') }}</b>
                     @endif
-                </div>
-                <div class="col-xs-7 subrayar">
-                        @if($tipoArqueo==1)
-                            <b>{{ \Carbon\Carbon::now()->format('d/m/Y h:i:s A')}}</b>
-                        @else
-                            <b>{{ $detalle->created_at->formatLocalized('%d/%m/%Y a las %H:%M:%S') }}</b>
-                        @endif
-                </div>
             </div>
         </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <h4><center>Movimientos en caja</center></h4>
-        <table class="table-simple">
-            @php
-                $contador=1;
+        @php
+                $contador=3;
                 $total=$detalle->importe;
-            @endphp
+                $c_mov=$movimientos->count();
+                $p_t=1;
+        @endphp
+        @foreach ($movimientos as $movimiento)
+        @if(($contador-1)%22==0 || $p_t==1)
+        @php
+            $p_t=0;
+        @endphp
+        <div class="page">
+        <table class="table table-hover table-sm table-striped index-table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -70,9 +76,9 @@
                     <th>Total</th>
                 </tr>
             </thead>
-            @if ($detalle->importe>0)
+            @if ($detalle->importe>0 && $contador==3)
                 <tr>
-                    <td>{{$contador}}</td>
+                    <td>{{$contador-4}}</td>
                     <td></td>
                     <td>Inicio</td>
                     <td>{{date_format($detalle->updated_at,'g:i A')}}</td>
@@ -85,9 +91,10 @@
                 @endphp
             @endif
             <tbody>
-                @foreach ($movimientos as $movimiento)
+            @endif
+                
                     <tr>
-                        <td>{{$contador}}</td>
+                        <td>{{$contador-2}}</td>
                         <td>{{$movimiento->factura}}</td>
                         <td>{{App\Transacion::tipo($movimiento->tipo)}}</td>
                         <td>{{date_format($movimiento->updated_at,'g:i A')}}</td>
@@ -142,13 +149,12 @@
                     @php
                         $contador++;
                     @endphp
-                @endforeach
-                @if($tipoArqueo==3)
+                @if($tipoArqueo==3 && ($c_mov+4)==$contador)
                     @php
                         $total=$total-$cierre->importe;
                     @endphp
                     <tr>
-                        <td>{{$contador}}</td>
+                        <td>{{$contador-2}}</td>
                         <td></td>
                         <td>Cierre</td>
                         <td>{{date_format($cierre->updated_at,'g:i A')}}</td>
@@ -157,8 +163,13 @@
                         <td>$ {{number_format($total,2,'.',',')}}</td>
                     </tr>
                 @endif
-             </tbody>
+                @if(($contador-1)%22==0)
+            </tbody>
         </table>
+        </div>
+        @endif
+        @endforeacH
+        
     </div>
 </div>
 @endsection

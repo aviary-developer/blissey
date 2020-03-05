@@ -26,11 +26,7 @@ class CambioProductoController extends Controller
       $pagina--;
       $pagina *= 10;
       $estado=$request->estado;
-      if($estado==null){
-        $retirados=CambioProducto::orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->get();
-      }else{
-        $retirados=CambioProducto::buscar($estado);
-      }
+      $retirados=CambioProducto::buscar($estado);
       return view('CambioProductos.index',compact('retirados','estado','pagina'));
     }
 

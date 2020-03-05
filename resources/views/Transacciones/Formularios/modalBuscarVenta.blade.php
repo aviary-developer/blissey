@@ -60,11 +60,13 @@
 						<center>
 							<h5>Resultado de búsqueda</h5s>
 						</center>
-					</div>
-					<table class="table table-striped table-sm" id="tablaBuscar">
+          </div>
+          <div class="flex-row" style="height:300px; overflow-x:hidden; overflow-y:scroll;">
+					<table class="table table-sm" id="tablaBuscar">
 						<thead>
 						</thead>
-					</table>
+          </table>
+          </div>
 				</div>
 
       </div>

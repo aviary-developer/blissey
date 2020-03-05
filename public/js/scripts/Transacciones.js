@@ -121,7 +121,7 @@ $(document).on('ready', function () {
               "</button>" +
               "</td>" +
               "</tr>";
-            if (conteo < 4) {
+            if (conteo < 10) {
               tabla.append(html);
             }
             conteo++;
@@ -138,40 +138,36 @@ $(document).on('ready', function () {
           "<th colspan='2'>Resultado</th>" +
           "<th>Estante|Nivel</th>" +
           "<th>Existencias</th>" +
-          "<th>Precio</th>" +
+          "<th style='width : 80px'>Precio</th>" +
           "<th>Componente</th>" +
           "<th style='width : 80px'>Acción</th>" +
           "</thead>";
         tabla.append(cab);
         $(res).each(function (key, value) {
-          $(value.componente_producto).each(function (key2, value2) {
-            $(value2.producto.division_producto).each(function (key3, value3) {
-              if (parseFloat(value3.inventario) > 0) {
-                if (value3.contenido != null) {
-                  var aux = value3.unidad.nombre;
-                } else {
-                  var aux = value2.producto.presentacion.nombre;
-                }
-                html = "<tr>" +
-                  "<td id='cu" + value3.id + "'>" + value2.producto.nombre + "</td>" +
-                  "<td id='cd" + value3.id + "'>" + " " + value3.division.nombre + " " + value3.cantidad + " " + aux + "</td>" +
-                  "<td>" + value3.ubicacion + "</td>" +
-                  "<td id='ct" + value3.id + "'>" + value3.inventario + "</td>" +
-                  "<td>$ <label id='cc" + value3.id + "'>" + parseFloat(value3.precio).toFixed(2) + "</label></td>" +
-                  "<td>" + value.nombre + "</td>" +
-                  "<td>" +
-                  "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value3.id + ");'>" +
-                  "<i class='fas fa-arrow-right'></i>" +
-                  "</button>" +
-                  "</td>" +
-                  "</tr>";
-                if (conteo < 4) {
-                  tabla.append(html);
-                }
-                conteo++;
-              }
-            });
-          });
+          if (parseFloat(value.inventario) > 0) {
+            if (value.u_unidad != null) {
+              var aux = value.u_nombre;
+            } else {
+              var aux = value.p_nombre;
+            }
+            html = "<tr>" +
+              "<td id='cu" + value.id + "'>" + value.nombre + "</td>" +
+              "<td id='cd" + value.id + "'>" + " " + value.d_nombre + " " + value.cantidad + " " + aux + "</td>" +
+              "<td>" + value.ubicacion + "</td>" +
+              "<td id='ct" + value.id + "'>" + value.inventario + "</td>" +
+              "<td>$ <label id='cc" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
+              "<td>" + value.co_nombre + "</td>" +
+              "<td>" +
+              "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value.id + ");'>" +
+              "<i class='fas fa-arrow-right'></i>" +
+              "</button>" +
+              "</td>" +
+              "</tr>";
+
+            tabla.append(html);
+
+            conteo++;
+          }
         });
       });
     }
@@ -195,7 +191,7 @@ $(document).on('ready', function () {
             "</button>" +
             "</td>" +
             "</tr>";
-          if (conteo < 4) {
+          if (conteo < 20) {
             tabla.append(html);
           }
           conteo++;

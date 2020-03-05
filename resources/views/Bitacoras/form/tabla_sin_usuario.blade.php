@@ -27,7 +27,7 @@
             @elseif ($bitacora->tipo == 'activate')
               <span class="badge border-info col-sm-12 border text-info">Activar</span>
             @elseif ($bitacora->tipo == 'desactivate')
-              <span class="badge border-purple col-sm-12 border text-purple">Papelara</span>
+              <span class="badge border-purple col-sm-12 border text-purple">Papelera</span>
             @elseif ($bitacora->tipo == 'login')
               <span class="badge border-primary col-sm-12 border text-primary">Ingreso</span>
             @elseif ($bitacora->tipo == 'logout')

@@ -147,7 +147,7 @@ class DetalleCajaController extends Controller
       $detalle=DetalleCaja::find($f_apertura);
       $tipoArqueo=2;
       $cierre="";
-      $fecha=$detalle->created_at->formatLocalized('%Y-%m-%d');                            //Farmacia
+      $fecha=$detalle->created_at->formatLocalized('%Y-%m-%d');//Farmacia
       if($detalle->user->tipoUsuario==1){//Recepción
         $fechaaux=date("Y-m-d",strtotime($fecha."+ 1 days"));
         $ha=DetalleCaja::whereBetween('created_at',[$detalle->created_at,$fechaaux." 07:00:00"])
@@ -193,7 +193,7 @@ class DetalleCajaController extends Controller
           $header = view('PDF.header.farmacia');
         }
         $footer = view('PDF.footer.numero_pagina');
-        $main = view('DetalleCajas.PDF.arqueo',compact('detalle','movimientos','tipoArqueo'));
+        $main = view('DetalleCajas.PDF.arqueo',compact('detalle','movimientos','tipoArqueo','cierre','f_apertura'));
         $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
         return $pdf->stream('nombre.pdf');
       }

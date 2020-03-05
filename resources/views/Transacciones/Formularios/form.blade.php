@@ -37,7 +37,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="fas fa-barcode"></i></div>
             </div>
-            {!! Form::text('factura',null,['class'=>'form-control form-control-sm','placeholder'=>'Factura']) !!}
+            {!! Form::text('factura',null,['class'=>'form-control form-control-sm','placeholder'=>'Factura','id'=>'factura']) !!}
           </div>
         </div>
         <div class="form-group col-sm-12">
@@ -146,7 +146,11 @@
   <div class="x_panel">
     <center>
       <div class="btn-group">
+        @if($tipo==1)
         {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
+        @else
+        {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'validarFactura()']) !!}
+        @endif
         <a href="../transacciones?tipo={{$tipo}}" class="btn btn-light btn-sm">Cancelar</a>
       </div>
     </center>
@@ -264,6 +268,26 @@
       totd=parseFloat($('#total_venta_aux').val());
       $('#total_venta').text((totd-(totd*(descuento/100))).toFixed(2));
 
+    }
+    async function validarFactura(){
+      $factura=$('#factura').val();
+      var ruta = $('#guardarruta').val() + "/validarFactura/"+$factura;
+      $.get(ruta, await async function (res) {
+        console.log(ruta);
+        if(res==1 || res=='1'){
+          document.getElementById("formVenta").submit();
+        }else{
+        swal({
+          toast: true,
+          type: "error",
+          title: "¡Error!",
+          html: "Número de factura ya ha sido utilizado",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 4000
+        });
+        }
+      });
     }
     $(document).ready(function(){
       descuento=$('#descuento').val();

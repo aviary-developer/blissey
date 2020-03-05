@@ -52,7 +52,12 @@ class CambioProducto extends Model
     return $total_vencidos;
   }
   public static function buscar($estado){
-    return $retirados=CambioProducto::where('estado',$estado)->orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->get();
+    return $retirados=CambioProducto::estado($estado)->orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->get();
+  }
+  public function scopeEstado($query, $estado){
+    if($estado!=""){
+      $query->where('estado',$estado);
+    }
   }
   public function transaccion(){
     return $this->belongsTo('App\DetalleTransacion','f_detalle_transaccion');

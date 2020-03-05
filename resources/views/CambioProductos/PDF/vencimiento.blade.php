@@ -3,37 +3,24 @@
 <div class="row">
     <div>
       <center>
-        <h3>REPORTE PRODUCTOS PRÓXIMOS A VENCER</h3>
+        <h3>MEDICAMENTOS PRÓXIMOS A VENCER</h3>
       </center>
     </div>
     <div>
-        <div class="col-xs-5">
-            <div class="col-xs-5">
-                <span>Localización:</span>
-            </div>
-            <div class="col-xs-7 subrayar">
-                <b>@if(App\Transacion::tipoUsuario())
-                        Recepción
-                    @else
-                        Farmacia
-                    @endif
-                </b>
-            </div>
-        </div>
-        <div class="col-xs-7">
-            <div class="col-xs-5">
-                <span>Fecha y hora del informe:</span>
-            </div>
-            <div class="col-xs-7 subrayar">
-                <b>{{ \Carbon\Carbon::now()->format('d/m/Y h:i:s A')}}</b>
-            </div>
-        </div>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <h4><center>Lotes próximos a vencer</center></h4>
-        <table class="table-simple">
+      @php
+        $contador=1;
+        $date = \Carbon\Carbon::now();
+        $date = $date->format('Y-m-d');
+      @endphp
+      @foreach ($retirados as $retirado)
+      @if ($retirado->transaccion->fecha_vencimiento>$date && $retirado->transaccion->divisionProducto->producto->estado)
+        @if(($contador-1)%22==0)
+        <div class="page">
+        <table class="table table-hover table-sm table-striped index-table">
             <thead>
               <tr>
                 <th>#</th>
@@ -45,13 +32,7 @@
               </tr>
             </thead>
             <tbody>
-                @php
-                    $contador=1;
-                    $date = \Carbon\Carbon::now();
-                    $date = $date->format('Y-m-d');
-                @endphp
-                @foreach ($retirados as $retirado)
-                @if ($retirado->transaccion->fecha_vencimiento>$date)
+              @endif
                   <tr>
                     <td>
                       {{$contador}}
@@ -77,9 +58,13 @@
                     $contador++;
                   @endphp
                   @endif
-                @endforeach
-            </tbody>
-          </table>
+                  @if(($contador-1)%22==0)
+                </tbody>
+            </table>
+            </div>
+            @endif
+            @endforeacH
+      </div>
     </div>
 </div>
 @endsection

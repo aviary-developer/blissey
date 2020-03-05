@@ -5,7 +5,7 @@
 @extends('principal')
 @section('layout')
   @include('Transacciones.Barra.create')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'transacciones.store','method' =>'POST','autocomplete'=>'off'])!!}
+  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','route' =>'transacciones.store','method' =>'POST','autocomplete'=>'off','id'=>'formVenta'])!!}
   @php
     if(!isset($fecha)){
     $fecha = Carbon\Carbon::now();

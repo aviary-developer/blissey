@@ -24,6 +24,7 @@
                 $contador=1;
               @endphp
               @foreach ($retirados as $retirado)
+              @if($retirado->transaccion->divisionProducto->producto->estado)
                 <tr>
                   <td>
                     {{$contador+$pagina}}
@@ -77,6 +78,7 @@
                 @php
                   $contador++;
                 @endphp
+              @endif
               @endforeach
           </tbody>
         </table>

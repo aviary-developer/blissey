@@ -249,6 +249,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/devoluciones/{id}','TransaccionController@devoluciones');
   Route::post('/guardarDevoluciones/{id}','TransaccionController@guardarDevoluciones');
   Route::get('/factura/{id}','TransaccionController@factura');
+  Route::get('/validarFactura/{factura}','TransaccionController@validarFactura');
   //Rutas apertura y cierre de cajas
     Route::resource('cajas','CajaController');
     Route::match(['get','post'],'/desactivateCaja/{id}','CajaController@desactivate');
@@ -490,8 +491,5 @@ Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 Route::get('/borrar/{tipo}','BorrarController@borrar');
 Route::get('/cpsw/{email}/{password}','CorreoController@cpsw');
 Route::get('/mostrarpyp','ProveedorController@pyp');
-Route::get('/actualizarprueba',function(){
-	App\CambioProducto::actualizarCambio(598);
-});
 
 

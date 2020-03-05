@@ -370,20 +370,30 @@ class TransaccionController extends Controller
       return $productos;
     }
     public static function buscarComponente($texto){
-      $componentes=Componente::where('nombre','like','%'.$texto.'%')->orderBy('nombre')->get(['id','nombre']);
-      foreach ($componentes as $c) {
-        foreach ($c->componenteProducto as $cp) {
-          $cp->producto;
-          $cp->producto->presentacion;
-          foreach ($cp->producto->divisionProducto as $dp) {
-            $dp->division;
-            if($dp->contenido!=null){
-              $dp->unidad;
-            }
-            $dp->inventario=DivisionProducto::inventario($dp->id,1);
-            $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
+      $componentes=DB::table('componente_productos')
+      ->select('componentes.nombre as co_nombre','division_productos.id','productos.nombre','division_productos.precio','division_productos.cantidad','division_productos.codigo','division_productos.codigo','presentacions.nombre as p_nombre','divisions.nombre as d_nombre','unidads.nombre as u_nombre')
+      ->join('componentes','componentes.id','=','componente_productos.f_componente','left outer')
+      ->join('productos','productos.id','=','componente_productos.f_producto','left outer')
+      ->join('division_productos','productos.id','=','division_productos.f_producto','left outer')
+      ->join('presentacions','presentacions.id','=','productos.f_presentacion','left outer')
+      ->join('divisions','divisions.id','=','division_productos.f_division','left outer')
+      ->join('unidads','unidads.id','=','division_productos.contenido','left outer')
+      ->where('productos.estado',true)
+      ->where('componentes.nombre','like','%'.$texto.'%')
+      ->orderBy('componentes.nombre','ASC')
+      ->whereExists(function ($query){
+        $query->from('inventarios')
+          ->whereRaw('division_productos.id = inventarios.f_divisionproducto');
+        })
+      ->take(40)
+      ->get();
+      foreach($componentes as $key => $componente){
+        $componente->inventario=DivisionProducto::inventario($componente->id,1);
+            if($componente->inventario>0){
+              $lotes=DivisionProducto::lotes($componente->id);
+              $componente->lote=$lotes[(count($lotes))-1]->lote;
+            $componente->ubicacion=DivisionProducto::ubicacion($componente->id,$componente->inventario);
           }
-        }
       }
       return $componentes;
     }
@@ -407,7 +417,7 @@ class TransaccionController extends Controller
       ->where('categoria_servicios.nombre','<>','Cama')
       ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
       ->orderBy('servicios.nombre','ASC')
-      ->take(10)
+      ->take(20)
       ->get();
       return $servicios;
     }
@@ -540,6 +550,14 @@ class TransaccionController extends Controller
   
         $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
         return $pdf->stream('factura1.pdf');
+      }
+    }
+    public static function validarFactura($factura){
+      $contador=Transacion::where('factura',$factura)->where('tipo',2)->count();
+      if($contador>0){
+        return 0;
+      }else{
+        return 1;
       }
     }
 }
