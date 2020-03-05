@@ -197,4 +197,12 @@ class Transacion extends Model
             return 0;
           }
         }
+        public static function verDevolucion($factura){
+            $cantidad=Transacion::where('factura',$factura)->where('devolucion','<>',0)->count();
+            if($cantidad>0){
+              return false;
+            }else{
+              return true;
+            }
+        }
       }

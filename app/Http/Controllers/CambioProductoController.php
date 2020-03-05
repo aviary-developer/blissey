@@ -72,11 +72,13 @@ class CambioProductoController extends Controller
         $detalle->f_estante=$request->f_estante[$i];
         $detalle->nivel=$request->nivel[$i];
         $detalle->save();
-        CambioProducto::actualizarCambio($request->f_producto[$i]);
         Inventario::Actualizar($request->f_producto[$i],Transacion::tipoUsuario(),10,$request->cantidad[$i]);          
       }
       Bitacora::bitacora('store','transacions','entradas',$transaccion->id);
       DB::commit();
+      for($i=0;$i<count($request->f_producto);$i++){
+        CambioProducto::actualizarCambio($request->f_producto[$i]);
+      }
       Return redirect('/entradas')->with('mensaje', '¡Pedido Confirmado!');
     }
 

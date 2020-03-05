@@ -30,7 +30,9 @@ class DivisionProducto extends Model
     $ultimo=Inventario::where('f_divisionproducto',$id)->where('localizacion',$ts)->get()->last();
     if($ultimo!=null){
       return $ultimo->existencia_nueva;
-  }
+    }else{
+      return 0;
+    }
     $cc=0;
     
     $dec=DivisionProducto::filtroDetalles(1,$ts,$id);//Compras

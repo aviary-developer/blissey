@@ -129,7 +129,7 @@ $(document).on('ready', function () {
         });
       });
     }
-    if (radio == '2' && valor.length > 0) {
+    if (radio == '2' && valor.length > 1) {
       var ruta = $('#guardarruta').val() + "/buscarComponenteVenta/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
@@ -175,7 +175,7 @@ $(document).on('ready', function () {
         });
       });
     }
-    if (radio == '3' && valor.length > 0) {
+    if (radio == '3' && valor.length > 1) {
       var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {

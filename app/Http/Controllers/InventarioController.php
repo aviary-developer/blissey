@@ -13,6 +13,7 @@ use App\Inventario;
 use App\Transacion;
 use App\User;
 use Carbon\Carbon;
+use App\CambioProducto;
 
 class InventarioController extends Controller
 {
@@ -102,6 +103,7 @@ class InventarioController extends Controller
         Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,$ultimo);  
         Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$ahora);          
         }
+      CambioProducto::actualizarCambio($detalle->f_producto);
         Bitacora::bitacora('update','detalle_transacions','inventarios',$id);
         Return redirect('/inventarios')->with('mensaje', '¡Editado!');
     }

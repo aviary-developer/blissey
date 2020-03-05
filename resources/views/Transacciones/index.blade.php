@@ -67,7 +67,9 @@
                     $fecha=\Carbon\Carbon::now()->subHours(2);
                     @endphp
                     @if ($tipo==2 && $fecha<$transaccion->updated_at)
-                      @include('Transacciones.Formularios.anularVenta')
+                      @if(App\Transacion::verDevolucion($transaccion->factura))
+                        @include('Transacciones.Formularios.anularVenta')
+                      @endif
                     @endif
                   </div>
                 </center>

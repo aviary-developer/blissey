@@ -240,7 +240,6 @@ class RequisicionController extends Controller
                   'f_producto'=>$detalle->f_producto,
                 ]);
               $regresivo=$regresivo-$fila->cantidad;
-              CambioProducto::actualizarCambio($detalle->f_producto);
             Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$fila->cantidad);        
             }elseif($regresivo!=0){
               DetalleTransacion::create([
@@ -251,7 +250,6 @@ class RequisicionController extends Controller
                 'f_producto'=>$detalle->f_producto,
               ]);
               $regresivo=0;
-              CambioProducto::actualizarCambio($detalle->f_producto);
             Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$regresivo);        
             }
             }
@@ -259,6 +257,9 @@ class RequisicionController extends Controller
         Bitacora::bitacora('update','transacions','requisiciones',$id);
 
         DB::commit();
+        foreach ($detalles as $detalle) {
+          CambioProducto::actualizarCambio($detalle->f_producto);
+        }
         return redirect('verrequisiciones?tipo=4')->with('mensaje', '¡Requisición atendida correctamente!');
       } catch (\Exception $e) {
         DB::rollback();

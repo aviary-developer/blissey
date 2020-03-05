@@ -138,7 +138,6 @@ class TransaccionController extends Controller
               'precio'=>$precio[$i],
               'f_usuario'=>Auth::user()->id,
             ]);
-            CambioProducto::actualizarCambio($f_producto[$i]);
             Inventario::Actualizar($f_producto[$i],Transacion::tipoUsuario(),2,$cantidad[$i]);
         }else{
           DetalleTransacion::create([
@@ -158,6 +157,13 @@ class TransaccionController extends Controller
       }
       Bitacora::bitacora('store','transacions','transacciones',$transaccion->id);
       DB::commit();
+      if($f_producto!=null && $tipo==2){
+        for ($i=0; $i < count($f_producto); $i++) {
+          if($tipo_detalle[$i]==1){
+          CambioProducto::actualizarCambio($f_producto[$i]);
+      }
+      }
+    }
       return redirect('/transacciones?tipo='.$tipo."&estado=".$estado)->with('mensaje', '¡Guardado!');
     }else{
       DB::rollback();
@@ -246,11 +252,14 @@ class TransaccionController extends Controller
           $detalle->f_estante=$request->f_estante[$i];
           $detalle->nivel=$request->nivel[$i];
           $detalle->save();
-          CambioProducto::actualizarCambio($request->f_producto[$i]);
+          
           Inventario::Actualizar($request->f_producto[$i],Transacion::tipoUsuario(),1,$request->cantidad[$i]);
         }
         Bitacora::bitacora('update','transacions','transacciones',$transaccion->id);
         DB::commit();
+        for($i=0;$i<$contador;$i++){
+          CambioProducto::actualizarCambio($request->f_producto[$i]);
+        }
         Return redirect('/transacciones?tipo=0')->with('mensaje', '¡Pedido Confirmado!');
     }
 
@@ -334,22 +343,6 @@ class TransaccionController extends Controller
       return $clientes;
     }
     public static function buscarVenta($texto){
-      // $productos=Producto::where('nombre','like','%'.$texto.'%')->orderBy('nombre','ASC')->where('estado',1)->get(['id','nombre','f_presentacion']);
-      // foreach ($productos as $p) {
-      //   $p->presentacion;
-      //   $p->divisionProducto;
-      //   foreach ($p->divisionProducto as $dp) {
-      //     $dp->division;
-      //     if($dp->contenido!=null){
-      //       $dp->unidad;
-      //     }
-      //     $dp->inventario=DivisionProducto::inventario($dp->id,1);
-      //     if($dp->inventario>0){
-      //       $lotes=DivisionProducto::lotes($dp->id);
-      //       $dp->lote=$lotes[(count($lotes))-1]->lote;}
-      //     $dp->ubicacion=DivisionProducto::ubicacion($dp->id,$dp->inventario);
-      //   }
-      // }
       $productos=DB::table('division_productos')
       ->select('productos.nombre','division_productos.id','division_productos.precio','division_productos.cantidad','division_productos.codigo','presentacions.nombre as p_nombre','divisions.nombre as d_nombre','unidads.nombre as u_nombre')
       ->join('productos','productos.id','=','division_productos.f_producto','left outer')
@@ -414,6 +407,7 @@ class TransaccionController extends Controller
       ->where('categoria_servicios.nombre','<>','Cama')
       ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
       ->orderBy('servicios.nombre','ASC')
+      ->take(10)
       ->get();
       return $servicios;
     }
@@ -429,7 +423,6 @@ class TransaccionController extends Controller
 
         foreach($detalles as $detalle){
           if($detalle->f_producto!=null && $detalle->f_producto!=""){
-            CambioProducto::actualizarCambio($detalle->f_producto);
             Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),3,$detalle->cantidad);        
           }
         }
@@ -439,6 +432,11 @@ class TransaccionController extends Controller
       }
       $t->save();
       DB::commit();
+      foreach($detalles as $detalle){
+        if($detalle->f_producto!=null && $detalle->f_producto!=""){
+          CambioProducto::actualizarCambio($detalle->f_producto);
+        }
+      }
       return redirect('/transacciones?tipo=2')->with('mensaje', '¡Anulado!');
     }
     public static function niveles($id){
@@ -499,7 +497,6 @@ class TransaccionController extends Controller
         foreach ($detalles as $detalle) {
           if(isset($request['cantidad'.$detalle->id])){
             if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
-              CambioProducto::actualizarCambio($detalle->f_producto); 
             Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),$totdevr->tipo,$request['cantidad'.$detalle->id]);        
             }
           }
@@ -509,6 +506,13 @@ class TransaccionController extends Controller
           return redirect('transacciones/'.$id)->with('mensaje', '¡No hay cambios!');
         }else{
           DB::commit();
+          foreach ($detalles as $detalle) {
+            if(isset($request['cantidad'.$detalle->id])){
+              if($request['cantidad'.$detalle->id]!="" && $request['cantidad'.$detalle->id]!=0){
+                CambioProducto::actualizarCambio($detalle->f_producto); 
+              }
+            }
+          }
           return redirect('transacciones/'.$id)->with('mensaje', '¡Devoluciones guardas!');
         }
       } catch (\Exception $e) {

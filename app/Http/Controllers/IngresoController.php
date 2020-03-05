@@ -27,6 +27,7 @@ use Response;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Inventario;
+use App\CambioProducto;
 
 class IngresoController extends Controller
 {
@@ -810,6 +811,7 @@ class IngresoController extends Controller
         }
         $detalle->save();
         DB::commit();
+        CambioProducto::actualizarCambio($detalle->f_producto);
         return $detalle->id;
       }catch(Exception $e){
         DB::rollback();
@@ -1082,6 +1084,7 @@ class IngresoController extends Controller
 				}
 			}
       DB::commit();
+      CambioProducto::actualizarCambio($detalle->f_producto);
       return 1;
     }catch(Exception $e){
       DB::rollback();
@@ -1114,6 +1117,7 @@ class IngresoController extends Controller
       Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$detalle->cantidad);   
       $detalle->delete();
       DB::commit();
+      CambioProducto::actualizarCambio($detalle->f_producto);
       return 1;
     }catch(Exception $e){
       DB::rollback();
@@ -1131,6 +1135,7 @@ class IngresoController extends Controller
       $detalle->save();
       Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),2,$detalle->cantidad);          
       DB::commit();
+      CambioProducto::actualizarCambio($detalle->f_producto);
       return 1;
     }catch(Exception $e){
       DB::rollback();
