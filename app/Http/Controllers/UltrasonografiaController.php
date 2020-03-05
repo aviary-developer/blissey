@@ -162,6 +162,9 @@ class UltrasonografiaController extends Controller
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->estado = false;
       $ultrasonografias->save();
+      $servicio =Servicio::where('f_ultrasonografia',$id)->first();
+      $servicio->estado=0;
+      $servicio->save();
       Bitacora::bitacora('desactivate','ultrasonografias','ultrasonografias',$id);
       return Redirect::to('/ultrasonografias');
     }
@@ -170,6 +173,9 @@ class UltrasonografiaController extends Controller
       $ultrasonografias = ultrasonografia::find($id);
       $ultrasonografias->estado = true;
       $ultrasonografias->save();
+      $servicio =Servicio::where('f_ultrasonografia',$id)->first();
+      $servicio->estado=1;
+      $servicio->save();
       Bitacora::bitacora('activate','ultrasonografias','ultrasonografias',$id);
       return Redirect::to('/ultrasonografias?estado=0');
     }

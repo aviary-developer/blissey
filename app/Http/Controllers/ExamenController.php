@@ -280,6 +280,10 @@ class ExamenController extends Controller
     $examenes = Examen::find($id);
     $examenes->estado = false;
     $examenes->save();
+    $servicio =Servicio::where('f_examen',$id)->first();
+    $servicio->estado=0;
+    $servicio->save();
+    Bitacora::bitacora('desactivate','examens','examenes',$id);
     return Redirect::to('/examenes');
   }
 
@@ -287,6 +291,10 @@ class ExamenController extends Controller
     $examenes = Examen::find($id);
     $examenes->estado = true;
     $examenes->save();
+    $servicio =Servicio::where('f_examen',$id)->first();
+    $servicio->estado=1;
+    $servicio->save();
+    Bitacora::bitacora('activate','examens','examenes',$id);
     return Redirect::to('/examenes?estado=0');
   }
   public function actualizarPrecioExamen(Request $request){

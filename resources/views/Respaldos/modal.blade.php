@@ -16,7 +16,7 @@
           <div class="input-group mb-2 mr-sm-2">
             <div class="custom-file input-group">
               <input type="file" name="subirRespaldo" class="custom-file-input" id="subirRespaldo" lang="es" accept=".sql" required>
-              <label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar Archivo</label>
+              <label class="form-control-sm custom-file-label " for="customFileLang">Seleccionar archivo</label>
             </div>
           </div>
         </div>

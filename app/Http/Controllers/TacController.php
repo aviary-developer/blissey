@@ -165,6 +165,9 @@ class TacController extends Controller
       $tac = Tac::find($id);
       $tac->estado = false;
       $tac->save();
+      $servicio =Servicio::where('f_tac',$id)->first();
+      $servicio->estado=0;
+      $servicio->save();
       Bitacora::bitacora('desactivate','tacs','tacs',$id);
       return Redirect::to('/tacs');
     }
@@ -173,6 +176,9 @@ class TacController extends Controller
       $tac = Tac::find($id);
       $tac->estado = true;
       $tac->save();
+      $servicio =Servicio::where('f_tac',$id)->first();
+      $servicio->estado=1;
+      $servicio->save();
       Bitacora::bitacora('activate','tacs','tacs',$id);
       return Redirect::to('/tacs?estado=0');
     }

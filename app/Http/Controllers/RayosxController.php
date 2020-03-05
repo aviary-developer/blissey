@@ -170,6 +170,9 @@ class RayosxController extends Controller
       $rayosx = Rayosx::find($id);
       $rayosx->estado = false;
       $rayosx->save();
+      $servicio =Servicio::where('f_rayox',$id)->first();
+      $servicio->estado=0;
+      $servicio->save();
       Bitacora::bitacora('desactivate','rayosxes','rayosx',$id);
       return Redirect::to('/rayosx')->with('mensaje','¡Desactivado!');
     }
@@ -178,6 +181,9 @@ class RayosxController extends Controller
       $rayosx = Rayosx::find($id);
       $rayosx->estado = true;
       $rayosx->save();
+      $servicio =Servicio::where('f_rayox',$id)->first();
+      $servicio->estado=1;
+      $servicio->save();
       Bitacora::bitacora('activate','rayosxes','rayosx',$id);
       return Redirect::to('/rayosx?estado=0')->with('mensaje','¡Restaurado!');
     }
