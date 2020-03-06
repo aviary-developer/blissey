@@ -18,6 +18,12 @@ class ServicioController extends Controller
      */
     public function index(Request $request)
     {
+      $contador=CategoriaServicio::where('nombre','Promociones')->count();
+      if($contador==0){
+        $cate=new CategoriaServicio();
+        $cate->nombre="Promociones";
+        $cate->save();
+      }
 			$estado = $request->get('estado');
 			$tipo = $request->get('tipo');
 			
