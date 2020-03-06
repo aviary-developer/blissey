@@ -21,9 +21,21 @@ class ServicioController extends Controller
 			$estado = $request->get('estado');
 			$tipo = $request->get('tipo');
 			
-			$servicios = Servicio::buscar($estado, $tipo);
-      $activos = Servicio::where('estado',true)->count();
-      $inactivos = Servicio::where('estado',false)->count();
+      $servicios = Servicio::buscar($estado, $tipo);
+      if(auth()->user()->tipoUsuario != 'Farmacia'){
+        $activos = Servicio::where('estado',true)->count();
+        $inactivos = Servicio::where('estado',false)->count();
+      }
+      else{
+      $activos =Servicio::join('categoria_servicios','categoria_servicios.id','servicios.f_categoria')->estado(true)->where(
+				function($query){
+				$query->where('categoria_servicios.nombre','Promociones');
+			})->count();
+      $inactivos = Servicio::join('categoria_servicios','categoria_servicios.id','servicios.f_categoria')->estado(false)->where(
+				function($query){
+				$query->where('categoria_servicios.nombre','Promociones');
+			})->count();
+      }
       return view('Servicios.index',compact(
         'servicios',
         'estado',
@@ -41,7 +53,11 @@ class ServicioController extends Controller
      */
     public function create()
     {
+      if(auth()->user()->tipoUsuario != 'Farmacia'){
       $categorias = CategoriaServicio::where('estado',true)->orderBy('nombre','asc')->get();
+      }else{
+        $categorias = CategoriaServicio::where('estado',true)->where('nombre','Promociones')->orderBy('nombre','asc')->get();
+      }
       return view('Servicios.create',compact('categorias'));
     }
 

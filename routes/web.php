@@ -56,11 +56,6 @@ Route::group(['middleware'=>'recepcion'], function()
   Route::match(['get','post'],'/desactivateCategoriaServicio/{id}','CategoriaServicioController@desactivate');
   Route::match(['get','post'],'/activateCategoriaServicio/{id}','CategoriaServicioController@activate');
   Route::match(['get','post'],'/destroyCategoriaServicio/{id}','CategoriaServicioController@destroy');
-  //Rutas de servicios
-  Route::resource('servicios','ServicioController');
-  Route::match(['get','post'],'/desactivateServicio/{id}','ServicioController@desactivate');
-  Route::match(['get','post'],'/activateServicio/{id}','ServicioController@activate');
-  Route::match(['get','post'],'/destroyServicio/{id}','ServicioController@destroy');
   //Rutas de habitaciones
   Route::resource('habitaciones','HabitacionController');
   Route::match(['get','post'],'/desactivateHabitacion/{id}','HabitacionController@desactivate');
@@ -225,6 +220,11 @@ Route::group(['middleware'=>'general'], function(){
 
   //Ruta de bitacoras
   Route::resource('historial','BitacoraController');
+  //Rutas de servicios
+  Route::resource('servicios','ServicioController');
+  Route::match(['get','post'],'/desactivateServicio/{id}','ServicioController@desactivate');
+  Route::match(['get','post'],'/activateServicio/{id}','ServicioController@activate');
+  Route::match(['get','post'],'/destroyServicio/{id}','ServicioController@destroy');
 
   //Rutas de transacciones
   Route::resource('transacciones','TransaccionController');

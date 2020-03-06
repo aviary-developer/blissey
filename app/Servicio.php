@@ -11,10 +11,19 @@ class Servicio extends Model
     ];
 
     public static function buscar($estado,$tipo){
+		if(auth()->user()->tipoUsuario == 'Farmacia'){
+			return Servicio::join('categoria_servicios','categoria_servicios.id','servicios.f_categoria')->estado($estado)->where(
+				function($query) use ($tipo){
+				$query->where('categoria_servicios.nombre','Promociones');
+			})->select('servicios.*')
+			->orderBy('servicios.nombre')->get();
+		}else{
 			return Servicio::join('categoria_servicios','categoria_servicios.id','servicios.f_categoria')->estado($estado)->where(
 				function($query) use ($tipo){
 				$query->paquete($tipo)->cirugia($tipo);
-			})->select('servicios.*')->orderBy('servicios.nombre')->get();
+			})->select('servicios.*')
+			->orderBy('servicios.nombre')->get();
+		}
     }
 
     public function scopeEstado($query, $estado){

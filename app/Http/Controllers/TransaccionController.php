@@ -424,6 +424,7 @@ class TransaccionController extends Controller
 
     public static function buscarServicio($texto,$tipo){
       if($tipo=='b'){
+        if(Auth::user()->tipoUsuario=="Recepción"){
       $servicios=DB::table('servicios')
       ->select('servicios.id','servicios.precio',DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre) as nombre'))
       ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
@@ -436,7 +437,19 @@ class TransaccionController extends Controller
       ->orderBy('servicios.nombre','ASC')
       ->take(20)
       ->get();
+        }else{
+          $servicios=DB::table('servicios')
+          ->select('servicios.id','servicios.precio',DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre) as nombre'))
+          ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
+          ->where('servicios.estado',true)
+          ->where('categoria_servicios.nombre','Promociones')
+          ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
+          ->orderBy('servicios.nombre','ASC')
+          ->take(20)
+          ->get();
+        }
       }else{
+				
         $servicios=DB::table('servicios')
         ->select('servicios.id','servicios.precio',DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre) as nombre'))
         ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
@@ -449,6 +462,10 @@ class TransaccionController extends Controller
         ->where('categoria_servicios.nombre','<>','Laboratorio Clínico')
         ->where('categoria_servicios.nombre','<>','Ultrasonografía')
         ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
+        ->whereNotExists(function ($query){
+          $query->from('promocions')
+            ->whereRaw('servicios.id = promocions.f_servicio');
+          })
         ->orderBy('servicios.nombre','ASC')
         ->take(20)
         ->get();
