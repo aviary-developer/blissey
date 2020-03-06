@@ -147,6 +147,13 @@ class TransaccionController extends Controller
             'precio'=>$precio[$i],
             'f_usuario'=>Auth::user()->id,
           ]);
+          $servi=Servicio::find($f_producto[$i]);
+            $promos=$servi->promos;
+            foreach($promos as $promo){
+              if($promo->f_divisionproducto!=null){
+                Inventario::Actualizar($promo->f_divisionproducto,Transacion::tipoUsuario(),2,$promo->cantidad);
+              }
+            }
         }
         }
       }
@@ -161,9 +168,17 @@ class TransaccionController extends Controller
         for ($i=0; $i < count($f_producto); $i++) {
           if($tipo_detalle[$i]==1){
           CambioProducto::actualizarCambio($f_producto[$i]);
+          }else{
+            $servicio=Servicio::find($f_producto[$i]);
+            $promos=$servicio->promos;
+            foreach($promos as $promo){
+              if($promo->f_divisionproducto!=null){
+                CambioProducto::actualizarCambio($promo->f_divisionproducto);
+              }
+            }
+          }
+        }
       }
-      }
-    }
       return redirect('/transacciones?tipo='.$tipo."&estado=".$estado)->with('mensaje', '¡Guardado!');
     }else{
       DB::rollback();
@@ -407,7 +422,8 @@ class TransaccionController extends Controller
 			}
     }
 
-    public static function buscarServicio($texto){
+    public static function buscarServicio($texto,$tipo){
+      if($tipo=='b'){
       $servicios=DB::table('servicios')
       ->select('servicios.id','servicios.precio',DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre) as nombre'))
       ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
@@ -415,10 +431,28 @@ class TransaccionController extends Controller
       ->where('categoria_servicios.nombre','<>','Honorarios')
       ->where('categoria_servicios.nombre','<>','Habitación')
       ->where('categoria_servicios.nombre','<>','Cama')
+      ->where('categoria_servicios.nombre','<>','Paquetes hospitalarios')
       ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
       ->orderBy('servicios.nombre','ASC')
       ->take(20)
       ->get();
+      }else{
+        $servicios=DB::table('servicios')
+        ->select('servicios.id','servicios.precio',DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre) as nombre'))
+        ->join('categoria_servicios','servicios.f_categoria','=','categoria_servicios.id','left outer')
+        ->where('servicios.estado',true)
+        ->where('categoria_servicios.nombre','<>','Honorarios')
+        ->where('categoria_servicios.nombre','<>','Habitación')
+        ->where('categoria_servicios.nombre','<>','Cama')
+        ->where('categoria_servicios.nombre','<>','Rayos X')
+        ->where('categoria_servicios.nombre','<>','TAC')
+        ->where('categoria_servicios.nombre','<>','Laboratorio Clínico')
+        ->where('categoria_servicios.nombre','<>','Ultrasonografía')
+        ->Where(DB::raw('concat(categoria_servicios.nombre," ",servicios.nombre)'), 'like','%'.$texto.'%')
+        ->orderBy('servicios.nombre','ASC')
+        ->take(20)
+        ->get();
+      }
       return $servicios;
     }
     public static function anularVenta($id,$comentario){

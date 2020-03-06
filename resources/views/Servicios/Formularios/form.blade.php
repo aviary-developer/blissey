@@ -1,9 +1,3 @@
-<div class="alert alert-danger" id="mout">
-  <center>
-    <p class="mb-1">El campo marcado con un * es <b>obligatorio</b>.</p>
-  </center>
-</div>
-
 <div class="x_panel">
   <div class="form-group">
     <label class="" for="nombre">Nombre *</label>
@@ -49,6 +43,17 @@
     </div>
   </div>
 </div>
+@if($create==true)
+<div class="x_panel">
+  <center>
+  <div class="btn-group">
+    <button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-outline-success btn-sm" title="Buscar">
+      <i class="fa fa-search"></i>
+    </button>
+</div>
+  </center>
+</div>
+@endif
 <div class="x_panel">
   <center>
     <button type="button" class="btn btn-primary btn-sm" id="save_me">Guardar</button>

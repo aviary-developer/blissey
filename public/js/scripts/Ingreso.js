@@ -345,7 +345,7 @@ $(document).on('ready', function () {
   $("#resultadoVentaS_").keyup(function () {
     var valor = $("#resultadoVentaS_").val();
     if (radio == '3') {
-      var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor + "/h";
       var tabla = $("#tablaBuscarS");
       $.get(ruta, function (res) {
         tabla.empty();

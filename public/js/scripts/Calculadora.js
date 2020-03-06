@@ -122,7 +122,7 @@ $(document).ready(async function () {
 			$("#panel_buscar_servicios").show();
 
 			var valor = obj.val();
-			var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
+			var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor + "/h";
 			var tabla = $("#table_buscar_servicios");
 			$.get(ruta, function (res) {
 				tabla.empty();

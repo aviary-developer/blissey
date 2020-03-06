@@ -53,5 +53,9 @@ class Servicio extends Model
 
     public function medico(){
       return $this->belongsTo('App\User','f_medico');
-    } 
+	} 
+
+	public function promos(){
+		return $this->hasMany('App\Promocion','f_servicio');
+	  }
 }

@@ -172,7 +172,7 @@ $(document).on('ready', function () {
       });
     }
     if (radio == '3' && valor.length > 1) {
-      var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor;
+      var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor + "/b";
       var tabla = $("#tablaBuscar");
       $.get(ruta, function (res) {
         tabla.empty();

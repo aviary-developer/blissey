@@ -7,6 +7,7 @@ use App\Servicio;
 use App\CategoriaServicio;
 use App\Bitacora;
 use Redirect;
+use App\Promocion;
 
 class ServicioController extends Controller
 {
@@ -53,6 +54,24 @@ class ServicioController extends Controller
     public function store(Request $request)
     {
       $servicios = Servicio::create($request->All());
+      $contador = count($request->tipo);
+      $tipo=$request->tipo;
+      $idp=$request->idp;
+      $cantidad=$request->cantidad;
+
+      for($i=0; $i<$contador; $i++){
+        $promocion=new Promocion();
+        $promocion->f_servicio=$servicios->id;
+        if($tipo[$i]==1){
+          $promocion->f_divisionproducto=$idp[$i];
+        }else{
+          $promocion->f_serviciop=$idp[$i];
+
+        }
+        $promocion->cantidad=$cantidad[$i];
+        $promocion->save();
+
+      }
       Bitacora::bitacora('store','servicios','servicios',$servicios->id);
       return redirect('/servicios')->with('mensaje', '¡Guardado!');
     }
@@ -112,6 +131,7 @@ class ServicioController extends Controller
      */
     public function destroy($id)
     {
+      Promocion::where('f_servicio',$id)->delete();
       $servicios = Servicio::findOrFail($id);
       $servicios->delete();
       Bitacora::bitacora('destroy','servicios','servicios',$id);
