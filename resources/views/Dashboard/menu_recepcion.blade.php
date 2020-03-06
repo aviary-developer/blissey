@@ -35,22 +35,25 @@
   </a>
   <ul class="nav child_menu">
     <li>
-    <a href={{asset( '/solicitudex?tipo=examenes')}}>Laboratorio Clínico</a>
+    <a href={{asset( '/solicitudex?tipo=examenes&vista=paciente')}}>Laboratorio Clínico</a>
     </li>
     <li>
-      <a href={{asset( '/solicitudex?tipo=ultras')}}>Ultrasonografía</a>
+      <a href={{asset( '/solicitudex?tipo=ultras&vista=paciente')}}>Ultrasonografía</a>
     </li>
     <li>
-      <a href={{asset( '/solicitudex?tipo=rayosx')}}>Rayos X</a>
+      <a href={{asset( '/solicitudex?tipo=rayosx&vista=paciente')}}>Rayos X</a>
     </li>
     <li>
-      <a href={{asset( '/solicitudex?tipo=tac')}}>TAC</a>
+      <a href={{asset( '/solicitudex?tipo=tac&vista=paciente')}}>TAC</a>
 		</li>
 		<li>
       <a>Mantenimiento
         <span class="fas fa-chevron-down float-right"></span>
       </a>
       <ul class="nav child_menu submenu">
+        <li>
+          <a href={{asset( '/examenes')}}>Exámenes</a>
+        </li>
         <li>
 					<a href={{asset( '/rayosx')}}>Rayos X</a>
 				</li>

@@ -16,9 +16,11 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
+      @if (Auth::user()->tipoUsuario == "Laboaratorio")
       <li class="nav-item">
         <a class="nav-link" href={!! asset('/examenes/create') !!}>Nuevo</a>
       </li>
+      @endif
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
