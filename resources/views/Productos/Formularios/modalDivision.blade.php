@@ -26,7 +26,7 @@
               <label class="" for="nombre">Código</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                  <div class="input-group-text"><i class="fas fa-dollar"></i></div>
+                  <div class="input-group-text"><i class="fas fa-user"></i></div>
                 </div>
                 {!! Form::text('codigo',null,['class'=>'form-control form-control-sm','placeholder'=>'Código','id'=>'codi']) !!}
               </div>
@@ -61,7 +61,7 @@
               <label class="" for="nombre">Precio de venta</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                  <div class="input-group-text"><i class="fas fa-dollar"></i></div>
+                  <div class="input-group-text"><i class="fas fa-cubes"></i></div>
                 </div>
                 {!! Form::number('pre',null,['class'=>'form-control form-control-sm','placeholder'=>'Precio','id'=>'pre','min'=>'0.01','step'=>'0.01']) !!}
               </div>

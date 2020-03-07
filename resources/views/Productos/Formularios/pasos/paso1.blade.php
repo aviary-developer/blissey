@@ -113,22 +113,20 @@ $presentaciones=App\Producto::arrayPresentaciones();
                     <td>{{$division->num_meses($division->n_meses)}}
                       <td style="width:15%">
                         <div class="btn-group">
-                          <input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
-                          <input type="hidden" value={{$division->id}}>
-                          @if(App\DetalleTransacion::cuenta($division->id))
-                            <button type="button" name="button" class="btn btn-sm btn-danger" id="eliminar_division_antigua">
-                              <i class="fas fa-times"></i>
-                            </button>
+													@if(App\DetalleTransacion::cuenta($division->id))
+													<button type="button" name="button" class="btn btn-sm btn-danger" id="eliminar_division_antigua">
+														<i class="fas fa-times"></i>
+													</button>
                           @else
-                            <button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
-                              <i class="fas fa-ban"></i>
-                            </button>
+													<button type="button" class="btn btn-sm btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Esta división no puede ser eliminada">
+														<i class="fas fa-ban"></i>
+													</button>
                           @endif
-                          <a data-toggle="tooltip" data-placement="top" title="Editar">
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}},{{$division->f_division}},{{$division->cantidad}},'{{$auxC}}','{{$auxN}}')">
-                              <i class="fas fa-edit"></i>
-                            </button>
-                          </a>
+													<input type="hidden" id={{"division".$key}} value={{$division->f_division.$division->cantidad}}>
+													<input type="hidden" value={{$division->id}}>
+													<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal2" onclick="llenarDivision({{$division->id}},'{{$division->codigo}}',{{$division->precio}},{{$division->stock}},{{$division->n_meses}},{{$division->f_division}},{{$division->cantidad}},'{{$auxC}}','{{$auxN}}')">
+														<i class="fas fa-edit"></i>
+													</button>
                         </div>
                       </td>
                     </tr>
