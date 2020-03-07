@@ -131,9 +131,11 @@ class InventarioController extends Controller
         $detalle->cantidad=$request->cantidad;
         $detalle->tipo=1;
         $detalle->save();
+        $d_t=DetalleTransacion::find($request->idTr);
+        Inventario::Actualizar($d_t->f_producto,Transacion::tipoUsuario(),15,$request->cantidad);  
+        CambioProducto::actualizarCambio($detalle->f_producto);
         Bitacora::bitacora('update','salidas','inventarios',$request->idTr);
         return redirect('/inventarios')->with('mensaje', '!Acción exitosa¡');
-
 		}
 		
 

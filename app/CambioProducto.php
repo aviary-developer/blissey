@@ -52,7 +52,7 @@ class CambioProducto extends Model
     return $total_vencidos;
   }
   public static function buscar($estado){
-    return $retirados=CambioProducto::estado($estado)->orderBy('id','DESC')->where('localizacion',Transacion::tipoUsuario())->get();
+    return $retirados=CambioProducto::estado($estado)->orderBy('id','DESC')->where('cantidad','>',0)->where('localizacion',Transacion::tipoUsuario())->get();
   }
   public function scopeEstado($query, $estado){
     if($estado!=""){
@@ -64,7 +64,7 @@ class CambioProducto extends Model
   }
   public static function conteo(){
     $date = \Carbon\Carbon::now()->format('Y-m-d');
-    $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
+    $todos=CambioProducto::where('estado',0)->where('cantidad','>',0)->where('localizacion',Transacion::tipoUsuario())->get();
     $conteo=0;
     foreach ($todos as $cambio){
       if($cambio->transaccion->fecha_vencimiento<$date){
@@ -75,7 +75,7 @@ class CambioProducto extends Model
   }
   public static function proximos(){
     $date = \Carbon\Carbon::now()->format('Y-m-d');
-    $todos=CambioProducto::where('estado',0)->where('localizacion',Transacion::tipoUsuario())->get();
+    $todos=CambioProducto::where('estado',0)->where('cantidad','>',0)->where('localizacion',Transacion::tipoUsuario())->get();
     $conteo=0;
     // echo Transacion::tipoUsuario();
     // echo $todos;

@@ -50,7 +50,7 @@ $(document).on('ready', function () {
                 });
 
             } else {
-                var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor + "/h";
+                var ruta = $('#guardarruta').val() + "/buscarServicios/" + valor + "/b";
                 $.get(ruta, function (res) {
                     tabla.empty();
                     cab = "<thead>" +

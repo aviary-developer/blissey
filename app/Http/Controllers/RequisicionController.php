@@ -239,8 +239,8 @@ class RequisicionController extends Controller
                   'lote'=>$fila->lote,
                   'f_producto'=>$detalle->f_producto,
                 ]);
+                Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$fila->cantidad);        
               $regresivo=$regresivo-$fila->cantidad;
-            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$fila->cantidad);        
             }elseif($regresivo!=0){
               DetalleTransacion::create([
                 'cantidad'=>$regresivo,
@@ -249,8 +249,8 @@ class RequisicionController extends Controller
                 'lote'=>$fila->lote,
                 'f_producto'=>$detalle->f_producto,
               ]);
+              Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$regresivo);        
               $regresivo=0;
-            Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),5,$regresivo);        
             }
             }
         }
