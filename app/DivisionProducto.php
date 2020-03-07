@@ -113,8 +113,8 @@ class DivisionProducto extends Model
     })
     ->where('detalle_transacions.f_producto',$id)
     ->where('transacions.localizacion',$ts)
-    // ->orderBy('detalle_transacions.created_at','DESC')
-    ->orderBy('detalle_transacions.fecha_vencimiento','ASC')
+    ->orderBy('detalle_transacions.created_at','DESC')
+    // ->orderBy('detalle_transacions.fecha_vencimiento','DESC')
     ->get();
   }
 
@@ -275,6 +275,18 @@ class DivisionProducto extends Model
             $fila->cantidad=$fila->cantidad-$diferencia;
             $ultimos[$i]=$fila;
           }
+        //   for ($i = 0; $i < count($ultimos); $i++) {
+        //     for ($j = 1; $j < (count($ultimos) - $i); $j++) {
+        //         if ($ultimos[$j - 1]->fecha_vencimiento > $ultimos[$j]->fecha_vencimiento) {
+        //             $temporal = $ultimos[$j - 1];
+        //             $ultimos[$j - 1] = $ultimos[$j];
+        //             $ultimos[$j] = $temporal;
+        //         }
+        //     }
+        // }
+        // if($diferencia!=0){
+        // $ultimos[0]->cantidad=$ultimos[0]->cantidad-$diferencia;
+        // }
           return $ultimos;
 
   } 
