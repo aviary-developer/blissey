@@ -100,8 +100,13 @@ class InventarioController extends Controller
             $diferencia=$nuevo-$anterior;
             $ultimo=Inventario::where('f_divisionproducto',$detalle->f_producto)->where('localizacion',Transacion::tipoUsuario())->get()->last()->existencia_nueva;
             $ahora=$ultimo+$diferencia;
-        Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,$ultimo);  
-        Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$ahora);          
+            if($diferencia > 0){
+                Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,abs($diferencia));            
+            }else{
+                Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,abs($diferencia)); 
+            }
+        // Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,$ultimo);  
+        // Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,$ahora);          
         }
       CambioProducto::actualizarCambio($detalle->f_producto);
         Bitacora::bitacora('update','detalle_transacions','inventarios',$id);
