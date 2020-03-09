@@ -250,7 +250,7 @@ $(document).on('ready', function () {
           transaccion: transaccion_id,
           tipo: "examenes"
         },
-        success: function (respuesta) {
+				success: function (respuesta) {
           if (respuesta) {
             localStorage.setItem('msg', 'yes');
             location.reload();

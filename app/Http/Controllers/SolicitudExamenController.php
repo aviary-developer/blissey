@@ -200,25 +200,32 @@ class SolicitudExamenController extends Controller
               $factura++;
             }
 
-            // $transaccion = new Transacion;
-            // $transaccion->fecha = Carbon::now();
-            // $transaccion->f_cliente = $request->f_paciente;
-            // $transaccion->f_ingreso = $request->f_ingreso;
-            // $transaccion->tipo = 2;
-            // $transaccion->factura = $factura;
-            // $transaccion->f_usuario = Auth::user()->id;
-            // $transaccion->localizacion = 1;
-            // $transaccion->save();
-            // $transaccion_id = $transaccion->id;
+						// $transaccion = new Transacion;
+						// $transaccion->fecha = Carbon::now();
+						// $transaccion->f_cliente = $request->f_paciente;
+						// $transaccion->f_ingreso = $request->f_ingreso;
+						// $transaccion->tipo = 2;
+						// $transaccion->factura = $factura;
+						// $transaccion->f_usuario = Auth::user()->id;
+						// $transaccion->localizacion = 1;
+						// $transaccion->save();
+						// $transaccion_id = $transaccion->id;
+						$solicitud = new SolicitudExamen;
+						$solicitud->f_paciente = $request->f_paciente;
+						$solicitud->f_rayox = $request->rayox;
+						$solicitud->estado = 1;
+						// $solicitud->f_transaccion = $transaccion_id;
+						$solicitud->save();
           }else{
-            $transaccion_id = $request->transaccion;
+						$transaccion_id = $request->transaccion;
+						$solicitud = new SolicitudExamen;
+						$solicitud->f_paciente = $request->f_paciente;
+						$solicitud->f_rayox = $request->rayox;
+						$solicitud->estado = 1;
+						$solicitud->f_transaccion = $transaccion_id;
+						$solicitud->save();
           }
-            $solicitud = new SolicitudExamen;
-            $solicitud->f_paciente = $request->f_paciente;
-            $solicitud->f_rayox = $request->rayox;
-            $solicitud->estado = 1;
-            // $solicitud->f_transaccion = $transaccion_id;
-            $solicitud->save();
+            
 
             //Detalle de transaccion
             if($request->f_ingreso != null){
@@ -257,25 +264,31 @@ class SolicitudExamenController extends Controller
               $factura++;
             }
 
-            // $transaccion = new Transacion;
-            // $transaccion->fecha = Carbon::now();
-            // $transaccion->f_cliente = $request->f_paciente;
-            // $transaccion->f_ingreso = $request->f_ingreso;
-            // $transaccion->tipo = 2;
-            // $transaccion->factura = $factura;
-            // $transaccion->f_usuario = Auth::user()->id;
-            // $transaccion->localizacion = 1;
-            // $transaccion->save();
-            // $transaccion_id = $transaccion->id;
+						// $transaccion = new Transacion;
+						// $transaccion->fecha = Carbon::now();
+						// $transaccion->f_cliente = $request->f_paciente;
+						// $transaccion->f_ingreso = $request->f_ingreso;
+						// $transaccion->tipo = 2;
+						// $transaccion->factura = $factura;
+						// $transaccion->f_usuario = Auth::user()->id;
+						// $transaccion->localizacion = 1;
+						// $transaccion->save();
+						// $transaccion_id = $transaccion->id;
+						$solicitud = new SolicitudExamen;
+						$solicitud->f_paciente = $request->f_paciente;
+						$solicitud->f_ultrasonografia = $request->ultrasonografia;
+						$solicitud->estado = 1;
+						// $solicitud->f_transaccion = $transaccion_id;
+						$solicitud->save();
           }else{
-            $transaccion_id = $request->transaccion;
+						$transaccion_id = $request->transaccion;
+						$solicitud = new SolicitudExamen;
+						$solicitud->f_paciente = $request->f_paciente;
+						$solicitud->f_ultrasonografia = $request->ultrasonografia;
+						$solicitud->estado = 1;
+						$solicitud->f_transaccion = $transaccion_id;
+						$solicitud->save();
           }
-            $solicitud = new SolicitudExamen;
-            $solicitud->f_paciente = $request->f_paciente;
-            $solicitud->f_ultrasonografia = $request->ultrasonografia;
-            $solicitud->estado = 1;
-            // $solicitud->f_transaccion = $transaccion_id;
-            $solicitud->save();
 
             //Detalle de transaccion
             if($request->f_ingreso != null){
@@ -352,8 +365,12 @@ class SolicitudExamenController extends Controller
           }else{
           $solicitud->codigo_muestra = $codigo_muestra;
           }
-          $solicitud->estado = 0;
-          // $solicitud->f_transaccion = $transaccion_id;
+					$solicitud->estado = 0;
+					if($request->f_ingreso == null){
+						// $solicitud->f_transaccion = $transaccion_id;
+					}else{
+						$solicitud->f_transaccion = $transaccion_id;
+					}
           $solicitud->save();
 
           //Detalle de transaccion
