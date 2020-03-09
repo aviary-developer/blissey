@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href={!! asset('/entradas') !!}>
+    <a class="navbar-brand" href={!! asset('/inventarios') !!}>
         Inventario
         <span class="badge border-primary border text-primary">ingresos
         </span>

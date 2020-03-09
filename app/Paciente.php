@@ -100,7 +100,7 @@ class Paciente extends Model
 		}
 
     public static function foraneos($id){
-      $ingresos= Ingreso::where('f_paciente',$id)->orWhere('f_responsable',$id)->count();
+      $ingresos= Hospitalizacion::where('f_paciente',$id)->orWhere('f_responsable',$id)->count();
       $transacciones=Transacion::where('f_cliente',$id)->count();
       return $ingresos+$transacciones;
 
