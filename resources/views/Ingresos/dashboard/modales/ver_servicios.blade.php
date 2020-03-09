@@ -1,5 +1,5 @@
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="ver_servicios" data-backdrop="static">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="row">
       <div class="x_panel m_panel text-danger">
         <center>

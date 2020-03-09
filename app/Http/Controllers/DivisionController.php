@@ -8,6 +8,7 @@ use App\Http\Requests\DivisionRequest;
 use Redirect;
 use Response;
 use App\Bitacora;
+use App\DivisionProducto;
 use DB;
 
 class DivisionController extends Controller
@@ -149,5 +150,15 @@ class DivisionController extends Controller
     public static function llenarDivision(){
       $divisiones=Division::where('estado',true)->orderBy('nombre')->get(['id','nombre']);
       return Response::json($divisiones);
-    }
+		}
+	
+	public function f_a(){
+		$divisiones = DivisionProducto::get();
+		$texto = "";
+		foreach($divisiones as $division){
+			//$texto .= "update division_productos set precio = ".$division->precio." where id = ".$division->id.";\n";
+			echo "update division_productos set precio = " . $division->precio . " where id = " . $division->id . ";<br>";
+		}
+		//return $texto;
+	}
 }

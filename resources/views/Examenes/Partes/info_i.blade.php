@@ -1,3 +1,4 @@
+@if(isset($secciones))
 @if($secciones!=null)
   @for ($i=0; $i < count($secciones); $i++)
     <div class="x_panel">
@@ -59,4 +60,5 @@
       </table>
     </div>
   @endfor
+@endif
 @endif

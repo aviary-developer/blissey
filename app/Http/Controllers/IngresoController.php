@@ -1068,20 +1068,26 @@ class IngresoController extends Controller
 
   public function editar24 (Request $request){
     $id = $request->id;
-    $cantidad = $request->cantidad;
+		$cantidad = $request->cantidad;
+		$precio = $request->precio;
     DB::beginTransaction();
     try{
-      $detalle = DetalleTransacion::find($id);
-      $anterior=$detalle->cantidad;
-      $detalle->cantidad = $cantidad;
-			$detalle->save();
-			if($detalle->estado){
-				$movimiento = $anterior - $cantidad;
-				if($movimiento > 0){
-					Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,abs($movimiento));            
-				}else{
-					Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,abs($movimiento)); 
+			$detalle = DetalleTransacion::find($id);
+			if($cantidad != null){
+				$anterior=$detalle->cantidad;
+				$detalle->cantidad = $cantidad;
+				$detalle->save();
+				if($detalle->estado){
+					$movimiento = $anterior - $cantidad;
+					if($movimiento > 0){
+						Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),14,abs($movimiento));            
+					}else{
+						Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),15,abs($movimiento)); 
+					}
 				}
+			}else{
+				$detalle->precio = $precio;
+				$detalle->save();
 			}
       DB::commit();
       CambioProducto::actualizarCambio($detalle->f_producto);
@@ -1218,7 +1224,9 @@ class IngresoController extends Controller
         $servicios[$indice]['id'] = $detalle->id;
         $servicios[$indice]['hora'] = $detalle->created_at->format('H:i.s');
         $servicios[$indice]['cantidad'] = $detalle->cantidad;
-        $servicios[$indice]['nombre'] = $detalle->servicio->nombre;
+				$servicios[$indice]['nombre'] = $detalle->servicio->nombre;
+				$servicios[$indice]['precio'] = $detalle->precio;
+				$servicios[$indice]['total'] = $detalle->precio * $detalle->cantidad;
         if($dias != -1 && $detalle->created_at->between($ultima24,$ultima48)){
           $servicios[$indice]['estado'] = 1;
         }else{
@@ -1266,7 +1274,9 @@ class IngresoController extends Controller
       }else{
         $productos[$indice]['division'] = $detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->unidad->nombre;
       }
-      $productos[$indice]['nombre'] = $detalle->divisionProducto->producto->nombre;
+			$productos[$indice]['nombre'] = $detalle->divisionProducto->producto->nombre;
+			$productos[$indice]['precio'] = $detalle->precio;
+			$productos[$indice]['total'] = $detalle->precio * $detalle->cantidad;
       // if($dias != -1 && $detalle->created_at->between($ultima24,$ultima48)){
       //   $productos[$indice]['estado'] = 1;
       // }else{

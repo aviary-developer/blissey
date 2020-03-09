@@ -123,7 +123,9 @@ function medicamento_fecha() {
           '<table class="table table-hover table-striped table-sm" id="tabla_v_p">' +
           '<thead>' +
           '<th>Hora</th>' +
-          '<th>Detalle</th>' +
+					'<th>Detalle</th>' +
+					'<th>Precio U</th>' +
+					'<th>Total</th>'+
           '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
@@ -135,12 +137,15 @@ function medicamento_fecha() {
             '<td>' + value.hora + '</td>' +
             '<td>' +
             value.cantidad + " " + value.division + ' <b class="">' + value.nombre + '</b>' +
-            '</td>';
-					html += '<td></center><div class="btn-group"><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(1,' + value.id + ',' + value.cantidad + ')"><i class="fa fa-edit"></i></button></center>';
+						'</td>';
+					html += '<td>' + "$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) + '</td>';
+					html += '<td>' + "$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value.total) + '</td>';
+					html += '<td><center><div class="btn-group">';
+					html += edit_button(value.id, value.cantidad, value.precio);
 					if (!value.estado) {
-						html += '</center><button type="button" id = "' + value.id + '" class="btn btn-success btn-sm" onclick="accion24(2,' + value.id + ',this)"><i class="fa fa-check"></i></button>';
+						html += '<button type="button" id = "' + value.id + '" class="btn btn-success btn-sm" onclick="accion24(2,' + value.id + ',this)"><i class="fa fa-check"></i></button>';
 					}
-					html += '</center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
+					html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           html += '</tr>';
           tabla.append(html);
         });
@@ -175,7 +180,9 @@ function servicio_fecha() {
           '<table class="table table-hover table-sm table-striped" id="tabla_v_s">' +
           '<thead>' +
           '<th>Hora</th>' +
-          '<th>Detalle</th>' +
+					'<th>Detalle</th>' +
+					'<th>Precio U</th>' +
+					'<th>Total</th>' +
           '<th class="w-25">Acción</th>'
         '</thead>' +
           '</table>' +
@@ -188,8 +195,11 @@ function servicio_fecha() {
             '<td>' +
             value.cantidad + " " + ' <b class="">' + value.nombre + '</b>' +
             '</td>';
-            html += '<td></center><div class="btn-group"><button type="button" id = "' + value.id + '" class="btn btn-primary btn-sm" onclick="accion24(1,' + value.id + ','+value.cantidad+')"><i class="fa fa-edit"></i></button></center>';
-						html += '</center><button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
+					html += '<td>' + "$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value.precio) + '</td>';
+					html += '<td>' + "$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(value.total) + '</td>';
+					html += '<td><center><div class="btn-group">';
+					html += edit_button(value.id, value.cantidad, value.precio);
+					html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(3,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           html += '</tr>';
           tabla.append(html);
         });
@@ -878,4 +888,19 @@ function ver_medico(servicio) {
       });
     }
   });
+}
+
+/**MAR9 . Función para realizar la edición de precio desde hospitalización */
+function edit_button(id, cantidad, precio) {
+	let html = '<div class="btn-group">';
+	html += '<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+	html += '<i class="fas fa-edit"></i>';
+	html += '</button>';
+	html += '<div class="dropdown-menu">';
+	html += '<a class="dropdown-item" href="#" onclick="accion24(1,' + id + ',' + cantidad + ')">Cantidad</a>';
+	html += '<a class="dropdown-item" href="#" onclick="accion24(6,' + id + ',' + precio + ')">Precio Unitario</a>';
+	html += '</div>';
+	html += '</div>';
+
+	return html;
 }
