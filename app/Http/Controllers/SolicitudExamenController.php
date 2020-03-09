@@ -130,25 +130,37 @@ class SolicitudExamenController extends Controller
               $factura++;
             }
 
-            // $transaccion = new Transacion;
-            // $transaccion->fecha = Carbon::now();
-            // $transaccion->f_cliente = $request->f_paciente;
-            // $transaccion->f_ingreso = $request->f_ingreso;
-            // $transaccion->tipo = 2;
-            // $transaccion->factura = $factura;
-            // $transaccion->f_usuario = Auth::user()->id;
-            // $transaccion->localizacion = 1;
-            // $transaccion->save();
-            // $transaccion_id = $transaccion->id;
+						// $transaccion = new Transacion;
+						// $transaccion->fecha = Carbon::now();
+						// $transaccion->f_cliente = $request->f_paciente;
+						// $transaccion->f_ingreso = $request->f_ingreso;
+						// $transaccion->tipo = 2;
+						// $transaccion->factura = $factura;
+						// $transaccion->f_usuario = Auth::user()->id;
+						// $transaccion->localizacion = 1;
+						// $transaccion->save();
+						// $transaccion_id = $transaccion->id;
+						$solicitud = new SolicitudExamen;
+						$solicitud->f_paciente = $request->f_paciente;
+						$solicitud->f_tac = $request->tac;
+						$solicitud->estado = 1;
+						// $solicitud->f_transaccion = $transaccion_id;
+						$solicitud->save();
           }else{
-            $transaccion_id = $request->transaccion;
-          }
-            $solicitud = new SolicitudExamen;
+						$transaccion_id = $request->transaccion;
+						$solicitud = new SolicitudExamen;
             $solicitud->f_paciente = $request->f_paciente;
             $solicitud->f_tac= $request->tac;
             $solicitud->estado = 1;
-            // $solicitud->f_transaccion = $transaccion_id;
+            $solicitud->f_transaccion = $transaccion_id;
             $solicitud->save();
+          }
+            // $solicitud = new SolicitudExamen;
+            // $solicitud->f_paciente = $request->f_paciente;
+            // $solicitud->f_tac= $request->tac;
+            // $solicitud->estado = 1;
+            // // $solicitud->f_transaccion = $transaccion_id;
+            // $solicitud->save();
 
             //Detalle de transaccion
             if($request->f_ingreso != null){
