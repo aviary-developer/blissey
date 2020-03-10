@@ -277,18 +277,18 @@ class DivisionProducto extends Model
 
             $ultimos[$i]=$fila;
           }
-          for ($i = 0; $i < count($ultimos); $i++) {
-            for ($j = 1; $j < (count($ultimos) - $i); $j++) {
-                if ($ultimos[$j - 1]->fecha_vencimiento > $ultimos[$j]->fecha_vencimiento) {
-                    $temporal = $ultimos[$j - 1];
-                    $ultimos[$j - 1] = $ultimos[$j];
-                    $ultimos[$j] = $temporal;
-                }
-            }
-        }
-        if($diferencia!=0){
-        $ultimos[0]->cantidad=$ultimos[0]->cantidad-$diferencia;
-        }
+        //   for ($i = 0; $i < count($ultimos); $i++) {
+        //     for ($j = 1; $j < (count($ultimos) - $i); $j++) {
+        //         if ($ultimos[$j - 1]->fecha_vencimiento > $ultimos[$j]->fecha_vencimiento) {
+        //             $temporal = $ultimos[$j - 1];
+        //             $ultimos[$j - 1] = $ultimos[$j];
+        //             $ultimos[$j] = $temporal;
+        //         }
+        //     }
+        // }
+        // if($diferencia!=0){
+        // $ultimos[0]->cantidad=$ultimos[0]->cantidad-$diferencia;
+        // }
           return $ultimos;
 
   } 
