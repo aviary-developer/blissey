@@ -1,6 +1,7 @@
 var radio = 1;
 var componentes_agregados = [];
 var contadorcp = 0;
+var replica = 0;
 $(document).on('ready', function () {
   var contador = $("#contador").val();
   $("#codigoBuscar").val("");
