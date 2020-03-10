@@ -272,7 +272,7 @@ class DivisionProducto extends Model
           $diferencia=$cuenta-$inventario;
           if($diferencia!=0 && $ultimos!=null && isset($ultimos[$i])){
             $fila=$ultimos[$i];
-            // $fila->cantidad=$fila->cantidad-$diferencia;
+            $fila->cantidad=$fila->cantidad-$diferencia;
             $fila->cantidad=$fila->cantidad;
 
             $ultimos[$i]=$fila;
