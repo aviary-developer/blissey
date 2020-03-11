@@ -17,6 +17,7 @@ class Inventario extends Model
         }elseif($tipo==2 || $tipo==5 || $tipo==7 || $tipo==8 || $tipo==11 || $tipo==15){
             $nuevo=$anterior-$cantidad;
         }
+        if($nuevo>-1){
         $inventario=new Inventario();
         $inventario->f_divisionproducto=$f_dp;
         $inventario->localizacion=$localizacion;
@@ -25,5 +26,6 @@ class Inventario extends Model
         $inventario->cantidad=$cantidad;
         $inventario->existencia_nueva=$nuevo;
         $inventario->save();
+        }
     }
 }

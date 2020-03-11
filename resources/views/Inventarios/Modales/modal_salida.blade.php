@@ -57,6 +57,7 @@
 </div>
 <script>
 function validarSalida(){
+  if(replica==0){
       limite=parseFloat($("#limiteCantidad").val());
       cantidad=parseFloat($("#cantidadModal").val());
       justificar=$("#justificarModal").val();
@@ -66,7 +67,10 @@ function validarSalida(){
         notaError("Cantidad supera las existencias");
       }else{
           $("#formulario").submit();
+          replica++;
+
       }
+    }
 
 }</script>
   
