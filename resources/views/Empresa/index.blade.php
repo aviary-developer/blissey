@@ -88,6 +88,21 @@
               @include('Empresa.Partes.farmacia')
             </div>
           </div>
+				</div>
+				
+				<div class="card">
+          <div class="card-header p-0" id="headingFive">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                Unidad de Imagenes
+							</button>
+            </h5>
+          </div>
+          <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div class="card-body p-2">
+              @include('Empresa.Partes.u_imagenes')
+            </div>
+          </div>
         </div>
 			</div>	
 		</div>
