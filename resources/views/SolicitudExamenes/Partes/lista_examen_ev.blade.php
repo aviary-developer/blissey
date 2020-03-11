@@ -42,7 +42,7 @@
                           <a id="" href= {!! asset('/verExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-success btn-sm" title="Ver"/>
                             <i class="fa fa-eye"></i>
                           </a>
-                          <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
+                          <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen.'/examenes')!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
                             <i class="fa fa-envelope"></i>
                           </a>
                         </div>

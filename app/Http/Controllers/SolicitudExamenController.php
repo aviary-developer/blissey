@@ -810,46 +810,46 @@ class SolicitudExamenController extends Controller
     }
   }
   }
-  public function entregarExamen($id,$idExamen)
+  public function entregarExamen($id,$idExamen,$tipo)
   {
-    if (Auth::user()->tipoUsuario == "TAC") {
+    if (Auth::user()->tipoUsuario == "TAC" || (Auth::user()->tipoUsuario == "Recepción" && $tipo=="tac")) {
       $resultado=Resultado::where('f_solicitud','=',$id)->first();
       $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
       $solicitud=SolicitudExamen::where('id','=',$id)->where('f_tac','=',$idExamen)->first();
       $cambioEstadoSolicitud=SolicitudExamen::find($id);
       $cambioEstadoSolicitud->estado=3;
       $cambioEstadoSolicitud->save();
-      $header = view('PDF.header.laboratorio');
+      $header = view('PDF.header..unidadImagenes');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('SolicitudTAC.entregaExamen',compact('solicitud','resultado','detallesResultado'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
       return $pdf->stream('TAC_con_solicitud_'.$solicitud->id.'.pdf');
-    }else if (Auth::user()->tipoUsuario == "Rayos X") {
+    }else if (Auth::user()->tipoUsuario == "Rayos X" || (Auth::user()->tipoUsuario == "Recepción" && $tipo=="rayosx")) {
       $resultado=Resultado::where('f_solicitud','=',$id)->first();
       $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
       $solicitud=SolicitudExamen::where('id','=',$id)->where('f_rayox','=',$idExamen)->first();
       $cambioEstadoSolicitud=SolicitudExamen::find($id);
       $cambioEstadoSolicitud->estado=3;
       $cambioEstadoSolicitud->save();
-      $header = view('PDF.header.laboratorio');
+      $header = view('PDF.header..unidadImagenes');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('SolicitudRayosx.entregaExamen',compact('solicitud','resultado','detallesResultado'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
       return $pdf->stream('Radiografia_con_solicitud_'.$solicitud->id.'.pdf');
-    }elseif (Auth::user()->tipoUsuario == "Ultrasonografía") {
+    }elseif (Auth::user()->tipoUsuario == "Ultrasonografía" || (Auth::user()->tipoUsuario == "Recepción" && $tipo=="ultras")) {
       $resultado=Resultado::where('f_solicitud','=',$id)->first();
       $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
       $solicitud=SolicitudExamen::where('id','=',$id)->where('f_ultrasonografia','=',$idExamen)->first();
       $cambioEstadoSolicitud=SolicitudExamen::find($id);
       $cambioEstadoSolicitud->estado=3;
       $cambioEstadoSolicitud->save();
-      $header = view('PDF.header.laboratorio');
+      $header = view('PDF.header.unidadImagenes');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('SolicitudUltras.entregaExamen',compact('solicitud','resultado','detallesResultado'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
       return $pdf->stream('Ultrasonografia_con_solicitud_'.$solicitud->id.'.pdf');
     }
-      else{
+      elseif(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $tipo=="examenes")){
         $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
         $areaExamen=Examen::find($idExamen);        
         if($areaExamen->area=='QUIMICA SANGUINEA'){//INICIO ENTREGA Q.S.

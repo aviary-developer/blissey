@@ -35,7 +35,7 @@
 															<i class="fa fa-edit"></i>
 														</a>
 													@endif
-                          <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_tac)!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
+                          <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_tac.'/tac')!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
                             <i class="fa fa-envelope"></i>
                           </a>
                         </div>

@@ -30,7 +30,7 @@
                     <td>{{$solicitud->rayox->nombre}}</td>
                     <td>
                       <center>
-                        <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox)!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
+                        <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_rayox.'/rayosx')!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
                           <i class="fa fa-envelope"></i>
                         </a>
                       </center>

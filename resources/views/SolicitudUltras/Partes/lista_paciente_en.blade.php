@@ -31,7 +31,7 @@
                     <td>
                       <center>
                         <div class="btn-group">
-                          <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_ultrasonografia)!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
+                          <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_ultrasonografia.'/ultras')!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
                             <i class="fa fa-envelope"></i>
                           </a>
                         </div>
