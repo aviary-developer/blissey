@@ -283,7 +283,7 @@ $("#guardar_examen").on("click", function (e) {
   var valido = new Validated('nombre_examen');
   valido.required();
   valido.min(4);
-  valido.max(30);
+  valido.max(50);
   bandera = valido.value(bandera);
 
   var valido = new Validated('precio_campo');
