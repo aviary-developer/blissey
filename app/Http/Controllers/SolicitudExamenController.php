@@ -13,6 +13,7 @@ use App\CategoriaServicio;
 use App\Servicio;
 use App\DetalleResultado;
 use App\Resultado;
+use App\Parametro;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Reactivo;
@@ -562,8 +563,17 @@ class SolicitudExamenController extends Controller
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',true)->get();
     $contador=0;
     $contadorSecciones=0;
+    $banderaValores=0;
+    $banderaUnidad=0;
     if($espr!=null){
       foreach ($espr as $esp) {
+        $para=Parametro::find($esp->f_parametro);
+        if($para->valorMinimo!=null ||$para->valorMaximo!=null){
+          $banderaValores=1;
+        }
+        if($para->unidad!=null){
+          $banderaUnidad=1;
+        }
         if($contador==0){
           $secciones[$contadorSecciones]=$esp->f_seccion;
         }else{
@@ -577,7 +587,7 @@ class SolicitudExamenController extends Controller
         $contador++;
       }
     }
-    return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones','contadorSecciones'));
+    return view('SolicitudExamenes.evaluarExamen',compact('solicitud','espr','secciones','contadorSecciones','banderaValores','banderaUnidad'));
   }
 }
   public function guardarResultadosExamen(Request $request)
@@ -886,8 +896,17 @@ class SolicitudExamenController extends Controller
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
     $contador=0;
     $contadorSecciones=0;
+    $banderaValores=0;
+    $banderaUnidad=0;
     if($espr!=null){
       foreach ($espr as $esp) {
+        $para=Parametro::find($esp->f_parametro);
+        if($para->valorMinimo!=null ||$para->valorMaximo!=null){
+          $banderaValores=1;
+        }
+        if($para->unidad!=null){
+          $banderaUnidad=1;
+        }
         if($contador==0){
           $secciones[$contadorSecciones]=$esp->f_seccion;
         }else{
@@ -912,7 +931,7 @@ class SolicitudExamenController extends Controller
     $cambioEstadoSolicitud->save();
     $header = view('PDF.header.laboratorio');
     $footer = view('PDF.footer.numero_pagina');
-    $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado'));
+    $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado','banderaValores','banderaUnidad'));
     //set_time_limit(300); // Extends to 5 minutes.
     //$pdf = \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);

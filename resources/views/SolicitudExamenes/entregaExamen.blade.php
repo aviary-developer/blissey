@@ -68,8 +68,12 @@
 							<thead>
 								<th>Parámetro</th>
 								<th>Resultado</th>
-								<th>Valores normales</th>
+								@if ($banderaValores==1)
+								<th>Valores normales</th>	
+								@endif
+								@if ($banderaUnidad==1)
 								<th>Unidades</th>
+								@endif
 							</thead>
 							<tbody>
 								@if ($espr!=null)
@@ -78,15 +82,21 @@
 											<tr>
 													<td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
 													<td><center>{{$detallesResultado[$esp]->resultado}}</center></td>
-													@if ($valor->parametro->valorMinimo!=null)
-														@if ($solicitud->paciente->sexo==0)
-															<td><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
-														@else
-															<td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
-														@endif
-														<td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
+													@if($banderaValores==1)
+															@if ($valor->parametro->valorMinimo!=null)
+																@if ($solicitud->paciente->sexo==0)
+																	<td><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
+																@else
+																	<td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
+																@endif
+																<td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
+															@else
+																<th>-</th><th>-</th>
+															@endif
 													@else
-														<th>-</th><th>-</th>
+															@if($banderaUnidad==1)
+															<td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
+															@endif
 													@endif
 													@if ($detallesResultado[$esp]->dato_controlado!=null)
 														<td><center>D.C.={{$detallesResultado[$esp]->dato_controlado}}</center></td>

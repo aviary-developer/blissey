@@ -71,12 +71,23 @@
         <table class="table table-sm table-hover table-stripped">
           <thead>
             <th style="width: 5%">#</th>
+            @if ($banderaValores==1)
             <th style="width: 25%">Parámetro</th>
             <th style="width: 20%">Resultado</th>
+            @else
+            <th>Parámetro</th>
+            <th>Resultado</th>
+            @endif
+            @if ($banderaValores==1)
             <th style="width: 10%" title="Valor Normal mínimo">VNm</th>
             <th style="width: 10%" title="Valor Normal Máximo">VNM</th>
+            @endif
+            @if ($banderaUnidad==1)
             <th style="width: 15%">Unidades</th>
+            @endif
+            @if ($banderaValores==1)
             <th style="width: 10%">DC</th>
+            @endif
           </thead>
           <tbody>
             @if ($espr!=null)
@@ -87,52 +98,58 @@
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}
                     <input type="hidden" name="nombresParametros[]" value="{{$esp->nombreParametro($esp->f_parametro)}}"></th>
                     <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
-                    @if($esp->parametro->valorMinimo!=null)
+                    @if($banderaValores==1)
+                        @if($esp->parametro->valorMinimo!=null)
+                          <td>
+                            <span class="badge border border-primary text-primary col-12">
+                              @if ($solicitud->paciente->sexo==0)
+                                {{number_format($esp->parametro->valorMinimoFemenino, 2, '.', ',')}}
+                                <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimoFemenino}}">
+                              @else
+                                {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}
+                                <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimo}}">
+                              @endif
+                            </span>
+                          </td>
+                          <td>
+                            <span class="badge border border-danger text-danger col-12">
+                              @if ($solicitud->paciente->sexo==0)
+                                {{number_format($esp->parametro->valorMaximoFemenino, 2, '.', ',')}}
+                                <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximoFemenino}}">
+                              @else
+                                {{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}
+                                <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximo}}">
+                              @endif
+                            </span>
+                          </td>
+                        @else
+                          <td>
+                            <span class="badge border border-secondary text-secondary">Ninguno</span>
+                            <input type="hidden" name="valoresMinimos[]" value="No">
+                          </td>
+                          <td>
+                            <span class="badge border border-secondary text-secondary">Ninguno</span>
+                            <input type="hidden" name="valoresMaximos[]" value="No">
+                          </td>
+                        @endif
+                      @endif
+                    @if($banderaUnidad==1)
                       <td>
-                        <span class="badge border border-primary text-primary col-12">
-                          @if ($solicitud->paciente->sexo==0)
-                            {{number_format($esp->parametro->valorMinimoFemenino, 2, '.', ',')}}
-                            <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimoFemenino}}">
-                          @else
-                            {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}
-                            <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimo}}">
-                          @endif
-                        </span>
-                      </td>
-                      <td>
-                        <span class="badge border border-danger text-danger col-12">
-                          @if ($solicitud->paciente->sexo==0)
-                            {{number_format($esp->parametro->valorMaximoFemenino, 2, '.', ',')}}
-                            <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximoFemenino}}">
-                          @else
-                            {{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}
-                            <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximo}}">
-                          @endif
-                        </span>
-                      </td>
-                    @else
-                      <td>
-                        <span class="badge border border-secondary text-secondary">Ninguno</span>
-                        <input type="hidden" name="valoresMinimos[]" value="No">
-                      </td>
-                      <td>
-                        <span class="badge border border-secondary text-secondary">Ninguno</span>
-                        <input type="hidden" name="valoresMaximos[]" value="No">
+                        @if ($esp->nombreUnidad($esp->parametro->unidad) == "-")
+                          <span class="badge border border-secondary text-secondary">Ninguna</span>
+                        @else
+                          {{$esp->nombreUnidad($esp->parametro->unidad)}}
+                        @endif
                       </td>
                     @endif
-                    <td>
-                      @if ($esp->nombreUnidad($esp->parametro->unidad) == "-")
-                        <span class="badge border border-secondary text-secondary">Ninguna</span>
+                    @if($banderaValores==1)
+                      @if ($esp->f_reactivo)
+                        <td>{!!Form::selectRange('datoControlado[]', 0, 4, 0,['class'=>'form-control form-control-sm'])!!}</td>
                       @else
-                        {{$esp->nombreUnidad($esp->parametro->unidad)}}
+                        <td>
+                          <span class="badge border border-secondary text-secondary">Ninguno</span>
+                        </td>
                       @endif
-                    </td>
-                    @if ($esp->f_reactivo)
-                      <td>{!!Form::selectRange('datoControlado[]', 0, 4, 0,['class'=>'form-control form-control-sm'])!!}</td>
-                    @else
-                      <td>
-                        <span class="badge border border-secondary text-secondary">Ninguno</span>
-                      </td>
                     @endif
                   </tr>
                 @endif
