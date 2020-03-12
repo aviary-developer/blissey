@@ -100,11 +100,12 @@
 				@foreach ($resultadosQuimicaSanguinea as $item => $rqs)
 					@php
 					if($rqs->observacion!=null){
-						if($observacion==""){
+						/* if($observacion==""){
 							$observacion=$rqs->observacion;	
 						}else{
 							$observacion=$observacion.", ".$rqs->observacion;
-						}
+						}*/
+						$observacionGeneral=$rqs->observacion;
 						$banderaObservacion=true;
 					}
 					@endphp
@@ -117,7 +118,7 @@
 							<div class="block">
 								<div class="block_content">
 									<h2 class="title"><a>OBSERVACIONES:</a></h2>
-									<p class="excerpt">{{$observacion}}</p>
+									<p class="excerpt">{{$observacionGeneral}}</p>
 								</div>
 							</div>
 						</li>
