@@ -12,7 +12,7 @@ class DivisionProducto extends Model
   protected $fillable = [
     'f_division','f_producto','cantidad','precio','codigo','contenido','stock'
   ];
-  public function nombreDivision($id){
+  public static function nombreDivision($id){
     $nombre = Division::find($id);
     return $nombre->nombre;
   }
@@ -138,13 +138,20 @@ class DivisionProducto extends Model
 
   }
   public static function stock($f_proveedor){
-    $divs=DivisionProducto::whereHas('producto',function ($query) use ($f_proveedor) {
-      if($f_proveedor!=""){
-      $query->where('estado',true)->where('f_proveedor',$f_proveedor);
-      }else{
-        $query->where('estado',true);
-      }
-    })->with('producto')->orderBy('codigo')->get();
+    // $divs=DivisionProducto::whereHas('producto',function ($query) use ($f_proveedor) {
+    //   if($f_proveedor!=""){
+    //   $query->where('estado',true)->where('f_proveedor',$f_proveedor);
+    //   }else{
+    //     $query->where('estado',true);
+    //   }
+    // })->with('producto')->orderBy('codigo')->get();
+    $divs=DB::table('division_productos')
+      ->select('division_productos.*','productos.nombre','productos.f_presentacion')
+      ->join('productos','division_productos.f_producto','=','productos.id','left outer')
+      ->where('productos.estado',true)
+      ->orderBy('productos.nombre','ASC')
+      ->get();
+
       foreach ($divs as $division) {
         $division->menos=DivisionProducto::menor($division->id,$division->stock);
         $division->inventario=DivisionProducto::inventario($division->id,1);

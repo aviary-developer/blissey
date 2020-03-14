@@ -9,9 +9,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="#">Reporte</a>   
-            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href={!! asset('/stockBajo_pdf/') !!}>Reporte</a>   
+            </li>
             <li class="nav-item">
                 @if ($f_proveedor!="")
                     <a href={!! asset('/stockProveedor/'.$f_proveedor) !!} class="nav-link">Pedido</a>

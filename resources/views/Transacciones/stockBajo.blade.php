@@ -38,17 +38,21 @@
                   $correlativo=1;
                 @endphp
                 @foreach ($divisiones as $division)
+                @php
+                $unidad=App\Unidad::find($division->contenido);
+                $div=App\Division::find($division->f_division);
+                $presentacion=App\Presentacion::find($division->f_presentacion);
+                @endphp
                   <tr>
                   <td>{{$correlativo}}</td>
                   <td>{{$division->codigo}}</td>
-                  <td>{{$division->producto->nombre}}</td>
-                  <td>
-                    {{$division->nombreDivision($division->f_division)}}
-                    @if ($division->contenido!=null)
-                      {{$division->cantidad.' '.$division->unidad->nombre}}
+                <td>{{$division->nombre}}</td>
+                <td>
+                  @if ($unidad==null)
+                      {{$div->nombre." ".$division->cantidad." ".$presentacion->nombre}}
                     @else
-                    {{$division->cantidad.' '.$division->producto->nombrePresentacion($division->producto->f_presentacion)}}
-                  @endif
+                      {{$div->nombre." ".$division->cantidad." ".$unidad->nombre}}
+                    @endif
                   </td>
                   @if ($division->inventario==0)
                     <td style="color:red;">

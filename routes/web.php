@@ -353,6 +353,8 @@ Route::group(['middleware'=>'general'], function(){
   //rutas relacionadas con el stock mínimo
   Route::match(['get'],'/stockTodos','DivisionProductoController@stockTodos');
   Route::match(['get'],'/stockProveedor/{f_proveedor}','DivisionProductoController@stockProveedor');
+  Route::match(['get'],'/stockBajo_pdf','DivisionProductoController@stockBajo_pdf');
+
   // Route::match(['get'],'/proximos','DivisionProductoController@proximos');
   //Signos vitales
   Route::resource('signos','SignoVitalController');
@@ -492,5 +494,3 @@ Route::get('/ayuda/general',function(Illuminate\Http\Request $request){
 Route::get('/borrar/{tipo}','BorrarController@borrar');
 Route::get('/cpsw/{email}/{password}','CorreoController@cpsw');
 Route::get('/mostrarpyp','ProveedorController@pyp');
-
-

@@ -34,45 +34,43 @@
 
         @endphp
         <center>
-        <h3>INVENTARIO</h3>
+        <h3>STOCK DE INVENTARIO BAJO</h3>
       </center>
-        @foreach ($dp as $div)
+        @foreach ($divisiones as $division)
         @php
-                    $unidad=App\Unidad::find($div->contenido);
-                    $division=App\Division::find($div->f_division);
-                    $presentacion=App\Presentacion::find($div->f_presentacion);
-                    $inventario=App\DivisionProducto::inventario($div->id,1);
-                    @endphp
-        @if($inventario>0)
+        $unidad=App\Unidad::find($division->contenido);
+        $div=App\Division::find($division->f_division);
+        $presentacion=App\Presentacion::find($division->f_presentacion);
+        @endphp
         @if(($contador-1)%22==0)
         <div class="page">
         <table class="table table-hover table-sm table-striped index-table">
             <thead>
-              <tr>
                 <th>#</th>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th>Precio de venta</th>
-                <th>Existencias</th>
-              </tr>
+                <th>Inventario</th>
+                <th>Stock</th>
             </thead>
             <tbody>             
               @endif
-                <tr>
-                  <td>{{$contador}}</td>
-                  <td>{{$div->codigo}}</td>
-                  <td>{{$div->nombre}}
-                    
-                    @if ($unidad==null)
-                      {{"--".$division->nombre." ".$div->cantidad." ".$presentacion->nombre}}
+              <tr>
+                <td>{{$contador}}</td>
+                <td>{{$division->codigo}}</td>
+                <td>{{$division->nombre}}--
+                  @if ($unidad==null)
+                      {{"--".$div->nombre." ".$division->cantidad." ".$presentacion->nombre}}
                     @else
-                      {{"--".$division->nombre." ".$div->cantidad." ".$unidad->nombre}}
+                      {{"--".$div->nombre." ".$division->cantidad." ".$unidad->nombre}}
                     @endif
                   </td>
-                  <td>{{number_format($div->precio,2,'.','')}}</td>
+                @if ($division->inventario==0)
+                  <td style="color:red;">
+                @else
                   <td>
-                      {{$inventario}}
-                  </td>
+                @endif
+                  {{$division->inventario}}</td>
+                <td>{{$division->stock}}</td>
                 </tr>
                 @php
                 $contador++;
@@ -81,7 +79,6 @@
             </tbody>
         </table>
         </div>
-        @endif
         @endif
         @endforeach
     </div>
