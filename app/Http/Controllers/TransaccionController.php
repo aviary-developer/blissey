@@ -487,7 +487,7 @@ class TransaccionController extends Controller
             Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),3,$detalle->cantidad);        
           }
           if($detalle->f_servicio!=null && $detalle->f_servicio!=""){
-            $servi=Servicio::find($f_servicio);
+            $servi=Servicio::find($detalle->f_servicio);
             $promos=$servi->promos;
             foreach($promos as $promo){
               if($promo->f_divisionproducto!=null){
@@ -507,7 +507,7 @@ class TransaccionController extends Controller
           CambioProducto::actualizarCambio($detalle->f_producto);
         }
         if($detalle->f_servicio!=null && $detalle->f_servicio!=""){
-          $servi=Servicio::find($f_servicio);
+          $servi=Servicio::find($detalle->f_servicio);
           $promos=$servi->promos;
           foreach($promos as $promo){
             if($promo->f_divisionproducto!=null){
