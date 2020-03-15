@@ -8,6 +8,7 @@ use App\CategoriaServicio;
 use App\Bitacora;
 use Redirect;
 use App\Promocion;
+use App\DivisionProducto;
 
 class ServicioController extends Controller
 {
@@ -182,5 +183,20 @@ class ServicioController extends Controller
 			$precio = $paquete->precio;
 			$id = $paquete->id;
 			return compact('precio','id');
-		}
+    }
+    public static function comprobarServicio($f_servicio,$cantidad){
+      $servicio=Servicio::find($f_servicio);
+      $promos=$servicio->promos;
+      $aux=1;
+      
+      foreach($promos as $promo){
+        if($promo->f_divisionproducto!=null){
+          $inventario=DivisionProducto::inventario($promo->f_divisionproducto,1);
+          if($inventario<($promo->cantidad*$cantidad)){
+            return 0;
+          }
+        }
+      }
+      return $aux;
+    }
 }

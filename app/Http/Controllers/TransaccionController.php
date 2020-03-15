@@ -151,7 +151,7 @@ class TransaccionController extends Controller
             $promos=$servi->promos;
             foreach($promos as $promo){
               if($promo->f_divisionproducto!=null){
-                Inventario::Actualizar($promo->f_divisionproducto,Transacion::tipoUsuario(),2,$promo->cantidad);
+                Inventario::Actualizar($promo->f_divisionproducto,Transacion::tipoUsuario(),2,($promo->cantidad*$cantidad[$i]));
               }
             }
         }
@@ -486,6 +486,15 @@ class TransaccionController extends Controller
           if($detalle->f_producto!=null && $detalle->f_producto!=""){
             Inventario::Actualizar($detalle->f_producto,Transacion::tipoUsuario(),3,$detalle->cantidad);        
           }
+          if($detalle->f_servicio!=null && $detalle->f_servicio!=""){
+            $servi=Servicio::find($f_servicio);
+            $promos=$servi->promos;
+            foreach($promos as $promo){
+              if($promo->f_divisionproducto!=null){
+                Inventario::Actualizar($promo->f_divisionproducto,Transacion::tipoUsuario(),3,($promo->cantidad*$detalle->cantidad));
+              }
+            }
+          }
         }
       } catch (\Exception $e) {
         DB::rollback();
@@ -496,6 +505,15 @@ class TransaccionController extends Controller
       foreach($detalles as $detalle){
         if($detalle->f_producto!=null && $detalle->f_producto!=""){
           CambioProducto::actualizarCambio($detalle->f_producto);
+        }
+        if($detalle->f_servicio!=null && $detalle->f_servicio!=""){
+          $servi=Servicio::find($f_servicio);
+          $promos=$servi->promos;
+          foreach($promos as $promo){
+            if($promo->f_divisionproducto!=null){
+              CambioProducto::actualizarCambio($promo->f_divisionproducto);
+            }
+          }
         }
       }
       return redirect('/transacciones?tipo=2')->with('mensaje', '¡Anulado!');

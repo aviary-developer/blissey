@@ -225,6 +225,8 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/desactivateServicio/{id}','ServicioController@desactivate');
   Route::match(['get','post'],'/activateServicio/{id}','ServicioController@activate');
   Route::match(['get','post'],'/destroyServicio/{id}','ServicioController@destroy');
+  Route::get('/comprobarServicio/{f_servicio}/{cantidad}','ServicioController@comprobarServicio');
+
 
   //Rutas de transacciones
   Route::resource('transacciones','TransaccionController');
@@ -245,6 +247,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::post('/guardarDevoluciones/{id}','TransaccionController@guardarDevoluciones');
   Route::get('/factura/{id}','TransaccionController@factura');
   Route::get('/validarFactura/{factura}','TransaccionController@validarFactura');
+
   //Rutas apertura y cierre de cajas
     Route::resource('cajas','CajaController');
     Route::match(['get','post'],'/desactivateCaja/{id}','CajaController@desactivate');

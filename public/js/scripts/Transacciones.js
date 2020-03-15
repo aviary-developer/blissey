@@ -309,24 +309,6 @@ $(document).on('ready', function () {
     }
     notaNotice("El producto fue removido");
   });
-  function validarCantidad() { //Campo cantidad_resultado
-    c = 0;
-    var error = [];
-    valor = true;
-    if ($("#cantidad_resultado").val() == "") {
-      error[c] = 'El campo cantidad es requerido';
-      c = c + 1;
-      valor = false;
-    } if (parseFloat($("#cantidad_resultado").val()) <= 0) {
-      error[c] = 'La cantidad debe ser mayor a cero';
-      c = c + 1;
-      valor = false;
-    }
-    for (var i = 0; i < c; i++) {
-      notaError(error[i]);
-    }
-    return valor;
-  }
   function validaciones() { //campo cantidad
     c = 0;
     var error = [];
@@ -547,75 +529,105 @@ function cambioRadio(t) {
   radio = t;
   limpiarTablaVenta();
 }
-function registrarventa(id) {
-  var cantidad = parseFloat($('#cantidad_resultado').val());
-  var existencia = parseFloat($('#ct' + id).text());
-  c1 = $('#cu' + id).text();
-  c2 = $('#cd' + id).text();
-  if (radio != 3) {
-    if (cantidad > existencia || componentes_agregados.includes("" + id + "")) {
-      if (cantidad > existencia) {
-        notaError("La cantidad solicitada supera las existencias");
+async function registrarventa(id) {
+  var v = validarCantidad();
+  if (v == true) {
+    var cantidad = parseFloat($('#cantidad_resultado').val());
+    var existencia = parseFloat($('#ct' + id).text());
+    c1 = $('#cu' + id).text();
+    c2 = $('#cd' + id).text();
+    if (radio != 3) {
+      if (cantidad > existencia || componentes_agregados.includes("" + id + "")) {
+        if (cantidad > existencia) {
+          notaError("La cantidad solicitada supera las existencias");
+        } else {
+          notaError('El producto ya se encuentra incluido');
+        }
       } else {
-        notaError('El producto ya se encuentra incluido');
+        c4 = parseFloat($('#cc' + id).text()).toFixed(2);
+        tabla = $('#tablaDetalle');
+        total_c = parseFloat(cantidad * c4).toFixed(2);
+        cambiarTotal(total_c, 1);
+        html = "<tr id='itr" + contadorcp + "'>" +
+          "<td>" + cantidad + "</td>" +
+          "<td>" + c2 + "</td>" +
+          "<td>" + c1 + "</td>" +
+          "<td>$ " + c4 + "</td>" +
+          "<td>$ " + total_c + "</td>" +
+          "<td>" +
+          "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
+          "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
+          "<input type='hidden' name='precio[]' value='" + c4 + "'>" +
+          "<input type='hidden' name='tipo_detalle[]' value='1'>" +
+          "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
+          "<i class='fas fa-dollar-sign'></i>" +
+          "</button>" +
+          "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
+          "<i class='fas fa-times'></i>" +
+          "</button>" +
+          "</td>" +
+          "</tr>";
+        tabla.append(html);
+        componentes_agregados.push("" + id + "");
+        notaInfo('Ha sido agregado en detalles');
       }
     } else {
-      c4 = parseFloat($('#cc' + id).text()).toFixed(2);
-      tabla = $('#tablaDetalle');
-      total_c = parseFloat(cantidad * c4).toFixed(2);
-      cambiarTotal(total_c, 1);
-      html = "<tr id='itr" + contadorcp + "'>" +
-        "<td>" + cantidad + "</td>" +
-        "<td>" + c2 + "</td>" +
-        "<td>" + c1 + "</td>" +
-        "<td>$ " + c4 + "</td>" +
-        "<td>$ " + total_c + "</td>" +
-        "<td>" +
-        "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
-        "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
-        "<input type='hidden' name='precio[]' value='" + c4 + "'>" +
-        "<input type='hidden' name='tipo_detalle[]' value='1'>" +
-        "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
-        "<i class='fas fa-dollar-sign'></i>" +
-        "</button>" +
-        "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
-        "<i class='fas fa-times'></i>" +
-        "</button>" +
-        "</td>" +
-        "</tr>";
-      tabla.append(html);
-      componentes_agregados.push("" + id + "");
-      notaInfo('Ha sido agregado en detalles');
+      var ruta = $('#guardarruta').val() + "/comprobarServicio/" + id + "/" + cantidad;
+      var tabla = $("#tablaBuscar");
+      await $.get(ruta, async function (res) {
+
+        if (res == 1) {
+          console.log('Servicio');
+          c2 = parseFloat(c2).toFixed(2);
+          tabla = $('#tablaDetalle');
+          total_c = parseFloat(cantidad * c2).toFixed(2);
+          cambiarTotal(total_c, 1);
+          html = "<tr id='itr" + contadorcp + "'>" +
+            "<td>" + cantidad + "</td>" +
+            "<td>" + c1 + "</td>" +
+            "<td></td>" +
+            "<td>$ " + c2 + "</td>" +
+            "<td>$ " + total_c + "</td>" +
+            "<td>" +
+            "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
+            "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
+            "<input type='hidden' name='precio[]' value='" + c2 + "'>" +
+            "<input type='hidden' name='tipo_detalle[]' value='2'>" +
+            "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
+            "<i class='fas fa-dollar-sign'></i>" +
+            "</button>" +
+            "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
+            "<i class='fas fa-times'></i>" +
+            "</button>" +
+            "</td>" +
+            "</tr>";
+          tabla.append(html);
+          notaInfo('Ha sido agregado en detalles');
+        } else {
+          notaError('No hay sufientes productos para usar la promoción');
+        }
+      });
     }
-  } else {
-    console.log('Servicio');
-    c2 = parseFloat(c2).toFixed(2);
-    tabla = $('#tablaDetalle');
-    total_c = parseFloat(cantidad * c2).toFixed(2);
-    cambiarTotal(total_c, 1);
-    html = "<tr id='itr" + contadorcp + "'>" +
-      "<td>" + cantidad + "</td>" +
-      "<td>" + c1 + "</td>" +
-      "<td></td>" +
-      "<td>$ " + c2 + "</td>" +
-      "<td>$ " + total_c + "</td>" +
-      "<td>" +
-      "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
-      "<input type='hidden' name='cantidad[]' value='" + cantidad + "'>" +
-      "<input type='hidden' name='precio[]' value='" + c2 + "'>" +
-      "<input type='hidden' name='tipo_detalle[]' value='2'>" +
-      "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
-      "<i class='fas fa-dollar-sign'></i>" +
-      "</button>" +
-      "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
-      "<i class='fas fa-times'></i>" +
-      "</button>" +
-      "</td>" +
-      "</tr>";
-    tabla.append(html);
-    notaInfo('Ha sido agregado en detalles');
+    contadorcp++;
   }
-  contadorcp++;
+}
+function validarCantidad() { //Campo cantidad_resultado
+  c = 0;
+  var error = [];
+  valor = true;
+  if ($("#cantidad_resultado").val() == "") {
+    error[c] = 'El campo cantidad es requerido';
+    c = c + 1;
+    valor = false;
+  } if (parseFloat($("#cantidad_resultado").val()) <= 0) {
+    error[c] = 'La cantidad debe ser mayor a cero';
+    c = c + 1;
+    valor = false;
+  }
+  for (var i = 0; i < c; i++) {
+    notaError(error[i]);
+  }
+  return valor;
 }
 function cambiarTotal(cantidad, tipo) { //cantidad que recibe y si la cantidad se suma o resta
   descuento = $('#descuento').val();
