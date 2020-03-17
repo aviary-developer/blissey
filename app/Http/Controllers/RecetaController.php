@@ -51,10 +51,9 @@ class RecetaController extends Controller
     {
 				$consulta = Consulta::find($id);
 				if($consulta->recetas != null){
-					$header = view('PDF.header.hospital');
-					$footer = view('PDF.footer.numero_pagina');
-					$main = view('Recetas.PDF.contenido',compact('consulta'));
-					$pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+					$main = view('Recetas.PDF.prueba',compact('consulta'));
+					//Tamaño oficio 178 y 140 Carta
+					$pdf = \PDF::loadHtml($main)->setOption('page-width','216')->setOption('page-height','140')->setOption('margin-top','8')->setOption('margin-bottom','30');
 					return $pdf->stream('nombre.pdf');
 				}else{
 					return "No existe receta";
