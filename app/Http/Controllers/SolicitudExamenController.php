@@ -71,10 +71,10 @@ class SolicitudExamenController extends Controller
     $vista = $request->get("vista");
     if($vista == "paciente"){
       $pacientes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->orderBy('estado')->get();
+      $solicitudes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->orderBy('estado')->orderBy('created_at','desc')->get();
     }else{
       $examenes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->orderBy('estado')->get();
+      $solicitudes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->orderBy('estado')->orderBy('created_at','desc')->get();
     }
     return view('SolicitudExamenes.index',compact('pacientes','solicitudes','examenes','vista'));
   }
