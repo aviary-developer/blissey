@@ -713,48 +713,51 @@ class PacienteController extends Controller
         $html = $fila[$i][0] = ($i + 1);
         $html .= '</td>';
         $html .= '<td>';
-        $html .= $fila[$i][1] = $solicitud->created_at->formatLocalized('%d %b %y');
-        if($solicitud->transaccion->ingreso != null){
+				$html .= $fila[$i][1] = $solicitud->created_at->formatLocalized('%d %b %y');
+				$html .= '</td>';
+				$html .= '<td>';
+				$html .= $fila[$i][2] = $solicitud->created_at->formatLocalized('%R');
+        if($solicitud->transaccion != null){
           $html .= '<i class="fas fa-check-circle text-success float-right"></i>';
         }
         $html .= '</td>';
         $html .= '<td>';
         if($solicitud->f_examen != null){
-          $html .= $fila[$i][2] = $solicitud->examen->nombreExamen;
+          $html .= $fila[$i][3] = $solicitud->examen->nombreExamen;
         }else if($solicitud->f_rayox != null){
-          $html .= $fila[$i][2] = $solicitud->rayox->nombre;
+          $html .= $fila[$i][3] = $solicitud->rayox->nombre;
         }else if($solicitud->f_ultrasonografia != null){
-          $html .= $fila[$i][2] = $solicitud->ultrasonografia->nombre;
+          $html .= $fila[$i][3] = $solicitud->ultrasonografia->nombre;
         }else if($solicitud->f_tac != null){
-          $html .= $fila[$i][2] = $solicitud->tac->nombre;
+          $html .= $fila[$i][3] = $solicitud->tac->nombre;
         }
         $html .= '</td>';
         $html .= '<td>';
         if($solicitud->f_examen != null){
-          $html .= $fila[$i][3] = '<span class="badge border border-primary text-primary col-10">Laboratorio</span>';
+          $html .= $fila[$i][4] = '<span class="badge border border-primary text-primary col-10">LAB</span>';
         }else if($solicitud->f_rayox != null){
-          $html .= $fila[$i][3] = '<span class="badge border border-danger text-danger col-10">Rayos X</span>';
+          $html .= $fila[$i][4] = '<span class="badge border border-danger text-danger col-10">RYX</span>';
         }else if($solicitud->f_ultrasonografia != null){
-          $html .= $fila[$i][3] = '<span class="badge border border-success text-success col-10">Ultrasonografía</span>';
+          $html .= $fila[$i][4] = '<span class="badge border border-success text-success col-10">ULT</span>';
         }else if($solicitud->f_tac != null){
-          $html .= $fila[$i][3] = '<span class="badge border border-warning  text-warning col-10">TAC</span>';
+          $html .= $fila[$i][4] = '<span class="badge border border-warning  text-warning col-10">TAC</span>';
         }
         $html .= '</td>';
         $html .= '<td>';
         if($solicitud->f_examen != null){
-          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_examen_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","examen_id":"'.$solicitud->f_examen.'","estado":"'.$solicitud->estado.'"} id="ver_examen_f">
+          $html .= $fila[$i][5] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_examen_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","examen_id":"'.$solicitud->f_examen.'","estado":"'.$solicitud->estado.'"} id="ver_examen_f">
             <i class="fas fa-info-circle"></i>
           </button>';
         }else if($solicitud->f_rayox != null){
-          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"0","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
+          $html .= $fila[$i][5] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"0","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
             <i class="fas fa-info-circle"></i>
           </button>';
         }else if($solicitud->f_ultrasonografia != null){
-          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"1","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
+          $html .= $fila[$i][5] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"1","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
             <i class="fas fa-info-circle"></i>
           </button>';
         }else if($solicitud->f_tac != null){
-          $html .= $fila[$i][4] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"2","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
+          $html .= $fila[$i][5] = '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={"solicitud_id":"'.$solicitud->id.'","tipo":"2","estado":"'.$solicitud->estado.'"} id="ver_evaluacion_f">
             <i class="fas fa-info-circle"></i>
           </button>';
         }

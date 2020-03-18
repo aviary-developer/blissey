@@ -20,10 +20,11 @@
     <table class="table table-sm table-hover table-striped" id="solicitud-table">
       <thead>
         <th>#</th>
-        <th>Fecha</th>
+				<th>Fecha</th>
+				<th>Hora</th>
         <th>Nombre</th>
         <th>Tipo</th>
-        <th style="width: 80px;">Opción</th>
+        <th style="width: 25px;">Opción</th>
       </thead>
       <tbody id="sol-body-table">
         @php
@@ -33,11 +34,16 @@
           <tr>
             <td>{{$correlativo}}</td>
             <td>
-              {{$solicitud->created_at->formatLocalized('%d %b %y')}}
-              @if ($solicitud->transaccion->ingreso != null)
-                <i class="fas fa-check-circle text-success float-right" title="Servicio médico"></i>
-              @endif
-            </td>
+							{{$solicitud->created_at->formatLocalized('%d %b %y')}}
+						</td>
+						<td>
+							{{$solicitud->created_at->formatLocalized('%R')}}
+							@if ($solicitud->transaccion != null)
+								@if ($solicitud->transaccion->ingreso != null)
+									<i class="fas fa-check-circle text-success float-right" title="Servicio médico"></i>
+								@endif
+							@endif
+						</td>
             <td>
               @if ($solicitud->f_examen != null)
                 {{$solicitud->examen->nombreExamen}}
@@ -51,11 +57,11 @@
             </td>
             <td>
               @if ($solicitud->f_examen != null)
-                <span class="badge border border-primary text-primary col-10">Laboratorio</span>
+                <span class="badge border border-primary text-primary col-10">LAB</span>
               @elseif($solicitud->f_ultrasonografia != null)
-                <span class="badge border border-success text-success col-10">Ultrasonografía</span>
+                <span class="badge border border-success text-success col-10">ULT</span>
               @elseif($solicitud->f_rayox != null)
-                <span class="badge border border-danger text-danger col-10">Rayos X</span>
+                <span class="badge border border-danger text-danger col-10">RYX</span>
               @elseif($solicitud->f_tac != null)
                 <span class="badge border border-warning  text-warning col-10">TAC</span>
               @endif
@@ -66,7 +72,7 @@
                   <i class="fas fa-info-circle"></i>
                 </button>
               @elseif($solicitud->f_rayox != null)
-                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={{'{"solicitud_id":"'.$solicitud->id.'","tipo":"0","estado":"'.$solicitud->estado.'"}'}}id="ver_evaluacion_f">
+                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ver_ev_pac" title="Ver" data-value={{'{"solicitud_id":"'.$solicitud->id.'","tipo":"0","estado":"'.$solicitud->estado.'"}'}} id="ver_evaluacion_f">
                   <i class="fas fa-info-circle"></i>
                 </button>
               @elseif($solicitud->f_ultrasonografia != null)
