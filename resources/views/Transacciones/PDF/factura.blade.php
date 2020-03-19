@@ -47,11 +47,11 @@
                       @else
                         Clientes varios
                       @endif</td>
-                    <td colspan="2" style="text-align:right;">{{$transaccion->fecha->formatLocalized('%d/%m/%Y')}}</td>
+                    <td colspan="2" style="text-align:center;">{{$transaccion->fecha->formatLocalized('%d/%m/%Y')}}</td>
                 </tr>
             </tbody>
         </table>
-        <div style="height: 69px;">
+        <div style="height: 57px;">
         </div>
         <table class="table-simple">
                     <tbody>
@@ -60,9 +60,9 @@
                         $contador++;
                     @endphp
                       <tr>
-                        <td style="width: 12%;text-align:center;">{{$detalle->cantidad}}</td>
+                        <td style="width: 16%;text-align:center;">{{$detalle->cantidad}}</td>
                         @if($detalle->f_servicio==null)
-                        <td style="width: 56%">
+                        <td style="width: 51%">
                           @if($detalle->divisionProducto->unidad==null)
                             {{$detalle->divisionProducto->division->nombre." ".$detalle->divisionProducto->cantidad." ".$detalle->divisionProducto->producto->presentacion->nombre}}
                           @else
@@ -75,7 +75,7 @@
                           @endif
                     </td>
                       @else
-                        <td style="width: 56%">
+                        <td style="width: 51%">
                           @if($detalle->servicio->categoria->nombre=="Ultrasonografía" || $detalle->servicio->categoria->nombre=="TAC" || $detalle->servicio->categoria->nombre=="Rayos X")
                             {{$detalle->servicio->categoria->nombre." "}}
                           @endif
@@ -98,37 +98,47 @@
                       @php
                         $descontado=number_format($detalle->precio-($detalle->precio*($detalle->descuento/100)),2,'.','.');
                       @endphp
-                      <td style="width: 24%">$ {{number_format($detalle->precio,2,'.','.')}}</td>
+                      <td style="width: 23%">$ {{number_format($detalle->precio,2,'.','.')}}</td>
                       <td>$ {{number_format($detalle->cantidad*$descontado,2,'.','.')}}</td>
                       @php
                       $total=$total+($detalle->cantidad*$descontado);
                       @endphp
                       </tr>
                     @endforeach
-                    @for($i=1;$i<=(9-$contador);$i++)
+                    @for($i=1;$i<=(8-$contador);$i++)
                     <tr>
                     <td colspan="4" style="color:white">{{$i}}</td>
                     </tr>
                     @endfor
                       </tbody>
                     </table>
-                    <div style="height: 10px;">
+                    <div style="height: 4px;">
                     </div>
                     <table class="table-simple">
                         <tbody>
+                          @if($transaccion->descuento==0 || $transaccion->detalleTransaccion->count()<8)
+                                <tr>
+                                  <td colspan="4" style="color:white">Espacio</td>
+                                </tr>
+                          @endif
                             <tr>
-                                <td colspan='4'><div style="text-align:right;">
+                              <td colspan='2'></td>
+                                <td><div style="text-align:right;">
                                   @if ($transaccion->descuento>0)(Descuento general {{$transaccion->descuento}}%)
                                   @else
                                   @endif
                                       $ {{number_format($total,2,'.','.')}}</div></td>
+                          <td style="width: 5%;"></td>
                               </tr>
                               @if ($transaccion->descuento>0)
                                 @php
                                   $total=$total-($total*($transaccion->descuento/100));
                                 @endphp
                                 <tr>
-                                  <td colspan='{{$aux}}'><div style="text-align:right;">$ {{number_format($total,2,'.','.')}}</div></td>
+                                  <td colspan='3'><div style="text-align:right;">
+                                    $ {{number_format($total,2,'.','.')}}
+                                  </div></td>
+                                  <td style="width: 5%;"></td>
                                 </tr>
                               @endif
                               <tr>
@@ -137,16 +147,36 @@
                               </tr>
                         </tbody>
                     </table>
-                    <div style="height: 10px;">
+                    <div style="height: 1px;">
                     </div>
-                    <div style="text-align:right;">
-                        $ {{number_format($total,2,'.','.')}}
+                    <table class="table-simple">
+                      <tbody>
+
+                        <tr>
+                          <td colspan="2"></td>
+                          <td style="text-align:right;">
+                          $ {{number_format($total,2,'.','.')}}
+
+                          </td>
+                          <td style="width: 5%;"></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+
+                          <td style="text-align:right;">
+                          VENTA TOTAL $ {{number_format($total,2,'.','.')}}
+
+                          </td>
+                          <td style="width: 5%;"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    {{-- <div style="text-align:right;">
                     </div>
                     {{-- <div style="height: 50px;">
                     </div> --}}
-                    <div style="text-align:right;">
-                        VENTA TOTAL $ {{number_format($total,2,'.','.')}}
-                    </div>
+                    {{-- <div style="text-align:right;">
+                    </div> --}}
     </div>
   </div>
 </body>
