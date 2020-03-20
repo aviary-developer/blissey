@@ -19,7 +19,7 @@ class Consulta extends Model
     }
 
     public function recetas(){
-        return $this->hasMany('App\Receta','f_consulta');
+        return $this->hasOne('App\Receta','f_consulta');
     }
 
     public function ingreso(){

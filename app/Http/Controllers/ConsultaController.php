@@ -6,6 +6,7 @@ use App\Consulta;
 use App\Producto;
 use App\Bitacora;
 use App\Receta;
+use App\DetalleReceta;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,14 @@ class ConsultaController extends Controller
             $consulta->f_medico = Auth::user()->id;
             $consulta->save();
 
-            $codigo = str_pad($consulta->id, 10, "0", STR_PAD_LEFT);
+						$codigo = str_pad($consulta->id, 10, "0", STR_PAD_LEFT);
+
+						//MAR20: Se crea la receta
+						$receta = new Receta;
+						$receta->f_consulta = $consulta->id;
+						$receta->barcode = $codigo;
+						$receta->f_medico = Auth::user()->id;
+						$receta->save();
 
             if(isset($request->nombre_producto)){
                 foreach($request->nombre_producto as $k => $nombre_producto){
@@ -56,88 +64,76 @@ class ConsultaController extends Controller
                         $id_p = null;
                     }else{
                         $id_p = $producto->id;
-                    }
+										}
+
+										$detalle = new DetalleReceta;
+										$detalle->f_receta = $receta->id;
     
-                    $receta = new Receta;
-                    $receta->f_consulta = $consulta->id;
-                    $receta->barcode = $codigo;
-                    $receta->f_medico = Auth::user()->id;
+                    $detalle->nombre_producto = $nombre_producto;
+                    $detalle->f_producto = $id_p;
+                    $detalle->cantidad_dosis = $request->cant_dosis[$k];
+                    $detalle->forma_dosis = $request->forma_dosis[$k];
+                    $detalle->cantidad_frecuencia = $request->cant_frec[$k];
+                    $detalle->forma_frecuencia = $request->forma_frec[$k];
+                    $detalle->cantidad_duracion = $request->cant_duracion[$k];
+                    $detalle->forma_duracion = $request->forma_duracion[$k];
+                    $detalle->observacion = $request->observacion[$k];
     
-                    $receta->nombre_producto = $nombre_producto;
-                    $receta->f_producto = $id_p;
-                    $receta->cantidad_dosis = $request->cant_dosis[$k];
-                    $receta->forma_dosis = $request->forma_dosis[$k];
-                    $receta->cantidad_frecuencia = $request->cant_frec[$k];
-                    $receta->forma_frecuencia = $request->forma_frec[$k];
-                    $receta->cantidad_duracion = $request->cant_duracion[$k];
-                    $receta->forma_duracion = $request->forma_duracion[$k];
-                    $receta->observacion = $request->observacion[$k];
-    
-                    $receta->save();
+                    $detalle->save();
                 }
             }
             if(isset($request->f_examen)){
                 foreach($request->f_examen as $f_examen){
-                    $receta = new Receta;
-                    $receta->f_consulta = $consulta->id;
-                    $receta->barcode = $codigo;
-                    $receta->f_medico = Auth::user()->id;
+										$detalle = new DetalleReceta;
+										$detalle->f_receta = $receta->id;
     
-                    $receta->f_examen = $f_examen;
+                    $detalle->f_examen = $f_examen;
     
-                    $receta->save();
+                    $detalle->save();
                 }
             }
 
             if(isset($request->f_tac)){
                 foreach($request->f_tac as $f_tac){
-                    $receta = new Receta;
-                    $receta->f_consulta = $consulta->id;
-                    $receta->barcode = $codigo;
-                    $receta->f_medico = Auth::user()->id;
+										$detalle = new DetalleReceta;
+										$detalle->f_receta = $receta->id;
     
-                    $receta->f_tac = $f_tac;
+                    $detalle->f_tac = $f_tac;
     
-                    $receta->save();
+                    $detalle->save();
                 }
             }
 
             if(isset($request->f_ultrasonografia)){
                 foreach($request->f_ultrasonografia as $f_ultrasonografia){
-                    $receta = new Receta;
-                    $receta->f_consulta = $consulta->id;
-                    $receta->barcode = $codigo;
-                    $receta->f_medico = Auth::user()->id;
+										$detalle = new DetalleReceta;
+										$detalle->f_receta = $receta->id;
     
-                    $receta->f_ultrasonografia = $f_ultrasonografia;
+                    $detalle->f_ultrasonografia = $f_ultrasonografia;
     
-                    $receta->save();
+                    $detalle->save();
                 }
             }
 
             if(isset($request->f_rayox)){
                 foreach($request->f_rayox as $f_rayox){
-                    $receta = new Receta;
-                    $receta->f_consulta = $consulta->id;
-                    $receta->barcode = $codigo;
-                    $receta->f_medico = Auth::user()->id;
+										$detalle = new DetalleReceta;
+										$detalle->f_receta = $receta->id;
     
-                    $receta->f_rayox = $f_rayox;
+                    $detalle->f_rayox = $f_rayox;
     
-                    $receta->save();
+                    $detalle->save();
                 }
             }
 
 
             if($request->texto != null || $request->texto != ""){
-                $receta = new Receta;
-                $receta->f_consulta = $consulta->id;
-                $receta->barcode = $codigo;
-                $receta->f_medico = Auth::user()->id;
+								$detalle = new DetalleReceta;
+								$detalle->f_receta = $receta->id;
 
-                $receta->Texto = $request->texto;
+                $detalle->Texto = $request->texto;
 
-                $receta->save();
+                $detalle->save();
             }
 
             DB::commit();

@@ -15,10 +15,10 @@
 			<div class="row">
 				<div style="height:85px">
 					<div class="row">
-						<img src={{'data:image/png;base64,' . DNS1D::getBarcodePNG($consulta->recetas[0]->barcode, "C128",2,30,array(1,1,1),true)}} alt="barcode" />
+						<img src={{'data:image/png;base64,' . DNS1D::getBarcodePNG($consulta->recetas->barcode, "C128",2,30,array(1,1,1),true)}} alt="barcode" />
 					</div>
 					<div class="row">
-						{{$consulta->recetas[0]->barcode}}
+						{{$consulta->recetas->barcode}}
 					</div>
 				</div>
 			</div>
@@ -37,11 +37,11 @@
 
 			<!--Cuerpo de la receta-->
 			<div class="row">
-				@if ($consulta->recetas->where('nombre_producto','!=',null)->count() > 0)
+				@if ($consulta->recetas->detalle->where('nombre_producto','!=',null)->count() > 0)
 					<div class="row">
 						<span><b>Medicamentos</b></span>
 					</div>
-					@foreach ($consulta->recetas->where('nombre_producto','!=',null) as $receta)
+					@foreach ($consulta->recetas->detalle->where('nombre_producto','!=',null) as $receta)
 						<div class="row">
 							<div class="col-xs-12">
 								<p style="margin: 0px">
@@ -62,11 +62,11 @@
 					@endforeach
 				@endif
 
-				@if ($consulta->recetas->where('f_examen','!=',null)->count() > 0)
+				@if ($consulta->recetas->detalle->where('f_examen','!=',null)->count() > 0)
 					<div class="row">
 						<span><b>Laboratorio clínico</b></span>
 					</div>
-					@foreach ($consulta->recetas->where('f_examen','!=',null) as $receta)
+					@foreach ($consulta->recetas->detalle->where('f_examen','!=',null) as $receta)
 						<div class="row">
 							<div class="col-xs-12">
 								<p style="margin:0px">
@@ -80,11 +80,11 @@
 					@endforeach
 				@endif
 
-				@if ($consulta->recetas->where('f_ultrasonografia','!=',null)->count() > 0)
+				@if ($consulta->recetas->detalle->where('f_ultrasonografia','!=',null)->count() > 0)
 					<div class="row">
 						<span><b>Ultrasonografía</b></span>
 					</div>
-					@foreach ($consulta->recetas->where('f_ultrasonografia','!=',null) as $receta)
+					@foreach ($consulta->recetas->detalle->where('f_ultrasonografia','!=',null) as $receta)
 						<div class="row">
 							<div class="col-xs-12">
 								<p style="margin:0px">
@@ -99,11 +99,11 @@
 					@endforeach
 				@endif
 
-				@if ($consulta->recetas->where('f_rayox','!=',null)->count() > 0)
+				@if ($consulta->recetas->detalle->where('f_rayox','!=',null)->count() > 0)
 					<div class="row">
 						<span><b>Rayos X</b></span>
 					</div>
-					@foreach ($consulta->recetas->where('f_rayox','!=',null) as $receta)
+					@foreach ($consulta->recetas->detalle->where('f_rayox','!=',null) as $receta)
 						<div class="row">
 							<div class="col-xs-12">
 								<p style="margin:0px;">
@@ -118,11 +118,11 @@
 					@endforeach
 				@endif
 
-				@if ($consulta->recetas->where('f_tac','!=',null)->count() > 0)
+				@if ($consulta->recetas->detalle->where('f_tac','!=',null)->count() > 0)
 					<div class="row">
 						<span><b>Tomografía Axial Computarizada (TAC)</b></span>
 					</div>
-					@foreach ($consulta->recetas->where('f_tac','!=',null) as $receta)
+					@foreach ($consulta->recetas->detalle->where('f_tac','!=',null) as $receta)
 						<div class="row">
 							<div class="col-xs-12">
 								<p style="margin:0px">
@@ -136,14 +136,14 @@
 						</div>
 					@endforeach
 				@endif
-				@if ($consulta->recetas->where('Texto','!=',null)->count() > 0)
+				@if ($consulta->recetas->detalle->where('Texto','!=',null)->count() > 0)
 					<div class="row">
 						<span><b>Tratamiento</b></span>
 					</div>
 					<div class="row">
 						<div class="col-xs-12">
 							@php
-								$receta = $consulta->recetas->where('Texto','!=',null)->first();
+								$receta = $consulta->recetas->detalle->where('Texto','!=',null)->first();
 							@endphp
 							{!! $receta->Texto !!}
 						</div>

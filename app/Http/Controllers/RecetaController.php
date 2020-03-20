@@ -95,12 +95,12 @@ class RecetaController extends Controller
     }
 
     public function buscar_solicitud(Request $request){
-        $recetas = Receta::where('barcode',$request->codigo)->get();
-        if($recetas->count() > 0){
-            $lab = $recetas->where('f_examen','!=',null);
-            $ultra = $recetas->where('f_ultrasonografia','!=',null);
-            $tac = $recetas->where('f_tac','!=',null);
-            $rayo = $recetas->where('f_rayox','!=',null);
+        $recetas = Receta::where('barcode',$request->codigo)->first();
+        if($recetas->detalle->count() > 0){
+            $lab = $recetas->detalle->where('f_examen','!=',null);
+            $ultra = $recetas->detalle->where('f_ultrasonografia','!=',null);
+            $tac = $recetas->detalle->where('f_tac','!=',null);
+            $rayo = $recetas->detalle->where('f_rayox','!=',null);
     
             $total_lab = $lab->count();
             $total_ultra = $ultra->count();
@@ -150,7 +150,7 @@ class RecetaController extends Controller
                 $cero = false;
             }
     
-            $consulta = $recetas[0]->consulta;
+            $consulta = $recetas->consulta;
             $paciente = $consulta->ingreso->paciente->nombre.' '.$consulta->ingreso->paciente->apellido;
             $id_p = $consulta->ingreso->f_paciente;
             $fecha = $consulta->created_at->format('d/m/Y');
@@ -178,8 +178,8 @@ class RecetaController extends Controller
 
     public function buscar_medicamento(Request $request){
         $recetas = Receta::where('barcode',$request->codigo)->get();
-        if($recetas->count() > 0){
-            $medicamentos = $recetas->where('f_producto','!=',null);
+        if($recetas->detalle->count() > 0){
+            $medicamentos = $recetas->detalle->where('f_producto','!=',null);
             $total_medicamento = $medicamentos->count();
 
             $productos = [];
@@ -226,7 +226,7 @@ class RecetaController extends Controller
 
             }
 
-            $consulta = $recetas[0]->consulta;
+            $consulta = $recetas->consulta;
             $paciente = $consulta->ingreso->hospitalizacion->paciente->nombre.' '.$consulta->ingreso->hospitalizacion->paciente->apellido;
             $id_p = $consulta->ingreso->hospitalizacion->f_paciente;
             $fecha = $consulta->created_at->format('d/m/Y');
