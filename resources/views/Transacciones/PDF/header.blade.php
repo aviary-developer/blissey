@@ -38,7 +38,7 @@
       $empresa = App\Empresa::first();
       $telefonos = App\TelefonoEmpresa::where('tipo','farmacia')->get();
     @endphp
-    <div style="height: 165px;">
+    <div style="height: 160px;">
     </div>
   </body>
 </html>

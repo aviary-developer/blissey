@@ -48,11 +48,11 @@
                       @else
                         Clientes varios
                       @endif</td>
-                    <td colspan="2" style="text-align:right;">{{$transaccion->fecha->formatLocalized('%d/%m/%Y')}}</td>
+                    <td colspan="2" style="text-align:center;">{{$transaccion->fecha->formatLocalized('%d/%m/%Y')}}</td>
                 </tr>
             </tbody>
         </table>
-        <div style="height: 69px;">
+        <div style="height: 57px;">
         </div>
         @php
             $c_productos=0;
@@ -84,9 +84,9 @@
                         $contador++;
                     @endphp
                         <tr>
-                            <td style="width: 12%;text-align:center;">{{$c_productos}}</td>
-                            <td style="width: 56%">Medicamentos varios</td>
-                            <td style="width: 24%"></td>
+                            <td style="width: 16%;text-align:center;">{{$c_productos}}</td>
+                            <td style="width: 51%">Medicamentos varios</td>
+                            <td style="width: 23%"></td>
                             <td>{{number_format($p_productos,2,'.','.')}}<td>
                         </tr>
                     @endif
@@ -95,36 +95,44 @@
                         $contador++;
                     @endphp
                         <tr>
-                            <td style="width: 12%;text-align:center;">{{$c_servicios}}</td>
-                            <td style="width: 56%">Examenes varios</td>
-                            <td style="width: 24%"></td>
+                            <td style="width: 16%;text-align:center;">{{$c_servicios}}</td>
+                            <td style="width: 51%">Examenes varios</td>
+                            <td style="width: 23%"></td>
                             <td>{{number_format($p_servicios,2,'.','.')}}<td>
                         </tr>
                     @endif
-                    @for($i=1;$i<=(9-$contador);$i++)
+                    @for($i=1;$i<=(8-$contador);$i++)
                     <tr>
                     <td colspan="4" style="color:white">{{$i}}</td>
                     </tr>
                     @endfor
                       </tbody>
                     </table>
-                    <div style="height: 10px;">
+                    <div style="height: 4px;">
                     </div>
                     <table class="table-simple">
                         <tbody>
+                                <tr>
+                                  <td colspan="4" style="color:white">Espacio</td>
+                                </tr>
                             <tr>
-                                <td colspan='4'><div style="text-align:right;">
+                              <td colspan='2'></td>
+                                <td><div style="text-align:right;">
                                   @if ($transaccion->descuento>0)(Descuento general {{$transaccion->descuento}}%)
                                   @else
                                   @endif
                                       $ {{number_format($total,2,'.','.')}}</div></td>
+                          <td style="width: 5%;"></td>
                               </tr>
                               @if ($transaccion->descuento>0)
                                 @php
                                   $total=$total-($total*($transaccion->descuento/100));
                                 @endphp
                                 <tr>
-                                  <td colspan='{{$aux}}'><div style="text-align:right;">$ {{number_format($total,2,'.','.')}}</div></td>
+                                  <td colspan='3'><div style="text-align:right;">
+                                    $ {{number_format($total,2,'.','.')}}
+                                  </div></td>
+                                  <td style="width: 5%;"></td>
                                 </tr>
                               @endif
                               <tr>
@@ -133,16 +141,36 @@
                               </tr>
                         </tbody>
                     </table>
-                    <div style="height: 10px;">
+                    <div style="height: 1px;">
                     </div>
-                    <div style="text-align:right;">
-                        $ {{number_format($total,2,'.','.')}}
+                    <table class="table-simple">
+                      <tbody>
+
+                        <tr>
+                          <td colspan="2"></td>
+                          <td style="text-align:right;">
+                          $ {{number_format($total,2,'.','.')}}
+
+                          </td>
+                          <td style="width: 5%;"></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+
+                          <td style="text-align:right;">
+                          VENTA TOTAL $ {{number_format($total,2,'.','.')}}
+
+                          </td>
+                          <td style="width: 5%;"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    {{-- <div style="text-align:right;">
                     </div>
                     {{-- <div style="height: 50px;">
                     </div> --}}
-                    <div style="text-align:right;">
-                        VENTA TOTAL $ {{number_format($total,2,'.','.')}}
-                    </div>
+                    {{-- <div style="text-align:right;">
+                    </div> --}}
     </div>
   </div>
 </div>
