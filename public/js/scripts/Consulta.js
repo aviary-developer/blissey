@@ -30,7 +30,10 @@ $(document).on("ready", function () {
     var examen = [];
     var tac = [];
     var ultra = [];
-    var rayo = [];
+		var rayo = [];
+		
+		//MAR20.20 Guardar el nombre de la receta
+		var nombre_receta = $("#nombre_receta").val();
 
     $(nombre_producto_prov).each(function (key, value) {
       nombre_producto.push(value.value);
@@ -80,7 +83,8 @@ $(document).on("ready", function () {
         f_tac: tac,
         f_ultrasonografia: ultra,
         f_rayox: rayo,
-        texto: contenedor.val()
+				texto: contenedor.val(),
+				nombre_receta: nombre_receta
       },
       success: function (r) {
         if (r != 0) {
@@ -171,7 +175,9 @@ $(document).on("ready", function () {
     is_valid = valido.value(is_valid);
 
     if (is_valid) {
-      $("#receta").modal('show');
+			$("#receta").modal('show');
+			$("#buscar_receta_div").show();
+			$("#nueva_receta_div").hide();
     }
   });
 

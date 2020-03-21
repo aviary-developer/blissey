@@ -55,6 +55,7 @@ class ConsultaController extends Controller
 						$receta->f_consulta = $consulta->id;
 						$receta->barcode = $codigo;
 						$receta->f_medico = Auth::user()->id;
+						$receta->nombre_receta = $request->nombre_receta;
 						$receta->save();
 
             if(isset($request->nombre_producto)){

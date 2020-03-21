@@ -164,7 +164,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p>
-            <i class="fa fa-check blue"></i> Realizarse una ultrasonografía 
+            <i class="fa fa-check blue"></i> Realizarse una tomografía  
             {{$consulta->articulo($receta->tac->nombre)}} 
             <b class="blue">
               {{$receta->tac->nombre}}
@@ -174,7 +174,7 @@
       </div>
     @endforeach
   @endif
-  @if ($consulta->recetas->where('Texto','!=',null)->count() > 0)
+  @if ($consulta->recetas->detalle->where('Texto','!=',null)->count() > 0)
     <br>
     <div class="row">
       <div class="col-xs-10">
@@ -186,7 +186,7 @@
     <div class="row">
       <div class="col-xs-12">
         @php
-          $receta = $consulta->recetas->where('Texto','!=',null)->first();
+          $receta = $consulta->recetas->detalle->where('Texto','!=',null)->first();
         @endphp
         {!! $receta->Texto !!}
       </div>

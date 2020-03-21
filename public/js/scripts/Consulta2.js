@@ -130,3 +130,220 @@ $("#back_historial").on('click', function (e) {
     $("#nivel").val(0);
   }
 });
+
+//MAR20.20 Actualizaciones del buscador de recetas
+$("#nuevo_receta_btn").click(function () {
+	$("#buscar_receta_div").hide();
+	$("#nueva_receta_div").show();
+});
+
+$("#nombre_receta_buscar").on('keyup', function () {
+	if ($(this).val().length > 1) {
+		$.ajax({
+			type: 'get',
+			url: $('#guardarruta').val() + '/receta/buscar',
+			data: {
+				valor: $(this).val()
+			},
+			success: function (r) {
+				let div = $("#resultado_buscar_receta");
+				let html = "";
+				div.empty();
+				if (r.length > 0) {
+					$(r).each(function (k, v) {
+						html += '<div class="row">';
+						html += '<div class="col-10">';
+						html += '<div class="flex-row">';
+						html += '<span class="font-md">';
+						html += '<b>';
+						html += v.nombre;
+						html += '</b>';
+						html += '</span> ';
+						html += '</div>';
+						html += '<div class="flex-row">';
+						html += '<span><i>"';
+						html += v.diagnostico
+						html += '"</i></span>';
+						html += '</div>';
+						html += '<div class="flex-row">';
+						html += '<span>';
+						html += v.medico;
+						html += '</span>';
+						html += '<span class="badge badge-light border border-primary text-primary badge-pill float-right">';
+						html += '<i class="far fa-calendar"></i> ';
+						html += v.fecha;
+						html += '</span>';
+						html += '</div>';
+						html += '</div>';//Div col 10
+						html += '<div class="col-2">';
+						html += '<button type="button" id="ver_receta_buscar" class="btn btn-sm btn-primary" data-id="' + v.id + '" title="Ver">';
+						html += '<i class="fas fa-eye"></i>';
+						html += '</button>';
+						html += '</div>';
+						html += '</div>';
+						html += '<hr class="my-1">';
+					});
+				} else {
+					html = '<div class="flex-row"><center>No hay registros que cumplan con la búsqueda</center></div>';
+				}
+				div.append(html);
+			}
+		});
+	}
+});
+
+$("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
+	e.preventDefault();
+	$.ajax({
+		type: 'get',
+		url: $('#guardarruta').val() + '/receta/ver',
+		data: {
+			id: $(this).data('id'),
+		},
+		success: function (r) {
+			$("#nombre_receta_a_buscar").text(r.nombre);
+			let div = $("#texto_receta_buscar");
+			div.empty();
+			let html = '<div class="col-12">';
+			if (r.medicamentos.length > 0) {
+				html += '<div class="flex-row">';
+				html += '<span class="font-md font-weight-bold">';
+				html += 'Medicametos'
+				html += '</span>';
+				html += '</div>';
+
+				$(r.medicamentos).each(function (k, v) {
+					html += '<div class="flex-row">';
+					html += '<span>';
+					html += '<i class="fas fa-check"></i> ';
+					html += v.dosis;
+					html += '<b> ';
+					html += v.nombre;
+					html += '</b>';
+					html += ' cada ';
+					html += v.frecuencia;
+					html += ' durante ';
+					html += v.duracion;
+
+					if (v.nota != null) {
+						html += '<i> ';
+						html += 'Nota: ';
+						html += v.nota;
+						html += '</i>';
+					}
+
+					html += '</span>';
+					html += '</div>';
+				});
+
+				html += '<hr class="my-2">';
+			}
+
+			if (r.laboratorios.length > 0) {
+				html += '<div class="flex-row">';
+				html += '<span class="font-md font-weight-bold">';
+				html += 'Laboratorio Clínico'
+				html += '</span>';
+				html += '</div>';
+
+				$(r.laboratorios).each(function (k, v) {
+					html += '<div class="flex-row">';
+					html += '<span>';
+					html += '<i class="fas fa-check"></i> ';
+					html += 'Realizarse un examen de ';
+					html += '<b> ';
+					html += v.nombre;
+					html += '</b>';
+					html += '</span>';
+					html += '</div>';
+				});
+
+				html += '<hr class="my-2">';
+			}
+
+			if (r.ultrasonografias.length > 0) {
+				html += '<div class="flex-row">';
+				html += '<span class="font-md font-weight-bold">';
+				html += 'Ultrasonografía'
+				html += '</span>';
+				html += '</div>';
+
+				$(r.ultrasonografias).each(function (k, v) {
+					html += '<div class="flex-row">';
+					html += '<span>';
+					html += '<i class="fas fa-check"></i> ';
+					html += 'Realizarse una ultrasonografía';
+					html += '<b> ';
+					html += v.nombre;
+					html += '</b>';
+					html += '</span>';
+					html += '</div>';
+				});
+
+				html += '<hr class="my-2">';
+			}
+
+			if (r.rayos_xs.length > 0) {
+				html += '<div class="flex-row">';
+				html += '<span class="font-md font-weight-bold">';
+				html += 'Rayos X'
+				html += '</span>';
+				html += '</div>';
+
+				$(r.rayos_xs).each(function (k, v) {
+					html += '<div class="flex-row">';
+					html += '<span>';
+					html += '<i class="fas fa-check"></i> ';
+					html += 'Realizarse una rafiografía ';
+					html += '<b> ';
+					html += v.nombre;
+					html += '</b>';
+					html += '</span>';
+					html += '</div>';
+				});
+
+				html += '<hr class="my-2">';
+			}
+
+			if (r.tacs.length > 0) {
+				html += '<div class="flex-row">';
+				html += '<span class="font-md font-weight-bold">';
+				html += 'Tomografía Axial Computarizada (TAC)'
+				html += '</span>';
+				html += '</div>';
+
+				$(r.tacs).each(function (k, v) {
+					html += '<div class="flex-row">';
+					html += '<span>';
+					html += '<i class="fas fa-check"></i> ';
+					html += 'Realizarse una tomografía ';
+					html += '<b> ';
+					html += v.nombre;
+					html += '</b>';
+					html += '</span>';
+					html += '</div>';
+				});
+
+				html += '<hr class="my-2">';
+			}
+
+			if (r.texto != null) {
+				html += '<div class="flex-row">';
+				html += '<span class="font-md font-weight-bold">';
+				html += 'Tratamiento'
+				html += '</span>';
+				html += '</div>';
+				html += '<div class="flex-row">';
+				html += '<p>';
+				html += r.texto;
+				html += '</p>';
+				html += '</div>';
+			}
+
+			html += '</div>';
+			div.append(html);
+
+			$("#copy_receta").show();
+		}
+	});
+});

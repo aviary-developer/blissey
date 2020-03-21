@@ -243,5 +243,71 @@ class RecetaController extends Controller
             $cero = true;
             return (compact('cero','recetas'));
         }
-    }
+		}
+	
+	public function buscar(Request $request){
+		$valor = $request->valor;
+		$recetas = Receta::where('nombre_receta','LIKE','%'.$valor.'%')->orderBy('nombre_receta')->get();
+		$lista = [];
+		foreach($recetas as $k => $receta){
+			$lista[$k]["id"] = $receta->id;
+			$lista[$k]["nombre"] = $receta->nombre_receta;
+			$lista[$k]['fecha'] = $receta->created_at->format('d-m-Y');
+			$lista[$k]['medico'] = (($receta->consulta->medico->sexo)?"Dr. ":"Dra. ").$receta->consulta->medico->nombre.' '.$receta->consulta->medico->apellido;
+			$lista[$k]["diagnostico"] = $receta->consulta->diagnostico;
+		}
+		return $lista;
+	}
+
+	public function ver(Request $request){
+		$receta = Receta::find($request->id);
+		$medicamentos = [];
+		$laboratorios = [];
+		$ultrasonografias = [];
+		$rayos_xs = [];
+		$tacs = [];
+		$texto = null;
+		$nombre = $receta->nombre_receta;
+		foreach($receta->detalle->where('nombre_producto','<>',null) as $k => $detalle){
+			$medicamentos[$k]['nombre'] = $detalle->nombre_producto;
+			$medicamentos[$k]['dosis'] = $detalle->cantidad_dosis.' ';
+			if($detalle->forma_dosis == 0 && $detalle->f_producto != null){
+				$medicamentos[$k]['dosis'] .= $detalle->producto->presentacion->nombre;
+			}else{
+				$medicamentos[$k]['dosis'] .= Consulta::dosis($detalle->forma_dosis);
+			}
+			$medicamentos[$k]['frecuencia'] = Consulta::tiempos($detalle->cantidad_frecuencia, $detalle->forma_frecuencia);
+			$medicamentos[$k]['duracion'] = Consulta::tiempos($detalle->cantidad_duracion, $detalle->forma_duracion);
+			$medicamentos[$k]['nota'] = $detalle->observacion;
+			$medicamentos[$k]['f_producto'] = $detalle->f_producto;
+		}
+		foreach($receta->detalle->where('f_examen','<>',null) as $k => $detalle){
+			$laboratorios[$k]['nombre'] = $detalle->examen->nombreExamen;
+			$laboratorios[$k]['f_examen'] = $detalle->f_examen;
+		}
+		foreach ($receta->detalle->where('f_ultrasonografia', '<>', null) as $k => $detalle) {
+			$ultrasonografias[$k]['nombre'] = Consulta::articulo($detalle->ultasonografia->nombre);
+			$ultrasonografias[$k]['f_ultrasonografia'] = $detalle->f_ultrasonografia;
+		}
+		foreach ($receta->detalle->where('f_rayox', '<>', null) as $k => $detalle) {
+			$rayos_xs[$k]['nombre'] = Consulta::articulo($detalle->rayox->nombre);
+			$rayos_xs[$k]['f_rayox'] = $detalle->f_rayox;
+		}
+		foreach ($receta->detalle->where('f_tac', '<>', null) as $k => $detalle) {
+			$tacs[$k]['nombre'] = Consulta::articulo($detalle->tac->nombre);
+			$tacs[$k]['f_tac'] = $detalle->f_tac;
+		}
+		if($receta->detalle->where('Texto','<>',null)->count() > 0){
+			$texto = $receta->detalle->where('Texto','<>',null)->first()->Texto;
+		}
+		return compact(
+			'medicamentos',
+			'laboratorios',
+			'ultrasonografias',
+			'rayos_xs',
+			'tacs',
+			'texto',
+			'nombre'
+		);
+	}
 }

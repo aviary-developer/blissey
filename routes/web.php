@@ -431,6 +431,9 @@ Route::get('/consultas/datos_producto','ConsultaController@datos_producto')->nam
 Route::resource('recetas', 'RecetaController');
 Route::get('receta/buscar_solicitud','RecetaController@buscar_solicitud');
 Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
+//MAR20.20 Rutas para el buscador de recetas
+Route::get('receta/buscar','RecetaController@buscar');
+Route::get('receta/ver','RecetaController@ver');
 
 Route::resource('calendarios', 'CalendarioController');
 Route::get('calendario/eventos','CalendarioController@eventos');

@@ -7,7 +7,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
             @if($examen->area == "BACTERIOLOGIA")
               <span class="button-checkbox  col-sm-12">
@@ -30,7 +30,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
             @if($examen->area == "EXAMENES DE HECES")
               <span class="button-checkbox  col-sm-12">
@@ -53,7 +53,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "EXAMENES DE ORINA")
             <span class="button-checkbox  col-sm-12">
@@ -76,7 +76,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "HEMATOLOGIA")
             <span class="button-checkbox col-sm-12">
@@ -99,7 +99,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "INMUNOLOGIA")
             <span class="button-checkbox col-sm-12">
@@ -122,7 +122,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "QUIMICA SANGUINEA")
             <span class="button-checkbox col-sm-12">
@@ -145,7 +145,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "ENZIMAS")
             <span class="button-checkbox col-sm-12">
@@ -168,7 +168,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "PRUEBAS ESPECIALES")
             <span class="button-checkbox col-sm-12">
@@ -191,7 +191,7 @@
         </center>
       </div>
       <br>
-      <div class="row">
+      <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
         @foreach($examenes as $examen)
           @if($examen->area == "OTROS")
             <span class="button-checkbox col-sm-12">
