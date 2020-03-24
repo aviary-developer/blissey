@@ -8,16 +8,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
             @if($examen->area == "BACTERIOLOGIA")
               <span class="button-checkbox  col-sm-12">
-                <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+                <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                   <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                 </button>
                 <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
               </span>
             @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -31,16 +33,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
             @if($examen->area == "EXAMENES DE HECES")
               <span class="button-checkbox  col-sm-12">
-                <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+                <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                   <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
                 </button>
                 <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
               </span>
             @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -54,16 +58,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "EXAMENES DE ORINA")
             <span class="button-checkbox  col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -77,16 +83,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "HEMATOLOGIA")
             <span class="button-checkbox col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -100,16 +108,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "INMUNOLOGIA")
             <span class="button-checkbox col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -123,16 +133,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "QUIMICA SANGUINEA")
             <span class="button-checkbox col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -146,16 +158,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "ENZIMAS")
             <span class="button-checkbox col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -169,16 +183,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "PRUEBAS ESPECIALES")
             <span class="button-checkbox col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>
@@ -192,16 +208,18 @@
       </div>
       <br>
       <div class="row" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+				<div class="col-12">
         @foreach($examenes as $examen)
           @if($examen->area == "OTROS")
             <span class="button-checkbox col-sm-12">
-              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);">
+              <button type = "button" class="btn btn-sm col-sm-12" data-color="success" onclick="agregarExamenEnSolicitud2(this);" data-estado="0">
                 <span id="nombre_de_examen">{{ $examen->nombreExamen }}</span> <br> <strong>{{ $examen->nombreMuestra($examen->tipoMuestra) }}</strong>
               </button>
               <input type="checkbox" hidden name="examen[]" value={{$examen->id}}>
             </span>
           @endif
-        @endforeach
+				@endforeach
+				</div>
       </div>
     </div>
   </div>

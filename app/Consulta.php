@@ -92,7 +92,9 @@ class Consulta extends Model
             } else if ($penultima == 'o' || $penultima == 'e' || $penultima == 'i' || $penultima == 'u') {
             $art = 'de los';
             }
-        } else {
+        } else if($ultima == 'l' && $penultima == 'a'){
+					$art = '';
+				} else {
             if ($penultima == 'a') {
             $art = 'de la';
             } else if ($penultima == 'o' || $penultima == 'e' || $penultima == 'i' || $penultima == 'u') {

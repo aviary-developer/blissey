@@ -149,57 +149,23 @@ $(document).on('ready', function () {
   $("#agregar-medicamento-receta").click(function (e) {
     e.preventDefault();
 
-    //Variables de información
-    var medicamento = $("#nombre_producto").val();
-    var cant_dosis = $("#numero-dosis").val();
-    var forma_dosis = $("#forma-dosis").val();
-    var texto_dosis = $("#forma-dosis option:selected").text();
-    var cant_frec = $("#numero-frec").val();
-    var forma_frec = $("#forma-frec").val();
-    var texto_frec = $("#forma-frec option:selected").text();
-    var cant_duracion = $("#numero-duracion").val();
-    var forma_duracion = $("#forma-duracion").val();
-    var texto_duracion = $("#forma-duracion option:selected").text();
-    var observacion = $("#observacion-receta").val();
-    var presentacion = $("#presentacion-selecta").text();
+		//Variables de información
+		let parametros = {
+			nombre_medicamento: $("#nombre_producto").val(),
+			cant_dosis : $("#numero-dosis").val(),
+			forma_dosis : $("#forma-dosis").val(),
+			texto_forma_dosis : $("#forma-dosis option:selected").text(),
+			cant_frec : $("#numero-frec").val(),
+			forma_frec : $("#forma-frec").val(),
+			texto_forma_frec : $("#forma-frec option:selected").text(),
+			cant_duracion : $("#numero-duracion").val(),
+			forma_duracion : $("#forma-duracion").val(),
+			texto_forma_duracion : $("#forma-duracion option:selected").text(),
+			observacion : $("#observacion-receta").val(),
+			presentacion : $("#presentacion-selecta").text()
+		}
 
-    if (medicamento.length > 0) {
-
-      var html = '<div class="row">' +
-        '<div class="row" style="margin: 0 10px 0 15px">' +
-        '<p class="mb-1 h-auto" style="font-size: medium">' +
-        '<button type="button" class="btn btn-sm btn-danger" id="remove_medicamento">' +
-        '<i class="fa fa-times"></i>' +
-        '</button>' +
-        cant_dosis + ' ' + ((forma_dosis == 0 && presentacion != "¡No está disponible!") ? presentacion : texto_dosis) + ' de ' +
-        '<b class="blue">' +
-        medicamento +
-        '</b>' +
-        ' cada ' + cant_frec + ' ' + texto_frec + ' durante ' + ((forma_duracion == 5) ? ('tiempo ' + texto_duracion) : (cant_duracion + ' ' + texto_duracion)) + '. ' +
-        ((observacion.length > 0) ? ('<i>' + 'Nota: ' + observacion + '</i>') : "") +
-        '</p>' +
-        '<input type="hidden" name="medicamento[]" id="i_medicamento" value="' + medicamento + '">' +
-        '<input type="hidden" name="cant_dosis[]" id="i_cant_dosis" value="' + cant_dosis + '">' +
-        '<input type="hidden" name="forma_dosis[]" id="i_forma_dosis" value="' + forma_dosis + '">' +
-        '<input type="hidden" name="cant_frec[]" id="i_cant_frec" value="' + cant_frec + '">' +
-        '<input type="hidden" name="forma_frec[]" id="i_forma_frec" value="' + forma_frec + '">' +
-        '<input type="hidden" name="cant_duracion[]" id="i_cant_duracion" value="' + cant_duracion + '">' +
-        '<input type="hidden" name="forma_duracion[]" id="i_forma_duracion" value="' + forma_duracion + '">' +
-        '<input type="hidden" name="observacion[]" id="i_observacion" value="' + observacion + '">' +
-        '</div>' +
-        '</div>';
-
-      $("#texto-medicamento").append(html);
-    } else {
-      swal({
-        title: '¡Error!',
-        text: 'No ha seleccionado ningún medicamento',
-        type: 'error',
-        toast: true,
-        timer: 4000,
-        showConfirmButton: false
-      });
-    }
+		built_medicamento(parametros);
 
     $("#nombre_producto").val("");
     $("#numero-dosis").val("1");
@@ -231,18 +197,33 @@ $(document).on('ready', function () {
   });
 
   $("#agregar_ultra_receta").click(function (e) {
-    e.preventDefault();
-    agregar_text_receta_evaluacion('ultra');
+		e.preventDefault();
+		let p = {
+			tipo: 'ultra',
+			texto: $("#f_ultra_receta option:selected").text(),
+			id: $("#f_ultra_receta").val()
+		};
+    agregar_text_receta_evaluacion(p);
   });
 
   $("#agregar_rayo_receta").click(function (e) {
-    e.preventDefault();
-    agregar_text_receta_evaluacion('rayo');
+		e.preventDefault();
+		let p = {
+			tipo: 'rayo',
+			texto: $("#f_rayo_receta option:selected").text(),
+			id: $("#f_rayo_receta").val()
+		};
+    agregar_text_receta_evaluacion(p);
   });
 
   $("#agregar_tac_receta").click(function (e) {
-    e.preventDefault();
-    agregar_text_receta_evaluacion('tac');
+		e.preventDefault();
+		let p = {
+			tipo: 'tac',
+			texto: $("#f_tac_receta option:selected").text(),
+			id :$("#f_tac_receta").val()
+		};
+    agregar_text_receta_evaluacion(p);
   });
 
   $("#buscar_receta_m").click(async function (e) {
@@ -479,18 +460,15 @@ $("#receta").on('shown.bs.modal', function () {
   $(document).off('focusin.modal');
 });
 
-function agregar_text_receta_evaluacion(tipo) {
+function agregar_text_receta_evaluacion(p) {
+	let texto = p.texto;
+	let id = p.id;
+	let tipo = p.tipo;
   if (tipo == 'ultra') {
-    var texto = $("#f_ultra_receta option:selected").text();
-    var id = $("#f_ultra_receta").val();
     var tipo_l = 'una ultrasonografía';
   } else if (tipo == 'rayo') {
-    var texto = $("#f_rayo_receta option:selected").text();
-    var id = $("#f_rayo_receta").val();
     var tipo_l = 'una radiografía';
   } else {
-    var texto = $("#f_tac_receta option:selected").text();
-    var id = $("#f_tac_receta").val();
     var tipo_l = 'una tomografía';
   }
 
@@ -529,5 +507,61 @@ function agregar_text_receta_evaluacion(tipo) {
     '</div>' +
     '</div>';
 
-  $("#texto-evaluacion").append(html);
+  $("#texto-evaluacion > div").append(html);
+}
+
+async function built_medicamento(p) {
+	//Variables de información
+	let medicamento = p.nombre_medicamento;
+	let cant_dosis = p.cant_dosis;
+	let forma_dosis = p.forma_dosis;
+	let texto_dosis = p.texto_forma_dosis;
+	let cant_frec = p.cant_frec;
+	let forma_frec = p.forma_frec;
+	let texto_frec = p.texto_forma_frec;
+	let cant_duracion = p.cant_duracion;
+	let forma_duracion = p.forma_duracion;
+	let texto_duracion = p.texto_forma_duracion;
+	let observacion = p.observacion;
+	let presentacion = p.presentacion;
+
+	let html = '';
+
+	if (medicamento.length > 0) {
+
+		html += '<div class="row">' +
+			'<div class="row" style="margin: 0 10px 0 15px">' +
+			'<p class="mb-1 h-auto" style="font-size: medium">' +
+			'<button type="button" class="btn btn-sm btn-danger" id="remove_medicamento">' +
+			'<i class="fa fa-times"></i>' +
+			'</button>' +
+			cant_dosis + ' ' + ((forma_dosis == 0 && presentacion != "¡No está disponible!") ? presentacion : texto_dosis) + ' de ' +
+			'<b class="blue">' +
+			medicamento +
+			'</b>' +
+			' cada ' + cant_frec + ' ' + texto_frec + ' durante ' + ((forma_duracion == 5) ? ('tiempo ' + texto_duracion) : (cant_duracion + ' ' + texto_duracion)) + '. ' +
+			((observacion.length > 0) ? ('<i>' + 'Nota: ' + observacion + '</i>') : "") +
+			'</p>' +
+			'<input type="hidden" name="medicamento[]" id="i_medicamento" value="' + medicamento + '">' +
+			'<input type="hidden" name="cant_dosis[]" id="i_cant_dosis" value="' + cant_dosis + '">' +
+			'<input type="hidden" name="forma_dosis[]" id="i_forma_dosis" value="' + forma_dosis + '">' +
+			'<input type="hidden" name="cant_frec[]" id="i_cant_frec" value="' + cant_frec + '">' +
+			'<input type="hidden" name="forma_frec[]" id="i_forma_frec" value="' + forma_frec + '">' +
+			'<input type="hidden" name="cant_duracion[]" id="i_cant_duracion" value="' + cant_duracion + '">' +
+			'<input type="hidden" name="forma_duracion[]" id="i_forma_duracion" value="' + forma_duracion + '">' +
+			'<input type="hidden" name="observacion[]" id="i_observacion" value="' + observacion + '">' +
+			'</div>' +
+			'</div>';
+	} else {
+		swal({
+			title: '¡Error!',
+			text: 'No ha seleccionado ningún medicamento',
+			type: 'error',
+			toast: true,
+			timer: 4000,
+			showConfirmButton: false
+		});
+	}
+
+	$("#texto-medicamento > div").append(html);
 }

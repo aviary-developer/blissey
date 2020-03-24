@@ -65,7 +65,7 @@
 				@include('SolicitudExamenes.Formularios.opciones')
 			</div>
 		</div>
-		<div class="col-sm-5">
+		<div class="col-sm-5" style="height: 440px">
 			<div class="x_panel m_panel" style="height: 440px">
 				@include('SolicitudExamenes.Formularios.contenido2')
 			</div>
@@ -77,7 +77,9 @@
 						<h5 class="">Receta de laboratorio</h5>
 					</center>
 				</div>
-				<div class="row" id="texto_receta_laboratorio" style="overflow-x: hidden; overflow-y: scroll; height: 370px"></div>
+				<div class="row" id="texto_receta_laboratorio" style="overflow-x: hidden; overflow-y: scroll; height: 370px">
+					<div class="col-12"></div>
+				</div>
 			</div>
 		</div>
 	</div>

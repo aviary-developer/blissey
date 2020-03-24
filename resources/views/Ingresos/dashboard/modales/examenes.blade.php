@@ -71,7 +71,10 @@ var solicitudes=0;
   }
 
   async function agregarExamenEnSolicitud2(boton){
-    if (boton.className==="btn btn-sm col-sm-12 btn-defualt") {
+		//MAR20.20 Nueva comparativa, usa un data en lugar de la clase completa. Es más eficiente 
+		let estado = $(boton).data('estado');
+		console.log(estado);
+    if (estado === 0) {
       solicitudes=solicitudes+1;
       $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
       swal({
@@ -83,7 +86,7 @@ var solicitudes=0;
         showConfirmButton: false
       });
 
-      var panel = $("#texto_receta_laboratorio");
+      var panel = $("#texto_receta_laboratorio > div");
       var texto_boton = $(boton).find('span').text();
       var selector = texto_boton.replace(/ /g,'-');
 
@@ -94,8 +97,9 @@ var solicitudes=0;
         '</p>'+
         '</div>';
       
-      panel.append(html);
-    } else if(boton.className==="btn btn-sm col-sm-12 btn-success") {
+			panel.append(html);
+			$(boton).data('estado',1);
+    } else if(estado === 1) {
       solicitudes=solicitudes-1;
       swal({
         type: 'warning',
@@ -108,7 +112,8 @@ var solicitudes=0;
 
       var texto_boton = $(boton).find('span').text();
       var selector = texto_boton.replace(/ /g,'-');
-      $("#"+selector).remove();
+			$("#"+selector).remove();
+			$(boton).data('estado',0);
     }
   }
 </script>

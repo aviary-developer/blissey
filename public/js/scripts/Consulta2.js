@@ -1,3 +1,11 @@
+//MAR20.20 Se utilizará una estructura de arrays de objectos para poder reutilizar las funciones de dibujo de la receta en la pantalla modal y así poder reducir el código necesario para poder copiar una receta guardada en una nueva.
+var ar_medicamentos = [];
+var ar_laboratorios = [];
+var ar_ultrasonografias = [];
+var ar_rayosx = [];
+var ar_tacs = [];
+var indicaciones = "";
+
 $("#cambio_div_consulta").on('click', function (e) {
   e.preventDefault();
   $("#div_previo").hide();
@@ -201,6 +209,7 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 			id: $(this).data('id'),
 		},
 		success: function (r) {
+			console.log(r);
 			$("#nombre_receta_a_buscar").text(r.nombre);
 			let div = $("#texto_receta_buscar");
 			div.empty();
@@ -211,6 +220,8 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 				html += 'Medicametos'
 				html += '</span>';
 				html += '</div>';
+
+				ar_medicamentos = [];
 
 				$(r.medicamentos).each(function (k, v) {
 					html += '<div class="flex-row">';
@@ -234,9 +245,27 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 
 					html += '</span>';
 					html += '</div>';
+
+					let parametros = {
+						nombre_medicamento: v.nombre,
+						cant_dosis: v.cant_dosis,
+						forma_dosis: v.forma_dosis,
+						texto_forma_dosis: v.texto_dosis,
+						cant_frec: v.cant_frec,
+						forma_frec: v.forma_frec,
+						texto_forma_frec: v.texto_frec,
+						cant_duracion: v.cant_duracion,
+						forma_duracion: v.forma_duracion,
+						texto_forma_duracion: v.texto_duracion,
+						observacion: v.nota,
+						presentacion: v.presentacion
+					}
+	
+					ar_medicamentos.push(parametros);
 				});
 
 				html += '<hr class="my-2">';
+
 			}
 
 			if (r.laboratorios.length > 0) {
@@ -256,6 +285,10 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 					html += '</b>';
 					html += '</span>';
 					html += '</div>';
+
+					let obj = $(document).find('input[type="checkbox"][value="' + v.f_examen + '"]').parent('span').find('button.col-sm-12');
+					ar_laboratorios.push(obj);
+
 				});
 
 				html += '<hr class="my-2">';
@@ -278,6 +311,14 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 					html += '</b>';
 					html += '</span>';
 					html += '</div>';
+
+					let ul = {
+						tipo: 'ultra',
+						texto: v.texto,
+						id: v.f_ultrasonografia
+					}
+
+					ar_ultrasonografias.push(ul);
 				});
 
 				html += '<hr class="my-2">';
@@ -300,6 +341,14 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 					html += '</b>';
 					html += '</span>';
 					html += '</div>';
+
+					let rx = {
+						tipo: 'rayo',
+						texto: v.texto,
+						id: v.f_rayox
+					}
+
+					ar_rayosx.push(rx);
 				});
 
 				html += '<hr class="my-2">';
@@ -322,6 +371,14 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 					html += '</b>';
 					html += '</span>';
 					html += '</div>';
+
+					let tc = {
+						tipo: 'tac',
+						texto: v.texto,
+						id: v.f_tac
+					}
+
+					ar_tacs.push(tc);
 				});
 
 				html += '<hr class="my-2">';
@@ -338,6 +395,8 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 				html += r.texto;
 				html += '</p>';
 				html += '</div>';
+
+				indicaciones = r.texto;
 			}
 
 			html += '</div>';
@@ -346,4 +405,28 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 			$("#copy_receta").show();
 		}
 	});
+});
+
+$("#copy_receta").click(function (e) {
+	e.preventDefault();
+	$(ar_medicamentos).each(function (k, v) {
+		built_medicamento(v);
+	});
+	$(ar_laboratorios).each(function (k, v) {
+		v.click();
+	});
+	$(ar_ultrasonografias).each(function (k, v) {
+		agregar_text_receta_evaluacion(v);
+	});
+	$(ar_rayosx).each(function (k, v) {
+		agregar_text_receta_evaluacion(v);
+	});
+	$(ar_tacs).each(function (k, v) {
+		agregar_text_receta_evaluacion(v);
+	});
+
+	$('#editor-one').html(indicaciones);
+
+	$("#buscar_receta_div").hide();
+	$("#nueva_receta_div").show();
 });
