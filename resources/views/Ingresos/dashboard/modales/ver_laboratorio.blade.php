@@ -3,17 +3,27 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="x_panel m_panel text-danger">
-          <center>
-            <h4 class="mb-1">
-              <i class="fas fa-microscope"></i>
-              Laboratorio Clínico
-            </h4>
-          </center>
+					<div class="row">
+						<div class="col-1"></div>
+						<div class="col-10">
+							<center>
+								<h4 class="mb-1">
+									<i class="fas fa-microscope"></i>
+									Laboratorio Clínico
+								</h4>
+							</center>
+						</div>
+						<div class="col-1">
+							<button type="button" class="btn btn-sm" onclick="$('#busqueda_ver_laboratorio').toggle();$('#todo_ver_laboratorio').toggle()">
+								<i class="fas fa-search"></i>
+							</button>
+						</div>
+					</div>
         </div>
-      </div>
+			</div>
     </div>
 
-    <div class="row">
+    <div class="row" id="busqueda_ver_laboratorio">
       <div class="col-sm-5">
         <div class="x_panel m_panel">
           <div class="flex-row">
@@ -76,7 +86,66 @@
           </div>
         </div>
       </div>
-    </div>
+		</div>
+		
+		<div class="row" id="todo_ver_laboratorio" style="display: none;">
+			<div class="col-12">
+				<div class="m_panel x_panel">
+					<div class="flex-row">
+						<center>
+							<h5>Listado de exámenes del paciente</h5>
+						</center>
+					</div>
+					<div class="flex-row">
+						<table class="table table-sm index-table table-hover">
+							<thead>
+								<th>#</th>
+								<th>Fecha</th>
+								<th>Hora</th>
+								<th>Examen</th>
+								<th>Acción</th>
+							</thead>
+							<tbody>
+								@php
+										$i = 1;
+								@endphp
+								@foreach ($detalle_l as $detalle)
+									<tr>
+										<td>{{$i}}</td>
+										<td>{{$detalle->created_at->format('d/m/Y')}}</td>
+										<td>{{$detalle->created_at->format('h:i a')}}</td>
+										<td>
+											{{$detalle->examen->nombreExamen}}
+											@if($detalle->transaccion != null)
+												@if($detalle->transaccion->ingreso != null)
+													@if ($detalle->transaccion->ingreso->id == $ingreso->id)	
+														<span class="badge badge-warning float-right">A</span>
+													@endif
+												@endif
+											@endif
+										</td>
+										<td>
+											@if ($detalle->estado == 2)
+												<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ver_examen_pac" onclick="{{'ver_examen_completo('.$detalle->id.','.$detalle->f_examen.','.$detalle->estado.')'}}">
+													<i class="fas fa-eye"></i>
+												</button>
+											@else
+												<button type="button" class="btn btn-sm" disabled>
+													<i class="fas fa-spinner"></i>
+												</button>
+											@endif
+										</td>
+									</tr>
+									@php
+										$i++;
+									@endphp
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
     
     <div class="m_panel x_panel bg-transparent" style="border:0px !important">
       <center>

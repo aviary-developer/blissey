@@ -88,7 +88,7 @@ async function v_consulta(id, tipo, nivel = 0) {
             '</center>' +
             '</div>' +
             '<div class="flex-row">' +
-            '<center><span class="col-6 badge font-sm mb-2 badge-pink">Consulta Médica</span></center>' +
+            '<center><span class="col-6 badge font-sm mb-2 badge-info">Evolución</span></center>' +
             '</div>' +
             '</div>' +
             '<div class="col-sm-2">' +

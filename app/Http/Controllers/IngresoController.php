@@ -431,8 +431,8 @@ class IngresoController extends Controller
         }
         /**Contador de cuantos examenes han sido asignados en las últimas 24 horas */
         $count_l24 = 0;
-        if($ingreso->transaccion->solicitud->count()>0){
-          foreach($ingreso->transaccion->solicitud as $solicitud){
+        if($ingreso->hospitalizacion->paciente->solicitudes->count()>0){
+          foreach($ingreso->hospitalizacion->paciente->solicitudes as $solicitud){
             if($solicitud->examen != null){
               $detalle_l[$indice_detalle_l] = $solicitud;
               $indice_detalle_l++;
@@ -555,7 +555,7 @@ class IngresoController extends Controller
       $historial = null;
       $lista_medicamentos = null;
       if(Auth::user()->tipoUsuario == "Médico"){
-        $historial = $ingreso->hospitalizacion->ingreso;
+				$historial = Hospitalizacion::where('f_paciente',$ingreso->hospitalizacion->f_paciente)->orderBy('created_at','desc')->get();
         $lista_medicamentos = Producto::orderBy('nombre','asc')->get();
 			}
 			/**Listado de paquetes hospitalarios para la parte de los paquetes */
@@ -1312,9 +1312,9 @@ class IngresoController extends Controller
       }
     }
     if($request->pendiente == null){
-      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_examen','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_examen','!=',null);
     }else{
-      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_examen','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('estado',0)->where('f_examen','!=',null);
     }
     $laboratorio = [];
     $indice = 0;
@@ -1327,8 +1327,15 @@ class IngresoController extends Controller
       }
       $laboratorio[$indice]['muestra'] = $detalle->codigo_muestra;
       $laboratorio[$indice]['nombre'] = $detalle->examen->nombreExamen;
-      $laboratorio[$indice]['estado'] = $detalle->estado;
-      $indice++;
+			$laboratorio[$indice]['estado'] = $detalle->estado;
+			$laboratorio[$indice]['f_examen'] = $detalle->f_examen;
+			$laboratorio[$indice]['actual'] = false;
+			if($detalle->transaccion != null){
+				if($detalle->transaccion->ingreso->id == $ingreso->id){
+					$laboratorio[$indice]['actual'] = true;		
+				}
+			}
+			$indice++;
     }
     $laboratorio = array_reverse($laboratorio);
     setlocale(LC_ALL,'es');

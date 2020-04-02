@@ -295,18 +295,21 @@ function laboratorio_fecha() {
         panel.append(html);
         tabla = $("#tabla_v_l");
         $(r.laboratorio).each(function (key, value) {
-          html = '<tr id="r' + value.id + '">' +
-            '<td>' + value.hora + '</td>' +
-            '<td>' +
-            value.muestra + " " + ' <b class="">' + value.nombre + '</b>' +
-            '</td>';
-          if (value.estado == 0) {
-            html += '<td><span class="badge font-sm mb-1 badge-light col-sm-10" data-toggle="tooltip" data-placement="top" title="Pendiente"><i class="fa fa-spinner"></i></span></td>';
+					html = '<tr id="r' + value.id + '">' +
+						'<td>' + value.hora + '</td>' +
+						'<td>' +
+						value.muestra + " " + ' <b class="">' + value.nombre + '</b>';
+					if (value.actual) {
+						html += '<span class="badge badge-warning float-right" title="Actual">A</span>';
+					}
+          html += '</td>';
+					if (value.estado == 0) {
+						html += '<td><center><button type="button" class="btn btn-sm disabled" title="Pendiente"><i class="fas fa-spinner"></i></button></center></td>';
           } else if (value.estado == 1) {
 						html += '<td><center><div class="btn-group"><button type="button" class="btn btn-primary btn-sm disabled" title="Evaluando"><i class="fas fa-cog"></i></button>';
 						html += '<button type="button" id = "' + value.id + '" class="btn btn-danger btn-sm" onclick="accion24(4,' + value.id + ',this)"><i class="fa fa-times"></i></button></div></center></td>';
           } else {
-            html += '<td><span class="badge font-sm mb-1 badge-success col-sm-10" data-toggle="tooltip" data-placement="top" title="Listo"><i class="fa fa-check"></i></span></td>';
+						html += '<td><center><button type="button" class="btn btn-success btn-sm" title="Listo" data-toggle="modal" data-target="#ver_examen_pac" onclick="ver_examen_completo('+value.id+','+value.f_examen+','+value.estado+')"><i class="fas fa-eye"></i></button></center></td>';
           }
           html += '</tr>';
           tabla.append(html);
@@ -319,7 +322,6 @@ function laboratorio_fecha() {
     }
   });
 }
-
 function ultra_fecha() {
   var fecha = $("#fecha_ultra").val();
   var id = $("#id").val();

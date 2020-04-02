@@ -378,50 +378,17 @@ $(document).on('ready', function () {
         consulta_tabla.draw();
       }
     });
-  });
+	});
 
   $("#solicitud-table").on("click", "#ver_examen_f", function (e) {
-    e.preventDefault();
+		e.preventDefault();
+		
     var solicitud = $(this).data('value').solicitud_id;
     var examen = $(this).data('value').examen_id;
     var estado = $(this).data('value').estado;
 
-    $.ajax({
-      type: 'get',
-      url: $('#guardarruta').val() + '/paciente/datos_ev',
-      data: {
-        id: solicitud
-      },
-      success: function (r) {
-        var fecha = moment(r.solicitud.created_at);
-
-        $("#fecha_ev").text(fecha.format('DD [de] MMMM [del] YYYY'));
-        $("#ev_").text(r.examen);
-        $("#tipo_ev").empty().append(r.area);
-      }
-    });
-
-    if (estado < 2) {
-      $("#cargando_ex_m").show();
-      $("#contenido_evaluacion").hide();
-    } else {
-      $("#cargando_ex_m").hide();
-      $("#contenido_evaluacion").show();
-
-      var cuerpo = $("#contenido_evaluacion");
-
-      $.ajax({
-        type: 'get',
-        url: $('#guardarruta').val() + '/paciente/ver_examen',
-        data: {
-          solicitud: solicitud,
-          examen: examen
-        },
-        success: function (r) {
-          cuerpo.empty().append(r);
-        }
-      });
-    }
+		ver_examen_completo(solicitud, examen, estado, 1);
+    
   });
 
   $("#solicitud-table").on("click", "#ver_evaluacion_f", function (e) {
@@ -497,3 +464,45 @@ $(document).on('ready', function () {
     });
   });
 });
+
+function ver_examen_completo(solicitud, examen, estado, ruta = 0) {
+	if (ruta == 0) {
+		$("#ver_laboratorio").modal('hide');
+	}
+	$.ajax({
+		type: 'get',
+		url: $('#guardarruta').val() + '/paciente/datos_ev',
+		data: {
+			id: solicitud
+		},
+		success: function (r) {
+			var fecha = moment(r.solicitud.created_at);
+
+			$("#fecha_ev").text(fecha.format('DD [de] MMMM [del] YYYY'));
+			$("#ev_").text(r.examen);
+			$("#tipo_ev").empty().append(r.area);
+		}
+	});
+
+	if (estado < 2) {
+		$("#cargando_ex_m").show();
+		$("#contenido_evaluacion").hide();
+	} else {
+		$("#cargando_ex_m").hide();
+		$("#contenido_evaluacion").show();
+
+		var cuerpo = $("#contenido_evaluacion");
+
+		$.ajax({
+			type: 'get',
+			url: $('#guardarruta').val() + '/paciente/ver_examen',
+			data: {
+				solicitud: solicitud,
+				examen: examen
+			},
+			success: function (r) {
+				cuerpo.empty().append(r);
+			}
+		});
+	}
+}
