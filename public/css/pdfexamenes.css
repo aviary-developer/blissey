@@ -1,6 +1,6 @@
 *{
     font-family: sans-serif;
-    font-size: 10pt;
+    font-size: 12pt;
     color: black;
   }
   @font-face{
@@ -40,12 +40,12 @@
   }
   
   .table-simple th{
-    background-color: silver;
+    background-color: white;
     text-align: center;
   }
   
   .table-simple thead{
-      background: silver;
+      background: white;
   }
   
   .table-simple th,.table-simple td{

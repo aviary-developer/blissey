@@ -41,7 +41,7 @@
 		</div>
 		<div>
 			<span style="float: right">
-				Fecha de evaluación: <b><u>{{$resultado->created_at->format('d/m/Y')}}</u></b>
+				Fecha de evaluación: <b>{{$resultado->updated_at->format('d/m/Y h:i:s a')}}</b>
 			</span>
 			<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
 		</div>
