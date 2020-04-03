@@ -398,38 +398,7 @@ $(document).on('ready', function () {
     var tipo = $(this).data('value').tipo;
     var estado = $(this).data('value').estado;
 
-    if (tipo == 0) {
-      $("#titulo-mo").text('Evaluación de Rayos X');
-    } else if (tipo == 1) {
-      $("#titulo-mo").text('Evaluación de Ultrasonografía');
-    } else if (tipo == 2) {
-      $("#titulo-mo").text('Evaluación de TAC');
-    }
-
-
-    $.ajax({
-      type: 'get',
-      url: $('#guardarruta').val() + '/paciente/ver_evaluacion',
-      data: {
-        solicitud: solicitud
-      },
-      success: function (r) {
-        var fecha = moment(r.solicitud.created_at);
-
-        $("#fecha_ev_2").text(fecha.format('DD [de] MMMM [del] YYYY'));
-        $("#ev_2").text(r.nombre);
-
-        if (estado < 2) {
-          $("#cargando_ex_m_2").show();
-          $("#contenido_evaluacion_2").hide();
-        } else {
-          $("#cargando_ex_m_2").hide();
-          $("#contenido_evaluacion_2").show();
-
-          $("#contenido_evaluacion_2").empty().append(r.html);
-        }
-      }
-    });
+		ver_evaluacion_completa(solicitud, tipo, estado);
   });
 
   $("#filtro_e").on('change', function () {
@@ -505,4 +474,47 @@ function ver_examen_completo(solicitud, examen, estado, ruta = 0) {
 			}
 		});
 	}
+}
+
+function ver_evaluacion_completa(solicitud, tipo, estado, ruta = -1) {
+	if (ruta == 0) {
+		$("#ver_rayosx").modal('hide');
+	} else if(ruta == 1){
+		$("#ver_ultra").modal('hide');
+	}else if(ruta == 2){
+		$("#ver_tac").modal('hide');
+	}
+
+	if (tipo == 0) {
+		$("#titulo-mo").text('Evaluación de Rayos X');
+	} else if (tipo == 1) {
+		$("#titulo-mo").text('Evaluación de Ultrasonografía');
+	} else if (tipo == 2) {
+		$("#titulo-mo").text('Evaluación de TAC');
+	}
+
+
+	$.ajax({
+		type: 'get',
+		url: $('#guardarruta').val() + '/paciente/ver_evaluacion',
+		data: {
+			solicitud: solicitud
+		},
+		success: function (r) {
+			var fecha = moment(r.solicitud.created_at);
+
+			$("#fecha_ev_2").text(fecha.format('DD [de] MMMM [del] YYYY'));
+			$("#ev_2").text(r.nombre);
+
+			if (estado < 2) {
+				$("#cargando_ex_m_2").show();
+				$("#contenido_evaluacion_2").hide();
+			} else {
+				$("#cargando_ex_m_2").hide();
+				$("#contenido_evaluacion_2").show();
+
+				$("#contenido_evaluacion_2").empty().append(r.html);
+			}
+		}
+	});
 }

@@ -2,19 +2,36 @@
   <div class="modal-dialog">
     <div class="row">
       <div class="x_panel m_panel text-danger">
-        <center>
-          <h4 class="mb-1">
-            <i class="fas fa-x-ray"></i>
-            Rayos X
-            <button type="button" class="btn btn-sm btn-light float-right" id="s-earch-rx" title="Búsqueda">
-              <i class="fas fa-search"></i>
-            </button>
-          </h4>
-        </center>
+				<div class="row">
+					<div class="col-3"></div>
+					<div class="col-6">
+						<center>
+							<h4 class="mb-1">
+								<i class="fas fa-x-ray"></i>
+								Rayos X
+								
+							</h4>
+						</center>
+					</div>
+					<div class="col-3">
+						<center>
+							<div class="btn-group">
+								<button type="button" class="btn btn-sm btn-light float-right" id="s-earch-rx" title="Búsqueda">
+									<i class="fas fa-search"></i>
+								</button>
+								@if (Auth::user()->tipoUsuario == "Médico")
+									<button type="button" class="btn btn-sm btn-light float-right" id="view-rx" title="Ver todo" onclick="$('#busqueda_ver_rayos').toggle();$('#todo_ver_rayos').toggle()">
+										<i class="fas fa-bars"></i>
+									</button>
+								@endif
+							</div>
+						</center>
+					</div>
+				</div>        
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="busqueda_ver_rayos">
       <div class="x_panel m_panel" id="div-h-rx" style="display:none;">
         <div class="flex-row">
           <center>
@@ -59,7 +76,64 @@
           </div>
         </div>
       </div>
-    </div>
+		</div>
+		
+		<div class="row" id="todo_ver_rayos" style="display: none;">
+				<div class="m_panel x_panel">
+					<div class="flex-row">
+						<center>
+							<h5>Listado de Rayos X del paciente</h5>
+						</center>
+					</div>
+					<div class="flex-row">
+						<table class="table table-sm index-table table-hover">
+							<thead>
+								<th>#</th>
+								<th>Fecha</th>
+								<th>Hora</th>
+								<th>Evaluación</th>
+								<th>Acción</th>
+							</thead>
+							<tbody>
+								@php
+										$i = 1;
+								@endphp
+								@foreach ($detalle_r as $detalle)
+									<tr>
+										<td>{{$i}}</td>
+										<td>{{$detalle->created_at->format('d/m/Y')}}</td>
+										<td>{{$detalle->created_at->format('h:i a')}}</td>
+										<td>
+											{{$detalle->rayox->nombre}}
+											@if($detalle->transaccion != null)
+												@if($detalle->transaccion->ingreso != null)
+													@if ($detalle->transaccion->ingreso->id == $ingreso->id)	
+														<span class="badge badge-warning float-right">A</span>
+													@endif
+												@endif
+											@endif
+										</td>
+										<td>
+											@if ($detalle->estado == 2)
+												<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ver_ev_pac" onclick="{{'ver_evaluacion_completa('.$detalle->id.',0,'.$detalle->estado.',1)'}}">
+													<i class="fas fa-eye"></i>
+												</button>
+											@else
+												<button type="button" class="btn btn-sm" disabled>
+													<i class="fas fa-spinner"></i>
+												</button>
+											@endif
+										</td>
+									</tr>
+									@php
+										$i++;
+									@endphp
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+				</div>
+		</div>
     
     <div class="m_panel x_panel bg-transparent" style="border:0px !important">
       <center>

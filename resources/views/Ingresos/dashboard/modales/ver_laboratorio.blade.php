@@ -14,9 +14,11 @@
 							</center>
 						</div>
 						<div class="col-1">
-							<button type="button" class="btn btn-sm" onclick="$('#busqueda_ver_laboratorio').toggle();$('#todo_ver_laboratorio').toggle()">
-								<i class="fas fa-search"></i>
-							</button>
+							@if (Auth::user()->tipoUsuario == "Médico")
+								<button type="button" class="btn btn-sm btn-light" onclick="$('#busqueda_ver_laboratorio').toggle();$('#todo_ver_laboratorio').toggle()">
+									<i class="fas fa-bars"></i>
+								</button>
+							@endif
 						</div>
 					</div>
         </div>

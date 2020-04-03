@@ -108,3 +108,4 @@
 </div>
 
 @include('Pacientes.Partes.modal_examenes')
+@include('Pacientes.Partes.modal_evaluacion')

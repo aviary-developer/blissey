@@ -443,8 +443,8 @@ class IngresoController extends Controller
           }
         }
         $count_r24 = 0;
-        if($ingreso->transaccion->solicitud->count()>0){
-          foreach($ingreso->transaccion->solicitud as $solicitud){
+        if($ingreso->hospitalizacion->paciente->solicitudes->count()>0){
+          foreach($ingreso->hospitalizacion->paciente->solicitudes as $solicitud){
             if($solicitud->rayox != null){
               $detalle_r[$indice_detalle_r] = $solicitud;
               $indice_detalle_r++;
@@ -455,8 +455,8 @@ class IngresoController extends Controller
           }
         }
         $count_tac24 = 0;
-        if($ingreso->transaccion->solicitud->count()>0){
-          foreach($ingreso->transaccion->solicitud as $solicitud){
+        if($ingreso->hospitalizacion->paciente->solicitudes->count()>0){
+          foreach($ingreso->hospitalizacion->paciente->solicitudes as $solicitud){
             if($solicitud->f_tac != null){
               $detalle_tac[$indice_detalle_tac] = $solicitud;
               $indice_detalle_tac++;
@@ -467,8 +467,8 @@ class IngresoController extends Controller
           }
         }
         $count_u24 = 0;
-        if($ingreso->transaccion->solicitud->count()>0){
-          foreach($ingreso->transaccion->solicitud as $solicitud){
+        if($ingreso->hospitalizacion->paciente->solicitudes->count()>0){
+          foreach($ingreso->hospitalizacion->paciente->solicitudes as $solicitud){
             if($solicitud->ultrasonografia != null){
               $detalle_u[$indice_detalle_u] = $solicitud;
               $indice_detalle_u++;
@@ -1364,9 +1364,9 @@ class IngresoController extends Controller
       }
     }
     if($request->pendiente == null){
-      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_rayox','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_rayox','!=',null);
     }else{
-      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_rayox','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('estado',0)->where('f_rayox','!=',null);
     }
     $rayox = [];
     $indice = 0;
@@ -1374,7 +1374,14 @@ class IngresoController extends Controller
       $rayox[$indice]['id'] = $detalle->id;
       $rayox[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       $rayox[$indice]['nombre'] = $detalle->rayox->nombre;
-      $rayox[$indice]['estado'] = $detalle->estado;
+			$rayox[$indice]['estado'] = $detalle->estado;
+			$rayox[$indice]['f_rayox'] = $detalle->f_rayox;
+			$rayox[$indice]['actual'] = false;
+			if ($detalle->transaccion != null) {
+				if ($detalle->transaccion->ingreso->id == $ingreso->id) {
+					$rayox[$indice]['actual'] = true;
+				}
+			}
       $indice++;
     }
     $rayox = array_reverse($rayox);
@@ -1404,9 +1411,9 @@ class IngresoController extends Controller
       }
     }
     if($request->pendiente == null){
-      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_ultrasonografia','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_ultrasonografia','!=',null);
     }else{
-      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_ultrasonografia','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('estado',0)->where('f_ultrasonografia','!=',null);
     }
     $ultra = [];
     $indice = 0;
@@ -1414,7 +1421,14 @@ class IngresoController extends Controller
       $ultra[$indice]['id'] = $detalle->id;
       $ultra[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       $ultra[$indice]['nombre'] = $detalle->ultrasonografia->nombre;
-      $ultra[$indice]['estado'] = $detalle->estado;
+			$ultra[$indice]['estado'] = $detalle->estado;
+			$ultra[$indice]['f_ultrasonografia'] = $detalle->f_ultrasonografia;
+			$ultra[$indice]['actual'] = false;
+			if ($detalle->transaccion != null) {
+				if ($detalle->transaccion->ingreso->id == $ingreso->id) {
+					$ultra[$indice]['actual'] = true;
+				}
+			}
       $indice++;
     }
     $ultra = array_reverse($ultra);
@@ -1444,9 +1458,9 @@ class IngresoController extends Controller
       }
     }
     if($request->pendiente == null){
-      $lista = $ingreso->transaccion->solicitud->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_tac','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('created_at','>',$fecha)->where('created_at','<',$fecha24)->where('f_tac','!=',null);
     }else{
-      $lista = $ingreso->transaccion->solicitud->where('estado',0)->where('f_tac','!=',null);
+      $lista = $ingreso->hospitalizacion->paciente->solicitudes->where('estado',0)->where('f_tac','!=',null);
     }
     $tac = [];
     $indice = 0;
@@ -1454,7 +1468,14 @@ class IngresoController extends Controller
       $tac[$indice]['id'] = $detalle->id;
       $tac[$indice]['hora'] = $detalle->created_at->format('h:i.s a');
       $tac[$indice]['nombre'] = $detalle->tac->nombre;
-      $tac[$indice]['estado'] = $detalle->estado;
+			$tac[$indice]['estado'] = $detalle->estado;
+			$tac[$indice]['f_tac'] = $detalle->f_tac;
+			$tac[$indice]['actual'] = false;
+			if ($detalle->transaccion != null) {
+				if ($detalle->transaccion->ingreso->id == $ingreso->id) {
+					$tac[$indice]['actual'] = true;
+				}
+			}
       $indice++;
     }
     $tac = array_reverse($tac);
