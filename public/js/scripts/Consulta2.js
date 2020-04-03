@@ -184,7 +184,7 @@ $("#nombre_receta_buscar").on('keyup', function () {
 						html += '</div>';
 						html += '</div>';//Div col 10
 						html += '<div class="col-2">';
-						html += '<button type="button" id="ver_receta_buscar" class="btn btn-sm btn-primary" data-id="' + v.id + '" title="Ver">';
+						html += '<button type="button" id="ver_receta_buscar" class="btn btn-sm btn-info" data-id="' + v.id + '" title="Ver">';
 						html += '<i class="fas fa-eye"></i>';
 						html += '</button>';
 						html += '</div>';
@@ -202,11 +202,39 @@ $("#nombre_receta_buscar").on('keyup', function () {
 
 $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 	e.preventDefault();
+	ver_receta_(this);
+});
+
+$("#copy_receta").click(function (e) {
+	e.preventDefault();
+	$(ar_medicamentos).each(function (k, v) {
+		built_medicamento(v);
+	});
+	$(ar_laboratorios).each(function (k, v) {
+		v.click();
+	});
+	$(ar_ultrasonografias).each(function (k, v) {
+		agregar_text_receta_evaluacion(v);
+	});
+	$(ar_rayosx).each(function (k, v) {
+		agregar_text_receta_evaluacion(v);
+	});
+	$(ar_tacs).each(function (k, v) {
+		agregar_text_receta_evaluacion(v);
+	});
+
+	$('#editor-one').html(indicaciones);
+
+	$("#buscar_receta_div").hide();
+	$("#nueva_receta_div").show();
+});
+
+function ver_receta_(obj) {
 	$.ajax({
 		type: 'get',
 		url: $('#guardarruta').val() + '/receta/ver',
 		data: {
-			id: $(this).data('id'),
+			id: $(obj).data('id'),
 		},
 		success: function (r) {
 			console.log(r);
@@ -260,7 +288,7 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 						observacion: v.nota,
 						presentacion: v.presentacion
 					}
-	
+
 					ar_medicamentos.push(parametros);
 				});
 
@@ -405,28 +433,4 @@ $("#resultado_buscar_receta").on('click', '#ver_receta_buscar', function (e) {
 			$("#copy_receta").show();
 		}
 	});
-});
-
-$("#copy_receta").click(function (e) {
-	e.preventDefault();
-	$(ar_medicamentos).each(function (k, v) {
-		built_medicamento(v);
-	});
-	$(ar_laboratorios).each(function (k, v) {
-		v.click();
-	});
-	$(ar_ultrasonografias).each(function (k, v) {
-		agregar_text_receta_evaluacion(v);
-	});
-	$(ar_rayosx).each(function (k, v) {
-		agregar_text_receta_evaluacion(v);
-	});
-	$(ar_tacs).each(function (k, v) {
-		agregar_text_receta_evaluacion(v);
-	});
-
-	$('#editor-one').html(indicaciones);
-
-	$("#buscar_receta_div").hide();
-	$("#nueva_receta_div").show();
-});
+}

@@ -11,6 +11,7 @@ use App\Paciente;
 use App\Servicio;
 use App\Producto;
 use App\Rayosx;
+use App\Receta;
 use App\Cama;
 use App\Tac;
 use App\ultrasonografia;
@@ -560,7 +561,37 @@ class IngresoController extends Controller
 			}
 			/**Listado de paquetes hospitalarios para la parte de los paquetes */
 			$paquetes_hospitalarios = Servicio::join('categoria_servicios','servicios.f_categoria','categoria_servicios.id')->where('categoria_servicios.nombre','Paquetes hospitalarios')->orderBy('servicios.nombre')->select('servicios.*')->get();
+			/**ABR3.20 Crear un detalle con los honorarios Médicos para el cobro en caso de ser consulta */
+			$detalle_hc = 0;
+			if($ingreso->tipo == 3){
+				$detalle_honorario_consulta = DetalleTransacion::where('f_transaccion',$ingreso->transaccion->id)->where('f_servicio',$ingreso->hospitalizacion->medico->servicio->id)->first();
+				if($detalle_honorario_consulta == null){
+					DB::beginTransaction();
+					try{
+						$transaccion_honorario = new DetalleTransacion;
+						$transaccion_honorario->f_servicio = $ingreso->hospitalizacion->medico->servicio->id;
+						$transaccion_honorario->precio = $ingreso->hospitalizacion->medico->servicio->precio;
+						$transaccion_honorario->f_transaccion = $ingreso->transaccion->id;
+						$transaccion_honorario->cantidad = 1;
+						$transaccion_honorario->f_usuario = Auth::user()->id;
+						$transaccion_honorario->save();
+						DB::commit();
+						$detalle_hc = $transaccion_honorario;
+					}catch(Exception $e){
+						DB::rollback();
+					}
+				}else{
+					$detalle_hc = $detalle_honorario_consulta;
+				}
+			}
+			/**Lectura de recetas para usuarios de tipo enfermería */
+			$indicaciones = [];
+			if(Auth::user()->tipoUsuario == "Enfermería"){
+				$indicaciones = Receta::join('consultas','recetas.f_consulta','consultas.id')->join('users','consultas.f_medico','users.id')->where('consultas.f_ingreso',$ingreso->id)->select('recetas.*','users.nombre','users.apellido','users.sexo')->orderBy('recetas.created_at','desc')->get();
+			}
       return view('Ingresos.dashboard.show',compact(
+				'indicaciones',
+				'detalle_hc',
         'ingreso',
         'paciente',
         'responsable',

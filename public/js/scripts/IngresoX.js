@@ -931,3 +931,8 @@ function edit_button(id, cantidad, precio) {
 
 	return html;
 }
+
+/**ABR3.20 Función para que enfermería pueda leer las recetas */
+$("#ver_receta_e").click(function (e) { 
+	ver_receta_(this);
+});

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-8">
-    <div class="x_panel border border-danger rounded">
-      @include('Ingresos.dashboard.partes.signos_r')
+    <div class="x_panel border border-info rounded">
+      @include('Ingresos.dashboard.partes.medico_cr')
     </div>
   </div>
   <div class="col-sm-4">
@@ -24,7 +24,7 @@
         <div class="flex-row">
           <div style="height: 106px">
             <center style="margin-top: 20px">
-              <input type="hidden" id="precio_consulta" value={{floatval($ingreso->hospitalizacion->medico->servicio->precio)}}>
+              <input type="hidden" id="precio_consulta" value={{floatval($detalle_hc->precio)}}>
               <button type="button" class="btn-lg btn btn-success" id="fin_consulta">
                 <i class="fa fa-arrow-right"></i> Finalizar consulta
               </button>
