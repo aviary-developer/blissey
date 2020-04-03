@@ -130,7 +130,7 @@
 						<div>
 							<span> Realizó: <strong><i>{{$resultadosQuimicaSanguinea[0]->laboratorista->nombre}} {{$resultadosQuimicaSanguinea[0]->laboratorista->apellido}}</i></strong></span> &nbsp
 							<span>
-								<img src={{asset(Storage::url($resultadosQuimicaSanguinea[0]->laboratorista->sello))}} style="width:4.8cm; height:1.8cm">
+								<img src={{asset(Storage::url($resultadosQuimicaSanguinea[0]->laboratorista->sello))}} style="width:250px">
 								<img src={{asset(Storage::url($resultadosQuimicaSanguinea[0]->laboratorista->firma))}} style="width:180px;">
 							</span>
 						</div>

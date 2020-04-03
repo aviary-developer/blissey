@@ -141,7 +141,7 @@
 						<div>
 							<span> Realizó: <strong><i>{{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}</i></strong></span> &nbsp
 							<span>
-								<img src={{asset(Storage::url($resultado->laboratorista->sello))}} style="width:4.8cm; height:1.8cm">
+								<img src={{asset(Storage::url($resultado->laboratorista->sello))}} style="width:250px">
 								<img src={{asset(Storage::url($resultado->laboratorista->firma))}} style="width:180px;">
 							</span>
 						</div>
