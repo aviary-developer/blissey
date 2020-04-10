@@ -305,3 +305,5 @@
   @include('Transacciones.Formularios.modalBuscarProducto')
 @endif
 @include('Transacciones.Formularios.modalBuscarCliente')
+@include('SolicitudExamenes.Partes.modal_nuevo_paciente')
+

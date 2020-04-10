@@ -829,7 +829,7 @@ class SolicitudExamenController extends Controller
       $cambioEstadoSolicitud=SolicitudExamen::find($id);
       $cambioEstadoSolicitud->estado=3;
       $cambioEstadoSolicitud->save();
-      $header = view('PDF.header..unidadImagenes');
+      $header = view('PDF.header.unidadImagenes');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('SolicitudTAC.entregaExamen',compact('solicitud','resultado','detallesResultado'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
@@ -841,7 +841,7 @@ class SolicitudExamenController extends Controller
       $cambioEstadoSolicitud=SolicitudExamen::find($id);
       $cambioEstadoSolicitud->estado=3;
       $cambioEstadoSolicitud->save();
-      $header = view('PDF.header..unidadImagenes');
+      $header = view('PDF.header.unidadImagenes');
       $footer = view('PDF.footer.numero_pagina');
       $main = view('SolicitudRayosx.entregaExamen',compact('solicitud','resultado','detallesResultado'));
       $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);

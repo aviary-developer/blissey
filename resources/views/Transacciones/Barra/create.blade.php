@@ -13,6 +13,18 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
+        @if ($tipo==2)
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Nuevo
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a href="#" class="dropdown-item" data-target="#modal_paciente_mini" data-toggle="modal">
+              Paciente
+            </a>
+          </div>
+        </li>
+        @endif
       </ul>
       @include('Dashboard.boton_salir')
   </div>

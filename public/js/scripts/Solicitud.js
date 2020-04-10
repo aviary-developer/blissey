@@ -102,6 +102,9 @@ $(document).on("ready", function () {
             $("#f_paciente").val(r.id);
             $("#n_paciente").val(r.nombre);
 
+            $("#f_cliente").val(r.id);
+            $("#f_clientea").val(r.nombre);
+
             nombre.val("");
             apellido.val("");
             fecha.val(moment().format("yyyy-MM-dd"));
