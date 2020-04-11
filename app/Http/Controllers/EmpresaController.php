@@ -78,10 +78,13 @@ class EmpresaController extends Controller
             }
             if ($request->hasfile('logo_farmacia')) {
                 $empresa->logo_farmacia = $request->file('logo_farmacia')->store('public/logo');
-						}
-						if ($request->hasfile('logo_imagenes')) {
-							$empresa->logo_imagenes = $request->file('logo_imagenes')->store('public/logo');
-						}
+			}
+			if ($request->hasfile('logo_imagenes')) {
+				$empresa->logo_imagenes = $request->file('logo_imagenes')->store('public/logo');
+            }
+            if ($request->hasfile('sello_laboratorio')) {
+				$empresa->sello_laboratorio = $request->file('sello_laboratorio')->store('public/logo');
+			}
             $empresa->save();
             if(isset($request->telefono)){
                 foreach ($request->telefono as $t => $tel) {
@@ -143,8 +146,9 @@ class EmpresaController extends Controller
             $hospital = $empresa->logo_hospital;
             $laboratorio = $empresa->logo_laboratorio;
             $clinica = $empresa->logo_clinica;
-						$farmacia = $empresa->logo_farmacia;
-						$imagenes = $empresa->logo_imagenes;
+			$farmacia = $empresa->logo_farmacia;
+            $imagenes = $empresa->logo_imagenes;
+            $selloLab = $empresa->sello_laboratorio;
             $empresa->fill($request->all());
             if ($request->hasfile('logo_hospital')) {
                 $empresa->logo_hospital = $request->file('logo_hospital')->store('public/logo');
@@ -170,13 +174,19 @@ class EmpresaController extends Controller
                 if($farmacia != "noImgen.jpg"){
                     Storage::delete($farmacia);
                 }
-						}
-						if ($request->hasfile('logo_imagenes')) {
-							$empresa->logo_imagenes = $request->file('logo_imagenes')->store('public/logo');
-							if ($imagenes != "noImgen.jpg") {
-								Storage::delete($imagenes);
-							}
-						}
+			}
+			if ($request->hasfile('logo_imagenes')) {
+				$empresa->logo_imagenes = $request->file('logo_imagenes')->store('public/logo');
+				if ($imagenes != "noImgen.jpg") {
+					Storage::delete($imagenes);
+				}
+            }
+            if ($request->hasfile('sello_laboratorio')) {
+				$empresa->sello_laboratorio = $request->file('sello_laboratorio')->store('public/logo');
+				if ($imagenes != "noImgen.jpg") {
+					Storage::delete($selloLab);
+				}
+			}
             $empresa->save();
 
             if(isset($request->telefono)){

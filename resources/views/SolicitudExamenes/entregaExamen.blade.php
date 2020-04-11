@@ -137,15 +137,17 @@
 				</div>
 			@endif
 				<div class="col-md-12 col-sm-12 col-12" style="margin-top: 20px">
-					<center>
+						<span> Realizó: <strong><i>{{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}</i></strong></span>
 						<div>
-							<span> Realizó: <strong><i>{{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}</i></strong></span> &nbsp
 							<span>
 								<img src={{asset(Storage::url($resultado->laboratorista->sello))}} style="width:250px">
 								<img src={{asset(Storage::url($resultado->laboratorista->firma))}} style="width:180px;">
+								@php
+									$empresa=App\Empresa::find(1);
+								@endphp
+								<img src={{asset(Storage::url($empresa->sello_laboratorio))}} style="width:180px;">
 							</span>
 						</div>
-					</center>
 				</div>
 			</div>
 		</div>

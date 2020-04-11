@@ -98,6 +98,26 @@ $(document).on("ready", function () {
 			})(f);
 			reader.readAsDataURL(f);
 		}
+    });
+    
+    $("#sello_laboratorio").on("change", function (evt) {
+
+		var files = evt.target.files;
+
+		for (var i = 0, f; f = files[i]; i++) {
+			if (!f.type.match('image.*')) {
+				continue;
+			}
+
+			var reader = new FileReader();
+
+			reader.onload = (function (theFile) {
+				return function (e) {
+					document.getElementById('list6').innerHTML = ['<img style="height: 200px; width: 200px; object-fit: contain;" src = "', e.target.result, '"/>'].join("");
+				};
+			})(f);
+			reader.readAsDataURL(f);
+		}
 	});
 
     $("#agregar_telefono_hospital").on("click", function (e) {

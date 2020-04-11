@@ -103,7 +103,21 @@
               @include('Empresa.Partes.u_imagenes')
             </div>
           </div>
-        </div>
+		</div>
+		<div class="card">
+			<div class="card-header p-0" id="headingSix">
+			  <h5 class="mb-0">
+				<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+				  Sello de laboratorio
+							  </button>
+			  </h5>
+			</div>
+			<div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+			  <div class="card-body p-2">
+				@include('Empresa.Partes.sello_laboratorio')
+			  </div>
+			</div>
+		  </div>
 			</div>	
 		</div>
 	@endif
