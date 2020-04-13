@@ -43,7 +43,7 @@
 		</div>
 		<div>
 			<span style="float: right">
-				Fecha de evaluación: <b>{{$resultadosQuimicaSanguinea[0]->created_at->format('d/m/Y h:i a')}}</b>
+				Fecha de evaluación: <b>{{$resultadosQuimicaSanguinea[0]->created_at->format('d/m/Y')}}</b>
 			</span>
 			<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
 		</div>
