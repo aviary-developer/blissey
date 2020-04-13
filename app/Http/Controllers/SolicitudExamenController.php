@@ -684,6 +684,7 @@ class SolicitudExamenController extends Controller
     if($request->evaluar){
       $resultadosGuardar=$request->resultados;
       $datosControlados=$request->datoControlado;
+      $totalControlados= count($datosControlados);
       $observacion=$request->observacion;
       if($request->quimica){//INICIO GUARDAR RESULTADOS DE QUIMICA SANGUINEA
             $idsSolicitudes=$request->solicitud;
@@ -713,7 +714,9 @@ class SolicitudExamenController extends Controller
                 $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
                 $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
                 $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
+                if($contadorControlados<$totalControlados-1){
                 $contadorControlados++;
+                }
                 $finalReactivo=Reactivo::find($reactivoUtilizado->id);
                 $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
                 $finalReactivo->save();
