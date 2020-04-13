@@ -134,7 +134,7 @@
 								@php
 									$empresa=App\Empresa::find(1);
 								@endphp
-								<img src={{asset(Storage::url($empresa->sello_laboratorio))}} style="width:180px;">
+								<img src={{asset(Storage::url($empresa->sello_laboratorio))}} style="width:260px;">
 							</span>
 						</div>
 				</div>
