@@ -6,8 +6,8 @@
         <div class="x_panel m_panel text-danger">
           <center>
             <h4 class="mb-1">
+              <i class="fas fa-user"></i>
               Paciente
-              <span class="badge border border-danger text-danger">Nuevo</span>
             </h4>
           </center>
         </div>

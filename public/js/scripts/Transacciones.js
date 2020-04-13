@@ -56,7 +56,7 @@ $(document).on('ready', function () {
                   "<input type='hidden' name='nombre_producto[]' value ='" + value.nombre + "'>" +
                   "<input type='hidden' name='id_producto[]' value ='" + value2.id + "'>" +
                   "<button type='button' class='btn btn-sm btn-primary' id='agregar_resultado'>" +
-                  "<i class='fas fa-arrow-right'></i>" +
+                  "<i class='fas fa-check'></i>" +
                   "</button>" +
                   "</td>" +
                   "</tr>";
@@ -118,7 +118,7 @@ $(document).on('ready', function () {
               "<td>" + value.lote + "</td>" +
               "<td>" +
               "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value.id + ");'>" +
-              "<i class='fas fa-arrow-right'></i>" +
+              "<i class='fas fa-check'></i>" +
               "</button>" +
               "</td>" +
               "</tr>";
@@ -160,7 +160,7 @@ $(document).on('ready', function () {
               "<td>" + value.co_nombre + "</td>" +
               "<td>" +
               "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value.id + ");'>" +
-              "<i class='fas fa-arrow-right'></i>" +
+              "<i class='fas fa-check'></i>" +
               "</button>" +
               "</td>" +
               "</tr>";
@@ -188,7 +188,7 @@ $(document).on('ready', function () {
             "<td>$ <label id='cd" + value.id + "'>" + parseFloat(value.precio).toFixed(2) + "</label></td>" +
             "<td>" +
             "<button type='button' class='btn btn-sm btn-primary' onclick='registrarventa(" + value.id + ");'>" +
-            "<i class='fas fa-arrow-right'></i>" +
+            "<i class='fas fa-check'></i>" +
             "</button>" +
             "</td>" +
             "</tr>";
@@ -431,7 +431,7 @@ $(document).on('ready', function () {
             "<td>" + value.dui + "</td>" +
             "<td>" +
             "<button type='button' class='btn btn-sm btn-primary' onclick='agregarCliente(" + value.id + ");' data-dismiss='modal'>" +
-            "<i class='fas fa-arrow-right'></i>" +
+            "<i class='fas fa-check'></i>" +
             "</button>" +
             "</td>" +
             "</tr>";

@@ -31,7 +31,7 @@
                 <label class="" for="cantidad">Cantidad *</label>
                 <div class="input-group mb-2 mr-sm-2">
                   <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                    <div class="input-group-text"><i class="fas fa-cubes"></i></div>
                   </div>
                   {!! Form::number('cantidad_resultado',1,['id'=>'cantidad_resultado','class'=>'form-control form-control-sm','onKeyPress' => 'return entero( this, event,this.value);','placeholder'=>'Cantidad','min'=>'1']) !!}
                 </div>

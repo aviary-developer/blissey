@@ -40,7 +40,7 @@ $(document).on('ready', function () {
                                 "</td>" +
                                 "<td>" +
                                 "<button type='button' class='btn btn-sm btn-primary' onclick='registrarPromo(" + value2.id + ");'>" +
-                                "<i class='fas fa-arrow-right'></i>" +
+                                "<i class='fas fa-check'></i>" +
                                 "</button>" +
                                 "</td>" +
                                 "</tr>";
@@ -63,7 +63,7 @@ $(document).on('ready', function () {
                             "<td id='cuno" + value.id + "'>" + value.nombre + "</td>" +
                             "<td>" +
                             "<button type='button' class='btn btn-sm btn-primary' onclick='registrarPromo(" + value.id + ");'>" +
-                            "<i class='fas fa-arrow-right'></i>" +
+                            "<i class='fas fa-check'></i>" +
                             "</button>" +
                             "</td>" +
                             "</tr>";

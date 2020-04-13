@@ -123,7 +123,7 @@ $(document).on('ready', async function () {
             "<input type='hidden' name='nombre_componente[]' value ='" + value.nombre + "'>" +
             "<input type='hidden' name='id_componente[]' value ='" + value.id + "'>" +
             "<button type='button' class='btn btn-sm btn-primary' id='agregar_componente'>" +
-            "<i class='fa fa-arrow-right'></i>" +
+            "<i class='fa fa-check'></i>" +
             "</button>" +
             "</td>" +
             "</tr>";

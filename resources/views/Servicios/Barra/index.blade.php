@@ -43,7 +43,7 @@
 					</a>  
 					<div class="dropdown-divider"></div>
           @if ($tipo == null)	
-          @if(auth()->user()->tipoUsuario != 'Farmacia'))
+          @if(auth()->user()->tipoUsuario != 'Farmacia')
 						<a class="dropdown-item" href={!! asset('/servicios?tipo=paquete') !!}>
 							Paquetes hospitalarios
             </a>

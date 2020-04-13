@@ -32,7 +32,7 @@ $(document).on('ready', function () {
             if (parseFloat(value2.inventario) > parseFloat(value2.stock)) {
               html = html +
                 "<button type='button' class='btn btn-sm btn-primary' onclick='registrarRequisicion(" + value2.id + ");'>" +
-                "<i class='fa fa-arrow-right'></i>" +
+                "<i class='fa fa-check'></i>" +
                 "</button>";
             } else {
               html = html +

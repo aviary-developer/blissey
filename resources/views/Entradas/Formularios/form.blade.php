@@ -57,8 +57,8 @@
 			<button type="button" name="button" data-toggle="modal" data-target="#modal" class="btn btn-outline-success btn-sm" id="agregar_paciente">
         <i class="fas fa-search"></i>
 			</button>
-			<a href={{asset("/entradas")}} class="btn btn-light btn-sm">Cancelar</a>
 			{!!Form::button('Guardar',['class'=>'btn btn-primary btn-sm','id'=>'confirmarIngreso'])!!}
+			<a href={{asset("/entradas")}} class="btn btn-light btn-sm">Cancelar</a>
 		</center>
 	</div>
 </div>
