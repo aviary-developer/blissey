@@ -23,9 +23,9 @@
               <div class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
                 @if ($ingreso->tipo != 2 && $obs)
                   @if ($activo == 2)
-                    <a href="#tab_cb1" id="tab_cb_1" role="tab" data-toggle="tab" aria-selected="true" class="nav-link active active" aria-controls="tab_cb1" onclick="cambio_tipo_activo(2)">
+                    <a href="#tab_cb1" id="tab_cb_1" role="tab" data-toggle="tab" aria-selected="true" class="nav-link active" aria-controls="tab_cb1" onclick="cambio_tipo_activo(2)">
                   @else
-                    <a href="#tab_cb1" id="tab_cb_1" role="tab" data-toggle="tab" aria-selected="false" class="nav-link active" aria-controls="tab_cb1" onclick="cambio_tipo_activo(2)">
+                    <a href="#tab_cb1" id="tab_cb_1" role="tab" data-toggle="tab" aria-selected="false" class="nav-link" aria-controls="tab_cb1" onclick="cambio_tipo_activo(2)">
                   @endif
                       Observación
                     </a>
@@ -33,9 +33,9 @@
   
                 @if ($ingreso->tipo != 1 && $med)
                   @if ($activo == 1)
-                    <a href="#tab_cb2" id="tab_cb_2" role="tab" data-toggle="tab" aria-selected="true" class="nav-link active active" aria-controls="tab_cb2" onclick="cambio_tipo_activo(1)">
+                    <a href="#tab_cb2" id="tab_cb_2" role="tab" data-toggle="tab" aria-selected="true" class="nav-link active" aria-controls="tab_cb2" onclick="cambio_tipo_activo(1)">
                   @else
-                    <a href="#tab_cb2" id="tab_cb_2" role="tab" data-toggle="tab" aria-selected="false" class="nav-link active" aria-controls="tab_cb2" onclick="cambio_tipo_activo(1)">
+                    <a href="#tab_cb2" id="tab_cb_2" role="tab" data-toggle="tab" aria-selected="false" class="nav-link" aria-controls="tab_cb2" onclick="cambio_tipo_activo(1)">
                   @endif
                       Medio ingreso
                     </a>
@@ -43,9 +43,9 @@
   
                 @if ($ingreso->tipo != 0 && $ing)
                   @if ($activo == 0)
-                    <a href="#tab_cb3" id="tab_cb_3" role="tab" data-toggle="tab" aria-selected="true" class="nav-link active active" aria-controls="tab_cb3" onclick="cambio_tipo_activo(0)">
+                    <a href="#tab_cb3" id="tab_cb_3" role="tab" data-toggle="tab" aria-selected="true" class="nav-link active" aria-controls="tab_cb3" onclick="cambio_tipo_activo(0)">
                   @else
-                    <a href="#tab_cb3" id="tab_cb_3" role="tab" data-toggle="tab" aria-selected="false" class="nav-link active" aria-controls="tab_cb3" onclick="cambio_tipo_activo(0)">
+                    <a href="#tab_cb3" id="tab_cb_3" role="tab" data-toggle="tab" aria-selected="false" class="nav-link" aria-controls="tab_cb3" onclick="cambio_tipo_activo(0)">
                   @endif
                       Ingreso
                     </a>

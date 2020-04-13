@@ -110,27 +110,27 @@
 			</div>
 			<ul class="nav flex-column nav-pills" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
+					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
 						Nuevo
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
+					<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
 						Editar
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
+					<a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="false">
 						Ver información
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="four" aria-selected="false">
+					<a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="four" aria-selected="false">
 						Enviar a papelera
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="five-tab" data-toggle="tab" href="#five" role="tab" aria-controls="five" aria-selected="false">
+					<a class="nav-link" id="five-tab" data-toggle="tab" href="#five" role="tab" aria-controls="five" aria-selected="false">
 						Restaurar
 					</a>
 				</li>
