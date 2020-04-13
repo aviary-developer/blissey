@@ -9,6 +9,10 @@
       <span class="badge badge-info">
         Entregados
       </span>
+    @elseif($est == "historial")
+      <span class="badge badge-info">
+        HISTORIAL
+      </span>
     @else
       <span class="badge badge-primary">
         Solicitudes
@@ -50,6 +54,9 @@
             </a>
             <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.$vista.'&tipo=examenes') !!}>
               Evaluados
+            </a>
+            <a class="dropdown-item" href={!! asset('/historialExamenes?vista='.$vista.'&tipo=examenes') !!}>
+              Historial
             </a>
           @else
             <a class="dropdown-item" href={!! asset('/solicitudex?vista='.$vista.'&tipo=examenes') !!}>
