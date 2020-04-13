@@ -18,11 +18,11 @@
     <ul class="navbar-nav mr-auto">
       @if (Auth::user()->tipoUsuario == "Laboaratorio")
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/examenes/create') !!}>Nuevo</a>
+        <a class="nav-link active" href={!! asset('/examenes/create') !!}>Nuevo</a>
       </li>
       @endif
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -42,7 +42,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/examenesClinicos') !!} target="_blank">Ayuda</a>            
+        <a class="nav-link active" href={!! asset('/ayuda/examenesClinicos') !!} target="_blank">Ayuda</a>            
       </li>
     </ul>
     @include('Dashboard.boton_salir')

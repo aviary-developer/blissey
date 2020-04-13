@@ -21,20 +21,20 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/especialidades/'.$especialidad->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/especialidades/'.$especialidad->id.'/edit') !!}>Editar</a>
       </li>
       @if ($especialidad->estado)
         @if (!App\Especialidad::contar_medicos($especialidad->id))
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick={{"baja(".$especialidad->id.")"}}>Papelera</a>
+            <a class="nav-link active" href="#" onclick={{"baja(".$especialidad->id.")"}}>Papelera</a>
           </li>
         @endif
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$especialidad->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$especialidad->id.");'"!!}>Activar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$especialidad->id.");'" !!}>Eliminar</a>
+          <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$especialidad->id.");'" !!}>Eliminar</a>
         </li>
       @endif
     </ul>

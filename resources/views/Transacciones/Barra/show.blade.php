@@ -26,11 +26,11 @@
       <ul class="navbar-nav mr-auto">
           @if($transaccion->tipo==1 || $transaccion->tipo==2)
             <li class="nav-item">
-              <a class="nav-link" href={!! asset('/devoluciones/'.$transaccion->id)!!}>Devoluciones</a>
+              <a class="nav-link active" href={!! asset('/devoluciones/'.$transaccion->id)!!}>Devoluciones</a>
             </li>
           @endif     
         <li class="nav-item">
-          <a class="nav-link" href={!! asset('#') !!}>Ayuda</a>
+          <a class="nav-link active" href={!! asset('#') !!}>Ayuda</a>
         </li>
       </ul>
       @include('Dashboard.boton_salir')

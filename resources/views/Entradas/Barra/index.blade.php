@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href={!! asset('/cambio_productos/create') !!}>Nuevo</a>
+                <a class="nav-link active" href={!! asset('/cambio_productos/create') !!}>Nuevo</a>
             </li>
         </ul>
         @include('Dashboard.boton_salir')

@@ -21,22 +21,22 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/parametros/'.$parametro->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/parametros/'.$parametro->id.'/edit') !!}>Editar</a>
       </li>
       @if ($parametro->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$parametro->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$parametro->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$parametro->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$parametro->id.");'"!!}>Activar</a>
         </li>
         @php
           $cuenta=App\Parametro::foraneos($parametro->id);
         @endphp
         @if (!$cuenta>0)
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$parametro->id.");'" !!}>Eliminar</a>
+            <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$parametro->id.");'" !!}>Eliminar</a>
           </li>
         @endif
       @endif

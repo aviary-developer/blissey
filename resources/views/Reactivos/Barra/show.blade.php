@@ -21,22 +21,22 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={{ asset('/reactivos/'.$reactivo->id.'/edit') }} id="editar">Editar</a>
+        <a class="nav-link active" href={{ asset('/reactivos/'.$reactivo->id.'/edit') }} id="editar">Editar</a>
       </li>
       @if ($reactivo->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$reactivo->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$reactivo->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$reactivo->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$reactivo->id.");'"!!}>Activar</a>
         </li>
       @php
         $cuenta=App\Reactivo::foraneos($reactivo->id);
       @endphp
       @if (!$cuenta>0)
         <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$reactivo->id.");'" !!}>Eliminar</a>
+          <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$reactivo->id.");'" !!}>Eliminar</a>
         </li>
       @endif
       @endif

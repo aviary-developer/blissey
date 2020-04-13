@@ -22,23 +22,23 @@
     <ul class="navbar-nav mr-auto">
       @if ($caja->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$caja->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$caja->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$caja->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$caja->id.");'"!!}>Activar</a>
         </li>
         @php
           $cuenta=App\Caja::foraneos($caja->id);
         @endphp
         @if (!$cuenta>0)
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$caja->id.");'" !!}>Eliminar</a>
+            <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$caja->id.");'" !!}>Eliminar</a>
           </li>
         @endif
       @endif
       <li class="nav-item">
-          <a class="nav-link" href="#">Ayuda</a>
+          <a class="nav-link active" href="#">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

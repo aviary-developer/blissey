@@ -30,10 +30,10 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/solicitudex/create?tipo=ultras') !!}>Nuevo</a>
+        <a class="nav-link active" href={!! asset('/solicitudex/create?tipo=ultras') !!}>Nuevo</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -76,7 +76,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/solicitudExamenes') !!} target="_blank">Ayuda</a>
+        <a class="nav-link active" href={!! asset('/ayuda/solicitudExamenes') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

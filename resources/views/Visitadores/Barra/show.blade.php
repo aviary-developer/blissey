@@ -14,18 +14,18 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/visitadores/'.$visitador->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/visitadores/'.$visitador->id.'/edit') !!}>Editar</a>
       </li>
       @if ($visitador->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$visitador->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$visitador->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$visitador->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$visitador->id.");'"!!}>Activar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminar(".$visitador->id.");'" !!}>Eliminar</a>
+          <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$visitador->id.");'" !!}>Eliminar</a>
         </li>
       @endif
     </ul>

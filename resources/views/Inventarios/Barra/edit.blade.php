@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Reporte</a>
+          <a class="nav-link active" href="#">Reporte</a>
         </li>
       </ul>
       @include('Dashboard.boton_salir')

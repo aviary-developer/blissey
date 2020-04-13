@@ -17,7 +17,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
 			<li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/general?tipo=tac') !!} target="_blank">Ayuda</a>
+        <a class="nav-link active" href={!! asset('/ayuda/general?tipo=tac') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

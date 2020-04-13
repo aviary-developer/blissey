@@ -21,22 +21,22 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/divisiones/'.$division->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/divisiones/'.$division->id.'/edit') !!}>Editar</a>
       </li>
       @if ($division->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$division->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$division->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$division->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$division->id.");'"!!}>Activar</a>
         </li>
         @php
           $cuenta=App\Division::foraneos($division->id);
         @endphp
         @if (!$cuenta>0)
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$division->id.");'" !!}>Eliminar</a>
+            <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$division->id.");'" !!}>Eliminar</a>
           </li>
         @endif
       @endif

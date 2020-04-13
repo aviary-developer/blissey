@@ -19,7 +19,7 @@
     <ul class="navbar-nav mr-auto">
       @if ($transaccion->tipo == 4)
         <li class="nav-item">
-          <a class="nav-link" href="#"  onclick={!! "'eliminarPedido(".$transaccion->id.");'" !!}>Eliminar</a>
+          <a class="nav-link active" href="#"  onclick={!! "'eliminarPedido(".$transaccion->id.");'" !!}>Eliminar</a>
         </li>
       @endif
     </ul>

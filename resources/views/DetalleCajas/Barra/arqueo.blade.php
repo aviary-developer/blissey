@@ -16,9 +16,9 @@
       <ul class="navbar-nav mr-auto">
           <li class="nav-item">
               @if($tipoArqueo==1)
-              <a class="nav-link" target='_blank' href={!! asset('/informe_arqueo') !!}>Reporte</a>
+              <a class="nav-link active" target='_blank' href={!! asset('/informe_arqueo') !!}>Reporte</a>
             @else
-              <a class="nav-link" target='_blank' href={!! asset('/buscararqueo/'.$f_apertura.'/2') !!}>Reporte</a>
+              <a class="nav-link active" target='_blank' href={!! asset('/buscararqueo/'.$f_apertura.'/2') !!}>Reporte</a>
             @endif
           </li>
       </ul>

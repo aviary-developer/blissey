@@ -24,9 +24,9 @@
               <div class="nav flex-column nav-pills" id="tab_med" role="tablist" aria-orientation="vertical">
                 @for ($i = 0; $i <= $total_especialidad; $i++)
                   @if ($i == 0)
-                    <a href={{"#medCont".$i}} id={{"tab_med".$i}} role="tab" data-toggle="pill" aria-selected="true" class="nav-link active" aria-controls={{"medCont".$i}}>{{"Médicina General"}}</a>
+                    <a href={{"#medCont".$i}} id={{"tab_med".$i}} role="tab" data-toggle="pill" aria-selected="true" class="nav-link active active" aria-controls={{"medCont".$i}}>{{"Médicina General"}}</a>
                   @else
-                    <a href={{"#medCont".$i}} id={{"tab_med".$i}} role="tab" data-toggle="pill" aria-selected="false" class="nav-link" aria-controls={{"medCont".$i}}>{{$especialidades[($i-1)]->nombre}}</a>
+                    <a href={{"#medCont".$i}} id={{"tab_med".$i}} role="tab" data-toggle="pill" aria-selected="false" class="nav-link active" aria-controls={{"medCont".$i}}>{{$especialidades[($i-1)]->nombre}}</a>
                   @endif
                 @endfor
               </div>

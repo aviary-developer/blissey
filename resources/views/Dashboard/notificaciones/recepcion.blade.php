@@ -15,7 +15,7 @@
     $total=$asignar+$requisiciones+$stock+$porvencer+$vencidos;
   @endphp
   <li class="dropdown nav-item">
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+    <a href="#" class="nav-link active dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
       <i class="fas fa-bell"></i>
       @if ($total > 0)
         <span class="badge badge-danger">{{$total}}</span>

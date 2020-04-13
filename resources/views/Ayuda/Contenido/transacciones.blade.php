@@ -82,19 +82,19 @@
 			</div>
 			<ul class="nav flex-column nav-pills" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
+					<a class="nav-link active active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
 						Inventario
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" id="one-tab" data-toggle="tab" href="#two" role="tab" aria-controls="one" aria-selected="true">
+					<a class="nav-link active" id="one-tab" data-toggle="tab" href="#two" role="tab" aria-controls="one" aria-selected="true">
 						Nuevo pedido
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" id="two-tab" data-toggle="tab" href="#three" role="tab" aria-controls="two" aria-selected="false">
+					<a class="nav-link active" id="two-tab" data-toggle="tab" href="#three" role="tab" aria-controls="two" aria-selected="false">
 						Confirmar pedido
 					</a>
 				</li>

@@ -21,16 +21,16 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/pacientes/create') !!}>Nuevo</a>
+        <a class="nav-link active" href={!! asset('/pacientes/create') !!}>Nuevo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#filtro_pac" id="abrir_filtro">Buscar</a>
+        <a class="nav-link active" href="#" data-toggle="modal" data-target="#filtro_pac" id="abrir_filtro">Buscar</a>
       </li>
       {{-- <li class="nav-item">
-        <a class="nav-link" href="#">Reporte</a>
+        <a class="nav-link active" href="#">Reporte</a>
       </li> --}}
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -51,9 +51,9 @@
       </li>
       <li class="nav-item">
         @if (Auth::user()->tipoUsuario == "Farmacia")
-          <a class="nav-link" href={!! asset('/ayuda/general?tipo=clientes') !!} target="_blank">Ayuda</a>            
+          <a class="nav-link active" href={!! asset('/ayuda/general?tipo=clientes') !!} target="_blank">Ayuda</a>            
         @else
-          <a class="nav-link" href={!! asset('/ayuda/general?tipo=pacientes') !!} target="_blank">Ayuda</a>
+          <a class="nav-link active" href={!! asset('/ayuda/general?tipo=pacientes') !!} target="_blank">Ayuda</a>
         @endif
       </li>
     </ul>

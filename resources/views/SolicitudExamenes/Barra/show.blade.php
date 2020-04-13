@@ -19,7 +19,7 @@
     <ul class="navbar-nav mr-auto">
       @if ($solicitud->estado == 2)
         <li class="nav-item">
-          <a class="nav-link" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!}>Editar</a>
+          <a class="nav-link active" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!}>Editar</a>
         </li>
       @endif
     </ul>

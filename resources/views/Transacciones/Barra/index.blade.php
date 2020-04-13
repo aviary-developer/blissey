@@ -20,13 +20,13 @@
     <ul class="navbar-nav mr-auto">
 @if($tipo==0)
   <li class="nav-item">
-    <a class="nav-link" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
+    <a class="nav-link active" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
   </li>
   {{-- <li class="nav-item">
-    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+    <a class="nav-link active" href={!! asset('#') !!}>Reporte</a>
   </li> --}}
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -42,10 +42,10 @@
 
 @if($tipo==1)
   {{-- <li class="nav-item">
-    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+    <a class="nav-link active" href={!! asset('#') !!}>Reporte</a>
   </li> --}}
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -61,13 +61,13 @@
 
 @if($tipo==2)
   <li class="nav-item">
-    <a class="nav-link" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
+    <a class="nav-link active" href={!! asset('/transacciones/create?tipo='.$tipo) !!}>Nuevo</a>
   </li>
   {{-- <li class="nav-item">
-    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+    <a class="nav-link active" href={!! asset('#') !!}>Reporte</a>
   </li> --}}
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -83,10 +83,10 @@
 
 @if($tipo==3)
   {{-- <li class="nav-item">
-    <a class="nav-link" href={!! asset('#') !!}>Reporte</a>
+    <a class="nav-link active" href={!! asset('#') !!}>Reporte</a>
   </li> --}}
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Ver
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -100,7 +100,7 @@
   </li>
 @endif
 <li class="nav-item">
-    <a class="nav-link" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
+    <a class="nav-link active" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
 </li>
 </ul>
 @include('Dashboard.boton_salir')

@@ -21,27 +21,27 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/categoria_productos/'.$categoria->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/categoria_productos/'.$categoria->id.'/edit') !!}>Editar</a>
       </li>
       @if ($categoria->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$categoria->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$categoria->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$categoria->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$categoria->id.");'"!!}>Activar</a>
         </li>
         @php
           $cuenta=App\CategoriaProducto::foraneos($categoria->id);
         @endphp
         @if (!$cuenta>0)
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$categoria->id.");'" !!}>Eliminar</a>
+            <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$categoria->id.");'" !!}>Eliminar</a>
           </li>
         @endif
       @endif
       <li class="nav-item">
-          <a class="nav-link" href="#">Ayuda</a>
+          <a class="nav-link active" href="#">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

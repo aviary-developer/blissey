@@ -20,25 +20,25 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/usuarios/'.$usuario->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/usuarios/'.$usuario->id.'/edit') !!}>Editar</a>
       </li>
       @if (Auth::user()->administrador)
         @if ($usuario->estado)
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick={{"baja(".$usuario->id.")"}}>Papelera</a>
+            <a class="nav-link active" href="#" onclick={{"baja(".$usuario->id.")"}}>Papelera</a>
           </li>
         @else
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick={!! "'alta(".$usuario->id.");'"!!}>Activar</a>
+            <a class="nav-link active" href="#" onclick={!! "'alta(".$usuario->id.");'"!!}>Activar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$usuario->id.");'" !!}>Eliminar</a>
+            <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$usuario->id.");'" !!}>Eliminar</a>
           </li>
         @endif
       @endif
       @if (Auth::user()->id == $id)
         <li class="nav-item">
-          <a class="nav-link" href="#" data-target="#modal-c" data-toggle="modal">
+          <a class="nav-link active" href="#" data-target="#modal-c" data-toggle="modal">
             Contraseña
             @if ($usuario->password_correo())
               <i class="fas fa-exclamation-circle text-danger" title="Modifique la contraseña"></i>

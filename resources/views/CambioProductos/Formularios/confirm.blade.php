@@ -3,10 +3,10 @@
   @endphp
   @if ($contador>0)
     <li class="nav-item">
-      <a class="nav-link"href="#" onclick={!! "'retirar();'" !!}>Retirar lotes vencidos</a>
+      <a class="nav-link active"href="#" onclick={!! "'retirar();'" !!}>Retirar lotes vencidos</a>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Reporte
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

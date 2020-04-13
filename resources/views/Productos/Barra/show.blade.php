@@ -22,22 +22,22 @@
 
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/productos/'.$producto->id.'/edit') !!}>Editar</a>
+        <a class="nav-link active" href={!! asset('/productos/'.$producto->id.'/edit') !!}>Editar</a>
       </li>
       @if ($producto->estado)
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={{"baja(".$producto->id.")"}}>Papelera</a>
+          <a class="nav-link active" href="#" onclick={{"baja(".$producto->id.")"}}>Papelera</a>
         </li>
       @else
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick={!! "'alta(".$producto->id.");'"!!}>Activar</a>
+          <a class="nav-link active" href="#" onclick={!! "'alta(".$producto->id.");'"!!}>Activar</a>
         </li>
         @php
           $cuenta=App\Transacion::foraneos($producto->id);
         @endphp
         @if (!$cuenta>0)
           <li class="nav-item">
-            <a class="nav-link" href="#"  onclick={!! "'eliminar(".$producto->id.");'" !!}>Eliminar</a>
+            <a class="nav-link active" href="#"  onclick={!! "'eliminar(".$producto->id.");'" !!}>Eliminar</a>
           </li>
         @endif
       @endif

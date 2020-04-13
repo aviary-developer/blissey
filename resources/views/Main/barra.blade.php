@@ -9,7 +9,7 @@
     <ul class="navbar-nav mr-auto">
 			@if (Auth::user()->tipoUsuario == "Recepción")
 				<li class="nav-item">
-					<a class="nav-link" href={!! asset('#') !!} data-target="#turno" data-toggle="modal">Reporte de turno</a>
+					<a class="nav-link active" href={!! asset('#') !!} data-target="#turno" data-toggle="modal">Reporte de turno</a>
 				</li>
 			@endif
     </ul>

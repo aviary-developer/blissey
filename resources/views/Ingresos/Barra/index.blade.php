@@ -11,7 +11,9 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('#') !!} data-target="#calculadora" data-toggle="modal">Calculadora</a>
+        <a class="nav-link active" href={!! asset('#') !!} data-target="#calculadora" data-toggle="modal">
+						Calculadora
+				</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

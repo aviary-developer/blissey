@@ -11,13 +11,13 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-        <a class="nav-link" href={!! asset('/entradas') !!}>Entradas</a>
+        <a class="nav-link active" href={!! asset('/entradas') !!}>Entradas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/inventario_pdf') !!} target="_blank">Reporte</a>            
+        <a class="nav-link active" href={!! asset('/inventario_pdf') !!} target="_blank">Reporte</a>            
       </li>
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
+        <a class="nav-link active" href={!! asset('/ayuda/transacciones') !!} target="_blank">Ayuda</a>            
       </li>
     </ul>
     @include('Dashboard.boton_salir')

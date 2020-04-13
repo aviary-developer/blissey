@@ -8,13 +8,13 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#" onclick="confirmarRespaldo()">Nuevo</a>
+        <a class="nav-link active" href="#" onclick="confirmarRespaldo()">Nuevo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-respaldo">Subir</a>
+        <a class="nav-link active" href="#" data-toggle="modal" data-target="#modal-respaldo">Subir</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/basedatos') !!} target="_blank">Ayuda</a>
+        <a class="nav-link active" href={!! asset('/ayuda/basedatos') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')

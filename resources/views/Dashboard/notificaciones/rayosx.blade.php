@@ -3,7 +3,7 @@
     $solicitudes= App\SolicitudExamen::where('estado','=',1)->where('f_rayox','!=',null)->orderBy('id','desc')->get();
   @endphp
   <li class="dropdown nav-item">
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+    <a href="#" class="nav-link active dropdown-toggle" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
       <i class="fas fa-bell"></i>
       @if ($solicitudes->count() > 0)
         <span class="badge badge-danger">{{$solicitudes->count()}}</span>

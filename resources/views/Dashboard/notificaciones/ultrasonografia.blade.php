@@ -3,7 +3,7 @@
     $solicitudes= App\SolicitudExamen::where('estado','=',1)->where('f_ultrasonografia','!=',null)->orderBy('id','desc')->get();
   @endphp
   <li class="dropdown nav-item">
-    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+    <a href="#" class="dropdown-toggle nav-link active" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
       <i class="fas fa-bell"></i>
       @if ($solicitudes->count() > 0)
         <span class="badge badge-danger">{{$solicitudes->count()}}</span>

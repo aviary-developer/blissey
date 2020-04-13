@@ -8,10 +8,10 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#modal-bitacora">Buscar</a>
+        <a class="nav-link active" href="#" data-toggle="modal" data-target="#modal-bitacora">Buscar</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href={!! asset('/ayuda/historial') !!} target="_blank">Ayuda</a>
+        <a class="nav-link active" href={!! asset('/ayuda/historial') !!} target="_blank">Ayuda</a>
       </li>
     </ul>
     @include('Dashboard.boton_salir')
