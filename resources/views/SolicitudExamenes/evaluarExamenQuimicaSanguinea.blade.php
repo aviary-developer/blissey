@@ -32,6 +32,9 @@
     <input type="hidden" name="solicitud[]" value={{$so->id}}>
     <input type="hidden" name="idExamen[]" value={{$so->f_examen}}>
     @endforeach
+  @php
+      //dd($esprQuimicaSanguinea);
+  @endphp
     @foreach ($esprQuimicaSanguinea as $esp)
       <input type="hidden" name="espr[]" value={{$esp->id}}>
     @endforeach
@@ -86,7 +89,7 @@
                     <td>{{$contadorParametros}}</td>
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}
                         <input type="hidden" name="nombresParametros[]" value="{{$esp->nombreParametro($esp->f_parametro)}}"></th>
-                    <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
+                    <td><input type="number" class="form-control form-control-sm" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
                     @if($esp->parametro->valorMinimo!=null)
                       <td>
                         <span class="badge border border-primary text-primary col-12">
@@ -130,7 +133,7 @@
                     @if ($esp->f_reactivo)
                       <td>{!!Form::selectRange('datoControlado[]', 0, 4, 0,['class'=>'form-control form-control-sm'])!!}</td>
                     @else
-                      <td>
+                      <td><input name="datoControlado[]" type="hidden" value="noReactivo">
                         <span class="badge border border-secondary text-secondary">Ninguno</span>
                       </td>
                     @endif

@@ -554,8 +554,10 @@ class SolicitudExamenController extends Controller
           $solicitud=SolicitudExamen::where('id','=',$id)->where('estado','=',1)->where('f_examen','=',$idExamen)->first();
           $solicitudes=SolicitudExamen::where('estado','=',1)->where('codigo_muestra','=',$solicitud->codigo_muestra)->where('created_at','>',$hoy)->where('created_at','<',$hoy2)->get();
           foreach ($solicitudes as $i => $soli) {
-            $espr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->where('estado','=',true)->first();
-            $esprQuimicaSanguinea[]=$espr;      
+            $todasEspr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->where('estado','=',true)->get();
+            foreach($todasEspr as $espr){
+            $esprQuimicaSanguinea[]=$espr;
+            }
           }
           return view('SolicitudExamenes.evaluarExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea'));
       }
@@ -700,12 +702,14 @@ class SolicitudExamenController extends Controller
             $resultados=Resultado::all();
             $idResultado=$resultados->last()->id;
             if($request->espr){
+              foreach ($request->espr as $key =>$valor) {
               $detallesResultado= new DetalleResultado();
               $detallesResultado->f_resultado=$idResultado;
               $detallesResultado->f_espr=$request->espr[$key];
               $detallesResultado->resultado=$resultadosGuardar[$key];
-              $espr_evaluar_controlado=ExamenSeccionParametro::find($request->espr[$key]);
+              $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
               if($espr_evaluar_controlado->f_reactivo){
+                if($datosControlados[$contadorControlados]!="noReactivo"){
                 $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
                 $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
                 $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
@@ -713,8 +717,10 @@ class SolicitudExamenController extends Controller
                 $finalReactivo=Reactivo::find($reactivoUtilizado->id);
                 $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
                 $finalReactivo->save();
+                }
               }
               $detallesResultado->save();
+            }
           }
             $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
             $cambioEstadoSolicitud->estado=2;
@@ -868,21 +874,28 @@ class SolicitudExamenController extends Controller
           $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
           $solicitudes=SolicitudExamen::where('codigo_muestra','=',$solicitud->codigo_muestra)->where('created_at','>',$hoy)->where('created_at','<',$hoy2)->get();
           foreach ($solicitudes as $i => $soli) {
-            $espr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->where('estado','=',true)->first();
-            $esprQuimicaSanguinea[]=$espr;      
-            $resultado=Resultado::where('f_solicitud','=',$soli->id)->first();
+            $todasEspr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->where('estado','=',true)->get();
+            foreach ($todasEspr as $espr){
+              $esprQuimicaSanguinea[]=$espr;
+            }
+            $todosResultado=Resultado::where('f_solicitud','=',$soli->id)->get();
+            foreach ($todosResultado as $resultado){
             $resultadosQuimicaSanguinea[]=$resultado;
-            $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->first();
-            $detallesResultadosQuimicaSanguinea[]=$detallesResultado;
+            }
+            $todosDetallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+            foreach ($todosDetallesResultado as $detallesResultado){
+              $detallesResultadosQuimicaSanguinea[]=$detallesResultado;
               if($detallesResultado->dato_controlado!=null){
                 $tieneDatoControlado[]=1;
               }else{
                 $tieneDatoControlado[]=0;
               }
+            }
           $cambioEstadoSolicitud=SolicitudExamen::find($soli->id);
           $cambioEstadoSolicitud->estado=3;
           $cambioEstadoSolicitud->save();
         }
+        //dd($detallesResultadosQuimicaSanguinea);
         $header = view('PDF.header.laboratorio');
         $footer = view('PDF.footer.numero_pagina');
         $main = view('SolicitudExamenes.entregaExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado'));
