@@ -1149,11 +1149,11 @@ class SolicitudExamenController extends Controller
       return view('SolicitudUltras.examenesEntregados',compact('pacientes','solicitudes','examenes','vista'));
     }elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
       if($vista == "paciente"){
-        $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
-        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+        $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereDate('created_at', Carbon::today())->distinct()->get(['f_paciente']);
+        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereDate('created_at', Carbon::today())->orderBy('estado')->get();
       }else{
-        $examenes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
-        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
+        $examenes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereDate('created_at', Carbon::today())->distinct()->get(['f_examen']);
+        $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereDate('created_at', Carbon::today())->orderBy('estado')->get();
       }
       return view('SolicitudExamenes.examenesEntregados',compact('pacientes','solicitudes','examenes','vista'));
     }
