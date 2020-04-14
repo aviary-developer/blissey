@@ -91,7 +91,7 @@
 													<td style="width:35%"><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
 													<td style="width:20%"><center>{{$detallesResultado[$esp]->resultado}}</center></td>
 													@if($banderaValores==1)
-															@if ($valor->parametro->valorMinimo!=null || $valor->parametro->valorMinimo==0)
+															@if (strlen($valor->parametro->valorMinimo)>0)
 																@if ($solicitud->paciente->sexo==0)
 																	<td style="width:30%"><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
 																@else
