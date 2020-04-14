@@ -947,7 +947,7 @@ class SolicitudExamenController extends Controller
     $cambioEstadoSolicitud->save();
     $header = view('PDF.header.laboratorio');
     $footer = view('PDF.footer.numero_pagina');
-    $main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado','banderaValores','banderaUnidad'));
+		$main = view('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado','banderaValores','banderaUnidad'));
     //set_time_limit(300); // Extends to 5 minutes.
     //$pdf = \PDF::loadView('SolicitudExamenes.entregaExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado','tieneDatoControlado'));
     $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {!!Html::style('assets/bootstrap/dist/css/bootstrap.css')!!}
-    {!!Html::style('css/pdf.css')!!}
+		{!!Html::style('css/pdf.css')!!}
+		{!!Html::style('assets/font-awesome/css/font-awesome.min.css')!!}
     <script>
     function subst() {
       var vars = {};
@@ -47,15 +48,15 @@
         <center>
           <strong><h3 class="vivaldi">{{$empresa->nombre_laboratorio}}</h3>
           <span><i>{{"C.S.S.P. ".$empresa->codigo_laboratorio}}</i></span></strong>
-          <h6 class="vivaldi font-plus">{{$empresa->direccion_laboratorio}}</h6>
-          <h6 class="vivaldi font-plus">{{$empresa->correo_laboratorio}}</h6>
-          <h6 class="vivaldi font-plus">
-            @if($telefonos!=null)
-              @if (count($telefonos)>1)
-                {{"Teléfonos: "}}
-              @elseif (count($telefonos) == 1)
-                {{"Teléfono: "}}
-              @endif
+          <h6 class="vivaldi font-10">{{$empresa->direccion_laboratorio}}</h6>
+          <h6 class="vivaldi font-10">
+						<i class="fa fa-envelope-o"></i>
+						&nbsp;
+						{{$empresa->correo_laboratorio}}           
+						@if($telefonos!=null)
+							&nbsp;
+							<i class="fa fa-phone"></i>
+							&nbsp;
               @if (count($telefonos)>0)
                 @foreach ($telefonos as $k => $telefono)
                   {{$telefono->telefono}}
