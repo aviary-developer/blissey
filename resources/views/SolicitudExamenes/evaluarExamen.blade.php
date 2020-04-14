@@ -99,7 +99,7 @@
                     <input type="hidden" name="nombresParametros[]" value="{{$esp->nombreParametro($esp->f_parametro)}}"></th>
                     <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
                     @if($banderaValores==1)
-                        @if($esp->parametro->valorMinimo!=null)
+                        @if($esp->parametro->valorMinimo!=null || $esp->parametro->valorMinimo==0)
                           <td>
                             <span class="badge border border-primary text-primary col-12">
                               @if ($solicitud->paciente->sexo==0)

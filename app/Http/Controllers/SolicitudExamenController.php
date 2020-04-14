@@ -570,7 +570,7 @@ class SolicitudExamenController extends Controller
     if($espr!=null){
       foreach ($espr as $esp) {
         $para=Parametro::find($esp->f_parametro);
-        if($para->valorMinimo!=null ||$para->valorMaximo!=null){
+        if($para->valorMinimo!=null || $para->valorMaximo!=null || $para->valorMinimoFemenino!=null || $para->valorMaximoFemenino!=null){
           $banderaValores=1;
         }
         if($para->unidad!=null){
@@ -684,7 +684,9 @@ class SolicitudExamenController extends Controller
     if($request->evaluar){
       $resultadosGuardar=$request->resultados;
       $datosControlados=$request->datoControlado;
+      if($datosControlados){
       $totalControlados= count($datosControlados);
+    }
       $observacion=$request->observacion;
       if($request->quimica){//INICIO GUARDAR RESULTADOS DE QUIMICA SANGUINEA
             $idsSolicitudes=$request->solicitud;

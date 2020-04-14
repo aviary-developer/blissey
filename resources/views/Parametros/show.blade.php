@@ -48,7 +48,7 @@
 		</div>
 		<div class="flex-row">
 			<h6 class="font-weight-bold">
-				@if($parametro->valorMinimo != null)
+				@if($parametro->valorMinimo != null || $parametro->valorMinimo == 0)
 					<span class="badge border border-primary text-primary col-4">
 						<i class="fas fa-male float-left"></i>
 						{{number_format($parametro->valorMinimo, 2, '.', ',')}}
@@ -57,7 +57,7 @@
 					<span class="badge border border-secondary text-secondary col-4">Ninguno</span>
 				@endif
 
-				@if($parametro->valorMinimoFemenino != null)
+				@if($parametro->valorMinimoFemenino != null || $parametro->valorMinimoFemenino == 0)
 					<span class="badge border border-pink text-pink col-4">
 						<i class="fas fa-female float-left"></i>
 						{{number_format($parametro->valorMinimoFemenino, 2, '.', ',')}}
