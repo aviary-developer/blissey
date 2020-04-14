@@ -69,7 +69,7 @@
 											<tr>
 													<td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
 													<td><center>{{$detallesResultadosQuimicaSanguinea[$esp]->resultado}}</center></td>
-													@if ($valor->parametro->valorMinimo!=null || $valor->parametro->valorMinimo==0)
+													@if (strlen($valor->parametro->valorMinimo)>0)
 														@if ($solicitud->paciente->sexo==0)
 															@if ($valor->parametro->valorMinimoFemenino!=null)
 															<td><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
