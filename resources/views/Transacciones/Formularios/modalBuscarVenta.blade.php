@@ -22,7 +22,7 @@
 									<div id="radioBtn" class="btn-group col-sm-12">
 										<a class="btn btn-primary btn-sm active col-sm-auto" data-toggle="busq" data-title="1" onclick="cambioRadio(1)">Producto</a>
 										<a class="btn btn-primary btn-sm notActive col-sm-auto" data-toggle="busq" data-title="2" onclick="cambioRadio(2)">Componente</a>
-											<a class="btn btn-primary btn-sm notActive col-sm-auto" data-toggle="busq" data-title="3" onclick="cambioRadio(3)">Servicios</a>
+                    <a class="btn btn-primary btn-sm notActive col-sm-auto" data-toggle="busq" data-title="3" onclick="cambioRadio(3)">Servicios</a>                      
 									</div>
 									<input type="hidden" name="busq" id="busq" value="1">
 								</div>

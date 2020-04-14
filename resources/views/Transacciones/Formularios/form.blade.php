@@ -137,6 +137,9 @@
           <button type="button" title="Buscar Receta" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#medicamento_m">
             <i class="fa fa-medkit"></i>
           </button>
+          <button type="button" name="button" data-toggle="modal" data-target="#solicitudes" class="btn btn-outline-success btn-sm" title="Solicitudes">
+            <i class="fa fa-user"></i>
+          </button>
         @endif
         </div>
       </center>
@@ -151,6 +154,7 @@
         @else
         {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'validarFactura()']) !!}
         @endif
+        
         <a href="../transacciones?tipo={{$tipo}}" class="btn btn-light btn-sm">Cancelar</a>
       </div>
     </center>
@@ -304,6 +308,7 @@
 @if($tipo==0)
   @include('Transacciones.Formularios.modalBuscarProducto')
 @endif
+@include('Transacciones.Formularios.modalSolicitudes')
 @include('Transacciones.Formularios.modalBuscarCliente')
 @include('SolicitudExamenes.Partes.modal_nuevo_paciente')
 

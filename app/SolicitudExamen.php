@@ -33,6 +33,20 @@ class SolicitudExamen extends Model
         $examen = Tac::find($id);
         return $examen->nombre;
     }
+    public function servicio($tipo,$id){
+      if($tipo==1){
+        return Servicio::where('f_examen',$id)->get()->first();
+      }
+      if($tipo==2){
+        return Servicio::where('f_ultrasonografia',$id)->get()->first();
+      }
+      if($tipo==3){
+        return Servicio::where('f_rayox',$id)->get()->first();
+      }
+      if($tipo==4){
+        return Servicio::where('f_tac',$id)->get()->first();
+      }
+    }
     public function paciente(){
       return $this->belongsTo('App\Paciente','f_paciente');
     }

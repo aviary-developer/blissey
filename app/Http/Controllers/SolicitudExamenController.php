@@ -144,7 +144,8 @@ class SolicitudExamenController extends Controller
 						$solicitud = new SolicitudExamen;
 						$solicitud->f_paciente = $request->f_paciente;
 						$solicitud->f_tac = $request->tac;
-						$solicitud->estado = 1;
+            $solicitud->estado = 1;
+            $solicitud->cancelado=0;
 						// $solicitud->f_transaccion = $transaccion_id;
 						$solicitud->save();
           }else{
@@ -214,7 +215,8 @@ class SolicitudExamenController extends Controller
 						$solicitud = new SolicitudExamen;
 						$solicitud->f_paciente = $request->f_paciente;
 						$solicitud->f_rayox = $request->rayox;
-						$solicitud->estado = 1;
+            $solicitud->estado = 1;
+            $solicitud->cancelado=0;
 						// $solicitud->f_transaccion = $transaccion_id;
 						$solicitud->save();
           }else{
@@ -278,7 +280,8 @@ class SolicitudExamenController extends Controller
 						$solicitud = new SolicitudExamen;
 						$solicitud->f_paciente = $request->f_paciente;
 						$solicitud->f_ultrasonografia = $request->ultrasonografia;
-						$solicitud->estado = 1;
+            $solicitud->estado = 1;
+            $solicitud->cancelado=0;
 						// $solicitud->f_transaccion = $transaccion_id;
 						$solicitud->save();
           }else{
@@ -361,6 +364,9 @@ class SolicitudExamenController extends Controller
           $solicitud = new SolicitudExamen;
           $solicitud->f_paciente = $request->f_paciente;
           $solicitud->f_examen = $examen;
+          if($request->f_ingreso == null){
+            $solicitud->cancelado=0;
+          }
           if($area->area=='QUIMICA SANGUINEA'){
             $solicitud->codigo_muestra = $muestraQuimicaSanguinea;  
           }else{

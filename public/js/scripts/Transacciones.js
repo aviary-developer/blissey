@@ -290,6 +290,10 @@ $(document).on('ready', function () {
     var elemento = $(this).parents('tr').find('input:eq(0)').val();
     var cantidad = $(this).parents('tr').find('input:eq(1)').val();
     var precio = $(this).parents('tr').find('input:eq(2)').val();
+    var solicitud = $(this).parents('tr').find('input:eq(4)').val();
+    if (solicitud != "undefined") {
+      $('#bts' + solicitud).attr("disabled", false);
+    }
     total_c = parseFloat(cantidad) * parseFloat(precio);
     cambiarTotal(total_c, 0);
     var indice = componentes_agregados.indexOf(elemento);
@@ -611,6 +615,38 @@ async function registrarventa(id) {
     contadorcp++;
   }
 }
+async function registrarsolicitud(c1, c2, id, ids) {
+  console.log('Servicio');
+  c2 = parseFloat(c2).toFixed(2);
+  tabla = $('#tablaDetalle');
+  total_c = parseFloat(1 * c2).toFixed(2);
+  cambiarTotal(total_c, 1);
+  $('#bts' + ids).attr("disabled", true);
+  html = "<tr id='itr" + contadorcp + "'>" +
+    "<td>" + 1 + "</td>" +
+    "<td>" + c1 + "</td>" +
+    "<td></td>" +
+    "<td>$ " + c2 + "</td>" +
+    "<td>$ " + total_c + "</td>" +
+    "<td>" +
+    "<input type='hidden' name='f_producto[]' value='" + id + "'>" +
+    "<input type='hidden' name='cantidad[]' value='" + 1 + "'>" +
+    "<input type='hidden' name='precio[]' value='" + c2 + "'>" +
+    "<input type='hidden' name='tipo_detalle[]' value='2'>" +
+    "<input type='hidden' name='solicitud[]' value='" + ids + "'>" +
+    "<button type='button' class='btn btn-sm btn-primary' data-toggle='modal' data-target='#modalcp' onclick='cambiarPrecio(" + contadorcp + ");'>" +
+    "<i class='fas fa-dollar-sign'></i>" +
+    "</button>" +
+    "<button type='button' class='btn btn-sm btn-danger' id='eliminar_detalle'>" +
+    "<i class='fas fa-times'></i>" +
+    "</button>" +
+    "</td>" +
+    "</tr>";
+  tabla.append(html);
+  contadorcp++;
+  notaInfo('Ha sido agregado en detalles');
+}
+
 function validarCantidad() { //Campo cantidad_resultado
   c = 0;
   var error = [];

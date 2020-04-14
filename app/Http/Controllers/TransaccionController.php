@@ -22,6 +22,7 @@ use App\DetalleDevolucion;
 use App\CambioProducto;
 use App\Bitacora;
 use App\Inventario;
+use App\SolicitudExamen;
 
 class TransaccionController extends Controller
 {
@@ -67,6 +68,7 @@ class TransaccionController extends Controller
       $f_producto=$request->f_producto;
       $cantidad=$request->cantidad;
       $precio=$request->precio;
+      $solicitud=$request->solicitud;
       $validar['f_producto']='required';
       if($tipo==0){
         $validar['f_proveedor']='required';
@@ -127,6 +129,15 @@ class TransaccionController extends Controller
         $transaccion->localizacion=Transacion::tipoUsuario();
         $transaccion->descuento=$descuento;
         $transaccion->save();
+
+        if($solicitud!=null){
+          for ($i=0; $i < count($solicitud); $i++) {
+            $sol=SolicitudExamen::find($solicitud[$i]);
+            $sol->cancelado=true;
+            $sol->f_transaccion=$transaccion->id;
+            $sol->save();
+          }
+        }
 
         if($f_producto!=null){
           for ($i=0; $i < count($f_producto); $i++) {
