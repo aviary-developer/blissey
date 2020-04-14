@@ -87,12 +87,24 @@
                     @if($valor->parametro->valorMinimo)
                       <td>
                         <span class="badge border border-primary text-primary col-12">
-                          {{number_format($valor->parametro->valorMinimo, 2, '.', ',')}}
+                          @if ($solicitud->paciente->sexo==0)
+                                {{number_format($valor->parametro->valorMinimoFemenino, 2, '.', ',')}}
+                                <input type="hidden" name="valoresMinimos[]" value="{{$valor->parametro->valorMinimoFemenino}}">
+                              @else
+                                {{number_format($valor->parametro->valorMinimo, 2, '.', ',')}}
+                                <input type="hidden" name="valoresMinimos[]" value="{{$valor->parametro->valorMinimo}}">
+                              @endif
                         </span>
                       </td>
                       <td>
                         <span class="badge border border-danger text-danger col-12">
+                          @if ($solicitud->paciente->sexo==0)
+                          {{number_format($valor->parametro->valorMaximoFemenino, 2, '.', ',')}}
+                          <input type="hidden" name="valoresMaximos[]" value="{{$valor->parametro->valorMaximoFemenino}}">
+                        @else
                           {{number_format($valor->parametro->valorMaximo, 2, '.', ',')}}
+                          <input type="hidden" name="valoresMaximos[]" value="{{$valor->parametro->valorMaximo}}">
+                        @endif
                         </span>
                       </td>
                     @else

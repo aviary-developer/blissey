@@ -41,7 +41,7 @@
 		</div>
 		<div>
 			<span style="float: right">
-				Fecha de evaluación: <b>{{$resultado->updated_at->format('d/m/Y h:i a')}}</b>
+				Fecha de evaluación: <b>{{$resultado->updated_at->format('d/m/Y')}}</b>
 			</span>
 			<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
 		</div>
@@ -49,30 +49,38 @@
 		<div class="row">
 			@php
 				$cantidadSecciones=count($secciones);
+				$cantidadFilas = count($espr);
+				$aux = 0;
 			@endphp
 			@if ($cantidadSecciones==1)
 				<div class="col-xs-3"></div>
 			@endif
 			@foreach ($secciones as $k=>$variable)
-				@if($k%2==0)
+				@if($k%2==0 && $cantidadFilas < 12)
 					<div class="row">
 				@endif
-
-				<div class="col-xs-6">
+				@if (($cantidadFilas >= 12 && $k == 0) || ($cantidadFilas < 12))	
+					<div class="col-xs-6">
+				@endif
 					<center>
+						<div class="x_title">
+							<span class="font-plus">
+								<b>
+									<i class="fa fa-flask"></i>
+									{{$espr->first()->nombreSeccion($variable)}}
+								</b>
+							</span>
+							<div class="clearfix"></div>
+						</div>
 						<table  class="table-simple">
-							<div class="x_title">
-								<span><big>{{$espr->first()->nombreSeccion($variable)}}</big></span>
-								<div class="clearfix"></div>
-							</div>
 							<thead>
-								<th>Parámetro</th>
-								<th>Resultado</th>
+								<th style="width:35%">Parámetro</th>
+								<th style="width:20%">Resultado</th>
 								@if ($banderaValores==1)
-								<th>Valores normales</th>	
+								<th style="width:30%">Valores normales</th>	
 								@endif
 								@if ($banderaUnidad==1)
-								<th>Unidades</th>
+								<th style="width:20%">Unidades</th>
 								@endif
 							</thead>
 							<tbody>
@@ -80,28 +88,59 @@
 									@foreach ($espr as $esp =>$valor)
 										@if ($valor->f_seccion==$variable)
 											<tr>
-													<td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
-													<td><center>{{$detallesResultado[$esp]->resultado}}</center></td>
+													<td style="width:35%"><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
+													<td style="width:20%"><center>{{$detallesResultado[$esp]->resultado}}</center></td>
 													@if($banderaValores==1)
-															@if ($valor->parametro->valorMinimo!=null)
+															@if (strlen($valor->parametro->valorMinimo)>0)
 																@if ($solicitud->paciente->sexo==0)
-																	<td><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
+																	<td style="width:30%"><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
 																@else
-																	<td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
+																	<td style="width:30%"><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
 																@endif
-																<td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
+																<td style="width:20%"><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
 															@else
-																<th>-</th><th>-</th>
+																<td style="width:30%">
+																	<center>-</center>
+																</td>
+																<td style="width:20%">
+																	<center>-</center>
+																</td>
 															@endif
 													@else
 															@if($banderaUnidad==1)
-															<td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
+															<td style="width:20%"><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
 															@endif
 													@endif
 													@if ($detallesResultado[$esp]->dato_controlado!=null)
-														<td><center>D.C.={{$detallesResultado[$esp]->dato_controlado}}</center></td>
+														<td style="width:15%"><center>D.C.={{$detallesResultado[$esp]->dato_controlado}}</center></td>
 													@endif
 												</tr>
+												@if ($cantidadFilas > 12 && $esp == round(($cantidadFilas/2)-1))
+																</tbody>
+															</table>
+														</center>
+													</div>
+													<div class="col-xs-6">
+														<center>
+															<table  class="table-simple">
+																<thead>
+																	<thead>
+																		<th style="width:35%">Parámetro</th>
+																		<th style="width:20%">Resultado</th>
+																		@if ($banderaValores==1)
+																			<th style="width:30%">Valores normales</th>	
+																		@endif
+																		@if ($banderaUnidad==1)
+																			<th style="width:20%">Unidades</th>
+																		@endif
+																</thead>
+																<tbody>
+												@endif
+												@php
+														if($cantidadFilas-1 == $esp){
+															$aux = 1;
+														}
+												@endphp
 											@endif
 										@endforeach
 									@else
@@ -116,27 +155,22 @@
 							</tbody>
 						</table>
 					</center>
-				</div>
-				@if($k%2!=0)
+				@if ($cantidadFilas < 12)	
 					</div>
+				@endif
+				@if(($k%2!=0 && $cantidadFilas < 12) || $aux == 1)
+					</div><!--Ey-->
 				@endif
 			@endforeach
 			@if($resultado->observacion!=null)
-				<br>
-				<div class="col-xs-12">
-					<ul class="list-unstyled timeline widget">
-						<li>
-							<div class="block">
-								<div class="block_content">
-									<h2 class="title"><a>OBSERVACIONES:</a></h2>
-									<p class="excerpt">{{$resultado->observacion}}</p>
-								</div>
-							</div>
-						</li>
-					</ul>
+				<div class="row">
+					<div class="col-xs-12" style="margin-top: 15px">
+						<p class=""><span class="text-primary"><b>OBSERVACIONES: </b></span> {{$resultado->observacion}}</p>
+					</div>
 				</div>
 			@endif
-				<div class="col-md-12 col-sm-12 col-12" style="margin-top: 20px">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-12" style="margin-top: 15px">
 						<span> Realizó: <strong><i>{{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}</i></strong></span>
 						<div>
 							<span>
@@ -149,6 +183,7 @@
 							</span>
 						</div>
 				</div>
+			</div>
 			</div>
 		</div>
 	</div>
