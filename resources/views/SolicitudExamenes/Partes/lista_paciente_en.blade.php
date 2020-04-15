@@ -35,6 +35,11 @@
                     <td>
                       <center>
                         <div class="btn-group">
+                          @if (Auth::user()->tipoUsuario == "Laboaratorio")
+														<a id="evaluar" href= {!! asset('/editarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm" title="Editar"/>
+															<i class="fa fa-edit"></i>
+														</a>
+													@endif
                           <a id="" href= {!! asset('/verExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-success btn-sm" title="Ver"/>
                             <i class="fa fa-eye"></i>
                           </a>

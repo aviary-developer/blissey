@@ -65,6 +65,9 @@
             <a class="dropdown-item" href={!! asset('/solicitudex?vista='.$vista.'&tipo=examenes') !!}>
               Solicitudes
             </a>
+            <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.$vista.'&tipo=examenes') !!}>
+              Evaluados
+            </a>
             <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.$vista.'&tipo=examenes') !!}>
               Entregados
             </a>
