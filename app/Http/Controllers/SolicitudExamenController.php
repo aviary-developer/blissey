@@ -777,10 +777,8 @@ class SolicitudExamenController extends Controller
         }
       }
         $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
-        if(!$request->estaIncompleto){
-          if($request->estaIncompleto==true){
+        if($request->estaIncompleto==1){
         $cambioEstadoSolicitud->completo=false;
-        }
         }
         $cambioEstadoSolicitud->estado=2;
         $cambioEstadoSolicitud->save();
@@ -832,22 +830,20 @@ class SolicitudExamenController extends Controller
           $detallesResultado[$key]->save();
         }
       }
+      $cambioCompletoSolicitud=SolicitudExamen::find($idSolicitud);
+          if($request->estaIncompleto==1){
+            $cambioCompletoSolicitud->completo=false;
+          }else{
+            $cambioCompletoSolicitud->completo=true;
+          }
+        $cambioCompletoSolicitud->save();
       }catch(Exception $e){
         DB::rollback();
         return redirect('/examenesEvaluados?tipo=examenes&vista=paciente')->with('mensaje','Algo salio mal');
       }
-      $cambioCompletoSolicitud=SolicitudExamen::find($idSolicitud);
-        if(!$request->estaIncompleto){
-          if($request->estaIncompleto==1){
-            $cambioCompletoSolicitud->completo=false;
-          }elseif($request->estaIncompleto==0){
-            $cambioCompletoSolicitud->completo=true;
-          }
-        }
-        $cambioCompletoSolicitud->save();
       DB::commit();
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
-      return redirect('/examenesEvaluados?tipo=examenes&vista=paciente')->with('mensaje', '¡Editado!');
+      return redirect('/examenesEvaluados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
     }
   }
   }
@@ -980,7 +976,7 @@ class SolicitudExamenController extends Controller
   {
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
-    $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
+    $solicitud=SolicitudExamen::where('id','=',$id)->first();
     $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->distinct()->get(['f_seccion']);;
     $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
     $contador=0;
