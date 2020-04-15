@@ -29,6 +29,7 @@
 
     <input type="hidden" name="solicitud" value={{$solicitud->id}}>
     <input type="hidden" name="evaluar" value=true>
+    <input type="hidden" name="seGuardara" value=true>
     <input type="hidden" name="idExamen" value={{$solicitud->f_examen}}>
     @foreach ($espr as $esp)
       <input type="hidden" name="espr[]" value={{$esp->id}}>
@@ -262,7 +263,7 @@ $("#guardarLaEvaluacion").on("click", function (e) {
       html+="<center><h2 class='text-warning'>¡Advertencia!</h2></center>";
       html+="<hr>"
     for (i = 0; i < parametros.length; i++) {
-      //console.log('Parametro: '+parametros[i]+' Mínimo: '+valoresMinimos[i]+' Resultado: '+resultados[i]+' Máximo: '+valoresMaximos[i]);
+      console.log(' Resultado: '+resultados[i]);
       if(valoresMinimos[i]!='No'){
       if(parseFloat(resultados[i])<parseFloat(valoresMinimos[i])){
         html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>debajo</span> del valor normal mínimo <span class='text-success font-weight-bold'>"+valoresMinimos[i]+"</span>";
