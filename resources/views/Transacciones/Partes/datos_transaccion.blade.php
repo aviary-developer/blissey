@@ -88,7 +88,7 @@
             <div class="flex-row">
                 <h6 class="font-weight-bold">
                     <a href={!! asset('/factura/'.$transaccion->id)!!} target="_blank" class="btn btn-sm btn-success" title="Ver">
-                        <i class="fas fa-archive"></i>
+                        <i class="fas fa-receipt"></i>
                       </a>
                 </h6>
             </div>
