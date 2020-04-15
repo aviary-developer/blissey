@@ -1,6 +1,6 @@
 @extends('principal')
 @section('layout')
-  {!!Form::open(['class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
+  {!!Form::open(['id'=>'guardarResultadosExamen2','class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
   @endphp
@@ -27,6 +27,7 @@
     </div>
 
     <input type="hidden" name="solicitud" value={{$solicitud->id}}>
+    <input type="hidden" name="estaIncompleto" value=0 id="estaIncompleto">
     <input type="hidden" name="idExamen" value={{$solicitud->f_examen}}>
     @foreach ($espr as $esp)
       <input type="hidden" name="espr[]" value={{$esp->id}}>
@@ -82,7 +83,9 @@
                 @if ($valor->f_seccion==$variable)
                   <tr>
                     <td>{{$contadorParametros}}</td>
-                    <td>{{$valor->nombreParametro($valor->f_parametro)}}</th>
+                    <td>{{$valor->nombreParametro($valor->f_parametro)}}
+                      <input type="hidden" name="nombresParametros[]" value="{{$valor->nombreParametro($valor->f_parametro)}}">
+                    </th>
                     <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$detallesResultado[$esp]->resultado}}"></input></td>
                     @if($valor->parametro->valorMinimo)
                       <td>
@@ -110,9 +113,11 @@
                     @else
                       <td>
                         <span class="badge border border-secondary text-secondary">Ninguno</span>
+                        <input type="hidden" name="valoresMinimos[]" value="No">
                       </td>
                       <td>
                         <span class="badge border border-secondary text-secondary">Ninguno</span>
+                        <input type="hidden" name="valoresMaximos[]" value="No">
                       </td>
                     @endif
                     <td>
@@ -186,7 +191,7 @@
       
     <div class="x_panel">
       <center>
-        {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
+        {!! Form::button('Guardar',['id'=>'guardarLaEdicion','class'=>'btn btn-primary btn-sm']) !!}
         <button type="reset" name="button" class="btn  btn-light btn-sm">Limpiar</button>
         <a href={!! asset('/examenesEvaluados?vista=paciente') !!} class="btn btn-light btn-sm">Cancelar</a>
       </center>
@@ -216,4 +221,66 @@
   }
   document.getElementById('imagenExamen').addEventListener('change', imagenExamenFuncion, false);
 </script>
+<script>
+  $("#guardarLaEdicion").on("click", function (e) {
+    var parametros=[];
+    var resultados=[];
+    var valoresMinimos=[];
+    var valoresMaximos=[];
+    $("input[name='nombresParametros[]']").each(function( key, value ) {
+    parametros[key]=$(value).val();
+    });
+    $("input[name='resultados[]']").each(function( key, value ) {
+    resultados[key]=$(value).val();
+    });
+    $("input[name='valoresMinimos[]']").each(function( key, value ) {
+    valoresMinimos[key]=$(value).val();
+    });
+    $("input[name='valoresMaximos[]']").each(function( key, value ) {
+    valoresMaximos[key]=$(value).val();
+    });
+    var i;
+    var bandera=0;
+    var vacios=0;
+    var html="<center><span class='text-warning' style='font-size: 300%'><i class='fas fa-exclamation-triangle'></i></span></center>";
+        html+="<center><h2 class='text-warning'>¡Advertencia!</h2></center>";
+        html+="<hr>"
+      for (i = 0; i < parametros.length; i++) {
+        if(!resultados[i]){
+          vacios=1;
+        }
+        if(valoresMinimos[i]!='No'){
+        if(parseFloat(resultados[i])<parseFloat(valoresMinimos[i])){
+          html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>debajo</span> del valor normal mínimo <span class='text-success font-weight-bold'>"+valoresMinimos[i]+"</span>";
+          bandera=1;
+        }
+        if(parseFloat(resultados[i])>parseFloat(valoresMaximos[i])){
+          html+="<br><span class='badge badge-primary'>"+(i+1)+"</span> <span class='font-weigth-bold'>"+parametros[i]+"</span> es igual a <span class='font-lg badge badge-danger'>"+resultados[i]+"</span> por <span class='font-weight-bold text-danger'>encima</span> del valor normal máximo <span class='text-success font-weight-bold'>"+valoresMaximos[i]+"</span>";
+          bandera=1;
+        }
+        html+="<hr class='my-1'>"
+      }
+      }
+      $("#estaIncompleto").val(vacios);
+      html=html+"<hr><h4 class='red'>¡Importante!<h4>"+
+      '<span>¿Está seguro que desea guardar?<br><small>Verifique los resultados</small></span>';
+      if(bandera==1){
+    swal({
+        title: 'Valores fuera de rangos normales',
+        html: html,
+        showCancelButton: true,
+        confirmButtonText: 'Si, ¡Guardar!',
+        cancelButtonText: 'No, ¡Seguir trabajando!',
+        confirmButtonClass: 'btn btn-primary',
+        cancelButtonClass: 'btn btn-light'
+      }).then((result) => {
+        if (result.value) {
+          $("#guardarResultadosExamen2").submit();
+        }
+      });}
+          else{
+            $("#guardarResultadosExamen2").submit();
+          }
+  });
+  </script>
 @endsection

@@ -29,7 +29,11 @@
             <tbody>
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_paciente == $paciente->f_paciente)
-                  <tr>
+                @if ($solicitud->completo==false)
+                <tr class="table-warning">
+                @else
+                <tr>  
+                @endif
                     <td>{{$solicitud->codigo_muestra}}</td>
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>{{$solicitud->examen->nombreExamen}}</td>

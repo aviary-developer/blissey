@@ -777,6 +777,11 @@ class SolicitudExamenController extends Controller
         }
       }
         $cambioEstadoSolicitud=SolicitudExamen::find($idSolicitud);
+        if(!$request->estaIncompleto){
+          if($request->estaIncompleto==true){
+        $cambioEstadoSolicitud->completo=false;
+        }
+        }
         $cambioEstadoSolicitud->estado=2;
         $cambioEstadoSolicitud->save();
         DB::commit();
@@ -831,6 +836,15 @@ class SolicitudExamenController extends Controller
         DB::rollback();
         return redirect('/examenesEvaluados?tipo=examenes&vista=paciente')->with('mensaje','Algo salio mal');
       }
+      $cambioCompletoSolicitud=SolicitudExamen::find($idSolicitud);
+        if(!$request->estaIncompleto){
+          if($request->estaIncompleto==1){
+            $cambioCompletoSolicitud->completo=false;
+          }elseif($request->estaIncompleto==0){
+            $cambioCompletoSolicitud->completo=true;
+          }
+        }
+        $cambioCompletoSolicitud->save();
       DB::commit();
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
       return redirect('/examenesEvaluados?tipo=examenes&vista=paciente')->with('mensaje', '¡Editado!');
