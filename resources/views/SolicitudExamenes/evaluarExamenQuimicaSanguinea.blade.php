@@ -90,9 +90,9 @@
                     <td>{{$esp->nombreParametro($esp->f_parametro)}}
                         <input type="hidden" name="nombresParametros[]" value="{{$esp->nombreParametro($esp->f_parametro)}}"></th>
                     <td><input type="number" class="form-control form-control-sm" name="resultados[]" value="{{$esp->parametro->valorPredeterminado}}"></input></td>
-                    @if($esp->parametro->valorMinimo!=null)
+                    @if(strlen($esp->parametro->valorMinimo)>0)
                     @php
-                        echo $esp->parametro->valorMinimo;
+                        echo strlen($esp->parametro->valorMinimo);
                     @endphp
                       <td>
                         <span class="badge border border-primary text-primary col-12">
