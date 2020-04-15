@@ -13,7 +13,7 @@
 <div class="flex-row">
   <table class="table table-striped table-sm">
     <tbody>
-      @if ($primero!=null)
+     {{--  @if ($primero!=null)
         @foreach ($primero as $ingreso)
           <tr>
             <td class="w-50">{{
@@ -29,7 +29,7 @@
             </td>
           </tr>
         @endforeach
-      @endif
+      @endif --}}
     </tbody>
   </table>
 </div>

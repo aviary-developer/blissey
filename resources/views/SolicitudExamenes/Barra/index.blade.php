@@ -48,6 +48,9 @@
             <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.$vista.'&tipo=examenes') !!}>
               Entregados
             </a>
+            <a class="dropdown-item" href={!! asset('/historialExamenes?vista='.$vista.'&tipo=examenes') !!}>
+              Historial
+            </a>
           @elseif($est == "entregados")
             <a class="dropdown-item" href={!! asset('/solicitudex?vista='.$vista.'&tipo=examenes') !!}>
               Solicitudes
@@ -65,12 +68,17 @@
             <a class="dropdown-item" href={!! asset('/examenesEntregados?vista='.$vista.'&tipo=examenes') !!}>
               Entregados
             </a>
+            <a class="dropdown-item" href={!! asset('/historialExamenes?vista='.$vista.'&tipo=examenes') !!}>
+              Historial
+            </a>
           @endif  
           <div class="dropdown-divider"></div>
           @if ($est == "evaluados")
             <a class="dropdown-item" href={!! asset('/examenesEvaluados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @elseif($est == "entregados")
             <a class="dropdown-item" href={!! asset('/examenesEntregados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          @elseif($est == "historial")
+            <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @else
             <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
           @endif

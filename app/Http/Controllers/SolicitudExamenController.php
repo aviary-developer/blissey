@@ -739,7 +739,7 @@ class SolicitudExamenController extends Controller
             DB::commit();
           }catch(Exception $e){
             DB::rollback();
-            return redirect('/solicitudex?tipo=examenes&vista=paciente')->with('mensaje','Algo salio mal');
+            return redirect('/solicitudex?tipo=examenes&vista=examenes')->with('mensaje','Algo salio mal');
           }
         }
       }else{//FIN GUARDAR RESULTADOS DE QUIMICA SANGUINEA
@@ -786,7 +786,7 @@ class SolicitudExamenController extends Controller
       }
     }
       Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
-      return redirect('/solicitudex?tipo=examenes&vista=paciente')->with('mensaje', '¡Guardado!');
+      return redirect('/solicitudex?tipo=examenes&vista=examenes')->with('mensaje', '¡Guardado!');
     }else {///EDICION DE RESULTADOS DE EXAMENES
       $idSolicitud=$request->solicitud;
       $resultadosGuardar=$request->resultados;
