@@ -87,7 +87,7 @@
                       <input type="hidden" name="nombresParametros[]" value="{{$valor->nombreParametro($valor->f_parametro)}}">
                     </th>
                     <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$detallesResultado[$esp]->resultado}}"></input></td>
-                    @if($valor->parametro->valorMinimo)
+                    @if(strlen($valor->parametro->valorMinimo)>0)
                       <td>
                         <span class="badge border border-primary text-primary col-12">
                           @if ($solicitud->paciente->sexo==0)
