@@ -86,6 +86,10 @@ $(document).on("ready", function () {
     valido.required();
     is_valid = valido.value(is_valid);
 
+    var valido = new Validated('pac_fecha');
+    valido.required();
+    is_valid = valido.value(is_valid);
+    
     if (is_valid) {
       $.ajax({
         type: 'post',
