@@ -33,6 +33,11 @@
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>
                       {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
+                      @if ($solicitud->enviarClinica==1)
+                          <span class="badge badge-pill badge-pink" title="Debe enviarse a clínica">
+                              <i class="fa fa-ambulance"></i>
+                              </span>
+                        @endif
                     </td>
                     <td>
                       <center>
@@ -48,7 +53,7 @@
                           <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen.'/examenes')!!} class="btn btn-primary btn-sm" title="Imprimir" target="_blank"/>
                             <i class="fa fa-print"></i>
                           </a>
-                        </div>
+                        </div>                        
                       </center>
                     <td>
                   </tr>

@@ -33,8 +33,8 @@
         </a>
       @endif
       <a id="entregar" href={!! asset('/entregarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-primary btn-sm" title="Entregar" target="_blank"/>
-        <i class="fa fa-envelope"></i>
+        <i class="fa fa-print"></i>
       </a>
-    @endif
+    @endif    
   </div>
 </center>

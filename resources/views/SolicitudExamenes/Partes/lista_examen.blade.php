@@ -82,6 +82,11 @@
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>
                       {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
+                      @if ($solicitud->enviarClinica==1)
+                      <span class="badge badge-pill badge-pink" title="Debe enviarse a clínica">
+                          <i class="fa fa-ambulance"></i>
+                          </span>
+                    @endif
                     </td>
                     <td id="celda">
                       @include('SolicitudExamenes.Formularios.delete')

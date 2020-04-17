@@ -381,7 +381,11 @@ class SolicitudExamenController extends Controller
 						// $solicitud->f_transaccion = $transaccion_id;
 					}else{
 						$solicitud->f_transaccion = $transaccion_id;
-					}
+          }
+          if($request->enviarClinica)
+          {
+            $solicitud->enviarClinica=1;
+          }
           $solicitud->save();
 
           //Detalle de transaccion

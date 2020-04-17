@@ -43,11 +43,18 @@
         </div>
     </div>
   </div>
+  {{-- <div class="form-group col-sm-4">
+  <div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="customCheck1">
+    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+  </div>
+  </div> --}}
 </div>
 
 <div class="row">
   @include('SolicitudExamenes.Formularios.examenes')
   <input type="hidden" id="seleccion" value="solicitud">
+  <input type="hidden" id="enviarClinica" name="enviarClinica" value=0>
   <input type="hidden" name="tipo" value="examenes">
 </div>
 
@@ -71,9 +78,32 @@ var solicitudes=0;
     var valido = new Validated('n_paciente');
     valido.required();
     is_valid = valido.value(true);
-
     if(is_valid){
+      swal({
+    title: '¿Se enviarán los resultados a clínica?',
+    text: 'Se agregará una notificación a cada examen',
+    type: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Si, ¡Se enviarán!',
+    cancelButtonText: 'No, ¡No se enviarán!',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-light',
+    buttonsStyling: false
+  }).then((result) => {
+    if (result.value) {
+      $('#enviarClinica').val(1);
+      Swal.fire(
+      'Listo',
+      'Notificación agregada',
+      'info'
+    )
+    $('#form').submit();
+    }else{
+      $('#enviarClinica').val(0);
       $('#form').submit();
+    }
+  });
+      //$('#form').submit();
     }
   });
 

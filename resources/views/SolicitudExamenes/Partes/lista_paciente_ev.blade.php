@@ -39,7 +39,12 @@
                   @endphp
                   <td>{{$muestraNoQs[0]}}</td>
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
-                    <td>{{$solicitud->examen->nombreExamen}}</td>
+                    <td>{{$solicitud->examen->nombreExamen}}
+                      @if ($solicitud->enviarClinica==1)
+                      <span class="badge badge-pill badge-pink" title="Debe enviarse a clínica">
+                          <i class="fa fa-ambulance"></i>
+                          </span>
+                    @endif</td>
                     <td>
                       <center>
 												<div class="btn-group">
