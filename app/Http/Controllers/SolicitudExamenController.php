@@ -587,7 +587,7 @@ class SolicitudExamenController extends Controller
         if($para->valorMinimo!=null || $para->valorMaximo!=null || $para->valorMinimoFemenino!=null || $para->valorMaximoFemenino!=null){
           $banderaValores=1;
         }
-        if($para->unidad!=null){
+        if(strlen($para->unidad)>0){
           $banderaUnidad=1;
         }
         if($contador==0){
