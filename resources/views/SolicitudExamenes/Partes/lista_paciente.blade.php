@@ -26,7 +26,10 @@
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_paciente == $paciente->f_paciente)
                   <tr>
-                    <td>{{$solicitud->codigo_muestra}}</td>
+                    @php
+                      $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
+                  @endphp
+                  <td>{{$muestraNoQs[0]}}</td>
                     <td>{{$solicitud->created_at->format('d/m/y')}}
                     <td>{{$solicitud->nombreExamen($solicitud->f_examen)}}</td>
                     <td id="celda">

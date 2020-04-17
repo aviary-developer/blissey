@@ -21,7 +21,7 @@
         <div class="card-body">
           <table class="table table-hover table-sm table-striped">
             <thead>
-              <th>Código</th>
+              <th>Muestra</th>
               <th>Fecha</th>
               <th>Examen</th>
               <th>Opciones</th>
@@ -34,7 +34,10 @@
                 @else
                 <tr>  
                 @endif
-                    <td>{{$solicitud->codigo_muestra}}</td>
+                  @php
+                      $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
+                  @endphp
+                  <td>{{$muestraNoQs[0]}}</td>
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>{{$solicitud->examen->nombreExamen}}</td>
                     <td>

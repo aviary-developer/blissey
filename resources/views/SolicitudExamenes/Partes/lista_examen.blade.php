@@ -29,7 +29,10 @@
             @foreach($solicitudes as $solicitud)
               @if($solicitud->f_examen == $examen->f_examen)
                 <tr>
-                  <td>{{$solicitud->codigo_muestra}}</td>
+                  @php
+                      $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
+                  @endphp
+                  <td>{{$muestraNoQs[0]}}</td>
                   <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                   <td>
                     {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
@@ -72,7 +75,10 @@
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_examen == $examen->f_examen)
                   <tr>
-                    <td>{{$solicitud->codigo_muestra}}</td>
+                    @php
+                      $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
+                  @endphp
+                  <td>{{$muestraNoQs[0]}}</td>
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>
                       {{$solicitud->nombrePaciente($solicitud->f_paciente)}}

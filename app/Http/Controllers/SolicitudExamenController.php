@@ -351,14 +351,18 @@ class SolicitudExamenController extends Controller
           $hoy = Carbon::today()->startOfDay();
           $hoy2 = Carbon::today()->endOfDay();
           $cantidad_examenes = SolicitudExamen::where('created_at','>',$hoy)->where('created_at','<',$hoy2)->count();
-          $cantidad_examenes++;
           //$codigo_muestra = $examen.'-'.$cantidad_examenes.'-'.$año_corto;
-          $codigo_muestra =$cantidad_examenes;
+          if($cantidad_examenes==0){
+           $codigo_muestra=0; 
+          }else{
+            $ultimaSolicitudConMuestra = SolicitudExamen::where('created_at','>',$hoy)->where('created_at','<',$hoy2)->where('codigo_muestra','!=',null)->get();
+            $muestraSeparada= explode(" ", $ultimaSolicitudConMuestra->last()->codigo_muestra." siQS");
+            $codigo_muestra=(int) $muestraSeparada[0];
+          }
           if($banderaQS==false){
-          if($area->area=='QUIMICA SANGUINEA'){
+            $codigo_muestra++;
             $muestraQuimicaSanguinea=$codigo_muestra;
             $banderaQS=true;
-          }
         }
           //Inicio
           $solicitud = new SolicitudExamen;
@@ -370,7 +374,7 @@ class SolicitudExamenController extends Controller
           if($area->area=='QUIMICA SANGUINEA'){
             $solicitud->codigo_muestra = $muestraQuimicaSanguinea;  
           }else{
-          $solicitud->codigo_muestra = $codigo_muestra;
+          $solicitud->codigo_muestra = $muestraQuimicaSanguinea." noQS";//LE PONGO LA MISMA DE QS
           }
 					$solicitud->estado = 0;
 					if($request->f_ingreso == null){

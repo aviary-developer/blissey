@@ -17,7 +17,7 @@
           
           <table class="table table-hover table-striped table-sm">
             <thead>
-              <th>Código</th>
+              <th>Muestra</th>
               <th>Fecha</th>
               <th>Paciente</th>
               <th>Opciones</th>
@@ -26,7 +26,10 @@
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_examen == $examen->f_examen)
                   <tr>
-                    <td>{{$solicitud->codigo_muestra}}</td>
+                    @php
+                      $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
+                  @endphp
+                  <td>{{$muestraNoQs[0]}}</td>
                     <td>{{$solicitud->created_at->format('d/m/y')}}</td>
                     <td>
                       {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
