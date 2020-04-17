@@ -43,18 +43,28 @@
   .table-simple th{
     background-color: white;
     text-align: center;
+    border-right: white 1px solid;
+  }
+  .table-simple th:last-of-type{
+    border-right: black 1px solid;
   }
   
   .table-simple thead{
       background: white;
   }
   
-  .table-simple th,.table-simple td{
+  .table-simple td{
     border-top: white 1px solid;
     border-right: white 1px hidden;
     border-bottom: black 1px solid;
     border-left: white 1px hidden;
     padding: 2px 5px 2px 5px;
+  }
+  .table-simple tr > td:last-of-type{
+    border-right: black 1px solid;
+  }
+  .table-simple tr > td:first-of-type{
+    border-left: black 1px solid;
   }
   h4 center{
     font-size: 14pt;

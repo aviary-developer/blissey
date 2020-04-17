@@ -35,28 +35,21 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="">
 		<center>
-			<strong><h3>Química Sanguinea</h3></strong>
+			<strong><h4 style="font-weight: 600;">Química Sanguinea</h4></strong>
 		</center>
 		<div>
-			<span style="float:right"> Edad: <strong><u>{{$solicitud->paciente->fechaNacimiento->age}} años</u></strong></span>
-			<span>Paciente: <strong><u>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</u></strong></span>
+			<span style="float:right">Fecha de evaluación: <b>{{$resultadosQuimicaSanguinea[0]->created_at->format('d/m/Y')}}</b></span>
+			<span>Paciente: <strong>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</strong> &nbsp;  Edad: <strong>{{$solicitud->paciente->fechaNacimiento->age}} años</strong></span>
 		</div>
 		<div>
-			<span style="float: right">
-				Fecha de evaluación: <b>{{$resultadosQuimicaSanguinea[0]->created_at->format('d/m/Y')}}</b>
-			</span>
-			<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
+			<span> Muestra: <strong>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</strong></span>
 		</div>
-		<div class="clearfix"></div>
+		<br>
 		<div class="row">
 		<div class="col-xs-3"></div>
 				<div class="col-xs-6">
 					<center>
 						<table class="table-simple">
-							<div class="x_title">
-								<span><big>Química Sanguinea</big></span>
-								<div class="clearfix"></div>
-							</div>
 							<thead>
 								<th>Parámetro</th>
 								<th>Resultado</th>
@@ -134,7 +127,6 @@
 				</div>
 			@endif
 				<div class="col-md-12 col-sm-12 col-12" style="margin-top: 20px">
-					<span> Realizó: <strong><i>{{$resultadosQuimicaSanguinea[0]->laboratorista->nombre}} {{$resultadosQuimicaSanguinea[0]->laboratorista->apellido}}</i></strong></span>	
 					<div>
 							<span>
 								<img src={{asset(Storage::url($resultadosQuimicaSanguinea[0]->laboratorista->sello))}} style="width:250px">

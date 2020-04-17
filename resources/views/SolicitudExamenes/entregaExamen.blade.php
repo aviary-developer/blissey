@@ -33,17 +33,14 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="">
 		<center>
-			<strong><h3>{{$solicitud->examen->nombreExamen}}</h3></strong>
+			<strong><h4 style="font-weight: 900;">{{$solicitud->examen->nombreExamen}}</h4></strong>
 		</center>
 		<div>
-			<span style="float:right"> Edad: <strong><u>{{$solicitud->paciente->fechaNacimiento->age}} años</u></strong></span>
-			<span>Paciente: <strong><u>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</u></strong></span>
+			<span style="float:right">Fecha de evaluación: <b>{{$resultado->updated_at->format('d/m/Y')}}</b></span>
+			<span>Paciente: <strong>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</strong>&nbsp; Edad: <strong>{{$solicitud->paciente->fechaNacimiento->age}} años</strong></span>
 		</div>
 		<div>
-			<span style="float: right">
-				Fecha de evaluación: <b>{{$resultado->updated_at->format('d/m/Y')}}</b>
-			</span>
-			<span> Muestra: <strong><u>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</u></strong></span>
+			<span> Muestra: <strong>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</strong></span>
 		</div>
 		<div class="clearfix"></div>
 		<div class="row">
@@ -63,7 +60,6 @@
 					<div class="col-xs-6">
 				@endif
 					<center>
-						<div class="x_title">
 							<span class="font-plus">
 								<b>
 									<i class="fa fa-flask"></i>
@@ -71,7 +67,6 @@
 								</b>
 							</span>
 							<div class="clearfix"></div>
-						</div>
 						<table  class="table-simple">
 							<thead>
 								<th style="width:35%">Parámetro</th>
@@ -179,7 +174,6 @@
 			@endif
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-12" style="margin-top: 15px">
-						<span> Realizó: <strong><i>{{$resultado->laboratorista->nombre}} {{$resultado->laboratorista->apellido}}</i></strong></span>
 						<div>
 							<span>
 								<img src={{asset(Storage::url($resultado->laboratorista->sello))}} style="width:250px">
@@ -187,7 +181,7 @@
 								@php
 									$empresa=App\Empresa::find(1);
 								@endphp
-								<img src={{asset(Storage::url($empresa->sello_laboratorio))}} style="width:260px;">
+								<img src={{asset(Storage::url($empresa->sello_laboratorio))}} style="width:250px;">
 							</span>
 						</div>
 				</div>
