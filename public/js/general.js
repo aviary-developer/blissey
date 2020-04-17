@@ -89,7 +89,7 @@ function recarga() {
   location.reload();
 }
 $("#entregar").click(function () {
-  setTimeout(recarga, 7000);
+  setTimeout(recarga, 3000);
 });
 
 $(".index-table").DataTable();
