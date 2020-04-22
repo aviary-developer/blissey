@@ -509,10 +509,12 @@ class IngresoController extends Controller
 
       if(($ingreso->tipo > 0 && $ingreso->tipo < 3) || ($ingreso->tipo == 0 && $ingreso->estado != 0)){
         /**Obtener el total de gastos del ingreso, pero solo si es un ingreso, mediingreso u observacion */
-        $total_gastos = $this->total_gastos($id);
-				$iva = $total_gastos * 0.13;
-				$iva = number_format($iva,2);
-        $total_gastos += $iva;
+				$total_gastos = $this->total_gastos($id);
+				if($ingreso->iva){
+					$iva = $total_gastos * 0.13;
+					$iva = number_format($iva,2);
+					$total_gastos += $iva;
+				}
         /**Total abonado a la deuda */
         $total_abono = Ingreso::abonos($id);
         /**Total adeudado a la cuenta */
@@ -813,7 +815,7 @@ class IngresoController extends Controller
     }
 
     protected function total_gastos($id){
-      $total = Ingreso::servicio_gastos($id);
+			$total = Ingreso::servicio_gastos($id);
       //Gastos por honorarios medicos
       $total += Ingreso::honorario_gastos($id);
       //Gastos por medicinas
@@ -886,7 +888,8 @@ class IngresoController extends Controller
       $id = $request->id;
       $fecha_x = $request->fecha;
 
-      $fecha_xf = Carbon::parse($fecha_x)->hour(7);
+			$fecha_xf = Carbon::parse($fecha_x)->hour(7);
+			$fecha_hf = Carbon::parse($fecha_x);
       $ahora = Carbon::now();
       if($ahora->lt($fecha_xf)){
         $fecha_xf->subDay();
@@ -901,7 +904,8 @@ class IngresoController extends Controller
       $fecha = $dia_ingreso->addDays($dia);
 
       setlocale(LC_ALL,'es');
-      $ultima24 = $fecha_xf;
+			$ultima24 = $fecha_xf;
+			$ultima_honorario_24 = $fecha_hf;
       $ultima48 = Carbon::parse($fecha_x)->hour(7)->addDay();
 
       $fecha = $fecha->formatLocalized('%d de %B de %Y');
@@ -917,7 +921,7 @@ class IngresoController extends Controller
       if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)!=null){
         $k = 0;
         foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle){
-          if($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($ultima24, $ultima48))){
+          if($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($ultima_honorario_24, $ultima48))){
             $medicos[$k]["nombre"] = $detalle->servicio->nombre;
             $medicos[$k]["precio"] = $detalle->precio;
             $k++;
@@ -1014,8 +1018,12 @@ class IngresoController extends Controller
         }
       }
 
-			$iva = $total * 0.13;
-			$iva = number_format($iva,2);
+			if($ingreso->iva){
+				$iva = $total * 0.13;
+				$iva = number_format($iva,2);
+			}else{
+				$iva = 0;
+			}
       $total += $iva;
 
       return(compact(
@@ -1211,10 +1219,12 @@ class IngresoController extends Controller
       $monto[$i]=Ingreso::servicio_gastos($id,$i);
       $monto[$i]+=Ingreso::honorario_gastos($id,$i);
       $monto[$i]+=Ingreso::tratamiento_gastos($id,$i);
-      $abonos[$i]=Ingreso::abonos($id,$i);
-			$iva = $monto[$i]*0.13;
-			$iva = number_format($iva,2);
-      $monto[$i]+=$iva;
+			$abonos[$i]=Ingreso::abonos($id,$i);
+			if($ingreso->iva){
+				$iva = $monto[$i]*0.13;
+				$iva = number_format($iva,2);
+				$monto[$i]+=$iva;
+			}
 			$fecha[$i]=$ingreso->fecha_ingreso->addDays($i)->format('m-d-Y');
 			if($dias > 10 && $dias < 20){
 				$l += 2;
@@ -1712,5 +1722,20 @@ class IngresoController extends Controller
 		$responsable = $hospitalizacion->responsable;
 		$responsable->edad = $responsable->fechaNacimiento->age;
 		return compact('paciente','responsable');
+	}
+
+	//ABR22.20 Estado de IVA
+	public function estado_iva(Request $request){
+		$ingreso = Ingreso::find($request->i_id);
+		DB::beginTransaction();
+		try{
+			$ingreso->iva = !$ingreso->iva;
+			$ingreso->save();
+			DB::commit();
+			return 1;
+		}catch(Exception $e){
+			DB::rollback();
+			return 0;
+		}
 	}
 }

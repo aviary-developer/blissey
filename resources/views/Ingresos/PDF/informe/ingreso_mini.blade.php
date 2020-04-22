@@ -329,8 +329,9 @@
       </thead>
       <tbody>
         @for ($i = $total_honorario = 0; $i <= $dias; $i++)
-          @php
-            $fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+					@php
+						$fecha_origen = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
+						$fecha_origen_honorario = $ingreso->fecha_ingreso->addDays($i)->hour(0)->minute(0);
             $ultima_24 = $ingreso->fecha_ingreso->addDays($i)->hour(7)->minute(0);
             
             $fecha_ingreso = $ingreso->fecha_ingreso->addDays($i);
@@ -341,8 +342,9 @@
             }
             $ultima_24->addDay();
           @endphp
-          @foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
-              @if ($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($fecha_origen,$ultima_24)))
+					@foreach ($ingreso->transaccion->detalleTransaccion->where('f_producto',null) as $detalle)
+							<tr>{{$detalle->created_at->between($fecha_origen,$ultima_24)}}</tr>
+              @if ($detalle->servicio->categoria->nombre == "Honorarios" && ($detalle->created_at->between($fecha_origen_honorario,$ultima_24)))
                 <tr>
                   <td class="text-center">{{$fecha_origen->format('d/m/Y')}}</td>
                   <td>{{$detalle->servicio->nombre}}</td>
@@ -457,9 +459,13 @@
         <td><b>Subtotal</b></td>
         <td class="text-right blue">{{'$ '.number_format(($subtotal),2,'.',',')}}</td>
       </tr>
-      @php
-        $iva = floatval($subtotal) * 0.13;
-        $total = floatval($subtotal) + floatval($iva);
+			@php
+				if($ingreso->iva){
+					$iva = floatval($subtotal) * 0.13;
+				}else{
+					$iva = 0;
+				}
+				$total = floatval($subtotal) + floatval($iva);
       @endphp
       <tr>
         <td>IVA (13%)</td>

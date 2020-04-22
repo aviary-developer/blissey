@@ -446,6 +446,9 @@ Route::get('servicio/precio_paquete','ServicioController@precio_paquete');
 Route::post('servicio/guardar_paquete','IngresoController@guardar_paquete');
 Route::post('servicio/guardar_honorario', 'IngresoController@guardar_honorario');
 
+//Ruta para el cambio de iva en ingreso
+Route::post('ingreso/estado_iva','IngresoController@estado_iva');
+
 //Ruta de validación 
 Route::get('/validate',function(Illuminate\Http\Request $request){
   $tabla = $request->tabla;

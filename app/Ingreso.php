@@ -191,7 +191,7 @@ class Ingreso extends Model
       $ingreso = Ingreso::find($id);
       $fecha_ingreso = $ingreso->fecha_ingreso->addDays($dia);
       $fecha_mayor = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
-      $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(7)->minute(0);
+      $fecha = $ingreso->fecha_ingreso->addDays($dia)->hour(0)->minute(0);
       if($fecha_ingreso->lt($fecha)){
         $fecha->subDay();
         $fecha_mayor->subDay();
@@ -208,7 +208,7 @@ class Ingreso extends Model
               }
             }
           }
-        }
+				}
       }else{
         if($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true)!=null){
           foreach($ingreso->transaccion->detalleTransaccion->where('f_producto',null)->where('estado',true) as $detalle){
@@ -219,7 +219,7 @@ class Ingreso extends Model
         }
       }
 
-      return $total;
+			return $total;
     }
 
     public static function abonos($id, $dia = -1){

@@ -374,10 +374,14 @@ $(document).on('ready', function () {
 					}
 					var gasto = parseFloat($("#total_gastos").val());
 					gasto += precio;
-					gasto += (precio * 0.13);
+					if ($("#estado_iva").val()) {
+						gasto += (precio * 0.13);
+					}
 					var deuda = parseFloat($("#total_deuda").val());
 					deuda += precio;
-					deuda += (precio * 0.13);
+					if ($("#estado_iva").val()) {
+						deuda += (precio * 0.13);
+					}
 					$("#total_gastos").val(gasto);
 					$("#total_deuda").val(deuda);
 					$("#total_gastos_label").empty().text("$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(gasto));
@@ -445,10 +449,14 @@ $(document).on('ready', function () {
 					}
 					var gasto = parseFloat($("#total_gastos").val());
 					gasto += precio;
-					gasto += (precio * 0.13);
+					if($("#estado_iva").val()){
+						gasto += (precio * 0.13);
+					}
 					var deuda = parseFloat($("#total_deuda").val());
 					deuda += precio;
-					deuda += (precio * 0.13);
+					if($("#estado_iva").val()){
+						deuda += (precio * 0.13);
+					}
 					$("#total_gastos").val(gasto);
 					$("#total_deuda").val(deuda);
 					$("#total_gastos_label").empty().text("$" + new Intl.NumberFormat('en-US', { style: "decimal", minimumFractionDigits: 2 }).format(gasto));

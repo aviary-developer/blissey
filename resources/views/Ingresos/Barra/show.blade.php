@@ -66,7 +66,15 @@
               <a class="dropdown-item" href="#" data-target="#cambio_hospitalizacion" data-toggle="modal">
                 Cambiar tipo de hospitalización
               </a>
-            @endif
+						@endif
+						<a class="dropdown-item" href="#" id="cambiar_estado_iva">
+							IVA
+							@if ($ingreso->iva)
+								<span class="badge badge-pill badge-success float-right">Activo</span>
+							@else
+							 	<span class="badge badge-pill badge-danger float-right">Inactivo</span>
+							@endif
+            </a>  
           </div>
         </li>
       @endif
@@ -76,3 +84,4 @@
 </nav>
 
 <input type="hidden" value={{number_format($total_deuda,2,'.','')}} id="deuda_para_alta">
+<input type="hidden" value="{{$ingreso->iva}}" id="estado_iva">

@@ -936,3 +936,20 @@ function edit_button(id, cantidad, precio) {
 $("#ver_receta_e").click(function (e) { 
 	ver_receta_(this);
 });
+
+/**ABR22.20 Cambio de estado del iva */
+$("#cambiar_estado_iva").click(function (e) {
+	$.ajax({
+		type: 'post',
+		url: $('#guardarruta').val() + '/ingreso/estado_iva',
+		data: {
+			i_id: $("#id").val()
+		},
+		success: function (r) {
+			if (r == 1) {
+				localStorage.setItem('msg', 'yes');
+				location.reload();
+			}
+		}
+	});
+ });
