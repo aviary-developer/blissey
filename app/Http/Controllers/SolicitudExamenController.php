@@ -843,7 +843,52 @@ class SolicitudExamenController extends Controller
     }
       Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
       return redirect('/solicitudex?tipo=examenes&vista=examenes')->with('mensaje', '¡Guardado!');
-    }else {///EDICION DE RESULTADOS DE EXAMENES
+    }else{
+      if($request->edicionQS){///EDICION QS
+          $idSolicitudCorrecta=$request->solicitud;
+          $datosControlados=$request->datoControlado;
+          $contadorControlados=0;
+          if($datosControlados){
+            $totalControlados= count($datosControlados);
+          }
+          DB::beginTransaction();
+          try{
+            $resultado= Resultado::where('f_solicitud','=',$idSolicitudCorrecta)->first();
+            if($request->hasfile('imagenExamen')){
+            $resultado->imagen = $request->file('imagenExamen')->store('public/examenes');
+            }
+            $idResultado=$resultado->id;
+            if($request->espr){
+              foreach ($request->espr as $key =>$valor) {
+              $detallesResultado= DetalleResultado::where('f_resultado','=',$idResultado)->where('f_espr','=',$valor)->first();
+              $detallesResultado->resultado=$request->resultados[$key];
+              $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
+              if($espr_evaluar_controlado->f_reactivo){
+                if($datosControlados[$contadorControlados]!="noReactivo"){
+                $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+                $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
+                $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
+                if($contadorControlados<$totalControlados-1){
+                $contadorControlados++;
+                }
+                $finalReactivo=Reactivo::find($reactivoUtilizado->id);
+                $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
+                $finalReactivo->save();
+                }
+              }
+              $detallesResultado->save();
+            }
+          }
+            DB::commit();
+            Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
+      return redirect('/examenesEvaluados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
+          }catch(Exception $e){
+            DB::rollback();
+            return redirect('/solicitudex?tipo=examenes&vista=examenes')->with('mensaje','Algo salio mal');
+          }
+        }///FIN EDICION QS
+      else{
+      ///EDICION DE RESULTADOS DE EXAMENES
       $idSolicitud=$request->solicitud;
       $resultadosGuardar=$request->resultados;
       $datosControlados=$request->datoControlado;
@@ -898,6 +943,7 @@ class SolicitudExamenController extends Controller
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
       return redirect('/examenesEvaluados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
     }
+  }
   }
   }
   public function entregarExamen($id,$idExamen,$tipo)
@@ -1038,6 +1084,44 @@ class SolicitudExamenController extends Controller
   }
   public function editarResultadosExamen($id,$idExamen)
   {
+        $solicitud=SolicitudExamen::where('id','=',$id)->first();
+        $areaExamen=Examen::find($idExamen);        
+        if($areaExamen->area=='QUIMICA SANGUINEA'){//INICIO EDICION DE Q.S.
+          $hoy = $solicitud->created_at->startOfDay();
+          $hoy2 = $solicitud->created_at->endOfDay();
+          $solicitud=SolicitudExamen::where('id','=',$id)->first();
+          $solicitudes=SolicitudExamen::where('codigo_muestra','=',$solicitud->codigo_muestra)->where('created_at','>',$hoy)->where('created_at','<',$hoy2)->get();
+          foreach ($solicitudes as $i => $soli) {
+            $solicitud=$soli;
+            $todasEspr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->get();
+            foreach ($todasEspr as $espr){
+              $esprQuimicaSanguinea[]=$espr;
+            }
+          } 
+            foreach($solicitudes as $soliComprobarResultado){
+            $resultadosTodosQuimicaSanguinea=Resultado::where('f_solicitud','=',$soliComprobarResultado->id)->first();
+            if($resultadosTodosQuimicaSanguinea){
+              $resultadosQuimicaSanguinea=$resultadosTodosQuimicaSanguinea;
+              $resultadoConSolicitudCorrecta=$resultadosTodosQuimicaSanguinea;
+              $solicitudCorrecta=$soliComprobarResultado->id;
+            }
+            }
+            $todosDetallesResultado=DetalleResultado::where('f_resultado','=', $resultadosQuimicaSanguinea->id)->get();
+            foreach ($todosDetallesResultado as $i => $detallesResultado){
+              $detallesResultadosQuimicaSanguinea[]=$detallesResultado->resultado;
+            //echo "DetalleRe ".$detallesResultado->id." - Resultado: ".$detallesResultado->resultado." - idRes ".$resultadosQuimicaSanguinea->id."<br>"; 
+              if($detallesResultado->dato_controlado!=null){
+                $tieneDatoControlado[]=$detallesResultado->dato_controlado;
+              }else{
+                $tieneDatoControlado[]=-1;
+              }
+            }
+          
+          //echo "<br>";
+        //dd($solicitud);
+        return view('SolicitudExamenes.editarResultadosQS',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado','resultadoConSolicitudCorrecta','solicitudCorrecta'));
+      }//FIN EDICION DE Q.S.
+      else{
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->first();
@@ -1062,6 +1146,7 @@ class SolicitudExamenController extends Controller
     }
     return view('SolicitudExamenes.editarResultadosExamen',compact('solicitud','espr','secciones','contadorSecciones','resultado','detallesResultado'));
   }
+}
   public function examenesEvaluados(Request $request)
   {
 		$pacientes = null;

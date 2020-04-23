@@ -3,7 +3,7 @@
   {!!Form::open(['id'=>'guardarResultadosExamen2','class' =>'form-horizontal form-label-left input_mask','url' =>'guardarResultadosExamen','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data'])!!}
   @php
     $fecha = Carbon\Carbon::now();
-    $edicionQS=false;
+    $edicionQS=true;
   @endphp
   @include('SolicitudExamenes.Barra.edited')
   <div class="col-md-10">
@@ -26,11 +26,11 @@
         </h6>
       </div>
     </div>
-
-    <input type="hidden" name="solicitud" value={{$solicitud->id}}>
+    <input type="hidden" name="edicionQS" value=true>
+    <input type="hidden" name="solicitud" value={{$solicitudCorrecta}}>
     <input type="hidden" name="estaIncompleto" value=0 id="estaIncompleto">
     <input type="hidden" name="idExamen" value={{$solicitud->f_examen}}>
-    @foreach ($espr as $esp)
+    @foreach ($esprQuimicaSanguinea as $esp)
       <input type="hidden" name="espr[]" value={{$esp->id}}>
     @endforeach
     @if ($solicitud->examen->imagen)
@@ -55,7 +55,6 @@
         </div>
       </div>
     @endif
-    @foreach ($secciones as $variable)
       <div class="x_panel">
         @php
         $contadorParametros = 1;
@@ -64,7 +63,7 @@
           <center>
             <h5>
               <i class="fa fa-flask"></i> 
-              {{$espr->first()->nombreSeccion($variable)}}
+              Química Sanguinea
             </h5>
           </center>
         </div>
@@ -79,36 +78,34 @@
             <th style="width: 10%">DC</th>
           </thead>
           <tbody>
-            @if ($espr!=null)
-              @foreach ($espr as $esp=>$valor)
-                @if ($valor->f_seccion==$variable)
+            @if ($esprQuimicaSanguinea!=null)
+            @foreach ($esprQuimicaSanguinea as $cont => $esp)
                   <tr>
                     <td>{{$contadorParametros}}</td>
-                    <td>{{$valor->nombreParametro($valor->f_parametro)}}
-                      <input type="hidden" name="nombresParametros[]" value="{{$valor->nombreParametro($valor->f_parametro)}}">
-                    </th>
-                    <td><input type="text" class="form-control form-control-sm" name="resultados[]" value="{{$detallesResultado[$esp]->resultado}}"></input></td>
-                    @if(strlen($valor->parametro->valorMinimo)>0)
+                    <td>{{$esp->nombreParametro($esp->f_parametro)}}
+                        <input type="hidden" name="nombresParametros[]" value="{{$esp->nombreParametro($esp->f_parametro)}}"></th>
+                    <td><input type="number" class="form-control form-control-sm" name="resultados[]" value="{{$detallesResultadosQuimicaSanguinea[$cont]}}"></input></td>
+                    @if(strlen($esp->parametro->valorMinimo)>0)
                       <td>
                         <span class="badge border border-primary text-primary col-12">
                           @if ($solicitud->paciente->sexo==0)
-                                {{number_format($valor->parametro->valorMinimoFemenino, 2, '.', ',')}}
-                                <input type="hidden" name="valoresMinimos[]" value="{{$valor->parametro->valorMinimoFemenino}}">
-                              @else
-                                {{number_format($valor->parametro->valorMinimo, 2, '.', ',')}}
-                                <input type="hidden" name="valoresMinimos[]" value="{{$valor->parametro->valorMinimo}}">
-                              @endif
+                            {{number_format($esp->parametro->valorMinimoFemenino, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimoFemenino}}">
+                          @else
+                            {{number_format($esp->parametro->valorMinimo, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMinimos[]" value="{{$esp->parametro->valorMinimo}}">
+                          @endif
                         </span>
                       </td>
                       <td>
                         <span class="badge border border-danger text-danger col-12">
-                          @if ($solicitud->paciente->sexo==1)
-                          {{number_format($valor->parametro->valorMaximoFemenino, 2, '.', ',')}}
-                          <input type="hidden" name="valoresMaximos[]" value="{{$valor->parametro->valorMaximoFemenino}}">
-                        @else
-                          {{number_format($valor->parametro->valorMaximo, 2, '.', ',')}}
-                          <input type="hidden" name="valoresMaximos[]" value="{{$valor->parametro->valorMaximo}}">
-                        @endif
+                          @if ($solicitud->paciente->sexo==0)
+                            {{number_format($esp->parametro->valorMaximoFemenino, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximoFemenino}}">
+                          @else
+                            {{number_format($esp->parametro->valorMaximo, 2, '.', ',')}}
+                            <input type="hidden" name="valoresMaximos[]" value="{{$esp->parametro->valorMaximo}}">
+                          @endif
                         </span>
                       </td>
                     @else
@@ -122,21 +119,24 @@
                       </td>
                     @endif
                     <td>
-                      @if ($valor->nombreUnidad($valor->parametro->unidad) == "-")
+                      @if ($esp->nombreUnidad($esp->parametro->unidad) == "-")
                         <span class="badge border border-secondary text-secondary">Ninguna</span>
                       @else
-                        {{$valor->nombreUnidad($valor->parametro->unidad)}}
+                        {{$esp->nombreUnidad($esp->parametro->unidad)}}
                       @endif
                     </td>
-                    @if ($valor->f_reactivo)
-                      <td>{!!Form::selectRange('datoControlado[]',0, 4, $detallesResultado[$esp]->dato_controlado,['class'=>'form-control form-control-sm'])!!}</td>
-                    @else
-                      <td>
+                    @if ($esp->f_reactivo)
+                    @if ($tieneDatoControlado[$cont]!=-1)
+                      <td>{!!Form::selectRange('datoControlado[]', 0, 4, $tieneDatoControlado[$cont],['class'=>'form-control form-control-sm'])!!}</td>
+                      @else
+                      <td>{!!Form::selectRange('datoControlado[]', 0, 4, 0,['class'=>'form-control form-control-sm'])!!}</td>
+                      @endif
+                      @else
+                      <td><input name="datoControlado[]" type="hidden" value="noReactivo">
                         <span class="badge border border-secondary text-secondary">Ninguno</span>
                       </td>
                     @endif
                   </tr>
-                @endif
                 @php
                   $contadorParametros++;
                 @endphp
@@ -164,17 +164,16 @@
           @endif
         </div>
       </div>
-    @endforeach
 
     <div class="x_panel">
       <center>
         <div class="">
           <label>
-            <input type="checkbox" name="checkObservacion" id="checkObservacion" class="js-switch" {{($resultado->observacion)?"checked":"unchecked"}} /> Añadir Observación
+            <input type="checkbox" name="checkObservacion" id="checkObservacion" class="js-switch" {{($resultadoConSolicitudCorrecta->observacion)?"checked":"unchecked"}} /> Añadir Observación
           </label>
         </div>
       </center>
-      <div class="form-group" id="divObservacion" style={{($resultado->observacion)?"display:block;":"display:none;"}}>
+      <div class="form-group" id="divObservacion" style={{($resultadoConSolicitudCorrecta->observacion)?"display:block;":"display:none;"}}>
         <label class="" for="direccion">Observación</label>
         <div class="input-group mb-2 mr-sm-2">
           <div class="input-group-prepend">
@@ -182,7 +181,7 @@
           </div>
           {!! Form::textarea(
             'observacion',
-            $resultado->observacion,
+            $resultadoConSolicitudCorrecta->observacion,
             ['class'=>'form-control form-control-sm',
             'placeholder'=>'Escriba la observación',
             'rows'=>'2']) !!}
@@ -194,7 +193,7 @@
       <center>
         {!! Form::button('Guardar',['id'=>'guardarLaEdicion','class'=>'btn btn-primary btn-sm']) !!}
         <button type="reset" name="button" class="btn  btn-light btn-sm">Limpiar</button>
-        <a href={!! asset('/examenesEvaluados?vista=paciente') !!} class="btn btn-light btn-sm">Cancelar</a>
+        <a href={!! asset('/examenesEvaluados?vista=examenes') !!} class="btn btn-light btn-sm">Cancelar</a>
       </center>
     </div>
   </div>
