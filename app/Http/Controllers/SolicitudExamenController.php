@@ -1240,6 +1240,74 @@ class SolicitudExamenController extends Controller
   }
   public function verExamen($id,$idExamen)
   {
+      $solicitud=SolicitudExamen::where('id','=',$id)->first();
+      $areaExamen=Examen::find($idExamen);
+      if($solicitud->created_at<"2020-04-23 00:00:00"){
+        $resultado=Resultado::where('f_solicitud','=',$id)->first();
+    $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
+    $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
+    $secciones=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->distinct()->get(['f_seccion']);;
+    $espr=ExamenSeccionParametro::where('f_examen','=',$idExamen)->where('estado','=',1)->get();
+    $contador=0;
+    $contadorSecciones=0;
+    if($espr!=null){
+      foreach ($espr as $esp) {
+        if($contador==0){
+          $secciones[$contadorSecciones]=$esp->f_seccion;
+        }else{
+          if($secciones[$contadorSecciones]==$esp->f_seccion)
+          {
+          }else {
+            $contadorSecciones++;
+            $secciones[$contadorSecciones]=$esp->f_seccion;
+          }
+        }
+        $contador++;
+      }
+    }
+    return view('SolicitudExamenes.verExamen',compact(
+      'solicitud',
+      'espr',
+      'secciones',
+      'contadorSecciones',
+      'resultado',
+      'detallesResultado'
+    ));
+      }
+      if($areaExamen->area=='QUIMICA SANGUINEA'){//INICIO VER Q.S.
+        $hoy = $solicitud->created_at->startOfDay();
+        $hoy2 = $solicitud->created_at->endOfDay();
+        $solicitud=SolicitudExamen::where('id','=',$id)->first();
+        $solicitudes=SolicitudExamen::where('codigo_muestra','=',$solicitud->codigo_muestra)->where('created_at','>',$hoy)->where('created_at','<',$hoy2)->get();
+        foreach ($solicitudes as $i => $soli) {
+          $solicitud=$soli;
+          $todasEspr=ExamenSeccionParametro::where('f_examen','=',$soli->f_examen)->get();
+          foreach ($todasEspr as $espr){
+            $esprQuimicaSanguinea[]=$espr;
+          }
+          $cambioEstadoSolicitud=SolicitudExamen::find($soli->id);
+          $cambioEstadoSolicitud->estado=3;
+          $cambioEstadoSolicitud->save();
+        } 
+          foreach($solicitudes as $soliComprobarResultado){
+          $resultadosTodosQuimicaSanguinea=Resultado::where('f_solicitud','=',$soliComprobarResultado->id)->first();
+          if($resultadosTodosQuimicaSanguinea){
+            $resultadosQuimicaSanguinea=$resultadosTodosQuimicaSanguinea;
+            $resultadoConSolicitudCorrecta=$resultadosTodosQuimicaSanguinea;
+          }
+          }
+          $todosDetallesResultado=DetalleResultado::where('f_resultado','=', $resultadosQuimicaSanguinea->id)->get();
+          foreach ($todosDetallesResultado as $i => $detallesResultado){
+            $detallesResultadosQuimicaSanguinea[]=$detallesResultado->resultado;          
+            if($detallesResultado->dato_controlado!=null){
+              $tieneDatoControlado[]=$detallesResultado->dato_controlado;
+            }else{
+              $tieneDatoControlado[]=-1;
+            }
+          }
+      return view('SolicitudExamenes.verExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado','resultadoConSolicitudCorrecta'));
+    //FIN VER Q.S.
+    }else{
     $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
@@ -1283,6 +1351,7 @@ class SolicitudExamenController extends Controller
     return view('SolicitudUltras.show',compact('solicitud','resultado','detalleResultadoUltrasonografia'));
   }*/
   }
+}
   public function examenesEntregados(Request $request){
 		$examenes = null;
 		$pacientes = null;
