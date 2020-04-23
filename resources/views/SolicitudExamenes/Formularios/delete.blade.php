@@ -25,6 +25,9 @@
         <a id="evaluar" href= {!! asset('/evaluarExamen/'.$solicitud->id.'/'.$solicitud->f_examen)!!} class="btn btn-dark btn-sm" title="Evaluar"/>
           <i class="fa fa-paste"></i>
         </a>
+        <button id="eliminar" type="button" class="btn btn-danger btn-sm" title="Eliminar"/>
+          <i class="fa fa-times"></i>
+        </button>
       @endif
     @else
       @if (Auth::user()->tipoUsuario != "Recepción")  

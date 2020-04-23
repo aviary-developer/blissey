@@ -66,7 +66,7 @@
           
           <table class="table table-hover table-striped table-sm">
             <thead>
-              <th>Código</th>
+              <th>Muestra</th>
               <th>Fecha</th>
               <th>Evaluación</th>
               <th>Opciones</th>

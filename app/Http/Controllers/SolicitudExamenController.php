@@ -376,7 +376,7 @@ class SolicitudExamenController extends Controller
           }else{
           $solicitud->codigo_muestra = $muestraQuimicaSanguinea." noQS";//LE PONGO LA MISMA DE QS
           }
-					$solicitud->estado = 0;
+					$solicitud->estado = 1;
 					if($request->f_ingreso == null){
 						// $solicitud->f_transaccion = $transaccion_id;
 					}else{
