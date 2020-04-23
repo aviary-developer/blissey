@@ -1242,7 +1242,7 @@ class SolicitudExamenController extends Controller
   {
       $solicitud=SolicitudExamen::where('id','=',$id)->first();
       $areaExamen=Examen::find($idExamen);
-      if($solicitud->created_at<"2020-04-23 00:00:00"){
+      if($solicitud->created_at<"2020-04-23 09:00:00"){
         $resultado=Resultado::where('f_solicitud','=',$id)->first();
     $detallesResultado=DetalleResultado::where('f_resultado','=', $resultado->id)->get();
     $solicitud=SolicitudExamen::where('id','=',$id)->where('f_examen','=',$idExamen)->first();
