@@ -303,4 +303,10 @@ class ExamenController extends Controller
     $servicio->save();
     return Response::json('sucess');
   }
+  public function actualizarNombreExamen(Request $request){
+    $examen = Examen::find($request->idExamen);
+    $examen->nombreExamen=$request->nombreExamen;
+    $examen->save();
+    return Response::json('sucess');
+  }
 }

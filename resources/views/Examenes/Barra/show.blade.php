@@ -22,6 +22,9 @@
       <li class="nav-item">
         <a class="nav-link active" href="#" id="editar">Editar precio</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#" id="editarNameExamen">Editar nombre</a>
+      </li>
       @if ($examen->estado)
         <li class="nav-item">
           <a class="nav-link active" href="#" onclick={{"baja(".$examen->id.")"}}>Papelera</a>
@@ -40,6 +43,8 @@
 </nav>
 <input type="hidden" name="u" id="ubi" value="show">
 <input type="hidden" id="precio" value={{number_format($servicio->precio,2,'.',',')}}>
+<input type="hidden" id="nameExamen" value="{{$examen->nombreExamen}}">
+<input type="hidden" id="idExamenCambiar" value="{{$examen->id}}">
 <input type="hidden" id="id-s" value={{$servicio->id}}>
 
 <script type="text/javascript">
@@ -142,6 +147,59 @@
           type: 'error',
           title: '¡Error!',
           text: 'Ingrese una cantidad valida',
+          toast: true,
+          timer: 5000,
+          showConfirmButton: false,
+        });
+        }
+      }
+    });
+  });
+
+  $("#editarNameExamen").click(function(e){
+    var idExamen = $("#idExamenCambiar").val();
+    var nameExamen = $("#nameExamen").val();
+    var html_ = '<p>Ingrese el nombre del examen</p><input type="text" class="swal2-input" id="nameExamenModal" autocomplete="off" value="'+ nameExamen +'">';
+    swal({
+    title: 'Editar nombre de examen',
+    html: html_,
+    showCancelButton: true,
+    confirmButtonText: '¡Guardar!',
+    cancelButtonText: 'Cancelar',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-light'
+    }).then((result) => {
+      if (result.value) {
+        var nombre = $("#nameExamenModal").val();
+        if(nombre.length>0){
+          if(nombre.length<=4){
+            swal({
+          type: 'error',
+          title: '¡Error!',
+          text: 'El nombre debe ser mayor a 4 caracteres',
+          toast: true,
+          timer: 5000,
+          showConfirmButton: false,
+        });
+          }else{
+           $.ajax({
+            url: $('#guardarruta').val() + "/actualizarNombreExamen",
+            type: "POST",
+            data: {
+              idExamen: idExamen,
+              nombreExamen: nombre,
+            },
+            success: function () {
+              localStorage.setItem('msg', 'yes');
+              location.reload();
+            }
+          });
+          }
+        }else{
+          swal({
+          type: 'error',
+          title: '¡Error!',
+          text: 'Ingrese nombre',
           toast: true,
           timer: 5000,
           showConfirmButton: false,
