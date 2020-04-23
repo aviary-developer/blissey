@@ -101,7 +101,7 @@
                       </td>
                       <td>
                         <span class="badge border border-danger text-danger col-12">
-                          @if ($solicitud->paciente->sexo==0)
+                          @if ($solicitud->paciente->sexo==1)
                           {{number_format($valor->parametro->valorMaximoFemenino, 2, '.', ',')}}
                           <input type="hidden" name="valoresMaximos[]" value="{{$valor->parametro->valorMaximoFemenino}}">
                         @else

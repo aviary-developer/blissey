@@ -75,15 +75,23 @@
                     <td>{{$contadorParametros}}</td>
                     <td>{{$valor->nombreParametro($valor->f_parametro)}}</td>
                     <td>{{$detallesResultado[$esp]->resultado}}</td>
-                    @if($valor->parametro->valorMinimo)
+                    @if(strlen($valor->parametro->valorMinimo)>0)
                       <td>
                         <span class="badge border border-primary text-primary col-12">
-                          {{number_format($valor->parametro->valorMinimo, 2, '.', ',')}}
+                          @if ($solicitud->paciente->sexo==0)
+                                {{number_format($valor->parametro->valorMinimoFemenino, 2, '.', ',')}}
+                              @else
+                                {{number_format($valor->parametro->valorMinimo, 2, '.', ',')}}
+                              @endif
                         </span>
                       </td>
                       <td>
                         <span class="badge border border-danger text-danger col-12">
+                          @if ($solicitud->paciente->sexo==1)
+                          {{number_format($valor->parametro->valorMaximoFemenino, 2, '.', ',')}}
+                        @else
                           {{number_format($valor->parametro->valorMaximo, 2, '.', ',')}}
+                        @endif
                         </span>
                       </td>
                     @else

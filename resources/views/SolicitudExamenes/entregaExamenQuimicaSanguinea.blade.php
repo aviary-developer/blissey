@@ -38,7 +38,7 @@
 			<strong><h4 style="font-weight: 600;">Química Sanguinea</h4></strong>
 		</center>
 		<div>
-			<span style="float:right">Fecha de evaluación: <b>{{$resultadosQuimicaSanguinea[0]->created_at->format('d/m/Y')}}</b></span>
+			<span style="float:right">Fecha de evaluación: <b>{{$resultadoConSolicitudCorrecta->created_at->format('d/m/Y')}}</b></span>
 			<span>Paciente: <strong>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</strong> &nbsp;  Edad: <strong>{{$solicitud->paciente->fechaNacimiento->age}} años</strong></span>
 		</div>
 		<div>
@@ -61,7 +61,7 @@
 									@foreach ($esprQuimicaSanguinea as $esp =>$valor)
 											<tr>
 													<td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
-													<td><center>{{$detallesResultadosQuimicaSanguinea[$esp]->resultado}}</center></td>
+													<td><center>{{$detallesResultadosQuimicaSanguinea[$esp]}}</center></td>
 													@if (strlen($valor->parametro->valorMinimo)>0)
 														@if ($solicitud->paciente->sexo==0)
 															@if (strlen($valor->parametro->valorMinimoFemenino)>0)
@@ -80,8 +80,8 @@
 													@else
 														<th>-</th><th>-</th>
 													@endif
-													@if ($detallesResultadosQuimicaSanguinea[$esp]->dato_controlado!=null)
-														<td><center>D.C.={{$detallesResultadosQuimicaSanguinea[$esp]->dato_controlado}}</center></td>
+													@if ($tieneDatoControlado[$esp]!=-1)
+														<td><center>D.C.={{$tieneDatoControlado[$esp]}}</center></td>
 													@endif
 												</tr>
 										@endforeach
@@ -98,19 +98,17 @@
 						</table>
 					</center>
 				</div>
-				@foreach ($resultadosQuimicaSanguinea as $item => $rqs)
 					@php
-					if($rqs->observacion!=null){
+					if($resultadoConSolicitudCorrecta->observacion!=null){
 						/* if($observacion==""){
 							$observacion=$rqs->observacion;	
 						}else{
 							$observacion=$observacion.", ".$rqs->observacion;
 						}*/
-						$observacionGeneral=$rqs->observacion;
+						$observacionGeneral=$resultadoConSolicitudCorrecta->observacion;
 						$banderaObservacion=true;
 					}
 					@endphp
-				@endforeach
 			@if($banderaObservacion)
 				<br>
 				<div class="col-xs-12">
@@ -129,8 +127,8 @@
 				<div class="col-md-12 col-sm-12 col-12" style="margin-top: 20px">
 					<div>
 							<span>
-								<img src={{asset(Storage::url($resultadosQuimicaSanguinea[0]->laboratorista->sello))}} style="width:250px">
-								<img src={{asset(Storage::url($resultadosQuimicaSanguinea[0]->laboratorista->firma))}} style="width:180px;">
+								<img src={{asset(Storage::url($resultadoConSolicitudCorrecta->laboratorista->sello))}} style="width:250px">
+								<img src={{asset(Storage::url($resultadoConSolicitudCorrecta->laboratorista->firma))}} style="width:180px;">
 								@php
 									$empresa=App\Empresa::find(1);
 								@endphp
