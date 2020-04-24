@@ -1024,9 +1024,83 @@ class SolicitudExamenController extends Controller
                 $tieneDatoControlado[]=-1;
               }
             }
-          
+          ///INICIO DE ORDENAMIENTO
+          $solicitudParaOrdenar=SolicitudExamen::where('id','=',$id)->first();
+          $arrayDeEsprOrdenados=array();
+          $arrayEsprNoOrdenado=array();
+          $arrayDeDetallesOrdenados=array();
+          $arrayDeDetallesNoOrdenados=array();
+          foreach($esprQuimicaSanguinea as $i => $prueba){
+            $palabra=$solicitudParaOrdenar->quitar_tildes($prueba->nombreParametro($prueba->f_parametro));
+            $palabraMinuscula=strtolower($palabra);
+            if($palabraMinuscula=="glucosa"){
+              $espr1=$prueba;
+              $resultados1=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="creatinina"){
+              $espr2=$prueba;
+              $resultados2=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="nitrogeno ureico"){
+              $espr3=$prueba;
+              $resultados3=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="colesterol total"){
+              $espr4=$prueba;
+              $resultados4=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="colesterol hdl"){
+              $espr5=$prueba;
+              $resultados5=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="colesterol ldl"){
+              $espr6=$prueba;
+              $resultados6=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="trigliceridos"){
+              $espr7=$prueba;
+              $resultados7=$detallesResultadosQuimicaSanguinea[$i];
+            }elseif($palabraMinuscula=="acido urico"){
+              $espr8=$prueba;
+              $resultados8=$detallesResultadosQuimicaSanguinea[$i];
+            }else{
+              $arrayEsprNoOrdenado[]=$prueba;
+              $arrayDeDetallesNoOrdenados[]=$detallesResultadosQuimicaSanguinea[$i];
+            }
+          }
+          if(isset($espr1)){
+            $arrayDeEsprOrdenados[]=$espr1;
+            $arrayDeDetallesOrdenados[]=$resultados1;
+          }
+          if(isset($espr2)){
+            $arrayDeEsprOrdenados[]=$espr2;
+            $arrayDeDetallesOrdenados[]=$resultados2;
+          }
+          if(isset($espr3)){
+            $arrayDeEsprOrdenados[]=$espr3;
+            $arrayDeDetallesOrdenados[]=$resultados3;
+          }
+          if(isset($espr4)){
+            $arrayDeEsprOrdenados[]=$espr4;
+            $arrayDeDetallesOrdenados[]=$resultados4;
+          }
+          if(isset($espr5)){
+            $arrayDeEsprOrdenados[]=$espr5;
+            $arrayDeDetallesOrdenados[]=$resultados5;
+          }
+          if(isset($espr6)){
+            $arrayDeEsprOrdenados[]=$espr6;
+            $arrayDeDetallesOrdenados[]=$resultados6;
+          }
+          if(isset($espr7)){
+            $arrayDeEsprOrdenados[]=$espr7;
+            $arrayDeDetallesOrdenados[]=$resultados7;
+          }
+          if(isset($espr8)){
+            $arrayDeEsprOrdenados[]=$espr8;
+            $arrayDeDetallesOrdenados[]=$resultados8;
+          }
+          echo "<br>";
+          $arrayFinalEspr= array_merge($arrayDeEsprOrdenados,$arrayEsprNoOrdenado);
+          $arrayFinalResultados= array_merge($arrayDeDetallesOrdenados,$arrayDeDetallesNoOrdenados);
+          $esprQuimicaSanguinea=$arrayFinalEspr;
+          $detallesResultadosQuimicaSanguinea=$arrayFinalResultados;
+          ///FINAL DE ORDENAMIENTO
           //echo "<br>";
-        //dd($solicitud);
         $header = view('PDF.header.laboratorio');
         $footer = view('PDF.footer.numero_pagina');
         $main = view('SolicitudExamenes.entregaExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado','resultadoConSolicitudCorrecta'));
