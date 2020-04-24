@@ -1029,6 +1029,8 @@ class SolicitudExamenController extends Controller
           $arrayEsprNoOrdenado=array();
           $arrayDeDetallesOrdenados=array();
           $arrayDeDetallesNoOrdenados=array();
+          $arrayDeControladosOrdenados=array();
+          $arrayDeControladosNoOrdenado=array();
           $banderaParametroLargo=false;
           foreach($esprQuimicaSanguinea as $i => $prueba){
             $palabra=$solicitudParaOrdenar->quitar_tildes($prueba->nombreParametro($prueba->f_parametro));
@@ -1039,69 +1041,87 @@ class SolicitudExamenController extends Controller
             if($palabraMinuscula=="glucosa"){
               $espr1=$prueba;
               $resultados1=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado1=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="creatinina"){
               $espr2=$prueba;
               $resultados2=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado2=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="nitrogeno ureico"){
               $espr3=$prueba;
               $resultados3=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado3=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="colesterol total"){
               $espr4=$prueba;
               $resultados4=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado4=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="colesterol hdl"){
               $espr5=$prueba;
               $resultados5=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado5=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="colesterol ldl"){
               $espr6=$prueba;
               $resultados6=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado6=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="trigliceridos"){
               $espr7=$prueba;
               $resultados7=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado7=$tieneDatoControlado[$i];
             }elseif($palabraMinuscula=="acido urico"){
               $espr8=$prueba;
               $resultados8=$detallesResultadosQuimicaSanguinea[$i];
+              $controlado8=$tieneDatoControlado[$i];
             }else{
               $arrayEsprNoOrdenado[]=$prueba;
               $arrayDeDetallesNoOrdenados[]=$detallesResultadosQuimicaSanguinea[$i];
+              $arrayDeControladosNoOrdenado[]=$tieneDatoControlado[$i];
             }
           }
           if(isset($espr1)){
             $arrayDeEsprOrdenados[]=$espr1;
             $arrayDeDetallesOrdenados[]=$resultados1;
+            $arrayDeControladosOrdenados[]=$controlado1;
           }
           if(isset($espr2)){
             $arrayDeEsprOrdenados[]=$espr2;
             $arrayDeDetallesOrdenados[]=$resultados2;
+            $arrayDeControladosOrdenados[]=$controlado2;
           }
           if(isset($espr3)){
             $arrayDeEsprOrdenados[]=$espr3;
             $arrayDeDetallesOrdenados[]=$resultados3;
+            $arrayDeControladosOrdenados[]=$controlado3;
           }
           if(isset($espr4)){
             $arrayDeEsprOrdenados[]=$espr4;
             $arrayDeDetallesOrdenados[]=$resultados4;
+            $arrayDeControladosOrdenados[]=$controlado4;
           }
           if(isset($espr5)){
             $arrayDeEsprOrdenados[]=$espr5;
             $arrayDeDetallesOrdenados[]=$resultados5;
+            $arrayDeControladosOrdenados[]=$controlado5;
           }
           if(isset($espr6)){
             $arrayDeEsprOrdenados[]=$espr6;
             $arrayDeDetallesOrdenados[]=$resultados6;
+            $arrayDeControladosOrdenados[]=$controlado6;
           }
           if(isset($espr7)){
             $arrayDeEsprOrdenados[]=$espr7;
             $arrayDeDetallesOrdenados[]=$resultados7;
+            $arrayDeControladosOrdenados[]=$controlado7;
           }
           if(isset($espr8)){
             $arrayDeEsprOrdenados[]=$espr8;
             $arrayDeDetallesOrdenados[]=$resultados8;
+            $arrayDeControladosOrdenados[]=$controlado8;
           }
-          echo "<br>";
           $arrayFinalEspr= array_merge($arrayDeEsprOrdenados,$arrayEsprNoOrdenado);
           $arrayFinalResultados= array_merge($arrayDeDetallesOrdenados,$arrayDeDetallesNoOrdenados);
+          $arrayFinalControlados= array_merge($arrayDeControladosOrdenados,$arrayDeControladosNoOrdenado);
           $esprQuimicaSanguinea=$arrayFinalEspr;
           $detallesResultadosQuimicaSanguinea=$arrayFinalResultados;
+          $tieneDatoControlado=$arrayFinalControlados;
           ///FINAL DE ORDENAMIENTO
           //echo "<br>";
         $header = view('PDF.header.laboratorio');
