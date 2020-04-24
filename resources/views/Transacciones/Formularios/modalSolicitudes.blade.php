@@ -17,7 +17,7 @@
         <div class="x_panel m_panel">
 
 
-            <div class="form-group col-sm-8">
+            <div class="form-group col-sm-12">
               <label class="" for="nombre">Buscar</label>
               <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
