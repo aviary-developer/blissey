@@ -50,8 +50,13 @@
 		</div>
 		<br>
 		<div class="row">
+		@if ($banderaParametroLargo==true)
+		<div class="col-xs-2"></div>
+		<div class="col-xs-8">
+		@else
 		<div class="col-xs-3"></div>
-				<div class="col-xs-6">
+		<div class="col-xs-6">
+		@endif
 					<center>
 						<table class="table-simple">
 							<thead>
@@ -64,25 +69,25 @@
 								@if ($esprQuimicaSanguinea!=null)
 									@foreach ($esprQuimicaSanguinea as $esp =>$valor)
 											<tr>
-													<td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
+													<td><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></td>
 													<td><center>{{$detallesResultadosQuimicaSanguinea[$esp]}}</center></td>
 													@if (strlen($valor->parametro->valorMinimo)>0)
 														@if ($solicitud->paciente->sexo==0)
 															@if (strlen($valor->parametro->valorMinimoFemenino)>0)
 															<td><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
 															@else
-															<th>-</th>
+															<td>-</td>
 															@endif
 														@else
 															@if (strlen($valor->parametro->valorMinimo)>0)
 															<td><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
 															@else
-															<th>-</th>
+															<td>-</td>
 															@endif
 														@endif
 														<td><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
 													@else
-														<th>-</th><th>-</th>
+														<td><center>-</center></td><td><center>-</center></td>
 													@endif
 													@if ($tieneDatoControlado[$esp]!=-1)
 														<td><center>D.C.={{$tieneDatoControlado[$esp]}}</center></td>

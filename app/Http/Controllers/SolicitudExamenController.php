@@ -1029,9 +1029,13 @@ class SolicitudExamenController extends Controller
           $arrayEsprNoOrdenado=array();
           $arrayDeDetallesOrdenados=array();
           $arrayDeDetallesNoOrdenados=array();
+          $banderaParametroLargo=false;
           foreach($esprQuimicaSanguinea as $i => $prueba){
             $palabra=$solicitudParaOrdenar->quitar_tildes($prueba->nombreParametro($prueba->f_parametro));
             $palabraMinuscula=strtolower($palabra);
+            if(strlen($palabraMinuscula)>20){
+              $banderaParametroLargo=true;
+            }
             if($palabraMinuscula=="glucosa"){
               $espr1=$prueba;
               $resultados1=$detallesResultadosQuimicaSanguinea[$i];
@@ -1102,7 +1106,7 @@ class SolicitudExamenController extends Controller
           //echo "<br>";
         $header = view('PDF.header.laboratorio');
         $footer = view('PDF.footer.numero_pagina');
-        $main = view('SolicitudExamenes.entregaExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado','resultadoConSolicitudCorrecta'));
+        $main = view('SolicitudExamenes.entregaExamenQuimicaSanguinea',compact('solicitud','solicitudes','esprQuimicaSanguinea','resultadosQuimicaSanguinea','detallesResultadosQuimicaSanguinea','tieneDatoControlado','resultadoConSolicitudCorrecta','banderaParametroLargo'));
         $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header);
         return $pdf->stream('ExamenQuimicaSanguinea_'.$solicitud->id.'.pdf');
       }//FIN ENTREGA Q.S.

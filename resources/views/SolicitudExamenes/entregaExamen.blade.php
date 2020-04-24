@@ -87,7 +87,7 @@
 									@foreach ($espr as $esp =>$valor)
 										@if ($valor->f_seccion==$variable)
 											<tr>
-													<td style="width:35%"><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></th>
+													<td style="width:35%"><center>{{$valor->nombreParametro($valor->f_parametro)}}</center></td>
 													<td style="width:20%"><center>{{$detallesResultado[$esp]->resultado}}</center></td>
 													@if($banderaValores==1)
 															@if (strlen($valor->parametro->valorMinimo)>0 || strlen($valor->parametro->unidad)>0)
@@ -95,13 +95,13 @@
 																	@if (strlen($valor->parametro->valorMinimoFemenino)>0)
 																		<td style="width:30%"><center>{{number_format($valor->parametro->valorMinimoFemenino, 2, '.', '')." - ".number_format($valor->parametro->valorMaximoFemenino, 2, '.', '')}}</center></td>
 																	@else
-																		<th>-</th>
+																		<td>-</td>
 																	@endif
 																@else
 																	@if (strlen($valor->parametro->valorMinimo)>0)
 																		<td style="width:30%"><center>{{number_format($valor->parametro->valorMinimo, 2, '.', '')." - ".number_format($valor->parametro->valorMaximo, 2, '.', '')}}</center></td>
 																	@else
-																		<th>-</th>
+																		<td>-</td>
 																	@endif
 																@endif
 																<td style="width:20%"><center>{{$valor->nombreUnidad($valor->parametro->unidad)}}</center></td>
