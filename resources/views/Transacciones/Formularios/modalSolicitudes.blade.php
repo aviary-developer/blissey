@@ -13,6 +13,23 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-sm-12">
+        <div class="x_panel m_panel">
+
+
+            <div class="form-group col-sm-8">
+              <label class="" for="nombre">Buscar</label>
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-search"></i></div>
+                </div>
+                {!! Form::text('resultadoSolicitud',null,['id'=>'resultadoSolicitud','class'=>'form-control form-control-sm','placeholder'=>'Buscar']) !!}
+              </div>
+            </div>
+				
+					</div>
+					
+				</div>
         <div class="col-sm-12">                  
                   <div class="x_panel m_panel">
                       <div class="flex-row">
@@ -24,7 +41,7 @@
                 $solicitudes=App\SolicitudExamen::where('cancelado',false)->get();
             @endphp
             <div class="flex-row" style="height:300px; overflow-x:hidden; overflow-y:scroll;">
-                      <table class="table table-sm">
+                      <table class="table table-sm" class="tablaBuscarS">
                           <thead>
                               <th>Paciente</th>
                               <th>Examen</th>
@@ -53,7 +70,7 @@
                                     }
                               @endphp
                                   <tr>
-                                    <td>{{$solicitud->nombrePaciente($solicitud->f_paciente)}}</td> 
+                                    <td class="nombreS">{{$solicitud->nombrePaciente($solicitud->f_paciente)}}</td> 
                                     <td>
                                          {{$nsolicitud}}   
                                     </td>

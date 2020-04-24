@@ -149,6 +149,7 @@
   {!!Html::script('js/scripts/Examenes.js')!!}
   {!!Html::script('js/scripts/Examenes2.js')!!}
   {!!Html::script('js/scripts/Transacciones.js')!!}
+  {!!Html::script('js/scripts/BSolicitud.js')!!}
   {!!Html::script('js/scripts/Ingreso.js')!!}
   {!!Html::script('js/scripts/Ingreso2.js')!!}
   {!!Html::script('js/scripts/IngresoX.js')!!}
