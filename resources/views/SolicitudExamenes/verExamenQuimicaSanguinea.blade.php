@@ -85,7 +85,7 @@
                   </td>
                   <td>
                     <span class="badge border border-danger text-danger col-12">
-                      @if ($solicitud->paciente->sexo==1)
+                      @if ($solicitud->paciente->sexo==0)
                       {{number_format($valor->parametro->valorMaximoFemenino, 2, '.', ',')}}
                     @else
                       {{number_format($valor->parametro->valorMaximo, 2, '.', ',')}}

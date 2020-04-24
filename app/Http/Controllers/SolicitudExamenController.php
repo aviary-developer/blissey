@@ -725,13 +725,10 @@ class SolicitudExamenController extends Controller
               $detallesResultado->resultado=$resultadosGuardar[$key];
               $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
               if($espr_evaluar_controlado->f_reactivo){
-                if($datosControlados[$contadorControlados]!="noReactivo"){
-                $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+                if($datosControlados[$key]!="noReactivo"){
+                $detallesResultado->dato_controlado=$datosControlados[$key];
                 $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
-                $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
-                if($contadorControlados<$totalControlados-1){
-                $contadorControlados++;
-                }
+                $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$key]+1);
                 $finalReactivo=Reactivo::find($reactivoUtilizado->id);
                 $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
                 $finalReactivo->save();
@@ -846,6 +843,7 @@ class SolicitudExamenController extends Controller
     }else{
       if($request->edicionQS){///EDICION QS
           $idSolicitudCorrecta=$request->solicitud;
+          $estadoSoli=SolicitudExamen::find($idSolicitudCorrecta);
           $datosControlados=$request->datoControlado;
           $contadorControlados=0;
           if($datosControlados){
@@ -863,14 +861,11 @@ class SolicitudExamenController extends Controller
               $detallesResultado= DetalleResultado::where('f_resultado','=',$idResultado)->where('f_espr','=',$valor)->first();
               $detallesResultado->resultado=$request->resultados[$key];
               $espr_evaluar_controlado=ExamenSeccionParametro::find($valor);
-              if($espr_evaluar_controlado->f_reactivo){
-                if($datosControlados[$contadorControlados]!="noReactivo"){
-                $detallesResultado->dato_controlado=$datosControlados[$contadorControlados];
+              if($espr_evaluar_controlado->f_reactivo!=null){
+                if($datosControlados[$key]!="noReactivo"){
+                $detallesResultado->dato_controlado=$datosControlados[$key];
                 $reactivoUtilizado=Reactivo::where('id','=',$espr_evaluar_controlado->f_reactivo)->first();
-                $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$contadorControlados]+1);
-                if($contadorControlados<$totalControlados-1){
-                $contadorControlados++;
-                }
+                $cantidadReactivoRestante=$reactivoUtilizado->contenidoPorEnvase-($datosControlados[$key]+1);
                 $finalReactivo=Reactivo::find($reactivoUtilizado->id);
                 $finalReactivo->contenidoPorEnvase=$cantidadReactivoRestante;
                 $finalReactivo->save();
@@ -881,7 +876,11 @@ class SolicitudExamenController extends Controller
           }
             DB::commit();
             Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
-      return redirect('/examenesEvaluados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
+            if($estadoSoli->estado==2){
+              return redirect('/examenesEvaluados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
+            }elseif($estadoSoli->estado==3){
+              return redirect('/examenesEntregados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
+            }
           }catch(Exception $e){
             DB::rollback();
             return redirect('/solicitudex?tipo=examenes&vista=examenes')->with('mensaje','Algo salio mal');

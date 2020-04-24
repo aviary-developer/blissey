@@ -39,7 +39,11 @@
 		</center>
 		<div>
 			<span style="float:right">Fecha de evaluación: <b>{{$resultadoConSolicitudCorrecta->created_at->format('d/m/Y')}}</b></span>
-			<span>Paciente: <strong>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</strong> &nbsp;  Edad: <strong>{{$solicitud->paciente->fechaNacimiento->age}} años</strong></span>
+			<span>Paciente: <strong>{{$solicitud->paciente->nombre." ".$solicitud->paciente->apellido}}</strong> &nbsp;
+				@if($solicitud->paciente->fechaNacimiento->age!=0)
+				  Edad: <strong>{{$solicitud->paciente->fechaNacimiento->age}} años</strong>
+				@endif
+			</span>
 		</div>
 		<div>
 			<span> Muestra: <strong>{{$solicitud->examen->nombreMuestra($solicitud->examen->tipoMuestra)}}</strong></span>

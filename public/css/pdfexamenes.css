@@ -54,7 +54,7 @@
   }
   
   .table-simple td{
-    border-top: white 1px solid;
+    border-top: black 1px solid;
     border-right: white 1px hidden;
     border-bottom: black 1px solid;
     border-left: white 1px hidden;
