@@ -149,7 +149,7 @@
   <div class="x_panel">
     <center>
       <div class="btn-group">
-        @if($tipo==1)
+        @if($tipo==0)
         {!! Form::submit('Guardar',['class'=>'btn btn-primary btn-sm']) !!}
         @else
         {!! Form::button('Guardar',['class'=>'btn btn-primary btn-sm','onClick'=>'validarFactura()']) !!}

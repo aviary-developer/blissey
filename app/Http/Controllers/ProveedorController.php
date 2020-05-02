@@ -83,14 +83,16 @@ class ProveedorController extends Controller
           $nombrev=$request['nombrev'];
           $apellidov=$request['apellidov'];
           $telefonov=$request['telefonov'];
-          for($a=0;$a<$contador;$a++){
-            $dp=Dependiente::create([
-              'f_proveedor'=>$id_proveedor,
-              'nombre'=>$nombrev[$a],
-              'apellido'=>$apellidov[$a],
-              'telefono'=>$telefonov[$a],
-            ]);
-            Bitacora::bitacora('store','dependientes','visitadores',$dp->id);
+          if($contador!=null){
+            for($a=0;$a<$contador;$a++){
+              $dp=Dependiente::create([
+                'f_proveedor'=>$id_proveedor,
+                'nombre'=>$nombrev[$a],
+                'apellido'=>$apellidov[$a],
+                'telefono'=>$telefonov[$a],
+              ]);
+              Bitacora::bitacora('store','dependientes','visitadores',$dp->id);
+            }
           }
           Bitacora::bitacora('store','proveedors','proveedores',$proveedor->id);
           return redirect('/proveedores')->with('mensaje','¡Guardado!');
