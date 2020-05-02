@@ -1560,4 +1560,33 @@ class SolicitudExamenController extends Controller
       return view('SolicitudExamenes.historialExamenes',compact('pacientes','solicitudes','examenes','vista'));
     }
   }
+  public function bacteriologia(Request $request){
+    $pacientes = null;
+    $examenes = null;
+    if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
+      $vista = $request->get("vista");
+      if($vista == "paciente"){
+        $pacientes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','<',2)
+            ->where('examens.area','=','BACTERIOLOGIA')
+            ->distinct()
+            ->get(['f_paciente']);
+      }else{
+        $examenes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','<',2)
+            ->where('examens.area','=','BACTERIOLOGIA')
+            ->distinct()
+            ->get(['f_examen']);        
+      }
+      $solicitudes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','<',2)
+            ->where('examens.area','=','BACTERIOLOGIA')
+            ->orderBy('solicitud_examens.created_at','asc')
+            ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
+            'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            ->get();
+      return view('SolicitudExamenes.indexBacteriologia',compact('pacientes','solicitudes','examenes','vista'));
+    }
+  }
 }

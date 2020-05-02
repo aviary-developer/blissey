@@ -23,9 +23,15 @@
         Paciente
       </span>  
     @else
-      <span class="badge border-primary border text-primary">
-        Exámenes
-      </span>
+      @if(isset($bacteriologia))
+        <span class="badge border-primary border text-primary">
+          Bacteriología
+        </span>
+      @else
+        <span class="badge border-primary border text-primary">
+          Exámenes
+        </span>
+      @endif
     @endif
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +47,11 @@
           Ver
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          @if (isset($bacteriologia))
+          <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+            Historial
+          </a>
+          @else
           @if ($est == "solicitudes")
             <a class="dropdown-item" href={!! asset('/examenesEvaluados?vista='.$vista.'&tipo=examenes') !!}>
               Evaluados
@@ -74,17 +85,22 @@
             <a class="dropdown-item" href={!! asset('/historialExamenes?vista='.$vista.'&tipo=examenes') !!}>
               Historial
             </a>
+          @endif
           @endif  
           <div class="dropdown-divider"></div>
-          @if ($est == "evaluados")
-            <a class="dropdown-item" href={!! asset('/examenesEvaluados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
-          @elseif($est == "entregados")
-            <a class="dropdown-item" href={!! asset('/examenesEntregados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
-          @elseif($est == "historial")
-            <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
-          @else
-            <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
-          @endif
+            @if ($est == "evaluados")
+              <a class="dropdown-item" href={!! asset('/examenesEvaluados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+            @elseif($est == "entregados")
+              <a class="dropdown-item" href={!! asset('/examenesEntregados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+            @elseif($est == "historial")
+              <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+            @else
+              @if (isset($bacteriologia))
+              <a class="dropdown-item" href={!! asset('/solicitudesBacteriologia?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+              @else
+                <a class="dropdown-item" href={!! asset('/solicitudex?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+              @endif
+            @endif
             @if ($vista != "paciente")
               Por Paciente
             @else

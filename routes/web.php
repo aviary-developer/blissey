@@ -294,6 +294,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::match(['get','post'],'/impresionExamenesPorPaciente/{paciente}/{bandera}','SolicitudExamenController@impresionExamenesPorPaciente');
   Route::match(['get','post'],'/examenesEntregados','SolicitudExamenController@examenesEntregados');
   Route::match(['get','post'],'/historialExamenes','SolicitudExamenController@historialExamenes');
+  Route::match(['get','post'],'/solicitudesBacteriologia','SolicitudExamenController@bacteriologia');
   //Pacientes
   Route::resource('pacientes','PacienteController');
   Route::match(['get','post'],'/desactivatePaciente/{id}','PacienteController@desactivate');

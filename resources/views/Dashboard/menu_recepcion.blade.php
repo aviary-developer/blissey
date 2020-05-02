@@ -38,6 +38,9 @@
     <a href={{asset( '/solicitudex?tipo=examenes&vista=paciente')}}>Laboratorio Clínico</a>
     </li>
     <li>
+      <a href={{asset( '/solicitudesBacteriologia?tipo=examenes&vista=examenes')}}>Bacteriología</a>
+    </li>
+    <li>
       <a href={{asset( '/solicitudex?tipo=ultras&vista=paciente')}}>Ultrasonografía</a>
     </li>
     <li>
