@@ -74,7 +74,15 @@
             <tbody>
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_examen == $examen->f_examen)
+                @if(isset($bacteriologia))
+                  @if ($solicitud->completo==false)
+                  <tr class="table-warning" title="No está completamente evaluado">
+                  @else
+                  <tr>  
+                  @endif
+                @else
                   <tr>
+                @endif
                     @php
                       $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
                   @endphp

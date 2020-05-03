@@ -839,6 +839,10 @@ class SolicitudExamenController extends Controller
       }
     }
       Bitacora::bitacora('store','resultados','solicitudex',$idResultado);
+      $queAreaExamen=SolicitudExamen::where('id','=',$request->solicitud)->first();
+      if($queAreaExamen->examen->area=="BACTERIOLOGIA"){
+        return redirect('/solicitudesBacteriologia?tipo=examenes&vista=examenes')->with('mensaje', '¡Guardado!');
+      }
       return redirect('/solicitudex?tipo=examenes&vista=examenes')->with('mensaje', '¡Guardado!');
     }else{
       if($request->edicionQS){///EDICION QS
@@ -940,6 +944,10 @@ class SolicitudExamenController extends Controller
       }
       DB::commit();
       Bitacora::bitacora('update','resultados','solicitudex',$idResultado);
+      $queAreaExamen=SolicitudExamen::where('id','=',$request->solicitud)->first();
+      if($queAreaExamen->examen->area=="BACTERIOLOGIA"){
+        return redirect('/solicitudesBacteriologia?tipo=examenes&vista=examenes')->with('mensaje', '¡Guardado!');
+      }
       return redirect('/examenesEvaluados?tipo=examenes&vista=examenes')->with('mensaje', '¡Editado!');
     }
   }
@@ -1567,19 +1575,19 @@ class SolicitudExamenController extends Controller
       $vista = $request->get("vista");
       if($vista == "paciente"){
         $pacientes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
-            ->where('solicitud_examens.estado','<',2)
+            ->where('solicitud_examens.estado','<=',2)
             ->where('examens.area','=','BACTERIOLOGIA')
             ->distinct()
             ->get(['f_paciente']);
       }else{
         $examenes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
-            ->where('solicitud_examens.estado','<',2)
+            ->where('solicitud_examens.estado','<=',2)
             ->where('examens.area','=','BACTERIOLOGIA')
             ->distinct()
             ->get(['f_examen']);        
       }
       $solicitudes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
-            ->where('solicitud_examens.estado','<',2)
+            ->where('solicitud_examens.estado','<=',2)
             ->where('examens.area','=','BACTERIOLOGIA')
             ->orderBy('solicitud_examens.created_at','asc')
             ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
