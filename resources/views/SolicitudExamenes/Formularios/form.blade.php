@@ -75,20 +75,25 @@
 var solicitudes=0;
 
   $("#save_me").click(function(){
+    var totalPrecio=parseFloat($("#totalPrecio").text());
     var valido = new Validated('n_paciente');
     valido.required();
     is_valid = valido.value(true);
     if(is_valid){
+      if(totalPrecio>0.00){
       swal({
     title: '¿Se enviarán los resultados a clínica?',
-    text: 'Se agregará una notificación a cada examen',
+    html: 'Para seguir agregando solicitudes presione la tecla <u><strong>ESC</strong></u>',
     type: 'question',
     showCancelButton: true,
     confirmButtonText: 'Si, ¡Se enviarán!',
     cancelButtonText: 'No, ¡No se enviarán!',
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-light',
-    buttonsStyling: false
+    buttonsStyling: false,
+    closeOnClickOutside: false,
+  closeOnEsc: true,
+  allowOutsideClick: false,
   }).then((result) => {
     if (result.value) {
       $('#enviarClinica').val(1);
@@ -103,7 +108,16 @@ var solicitudes=0;
       $('#form').submit();
     }
   });
-      //$('#form').submit();
+      }else{
+        swal({
+            type: 'error',
+            html: '<span class="text-uppercase font-weight-bold mb-1">Seleccione al menos un examen</span>',
+            toast: true,
+            position: 'top-end',
+            timer: '4000',
+            showConfirmButton: false
+          });
+      }
     }
   });
 

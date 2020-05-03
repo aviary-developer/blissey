@@ -76,7 +76,7 @@
                 @if($solicitud->f_examen == $examen->f_examen)
                 @if(isset($bacteriologia))
                   @if ($solicitud->completo==false)
-                  <tr class="table-warning" title="No está completamente evaluado">
+                  <tr class="table-danger" title="No está completamente evaluado">
                   @else
                   <tr>  
                   @endif

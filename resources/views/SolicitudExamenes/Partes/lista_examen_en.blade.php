@@ -25,7 +25,11 @@
             <tbody>
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_examen == $examen->f_examen)
-                  <tr>
+                @if ($solicitud->completo==false)
+                <tr class="table-danger" title="No está completamente evaluado">
+                @else
+                <tr>  
+                @endif
                     @php
                       $muestraNoQs= explode(" ", $solicitud->codigo_muestra." siQS");
                   @endphp

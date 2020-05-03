@@ -70,12 +70,26 @@ class SolicitudExamenController extends Controller
     }else if(Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
     $vista = $request->get("vista");
     if($vista == "paciente"){
-      $pacientes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->orderBy('estado')->orderBy('created_at','desc')->get();
+      $pacientes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','<',2)
+            ->where('examens.area','!=','BACTERIOLOGIA')
+            ->distinct()
+            ->get(['f_paciente']);
     }else{
-      $examenes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','<',2)->where('f_examen','!=',null)->orderBy('estado')->orderBy('created_at','desc')->get();
+      $examenes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','<',2)
+            ->where('examens.area','!=','BACTERIOLOGIA')
+            ->distinct()
+            ->get(['f_examen']); 
     }
+    $solicitudes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','<',2)
+            ->where('examens.area','!=','BACTERIOLOGIA')
+            ->orderBy('solicitud_examens.created_at','asc')
+            ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
+            'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            ->get();
     return view('SolicitudExamenes.index',compact('pacientes','solicitudes','examenes','vista'));
   }
   }
@@ -1286,13 +1300,27 @@ class SolicitudExamenController extends Controller
       }
       return view('SolicitudUltras.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
     }elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
-    if($vista == "paciente"){
-      $pacientes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
-      $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->orderBy('estado')->get();
-    }else{
-      $examenes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
-      $solicitudes = SolicitudExamen::where('estado','=',2)->where('f_examen','!=',null)->orderBy('estado')->get();
-    }
+      if($vista == "paciente"){
+        $pacientes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+              ->where('solicitud_examens.estado','=',2)
+              ->where('examens.area','!=','BACTERIOLOGIA')
+              ->distinct()
+              ->get(['f_paciente']);
+      }else{
+        $examenes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+              ->where('solicitud_examens.estado','=',2)
+              ->where('examens.area','!=','BACTERIOLOGIA')
+              ->distinct()
+              ->get(['f_examen']); 
+      }
+      $solicitudes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+              ->where('solicitud_examens.estado','=',2)
+              ->where('examens.area','!=','BACTERIOLOGIA')
+              ->orderBy('solicitud_examens.created_at','asc')
+              ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
+              'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
+              'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+              ->get();
     return view('SolicitudExamenes.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
   }
   }
@@ -1558,14 +1586,39 @@ class SolicitudExamenController extends Controller
       }
       return view('SolicitudUltras.historialExamenes',compact('pacientes','solicitudes','examenes','vista'));
     }elseif (Auth::user()->tipoUsuario == "Laboaratorio" || (Auth::user()->tipoUsuario == "Recepción" && $request->tipo=="examenes")){
-      if($vista == "paciente"){
+      if(isset($request->bacteriologia)){
+        if($vista == "paciente"){
+          $pacientes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+              ->where('solicitud_examens.estado','=',3)
+              ->where('examens.area','=','BACTERIOLOGIA')
+              ->distinct()
+              ->get(['f_paciente']);
+        }else{
+          $examenes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+              ->where('solicitud_examens.estado','=',3)
+              ->where('examens.area','=','BACTERIOLOGIA')
+              ->distinct()
+              ->get(['f_examen']);        
+        }
+        $solicitudes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+              ->where('solicitud_examens.estado','=',3)
+              ->where('examens.area','=','BACTERIOLOGIA')
+              ->orderBy('solicitud_examens.created_at','asc')
+              ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
+              'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
+              'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+              ->get();
+              return view('SolicitudExamenes.historialBacteriologia',compact('pacientes','solicitudes','examenes','vista'));
+      }else{
+        if($vista == "paciente"){
         $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
         $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
-      }else{
+        }else{
         $examenes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->distinct()->get(['f_examen']);
         $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->orderBy('estado')->get();
-      }
+        }
       return view('SolicitudExamenes.historialExamenes',compact('pacientes','solicitudes','examenes','vista'));
+      }
     }
   }
   public function bacteriologia(Request $request){

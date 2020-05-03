@@ -1,5 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light  sticky-top mb-2" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href={!! asset('/solicitudex?tipo=examenes&vista=paciente') !!}>
+  @if (isset($bacteriologia))
+  <a class="navbar-brand" href={!! asset('/solicitudesBacteriologia?tipo=examenes&vista=examenes') !!}>
+    @else
+    <a class="navbar-brand" href={!! asset('/solicitudex?tipo=examenes&vista=paciente') !!}>      
+    @endif
     @if (isset($bacteriologia))
     Bacteriología
     @else
@@ -52,7 +56,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           @if (isset($bacteriologia))
-          <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+          <a class="dropdown-item" href={!! asset('/solicitudesBacteriologia?vista='.$vista.'&tipo=examenes') !!}>
+            Solicitudes
+          </a>
+          <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"").'&bacteriologia=1') !!}>
             Historial
           </a>
           @else
@@ -97,7 +104,11 @@
             @elseif($est == "entregados")
               <a class="dropdown-item" href={!! asset('/examenesEntregados?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
             @elseif($est == "historial")
+            @if (isset($bacteriologia))
+              <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"").'&bacteriologia=1') !!}>
+              @else
               <a class="dropdown-item" href={!! asset('/historialExamenes?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>
+              @endif
             @else
               @if (isset($bacteriologia))
               <a class="dropdown-item" href={!! asset('/solicitudesBacteriologia?tipo=examenes&vista='.(($vista!="paciente")?"paciente":"")) !!}>

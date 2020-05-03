@@ -26,7 +26,7 @@
               @foreach($solicitudes as $solicitud)
                 @if($solicitud->f_examen == $examen->f_examen)
                 @if ($solicitud->completo==false)
-                <tr class="table-warning">
+                <tr class="table-danger" title="No está completamente evaluado">
                 @else
                 <tr>  
                 @endif
