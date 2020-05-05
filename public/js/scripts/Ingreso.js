@@ -127,9 +127,21 @@ $(document).on('ready', function () {
     var v_fecha = $("#pac_fecha").val();
     var v_telefono = $("#pac_telefono").val();
 
-    if (v_nombre == "" || v_apellido == "") {
-      swal('¡Error!', 'El nombre y apellido son obligatorios, intentelo de nuevo', 'error');
-    } else {
+    var is_valid = true;
+
+    var valido = new Validated('pac_nombre');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    var valido = new Validated('pac_apellido');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    var valido = new Validated('pac_fecha');
+    valido.required();
+    is_valid = valido.value(is_valid);
+
+    if (is_valid) {
       var opcion = $("#seleccion").val();
       if (opcion == "paciente") {
         var input_nombre = $("#n_paciente");
@@ -250,7 +262,7 @@ $(document).on('ready', function () {
           transaccion: transaccion_id,
           tipo: "examenes"
         },
-				success: function (respuesta) {
+        success: function (respuesta) {
           if (respuesta) {
             localStorage.setItem('msg', 'yes');
             location.reload();
@@ -728,8 +740,8 @@ function recarga() {
 var aux;
 
 function accion24(tipo, id, objeto = null) {
-	//0: Eliminar, 1: Editar y 2: Cambiar estado
-	//6: Editar el precio
+  //0: Eliminar, 1: Editar y 2: Cambiar estado
+  //6: Editar el precio
   if (tipo == 1) {
     var html_ = '<p>Ingrese la nueva cantidad correcta</p><input class="swal2-input" type="number" step="1" min="1" id="edit_cantidad" value="' + objeto + '">';
     swal({
@@ -882,45 +894,45 @@ function accion24(tipo, id, objeto = null) {
         });
       }
     });
-	} else if (tipo == 6) {
-		var html_ = '<p>Ingrese el nuevo precio unitario correcto</p><input class="swal2-input" type="number" step="1" min="0" id="edit_precio" value="' + objeto + '">';
-		swal({
-			title: "Editar",
-			html: html_,
-			showCancelButton: true,
-			confirmButtonText: '¡Guardar!',
-			cancelButtonText: 'Cancelar',
-			confirmButtonClass: 'btn btn-primary',
-			cancelButtonClass: 'btn btn-light'
-		}).then((result) => {
-			if (result.value) {
-				var precio = $("#edit_precio").val();
-				$.ajax({
-					url: $('#guardarruta').val() + "/editar24",
-					type: "post",
-					data: {
-						id: id,
-						precio: precio
-					},
-					success: function (res) {
-						if (res) {
-							localStorage.setItem('msg', 'yes');
-							location.reload();
-						} else {
-							swal({
-								type: 'error',
-								toast: true,
-								title: '¡Algo salio mal!',
-								position: 'top-end',
-								showConfirmButton: false,
-								timer: 4000
-							});
-						}
-					}
-				});
-			}
-		});
-	}else {
+  } else if (tipo == 6) {
+    var html_ = '<p>Ingrese el nuevo precio unitario correcto</p><input class="swal2-input" type="number" step="1" min="0" id="edit_precio" value="' + objeto + '">';
+    swal({
+      title: "Editar",
+      html: html_,
+      showCancelButton: true,
+      confirmButtonText: '¡Guardar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-light'
+    }).then((result) => {
+      if (result.value) {
+        var precio = $("#edit_precio").val();
+        $.ajax({
+          url: $('#guardarruta').val() + "/editar24",
+          type: "post",
+          data: {
+            id: id,
+            precio: precio
+          },
+          success: function (res) {
+            if (res) {
+              localStorage.setItem('msg', 'yes');
+              location.reload();
+            } else {
+              swal({
+                type: 'error',
+                toast: true,
+                title: '¡Algo salio mal!',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000
+              });
+            }
+          }
+        });
+      }
+    });
+  } else {
     swal({
       title: 'Eliminar registro',
       text: '¿Está seguro? ¡El registro no podrá ser recuperado!',
