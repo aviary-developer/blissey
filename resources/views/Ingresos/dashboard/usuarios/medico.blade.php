@@ -16,7 +16,10 @@
         @include('Ingresos.dashboard.partes.historial_m')
         @include('Ingresos.dashboard.partes.ver_consulta')
         @include('Ingresos.dashboard.partes.ver_ingresos')
-        @include('Ingresos.dashboard.partes.acciones_ver_consulta')
+				@include('Ingresos.dashboard.partes.acciones_ver_consulta')
+				<div class="col-sm-12" style="height: 450px; overflow-x:hidden; overflow-y:scroll; display:none" id="ver_seguimiento">
+					@include('Ingresos.dashboard.partes.ver_seguimiento')
+				</div>
       </div>
     </div>
   </div>

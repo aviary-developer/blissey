@@ -41,8 +41,18 @@ async function v_consulta(id, tipo, nivel = 0) {
     $("#historial").hide();
     $("#ver_consulta").show();
     $("#action_bar").show();
-    $("#ver_ingresos").hide();
-  } else {
+		$("#ver_ingresos").hide();
+		$("#ver_seguimiento").hide();
+	} else if (tipo == -1) {
+		
+		await v_seguimiento(id);
+
+		$("#historial").hide();
+		$("#ver_consulta").hide();
+		$("#action_bar").show();
+		$("#ver_ingresos").hide();
+		$("#ver_seguimiento").show();
+	}else {
 
     await $.ajax({
       type: 'get',
@@ -58,51 +68,86 @@ async function v_consulta(id, tipo, nivel = 0) {
           var ruta = "/";
           if (ubicacion == "localhost") {
             ruta = "/blissey/public/";
-          }
-          var html = '<div class="col-sm-12 m-1 border border-secondary rounded">' +
-            '<div class="flex-row">' +
-            '<center>' +
-            '<h6 class="text-primary mt-1">' +
-            '<i class="far fa-calendar"></i> ' +
-            r.fechas[key] +
-            '</h6>' +
-            '</center>' +
-            '</div>' +
-            '<div class="flex-row mb-1">' +
-            '<div class="col-sm-10">' +
-            '<div class="flex-row">' +
-            '<center>' +
-            '<span class="font-weight-bold">' +
-            '<i class="fa fa-stethoscope"></i> ' +
-            r.medicos[key] +
-            '</span>' +
-            '</center>' +
-            '</div>' +
-            '<div class="flex-row mb-1">' +
-            '<center>' +
-            '<i>' +
-            '<span>' +
-            '"' + value.diagnostico + '"' +
-            '</span>' +
-            '</i>' +
-            '</center>' +
-            '</div>' +
-            '<div class="flex-row">' +
-            '<center><span class="col-6 badge font-sm mb-2 badge-info">Evolución</span></center>' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-sm-2">' +
-            '<div class="btn-group">' +
-            '<button type="button" class="mb-2 btn btn-sm btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',3,1)">' +
-            '<i class="fa fa-eye"></i>' +
-            '</button>' +
-						'<a href="' + $('#guardarruta').val() + '/recetas/' + value.id + '" target="_blank" class="btn btn-sm btn-primary mb-2">' +
-            '<i class="fas fa-prescription"></i>' +
-            '</a>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+					}
+					if (r.tipo[key] == "Consulta") {
+						var html = '<div class="col-sm-12 m-1 border border-secondary rounded">' +
+							'<div class="flex-row">' +
+							'<center>' +
+							'<h6 class="text-primary mt-1">' +
+							'<i class="far fa-calendar"></i> ' +
+							r.fechas[key] +
+							'</h6>' +
+							'</center>' +
+							'</div>' +
+							'<div class="flex-row mb-1">' +
+							'<div class="col-sm-10">' +
+							'<div class="flex-row">' +
+							'<center>' +
+							'<span class="font-weight-bold">' +
+							'<i class="fa fa-stethoscope"></i> ' +
+							r.medicos[key] +
+							'</span>' +
+							'</center>' +
+							'</div>' +
+							'<div class="flex-row mb-1">' +
+							'<center>' +
+							'<i>' +
+							'<span>' +
+							'"' + value.diagnostico + '"' +
+							'</span>' +
+							'</i>' +
+							'</center>' +
+							'</div>' +
+							'<div class="flex-row">' +
+							'<center><span class="col-6 badge font-sm mb-2 badge-info">Evolución</span></center>' +
+							'</div>' +
+							'</div>' +
+							'<div class="col-sm-2">' +
+							'<div class="btn-group">' +
+							'<button type="button" class="mb-2 btn btn-sm btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',3,1)">' +
+							'<i class="fa fa-eye"></i>' +
+							'</button>' +
+							'<a href="' + $('#guardarruta').val() + '/recetas/' + value.id + '" target="_blank" class="btn btn-sm btn-primary mb-2">' +
+							'<i class="fas fa-prescription"></i>' +
+							'</a>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>';
+					} else {
+						var html = '<div class="col-sm-12 m-1 border border-secondary rounded">' +
+							'<div class="flex-row">' +
+							'<center>' +
+							'<h6 class="text-primary mt-1">' +
+							'<i class="far fa-calendar"></i> ' +
+							r.fechas[key] +
+							'</h6>' +
+							'</center>' +
+							'</div>' +
+							'<div class="flex-row mb-1">' +
+							'<div class="col-sm-10">' +
+							'<div class="flex-row">' +
+							'<center>' +
+							'<span class="font-weight-bold">' +
+							'<i class="fa fa-stethoscope"></i> ' +
+							r.medicos[key] +
+							'</span>' +
+							'</center>' +
+							'</div>' +
+							'<div class="flex-row">' +
+							'<center><span class="col-6 badge font-sm mb-2 badge-dark">Seguimiento</span></center>' +
+							'</div>' +
+							'</div>' +
+							'<div class="col-sm-2">' +
+							'<div class="btn-group">' +
+							'<button type="button" class="mb-2 btn btn-sm btn-dark" style="margin: auto" onclick="v_consulta(' + value.id + ',-1,1)">' +
+							'<i class="fa fa-eye"></i>' +
+							'</button>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>';
+					}
 
           $("#ver_ingresos").append(html);
         });
@@ -112,7 +157,8 @@ async function v_consulta(id, tipo, nivel = 0) {
     $("#historial").hide();
     $("#ver_consulta").hide();
     $("#ver_ingresos").show();
-    $("#action_bar").show();
+		$("#action_bar").show();
+		$("#ver_seguimiento").hide();
   }
   $("#nivel").val(nivel);
   $("#back_historial").show();
@@ -126,7 +172,8 @@ $("#back_historial").on('click', function (e) {
     $("#historial").show();
     $("#ver_consulta").hide();
     $("#action_bar").hide();
-    $("#ver_ingresos").hide();
+		$("#ver_ingresos").hide();
+		$("#ver_seguimiento").hide();
 
     $("#back_historial").hide();
   } else {
@@ -134,7 +181,7 @@ $("#back_historial").on('click', function (e) {
     $("#ver_consulta").hide();
     $("#action_bar").show();
     $("#ver_ingresos").show();
-
+		$("#ver_seguimiento").hide();
     $("#nivel").val(0);
   }
 });
@@ -431,6 +478,23 @@ function ver_receta_(obj) {
 			div.append(html);
 
 			$("#copy_receta").show();
+		}
+	});
+}
+
+//MAY4.20 Actualizacion del seguimiento de enfermeria
+function v_seguimiento(id) {
+	 $.ajax({
+		type: 'get',
+		url: $('#guardarruta').val() + '/seguimientos',
+		data: {
+			id: id
+		},
+		success: function (r) {
+			$("#fecha_seguimiento").text(r.fecha_f);
+			$("#descripcion_seguimiento").text(r.descripcion);
+			$("#enfermeria_seguimiento").text(r.nombre);
+			$("#id_seguimiento").val(r.f_ingreso);
 		}
 	});
 }

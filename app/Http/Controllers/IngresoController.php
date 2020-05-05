@@ -18,6 +18,7 @@ use App\ultrasonografia;
 use App\SolicitudExamen;
 use App\Abono;
 use App\Hospitalizacion;
+use App\Seguimiento;
 use App\Especialidad;
 use Illuminate\Http\Request;
 use App\Transacion;
@@ -588,10 +589,13 @@ class IngresoController extends Controller
 			}
 			/**Lectura de recetas para usuarios de tipo enfermería */
 			$indicaciones = [];
+			$seguimientos = [];
 			if(Auth::user()->tipoUsuario == "Enfermería"){
 				$indicaciones = Receta::join('consultas','recetas.f_consulta','consultas.id')->join('users','consultas.f_medico','users.id')->where('consultas.f_ingreso',$ingreso->id)->select('recetas.*','users.nombre','users.apellido','users.sexo')->orderBy('recetas.created_at','desc')->get();
+				$seguimientos = Seguimiento::where('f_ingreso',$ingreso->id)->orderBy('fecha','desc')->get();
 			}
       return view('Ingresos.dashboard.show',compact(
+				'seguimientos',
 				'indicaciones',
 				'detalle_hc',
         'ingreso',
