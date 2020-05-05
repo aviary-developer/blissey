@@ -121,11 +121,11 @@ $(document).on('ready', function () {
   $("#guardar_paciente_nuevo").on('click', function (e) {
     e.preventDefault();
 
-    var v_nombre = $("#pac_nombre").val();
-    var v_apellido = $("#pac_apellido").val();
-    var v_sexo = $("#pac_sexo").val();
-    var v_fecha = $("#pac_fecha").val();
-    var v_telefono = $("#pac_telefono").val();
+    var v_nombre = $("#pac_nombre");
+    var v_apellido = $("#pac_apellido");
+    var v_sexo = $("#pac_sexo");
+    var v_fecha = $("#pac_fecha");
+    var v_telefono = $("#pac_telefono");
 
     var is_valid = true;
 
@@ -155,11 +155,11 @@ $(document).on('ready', function () {
         type: "POST",
         url: $('#guardarruta').val() + "/guardar_paciente",
         data: {
-          nombre: v_nombre,
-          apellido: v_apellido,
-          sexo: v_sexo,
-          fechaNacimiento: v_fecha,
-          telefono: v_telefono
+          nombre: v_nombre.val(),
+          apellido: v_apellido.val(),
+          sexo: v_sexo.val(),
+          fechaNacimiento: v_fecha.val(),
+          telefono: v_telefono.val()
         },
         success: function (respuesta) {
           if (respuesta != false) {
