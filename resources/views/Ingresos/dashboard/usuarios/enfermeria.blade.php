@@ -6,14 +6,19 @@
   </div>
 @else
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<div class="x_panel border border-danger rounded">
 				@include('Ingresos.dashboard.partes.signos_r')
 			</div>
 		</div>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<div class="x_panel border border-info rounded">
 				@include('Ingresos.dashboard.partes.indicaciones_e')
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="x_panel border border-info rounded">
+				@include('Ingresos.dashboard.partes.seguimiento_e')
 			</div>
 		</div>
 	</div>
@@ -51,4 +56,5 @@
 			</div>
 		</div>
 	</div>
+	{!!Html::script('js/scripts/Seguimiento.js')!!}
 @endif

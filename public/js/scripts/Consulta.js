@@ -62,40 +62,62 @@ $(document).on("ready", function () {
       rayo.push(value.value);
     });
 
-    await $.ajax({
-      type: "post",
-      url: $('#guardarruta').val() + "/consulta",
-      data: {
-        motivo: $("#motivo").val(),
-        historia: $("#historia").val(),
-        examen_fisico: $("#ex_fisico").val(),
-        diagnostico: $("#diagnostico").val(),
-        f_ingreso: $("#id").val(),
-        nombre_producto: nombre_producto,
-        cant_dosis: cant_dosis,
-        forma_dosis: forma_dosis,
-        cant_frec: cant_frec,
-        forma_frec: forma_frec,
-        cant_duracion: cant_duracion,
-        forma_duracion: forma_duracion,
-        observacion: observacion,
-        f_examen: examen,
-        f_tac: tac,
-        f_ultrasonografia: ultra,
-        f_rayox: rayo,
-				texto: contenedor.val(),
-				nombre_receta: nombre_receta
-      },
-      success: function (r) {
-        if (r != 0) {
-          swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
-          window.open($('#guardarruta').val() + "/recetas/" + r, '_blank');
-          location.reload();
-        } else {
-          swal("¡Error!", "Algo salio mal", "error");
-        }
-      }
-    });
+		let guardar = false;
+		if (nombre_receta == "") {
+			swal({
+				title: 'Guardar Receta Sin Nombre',
+				text: '¿Está seguro que desea guardar la receta sin nombre? ¡Ya no será posible asignarle un nombre después!',
+				type: 'question',
+				showCancelButton: true,
+				confirmButtonText: 'Si, ¡Guardar!',
+				cancelButtonText: 'No, ¡Cancelar!',
+				confirmButtonClass: 'btn btn-primary',
+				cancelButtonClass: 'btn btn-light',
+				buttonsStyling: false
+			}).then((result) => {
+				if (result.value) {
+					guardar = true;
+				}
+			});
+		} else {
+			guardar = true;
+		}
+		if (guardar) {
+			await $.ajax({
+				type: "post",
+				url: $('#guardarruta').val() + "/consulta",
+				data: {
+					motivo: $("#motivo").val(),
+					historia: $("#historia").val(),
+					examen_fisico: $("#ex_fisico").val(),
+					diagnostico: $("#diagnostico").val(),
+					f_ingreso: $("#id").val(),
+					nombre_producto: nombre_producto,
+					cant_dosis: cant_dosis,
+					forma_dosis: forma_dosis,
+					cant_frec: cant_frec,
+					forma_frec: forma_frec,
+					cant_duracion: cant_duracion,
+					forma_duracion: forma_duracion,
+					observacion: observacion,
+					f_examen: examen,
+					f_tac: tac,
+					f_ultrasonografia: ultra,
+					f_rayox: rayo,
+					texto: contenedor.val(),
+					nombre_receta: nombre_receta
+				},
+				success: function (r) {
+					if (r != 0) {
+						swal("¡Hecho!", "Accion realizada satisfactoriamente", "success");
+						window.open($('#guardarruta').val() + "/recetas/" + r, '_blank');
+						location.reload();
+					} else {
+						swal("¡Error!", "Algo salio mal", "error");
+					}
+				}
+			});
+		}
   });
 
   $("#btn_lista").on("click", function (e) {

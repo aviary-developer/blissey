@@ -7,9 +7,11 @@ use App\Producto;
 use App\Bitacora;
 use App\Receta;
 use App\DetalleReceta;
+use App\Seguimiento;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ConsultaController extends Controller
 {
@@ -202,15 +204,26 @@ class ConsultaController extends Controller
     }
 
     public function ingresos(Request $request){
-        $consultas = Consulta::where('f_ingreso',$request->id)->orderBy('created_at','desc')->get();
+				$seguimientos = DB::table('seguimientos as s')->where('f_ingreso',$request->id)->select('s.id','s.descripcion','s.created_at','s.f_enfermeria as f_medico');
+				$consultas = DB::table('consultas as c')->where('f_ingreso',$request->id)->select('c.id','c.diagnostico','c.created_at','c.f_medico')->union($seguimientos)->orderBy('created_at','desc')->get();
         setlocale(LC_ALL,'es');
         $fechas = [];
-        $medicos = [];
-        foreach($consultas as $k => $consulta){
-            $fechas[$k] = $consulta->created_at->formatLocalized('%d de %B de %Y a las %H:%M');
-            $medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
+				$medicos = [];
+				$tipo = [];
+        foreach($consultas as $k => $consulta_a){
+						$consulta = new Consulta;
+						$consulta->f_medico = $consulta_a->f_medico;
+						$consulta->created_at = new Carbon($consulta_a->created_at);
+						$fechas[$k] = $consulta->created_at->formatLocalized('%d de %B de %Y a las %H:%M');
+						if($consulta->medico->tipoUsuario == "Médico"){
+							$medicos[$k] = (($consulta->medico->sexo)?'Dr. ':'Dra. ').$consulta->medico->nombre.' '.$consulta->medico->apellido;
+							$tipo[$k] = "Consulta";
+						}else{
+							$medicos[$k] = $consulta->medico->nombre . ' ' . $consulta->medico->apellido;
+							$tipo[$k] = "Seguimiento";
+						}
         }
-        return (compact('consultas','medicos','fechas'));
+        return (compact('consultas','medicos','fechas','tipo'));
     }
 
     public function datos_producto (Request $request){
