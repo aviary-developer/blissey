@@ -148,18 +148,44 @@
 			var nivel = $('select[name="niveles"]').val();
 
 			if(fecha != null && lote.length > 0 && estante != ""){
-				fila.parent('center').parent('td').parent('tr').find('#fecha_vencimiento_h').val(fecha);
-				fila.parent('center').parent('td').parent('tr').find('#lote_h').val(lote);
-				fila.parent('center').parent('td').parent('tr').find('#estante_h').val(estante);
-				fila.parent('center').parent('td').parent('tr').find('#nivel_h').val(nivel);
-				fila.parent('center').parent('td').parent('tr').find('#state-of').val("true");
-	
-				$("#lote_i").val("");
-	
-				fila.removeClass('btn-success').addClass("btn-info");
-				fila.empty().append('<i class="fa fa-search"></i>');
-	
-				$("#almacenar").modal('hide');
+				var hoy = new Date();
+				var dd = hoy.getDate();
+				var mm = hoy.getMonth()+1;
+				var yyyy = hoy.getFullYear();
+
+				if(dd<10) {
+					dd='0'+dd;
+				} 
+
+				if(mm<10) {
+					mm='0'+mm;
+				} 
+				actual=yyyy+"-"+mm+"-"+dd;
+
+				if(fecha>actual){
+					fila.parent('center').parent('td').parent('tr').find('#fecha_vencimiento_h').val(fecha);
+					fila.parent('center').parent('td').parent('tr').find('#lote_h').val(lote);
+					fila.parent('center').parent('td').parent('tr').find('#estante_h').val(estante);
+					fila.parent('center').parent('td').parent('tr').find('#nivel_h').val(nivel);
+					fila.parent('center').parent('td').parent('tr').find('#state-of').val("true");
+		
+					$("#lote_i").val("");
+		
+					fila.removeClass('btn-success').addClass("btn-info");
+					fila.empty().append('<i class="fa fa-search"></i>');
+		
+					$("#almacenar").modal('hide');
+
+				}else{
+					swal({
+						type: 'error',
+						title: '¡Error!',
+						text: 'Ingrese una fecha válida',
+						toast: true,
+						timer: 4000,
+						showConfirmButton: false
+					});	
+				}
 			}else{
 				swal({
 					type: 'error',

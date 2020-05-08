@@ -56,7 +56,7 @@
                         @endif
                         @if($movimiento->tipo==8)
                           @php
-                          $suma=$movimiento->devolucion;
+                          $suma=number_format($movimiento->devolucion,2,'.',',');
                           $total=$total+$suma;
                           @endphp
                           $ {{number_format($suma,2,'.',',')}}
@@ -79,7 +79,7 @@
                         @endif
                         @if($movimiento->tipo==9)
                           @php
-                          $resta=$movimiento->devolucion;
+                          $resta=number_format($movimiento->devolucion,2,'.',',');
                           $total=$total-$resta;
                           @endphp
                           $ {{number_format($resta,2,'.',',')}}

@@ -36,7 +36,11 @@
                             </td>
                             <td>{{$detalle->divisionProducto->producto->nombre}}</td>
                           @else
-                            <td>{{$detalle->servicio->nombre}}</td>
+                            <td>
+                              @if($detalle->servicio->categoria->nombre=="Ultrasonografía" || $detalle->servicio->categoria->nombre=="TAC" || $detalle->servicio->categoria->nombre=="Rayos X")
+                            {{$detalle->servicio->categoria->nombre." "}}
+                          @endif
+                              {{$detalle->servicio->nombre}}</td>
                             <td></td>
                           @endif
       

@@ -78,7 +78,7 @@
             </thead>
             @if ($detalle->importe>0 && $contador==3)
                 <tr>
-                    <td>{{$contador-4}}</td>
+                    <td>{{$contador-2}}</td>
                     <td></td>
                     <td>Inicio</td>
                     <td>{{date_format($detalle->updated_at,'g:i A')}}</td>
@@ -108,7 +108,7 @@
                             @endif
                             @if($movimiento->tipo==8)
                                 @php
-                                    $suma=$movimiento->devolucion;
+                                    $suma=number_format($movimiento->devolucion,2,'.',',');
                                     $total=$total+$suma;
                                 @endphp
                                 $ {{number_format($suma,2,'.',',')}}
@@ -131,7 +131,7 @@
                             @endif
                             @if($movimiento->tipo==9)
                                 @php
-                                    $resta=$movimiento->devolucion;
+                                    $resta=number_format($movimiento->devolucion,2,'.',',');
                                     $total=$total-$resta;
                                 @endphp
                                 $ {{number_format($resta,2,'.',',')}}
