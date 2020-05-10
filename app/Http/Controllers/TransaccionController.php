@@ -633,7 +633,7 @@ class TransaccionController extends Controller
       }
     }
     public static function validarFactura($factura){
-      $contador=Transacion::where('factura',$factura)->where('tipo',2)->count();
+      $contador=Transacion::where('factura',$factura)->where('f_ingreso',null)->where('tipo',2)->count();
       if($contador>0){
         return 0;
       }else{

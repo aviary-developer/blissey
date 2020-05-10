@@ -149,7 +149,7 @@ class Transacion extends Model
                                   });
         }
         public function scopeFiltroFecha($query,$fecha,$hasta){
-          $hasta=date("Y-m-d",strtotime($fecha."+ 1 days"));
+          // $hasta=date("Y-m-d",strtotime($fecha."+ 1 days"));
           $query->where('fecha',$fecha)->orWhere('updated_at',"<",$hasta);
         }
         public function scopefiltroTipo($query){
@@ -198,7 +198,7 @@ class Transacion extends Model
           }
         }
         public static function verDevolucion($factura){
-            $cantidad=Transacion::where('factura',$factura)->where('devolucion','<>',0)->count();
+            $cantidad=Transacion::where('factura',$factura)->where('tipo',9)->where('devolucion','<>',0)->count();
             if($cantidad>0){
               return false;
             }else{

@@ -148,7 +148,7 @@ class DetalleCajaController extends Controller
       $tipoArqueo=2;
       $cierre="";
       $fecha=$detalle->created_at->formatLocalized('%Y-%m-%d');//Farmacia
-      if($detalle->user->tipoUsuario==1){//Recepción
+      if($detalle->user->tipoUsuario=="Recepción"){//Recepción
         $fechaaux=date("Y-m-d",strtotime($fecha."+ 1 days"));
         $ha=DetalleCaja::whereBetween('created_at',[$detalle->created_at,$fechaaux." 07:00:00"])
         ->where('id','>',$detalle->id)
