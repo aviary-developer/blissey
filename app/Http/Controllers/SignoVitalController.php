@@ -110,8 +110,8 @@ class SignoVitalController extends Controller
         $signos = SignoVital::find($id);
         setlocale(LC_ALL,'es');
         $fecha = $signos->created_at->formatLocalized('%d de %B de %Y a las %H:%M');
-        $sexo = $signos->ingreso->paciente->sexo;
-        $edad = $signos->ingreso->paciente->fechaNacimiento->age;
+        $sexo = $signos->ingreso->hospitalizacion->paciente->sexo;
+        $edad = $signos->ingreso->hospitalizacion->paciente->fechaNacimiento->age;
         return (compact('signos','fecha','sexo','edad'));
     }
 }
