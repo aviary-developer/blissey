@@ -95,7 +95,7 @@
             @else
 
               @if($create)
-                <option value="Gerencia">Gerencia</option>
+                {{--  <option value="Gerencia">Gerencia</option>  --}}
                 <option value="Médico">Médico</option>
                 <option value="Recepción">Recepción</option>
                 <option value="Laboaratorio">Laboratorio Clínico</option>
@@ -105,11 +105,11 @@
                 <option value="Enfermería">Enfermería</option>
                 <option value="TAC">TAC</option>
               @else
-                @if($usuarios->tipoUsuario == "Gerencia")
+                {{--  @if($usuarios->tipoUsuario == "Gerencia")
                   <option value="Gerencia" selected>Gerencia</option>
                 @else
                   <option value="Gerencia">Gerencia</option>
-                @endif
+                @endif  --}}
                 @if($usuarios->tipoUsuario == "Médico")
                   <option value="Médico" selected>Médico</option>
                 @else

@@ -48,7 +48,7 @@
         Presión Arterial:
       </div>
       @php
-        $edad = $ingreso->paciente->fechaNacimiento->age;
+        $edad = $ingreso->hospitalizacion->paciente->fechaNacimiento->age;
         $sistole = $signo->sistole;
         $diastole = $signo->diastole;
       @endphp
@@ -58,7 +58,7 @@
             Vacio
           </span>
         @elseif (
-          ($ingreso->paciente->sexo && 
+          ($ingreso->hospitalizacion->paciente->sexo && 
           ((($edad >= 16 && $edad <= 18) && ($sistole >= 105 && $sistole <= 135) && ($diastole >= 60 && $diastole <= 86)) ||
           (($edad >= 19 && $edad <= 24) && ($sistole >= 105 && $sistole <= 139) && ($diastole >= 62 && $diastole <= 88)) ||
           (($edad >= 25 && $edad <= 29) && ($sistole >= 108 && $sistole <= 139) && ($diastole >= 65 && $diastole <= 89)) ||
@@ -66,7 +66,7 @@
           (($edad >= 40 && $edad <= 49) && ($sistole >= 110 && $sistole <= 150) && ($diastole >= 70 && $diastole <= 96)) ||
           (($edad >= 50 && $edad <= 59) && ($sistole >= 115 && $sistole <= 155) && ($diastole >= 70 && $diastole <= 98)) ||
           (($edad >= 60) && ($sistole >= 115 && $sistole <= 160) && ($diastole >= 70 && $diastole <= 100)) )) ||
-          (!$ingreso->paciente->sexo && 
+          (!$ingreso->hospitalizacion->paciente->sexo && 
           ((($edad >= 16 && $edad <= 18) && ($sistole >= 100 && $sistole <= 130) && ($diastole >= 60 && $diastole <= 85)) ||
           (($edad >= 19 && $edad <= 24) && ($sistole >= 100 && $sistole <= 130) && ($diastole >= 60 && $diastole <= 85)) ||
           (($edad >= 25 && $edad <= 29) && ($sistole >= 102 && $sistole <= 135) && ($diastole >= 60 && $diastole <= 86)) ||
