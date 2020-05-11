@@ -28,7 +28,7 @@
                   <th>Código</th>
                   <th>Producto</th>
                   <th>Catidad/Contenido</th>
-                  <th>Inventario</th>
+                  <th>Existencias</th>
                   <th>Stock</th>
                 </tr>
               </thead>

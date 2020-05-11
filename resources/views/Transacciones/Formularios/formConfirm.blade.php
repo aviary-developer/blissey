@@ -76,12 +76,12 @@
 			<div class="input-group mb-2 mr-sm-2">
 				<span class="button-checkbox col-sm-12">
 					<center>
-						<button type = "button" class="btn btn-sm col-4" data-color="success" onclick="cambio()">
-							<span id="iva">No</span>
+						<button type = "button" class="btn btn-sm col-4" data-color="info" onclick="cambio()">
+							<span id="iva">Si</span>
 						</button>
 					</center>
           <input type="checkbox" hidden name="desactivate" value="1">
-          <input hidden name="ivaincluido" value="0" id="ivaincluido">
+          <input hidden name="ivaincluido" value="1" id="ivaincluido">
         </span>
 			</div>
 		</div>

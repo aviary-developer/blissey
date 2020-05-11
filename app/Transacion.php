@@ -13,11 +13,11 @@ class Transacion extends Model
   protected $dates = ['fecha'];
 
   public static function buscar($buscar,$tipo){
-    return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('id','DESC')->where('f_ingreso',null)->paginate(10);
+    return Transacion::factura($buscar)->tipo($tipo)->localizacion()->orderBy('id','DESC')->where('f_ingreso',null)->get();
   }
   public static function pendientes($buscar,$tipo){
     $contrario=Transacion::contrario(Transacion::tipoUsuario());
-    return Transacion::factura($buscar)->tipo($tipo)->where('localizacion',$contrario)->orderBy('fecha','DESC')->paginate(10);
+    return Transacion::factura($buscar)->tipo($tipo)->where('localizacion',$contrario)->orderBy('fecha','DESC')->get();
   }
   public function scopeFactura($query, $buscar){
     if(trim($buscar)!=""){

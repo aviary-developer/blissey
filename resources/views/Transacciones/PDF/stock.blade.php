@@ -49,7 +49,7 @@
                 <th>#</th>
                 <th>Código</th>
                 <th>Nombre</th>
-                <th>Inventario</th>
+                <th>Existencias</th>
                 <th>Stock</th>
             </thead>
             <tbody>             
