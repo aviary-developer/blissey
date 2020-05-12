@@ -137,9 +137,11 @@
           <button type="button" title="Buscar Receta" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#medicamento_m">
             <i class="fa fa-medkit"></i>
           </button>
+          @if(App\Transacion::tipoUsuario()==1)
           <button type="button" name="button" data-toggle="modal" data-target="#solicitudes" class="btn btn-outline-success btn-sm" title="Solicitudes">
             <i class="fa fa-user"></i>
           </button>
+          @endif
         @endif
         </div>
       </center>

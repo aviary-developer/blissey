@@ -19,7 +19,9 @@
                           <th>Lote</th>
                             @endif
                             <th>Precio unitario</th>
+                            @if($transaccion->tipo==1)
                             <th>Descuento</th>
+                            @endif
                             <th>Subtotal</th>
                         </thead>      
                         <tbody>
@@ -61,7 +63,9 @@
                             $descontado=$detalle->precio-($detalle->precio*($detalle->descuento/100));
                           @endphp
                           <td>$ {{number_format($detalle->precio,2,'.','.')}}</td>
+                          @if($transaccion->tipo==1)
                           <td>{{$detalle->descuento}}%</td>
+                          @endif
                           <td>$ {{number_format($detalle->cantidad*$descontado,2,'.','.')}}</td>
                           @php
                           $total=$total+($detalle->cantidad*$descontado);
