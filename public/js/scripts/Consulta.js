@@ -62,9 +62,9 @@ $(document).on("ready", function () {
       rayo.push(value.value);
     });
 
-		let guardar = false;
+		var guardar = false;
 		if (nombre_receta == "") {
-			swal({
+			await swal({
 				title: 'Guardar Receta Sin Nombre',
 				text: '¿Está seguro que desea guardar la receta sin nombre? ¡Ya no será posible asignarle un nombre después!',
 				type: 'question',
@@ -82,6 +82,7 @@ $(document).on("ready", function () {
 		} else {
 			guardar = true;
 		}
+		console.log(guardar);
 		if (guardar) {
 			await $.ajax({
 				type: "post",
