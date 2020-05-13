@@ -12,14 +12,16 @@
     <div class="x_panel border border-success rounded">
       @include('widget.solicitudes')
     </div>
-  @elseif(Auth::user()->tipoUsuario == "Recepción")
+  @elseif(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Enfermería" || Auth::user()->tipoUsuario == "Médico")
     <div class="x_panel border border-purple rounded">
       @include('widget.ingreso')
-    </div>
-    <div class="x_panel border border-success rounded">
-      @include('widget.solicitudes')
-    </div>
-    @elseif(Auth::user()->tipoUsuario == "Farmacia")
+		</div>
+		@if (Auth::user()->tipoUsuario == "Recepción")
+			<div class="x_panel border border-success rounded">
+				@include('widget.solicitudes')
+			</div>
+		@endif
+  @elseif(Auth::user()->tipoUsuario == "Farmacia")
     <div class="x_panel border border-purple rounded">
       @include('widget.pedidos')
     </div>

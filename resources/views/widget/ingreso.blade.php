@@ -23,8 +23,20 @@
               $hoy = Carbon\Carbon::now();
             @endphp
             <td>
+							 @php
+									$hoy = Carbon\Carbon::today()->hour(7);
+									$ahora = Carbon\Carbon::now();
+									if($ahora->lt($hoy)){
+										$hoy = $hoy->subDays(1);
+									}
+									$dia_ingreso = $ingreso->fecha_ingreso->hour(7)->minute(0);
+									if($ingreso->fecha_ingreso->lt($dia_ingreso)){
+										$dia_ingreso->subDay();
+									}
+									$dias = $dia_ingreso->diffInDays($hoy);
+								@endphp
               <span class="badge border border-primary text-primary col-6 float-right">
-                {{($ingreso->fecha_ingreso->diffInDays($hoy)+1).' días'}}
+                {{($dias).(($dias > 1)?' días':' día')}}
               </span>
             </td>
           </tr>

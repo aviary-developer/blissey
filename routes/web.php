@@ -140,7 +140,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/', function () {
 		$primero = $segundo = $tercero = $proximosReactivosVencer= "Nada";
 		$count_existencia_reactivo = 0;
-    if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio"){
+    if(Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Laboaratorio" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería"){
       $primero = App\Ingreso::where('estado',1)->take(5)->get();
       $segundo = App\SolicitudExamen::where('estado','<>',3)->where('f_examen','!=',null)->distinct()->get(['f_paciente']);
       $tercero = App\Reactivo::where('contenidoPorEnvase','<',20)->get();
