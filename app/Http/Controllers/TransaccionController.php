@@ -362,10 +362,7 @@ class TransaccionController extends Controller
       }
     }
     public static function buscarCliente($valor){
-      $clientes=Paciente::where('nombre','like','%'.$valor.'%')
-      ->orWhere('apellido', 'like','%'.$valor.'%')
-      ->orWhere('telefono', 'like','%'.$valor.'%')
-      ->orWhere('dui', 'like','%'.$valor.'%')->orderBy('nombre')->take(10)->get();
+      $clientes=Paciente::where('estado',true)->filtro($valor)->orderBy('nombre')->take(10)->get();
       return $clientes;
     }
     public static function buscarVenta($texto){

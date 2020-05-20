@@ -77,6 +77,10 @@ class Paciente extends Model
       }
       $query->where('estado',$estado);
     }
+    public function scopeFiltro($query,$filtro){
+      $query->where('nombre', 'like','%'.$filtro.'%')->orWhere('apellido', 'like','%'.$filtro.'%')
+      ->orWhere('telefono','like',$filtro."%")->orWhere('dui','like',$filtro."%");
+    }
 
 
     public static function completed($id){
