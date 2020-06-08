@@ -70,10 +70,10 @@ class IngresoController extends Controller
       $fecha = Carbon::now();
       return view('Ingresos.index.base',compact(
         // 'ingresos',
-        'estado',
+        //'estado',
         // 'activos',
-        'pagina',
-        'tipo',
+        //'pagina',
+        //'tipo',
         'index',
         // 'estadoOpuesto',
         'habitaciones_ingreso',
