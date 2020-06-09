@@ -257,7 +257,7 @@ $(document).on('ready', function () {
           "</tr>";
       } else {
         html = "<tr>" +
-          "<td><input type='number' placeholder='cantidad' name='cantidad[]' class='form-control form-control-sm' value='" + cantidad + "'>" +
+          "<td><input type='number' placeholder='cantidad' name='cantidad[]' onKeyUp='recalcular();' class='form-control form-control-sm' value='" + cantidad + "'>" +
           '	<input type="hidden" name="descuento[]" id="descuento_h">' +
           '<input type="hidden" name="fecha_vencimiento[]" id="fecha_vencimiento_h">' +
           '<input type="hidden" name="precio[]" id="precio_h">' +
@@ -461,26 +461,8 @@ $(document).on('ready', function () {
     });
 
     if (bandera) {
-      var cantidades = document.getElementsByName("cantidad[]");
-      var descuentos = document.getElementsByName("descuento[]");
-      var precios = document.getElementsByName("precio[]");
+      acumulado = parseFloat($('#total_venta_aux').val());
       var arqueo = parseFloat($('#arqueo').val());
-      acumulado = 0;
-      for (i = 0; i < cantidades.length; i++) {
-        cantidad = parseFloat(cantidades[i].value);
-        descuento = parseFloat(descuentos[i].value);
-        precio = parseFloat(precios[i].value);
-        subtotal = cantidad * precio;
-        total = subtotal - (subtotal * (descuento / 100));
-        acumulado += total;
-        console.log("acumulado" + acumulado);
-      }
-      acumulado = acumulado - (acumulado * (parseFloat($('#descuentog').val()) / 100));
-      console.log("dg" + acumulado);
-      if ($('#ivaincluido').val() == '0') {
-        acumulado = acumulado + (acumulado * 0.13);
-      }
-      console.log("iva" + acumulado);
       if (arqueo >= acumulado) {
         $('#formVender').submit();
       } else {

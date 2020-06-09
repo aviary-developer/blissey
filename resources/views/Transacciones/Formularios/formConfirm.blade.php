@@ -67,7 +67,7 @@
 				<div class="input-group-prepend">
 					<div class="input-group-text"><i class="fas fa-percent"></i></div>
 				</div>
-				{!! Form::number('descuentog',0,['class'=>'form-control form-control-sm','id'=>'descuentog']) !!}
+				{!! Form::number('descuentog',0,['class'=>'form-control form-control-sm','id'=>'descuentog','onKeyUp' => 'recalcular();']) !!}
 			</div>
 		</div>
 
@@ -76,7 +76,7 @@
 			<div class="input-group mb-2 mr-sm-2">
 				<span class="button-checkbox col-sm-12">
 					<center>
-						<button type = "button" class="btn btn-sm col-4" data-color="info" onclick="cambio()">
+						<button type = "button" class="btn btn-sm col-4" data-color="info" onclick="cambio();recalcular();">
 							<span id="iva">Si</span>
 						</button>
 					</center>
@@ -119,7 +119,7 @@
 			@foreach ($detalles as $key => $detalle)
 				<tr>
 					<td>
-						{!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad','min'=>'1','onKeyPress' => 'return entero( this, event,this.value);']) !!}
+						{!! Form::number('cantidad[]',$detalle->cantidad,['class'=>'form-control form-control-sm','placeholder'=>'Cantidad','min'=>'1','onKeyUp' => 'recalcular();','onKeyPress' => 'return entero( this, event,this.value);']) !!}
 
 						<input type="hidden" name="descuento[]" id="descuento_h">
 						<input type="hidden" name="fecha_vencimiento[]" id="fecha_vencimiento_h">
@@ -162,6 +162,10 @@
 			<input type="hidden" id="contador" value={{$auxiliar_contador}}>
       <div id="eliminados"></div>
 		</table>
+		<h5 class="mb-1">
+			Total: $ <label id="total_venta">0.00</label>
+			<input type="hidden" id="total_venta_aux" value='0'>
+		</h5>
 	</div>
 
 </div>
@@ -271,6 +275,7 @@
 					fila.empty().append('<i class="fa fa-search"></i>');
 		
 					$("#almacenar").modal('hide');
+					recalcular();
 				}else{
 					swal({
 						type: 'error',
@@ -300,5 +305,37 @@
 			$("#precio_i").val("");
 			$("#descuento_i").val("0");
 		});
+
 	});
+			function actualizarTotal(total) {
+				descuento = $('#descuentog').val();
+				if (descuento == "") {
+					descuento = 0;
+				} else {
+					descuento = parseFloat(descuento);
+				}
+
+				if ($('#ivaincluido').val() == '0') {
+					total = total + (total * 0.13);
+				}
+				$('#total_venta').text((total - (total * (descuento / 100))).toFixed(2));
+				$('#total_venta_aux').val(parseFloat(total).toFixed(2));
+			}
+			function recalcular(){
+				var cantidades = document.getElementsByName("cantidad[]");
+						var descuentos = document.getElementsByName("descuento[]");
+						var precios = document.getElementsByName("precio[]");
+						acumulado = 0;
+						for (i = 0; i < cantidades.length; i++) {
+							if(precios[i].value!="" && cantidades[i].value!=""){
+							cantidad = parseFloat(cantidades[i].value);
+							descuento = parseFloat(descuentos[i].value);
+							precio = parseFloat(precios[i].value);
+							subtotal = cantidad * precio;
+							total = subtotal - (subtotal * (descuento / 100));
+							acumulado += total;
+							}
+						}
+						actualizarTotal(acumulado);
+			}
 </script>
