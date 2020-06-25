@@ -20,12 +20,12 @@
         <div role="tabpanel" data-example-id="togglable-tabs">
           <div class="col-sm-3">
             <div class="x_panel m_panel">
-              @include('SolicitudExamenes.Formularios.opciones')
+              @include('SolicitudExamenes.Formularios.opcionesx2')
             </div>
           </div>
           <div class="col-sm-9">
             <div class="x_panel m_panel" style="height: 369px">
-              @include('SolicitudExamenes.Formularios.contenido')
+              @include('SolicitudExamenes.Formularios.contenidox2')
             </div>
           </div>
         </div>
