@@ -2,16 +2,21 @@
 @section('layout')
 	@php
     setlocale(LC_ALL,'es');
-    $est = "historial"
+    $est = "busqueda"
   @endphp
   @include('SolicitudExamenes.Barra.index')
   <div class="col-sm-8">
     <div class="x_content">
       <div class="col-sm-12">
+		  @if ($data)
+		  <div class="alert alert-info" role="alert">
+			<h4><strong>Busqueda realizada de: {{$data}}</strong></h4>
+		  </div>
+		  @endif
         @if($vista == "paciente")
-          @include('SolicitudExamenes.Partes.lista_paciente_historial')
+          @include('SolicitudExamenes.Partes.lista_paciente_en')
         @else
-          @include('SolicitudExamenes.Partes.lista_paciente_historial')
+          @include('SolicitudExamenes.Partes.lista_examen_en')
         @endif
       </div>
     </div>

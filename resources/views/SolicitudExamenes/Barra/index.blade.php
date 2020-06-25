@@ -21,6 +21,10 @@
       <span class="badge badge-info">
         HISTORIAL
       </span>
+    @elseif($est == "busqueda")
+      <span class="badge badge-info">
+        BUSQUEDA EN HISTORIAL
+      </span>
     @else
       <span class="badge badge-primary">
         Solicitudes

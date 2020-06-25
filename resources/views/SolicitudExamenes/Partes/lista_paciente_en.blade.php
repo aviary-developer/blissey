@@ -8,11 +8,6 @@
           <button class="btn btn-link" data-toggle="collapse" data-target={{"#collapse".$k}} aria-expanded="true" aria-controls={{"collapse".$k}}>
             {{$paciente->nombrePaciente($paciente->f_paciente)}}
           </button>
-          {{--<button class="btn btn-link float-right" data-toggle="collapse" data-target={{"#collapse".$k}} aria-expanded="true" aria-controls={{"collapse".$k}} onclick={!! "'imprimirExaEvaPacie(".$solicitudes.",".$paciente->f_paciente.");'" !!}>
-            
-            <i class="fas fa-print"></i>
-            
-          </button>--}}
         </h5>
       </div>
 

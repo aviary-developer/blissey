@@ -17,6 +17,7 @@ use App\Parametro;
 use App\ExamenSeccionParametro;
 use App\Bitacora;
 use App\Reactivo;
+use App\Paciente;
 use App\Tac;
 use App\Transacion;
 use App\DetalleTransacion;
@@ -1649,5 +1650,61 @@ class SolicitudExamenController extends Controller
             ->get();
       return view('SolicitudExamenes.indexBacteriologia',compact('pacientes','solicitudes','examenes','vista'));
     }
+  }
+  public function busquedaHistorial(Request $request){
+    $examenes = null;
+    $pacientes = null;
+    $data = null;
+    $vista = "paciente";
+    if($request->busquedaPor=="fechas"){
+      $fechaInicial=$request->fechaInicial;
+      $fechaFinal=$request->fechaFinal;
+      $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereBetween('created_at', [$fechaInicial." 00:00:00",$fechaFinal." 23:59:59"])->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereBetween('created_at', [$fechaInicial." 00:00:00",$fechaFinal." 23:59:59"])->orderBy('estado')->get();
+      $dateInicial = Carbon::parse($fechaInicial)->format('d-m-Y');
+      $dateFinal = Carbon::parse($fechaFinal)->format('d-m-Y');
+      $data=$dateInicial." al ".$dateFinal;
+    }else if($request->busquedaPor=="nombre"){
+      $nombre=$request->buscarNombre;
+      $pacientes = SolicitudExamen::join('pacientes', 'solicitud_examens.f_paciente', '=','pacientes.id')
+            ->where('solicitud_examens.estado','=',3)
+            ->where('pacientes.nombre','LIKE','%'.$nombre.'%')
+            ->orWhere('pacientes.apellido','LIKE','%'.$nombre.'%')
+            ->distinct()
+            ->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::join('pacientes', 'solicitud_examens.f_paciente', '=','pacientes.id')
+            ->where('solicitud_examens.estado','=',3)
+            ->where('pacientes.nombre','LIKE','%'.$nombre.'%')
+            ->orWhere('pacientes.apellido','LIKE','%'.$nombre.'%')
+            ->orderBy('solicitud_examens.created_at','asc')
+            ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
+            'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            ->get();
+      $data=$nombre;
+    }else if($request->busquedaPor=="hoy"){
+      $pacientes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereDate('created_at', Carbon::today())->distinct()->get(['f_paciente']);
+      $solicitudes = SolicitudExamen::where('estado','=',3)->where('f_examen','!=',null)->whereDate('created_at', Carbon::today())->orderBy('estado')->get();
+      $data= Carbon::today()->format('d/m/Y');
+    }else if($request->busquedaPor=="examenes"){
+      $examen=$request->examenBuscar;
+      $examenes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','=',3)
+            ->where('examens.id','=',$examen)
+            ->distinct()
+            ->get(['f_examen']);
+      $solicitudes = SolicitudExamen::join('examens', 'solicitud_examens.f_examen', '=','examens.id')
+            ->where('solicitud_examens.estado','=',3)
+            ->where('examens.id','=',$examen)
+            ->orderBy('solicitud_examens.created_at','asc')
+            ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
+            'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            ->get();
+      $nombreExamen=Examen::find($examen); 
+      $data= $nombreExamen->nombreExamen;
+      $vista = "examenes";
+    }
+    return view('SolicitudExamenes.historialBusquedaExamenes',compact('pacientes','solicitudes','examenes','vista','data'));
   }
 }
