@@ -48,15 +48,21 @@ $(document).on('ready', function () {
               head =
                 "<thead>" +
                 "<th>Nombre</th>" +
+                "<th>Edad</th>" +
                 "<th style='width : 80px'>Opción</th>" +
                 "</thead>";
               tabla.append(head);
               $(res).each(function (key, value) {
+                aux_fecha = value.fechaNacimiento.split('-');
+                edad = calculate_age(aux_fecha[0], aux_fecha[1], aux_fecha[2]);
                 html =
                   "<tr>" +
                   "<td>" +
                   value.apellido + ', ' + value.nombre +
                   "</td>" +
+                  "<td>" +
+                  edad +
+                  " años</td>" +
                   "<td><center>" +
                   "<input type='hidden' name='nombre_paciente[]' value ='" + value.apellido + ', ' + value.nombre + "'>" +
                   "<input type='hidden' name='id_paciente[]' value ='" + value.id + "'>" +

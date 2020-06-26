@@ -421,9 +421,11 @@ $(document).on('ready', function () {
       var ruta = $('#guardarruta').val() + "/buscarCliente/" + valor;
       $.get(ruta, function (res) {
         tabla.empty();
-        html = "<thead><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>DUI</th><th style='width : 80px'>Acción</th></thead>";
+        html = "<thead><th>Nombre</th><th>Apellido</th><th>Edad</th><th>Teléfono</th><th>DUI</th><th style='width : 80px'>Acción</th></thead>";
         tabla.append(html);
         $(res).each(function (key, value) {
+          aux_fecha = value.fechaNacimiento.split('-');
+          edad = calculate_age(aux_fecha[0], aux_fecha[1], aux_fecha[2]);
           if (value.telefono == null)
             value.telefono = "";
           if (value.dui == null)
@@ -431,6 +433,7 @@ $(document).on('ready', function () {
           cadena = "<tr>" +
             "<td id='tbcn" + value.id + "'>" + value.nombre + "</td>" +
             "<td id='tbca" + value.id + "'>" + value.apellido + "</td>" +
+            "<td>" + edad + " años</td>" +
             "<td>" + value.telefono + "</td>" +
             "<td>" + value.dui + "</td>" +
             "<td>" +

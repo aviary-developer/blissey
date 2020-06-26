@@ -44,6 +44,7 @@
                       <table class="table table-sm" class="tablaBuscarS">
                           <thead>
                               <th>Paciente</th>
+                              <th>Edad</th>
                               <th>Examen</th>
                               <th>Precio</th>
                               <th>Acción</th>
@@ -71,6 +72,7 @@
                               @endphp
                                   <tr>
                                     <td class="nombreS">{{$solicitud->nombrePaciente($solicitud->f_paciente)}}</td> 
+                                    <td>{{$solicitud->edadPaciente($solicitud->f_paciente)}}</td>
                                     <td>
                                          {{$nsolicitud}}   
                                     </td>

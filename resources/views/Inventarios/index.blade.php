@@ -8,6 +8,7 @@
           <tr>
             <th>#</th>
             <th>Código</th>
+            <th>Precio</th>
             <th>Nombre</th>
             <th>Existencias</th>
             <th>Opciones</th>
@@ -22,6 +23,7 @@
             <tr>
               <td>{{$contador + $pagina}}</td>
               <td>{{$div->codigo}}</td>
+              <td>$ {{$div->precio}}</td>
               <td>{{$div->nombre}}</td>
               <td>
                 @php
