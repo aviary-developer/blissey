@@ -89,7 +89,7 @@ class SolicitudExamenController extends Controller
             ->orderBy('solicitud_examens.created_at','asc')
             ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
             'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
-            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica','solicitud_examens.paraTac')
             ->get();
     return view('SolicitudExamenes.index',compact('pacientes','solicitudes','examenes','vista'));
   }
@@ -400,6 +400,10 @@ class SolicitudExamenController extends Controller
           if($request->enviarClinica)
           {
             $solicitud->enviarClinica=1;
+          }
+          if($request->notificacionTac)
+          {
+            $solicitud->paraTac=1;
           }
           $solicitud->save();
 
@@ -1320,7 +1324,7 @@ class SolicitudExamenController extends Controller
               ->orderBy('solicitud_examens.created_at','asc')
               ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
               'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
-              'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+              'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica','solicitud_examens.paraTac')
               ->get();
     return view('SolicitudExamenes.examenesEvaluados',compact('pacientes','solicitudes','examenes','vista'));
   }
@@ -1607,7 +1611,7 @@ class SolicitudExamenController extends Controller
               ->orderBy('solicitud_examens.created_at','asc')
               ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
               'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
-              'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+              'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica','solicitud_examens.paraTac')
               ->get();
               return view('SolicitudExamenes.historialBacteriologia',compact('pacientes','solicitudes','examenes','vista'));
       }else{
@@ -1646,7 +1650,7 @@ class SolicitudExamenController extends Controller
             ->orderBy('solicitud_examens.created_at','asc')
             ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
             'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
-            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica','solicitud_examens.paraTac')
             ->get();
       return view('SolicitudExamenes.indexBacteriologia',compact('pacientes','solicitudes','examenes','vista'));
     }
@@ -1679,7 +1683,7 @@ class SolicitudExamenController extends Controller
             ->orderBy('solicitud_examens.created_at','asc')
             ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
             'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
-            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica','solicitud_examens.paraTac')
             ->get();
       $data=$nombre;
     }else if($request->busquedaPor=="hoy"){
@@ -1699,7 +1703,7 @@ class SolicitudExamenController extends Controller
             ->orderBy('solicitud_examens.created_at','asc')
             ->select('solicitud_examens.id','solicitud_examens.codigo_muestra','solicitud_examens.f_examen',
             'solicitud_examens.f_paciente','solicitud_examens.estado','solicitud_examens.created_at','solicitud_examens.updated_at',
-            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica')
+            'solicitud_examens.f_transaccion','solicitud_examens.cancelado','solicitud_examens.completo','solicitud_examens.enviarClinica','solicitud_examens.paraTac')
             ->get();
       $nombreExamen=Examen::find($examen); 
       $data= $nombreExamen->nombreExamen;

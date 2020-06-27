@@ -6,7 +6,6 @@
 <div class="x_panel">
   <div class="flex-row">
     <div class="col-sm-2"></div>
-    <input type="hidden" id="seleccion">
     <div class="form-group col-sm-6">
       <label class="" for="n_paciente">Paciente *</label>
       <div class="input-group mb-2 mr-sm-2 ">
@@ -55,6 +54,8 @@
   @include('SolicitudExamenes.Formularios.examenes')
   <input type="hidden" id="seleccion" value="solicitud">
   <input type="hidden" id="enviarClinica" name="enviarClinica" value=0>
+  <input type="hidden" id="paraTac" name="paraTac" value=0>
+  <input type="hidden" id="notificacionTac" name="notificacionTac" value=0>
   <input type="hidden" name="tipo" value="examenes">
 </div>
 
@@ -75,6 +76,7 @@
 var solicitudes=0;
 
   $("#save_me").click(function(){
+    alert($('#notificacionTac').val());
     var totalPrecio=parseFloat($("#totalPrecio").text());
     var valido = new Validated('n_paciente');
     valido.required();
@@ -132,6 +134,7 @@ var solicitudes=0;
           var total=(totalPrecio+precioExamen);
           $("#totalPrecio").text(total.toFixed(2));
           $("#totalSolicitudes").append('<li>'+boton.innerText+'</li>');
+          esCreatinina(boton.innerText);
           swal({
             type: 'success',
             html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Agregada!</i><br>Total solicitudes:'+solicitudes,
@@ -144,6 +147,7 @@ var solicitudes=0;
           solicitudes=solicitudes-1;
           totalPrecio=totalPrecio-precioExamen;
           $("#totalPrecio").text(totalPrecio.toFixed(2));
+          yaNoEsCreatinina(boton.innerText);
           swal({
             type: 'warning',
             html: '<span class="text-uppercase font-weight-bold mb-1">Solicitud</span><br><strong>'+boton.innerText+'</strong> <i>¡Eliminada!</i><br>Total solicitudes:'+solicitudes,
@@ -153,5 +157,49 @@ var solicitudes=0;
             showConfirmButton: false
           });
         }
+        $('#paraTac').change();
             }
+      function esCreatinina(nombre){
+        let examenEsCreatinina=nombre.toLowerCase().split('\n');
+          if(examenEsCreatinina[0].trim()==="creatinina"){
+            $('#paraTac').val(1).change();
+          }
+      }
+      function yaNoEsCreatinina(nombre){
+        let examenEsCreatinina=nombre.toLowerCase().split('\n');
+          if(examenEsCreatinina[0].trim()==="creatinina"){
+            $('#paraTac').val(0).change();
+            $('#notificacionTac').val(0);
+          }
+      }
+      $('#paraTac').change(function(e){
+      if($(this).val()==1){
+        swal({
+              title: 'Ha seleccionado Creatinina',
+              html: '¿Es para realizar un TAC?<br>Se agregará una notifiación',
+              type: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Si, es para TAC',
+              cancelButtonText: 'No, no agregar',
+              confirmButtonClass: 'btn btn-primary',
+              cancelButtonClass: 'btn btn-light',
+              buttonsStyling: false
+            }).then((result) => {
+              if (result.value) {
+                $('#notificacionTac').val(1);
+                swal({
+                  type: 'success',
+                  html: 'Notificación agregada',
+                  toast: true,
+                  position: 'center',
+                  timer: '4000',
+                  showConfirmButton: false
+                });
+              }else{
+                $('#notificacionTac').val(0);
+              }
+            }); 
+      }
+        });
+       /* */
 </script>

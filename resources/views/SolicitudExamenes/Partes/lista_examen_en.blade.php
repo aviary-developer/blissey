@@ -38,10 +38,15 @@
                     <td>
                       {{$solicitud->nombrePaciente($solicitud->f_paciente)}}
                       @if ($solicitud->enviarClinica==1)
-                          <span class="badge badge-pill badge-pink" title="Debe enviarse a clínica">
-                              <i class="fa fa-ambulance"></i>
-                              </span>
-                        @endif
+                      <span class="badge badge-pill badge-pink" title="Debe enviarse a clínica">
+                          <i class="fa fa-ambulance"></i>
+                          </span>
+                    @endif
+                    @if ($solicitud->paraTac==1)
+                    <span class="badge badge-pill badge-info" title="Exámen para TAC">
+                        <i class="fa fa-desktop"></i>
+                        </span>
+                  @endif
                     </td>
                     <td>
                       <center>
