@@ -1,5 +1,5 @@
 <div class="form-group col-sm-12">
-  <label class="" for="peso">Peso</label>
+  <label class="" for="peso">Peso</label> &nbsp; <small class="red">Obligatorio para IMC</small>
   <div class="input-group mb-2 mr-sm-2">
     <div class="input-group-prepend">
       <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
@@ -14,14 +14,14 @@
       'id'=>'peso']
     ) !!}
     <select name="medida" id="medida" class="form-control form-control-sm">
-      <option value="1">Kilogramos</option>
       <option value="0">Libras</option>
+      <option value="1">Kilogramos</option>
     </select>
   </div>
 </div>
 
 <div class="form-group col-sm-12">
-  <label class="" for="altura">Estatura (cm)</label>
+  <label class="" for="altura">Estatura (cm)</label>  &nbsp; <small class="red">Obligatorio para IMC</small>
   <div class="input-group mb-2 mr-sm-2">
     <div class="input-group-prepend">
       <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
@@ -34,6 +34,24 @@
       'min'=>'1',
       'step'=>'1',
       'id'=>'altura']
+    ) !!}
+  </div>
+</div>
+
+<div class="form-group col-sm-12">
+  <label class="" for="temperatura">Temperatura (°C)</label>
+  <div class="input-group mb-2 mr-sm-2">
+    <div class="input-group-prepend">
+      <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+    </div>
+    {!! Form::number(
+      'temperatura',
+      null,
+      ['class'=>'form-control form-control-sm',
+      'placeholder'=>'Temperatura en grados Celsius',
+      'min'=>'0.0',
+      'step'=>'0.1',
+      'id'=>'temperatura']
     ) !!}
   </div>
 </div>
@@ -61,24 +79,6 @@
       'min'=>'0.01',
       'step'=>'0.10',
       'id'=>'diastole']
-    ) !!}
-  </div>
-</div>
-
-<div class="form-group col-sm-12">
-  <label class="" for="temperatura">Temperatura (°C)</label>
-  <div class="input-group mb-2 mr-sm-2">
-    <div class="input-group-prepend">
-      <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
-    </div>
-    {!! Form::number(
-      'temperatura',
-      null,
-      ['class'=>'form-control form-control-sm',
-      'placeholder'=>'Temperatura en grados Celsius',
-      'min'=>'0.0',
-      'step'=>'0.1',
-      'id'=>'temperatura']
     ) !!}
   </div>
 </div>

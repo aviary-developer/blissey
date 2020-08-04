@@ -181,21 +181,21 @@ $(document).on("ready", function () {
     e.preventDefault();
     var is_valid = true;
 
-    var valido = new Validated('motivo');
+/*     var valido = new Validated('motivo');
     valido.required();
     is_valid = valido.value(is_valid);
 
     var valido = new Validated('historia');
     valido.required();
-    is_valid = valido.value(is_valid);
+    is_valid = valido.value(is_valid); */
 
     var valido = new Validated('ex_fisico');
     valido.required();
     is_valid = valido.value(is_valid);
 
-    var valido = new Validated('diagnostico');
+ /*    var valido = new Validated('diagnostico');
     valido.required();
-    is_valid = valido.value(is_valid);
+    is_valid = valido.value(is_valid); */
 
     if (is_valid) {
 			$("#receta").modal('show');

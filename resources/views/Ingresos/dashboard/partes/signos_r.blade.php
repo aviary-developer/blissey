@@ -194,8 +194,13 @@
         </div>
         @php
           $peso = number_format($signo->peso * (($signo->medida) ? 1 : 0.453592),2,'.',',');
+          if($signo->altura!=null || $signo->peso != null){
           $altura = number_format(($signo->altura / 100),2,'.',',');
           $imc = number_format(($peso/($altura*$altura)) ,2,'.',',');
+        }else{
+          $altura=null;
+          $imc=null;
+        }
           $nulo = ($signo->altura == null || $signo->peso == null)
         @endphp
         <div class="col-sm-5 col-sm-5">
