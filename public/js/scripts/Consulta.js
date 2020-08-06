@@ -145,47 +145,47 @@ $(document).on("ready", function () {
     var ultra_prov = $("input[name = 'ultra_v[]']").serializeArray();
     var rayo_prov = $("input[name = 'rayo_v[]']").serializeArray();
 
-    var nombre_producto = [];
-    var cant_dosis = [];
-    var forma_dosis = [];
-    var cant_frec = [];
-    var forma_frec = [];
-    var cant_duracion = [];
-    var forma_duracion = [];
-    var observacion = [];
-    var examen = [];
-    var tac = [];
-    var ultra = [];
-		var rayo = [];
+    var nombre_productoE = [];
+    var cant_dosisE = [];
+    var forma_dosisE = [];
+    var cant_frecE = [];
+    var forma_frecE = [];
+    var cant_duracionE = [];
+    var forma_duracionE = [];
+    var observacionE = [];
+    var examenE = [];
+    var tacE = [];
+    var ultraE = [];
+		var rayoE = [];
 		
 		//MAR20.20 Guardar el nombre de la receta
 		var nombre_receta = $("#nombre_receta").val();
 
     $(nombre_producto_prov).each(function (key, value) {
-      nombre_producto.push(value.value);
-      cant_dosis.push(cant_dosis_prov[key].value);
-      forma_dosis.push(forma_dosis_prov[key].value);
-      cant_frec.push(cant_frec_prov[key].value);
-      forma_frec.push(forma_frec_prov[key].value);
-      cant_duracion.push(cant_duracion_prov[key].value);
-      forma_duracion.push(forma_duracion_prov[key].value);
-      observacion.push(observacion_prov[key].value);
+      nombre_productoE.push(value.value);
+      cant_dosisE.push(cant_dosis_prov[key].value);
+      forma_dosisE.push(forma_dosis_prov[key].value);
+      cant_frecE.push(cant_frec_prov[key].value);
+      forma_frecE.push(forma_frec_prov[key].value);
+      cant_duracionE.push(cant_duracion_prov[key].value);
+      forma_duracionE.push(forma_duracion_prov[key].value);
+      observacionE.push(observacion_prov[key].value);
     });
 
     $(examen_prov).each(function (key, value) {
-      examen.push(value.value);
+      examenE.push(value.value);
     });
 
     $(tac_prov).each(function (key, value) {
-      tac.push(value.value);
+      tacE.push(value.value);
     });
 
     $(ultra_prov).each(function (key, value) {
-      ultra.push(value.value);
+      ultraE.push(value.value);
     });
 
     $(rayo_prov).each(function (key, value) {
-      rayo.push(value.value);
+      rayoE.push(value.value);
     });
 
 		var guardar = false;
@@ -219,18 +219,18 @@ $(document).on("ready", function () {
 					examen_fisico: $("#ex_fisicoEditar").val(),
 					diagnostico: $("#diagnosticoEditar").val(),
 					f_ingreso: $("#idConsultaEditar").val(),
-					nombre_producto: nombre_producto,
-					cant_dosis: cant_dosis,
-					forma_dosis: forma_dosis,
-					cant_frec: cant_frec,
-					forma_frec: forma_frec,
-					cant_duracion: cant_duracion,
-					forma_duracion: forma_duracion,
-					observacion: observacion,
-					f_examen: examen,
-					f_tac: tac,
-					f_ultrasonografia: ultra,
-					f_rayox: rayo,
+					nombre_producto: nombre_productoE,
+					cant_dosis: cant_dosisE,
+					forma_dosis: forma_dosisE,
+					cant_frec: cant_frecE,
+					forma_frec: forma_frecE,
+					cant_duracion: cant_duracionE,
+					forma_duracion: forma_duracionE,
+					observacion: observacionE,
+					f_examen: examenE,
+					f_tac: tacE,
+					f_ultrasonografia: ultraE,
+					f_rayox: rayoE,
 					texto: contenedor.val(),
 					nombre_receta: nombre_receta
 				},

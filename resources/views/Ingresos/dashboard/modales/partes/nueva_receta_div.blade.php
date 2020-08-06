@@ -23,16 +23,16 @@
 				</div>
 			</div>
 			<div class="btn-group col-sm-12">
-				<button type="button" class="btn btn-danger btn-sm col-sm-3" id="med-btn">Medicamento</button>
+				{{-- <button type="button" class="btn btn-danger btn-sm col-sm-3" id="med-btn">Medicamento</button>
 				<button type="button" class="btn btn-light btn-sm col-sm-3" id="lab-btn">Laboratorio Clínico</button>
-				<button type="button" class="btn btn-light btn-sm col-sm-3" id="ryu-btn">Rayos X, Ultras y TAC</button>
-				<button type="button" class="btn btn-light btn-sm col-sm-3" id="otro-btn">Otro</button>
+				<button type="button" class="btn btn-light btn-sm col-sm-3" id="ryu-btn">Rayos X, Ultras y TAC</button> --}}
+				{{-- <button type="button" class="btn btn-light btn-sm col-sm-12" id="otro-btn">Ingresar tratamiento</button> --}}
 			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
-	<div id="med-div">
+	{{-- <div id="med-div">
 		<div class="col-sm-6">
 			<div class="x_panel m_panel" style="min-height: 440px">
 				@include('Ingresos.dashboard.modales.partes.buscar_medicamento')
@@ -102,8 +102,8 @@
 				@include('Ingresos.dashboard.modales.partes.texto_evaluacion')
 			</div>
 		</div>
-	</div>
-	<div id="otro-div" class="w-100" style="display:none">
+	</div> --}}
+	<div id="otro-div" class="w-100">
 		<div class="col-sm-12">
 			<div class="x_panel m_panel" style="height: 440px">
 				<div class="flex-row">
