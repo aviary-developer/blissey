@@ -380,6 +380,7 @@ Route::group(['middleware'=>'general'], function(){
   Route::get('/consultar_ingresos','ConsultaController@ingresos');
   Route::get('/ver_signos', 'SignoVitalController@ver_signo');
   Route::resource('/consulta','ConsultaController');
+  Route::match(['get','post'],'/consultaEditar','ConsultaController@consultaEditar');
   //Rutas de Requisiciones
   Route::match(['get','post'],'/buscarProductoRequisicion/{texto}','RequisicionController@buscar');
   Route::match(['get','post'],'/asignarRequisicion/{id}','RequisicionController@asignar');
@@ -438,6 +439,7 @@ Route::get('receta/buscar_medicamento','RecetaController@buscar_medicamento');
 //MAR20.20 Rutas para el buscador de recetas
 Route::get('receta/buscar','RecetaController@buscar');
 Route::get('receta/ver','RecetaController@ver');
+Route::get('receta/verEditar','RecetaController@verEditarReceta');
 
 Route::resource('calendarios', 'CalendarioController');
 Route::get('calendario/eventos','CalendarioController@eventos');

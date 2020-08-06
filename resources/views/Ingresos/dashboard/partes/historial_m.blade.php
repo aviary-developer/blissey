@@ -5,7 +5,8 @@
   </div>
   <div class="col-sm-8">
     <center>
-      <h5 class="text-info">Historial Médico</h5>
+	  <h5 class="text-info">Historial Médico</h5>
+	  <input type="hidden" id="estaEditandoReceta" value=0>
     </center>
   </div>
   <div class="col-sm-2"></div>
@@ -24,7 +25,7 @@
 						</center>
 					</div>
 					<div class="flex-row mb-1">
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							@if ($ingreso_f->tipo == 3 && $ingreso_f->consulta->count() > 0)
 								<div class="flex-row">
 									<center>
@@ -63,13 +64,18 @@
 								</center>
 							</div> 
 						</div>
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<div class="btn-group">
 								@if ($ingreso_f->tipo == 3)
 									@if ($ingreso_f->consulta->count() > 0)		
 										<button type="button" class="btn btn-sm btn-dark mb-2" onclick={{'v_consulta('.(($ingreso_f->tipo == 3 && $ingreso_f->consulta->count() > 0)?$ingreso_f->consulta[0]->id:$ingreso_f->id).','.$ingreso_f->tipo.')'}}>
 											<i class="fa fa-eye"></i>
-										</button>
+										</button>										
+										@if ($ingreso_f->id == $ingreso->id)
+											<button type="button" class="btn btn-sm btn btn-success mb-2" data-toggle="modal" data-target="#editarConsulta" id="botonEditarConsulta" onclick={{'asignarIdConsulta('.(($ingreso_f->tipo == 3 && $ingreso_f->consulta->count() > 0)?$ingreso_f->consulta[0]->id:$ingreso_f->id).')'}}>
+												<i class="fa fa-edit"></i>
+											</button>
+										@endif
 									@else
 										<button type="button" class="btn btn-sm btn-dark mb-2" disabled>
 											<i class="fa fa-eye"></i>
@@ -109,3 +115,4 @@
 
 @include('Pacientes.Partes.modal_examenes')
 @include('Pacientes.Partes.modal_evaluacion')
+@include('Ingresos.dashboard.modales.editarConsulta')

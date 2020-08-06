@@ -127,7 +127,7 @@
 											@endif
 										</td>
 										<td>
-											@if ($detalle->estado == 2)
+											@if ($detalle->estado > 2)
 												<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ver_examen_pac" onclick="{{'ver_examen_completo('.$detalle->id.','.$detalle->f_examen.','.$detalle->estado.')'}}">
 													<i class="fas fa-eye"></i>
 												</button>

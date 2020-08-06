@@ -266,8 +266,93 @@ class RecetaController extends Controller
 		$ultrasonografias = [];
 		$rayos_xs = [];
 		$tacs = [];
-		$texto = null;
-		$nombre = $receta->nombre_receta;
+        $texto = null;
+        if($receta->nombre_receta!=null){
+            $nombre = $receta->nombre_receta;
+        }else{
+            $nombre="Sin nombre";
+        }
+		$i = 0;
+		foreach($receta->detalle->where('nombre_producto','<>',null) as $k => $detalle){
+			$medicamentos[$i]['nombre'] = $detalle->nombre_producto;
+			$medicamentos[$i]['dosis'] = $detalle->cantidad_dosis.' ';
+			if($detalle->forma_dosis == 0 && $detalle->f_producto != null){
+				$medicamentos[$i]['dosis'] .= $detalle->producto->presentacion->nombre;
+				$medicamentos[$i]["presentacion"] = $detalle->producto->presentacion->nombre;
+			}else{
+				$medicamentos[$i]['dosis'] .= Consulta::dosis($detalle->forma_dosis);
+				$medicamentos[$i]["presentacion"] = "¡No está disponible!";
+			}
+			$medicamentos[$i]['cant_dosis'] = $detalle->cantidad_dosis;
+			$medicamentos[$i]['forma_dosis'] = $detalle->forma_dosis;
+			$medicamentos[$i]['texto_dosis'] = Consulta::dosis($detalle->forma_dosis);
+			$medicamentos[$i]['frecuencia'] = Consulta::tiempos($detalle->cantidad_frecuencia, $detalle->forma_frecuencia);
+			$medicamentos[$i]['cant_frec'] = $detalle->cantidad_frecuencia;
+			$medicamentos[$i]['forma_frec'] = $detalle->forma_frecuencia;
+			$medicamentos[$i]['texto_frec'] = Consulta::tiempo($detalle->forma_frecuencia);
+			$medicamentos[$i]['duracion'] = Consulta::tiempos($detalle->cantidad_duracion, $detalle->forma_duracion);
+			$medicamentos[$i]['cant_duracion'] = $detalle->cantidad_duracion;
+			$medicamentos[$i]['forma_duracion'] = $detalle->forma_duracion;
+			$medicamentos[$i]['texto_duracion'] = Consulta::tiempo($detalle->forma_duracion);
+			$medicamentos[$i]['nota'] = ($detalle->observacion == null)?"":$detalle->observacion;
+			$medicamentos[$i]['f_producto'] = $detalle->f_producto;
+			$i++;
+		}
+		$j = 0;
+		foreach($receta->detalle->where('f_examen','<>',null) as $k => $detalle){
+			$laboratorios[$j]['nombre'] = $detalle->examen->nombreExamen;
+			$laboratorios[$j]['f_examen'] = $detalle->f_examen;
+			$j++;
+		}
+		$l = 0;
+		foreach ($receta->detalle->where('f_ultrasonografia', '<>', null) as $k => $detalle) {
+			$ultrasonografias[$l]['nombre'] = Consulta::articulo($detalle->ultrasonografia->nombre).' '.$detalle->ultrasonografia->nombre;
+			$ultrasonografias[$l]['texto'] = $detalle->ultrasonografia->nombre;
+			$ultrasonografias[$l]['f_ultrasonografia'] = $detalle->f_ultrasonografia;
+			$l++;
+		}
+		$m = 0;
+		foreach ($receta->detalle->where('f_rayox', '<>', null) as $k => $detalle) {
+			$rayos_xs[$m]['nombre'] = Consulta::articulo
+			($detalle->rayox->nombre).' '.$detalle->rayox->nombre;
+			$rayos_xs[$m]['texto'] = $detalle->rayox->nombre;
+			$rayos_xs[$m]['f_rayox'] = $detalle->f_rayox;
+			$m++;
+		}
+		$n = 0;
+		foreach ($receta->detalle->where('f_tac', '<>', null) as $k => $detalle) {
+			$tacs[$n]['nombre'] = Consulta::articulo($detalle->tac->nombre).' '.$detalle->tac->nombre;
+			$tacs[$n]['texto'] = $detalle->tac->nombre;
+			$tacs[$n]['f_tac'] = $detalle->f_tac;
+			$n++;
+		}
+		if($receta->detalle->where('Texto','<>',null)->count() > 0){
+			$texto = $receta->detalle->where('Texto','<>',null)->first()->Texto;
+		}
+		return compact(
+			'medicamentos',
+			'laboratorios',
+			'ultrasonografias',
+			'rayos_xs',
+			'tacs',
+			'texto',
+			'nombre'
+		);
+    }
+    
+    public function verEditarReceta(Request $request){
+		$receta = Receta::where('f_consulta','=',$request->id)->first();
+		$medicamentos = [];
+		$laboratorios = [];
+		$ultrasonografias = [];
+		$rayos_xs = [];
+		$tacs = [];
+        $texto = null;
+        if($receta->nombre_receta!=null){
+            $nombre = $receta->nombre_receta;
+        }else{
+            $nombre="Sin nombre";
+        }
 		$i = 0;
 		foreach($receta->detalle->where('nombre_producto','<>',null) as $k => $detalle){
 			$medicamentos[$i]['nombre'] = $detalle->nombre_producto;
