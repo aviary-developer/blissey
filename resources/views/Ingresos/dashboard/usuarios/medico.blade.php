@@ -76,7 +76,7 @@
           <div class="flex-row">
             <div style="height: 106px">
               <center style="margin-top: 20px">
-                <input type="hidden" id="precio_consulta" value={{floatval($detalle_hc->precio)}}>
+                <input type="hidden" id="precio_consulta" value={{floatval(0)}}>{{-- QUITE PRECIO, QUE PASE 0.00 --}}
                 <button type="button" class="btn-lg btn btn-success" id="fin_consulta">
                   <i class="fa fa-arrow-right"></i> Finalizar consulta
                 </button>
