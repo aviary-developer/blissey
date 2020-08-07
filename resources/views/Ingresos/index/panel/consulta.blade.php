@@ -3,7 +3,7 @@
     <h5 class="text-pink">Consulta Médica</h5>
   </div>
   <div class="col-sm-4">
-    @if (Auth::user()->tipoUsuario == "Recepción")
+    @if (Auth::user()->tipoUsuario == "Recepción" || Auth::user()->tipoUsuario == "Médico" || Auth::user()->tipoUsuario == "Enfermería")
       <div class="btn-group alignright">
         <button type="button" class="btn btn-sm btn-success alignright" data-toggle="modal" data-target="#n_ingreso" onclick={{'i_activo(0,3)'}}><i class="fa fa-plus"></i></button>
       </div>

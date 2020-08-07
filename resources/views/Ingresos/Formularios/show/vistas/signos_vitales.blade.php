@@ -188,12 +188,17 @@
           Índice de Masa Corporal:
         </div>
         @php
-          $peso = number_format($signo->peso * (($signo->medida) ? 1 : 0.453592),2,'.',',');
           if($signo->altura!=null || $signo->peso != null){
+          $peso = number_format($signo->peso * (($signo->medida) ? 1 : 0.453592),2,'.',',');
           $altura = number_format(($signo->altura / 100),2,'.',',');
-          $imc = number_format(($peso/($altura*$altura)) ,2,'.',',');
+          if($signo->altura==0.00){
+              $imc=null;
+          }else{
+            $imc = number_format(($peso/($altura*$altura)) ,2,'.',',');
+          }
         }else{
           $altura=null;
+          $peso=null;
           $imc=null;
         }
           $nulo = ($signo->altura == null || $signo->peso == null)

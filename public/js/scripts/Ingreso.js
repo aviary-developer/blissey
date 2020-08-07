@@ -466,7 +466,8 @@ $(document).on('ready', function () {
           success: function (r) {
             if (r == 1) {
               localStorage.setItem('msg', 'yes');
-              location.reload();
+              window.location.href = $('#guardarruta').val()+"/ingresos";
+              //location.reload();
             } else {
               swal({
                 type: 'error',
