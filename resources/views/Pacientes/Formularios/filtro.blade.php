@@ -17,7 +17,7 @@
       <div class="input-group-prepend">
         <div class="input-group-text"><i class="fas fa-user"></i></div>
       </div>
-      <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Buscar por nombre">
+      <input type="text" class="form-control form-control-sm" name="nombre" id="nombreFiltrar" placeholder="Buscar por nombre">
     </div>
   </div>
   
@@ -27,7 +27,7 @@
       <div class="input-group-prepend">
         <div class="input-group-text"><i class="fas fa-user"></i></div>
       </div>
-      <input type="text" class="form-control form-control-sm" id="apellido" placeholder="Buscar por apellido">
+      <input type="text" class="form-control form-control-sm" name="apellido" id="apellido" placeholder="Buscar por apellido">
     </div>
   </div>
   
@@ -49,7 +49,7 @@
       <div class="input-group-prepend">
         <div class="input-group-text"><i class="fas fa-phone"></i></div>
       </div>
-      <input type="text" class="form-control form-control-sm" id="telefono" placeholder="Buscar por teléfono" data-inputmask = "'mask' : '9999-9999'">
+      <input type="text" class="form-control form-control-sm" name="telefono" id="telefono" placeholder="Buscar por teléfono" data-inputmask = "'mask' : '9999-9999'">
     </div>
   </div>
   
@@ -59,7 +59,7 @@
       <div class="input-group-prepend">
         <div class="input-group-text"><i class="fas fa-map-marked"></i></div>
       </div>
-      <textarea class="form-control form-control-sm" id="direccion" placeholder="Buscar por dirección" rows="3"></textarea>
+      <textarea class="form-control form-control-sm" name="direccion" id="direccion" placeholder="Buscar por dirección" rows="3"></textarea>
     </div>
   </div>
   
@@ -69,7 +69,7 @@
       <div class="input-group-prepend">
         <div class="input-group-text"><i class="fas fa-credit-card"></i></div>
       </div>
-      <input type="text" class="form-control form-control-sm" id="dui" placeholder="Buscar por DUI" data-inputmask = "'mask' : '99999999-9'">
+      <input type="text" class="form-control form-control-sm" name="dui" id="dui" placeholder="Buscar por DUI" data-inputmask = "'mask' : '99999999-9'">
     </div>
   </div>
   
@@ -80,7 +80,6 @@
         <input type="text" id="range_paciente_edad" name="edad"/>
       </div>
     </div>
-    
   </div>
   <input type="hidden" id="min" value={{$fin}}>
   <input type="hidden" id="max" value={{$inicio}}>

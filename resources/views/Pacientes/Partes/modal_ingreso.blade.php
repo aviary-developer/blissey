@@ -109,6 +109,9 @@
                   <th>#</th>
                   <th>Fecha</th>
                   <th>Médico</th>
+                  <th>Consulta por</th>
+                  <th>Historia clínica</th>
+                  <th>Exámen físico</th>
                   <th>Diagnostico</th>
                 </thead>
                 <tbody id="c-body-table">

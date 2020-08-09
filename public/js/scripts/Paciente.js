@@ -134,7 +134,6 @@ $(document).on('ready', function () {
       },
       dataType: 'json',
       success: function (respuesta) {
-        console.log(respuesta);
         var p = $("#texto");
         p.empty();
         if (respuesta > 0 && respuesta < 3) {
@@ -350,7 +349,6 @@ $(document).on('ready', function () {
         consulta_tabla.clear();
         $(r.consultas).each(function (i, val) {
           var fecha_consulta = moment(val.created_at);
-
           html = '<tr>' +
             '<td>' +
             (i + 1) +
@@ -362,6 +360,15 @@ $(document).on('ready', function () {
             r.medicos[i] +
             '</td>' +
             '<td>' +
+            val.motivo +
+            '</td>' +
+            '<td>' +
+            val.historia +
+            '</td>' +
+            '<td>' +
+            val.examen_fisico +
+            '</td>' +
+            '<td>' +
             val.diagnostico +
             '</td>' +
             '</tr>';
@@ -371,6 +378,9 @@ $(document).on('ready', function () {
             (i + 1),
             fecha_consulta.format('DD [de] MMM [del] YYYY'),
             r.medicos[i],
+            val.motivo,
+            val.historia,
+            val.examen_fisico,
             val.diagnostico
           ]);
         });
